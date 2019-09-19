@@ -5,6 +5,7 @@ const xmlParser = require('xml2json');
 const fs = require('fs');
 const inside = require('point-in-polygon');
 const addressService = require('./../service/address.service');
+const selogerService = require('./seloger.service');
 const log = require('./../helper/log.helper');
 
 const parisDistricts = JSON.parse(fs.readFileSync('quartier_paris.json', 'utf8'));
@@ -21,7 +22,9 @@ function getById(req, res, next) {
         log('seloger fetched')
         const ad = JSON.parse(xmlParser.toJson(body)).detailAnnonce
 
-        addressService.getCoordinate(ad.adresse)
+        const address = selogerService.digForAddress(ad)
+
+        addressService.getCoordinate(address)
             .then((info) => {
                 log('info address fetched')
                 const district = parisDistricts.find(district => inside([info.geometry.lng, info.geometry.lat], district.fields.geom.coordinates[0]))
@@ -34,14 +37,14 @@ function getById(req, res, next) {
 
                     let isInRange = (typeof yearBuiltRange[0] === 'number') ?
                         yearBuiltRange[0] < yearBuilt && yearBuiltRange[1] > yearBuilt
-                    : (yearBuiltRange[0] === 'avant') ?
-                        yearBuilt < yearBuiltRange[1]
-                    : (yearBuiltRange[0] === 'apres') ?
-                        yearBuilt > yearBuiltRange[1]
-                    :
-                        false
-                            
-                    return encadrement.fields.id_quartier === district.fields.c_qu 
+                        : (yearBuiltRange[0] === 'avant') ?
+                            yearBuilt < yearBuiltRange[1]
+                            : (yearBuiltRange[0] === 'apres') ?
+                                yearBuilt > yearBuiltRange[1]
+                                :
+                                false
+
+                    return encadrement.fields.id_quartier === district.fields.c_qu
                         && isInRange
                         && encadrement.fields.piece === roomCount
                 })
