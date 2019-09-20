@@ -23,13 +23,15 @@ function getById(req, res, next) {
         const ad = JSON.parse(xmlParser.toJson(body)).detailAnnonce
 
         const address = selogerService.digForAddress(ad)
+        const roomCount = selogerService.digForRoomCount(ad)
+        const yearBuilt = selogerService.digForYearBuilt(ad)
+        const hasFurniture = selogerService.digForHasFurniture(ad)
 
         addressService.getCoordinate(address)
             .then((info) => {
                 log('info address fetched')
+                console.log(info)
                 const district = parisDistricts.find(district => inside([info.geometry.lng, info.geometry.lat], district.fields.geom.coordinates[0]))
-                const yearBuilt = ad.details.detail.find(detail => detail.libelle === "Année de construction").valeur
-                const roomCount = +ad.nbPieces
                 const rent = encadrements.filter((encadrement) => {
                     const yearBuiltRange = encadrement.fields.epoque
                         .split(/[\s-]+/)
