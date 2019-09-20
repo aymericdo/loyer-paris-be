@@ -1,16 +1,22 @@
+const numberString = require('./../helper/number-string.helper.js');
+
 function digForAddress(ad) {
     return ad.adresse
 }
 
 function digForRoomCount(ad) {
-    return +ad.nbPieces
+    const roomFromDetail = ad.details.detail.find(detail => detail.libelle === "Pièces")
+    const roomFromTitle = ad.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match('([0-9]*|un|deux|trois|quatre|cinq|six|sept)? ?((piece))')
+    return ad.nbPieces || (roomFromDetail && roomFromDetail.valeur) || (roomFromTitle || (isNaN(roomFromTitle[1]) ? numberString(roomFromTitle[1]) : roomFromTitle[1]))
 }
 
 function digForYearBuilt(ad) {
-    return ad.details.detail.find(detail => detail.libelle === "Année de construction") ? ad.details.detail.find(detail => detail.libelle === "Année de construction").valeur : 0
+    const yearFromDetail = ad.details.detail.find(detail => detail.libelle === "Année de construction")
+    return yearFromDetail && yearFromDetail.valeur
 }
 
 function digForHasFurniture(ad) {
+    const furnitureFromDescription = ad.descriptif.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match('meuble')
     return false
 }
 

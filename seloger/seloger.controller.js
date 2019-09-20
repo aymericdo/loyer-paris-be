@@ -50,10 +50,10 @@ function getById(req, res, next) {
                         && isInRange
                         && encadrement.fields.piece === roomCount
                 })
-                // res.json(ad)
                 // res.json(district)
+                // res.json(rent)
                 console.log(rent.length)
-                res.json(rent)
+                res.json(ad)
             })
     })
 }
