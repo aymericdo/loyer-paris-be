@@ -55,7 +55,7 @@ function getById(req, res, next) {
                         id: ad.idAnnonce,
                         detectedInfo: {
                             address,
-                            hasFurniture: hasFurniture,
+                            hasFurniture,
                             price: +(+price).toFixed(2),
                             roomCount: +roomCount,
                             surface: +surface,
@@ -63,7 +63,7 @@ function getById(req, res, next) {
                         },
                         computedInfo: {
                             dateRange: rent.fields.epoque,
-                            hasFurniture: rent.fields.meuble_txt,
+                            hasFurniture: !!rent.fields.meuble_txt.match('^meubl'),
                             max: rent.fields.max,
                             maxAuthorized: +(+rent.fields.max * +surface).toFixed(2),
                             min: rent.fields.min,
