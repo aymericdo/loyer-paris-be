@@ -41,7 +41,7 @@ function getById(req, res, next) {
                     const yearRange = yearBuiltService.getYearRange(rangeRents, yearBuilt)
 
                     const rentList = rangeRents.filter((rangeRent) => {
-                        return rangeRent.fields.id_quartier === district.fields.c_qu
+                        return (district ? rangeRent.fields.id_quartier === district.fields.c_qu : true)
                             && (yearRange ? rangeRent.fields.epoque === yearRange : true)
                             && (roomCount ? rangeRent.fields.piece === +roomCount : true)
                             && (hasFurniture !== null ? hasFurniture ? rangeRent.fields.meuble_txt.match('^meubl') : rangeRent.fields.meuble_txt.match('^non meubl') : true)
