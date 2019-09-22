@@ -1,8 +1,8 @@
 const numberString = require('./../helper/number-string.helper.js');
 
 function digForAddress(ad) {
-    const address = ad.adresse || _digForAddressInDescription(ad.descriptif.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
-    const postalCode = ad.cp || _digForPostalCode(ad.descriptif.toLowerCase()) || _digForNeighborhood(ad.descriptif.toLowerCase())
+    const address = ad.adresse || (ad.descriptif && _digForAddressInDescription(ad.descriptif.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")))
+    const postalCode = ad.cp || (ad.descriptif && _digForPostalCode(ad.descriptif.toLowerCase()) || _digForNeighborhood(ad.descriptif.toLowerCase()))
     return address || postalCode ? `${address} ${postalCode}` : null
 }
 
