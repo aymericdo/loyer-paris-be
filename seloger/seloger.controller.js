@@ -37,7 +37,7 @@ function getById(req, res, next) {
             addressService.getCoordinate(address)
                 .then((info) => {
                     log('info address fetched')
-                    const district = addressService.getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)
+                    const district = info && addressService.getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)
                     const yearRange = yearBuiltService.getYearRange(rangeRents, yearBuilt)
 
                     const rentList = rangeRents.filter((rangeRent) => {
