@@ -36,7 +36,7 @@ function digForYearBuilt(ad) {
 
 function digForHasFurniture(ad) {
     const furnitureFromDetail = ad.details.detail.find(detail => detail.libelle === "Meublé")
-    const furnitureFromDescription = ad.descriptif.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match('(?<!(non-|non ))meuble')
+    const furnitureFromDescription = ad.descriptif.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match('(?<!(non-|non ))\bmeuble')
     return !!furnitureFromDetail || (furnitureFromDescription && furnitureFromDescription.length > 1) || null
 }
 
