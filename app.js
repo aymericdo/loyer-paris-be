@@ -9,6 +9,10 @@ app.use(cors());
 
 app.use('/seloger', require('./seloger/seloger.controller'));
 
+app.use('/leboncoin', require('./leboncoin/leboncoin.controller'));
+
+app.use('/loueragile', require('./loueragile/loueragile.controller'));
+
 // opencage api tester
 app.get('/opencage', (req, res) => {
     addressService.getCoordinate(req.query.address)
