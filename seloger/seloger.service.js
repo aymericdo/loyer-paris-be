@@ -1,4 +1,5 @@
 const numberString = require('./../helper/number-string.helper.js');
+const regexString = require('./../helper/regex.helper');
 
 function digForAddress(ad) {
     const address = ad.adresse || (ad.descriptif && _digForAddressInDescription(ad.descriptif.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")))
@@ -7,25 +8,25 @@ function digForAddress(ad) {
 }
 
 function _digForAddressInDescription(description) {
-    const addressRe = new RegExp("([0-9]*)? ?((rue|avenue|passage|boulevard|faubourg|allee|quai|place|jardin) [a-zA-Z'\ ]*)");
+    const addressRe = new RegExp(regexString("address"));
     return description.match(addressRe) && description.match(addressRe)[0];
 }
 
 function _digForPostalCode(description) {
-    const postalCodeRe = new RegExp("\b75[0-9]{3}\b");
+    const postalCodeRe = new RegExp(regexString("postalCode"));
     return description.match(postalCodeRe) && description.match(postalCodeRe)[0];
 }
 
 function _digForNeighborhood(description) {
-    const neighborhoodRe = new RegExp("(?<=paris )[0-9]{1,2}");
+    const neighborhoodRe = new RegExp(regexString("neighborhood"));
     const match = description.match(neighborhoodRe) && description.match(neighborhoodRe)[0];
     return match ? match.length === 1 ? `7500${match}` : `750${match}` : null;
 }
 
 
 function digForRoomCount(ad) {
-    const roomFromDetail = ad.details && ad.details.detail.find(detail => detail.libelle === "Pièces")
-    const roomFromTitle = ad.titre && ad.titre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match('([0-9]*|un|deux|trois|quatre|cinq|six|sept)? ?((piece))')
+    const roomFromDetail = ad.details.detail.find(detail => detail.libelle === "Pièces")
+    const roomFromTitle = ad.titre && ad.titre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match(regexString("roomCount"))
     return ad.nbPieces || (roomFromDetail && roomFromDetail.valeur) || (roomFromTitle || (isNaN(roomFromTitle[1]) ? numberString(roomFromTitle[1]) : roomFromTitle[1]))
 }
 
@@ -35,8 +36,8 @@ function digForYearBuilt(ad) {
 }
 
 function digForHasFurniture(ad) {
-    const furnitureFromDetail = ad.details && ad.details.detail.find(detail => detail.libelle === "Meublé")
-    const furnitureFromDescription = ad.descriptif.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match('(?<!(non-|non ))\bmeuble')
+    const furnitureFromDetail = ad.details.detail.find(detail => detail.libelle === "Meublé")
+    const furnitureFromDescription = ad.descriptif.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match(regexString("furnished"))
     return !!furnitureFromDetail || (furnitureFromDescription && furnitureFromDescription.length > 1) || null
 }
 
