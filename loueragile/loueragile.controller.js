@@ -45,20 +45,24 @@ function getById(req, res, next) {
             log('filter done, sending data')
             res.json({
                 id: ad.idAnnonce,
-                address,
-                yearBuilt: +yearBuilt,
-                price: +price,
-                surface: +surface,
-                hasFurnitureDetected: hasFurniture,
-                roomCountDetected: +roomCount,
-                maxAuthorized: +rent.fields.max * +surface,
+                detectedInfo: {
+                    address,
+                    hasFurniture,
+                    price: +(+price).toFixed(2),
+                    roomCount: +roomCount,
+                    surface: +surface,
+                    yearBuilt: +yearBuilt,
+                },
+                computedInfo: {
+                    dateRange: rent.fields.epoque,
+                    hasFurniture: !!rent.fields.meuble_txt.match('^meubl'),
+                    max: rent.fields.max,
+                    maxAuthorized: +(+rent.fields.max * +surface).toFixed(2),
+                    min: rent.fields.min,
+                    neighborhood: rent.fields.nom_quartier,
+                    roomCount: +rent.fields.piece,
+                },
                 isLegal: +price < +rent.fields.max * +surface,
-                dateRange: rent.fields.epoque,
-                max: rent.fields.max,
-                min: rent.fields.min,
-                hasFurniture: rent.fields.meuble_txt,
-                roomCount: +rent.fields.piece,
-                neighborhood: rent.fields.nom_quartier,
             })
         }
     })
