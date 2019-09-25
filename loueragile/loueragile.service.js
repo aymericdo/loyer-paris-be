@@ -2,9 +2,10 @@ const numberString = require('../helper/number-string.helper.js');
 const regexString = require('./../helper/regex.helper');
 
 function digForCoordinates(ad) {
-    const lat = ad.ad.lat;
-    const long = ad.ad.lng;
-    return {"lng": long, "lat": lat}
+    return ad.location ? {
+        lng: ad.location.lng,
+        lat: ad.location.lat,
+    } : null
 }
 
 function digForAddress(ad) {
