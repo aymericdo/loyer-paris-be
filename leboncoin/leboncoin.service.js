@@ -32,24 +32,24 @@ function _digForNeighborhood(description) {
 
 
 function digForRoomCount(ad) {
-    const roomFromDetail = ad.attributes.find(detail => detail.key === "rooms")
+    const roomFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === "rooms")
     const roomFromTitle = ad.subject && ad.subject.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match(regexString("roomCount"))
     return (roomFromDetail && roomFromDetail.value) || (roomFromTitle || (isNaN(roomFromTitle[1]) ? numberString(roomFromTitle[1]) : roomFromTitle[1]))
 }
 
 function digForYearBuilt(ad) {
-    const yearFromDetail = ad.attributes.find(detail => detail.key === "Année de construction")
+    const yearFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === "Année de construction")
     return yearFromDetail && yearFromDetail.valeur
 }
 
 function digForHasFurniture(ad) {
-    const furnitureFromDetail = ad.attributes.find(detail => detail.key_label === "Meublé / Non meublé")
+    const furnitureFromDetail = ad.attributes && ad.attributes.find(detail => detail.key_label === "Meublé / Non meublé")
     const furnitureFromDescription = ad.body.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match(regexString("furnished"))
     return !!furnitureFromDetail || furnitureFromDescription.length > 1 || null
 }
 
 function digForSurface(ad) {
-    const surfaceFromDetail = ad.attributes.find(detail => detail.key === "square")
+    const surfaceFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === "square")
     return surfaceFromDetail && surfaceFromDetail.value
 }
 

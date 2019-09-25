@@ -17,7 +17,7 @@ function getById(req, res, next) {
     request({
         url: `https://api.leboncoin.fr/finder/classified/${req.query.id}`,
     }, (error, response, body) => {
-        log('leBonCoin fetched')
+        log('leboncoin fetched')
         console.log(body)
         const ad = JSON.parse(body)
 
