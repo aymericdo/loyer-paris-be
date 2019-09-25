@@ -10,7 +10,7 @@ function digForCoordinates(ad) {
 
 function digForAddress(ad) {
     const address = _digForAddressInDescription(ad.body.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
-    const postalCode = ad.location.zipcode || _digForPostalCode(ad.body.toLowerCase()) || _digForNeighborhood(ad.body.toLowerCase())
+    const postalCode = ad.location.zipcode || ad.body && (_digForPostalCode(ad.body.toLowerCase()) || _digForNeighborhood(ad.body.toLowerCase()))
     return address || postalCode ? `${address} ${postalCode}` : null
 }
 
