@@ -67,6 +67,10 @@ function getById(req, res, next) {
                     isLegal: +price < +rent.fields.max * +surface,
                 })
             }
+        } else {
+            res.json({
+                error: 'no data found',
+            })
         }
     })
 }
