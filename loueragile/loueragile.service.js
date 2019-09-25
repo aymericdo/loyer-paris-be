@@ -34,7 +34,7 @@ function _digForNeighborhood(description) {
 function digForRoomCount(ad) {
     const roomFromDetail = ad.ad.room
     const roomFromTitle = ad.ad.title && ad.ad.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").match(regexString("roomCount"))
-    return roomFromDetail || (roomFromTitle || (isNaN(roomFromTitle[1]) ? numberString(roomFromTitle[1]) : roomFromTitle[1]))
+    return roomFromDetail || (roomFromTitle && (isNaN(roomFromTitle[1]) ? numberString(roomFromTitle[1]) : roomFromTitle[1]))
 }
 
 function digForYearBuilt(ad) {
