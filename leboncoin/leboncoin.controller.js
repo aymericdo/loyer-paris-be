@@ -68,9 +68,8 @@ function getById(req, res, next) {
                 })
             }
         } else {
-            res.json({
-                error: 'no data found',
-            })
+            res.status(409)
+            res.render('no body found', { error: ad });
         }
     })
 }
