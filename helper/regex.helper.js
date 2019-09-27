@@ -12,4 +12,4 @@ module.exports = function (value) {
     } else {
         return null
     }
-};
+}

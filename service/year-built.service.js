@@ -22,4 +22,4 @@ function getYearRange(rangeRents, yearBuilt) {
 
 module.exports = {
     getYearRange,
-};
+}

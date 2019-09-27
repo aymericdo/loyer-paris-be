@@ -1,8 +1,8 @@
-const fs = require('fs');
-const opencage = require('opencage-api-client');
-const inside = require('point-in-polygon');
+const fs = require('fs')
+const opencage = require('opencage-api-client')
+const inside = require('point-in-polygon')
 
-const parisDistricts = JSON.parse(fs.readFileSync('quartier_paris.json', 'utf8'));
+const parisDistricts = JSON.parse(fs.readFileSync('quartier_paris.json', 'utf8'))
 
 function getCoordinate(address) {
     return opencage.geocode({ q: address }).then(data => {
@@ -21,7 +21,7 @@ function getCoordinate(address) {
         }
     }).catch(error => {
         console.log('error', error.message)
-    });
+    })
 }
 
 function getDistrictFromCoordinate(lng, lat) {
@@ -31,4 +31,4 @@ function getDistrictFromCoordinate(lng, lat) {
 module.exports = {
     getCoordinate,
     getDistrictFromCoordinate,
-};
+}
