@@ -34,7 +34,7 @@ function _digForNeighborhood(description) {
 
 function digForRoomCount(ad) {
     const roomFromDetail = ad.ad.room
-    const roomFromTitle = cleanup(ad.ad.title).match(regexString('roomCount'))
+    const roomFromTitle = ad.ad.title && cleanup(ad.ad.title).match(regexString('roomCount'))
     return roomFromDetail || (roomFromTitle && (isNaN(roomFromTitle[1]) ? numberString(roomFromTitle[1]) : roomFromTitle[1]))
 }
 
@@ -44,7 +44,7 @@ function digForYearBuilt(ad) {
 
 function digForHasFurniture(ad) {
     const furnitureFromDetail = ad.ad.furnished
-    const furnitureFromDescription = cleanup(ad.ad.description).match(regexString('furnished'))
+    const furnitureFromDescription = ad.ad.description && cleanup(ad.ad.description).match(regexString('furnished'))
     return !!furnitureFromDetail || furnitureFromDescription.length > 1 || null
 }
 
