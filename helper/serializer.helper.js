@@ -23,7 +23,10 @@ module.exports = function ({
     })
 
     // Get the worst case scenario
-    const rent = rentList.reduce((prev, current) => (prev.fields.max > current.fields.max) ? prev : current, [])
+    const rent = rentList.length ?
+        rentList.reduce((prev, current) => (prev.fields.max > current.fields.max) ? prev : current)
+        :
+        null
 
     log('filter done, sending data')
     return {
@@ -36,7 +39,7 @@ module.exports = function ({
             surface: +surface,
             yearBuilt: +yearBuilt,
         },
-        computedInfo: {
+        computedInfo: rent ? {
             dateRange: rent.fields.epoque,
             hasFurniture: !!rent.fields.meuble_txt.match('^meubl'),
             max: rent.fields.max,
@@ -44,7 +47,7 @@ module.exports = function ({
             min: rent.fields.min,
             neighborhood: rent.fields.nom_quartier,
             roomCount: +rent.fields.piece,
-        },
-        isLegal: +price < +rent.fields.max * +surface,
+        } : {},
+        isLegal: rent ? (+price < +rent.fields.max * +surface) : null,
     }
 }
