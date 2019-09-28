@@ -33,7 +33,6 @@ module.exports = function ({
         id,
         detectedInfo: {
             address,
-            district: district.fields.l_qu,
             hasFurniture,
             price: +(+price).toFixed(2),
             roomCount: +roomCount,
