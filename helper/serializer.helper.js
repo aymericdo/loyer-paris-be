@@ -18,7 +18,7 @@ module.exports = function ({
     const rentList = rangeRents.filter((rangeRent) => {
         return (district ? rangeRent.fields.id_quartier === district.fields.c_qu : true)
             && (yearRange ? rangeRent.fields.epoque === yearRange : true)
-            && (roomCount ? rangeRent.fields.piece === +roomCount : true)
+            && (roomCount ? +roomCount < 5 ? rangeRent.fields.piece === +roomCount : rangeRent.fields.piece === 4 : true)
             && (hasFurniture !== null ? hasFurniture ? rangeRent.fields.meuble_txt.match('^meubl') : rangeRent.fields.meuble_txt.match('^non meubl') : true)
     })
 
@@ -33,6 +33,7 @@ module.exports = function ({
         id,
         detectedInfo: {
             address,
+            district: district.fields.l_qu,
             hasFurniture,
             price: +(+price).toFixed(2),
             roomCount: +roomCount,
