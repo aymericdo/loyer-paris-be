@@ -23,7 +23,7 @@ module.exports = function ({
     })
 
     // Get the worst case scenario
-    const rent = rentList.reduce((prev, current) => (prev.fields.max > current.fields.max) ? prev : current)
+    const rent = rentList.reduce((prev, current) => (prev.fields.max > current.fields.max) ? prev : current, [])
 
     log('filter done, sending data')
     return {
