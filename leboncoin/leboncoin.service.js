@@ -46,7 +46,7 @@ function digForYearBuilt(ad) {
 function digForHasFurniture(ad) {
     const furnitureFromDetail = ad.attributes && ad.attributes.find(detail => detail.key_label === 'Meublé / Non meublé')
     const furnitureFromDescription = ad.body && cleanup(ad.body).match(regexString('furnished'))
-    return !!furnitureFromDetail || furnitureFromDescription.length > 1 || null
+    return !!furnitureFromDetail || (furnitureFromDescription && furnitureFromDescription.length > 1) || null
 }
 
 function digForSurface(ad) {
