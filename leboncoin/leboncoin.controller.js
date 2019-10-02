@@ -46,7 +46,7 @@ function getById(req, res, next) {
     }
 
     renewTorSessionPromise.then(() => {
-        request({
+        tr.request({
             url: `https://api.leboncoin.fr/finder/classified/${req.query.id}`,
         }, (error, response, body) => {
             log('leboncoin fetched')
