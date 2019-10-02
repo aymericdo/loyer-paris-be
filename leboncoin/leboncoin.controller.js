@@ -11,9 +11,6 @@ tr.TorControlPort.password = process.env.TOR_PASSWORD
 
 //print current ip
 tr.request('https://api.ipify.org', function (err, res, body) {
-    console.log('coucou')
-    console.log(err)
-    console.log(res.statusCode)
     if (!err && res.statusCode == 200) {
         console.log("Your public (through Tor) IP is: " + body);
     }
@@ -22,6 +19,16 @@ tr.request('https://api.ipify.org', function (err, res, body) {
 // routes
 router.get('/', getById)
 router.post('/data', getByData)
+router.get('/new', () => {
+    //renew to new ip
+    console.log('new ?')
+    tr.renewTorSession(function (err, msg) {
+        console.log(err)
+        if (msg) {
+            printTOR_IP();
+        }
+    });
+})
 
 function getByData(req, res, next) {
     log('getByData')
