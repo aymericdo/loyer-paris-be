@@ -5,6 +5,19 @@ const addressService = require('../service/address.service')
 const leboncoinService = require('./leboncoin.service')
 const log = require('../helper/log.helper')
 const serializer = require('./../helper/serializer.helper')
+const tr = require('tor-request')
+
+tr.TorControlPort.password = process.env.TOR_PASSWORD
+
+//print current ip
+tr.request('https://api.ipify.org', function (err, res, body) {
+    console.log('coucou')
+    console.log(err)
+    console.log(res.statusCode)
+    if (!err && res.statusCode == 200) {
+        console.log("Your public (through Tor) IP is: " + body);
+    }
+});
 
 // routes
 router.get('/', getById)
