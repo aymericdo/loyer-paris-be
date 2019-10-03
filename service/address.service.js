@@ -28,7 +28,13 @@ function getDistrictFromCoordinate(lng, lat) {
     return parisDistricts.find(district => inside([lng, lat], district.fields.geom.coordinates[0]))
 }
 
+function getDistrictFromPostalCode(postalCode) {
+    const code = postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2)
+    return parisDistricts.filter(district => district.fields.c_ar === +code)
+}
+
 module.exports = {
     getCoordinate,
     getDistrictFromCoordinate,
+    getDistrictFromPostalCode,
 }

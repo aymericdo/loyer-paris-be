@@ -3,7 +3,7 @@ const regexString = require('./../helper/regex.helper')
 const cleanup = require('./../helper/string-cleanup.helper')
 
 function digForCoordinates(ad) {
-    return ad.location ? {
+    return ad.location && ad.location.lng ? {
         lng: ad.location.lng,
         lat: ad.location.lat,
     } : null
@@ -12,7 +12,7 @@ function digForCoordinates(ad) {
 function digForAddress(ad) {
     const address = _digForAddressInDescription(cleanup(ad.body))
     const postalCode = ad.location.zipcode || ad.body && (_digForPostalCode(ad.body.toLowerCase()) || _digForNeighborhood(ad.body.toLowerCase()))
-    return address || postalCode ? `${address ? address : ''} ${postalCode ? postalCode : ''}` : null
+    return [address, postalCode]
 }
 
 function _digForAddressInDescription(description) {

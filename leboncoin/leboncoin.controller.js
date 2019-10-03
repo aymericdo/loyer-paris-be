@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const request = require('request')
+const fakeUa = require('fake-useragent')
 const addressService = require('../service/address.service')
 const leboncoinService = require('./leboncoin.service')
 const log = require('../helper/log.helper')
@@ -37,6 +37,7 @@ function getById(req, res, next) {
         renewTorSessionPromise = new Promise((resolve) => {
             tr.renewTorSession((err, msg) => {
                 if (msg) {
+                    console.log(msg)
                     resolve(msg)
                 } else {
                     console.log(err)
@@ -48,8 +49,18 @@ function getById(req, res, next) {
     renewTorSessionPromise.then(() => {
         tr.request({
             url: `https://api.leboncoin.fr/finder/classified/${req.query.id}`,
+            headers: {
+                'api_key': 'ba0c2dad52b3ec',
+                'Content-Type': 'application/json',
+                'Origin': 'https://www.leboncoin.fr',
+                'Referer': `https://www.leboncoin.fr/locations/${req.query.id}.htm/`,
+                'Sec-Fetch-Mode': 'cors',
+                'User-Agent': fakeUa(),
+            },
         }, (error, response, body) => {
             log('leboncoin fetched')
+            console.log(response)
+            console.log(body)
             const ad = JSON.parse(body)
             if (ad.body) {
                 digData(ad, (data) => {
@@ -72,15 +83,19 @@ function getById(req, res, next) {
     requestsCount += 1
 }
 
-function getDistrict(coordinates, address) {
+function getDistrict(coordinates, address, postalCode) {
     return coordinates ?
-        Promise.resolve(addressService.getDistrictFromCoordinate(coordinates.lng, coordinates.lat))
-        :
-        addressService.getCoordinate(address)
-            .then((info) => {
-                log('info address fetched')
-                return info && addressService.getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)
-            })
+        Promise.resolve([addressService.getDistrictFromCoordinate(coordinates.lng, coordinates.lat)])
+        : address ?
+            addressService.getCoordinate(`${address} ${postalCode ? postalCode : ''}`)
+                .then((info) => {
+                    log('info address fetched')
+                    return info && [addressService.getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)]
+                })
+            : postalCode ?
+                Promise.resolve(addressService.getDistrictFromPostalCode(postalCode))
+                :
+                Promise.resolve([])
 }
 
 function digData(ad, callback) {
@@ -90,15 +105,15 @@ function digData(ad, callback) {
     const hasFurniture = leboncoinService.digForHasFurniture(ad)
     const surface = leboncoinService.digForSurface(ad)
     const price = leboncoinService.digForPrice(ad)
-    const address = leboncoinService.digForAddress(ad)
+    const [address, postalCode] = leboncoinService.digForAddress(ad)
 
-    if (coordinates || address) {
-        getDistrict(coordinates, address)
-            .then((district) => {
+    if (coordinates || address || postalCode) {
+        getDistrict(coordinates, address, postalCode)
+            .then((districts) => {
                 callback(serializer({
                     id: ad.list_id,
-                    address,
-                    district,
+                    address: `${address ? address : ''} ${postalCode ? postalCode : ''}`,
+                    districts,
                     hasFurniture,
                     price,
                     roomCount,
