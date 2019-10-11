@@ -11,7 +11,7 @@ const serializer = require('./../helper/serializer.helper')
 router.get('/', getById)
 
 function getById(req, res, next) {
-    log('getById')
+    log(`-> ${req.baseUrl} getById`)
     request({
         url: `https://ws-seloger.svc.groupe-seloger.com/annonceDetail.xml?idAnnonce=${req.query.id}`,
     }, (error, response, body) => {

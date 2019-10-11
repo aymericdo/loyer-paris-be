@@ -21,7 +21,7 @@ function getDistrict(coordinates, address) {
 }
 
 function getById(req, res, next) {
-    log('getById')
+    log(`-> ${req.baseUrl} getById`)
     request({
         url: `https://www.loueragile.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${req.query.id}`,
     }, (error, response, body) => {

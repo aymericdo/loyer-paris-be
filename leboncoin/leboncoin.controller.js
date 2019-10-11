@@ -15,21 +15,8 @@ let requestsCount = 0
 router.get('/', getById)
 router.post('/data', getByData)
 
-function getByData(req, res, next) {
-    log('getByData')
-    digData(req.body, (data) => {
-        if (data) {
-            res.json(data)
-        } else {
-            res.status(409).json({
-                error: 'no address found',
-            })
-        }
-    })
-}
-
 function getById(req, res, next) {
-    log('getById')
+    log(`-> ${req.baseUrl} getById`)
     let renewTorSessionPromise = Promise.resolve({})
 
     if (requestsCount > 10) {
@@ -83,19 +70,17 @@ function getById(req, res, next) {
     requestsCount += 1
 }
 
-function getDistrict(coordinates, address, postalCode) {
-    return coordinates ?
-        Promise.resolve([addressService.getDistrictFromCoordinate(coordinates.lng, coordinates.lat)])
-        : address ?
-            addressService.getCoordinate(`${address} ${postalCode ? postalCode : ''}`)
-                .then((info) => {
-                    log('info address fetched')
-                    return info && [addressService.getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)]
-                })
-            : postalCode ?
-                Promise.resolve(addressService.getDistrictFromPostalCode(postalCode))
-                :
-                Promise.resolve([])
+function getByData(req, res, next) {
+    log(`-> ${req.baseUrl} getByData`)
+    digData(req.body, (data) => {
+        if (data) {
+            res.json(data)
+        } else {
+            res.status(409).json({
+                error: 'no address found',
+            })
+        }
+    })
 }
 
 function digData(ad, callback) {
@@ -124,6 +109,21 @@ function digData(ad, callback) {
     } else {
         return null
     }
+}
+
+function getDistrict(coordinates, address, postalCode) {
+    return coordinates ?
+        Promise.resolve([addressService.getDistrictFromCoordinate(coordinates.lng, coordinates.lat)])
+        : address ?
+            addressService.getCoordinate(`${address} ${postalCode ? postalCode : ''}`)
+                .then((info) => {
+                    log('info address fetched')
+                    return info && [addressService.getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)]
+                })
+            : postalCode ?
+                Promise.resolve(addressService.getDistrictFromPostalCode(postalCode))
+                :
+                Promise.resolve([])
 }
 
 module.exports = router

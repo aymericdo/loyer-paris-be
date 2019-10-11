@@ -44,9 +44,9 @@ function digForYearBuilt(ad) {
 }
 
 function digForHasFurniture(ad) {
-    const furnitureFromDetail = ad.attributes && ad.attributes.find(detail => detail.key_label === 'Meublé / Non meublé' && detail.value_label === 'Meublé')
+    const furnitureFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'furnished' && detail.value === '1')
     const furnitureFromDescription = ad.body && cleanup(ad.body).match(regexString('furnished'))
-    return !!furnitureFromDetail || (furnitureFromDescription && furnitureFromDescription.length > 1) || null
+    return !!furnitureFromDetail || (furnitureFromDescription && furnitureFromDescription.length > 0) || null
 }
 
 function digForSurface(ad) {

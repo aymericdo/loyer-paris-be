@@ -2,17 +2,10 @@ const numberString = require('../helper/number-string.helper.js')
 const regexString = require('./../helper/regex.helper')
 const cleanup = require('./../helper/string-cleanup.helper')
 
-function digForCoordinates(ad) {
-    return ad.location ? {
-        lng: ad.location.lng,
-        lat: ad.location.lat,
-    } : null
-}
-
 function digForAddress(ad) {
-    const address = _digForAddressInDescription(cleanup(ad.ad.description))
-    const postalCode = ad.ad.postal_code || _digForPostalCode(ad.ad.description.toLowerCase()) || _digForNeighborhood(ad.ad.description.toLowerCase())
-    return address || postalCode ? `${address ? address : ''} ${postalCode ? postalCode : ''}` : null
+    const address = _digForAddressInDescription(cleanup(ad.description))
+    const postalCode = ad.location.zipcode || ad.description && (_digForPostalCode(ad.description.toLowerCase()) || _digForNeighborhood(ad.description.toLowerCase()))
+    return [address, postalCode]
 }
 
 function _digForAddressInDescription(description) {
@@ -31,33 +24,33 @@ function _digForNeighborhood(description) {
     return match ? match.length === 1 ? `7500${match}` : `750${match}` : null
 }
 
-
 function digForRoomCount(ad) {
-    const roomFromDetail = ad.ad.room
-    const roomFromTitle = ad.ad.title && cleanup(ad.ad.title).match(regexString('roomCount'))
-    return roomFromDetail || (roomFromTitle && (isNaN(roomFromTitle[1]) ? numberString(roomFromTitle[1]) : roomFromTitle[1]))
+    const roomFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'rooms')
+    const roomFromTitle = ad.title && cleanup(ad.title).match(regexString('roomCount'))
+    return (roomFromDetail && roomFromDetail.value) || (roomFromTitle && (isNaN(roomFromTitle[1]) ? numberString(roomFromTitle[1]) : roomFromTitle[1]))
 }
 
 function digForYearBuilt(ad) {
-    return ad.yearBuilt || null
+    const yearFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'Année de construction')
+    return yearFromDetail && yearFromDetail.valeur
 }
 
 function digForHasFurniture(ad) {
-    const furnitureFromDetail = ad.ad.furnished
-    const furnitureFromDescription = ad.ad.description && cleanup(ad.ad.description).match(regexString('furnished'))
+    const furnitureFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'furnished' && detail.value === '1')
+    const furnitureFromDescription = ad.description && cleanup(ad.description).match(regexString('furnished'))
     return !!furnitureFromDetail || (furnitureFromDescription && furnitureFromDescription.length > 0) || null
 }
 
 function digForSurface(ad) {
-    return ad.ad.area || null
+    const surfaceFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'square')
+    return surfaceFromDetail && surfaceFromDetail.value
 }
 
 function digForPrice(ad) {
-    return ad.ad.rent
+    return ad.price
 }
 
 module.exports = {
-    digForCoordinates,
     digForAddress,
     digForRoomCount,
     digForYearBuilt,
