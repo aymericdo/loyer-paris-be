@@ -6,7 +6,7 @@ const rangeRents = JSON.parse(fs.readFileSync('encadrements.json', 'utf8'))
 module.exports = function ({
     id,
     address,
-    district,
+    postalCode,
     districts,
     hasFurniture,
     price,
@@ -17,8 +17,7 @@ module.exports = function ({
     const yearRange = yearBuiltService.getYearRange(rangeRents, yearBuilt)
 
     const rentList = rangeRents.filter((rangeRent) => {
-        return (district ? rangeRent.fields.id_quartier === district.fields.c_qu : true)
-            && (districts && districts.filter(Boolean).length ? districts.map(district => district.fields.c_qu).includes(rangeRent.fields.id_quartier) : true)
+        return (districts && districts.filter(Boolean).length ? districts.map(district => district.fields.c_qu).includes(rangeRent.fields.id_quartier) : true)
             && (yearRange ? rangeRent.fields.epoque === yearRange : true)
             && (roomCount ? +roomCount < 5 ? rangeRent.fields.piece === +roomCount : rangeRent.fields.piece === 4 : true)
             && (hasFurniture !== null ? hasFurniture ? rangeRent.fields.meuble_txt.match(/^meubl/g) : rangeRent.fields.meuble_txt.match(/^non meubl/g) : true)
@@ -34,7 +33,7 @@ module.exports = function ({
     return {
         id,
         detectedInfo: {
-            address,
+            address: `${address ? address : ''} ${postalCode ? postalCode : ''}`,
             hasFurniture,
             price: +(+price).toFixed(2),
             roomCount: +roomCount,

@@ -4,6 +4,7 @@ const request = require('request')
 const xmlParser = require('xml2json')
 const addressService = require('./../service/address.service')
 const selogerService = require('./seloger.service')
+const digService = require('./../service/dig.service')
 const log = require('./../helper/log.helper')
 const serializer = require('./../helper/serializer.helper')
 
@@ -23,30 +24,41 @@ function getById(req, res, next) {
             ad[key] = Object.entries(ad[key]).length === 0 && ad[key].constructor === Object ? null : ad[key]
         })
 
-        const address = selogerService.digForAddress(ad)
-        const yearBuilt = selogerService.digForYearBuilt(ad)
-        const roomCount = selogerService.digForRoomCount(ad)
-        const hasFurniture = selogerService.digForHasFurniture(ad)
-        const surface = selogerService.digForSurface(ad)
-        const price = selogerService.digForPrice(ad)
+        const cleanAd = selogerService.apiMapping(ad)
 
-        if (address) {
-            addressService.getCoordinate(address)
-                .then((info) => {
-                    log('info address fetched')
-                    const district = info && addressService.getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)
+        const [address, postalCode] = digService.digForAddress(cleanAd)
+        const yearBuilt = digService.digForYearBuilt(cleanAd)
+        const city = digService.digForCity(cleanAd)
+        const roomCount = digService.digForRoomCount(cleanAd)
+        const hasFurniture = digService.digForHasFurniture(cleanAd)
+        const surface = digService.digForSurface(cleanAd)
+        const price = digService.digForPrice(cleanAd)
 
-                    res.json(serializer({
-                        id: ad.idAnnonce,
-                        address,
-                        district,
-                        hasFurniture,
-                        price,
-                        roomCount,
-                        surface,
-                        yearBuilt,
-                    }))
-                })
+        if (address || postalCode) {
+            if (city && !!city.length && city.toLowerCase() !== 'paris') {
+                log(`error -> not in Paris`)
+                res.status(400).json({ msg: 'not in Paris bro', error: 'paris' })
+            } else {
+                addressService.getDistrict(null, address, postalCode)
+                    .then((districts) => {
+                        res.json(serializer({
+                            id: cleanAd.id,
+                            address,
+                            postalCode,
+                            districts,
+                            hasFurniture,
+                            price,
+                            roomCount,
+                            surface,
+                            yearBuilt,
+                        }))
+                    })
+            }
+        } else {
+            log(`error -> no address found`)
+            res.status(403).json({
+                msg: 'no address found', error: 'address',
+            })
         }
     })
 }

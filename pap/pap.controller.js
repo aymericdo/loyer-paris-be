@@ -3,6 +3,7 @@ const router = express.Router()
 const addressService = require('../service/address.service')
 const papService = require('./pap.service')
 const log = require('../helper/log.helper')
+const digService = require('./../service/dig.service')
 const serializer = require('./../helper/serializer.helper')
 
 // routes
@@ -15,55 +16,47 @@ function getById(req, res, next) {
 
 function getByData(req, res, next) {
     log(`-> ${req.baseUrl} getByData`)
-    digData(req.body, (data) => {
-        if (data) {
+    digData(papService.dataMapping(req.body),
+        (data) => {
             res.json(data)
-        } else {
-            res.status(409).json({
-                error: 'no address found',
-            })
-        }
-    })
+        }, (err) => {
+            res.status(err.status).json(err)
+        })
 }
 
-function digData(ad, callback) {
-    const yearBuilt = papService.digForYearBuilt(ad)
-    const roomCount = papService.digForRoomCount(ad)
-    const hasFurniture = papService.digForHasFurniture(ad)
-    const surface = papService.digForSurface(ad)
-    const price = papService.digForPrice(ad)
-    const [address, postalCode] = papService.digForAddress(ad)
+function digData(ad, onSuccess, onError) {
+    const yearBuilt = digService.digForYearBuilt(ad)
+    const roomCount = digService.digForRoomCount(ad)
+    const city = digService.digForCity(ad)
+    const hasFurniture = digService.digForHasFurniture(ad)
+    const surface = digService.digForSurface(ad)
+    const price = digService.digForPrice(ad)
+    const [address, postalCode] = digService.digForAddress(ad)
 
     if (address || postalCode) {
-        getDistrict(address, postalCode)
-            .then((districts) => {
-                callback(serializer({
-                    id: ad.list_id,
-                    address: `${address ? address : ''} ${postalCode ? postalCode : ''}`,
-                    districts,
-                    hasFurniture,
-                    price,
-                    roomCount,
-                    surface,
-                    yearBuilt,
-                }))
-            })
+        if (city && !!city.length && city.toLowerCase() !== 'paris') {
+            log(`error -> not in Paris`)
+            onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
+        } else {
+            addressService.getDistrict(null, address, postalCode)
+                .then((districts) => {
+                    onSuccess(serializer({
+                        id: ad.id,
+                        address,
+                        postalCode,
+                        districts,
+                        hasFurniture,
+                        price,
+                        roomCount,
+                        surface,
+                        yearBuilt,
+                    }))
+                })
+        }
     } else {
-        return null
+        log(`error -> no address found`)
+        onError({ status: 403, msg: 'no address found', error: 'address' })
     }
-}
-
-function getDistrict(address, postalCode) {
-    return address ?
-        addressService.getCoordinate(`${address} ${postalCode ? postalCode : ''}`)
-            .then((info) => {
-                log('info address fetched')
-                return info && [addressService.getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)]
-            })
-        : postalCode ?
-            Promise.resolve(addressService.getDistrictFromPostalCode(postalCode))
-            :
-            Promise.resolve([])
 }
 
 module.exports = router

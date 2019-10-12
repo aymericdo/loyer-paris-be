@@ -1,69 +1,43 @@
-const numberString = require('../helper/number-string.helper.js')
-const regexString = require('./../helper/regex.helper')
-const cleanup = require('./../helper/string-cleanup.helper')
+const cleanup = require('../helper/cleanup.helper')
 
-function digForCoordinates(ad) {
-    return ad.location && ad.location.lng ? {
-        lng: ad.location.lng,
-        lat: ad.location.lat,
-    } : null
-}
-
-function digForAddress(ad) {
-    const address = _digForAddressInDescription(cleanup(ad.body))
-    const postalCode = ad.location.zipcode || ad.body && (_digForPostalCode(ad.body.toLowerCase()) || _digForNeighborhood(ad.body.toLowerCase()))
-    return [address, postalCode]
-}
-
-function _digForAddressInDescription(description) {
-    const addressRe = new RegExp(regexString('address'))
-    return description.match(addressRe) && description.match(addressRe)[0]
-}
-
-function _digForPostalCode(description) {
-    const postalCodeRe = new RegExp(regexString('postalCode'))
-    return description.match(postalCodeRe) && description.match(postalCodeRe)[0]
-}
-
-function _digForNeighborhood(description) {
-    const neighborhoodRe = new RegExp(regexString('neighborhood'))
-    const match = description.match(neighborhoodRe) && description.match(neighborhoodRe)[0]
-    return match ? match.length === 1 ? `7500${match}` : `750${match}` : null
-}
-
-
-function digForRoomCount(ad) {
+function apiMapping(ad) {
     const roomFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'rooms')
-    const roomFromTitle = ad.subject && cleanup(ad.subject).match(regexString('roomCount'))
-    return (roomFromDetail && roomFromDetail.value) || (roomFromTitle && (isNaN(roomFromTitle[1]) ? numberString(roomFromTitle[1]) : roomFromTitle[1]))
-}
-
-function digForYearBuilt(ad) {
-    const yearFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'Année de construction')
-    return yearFromDetail && yearFromDetail.valeur
-}
-
-function digForHasFurniture(ad) {
     const furnitureFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'furnished' && detail.value === '1')
-    const furnitureFromDescription = ad.body && cleanup(ad.body).match(regexString('furnished'))
-    return !!furnitureFromDetail || (furnitureFromDescription && furnitureFromDescription.length > 0) || null
-}
-
-function digForSurface(ad) {
     const surfaceFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'square')
-    return surfaceFromDetail && surfaceFromDetail.value
+    const yearFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'Année de construction')
+
+    return {
+        id: ad.list_id,
+        title: cleanup.string(ad.subject),
+        description: cleanup.string(ad.body),
+        price: cleanup.price(ad.price[0]),
+        rooms: roomFromDetail && roomFromDetail.value,
+        furnished: !!furnitureFromDetail,
+        surface: surfaceFromDetail && cleanup.number(surfaceFromDetail.value),
+        yearBuilt: yearFromDetail && yearFromDetail.value,
+        coord: {
+            lng: ad.location.lng,
+            lat: ad.location.lat,
+        },
+        cityLabel: ad.location.city,
+        postalCode: ad.location.zipcode,
+    }
 }
 
-function digForPrice(ad) {
-    return ad.price
+function dataMapping(ad) {
+    return {
+        id: ad.id,
+        title: cleanup.string(ad.subject),
+        description: cleanup.string(ad.body),
+        price: +cleanup.price(ad.price),
+        rooms: +cleanup.number(ad.rooms),
+        furnished: ad.furnished ? ad.furnished === 'Meublé' ? true : false : null,
+        surface: +cleanup.number(ad.surface),
+        cityLabel: cleanup.string(ad.cityLabel),
+    }
 }
 
 module.exports = {
-    digForCoordinates,
-    digForAddress,
-    digForRoomCount,
-    digForYearBuilt,
-    digForHasFurniture,
-    digForSurface,
-    digForPrice,
+    apiMapping,
+    dataMapping,
 }

@@ -3,6 +3,7 @@ const router = express.Router()
 const fakeUa = require('fake-useragent')
 const addressService = require('../service/address.service')
 const leboncoinService = require('./leboncoin.service')
+const digService = require('./../service/dig.service')
 const log = require('../helper/log.helper')
 const serializer = require('./../helper/serializer.helper')
 const tr = require('tor-request')
@@ -50,17 +51,16 @@ function getById(req, res, next) {
             console.log(body)
             const ad = JSON.parse(body)
             if (ad.body) {
-                digData(ad, (data) => {
-                    if (data) {
+                digData(leboncoinService.dataApiMapping(ad),
+                    (data) => {
                         res.json(data)
-                    } else {
-                        res.status(409).json({
-                            error: 'no address found',
+                    }, (err) => {
+                        res.status(err.status).json({
+                            error: err.error,
                         })
-                    }
-                })
+                    })
             } else {
-                res.status(409).json({
+                res.status(403).json({
                     error: 'no body found',
                 })
             }
@@ -72,58 +72,48 @@ function getById(req, res, next) {
 
 function getByData(req, res, next) {
     log(`-> ${req.baseUrl} getByData`)
-    digData(req.body, (data) => {
-        if (data) {
+    digData(leboncoinService.dataMapping(req.body),
+        (data) => {
             res.json(data)
-        } else {
-            res.status(409).json({
-                error: 'no address found',
-            })
-        }
-    })
+        }, (err) => {
+            res.status(err.status).json(err)
+        })
 }
 
-function digData(ad, callback) {
-    const coordinates = leboncoinService.digForCoordinates(ad)
-    const yearBuilt = leboncoinService.digForYearBuilt(ad)
-    const roomCount = leboncoinService.digForRoomCount(ad)
-    const hasFurniture = leboncoinService.digForHasFurniture(ad)
-    const surface = leboncoinService.digForSurface(ad)
-    const price = leboncoinService.digForPrice(ad)
-    const [address, postalCode] = leboncoinService.digForAddress(ad)
+function digData(ad, onSuccess, onError) {
+    const coordinates = digService.digForCoordinates(ad)
+    const city = digService.digForCity(ad)
+    const yearBuilt = digService.digForYearBuilt(ad)
+    const roomCount = digService.digForRoomCount(ad)
+    const hasFurniture = digService.digForHasFurniture(ad)
+    const surface = digService.digForSurface(ad)
+    const price = digService.digForPrice(ad)
+    const [address, postalCode] = digService.digForAddress(ad)
 
     if (coordinates || address || postalCode) {
-        getDistrict(coordinates, address, postalCode)
-            .then((districts) => {
-                callback(serializer({
-                    id: ad.list_id,
-                    address: `${address ? address : ''} ${postalCode ? postalCode : ''}`,
-                    districts,
-                    hasFurniture,
-                    price,
-                    roomCount,
-                    surface,
-                    yearBuilt,
-                }))
-            })
-    } else {
-        return null
-    }
-}
-
-function getDistrict(coordinates, address, postalCode) {
-    return coordinates ?
-        Promise.resolve([addressService.getDistrictFromCoordinate(coordinates.lng, coordinates.lat)])
-        : address ?
-            addressService.getCoordinate(`${address} ${postalCode ? postalCode : ''}`)
-                .then((info) => {
-                    log('info address fetched')
-                    return info && [addressService.getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)]
+        if (city && !!city.length && city.toLowerCase() !== 'paris') {
+            log(`error -> not in Paris`)
+            onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
+        } else {
+            addressService.getDistrict(coordinates, address, postalCode)
+                .then((districts) => {
+                    onSuccess(serializer({
+                        id: ad.id,
+                        address,
+                        postalCode,
+                        districts,
+                        hasFurniture,
+                        price,
+                        roomCount,
+                        surface,
+                        yearBuilt,
+                    }))
                 })
-            : postalCode ?
-                Promise.resolve(addressService.getDistrictFromPostalCode(postalCode))
-                :
-                Promise.resolve([])
+        }
+    } else {
+        log(`error -> no address found`)
+        onError({ status: 403, msg: 'no address found', error: 'address' })
+    }
 }
 
 module.exports = router

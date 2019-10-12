@@ -1,5 +1,6 @@
 const fs = require('fs')
 const opencage = require('opencage-api-client')
+const log = require('./../helper/log.helper')
 const inside = require('point-in-polygon')
 
 const parisDistricts = JSON.parse(fs.readFileSync('quartier_paris.json', 'utf8'))
@@ -24,17 +25,31 @@ function getCoordinate(address) {
     })
 }
 
-function getDistrictFromCoordinate(lng, lat) {
+function getDistrict(coordinates, address, postalCode) {
+    return coordinates && coordinates.lng && coordinates.lat ?
+        Promise.resolve([_getDistrictFromCoordinate(coordinates.lng, coordinates.lat)])
+        : address ?
+            getCoordinate(`${address} ${postalCode ? postalCode : ''}`)
+                .then((info) => {
+                    log('info address fetched')
+                    return info && [_getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)]
+                })
+            : postalCode ?
+                Promise.resolve(_getDistrictFromPostalCode(postalCode))
+                :
+                Promise.resolve([])
+}
+
+function _getDistrictFromCoordinate(lng, lat) {
     return parisDistricts.find(district => inside([lng, lat], district.fields.geom.coordinates[0]))
 }
 
-function getDistrictFromPostalCode(postalCode) {
+function _getDistrictFromPostalCode(postalCode) {
     const code = postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2)
     return parisDistricts.filter(district => district.fields.c_ar === +code)
 }
 
 module.exports = {
     getCoordinate,
-    getDistrictFromCoordinate,
-    getDistrictFromPostalCode,
+    getDistrict,
 }

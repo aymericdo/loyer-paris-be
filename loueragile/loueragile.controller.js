@@ -3,22 +3,12 @@ const router = express.Router()
 const request = require('request')
 const addressService = require('../service/address.service')
 const loueragileService = require('./loueragile.service')
+const digService = require('./../service/dig.service')
 const log = require('../helper/log.helper')
 const serializer = require('./../helper/serializer.helper')
 
 // routes
 router.get('/', getById)
-
-function getDistrict(coordinates, address) {
-    return coordinates ?
-        Promise.resolve(addressService.getDistrictFromCoordinate(coordinates.lng, coordinates.lat))
-        :
-        addressService.getCoordinate(address)
-            .then((info) => {
-                log('info address fetched')
-                return info && addressService.getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)
-            })
-}
 
 function getById(req, res, next) {
     log(`-> ${req.baseUrl} getById`)
@@ -26,33 +16,41 @@ function getById(req, res, next) {
         url: `https://www.loueragile.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${req.query.id}`,
     }, (error, response, body) => {
         log('loueragile fetched')
-        const ad = JSON.parse(body)
+        const ad = loueragileService.apiMapping(JSON.parse(body))
 
-        const coordinates = loueragileService.digForCoordinates(ad)
-        const yearBuilt = loueragileService.digForYearBuilt(ad)
-        const roomCount = loueragileService.digForRoomCount(ad)
-        const hasFurniture = loueragileService.digForHasFurniture(ad)
-        const surface = loueragileService.digForSurface(ad)
-        const price = loueragileService.digForPrice(ad)
-        const address = loueragileService.digForAddress(ad)
+        const coordinates = digService.digForCoordinates(ad)
+        const yearBuilt = digService.digForYearBuilt(ad)
+        const city = digService.digForCity(ad)
+        const roomCount = digService.digForRoomCount(ad)
+        const hasFurniture = digService.digForHasFurniture(ad)
+        const surface = digService.digForSurface(ad)
+        const price = digService.digForPrice(ad)
+        const [address, postalCode] = digService.digForAddress(ad)
 
-        if (coordinates || address) {
-            getDistrict(coordinates, address)
-                .then((district) => {
-                    res.json(serializer({
-                        id: ad.ad.id,
-                        address,
-                        district,
-                        hasFurniture,
-                        price,
-                        roomCount,
-                        surface,
-                        yearBuilt,
-                    }))
-                })
+        if (coordinates || address || postalCode) {
+            if (city && !!city.length && city.toLowerCase() !== 'paris') {
+                log(`error -> not in Paris`)
+                res.status(400).json({ msg: 'not in Paris bro', error: 'paris' })
+            } else {
+                addressService.getDistrict(coordinates, address, postalCode)
+                    .then((districts) => {
+                        res.json(serializer({
+                            id: ad.id,
+                            address,
+                            postalCode,
+                            districts,
+                            hasFurniture,
+                            price,
+                            roomCount,
+                            surface,
+                            yearBuilt,
+                        }))
+                    })
+            }
         } else {
-            res.status(409).json({
-                error: 'no address found',
+            log(`error -> no address found`)
+            res.status(403).json({
+                msg: 'no address found', error: 'address',
             })
         }
     })
