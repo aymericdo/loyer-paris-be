@@ -10,7 +10,7 @@ const digit = {
     'neuf': 9,
 }
 
-module.exports = function (value) {
+module.exports = (value) => {
     if (value) {
         if (isNaN(value)) {
             if (Object.keys(digit).includes(value)) {

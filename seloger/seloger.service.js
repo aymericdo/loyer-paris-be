@@ -4,9 +4,9 @@ function apiMapping(ad) {
     const roomFromDetail = ad.details && ad.details.detail.find(detail => detail.libelle === 'Pièces')
     const surfaceFromDetail = ad.details && ad.details.detail.find(detail => detail.libelle === 'Surface')
     const yearFromDetail = ad.details && ad.details.detail.find(detail => detail.libelle === 'Année de construction')
-   
+
     return {
-        id: ad.id,
+        id: ad.idAnnonce,
         title: cleanup.string(ad.titre),
         description: cleanup.string(ad.descriptif),
         address: ad.adresse,

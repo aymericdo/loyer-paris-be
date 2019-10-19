@@ -1,4 +1,4 @@
-const stringToNumber = require('../helper/string-to-number.helper.js')
+const stringToNumber = require('../helper/string-to-number.helper')
 const regexString = require('./../helper/regex.helper')
 
 function digForCoordinates(ad) {

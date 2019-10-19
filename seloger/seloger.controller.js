@@ -2,17 +2,24 @@ const express = require('express')
 const router = express.Router()
 const request = require('request')
 const xmlParser = require('xml2json')
-const addressService = require('./../service/address.service')
 const selogerService = require('./seloger.service')
 const digService = require('./../service/dig.service')
 const log = require('./../helper/log.helper')
-const serializer = require('./../helper/serializer.helper')
+const cleanup = require('../helper/cleanup.helper')
+const serializer = require('./../service/serializer.service')
+const rentFilter = require('./../service/rent-filter.service')
+const saverService = require('./../service/saver.service')
 
 // routes
 router.get('/', getById)
 
 function getById(req, res, next) {
-    log(`-> ${req.baseUrl} getById`)
+    log(`-> ${req.baseUrl} getById`, 'blue')
+    if (!cleanup.number(req.query.id)) {
+        res.status(403).json({
+            msg: 'no address found', error: 'address',
+        })
+    }
     request({
         url: `https://ws-seloger.svc.groupe-seloger.com/annonceDetail.xml?idAnnonce=${req.query.id}`,
     }, (error, response, body) => {
@@ -36,26 +43,56 @@ function getById(req, res, next) {
 
         if (address || postalCode) {
             if (city && !!city.length && city.toLowerCase() !== 'paris') {
-                log(`error -> not in Paris`)
+                log('error -> not in Paris')
                 res.status(400).json({ msg: 'not in Paris bro', error: 'paris' })
             } else {
-                addressService.getDistrict(null, address, postalCode)
-                    .then((districts) => {
-                        res.json(serializer({
+                rentFilter({
+                    address,
+                    hasFurniture,
+                    postalCode,
+                    roomCount,
+                    yearBuilt,
+                }).then(({ match, coord }) => {
+                    if (match) {
+                        const serializedData = serializer({
                             id: cleanAd.id,
                             address,
                             postalCode,
-                            districts,
                             hasFurniture,
                             price,
                             roomCount,
                             surface,
                             yearBuilt,
-                        }))
-                    })
+                        }, match)
+
+                        saverService.rent({
+                            id: serializedData.id,
+                            website: 'seloger',
+                            address,
+                            postalCode,
+                            longitude: coord && coord.lng,
+                            latitude: coord && coord.lat,
+                            hasFurniture,
+                            roomCount,
+                            yearBuilt,
+                            price,
+                            surface,
+                            maxPrice: serializedData.computedInfo.maxAuthorized,
+                            isLegal: serializedData.isLegal,
+                            // renter,
+                        })
+
+                        res.json(serializedData)
+                    } else {
+                        log('error -> no match found')
+                        res.status(403).json({
+                            msg: 'no match found', error: 'address',
+                        })
+                    }
+                })
             }
         } else {
-            log(`error -> no address found`)
+            log('error -> no address found')
             res.status(403).json({
                 msg: 'no address found', error: 'address',
             })

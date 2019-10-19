@@ -1,17 +1,24 @@
 const express = require('express')
 const router = express.Router()
 const request = require('request')
-const addressService = require('../service/address.service')
 const loueragileService = require('./loueragile.service')
-const digService = require('./../service/dig.service')
 const log = require('../helper/log.helper')
-const serializer = require('./../helper/serializer.helper')
+const cleanup = require('../helper/cleanup.helper')
+const digService = require('./../service/dig.service')
+const serializer = require('./../service/serializer.service')
+const rentFilter = require('./../service/rent-filter.service')
+const saverService = require('./../service/saver.service')
 
 // routes
 router.get('/', getById)
 
 function getById(req, res, next) {
-    log(`-> ${req.baseUrl} getById`)
+    log(`-> ${req.baseUrl} getById`, 'blue')
+    if (!cleanup.number(req.query.id)) {
+        res.status(403).json({
+            msg: 'no address found', error: 'address',
+        })
+    }
     request({
         url: `https://www.loueragile.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${req.query.id}`,
     }, (error, response, body) => {
@@ -29,26 +36,57 @@ function getById(req, res, next) {
 
         if (coordinates || address || postalCode) {
             if (city && !!city.length && city.toLowerCase() !== 'paris') {
-                log(`error -> not in Paris`)
+                log('error -> not in Paris')
                 res.status(400).json({ msg: 'not in Paris bro', error: 'paris' })
             } else {
-                addressService.getDistrict(coordinates, address, postalCode)
-                    .then((districts) => {
-                        res.json(serializer({
+                rentFilter({
+                    address,
+                    coordinates,
+                    hasFurniture,
+                    postalCode,
+                    roomCount,
+                    yearBuilt,
+                }).then(({ match, coord }) => {
+                    if (match) {
+                        const serializedData = serializer({
                             id: ad.id,
                             address,
                             postalCode,
-                            districts,
                             hasFurniture,
                             price,
                             roomCount,
                             surface,
                             yearBuilt,
-                        }))
-                    })
+                        }, match)
+
+                        saverService.rent({
+                            id: serializedData.id,
+                            website: 'loueragile',
+                            address,
+                            postalCode,
+                            longitude: coordinates && coordinates.lng || coord && coord.lng,
+                            latitude: coordinates && coordinates.lat || coord && coord.lat,
+                            hasFurniture,
+                            roomCount,
+                            yearBuilt,
+                            price,
+                            surface,
+                            maxPrice: serializedData.computedInfo.maxAuthorized,
+                            isLegal: serializedData.isLegal,
+                            // renter,
+                        })
+
+                        res.json(serializedData)
+                    } else {
+                        log('error -> no match found')
+                        res.status(403).json({
+                            msg: 'no match found', error: 'address',
+                        })
+                    }
+                })
             }
         } else {
-            log(`error -> no address found`)
+            log('error -> no address found')
             res.status(403).json({
                 msg: 'no address found', error: 'address',
             })

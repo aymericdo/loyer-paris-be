@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const fakeUa = require('fake-useragent')
-const addressService = require('../service/address.service')
 const leboncoinService = require('./leboncoin.service')
 const digService = require('./../service/dig.service')
 const log = require('../helper/log.helper')
-const serializer = require('./../helper/serializer.helper')
+const serializer = require('./../service/serializer.service')
+const rentFilter = require('./../service/rent-filter.service')
+const saverService = require('./../service/saver.service')
 const tr = require('tor-request')
 
 tr.TorControlPort.password = process.env.TOR_PASSWORD
@@ -17,7 +18,7 @@ router.get('/', getById)
 router.post('/data', getByData)
 
 function getById(req, res, next) {
-    log(`-> ${req.baseUrl} getById`)
+    log(`-> ${req.baseUrl} getById`, 'blue')
     let renewTorSessionPromise = Promise.resolve({})
 
     if (requestsCount > 10) {
@@ -51,7 +52,7 @@ function getById(req, res, next) {
             console.log(body)
             const ad = JSON.parse(body)
             if (ad.body) {
-                digData(leboncoinService.dataApiMapping(ad),
+                digData(leboncoinService.apiMapping(ad),
                     (data) => {
                         res.json(data)
                     }, (err) => {
@@ -71,7 +72,7 @@ function getById(req, res, next) {
 }
 
 function getByData(req, res, next) {
-    log(`-> ${req.baseUrl} getByData`)
+    log(`-> ${req.baseUrl} getByData`, 'blue')
     digData(leboncoinService.dataMapping(req.body),
         (data) => {
             res.json(data)
@@ -92,26 +93,57 @@ function digData(ad, onSuccess, onError) {
 
     if (coordinates || address || postalCode) {
         if (city && !!city.length && city.toLowerCase() !== 'paris') {
-            log(`error -> not in Paris`)
+            log('error -> not in Paris')
             onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
         } else {
-            addressService.getDistrict(coordinates, address, postalCode)
-                .then((districts) => {
-                    onSuccess(serializer({
+            rentFilter({
+                address,
+                coordinates,
+                hasFurniture,
+                postalCode,
+                roomCount,
+                yearBuilt,
+            }).then(({ match, coord }) => {
+                if (match) {
+                    const serializedData = serializer({
                         id: ad.id,
                         address,
                         postalCode,
-                        districts,
                         hasFurniture,
                         price,
                         roomCount,
                         surface,
                         yearBuilt,
-                    }))
-                })
+                    }, match)
+
+                    saverService.rent({
+                        id: serializedData.id,
+                        website: 'leboncoin',
+                        address,
+                        postalCode,
+                        longitude: coordinates && coordinates.lng || coord && coord.lng,
+                        latitude: coordinates && coordinates.lat || coord && coord.lat,
+                        hasFurniture,
+                        roomCount,
+                        yearBuilt,
+                        price,
+                        surface,
+                        maxPrice: serializedData.computedInfo.maxAuthorized,
+                        isLegal: serializedData.isLegal,
+                        // renter,
+                    })
+
+                    onSuccess(serializedData)
+                } else {
+                    log('error -> no match found')
+                    res.status(403).json({
+                        msg: 'no match found', error: 'address',
+                    })
+                }
+            })
         }
     } else {
-        log(`error -> no address found`)
+        log('error -> no address found')
         onError({ status: 403, msg: 'no address found', error: 'address' })
     }
 }

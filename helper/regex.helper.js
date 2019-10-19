@@ -6,7 +6,7 @@ const regex = {
     furnished: /(?<!(non-|non ))\bmeuble/g
 }
 
-module.exports = function (value) {
+module.exports = (value) => {
     if (Object.keys(regex).includes(value)) {
         return regex[value]
     } else {
