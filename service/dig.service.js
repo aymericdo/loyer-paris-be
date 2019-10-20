@@ -1,5 +1,5 @@
-const stringToNumber = require('../helper/string-to-number.helper')
-const regexString = require('./../helper/regex.helper')
+const stringToNumber = require('helper/string-to-number.helper')
+const regexString = require('helper/regex.helper')
 
 function digForCoordinates(ad) {
     return ad.coord ? {
@@ -58,13 +58,18 @@ function digForPrice(ad) {
     return ad.price
 }
 
+function digForRenter(ad) {
+    return ad.renter
+}
+
 module.exports = {
-    digForCoordinates,
-    digForCity,
     digForAddress,
-    digForRoomCount,
-    digForYearBuilt,
+    digForCity,
+    digForCoordinates,
     digForHasFurniture,
-    digForSurface,
     digForPrice,
+    digForRenter,
+    digForRoomCount,
+    digForSurface,
+    digForYearBuilt,
 }

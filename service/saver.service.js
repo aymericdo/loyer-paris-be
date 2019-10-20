@@ -1,6 +1,6 @@
-const db = require('../db')
+const db = require('db')
 const Rent = db.Rent
-const log = require('../helper/log.helper')
+const log = require('helper/log.helper')
 
 function rent({
     id,

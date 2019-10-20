@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const logicimmoService = require('./logicimmo.service')
-const digService = require('service/dig.service')
+const orpiService = require('./orpi.service')
 const log = require('helper/log.helper')
+const digService = require('service/dig.service')
 const serializer = require('service/serializer.service')
 const rentFilter = require('service/rent-filter.service')
 const saverService = require('service/saver.service')
@@ -12,7 +12,7 @@ router.post('/data', getByData)
 
 function getByData(req, res, next) {
     log(`-> ${req.baseUrl} getByData`, 'blue')
-    digData(logicimmoService.dataMapping(req.body),
+    digData(orpiService.dataMapping(req.body),
         (data) => {
             res.json(data)
         }, (err) => {
@@ -27,16 +27,18 @@ function digData(ad, onSuccess, onError) {
     const hasFurniture = digService.digForHasFurniture(ad)
     const surface = digService.digForSurface(ad)
     const price = digService.digForPrice(ad)
+    const coordinates = digService.digForCoordinates(ad)
     const [address, postalCode] = digService.digForAddress(ad)
     const renter = digService.digForRenter(ad)
 
-    if (address || postalCode) {
+    if (coordinates || address || postalCode) {
         if (city && !!city.length && city.toLowerCase() !== 'paris') {
             log('error -> not in Paris')
             onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
         } else {
             rentFilter({
                 address,
+                coordinates,
                 hasFurniture,
                 postalCode,
                 roomCount,
@@ -51,15 +53,15 @@ function digData(ad, onSuccess, onError) {
                         address,
                         hasFurniture,
                         isLegal,
-                        latitude: coord && coord.lat,
-                        longitude: coord && coord.lng,
+                        latitude: coordinates && coordinates.lat || coord && coord.lat,
+                        longitude: coordinates && coordinates.lng || coord && coord.lng,
                         maxPrice: maxAuthorized,
                         postalCode,
                         price,
                         renter,
                         roomCount,
                         surface,
-                        website: 'logicimmo',
+                        website: 'orpi',
                         yearBuilt,
                     })
 

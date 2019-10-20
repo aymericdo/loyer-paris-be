@@ -1,4 +1,4 @@
-const cleanup = require('../helper/cleanup.helper')
+const cleanup = require('helper/cleanup.helper')
 
 function apiMapping(ad) {
     const roomFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'rooms')
@@ -27,13 +27,14 @@ function apiMapping(ad) {
 function dataMapping(ad) {
     return {
         id: ad.id,
-        title: cleanup.string(ad.subject),
-        description: cleanup.string(ad.body),
-        price: +cleanup.price(ad.price),
-        rooms: +cleanup.number(ad.rooms),
-        furnished: ad.furnished ? ad.furnished === 'Meublé' ? true : false : null,
-        surface: +cleanup.number(ad.surface),
         cityLabel: cleanup.string(ad.cityLabel),
+        description: cleanup.string(ad.body),
+        furnished: ad.furnished ? ad.furnished === 'Meublé' ? true : false : null,
+        price: +cleanup.price(ad.price),
+        renter: cleanup.string(ad.renter),
+        rooms: +cleanup.number(ad.rooms),
+        surface: +cleanup.number(ad.surface),
+        title: cleanup.string(ad.subject),
     }
 }
 

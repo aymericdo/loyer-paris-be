@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const papService = require('./pap.service')
-const log = require('../helper/log.helper')
-const digService = require('./../service/dig.service')
-const serializer = require('./../service/serializer.service')
-const rentFilter = require('./../service/rent-filter.service')
-const saverService = require('./../service/saver.service')
+const log = require('helper/log.helper')
+const digService = require('service/dig.service')
+const serializer = require('service/serializer.service')
+const rentFilter = require('service/rent-filter.service')
+const saverService = require('service/saver.service')
 
 // routes
 router.post('/data', getByData)
@@ -28,6 +28,7 @@ function digData(ad, onSuccess, onError) {
     const surface = digService.digForSurface(ad)
     const price = digService.digForPrice(ad)
     const [address, postalCode] = digService.digForAddress(ad)
+    const renter = digService.digForRenter(ad)
 
     if (address || postalCode) {
         if (city && !!city.length && city.toLowerCase() !== 'paris') {
@@ -42,35 +43,37 @@ function digData(ad, onSuccess, onError) {
                 yearBuilt,
             }).then(({ match, coord }) => {
                 if (match) {
-                    const serializedData = serializer({
-                        id: ad.id,
-                        address,
-                        postalCode,
-                        hasFurniture,
-                        price,
-                        roomCount,
-                        surface,
-                        yearBuilt,
-                    }, match)
+                    const maxAuthorized = +match.fields.max * +surface
+                    const isLegal = +price <= maxAuthorized
 
                     saverService.rent({
-                        id: serializedData.id,
-                        website: 'pap',
+                        id: ad.id,
                         address,
-                        postalCode,
-                        longitude: coord && coord.lng,
-                        latitude: coord && coord.lat,
                         hasFurniture,
-                        roomCount,
-                        yearBuilt,
+                        isLegal,
+                        latitude: coord && coord.lat,
+                        longitude: coord && coord.lng,
+                        maxPrice: maxAuthorized,
+                        postalCode,
                         price,
+                        renter,
+                        roomCount,
                         surface,
-                        maxPrice: serializedData.computedInfo.maxAuthorized,
-                        isLegal: serializedData.isLegal,
-                        // renter,
+                        website: 'pap',
+                        yearBuilt,
                     })
 
-                    onSuccess(serializedData)
+                    onSuccess(serializer({
+                        address,
+                        hasFurniture,
+                        isLegal,
+                        maxAuthorized,
+                        postalCode,
+                        price,
+                        roomCount,
+                        surface,
+                        yearBuilt,
+                    }, match))
                 } else {
                     log('error -> no match found')
                     res.status(403).json({

@@ -1,6 +1,6 @@
 const fs = require('fs')
 const opencage = require('opencage-api-client')
-const log = require('./../helper/log.helper')
+const log = require('helper/log.helper')
 const inside = require('point-in-polygon')
 
 const parisDistricts = JSON.parse(fs.readFileSync('json-data/quartier_paris.json', 'utf8'))

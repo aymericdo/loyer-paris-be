@@ -1,8 +1,8 @@
 const fs = require('fs')
-const yearBuiltService = require('./../service/year-built.service')
-const log = require('./../helper/log.helper')
+const yearBuiltService = require('service/year-built.service')
+const log = require('helper/log.helper')
 const rangeRents = JSON.parse(fs.readFileSync('json-data/encadrements.json', 'utf8'))
-const addressService = require('./../service/address.service')
+const addressService = require('service/address.service')
 
 module.exports = ({
     address,

@@ -1,4 +1,4 @@
-const cleanup = require('../helper/cleanup.helper')
+const cleanup = require('helper/cleanup.helper')
 
 function dataMapping(ad) {
     return {
@@ -6,6 +6,7 @@ function dataMapping(ad) {
         title: cleanup.string(ad.title),
         description: cleanup.string(ad.description),
         price: +cleanup.price(ad.price),
+        renter: cleanup.string(ad.renter),
         rooms: +cleanup.number(ad.rooms),
         furnished: ad.furnished,
         surface: +cleanup.number(ad.surface),

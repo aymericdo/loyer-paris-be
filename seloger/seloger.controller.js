@@ -3,12 +3,12 @@ const router = express.Router()
 const request = require('request')
 const xmlParser = require('xml2json')
 const selogerService = require('./seloger.service')
-const digService = require('./../service/dig.service')
-const log = require('./../helper/log.helper')
-const cleanup = require('../helper/cleanup.helper')
-const serializer = require('./../service/serializer.service')
-const rentFilter = require('./../service/rent-filter.service')
-const saverService = require('./../service/saver.service')
+const digService = require('service/dig.service')
+const log = require('helper/log.helper')
+const cleanup = require('helper/cleanup.helper')
+const serializer = require('service/serializer.service')
+const rentFilter = require('service/rent-filter.service')
+const saverService = require('service/saver.service')
 
 // routes
 router.get('/', getById)
@@ -40,6 +40,7 @@ function getById(req, res, next) {
         const hasFurniture = digService.digForHasFurniture(cleanAd)
         const surface = digService.digForSurface(cleanAd)
         const price = digService.digForPrice(cleanAd)
+        const renter = digService.digForRenter(cleanAd)
 
         if (address || postalCode) {
             if (city && !!city.length && city.toLowerCase() !== 'paris') {
@@ -54,35 +55,37 @@ function getById(req, res, next) {
                     yearBuilt,
                 }).then(({ match, coord }) => {
                     if (match) {
-                        const serializedData = serializer({
-                            id: cleanAd.id,
-                            address,
-                            postalCode,
-                            hasFurniture,
-                            price,
-                            roomCount,
-                            surface,
-                            yearBuilt,
-                        }, match)
+                        const maxAuthorized = +match.fields.max * +surface
+                        const isLegal = +price <= maxAuthorized
 
                         saverService.rent({
-                            id: serializedData.id,
-                            website: 'seloger',
+                            id: cleanAd.id,
                             address,
-                            postalCode,
-                            longitude: coord && coord.lng,
-                            latitude: coord && coord.lat,
                             hasFurniture,
-                            roomCount,
-                            yearBuilt,
+                            isLegal,
+                            latitude: coord && coord.lat,
+                            longitude: coord && coord.lng,
+                            maxPrice: maxAuthorized,
+                            postalCode,
                             price,
+                            renter,
+                            roomCount,
                             surface,
-                            maxPrice: serializedData.computedInfo.maxAuthorized,
-                            isLegal: serializedData.isLegal,
-                            // renter,
+                            website: 'seloger',
+                            yearBuilt,
                         })
 
-                        res.json(serializedData)
+                        res.json(serializer({
+                            address,
+                            hasFurniture,
+                            isLegal,
+                            maxAuthorized,
+                            postalCode,
+                            price,
+                            roomCount,
+                            surface,
+                            yearBuilt,
+                        }, match))
                     } else {
                         log('error -> no match found')
                         res.status(403).json({

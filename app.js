@@ -1,7 +1,8 @@
+require('rootpath')()
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const addressService = require('./service/address.service')
+const addressService = require('service/address.service')
 
 const port = process.env.PORT || 3000
 
@@ -16,13 +17,14 @@ app.use('/loueragile', require('./loueragile/loueragile.controller'))
 app.use('/pap', require('./pap/pap.controller'))
 app.use('/logic-immo', require('./logicimmo/logicimmo.controller'))
 app.use('/lefigaro', require('./lefigaro/lefigaro.controller'))
+app.use('/orpi', require('./orpi/orpi.controller'))
 
 // opencage api tester
-app.get('/opencage', (req, res) => {
-    addressService.getCoordinate(req.query.address)
-        .then((info) => {
-            res.json(info)
-        })
-})
+// app.get('/opencage', (req, res) => {
+//     addressService.getCoordinate(req.query.address)
+//         .then((info) => {
+//             res.json(info)
+//         })
+// })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

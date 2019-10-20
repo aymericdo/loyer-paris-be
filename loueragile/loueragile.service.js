@@ -1,21 +1,22 @@
-const cleanup = require('../helper/cleanup.helper')
+const cleanup = require('helper/cleanup.helper')
 
 function apiMapping(ad) {
     return {
         id: ad.ad.id,
-        title: cleanup.string(ad.ad.title),
-        description: cleanup.string(ad.ad.description),
-        price: ad.ad.rent,
-        rooms: ad.ad.room,
-        furnished: ad.ad.furnished,
-        surface: ad.ad.area,
-        yearBuilt: ad.yearBuilt,
-        postalCode: ad.ad.postal_code,
+        cityLabel: ad.ad.city,
         coord: {
             lng: ad.ad.lng,
             lat: ad.ad.lat,
         },
-        cityLabel: ad.ad.city,
+        description: cleanup.string(ad.ad.description),
+        furnished: ad.ad.furnished,
+        postalCode: ad.ad.postal_code,
+        price: ad.ad.rent,
+        renter: ad.ad.owner_type === 'Agence' && cleanup.string(ad.ad.source),
+        rooms: ad.ad.room,
+        surface: ad.ad.area,
+        title: cleanup.string(ad.ad.title),
+        yearBuilt: ad.yearBuilt,
     }
 }
 
