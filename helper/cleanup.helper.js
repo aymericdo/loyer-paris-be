@@ -1,5 +1,5 @@
 function string(string) {
-    return typeof string === 'string' && string && string.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    return typeof string === 'string' && string && string.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
 }
 
 function price(price) {

@@ -15,7 +15,7 @@ module.exports = ({
 
     return {
         detectedInfo: {
-            address: { order: 0, value: `${address ? address : ''} ${postalCode ? postalCode : ''}` },
+            address: { order: 0, value: `${address ? address : ''} ${postalCode ? postalCode : ''}`.trim() },
             hasFurniture: { order: 1, value: hasFurniture },
             roomCount: { order: 2, value: +roomCount },
             surface: { order: 3, value: +surface },
