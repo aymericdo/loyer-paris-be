@@ -1,1 +1,1 @@
-web: ./tor/bin/run_tor node app.js
+web: node app.js
