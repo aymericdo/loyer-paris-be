@@ -13,7 +13,7 @@ function digForCity(ad) {
 }
 
 function digForAddress(ad) {
-    const address = ad.adresse || ad.description && _digForAddressInDescription(ad.description)
+    const address = ad.address || ad.description && _digForAddressInDescription(ad.description)
     const postalCode = ad.postalCode || ad.cityLabel && (_digForPostalCode(ad.cityLabel) || _digForNeighborhood(ad.cityLabel)) || ad.description && (_digForPostalCode(ad.description) || _digForNeighborhood(ad.description))
     return [address, postalCode]
 }
