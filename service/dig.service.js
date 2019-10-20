@@ -20,18 +20,18 @@ function digForAddress(ad) {
 
 function _digForAddressInDescription(description) {
     const addressRe = new RegExp(regexString('address'))
-    return description.match(addressRe) && description.match(addressRe)[0]
+    return description.match(addressRe) && description.match(addressRe)[0].trim()
 }
 
 function _digForPostalCode(text) {
     const postalCodeRe = new RegExp(regexString('postalCode'))
-    return text.match(postalCodeRe) && text.match(postalCodeRe)[0]
+    return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
 }
 
 function _digForNeighborhood(text) {
     const neighborhoodRe = new RegExp(regexString('neighborhood'))
     const match = text.match(neighborhoodRe) && text.match(neighborhoodRe)[0]
-    return match ? match.length === 1 ? `7500${match}` : `750${match}` : null
+    return match ? match.length === 1 ? `7500${match.trim()}` : `750${match.trim()}` : null
 }
 
 function digForRoomCount(ad) {

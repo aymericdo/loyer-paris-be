@@ -6,7 +6,7 @@ function dataMapping(ad) {
         title: cleanup.string(ad.title),
         description: cleanup.string(ad.description),
         price: +cleanup.price(ad.price),
-        renter: cleanup.string(ad.renter),
+        renter: ad.renter && cleanup.string(ad.renter),
         rooms: +cleanup.number(ad.rooms),
         furnished: ad.furnished,
         surface: +cleanup.number(ad.surface),
