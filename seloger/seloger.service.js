@@ -7,7 +7,7 @@ function apiMapping(ad) {
 
     return {
         id: ad.idAnnonce,
-        address: ad.adresse,
+        address: cleanup.string(ad.adresse),
         cityLabel: ad.ville,
         description: cleanup.string(ad.descriptif),
         furnished: ad.furnished,

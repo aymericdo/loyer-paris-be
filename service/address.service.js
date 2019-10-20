@@ -26,33 +26,42 @@ function getCoordinate(address) {
 }
 
 function getDistricts(coordinates, address, postalCode) {
-    return coordinates && coordinates.lng && coordinates.lat ?
-        Promise.resolve({ districts: [_getDistrictFromCoordinate(coordinates.lng, coordinates.lat)] })
+    const districtFromCoordinate = coordinates && coordinates.lng && coordinates.lat
+        && _getDistrictFromCoordinate(coordinates.lng, coordinates.lat)
+
+    return districtFromCoordinate ?
+        Promise.resolve(districtFromCoordinate)
         : address ?
             getCoordinate(`${address} ${postalCode ? postalCode : ''}`)
                 .then((info) => {
                     log('info address fetched')
-                    return info && {
-                        districts: [_getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)],
+                    const districtFromAddress = info && _getDistrictFromCoordinate(info.geometry.lng, info.geometry.lat)
+                    return districtFromAddress ? {
+                        ...districtFromAddress,
                         coord: {
                             lng: info.geometry.lng,
                             lat: info.geometry.lat,
                         },
-                    }
+                    } : _getDistrictFromPostalCode(postalCode)
                 })
             : postalCode ?
-                Promise.resolve({ districts: _getDistrictFromPostalCode(postalCode) })
+                Promise.resolve(_getDistrictFromPostalCode(postalCode))
                 :
                 Promise.resolve({})
 }
 
 function _getDistrictFromCoordinate(lng, lat) {
-    return parisDistricts.find(district => inside([lng, lat], district.fields.geom.coordinates[0]))
+    const district = parisDistricts.find(district => inside([lng, lat], district.fields.geom.coordinates[0]))
+    return district ? { districts: [district] } : null
 }
 
 function _getDistrictFromPostalCode(postalCode) {
-    const code = postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2)
-    return parisDistricts.filter(district => district.fields.c_ar === +code)
+    if (postalCode) {
+        const code = postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2)
+        return { districts: parisDistricts.filter(district => district.fields.c_ar === +code) }
+    } else {
+        return {}
+    }
 }
 
 module.exports = {
