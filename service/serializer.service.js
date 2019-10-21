@@ -30,7 +30,7 @@ module.exports = ({
             dateRange: { order: 4, value: match.fields.epoque },
             min: { order: 5, value: match.fields.min },
             max: { order: 6, value: match.fields.max },
-            maxAuthorized: { order: 7, value: +maxAuthorized.toFixed(2) },
+            maxAuthorized: { order: 7, value: maxAuthorized },
             promoPercentage: { order: 8, value: !isLegal && +(100 - (maxAuthorized * 100 / +price)).toFixed(2) },
         },
         isLegal,

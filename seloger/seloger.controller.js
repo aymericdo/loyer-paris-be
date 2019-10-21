@@ -55,7 +55,7 @@ function getById(req, res, next) {
                     yearBuilt,
                 }).then(({ match, coord }) => {
                     if (match) {
-                        const maxAuthorized = +match.fields.max * +surface
+                        const maxAuthorized = +(+match.fields.max * +surface).toFixed(2)
                         const isLegal = +price <= maxAuthorized
 
                         saverService.rent({
