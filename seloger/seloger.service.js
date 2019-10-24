@@ -13,7 +13,7 @@ function apiMapping(ad) {
         furnished: ad.furnished,
         postalCode: ad.cp,
         price: cleanup.price(ad.prix),
-        renter: cleanup.string(ad.contact.nom),
+        renter: ad.contact && cleanup.string(ad.contact.nom),
         rooms: ad.nbPieces || roomFromDetail && roomFromDetail.valeur,
         surface: surfaceFromDetail && cleanup.number(surfaceFromDetail.valeur),
         title: cleanup.string(ad.titre),
