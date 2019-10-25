@@ -11,6 +11,7 @@ function apiMapping(ad) {
         cityLabel: ad.ville,
         description: cleanup.string(ad.descriptif),
         furnished: ad.furnished,
+        neighborhood: ad.permaLien.split('/').splice(-2)[0],
         postalCode: ad.cp,
         price: cleanup.price(ad.prix),
         renter: ad.contact && cleanup.string(ad.contact.nom),
