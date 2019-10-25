@@ -6,15 +6,17 @@ const addressService = require('service/address.service')
 
 module.exports = ({
     address,
+    city,
     coordinates,
     hasFurniture,
     postalCode,
     roomCount,
+    stations,
     yearBuilt,
 }) => {
     log('rent filter start')
 
-    return addressService.getDistricts(coordinates, address, postalCode)
+    return addressService.getDistricts(city, coordinates, address, postalCode, stations)
         .then((result) => {
             const yearRange = yearBuiltService.getYearRange(rangeRents, yearBuilt)
 

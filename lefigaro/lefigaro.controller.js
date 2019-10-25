@@ -37,6 +37,7 @@ function digData(ad, onSuccess, onError) {
         } else {
             rentFilter({
                 address,
+                city,
                 hasFurniture,
                 postalCode,
                 roomCount,
@@ -49,6 +50,7 @@ function digData(ad, onSuccess, onError) {
                     saverService.rent({
                         id: ad.id,
                         address,
+                        city,
                         hasFurniture,
                         isLegal,
                         latitude: coord && coord.lat,

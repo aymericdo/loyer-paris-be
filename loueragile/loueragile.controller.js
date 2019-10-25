@@ -43,10 +43,12 @@ function getById(req, res, next) {
             } else {
                 rentFilter({
                     address,
+                    city,
                     coordinates,
                     hasFurniture,
                     postalCode,
                     roomCount,
+                    stations,
                     yearBuilt,
                 }).then(({ match, coord }) => {
                     if (match) {
@@ -56,6 +58,7 @@ function getById(req, res, next) {
                         saverService.rent({
                             id: ad.id,
                             address,
+                            city,
                             hasFurniture,
                             isLegal,
                             latitude: coordinates && coordinates.lat || coord && coord.lat,

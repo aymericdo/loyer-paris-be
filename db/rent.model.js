@@ -5,6 +5,7 @@ const schema = new Schema({
     id: { type: String, required: true },
     website: { type: String, required: true },
     address: { type: String, required: false },
+    city: { type: String, required: false },
     postalCode: { type: String, required: false },
     longitude: { type: String, required: false },
     latitude: { type: String, required: false },

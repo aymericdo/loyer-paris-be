@@ -49,6 +49,7 @@ function getById(req, res, next) {
             } else {
                 rentFilter({
                     address,
+                    city,
                     hasFurniture,
                     postalCode,
                     roomCount,
@@ -61,6 +62,7 @@ function getById(req, res, next) {
                         saverService.rent({
                             id: cleanAd.id,
                             address,
+                            city,
                             hasFurniture,
                             isLegal,
                             latitude: coord && coord.lat,
