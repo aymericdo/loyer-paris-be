@@ -10,6 +10,7 @@ function dataMapping(ad) {
         rooms: +cleanup.number(ad.rooms),
         surface: +cleanup.number(ad.surface),
         title: cleanup.string(ad.title),
+        stations: ad.stations.map(station => cleanup.string(station)),
     }
 }
 

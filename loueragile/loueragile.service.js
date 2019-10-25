@@ -17,6 +17,7 @@ function apiMapping(ad) {
         surface: ad.ad.area,
         title: cleanup.string(ad.ad.title),
         yearBuilt: ad.yearBuilt,
+        stations: ad.ad.stops.map(stop => cleanup.string(stop.name))
     }
 }
 

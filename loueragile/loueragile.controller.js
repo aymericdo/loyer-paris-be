@@ -34,6 +34,7 @@ function getById(req, res, next) {
         const price = digService.digForPrice(ad)
         const [address, postalCode] = digService.digForAddress(ad)
         const renter = digService.digForRenter(ad)
+        const stations = digService.digForStations(ad)
 
         if (coordinates || address || postalCode) {
             if (city && !!city.length && city.toLowerCase() !== 'paris') {
@@ -67,6 +68,7 @@ function getById(req, res, next) {
                             surface,
                             website: 'loueragile',
                             yearBuilt,
+                            stations
                         })
 
                         res.json(serializer({

@@ -16,7 +16,8 @@ const schema = new Schema({
     maxPrice: { type: Number, required: true },
     isLegal: { type: Boolean, required: true },
     renter: { type: String, required: false },
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    stations: { type: [String], required: false },
 })
 
 schema.index({ id: 1, website: 1 }, { unique: true })

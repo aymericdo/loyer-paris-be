@@ -62,6 +62,10 @@ function digForRenter(ad) {
     return ad.renter
 }
 
+function digForStations(ad) {
+    return ad.stations
+}
+
 module.exports = {
     digForAddress,
     digForCity,
@@ -72,4 +76,5 @@ module.exports = {
     digForRoomCount,
     digForSurface,
     digForYearBuilt,
+    digForStations,
 }

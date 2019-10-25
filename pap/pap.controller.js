@@ -29,6 +29,7 @@ function digData(ad, onSuccess, onError) {
     const price = digService.digForPrice(ad)
     const [address, postalCode] = digService.digForAddress(ad)
     const renter = digService.digForRenter(ad)
+    const stations = digService.digForStations(ad)
 
     if (address || postalCode) {
         if (city && !!city.length && city.toLowerCase() !== 'paris') {
@@ -61,6 +62,7 @@ function digData(ad, onSuccess, onError) {
                         surface,
                         website: 'pap',
                         yearBuilt,
+                        stations,
                     })
 
                     onSuccess(serializer({
