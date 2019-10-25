@@ -18,6 +18,7 @@ function rent({
     isLegal,
     renter,
     createdAt,
+    stations,
 }) {
     const rent = new Rent({
         id,
@@ -35,6 +36,7 @@ function rent({
         isLegal,
         renter,
         createdAt,
+        stations,
     })
     log('Rent saver start')
     rent.save()
