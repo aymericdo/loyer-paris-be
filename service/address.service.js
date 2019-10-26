@@ -3,27 +3,55 @@ const opencage = require('opencage-api-client')
 const log = require('helper/log.helper')
 const inside = require('point-in-polygon')
 const stationService = require('service/station.service')
+const Fuse = require('fuse.js')
+const cleanup = require('helper/cleanup.helper')
 
+const parisAddresses = JSON.parse(fs.readFileSync('json-data/adresse_paris.json', 'utf8'))
 const parisDistricts = JSON.parse(fs.readFileSync('json-data/quartier_paris.json', 'utf8'))
 
-function getCoordinate(address) {
-    return opencage.geocode({ q: address, countrycode: 'fr' }).then(data => {
-        if (data.status.code == 200) {
-            if (data.results.length > 0) {
-                const place = data.results[0]
-                return place
-            }
-        } else if (data.status.code == 402) {
-            console.log('hit free-trial daily limit')
-            console.log('become a customer: https://opencagedata.com/pricing')
-        } else {
-            // other possible response codes:
-            // https://opencagedata.com/api#codes
-            console.log('error', data.status.message)
-        }
-    }).catch(error => {
-        console.log('error', error.message)
-    })
+function getCoordinate(q, { city, postalCode }) {
+    if (city && cleanup.string(city) === 'paris') {
+        const result = getAddressInParis(q, { postalCode })
+        return Promise.resolve(result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] })
+    } else {
+        return opencage.geocode({ q, countrycode: 'fr' })
+            .then(data => {
+                if (data.status.code == 200) {
+                    if (data.results.length > 0) {
+                        const place = data.results[0]
+                        return {
+                            lat: place.geometry.lat,
+                            lng: place.geometry.lng,
+                        }
+                    }
+                } else if (data.status.code == 402) {
+                    console.log('hit free-trial daily limit')
+                    console.log('become a customer: https://opencagedata.com/pricing')
+                } else {
+                    // other possible response codes:
+                    // https://opencagedata.com/api#codes
+                    console.log('error', data.status.message)
+                }
+            })
+            .catch(error => {
+                console.log('error', error.message)
+            })
+    }
+}
+
+function getAddressInParis(q, { postalCode }) {
+    const options = {
+        keys: ['fields.l_adr'],
+    }
+
+    const fuse = new Fuse(parisAddresses.filter(address => {
+        // 75010 -> 10; 75009 -> 9
+        const code = postalCode && (postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2))
+        return code ? address.fields.c_ar === +code : true
+    }), options)
+
+    const result = fuse.search(q)
+    return result && result.length && result
 }
 
 function getDistricts(city, coordinates, address, postalCode, stations) {
@@ -33,15 +61,15 @@ function getDistricts(city, coordinates, address, postalCode, stations) {
     return districtFromCoordinate ?
         Promise.resolve(districtFromCoordinate)
         : address ?
-            getCoordinate(`${address} ${postalCode ? postalCode : ''} ${city ? city : ''}`)
-                .then((info) => {
+            getCoordinate(`${address} ${postalCode ? postalCode : ''} ${city ? city : ''}`, { city, postalCode })
+                .then((coord) => {
                     log('info address fetched')
-                    const districtFromAddress = info && _getDistrictFromCoordinate(info.geometry.lat, info.geometry.lng)
+                    const districtFromAddress = coord && _getDistrictFromCoordinate(coord.lat, coord.lng)
                     return districtFromAddress ? {
                         ...districtFromAddress,
                         coord: {
-                            lng: info.geometry.lng,
-                            lat: info.geometry.lat,
+                            lat: coord.lat,
+                            lng: coord.lng,
                         },
                     } : _getDistrictFromPostalCode(postalCode, stations)
                 })
@@ -70,9 +98,11 @@ function _getDistrictFromPostalCode(postalCode, stations) {
             }).filter(Boolean)
         }
 
-        return { districts: parisDistricts.filter(district => {
-            return district.fields.c_ar === +code && (stationDistricts.length ? stationDistricts.includes(district.fields.l_qu) : true)
-        })}
+        return {
+            districts: parisDistricts.filter(district => {
+                return district.fields.c_ar === +code && (stationDistricts.length ? stationDistricts.includes(district.fields.l_qu) : true)
+            })
+        }
     } else {
         return {}
     }
@@ -80,6 +110,6 @@ function _getDistrictFromPostalCode(postalCode, stations) {
 
 module.exports = {
     getCoordinate,
+    getAddressInParis,
     getDistricts,
-    _getDistrictFromPostalCode,
 }

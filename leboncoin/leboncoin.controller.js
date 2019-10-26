@@ -22,13 +22,12 @@ function getByData(req, res, next) {
 
 function digData(ad, onSuccess, onError) {
     const coordinates = digService.digForCoordinates(ad)
-    const city = digService.digForCity(ad)
     const yearBuilt = digService.digForYearBuilt(ad)
     const roomCount = digService.digForRoomCount(ad)
     const hasFurniture = digService.digForHasFurniture(ad)
     const surface = digService.digForSurface(ad)
     const price = digService.digForPrice(ad)
-    const [address, postalCode] = digService.digForAddress(ad)
+    const [address, postalCode, city] = digService.digForAddress(ad)
     const renter = digService.digForRenter(ad)
 
     if (coordinates || address || postalCode) {

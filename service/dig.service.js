@@ -1,5 +1,7 @@
 const stringToNumber = require('helper/string-to-number.helper')
 const regexString = require('helper/regex.helper')
+const cleanup = require('helper/cleanup.helper')
+const addressService = require('service/address.service')
 
 function digForCoordinates(ad) {
     return ad.coord ? {
@@ -8,19 +10,24 @@ function digForCoordinates(ad) {
     } : null
 }
 
-function digForCity(ad) {
-    return ad.cityLabel && ad.cityLabel.match(/[A-Za-z]+/g) && ad.cityLabel.match(/[A-Za-z]+/g)[0]
-}
-
 function digForAddress(ad) {
-    const address = ad.address || ad.description && _digForAddressInDescription(ad.description)
-    const postalCode = ad.postalCode || ad.cityLabel && (_digForPostalCode(ad.cityLabel) || _digForNeighborhood(ad.cityLabel)) || ad.description && (_digForPostalCode(ad.description) || _digForNeighborhood(ad.description))
-    return [address, postalCode]
+    const city = ad.cityLabel && ad.cityLabel.match(/[A-Za-z]+/g) && ad.cityLabel.match(/[A-Za-z]+/g)[0]
+    const postalCode = ad.postalCode || ad.cityLabel
+        && (_digForPostalCode(ad.cityLabel) || _digForPostalCode2(ad.cityLabel))
+        || ad.description && (_digForPostalCode(ad.description) || _digForPostalCode2(ad.description))
+    const address = ad.address || ad.description && _digForAddressInDescription(ad.description, { city, postalCode })
+    return [address, postalCode, city]
 }
 
-function _digForAddressInDescription(description) {
+function _digForAddressInDescription(description, { city, postalCode }) {
     const addressRe = new RegExp(regexString('address'))
-    return description.match(addressRe) && description.match(addressRe)[0].trim()
+    const address = description.match(addressRe) && description.match(addressRe)[0].trim()
+    if (city && cleanup.string(city) === 'paris' && address) {
+        const result = addressService.getAddressInParis(`${address} ${postalCode ? postalCode : ''} ${city ? city : ''}`, { city, postalCode })
+        return result ? result[0].fields.l_adr : address
+    } else {
+        return address
+    }
 }
 
 function _digForPostalCode(text) {
@@ -28,9 +35,9 @@ function _digForPostalCode(text) {
     return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
 }
 
-function _digForNeighborhood(text) {
-    const neighborhoodRe = new RegExp(regexString('neighborhood'))
-    const match = text.match(neighborhoodRe) && text.match(neighborhoodRe)[0]
+function _digForPostalCode2(text) {
+    const postalCode2Re = new RegExp(regexString('postalCode2'))
+    const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
     return match ? match.length === 1 ? `7500${match.trim()}` : `750${match.trim()}` : null
 }
 
@@ -68,7 +75,6 @@ function digForStations(ad) {
 
 module.exports = {
     digForAddress,
-    digForCity,
     digForCoordinates,
     digForHasFurniture,
     digForPrice,

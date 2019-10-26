@@ -33,9 +33,8 @@ function getById(req, res, next) {
 
         const cleanAd = selogerService.apiMapping(ad)
 
-        const [address, postalCode] = digService.digForAddress(cleanAd)
+        const [address, postalCode, city] = digService.digForAddress(cleanAd)
         const yearBuilt = digService.digForYearBuilt(cleanAd)
-        const city = digService.digForCity(cleanAd)
         const roomCount = digService.digForRoomCount(cleanAd)
         const hasFurniture = digService.digForHasFurniture(cleanAd)
         const surface = digService.digForSurface(cleanAd)

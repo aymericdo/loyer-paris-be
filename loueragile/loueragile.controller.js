@@ -27,12 +27,11 @@ function getById(req, res, next) {
 
         const coordinates = digService.digForCoordinates(ad)
         const yearBuilt = digService.digForYearBuilt(ad)
-        const city = digService.digForCity(ad)
         const roomCount = digService.digForRoomCount(ad)
         const hasFurniture = digService.digForHasFurniture(ad)
         const surface = digService.digForSurface(ad)
         const price = digService.digForPrice(ad)
-        const [address, postalCode] = digService.digForAddress(ad)
+        const [address, postalCode, city] = digService.digForAddress(ad)
         const renter = digService.digForRenter(ad)
         const stations = digService.digForStations(ad)
 
