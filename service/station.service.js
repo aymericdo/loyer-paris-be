@@ -6,6 +6,10 @@ const parisStations = JSON.parse(fs.readFileSync('json-data/metros_paris.json', 
 function getCoordinate(station) {
     const options = {
         keys: ['tags.name'],
+        shouldSort: true,
+        threshold: 0.2,
+        tokenize: true,
+        matchAllTokens: true,
     }
     const fuse = new Fuse(parisStations, options)
     const result = fuse.search(station)

@@ -42,6 +42,10 @@ function getCoordinate(q, { city, postalCode }) {
 function getAddressInParis(q, { postalCode }) {
     const options = {
         keys: ['fields.l_adr'],
+        shouldSort: true,
+        threshold: 0.2,
+        tokenize: true,
+        matchAllTokens: true,
     }
 
     const fuse = new Fuse(parisAddresses.filter(address => {
