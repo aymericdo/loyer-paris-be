@@ -21,12 +21,14 @@ function digForAddress(ad) {
 
 function _digForAddressInDescription(description, { city, postalCode }) {
     const addressRe = new RegExp(regexString('address'))
-    const address = description.match(addressRe) && description.match(addressRe)[0].trim()
-    if (city && cleanup.string(city) === 'paris' && address) {
-        const result = addressService.getAddressInParis(address, { postalCode })
-        return result ? cleanup.string(result[0].fields.l_adr) : address
+    const addressesFromRegex = description.match(addressRe)
+    if (city && cleanup.string(city) === 'paris' && addressesFromRegex) {
+        const result = addressesFromRegex.flatMap(address => {
+            return addressService.getAddressInParis(address.trim(), { postalCode })
+        })
+        return result ? cleanup.string(result[0].fields.l_adr) : addressesFromRegex[0].trim()
     } else {
-        return address
+        return addressesFromRegex && addressesFromRegex[0].trim()
     }
 }
 
