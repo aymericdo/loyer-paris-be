@@ -2,6 +2,7 @@ const stringToNumber = require('helper/string-to-number.helper')
 const regexString = require('helper/regex.helper')
 const cleanup = require('helper/cleanup.helper')
 const addressService = require('service/address.service')
+const stationService = require('service/station.service')
 
 function digForCoordinates(ad) {
     return ad.coord ? {
@@ -72,7 +73,8 @@ function digForRenter(ad) {
 }
 
 function digForStations(ad) {
-    return ad.stations
+    console.log(stationService.getStations(ad.description))
+    return ad.stations || stationService.getStations(ad.description)
 }
 
 module.exports = {
