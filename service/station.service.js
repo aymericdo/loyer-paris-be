@@ -19,10 +19,10 @@ function getCoordinate(station) {
 
 function getStations(description) {
     return [...new Set(parisStations.map(station => {
-        if (station.tags && cleanup.string(description).search(cleanup.string(station.tags.name)) != -1) {
+        if (station.tags && description.search(cleanup.string(station.tags.name)) !== -1) {
             return station.tags.name
         }
-    }).filter(el => el != null))]
+    }).filter(Boolean))]
 }
 
 module.exports = {

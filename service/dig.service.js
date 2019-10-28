@@ -73,7 +73,6 @@ function digForRenter(ad) {
 }
 
 function digForStations(ad) {
-    console.log(stationService.getStations(ad.description))
     return ad.stations || stationService.getStations(ad.description)
 }
 
