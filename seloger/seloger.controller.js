@@ -40,6 +40,7 @@ function getById(req, res, next) {
         const surface = digService.digForSurface(cleanAd)
         const price = digService.digForPrice(cleanAd)
         const renter = digService.digForRenter(cleanAd)
+        const stations = digService.digForStations(cleanAd)
 
         if (address || postalCode) {
             if (city && !!city.length && city.toLowerCase() !== 'paris') {
