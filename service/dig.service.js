@@ -26,7 +26,7 @@ function _digForAddressInDescription(description, { city, postalCode }) {
     if (city && cleanup.string(city) === 'paris' && addressesFromRegex) {
         const result = addressesFromRegex.flatMap(address => {
             return addressService.getAddressInParis(address.trim(), { postalCode })
-        })
+        }).filter(Boolean)
         return result && result.length ? cleanup.string(result[0].fields.l_adr) : addressesFromRegex[0].trim()
     } else {
         return addressesFromRegex && addressesFromRegex[0].trim()
@@ -73,7 +73,6 @@ function digForRenter(ad) {
 }
 
 function digForStations(ad) {
-    console.log(stationService.getStations(ad.description))
     return ad.stations || stationService.getStations(ad.description)
 }
 

@@ -55,7 +55,7 @@ function getAddressInParis(q, { postalCode }) {
     }), options)
 
     const result = fuse.search(q)
-    return result && result.length && result
+    return result && result.length ? result : null
 }
 
 function getDistricts(city, coordinates, address, postalCode, stations) {
