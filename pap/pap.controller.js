@@ -61,10 +61,10 @@ function digData(ad, onSuccess, onError) {
                         price,
                         renter,
                         roomCount,
+                        stations,
                         surface,
                         website: 'pap',
                         yearBuilt,
-                        stations,
                     })
 
                     onSuccess(serializer({

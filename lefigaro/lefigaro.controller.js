@@ -28,6 +28,7 @@ function digData(ad, onSuccess, onError) {
     const price = digService.digForPrice(ad)
     const [address, postalCode, city] = digService.digForAddress(ad)
     const renter = digService.digForRenter(ad)
+    const stations = digService.digForStations(ad)
 
     if (address || postalCode) {
         if (city && !!city.length && city.toLowerCase() !== 'paris') {
@@ -40,6 +41,7 @@ function digData(ad, onSuccess, onError) {
                 hasFurniture,
                 postalCode,
                 roomCount,
+                stations,
                 yearBuilt,
             }).then(({ match, coord }) => {
                 if (match) {
@@ -59,6 +61,7 @@ function digData(ad, onSuccess, onError) {
                         price,
                         renter,
                         roomCount,
+                        stations,
                         surface,
                         website: 'lefigaro',
                         yearBuilt,

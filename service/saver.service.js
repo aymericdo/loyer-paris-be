@@ -21,37 +21,39 @@ function rent({
     createdAt,
     stations,
 }) {
-    const rent = new Rent({
-        id,
-        website,
-        address,
-        city,
-        postalCode,
-        longitude,
-        latitude,
-        hasFurniture,
-        roomCount,
-        yearBuilt,
-        price,
-        surface,
-        maxPrice,
-        isLegal,
-        renter,
-        createdAt,
-        stations,
-    })
-    log('Rent saver start')
-    rent.save()
-        .then(() => {
-            log('Rent saved', 'green')
+    if (id) {
+        const rent = new Rent({
+            id,
+            website,
+            createdAt,
+            ...(address === null || { address }),
+            ...(city === null || { city }),
+            ...(hasFurniture === null || { hasFurniture }),
+            ...(isLegal === null || { isLegal }),
+            ...(latitude === null || { latitude }),
+            ...(longitude === null || { longitude }),
+            ...(maxPrice === null || { maxPrice }),
+            ...(postalCode === null || { postalCode }),
+            ...(price === null || { price }),
+            ...(renter === null || { renter }),
+            ...(roomCount === null || { roomCount }),
+            ...(stations === null || !stations.length || { stations }),
+            ...(surface === null || { surface }),
+            ...(yearBuilt === null || { yearBuilt }),
         })
-        .catch(err => {
-            if (err.code === 11000) {
-                log('⚠️  Rent already saved', 'red')
-            } else {
-                console.log(err)
-            }
-        })
+        log('Rent saver start')
+        rent.save()
+            .then(() => {
+                log('Rent saved', 'green')
+            })
+            .catch(err => {
+                if (err.code === 11000) {
+                    log('⚠️  Rent already saved', 'red')
+                } else {
+                    console.log(err)
+                }
+            })
+    }
 }
 
 module.exports = {

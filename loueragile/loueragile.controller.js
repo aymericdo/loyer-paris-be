@@ -67,10 +67,10 @@ function getById(req, res, next) {
                             price,
                             renter,
                             roomCount,
+                            stations,
                             surface,
                             website: 'loueragile',
                             yearBuilt,
-                            stations
                         })
 
                         res.json(serializer({

@@ -53,6 +53,7 @@ function getById(req, res, next) {
                     hasFurniture,
                     postalCode,
                     roomCount,
+                    stations,
                     yearBuilt,
                 }).then(({ match, coord }) => {
                     if (match) {
@@ -72,6 +73,7 @@ function getById(req, res, next) {
                             price,
                             renter,
                             roomCount,
+                            stations,
                             surface,
                             website: 'seloger',
                             yearBuilt,
