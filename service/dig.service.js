@@ -27,9 +27,11 @@ function _digForAddressInDescription(description, { city, postalCode }) {
         const result = addressesFromRegex.flatMap(address => {
             return addressService.getAddressInParis(address.trim(), { postalCode })
         }).filter(Boolean)
-        console.log(cleanup.string(result[0].fields.l_adr))
-        console.log(cleanup.string(result[0].fields.l_adr))
-        return result && result.length ? cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi, "") ? cleanup.string(result[0].fields.l_adr) : cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() : addressesFromRegex[0].trim()
+        return result && result.length ?
+            cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi, "") ?
+                cleanup.string(result[0].fields.l_adr) :
+                    cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() :
+                        addressesFromRegex[0].trim()
     } else {
         return addressesFromRegex && addressesFromRegex[0].trim()
     }
