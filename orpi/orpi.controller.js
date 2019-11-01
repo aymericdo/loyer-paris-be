@@ -32,7 +32,7 @@ function digData(ad, onSuccess, onError) {
     const renter = digService.digForRenter(ad)
     const stations = digService.digForStations(ad)
 
-    if (!price || !surface) {
+    if (price && surface) {
         if (coordinates || address || postalCode) {
             if (city && !!city.length && city.toLowerCase() !== 'paris') {
                 log('error -> not in Paris')
