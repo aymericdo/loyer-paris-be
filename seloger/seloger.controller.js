@@ -5,6 +5,7 @@ const xmlParser = require('xml2json')
 const selogerService = require('./seloger.service')
 const digService = require('service/dig.service')
 const log = require('helper/log.helper')
+const roundNumber = require('helper/round-number.helper')
 const cleanup = require('helper/cleanup.helper')
 const serializer = require('service/serializer.service')
 const rentFilter = require('service/rent-filter.service')
@@ -64,63 +65,68 @@ function digData(ad, onSuccess, onError) {
     const renter = digService.digForRenter(ad)
     const stations = digService.digForStations(ad)
 
-    if (address || postalCode) {
-        if (city && !!city.length && city.toLowerCase() !== 'paris') {
-            log('error -> not in Paris')
-            onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
+    if (!price || !surface) {
+        if (address || postalCode) {
+            if (city && !!city.length && city.toLowerCase() !== 'paris') {
+                log('error -> not in Paris')
+                onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
+            } else {
+                rentFilter({
+                    address,
+                    city,
+                    hasFurniture,
+                    postalCode,
+                    roomCount,
+                    stations,
+                    yearBuilt,
+                }).then(({ match, coord }) => {
+                    if (match) {
+                        const maxAuthorized = roundNumber(+match.fields.max * surface)
+                        const isLegal = price <= maxAuthorized
+
+                        saverService.rent({
+                            id: ad.id,
+                            address,
+                            city,
+                            hasFurniture,
+                            isLegal,
+                            latitude: coord && coord.lat,
+                            longitude: coord && coord.lng,
+                            maxPrice: maxAuthorized,
+                            postalCode,
+                            price,
+                            renter,
+                            roomCount,
+                            stations,
+                            surface,
+                            website: 'seloger',
+                            yearBuilt,
+                        })
+
+                        onSuccess(serializer({
+                            address,
+                            hasFurniture,
+                            isLegal,
+                            maxAuthorized,
+                            postalCode,
+                            price,
+                            roomCount,
+                            surface,
+                            yearBuilt,
+                        }, match))
+                    } else {
+                        log('error -> no match found')
+                        onError({ status: 403, msg: 'no match found', error: 'address' })
+                    }
+                })
+            }
         } else {
-            rentFilter({
-                address,
-                city,
-                hasFurniture,
-                postalCode,
-                roomCount,
-                stations,
-                yearBuilt,
-            }).then(({ match, coord }) => {
-                if (match) {
-                    const maxAuthorized = +(+match.fields.max * +surface).toFixed(2)
-                    const isLegal = +price <= maxAuthorized
-
-                    saverService.rent({
-                        id: ad.id,
-                        address,
-                        city,
-                        hasFurniture,
-                        isLegal,
-                        latitude: coord && coord.lat,
-                        longitude: coord && coord.lng,
-                        maxPrice: maxAuthorized,
-                        postalCode,
-                        price,
-                        renter,
-                        roomCount,
-                        stations,
-                        surface,
-                        website: 'seloger',
-                        yearBuilt,
-                    })
-
-                    onSuccess(serializer({
-                        address,
-                        hasFurniture,
-                        isLegal,
-                        maxAuthorized,
-                        postalCode,
-                        price,
-                        roomCount,
-                        surface,
-                        yearBuilt,
-                    }, match))
-                } else {
-                    log('error -> no match found')
-                    onError({ status: 403, msg: 'no match found', error: 'address' })
-                }
-            })
+            log('error -> no address found')
+            onError({ status: 403, msg: 'no address found', error: 'address' })
         }
     } else {
-        log('error -> no address found')
-        onError({ status: 403, msg: 'no address found', error: 'address' })
+        log('error -> minimal information not found')
+        onError({ status: 403, msg: 'minimal information not found', error: 'minimal' })
     }
 }
 

@@ -20,11 +20,11 @@ app.use('/lefigaro', require('./lefigaro/lefigaro.controller'))
 app.use('/orpi', require('./orpi/orpi.controller'))
 
 // opencage api tester
-// app.get('/opencage', (req, res) => {
-//     addressService.getCoordinate(req.query.address)
-//         .then((info) => {
-//             res.json(info)
-//         })
-// })
+app.get('/opencage', (req, res) => {
+    addressService.getCoordinate(req.query.address)
+        .then((info) => {
+            res.json(info)
+        })
+})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

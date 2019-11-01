@@ -1,4 +1,5 @@
 const log = require('helper/log.helper')
+const roundNumber = require('helper/round-number.helper')
 
 module.exports = ({
     address,
@@ -17,21 +18,21 @@ module.exports = ({
         detectedInfo: {
             address: { order: 0, value: `${address ? address : ''} ${postalCode ? postalCode : ''}`.trim() },
             hasFurniture: { order: 1, value: hasFurniture },
-            roomCount: { order: 2, value: +roomCount },
-            surface: { order: 3, value: +surface },
-            yearBuilt: { order: 4, value: +yearBuilt },
-            price: { order: 5, value: +(+price).toFixed(2) },
+            roomCount: { order: 2, value: roomCount },
+            surface: { order: 3, value: surface },
+            yearBuilt: { order: 4, value: yearBuilt },
+            price: { order: 5, value: roundNumber(price) },
         },
         computedInfo: {
             neighborhood: { order: 0, value: match.fields.nom_quartier },
             hasFurniture: { order: 1, value: !!match.fields.meuble_txt.match(/^meubl/g) },
             roomCount: { order: 2, value: +match.fields.piece },
-            surface: { order: 3, value: +surface },
+            surface: { order: 3, value: surface },
             dateRange: { order: 4, value: match.fields.epoque },
-            min: { order: 5, value: +match.fields.min.toFixed(2) },
-            max: { order: 6, value: +match.fields.max.toFixed(2) },
-            maxAuthorized: { order: 7, value: +maxAuthorized.toFixed(2) },
-            promoPercentage: { order: 8, value: !isLegal && +(100 - (maxAuthorized * 100 / +price)).toFixed(2) },
+            min: { order: 5, value: roundNumber(+match.fields.min) },
+            max: { order: 6, value: roundNumber(+match.fields.max) },
+            maxAuthorized: { order: 7, value: maxAuthorized },
+            promoPercentage: { order: 8, value: !isLegal && roundNumber(100 - (maxAuthorized * 100 / price)) },
         },
         isLegal,
     }
