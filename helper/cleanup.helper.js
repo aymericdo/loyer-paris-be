@@ -7,7 +7,7 @@ function price(price) {
 }
 
 function number(number) {
-    return number && number.match(/\d+/g)[0]
+    return number && number.match(/\d+((\.|,|)\d+)?/g) && number.replace(/,/g, '.').match(/\d+((\.|,|)\d+)?/g)[0]
 }
 
 module.exports = {

@@ -30,8 +30,8 @@ function _digForAddressInDescription(description, { city, postalCode }) {
         return result && result.length ?
             cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi, "") ?
                 cleanup.string(result[0].fields.l_adr) :
-                    cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() :
-                        addressesFromRegex[0].trim()
+                cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() :
+            addressesFromRegex[0].trim()
     } else {
         return addressesFromRegex && addressesFromRegex[0].trim()
     }
@@ -77,7 +77,7 @@ function digForRenter(ad) {
 }
 
 function digForStations(ad) {
-    return ad.stations || stationService.getStations(ad.description)
+    return ad.stations || ad.description && stationService.getStations(ad.description)
 }
 
 module.exports = {

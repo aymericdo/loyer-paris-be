@@ -82,9 +82,7 @@ function digData(ad, onSuccess, onError) {
                     }, match))
                 } else {
                     log('error -> no match found')
-                    res.status(403).json({
-                        msg: 'no match found', error: 'address',
-                    })
+                    onError({ status: 403, msg: 'no match found', error: 'address' })
                 }
             })
         }
