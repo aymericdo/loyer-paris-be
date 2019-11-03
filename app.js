@@ -22,6 +22,8 @@ app.use('/orpi', require('./orpi/orpi.controller'))
 
 Sentry.init({ dsn: process.env.SENTRY_DSN })
 
+myUndefinedFunction()
+
 // opencage api tester
 // app.get('/opencage', (req, res) => {
 //     addressService.getCoordinate(req.query.address)
