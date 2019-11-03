@@ -28,7 +28,7 @@ function _digForAddressInDescription(description, { city, postalCode }) {
             return addressService.getAddressInParis(address.trim(), { postalCode })
         }).filter(Boolean)
         return result && result.length ?
-            cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi, "") ?
+            cleanup.string(addressesFromRegex[0]).match(/^\d+/gi, "") ?
                 cleanup.string(result[0].fields.l_adr) :
                 cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() :
             addressesFromRegex[0].trim()
