@@ -14,7 +14,7 @@ module.exports = ({
     stations,
     yearBuilt,
 }) => {
-    log('rent filter start')
+    log.info('rent filter start')
 
     return addressService.getDistricts(city, coordinates, address, postalCode, stations)
         .then((result) => {
@@ -27,7 +27,7 @@ module.exports = ({
                     && (hasFurniture !== null ? hasFurniture ? rangeRent.fields.meuble_txt.match(/^meubl/g) : rangeRent.fields.meuble_txt.match(/^non meubl/g) : true)
             })
 
-            log('rent filter done')
+            log.info('rent filter done')
             // Get the worst case scenario
             return rentList.length ?
                 {

@@ -13,7 +13,7 @@ const saverService = require('service/saver.service')
 // routes
 router.get('/', getById)
 function getById(req, res, next) {
-    log(`-> ${req.baseUrl} getById`, 'blue')
+    log.info(`-> ${req.baseUrl} getById`, 'blue')
     if (!cleanup.number(req.query.id)) {
         res.status(403).json({
             msg: 'no address found', error: 'address',
@@ -23,10 +23,10 @@ function getById(req, res, next) {
         url: `https://www.loueragile.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${req.query.id}`,
     }, (error, response, body) => {
         if (!body || !!error) {
-            log('error -> l\'api de loueragile bug')
+            log.error('l\'api de loueragile bug')
             res.status(403).json({ status: 403, msg: 'l\'api de loueragile bug', error: 'api' })
         } else {
-            log('loueragile fetched')
+            log.info('loueragile fetched')
             digData(loueragileService.apiMapping(JSON.parse(body)),
                 (data) => {
                     res.json(data)
@@ -51,7 +51,7 @@ function digData(ad, onSuccess, onError) {
     if (price && surface) {
         if (coordinates || address || postalCode) {
             if (city && !!city.length && city.toLowerCase() !== 'paris') {
-                log('error -> not in Paris')
+                log.error('not in Paris')
                 onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
             } else {
                 rentFilter({
@@ -99,17 +99,17 @@ function digData(ad, onSuccess, onError) {
                             yearBuilt,
                         }, match))
                     } else {
-                        log('error -> no match found')
+                        log.error('no match found')
                         onError({ status: 403, msg: 'no match found', error: 'address' })
                     }
                 })
             }
         } else {
-            log('error -> no address found')
+            log.error('no address found')
             onError({ status: 403, msg: 'no address found', error: 'address' })
         }
     } else {
-        log('error -> minimal information not found')
+        log.error('minimal information not found')
         onError({ status: 403, msg: 'minimal information not found', error: 'minimal' })
     }
 }

@@ -2,10 +2,8 @@ require('rootpath')()
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const addressService = require('service/address.service')
+// const addressService = require('service/address.service')
 const Sentry = require('@sentry/node');
-
-const port = process.env.PORT || 3000
 
 app.use(cors())
 app.use(express.json({
@@ -30,4 +28,5 @@ Sentry.init({ dsn: process.env.SENTRY_DSN })
 //         })
 // })
 
+const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

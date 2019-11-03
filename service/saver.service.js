@@ -41,14 +41,14 @@ function rent({
             ...(surface === null || { surface }),
             ...(yearBuilt === null || { yearBuilt }),
         })
-        log('Rent saver start')
+        log.info('Rent saver start')
         rent.save()
             .then(() => {
-                log('Rent saved', 'green')
+                log.info('Rent saved', 'green')
             })
             .catch(err => {
                 if (err.code === 11000) {
-                    log('⚠️  Rent already saved', 'red')
+                    log.info('⚠️  Rent already saved', 'red')
                 } else {
                     console.log(err)
                 }

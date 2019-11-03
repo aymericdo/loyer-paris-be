@@ -12,7 +12,7 @@ const saverService = require('service/saver.service')
 router.post('/data', getByData)
 
 function getByData(req, res, next) {
-    log(`-> ${req.baseUrl} getByData`, 'blue')
+    log.info(`-> ${req.baseUrl} getByData`, 'blue')
     digData(papService.dataMapping(req.body),
         (data) => {
             res.json(data)
@@ -34,7 +34,7 @@ function digData(ad, onSuccess, onError) {
     if (price && surface) {
         if (address || postalCode) {
             if (city && !!city.length && city.toLowerCase() !== 'paris') {
-                log('error -> not in Paris')
+                log.error('not in Paris')
                 onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
             } else {
                 rentFilter({
@@ -81,17 +81,17 @@ function digData(ad, onSuccess, onError) {
                             yearBuilt,
                         }, match))
                     } else {
-                        log('error -> no match found')
+                        log.error('no match found')
                         onError({ status: 403, msg: 'no match found', error: 'address' })
                     }
                 })
             }
         } else {
-            log('error -> no address found')
+            log.error('no address found')
             onError({ status: 403, msg: 'no address found', error: 'address' })
         }
     } else {
-        log('error -> minimal information not found')
+        log.error('minimal information not found')
         onError({ status: 403, msg: 'minimal information not found', error: 'minimal' })
     }
 }

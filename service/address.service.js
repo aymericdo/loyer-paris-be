@@ -67,7 +67,7 @@ function getDistricts(city, coordinates, address, postalCode, stations) {
         : address ?
             getCoordinate(`${address} ${postalCode ? postalCode : ''} ${city ? city : ''}`, { city, postalCode })
                 .then((coord) => {
-                    log('info address fetched')
+                    log.info('info address fetched')
                     const districtFromAddress = coord && _getDistrictFromCoordinate(coord.lat, coord.lng)
                     return districtFromAddress ? {
                         ...districtFromAddress,

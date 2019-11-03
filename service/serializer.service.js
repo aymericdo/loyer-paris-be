@@ -12,7 +12,7 @@ module.exports = ({
     surface,
     yearBuilt,
 }, match) => {
-    log('sending data', 'green')
+    log.info('sending data', 'green')
 
     return {
         detectedInfo: {
