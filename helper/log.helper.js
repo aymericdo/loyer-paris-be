@@ -16,7 +16,7 @@ const info = (message, color) => {
 }
 
 const error = (message, color) => {
-    log.info(message, color)
+    info(message, color)
     Sentry.captureMessage(message)
 }
 
