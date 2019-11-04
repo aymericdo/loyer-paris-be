@@ -14,7 +14,7 @@ function getCoordinate(station) {
     }
     const fuse = new Fuse(parisStations, options)
     const result = fuse.search(station)
-    return result && { lat: result[0].lat, lng: result[0].lon }
+    return result && result.length && { lat: result[0].lat, lng: result[0].lon }
 }
 
 function getStations(description) {
