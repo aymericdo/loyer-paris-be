@@ -63,12 +63,12 @@ function getMap(req, res, next) {
               { "field": "address", "type": "nominal" },
               { "field": "renter", "type": "nominal" },
               { "field": "postalCode", "type": "ordinal" },
-              { "field": "roomCount.$numberInt", "type": "quantitative" },
-              { "field": "surface.$numberInt", "type": "quantitative" },
-              { "field": "yearBuilt.$numberInt", "type": "quantitative" },
+              { "field": "roomCount", "type": "quantitative" },
+              { "field": "surface", "type": "quantitative" },
+              { "field": "yearBuilt", "type": "quantitative" },
               { "field": "hasFurniture", "type": "nominal" },
-              { "field": "price.$numberInt", "type": "quantitative" },
-              { "field": "maxPrice.$numberDouble", "type": "quantitative" }
+              { "field": "price", "type": "quantitative" },
+              { "field": "maxPrice", "type": "quantitative" }
             ]
           },
           "mark": {
