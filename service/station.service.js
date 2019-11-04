@@ -8,7 +8,7 @@ function getCoordinate(station) {
     const options = {
         keys: ['tags.name'],
         shouldSort: true,
-        threshold: 0.2,
+        threshold: 0.3,
         tokenize: true,
         matchAllTokens: true,
     }

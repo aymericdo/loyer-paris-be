@@ -28,5 +28,10 @@ Sentry.init({ dsn: process.env.SENTRY_DSN })
 //         })
 // })
 
+// address api tester
+// app.get('/address', (req, res) => {
+//     res.json(addressService.getAddressInParis(req.query.address, { postalCode: '75011' }))
+// })
+
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

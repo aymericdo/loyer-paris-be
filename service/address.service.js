@@ -9,9 +9,9 @@ const cleanup = require('helper/cleanup.helper')
 const parisAddresses = JSON.parse(fs.readFileSync('json-data/adresse_paris.json', 'utf8'))
 const parisDistricts = JSON.parse(fs.readFileSync('json-data/quartier_paris.json', 'utf8'))
 
-function getCoordinate(q, { city, postalCode }) {
-    if (city && cleanup.string(city) === 'paris') {
-        const result = getAddressInParis(q, { postalCode })
+function getCoordinate(q, addressInfo) {
+    if (addressInfo && addressInfo.city && cleanup.string(addressInfo.city) === 'paris') {
+        const result = getAddressInParis(q, { postalCode: addressInfo && addressInfo.postalCode })
         return Promise.resolve(result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] })
     } else {
         return opencage.geocode({ q, countrycode: 'fr' })
@@ -39,18 +39,22 @@ function getCoordinate(q, { city, postalCode }) {
     }
 }
 
-function getAddressInParis(q, { postalCode }) {
+function getAddressInParis(q, addressInfo) {
     const options = {
         keys: ['fields.l_adr'],
         shouldSort: true,
-        threshold: 0.2,
+        threshold: 0.5,
         tokenize: true,
         matchAllTokens: true,
     }
 
     const fuse = new Fuse(parisAddresses.filter(address => {
+        if (!(addressInfo && addressInfo.postalCode)) {
+            return true
+        }
+
         // 75010 -> 10; 75009 -> 9
-        const code = postalCode && (postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2))
+        const code = (addressInfo.postalCode.slice(-2)[0] === '0' ? addressInfo.postalCode.slice(-1) : addressInfo.postalCode.slice(-2))
         return code ? address.fields.c_ar === +code : true
     }), options)
 
