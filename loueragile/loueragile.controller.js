@@ -13,7 +13,7 @@ const saverService = require('service/saver.service')
 // routes
 router.get('/', getById)
 function getById(req, res, next) {
-    log.info(`-> ${req.baseUrl} getById`, 'blue')
+    log.info(`-> ${req.baseUrl} - ${req.query.id} getById`, 'blue')
     if (!cleanup.number(req.query.id)) {
         res.status(403).json({
             msg: 'no address found', error: 'address',
