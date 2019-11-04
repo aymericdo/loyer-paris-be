@@ -9,12 +9,14 @@ const cleanup = require('helper/cleanup.helper')
 const parisAddresses = JSON.parse(fs.readFileSync('json-data/adresse_paris.json', 'utf8'))
 const parisDistricts = JSON.parse(fs.readFileSync('json-data/quartier_paris.json', 'utf8'))
 
-function getCoordinate(q, addressInfo) {
-    if (addressInfo && addressInfo.city && cleanup.string(addressInfo.city) === 'paris') {
-        const result = getAddressInParis(q, { postalCode: addressInfo && addressInfo.postalCode })
+function getCoordinate(address, addressInfo) {
+    const postalCode = addressInfo && addressInfo.postalCode
+    const city = addressInfo && addressInfo.city
+    if (city && cleanup.string(city) === 'paris') {
+        const result = getAddressInParis(address, { postalCode })
         return Promise.resolve(result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] })
     } else {
-        return opencage.geocode({ q, countrycode: 'fr' })
+        return opencage.geocode({ q: `${address} ${postalCode ? postalCode : ''} ${city ? city : ''}`, countrycode: 'fr' })
             .then(data => {
                 if (data.status.code == 200) {
                     if (data.results.length > 0) {
@@ -69,7 +71,7 @@ function getDistricts(city, coordinates, address, postalCode, stations) {
     return districtFromCoordinate ?
         Promise.resolve(districtFromCoordinate)
         : address ?
-            getCoordinate(`${address} ${postalCode ? postalCode : ''} ${city ? city : ''}`, { city, postalCode })
+            getCoordinate(address, { city, postalCode })
                 .then((coord) => {
                     log.info('info address fetched')
                     const districtFromAddress = coord && _getDistrictFromCoordinate(coord.lat, coord.lng)
