@@ -33,6 +33,9 @@ function getMap(req, res, next) {
                   "type": "geoshape",
                   "fill": "lightgray",
                   "stroke": "white"
+                },
+                "encoding": {
+                  "tooltip": {"field": "properties.l_qu", "type": "nominal"}
                 }
               },
               {
