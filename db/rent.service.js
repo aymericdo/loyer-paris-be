@@ -2,21 +2,21 @@ const db = require('db')
 const Rent = db.Rent
 const log = require('helper/log.helper')
 
-function rent(callback) {
+function getAll(onSuccess, onError) {
     log.info('Load Rent DB')
     Rent.find({}, function (err, rents) {
         if (err) {
-            console.error(err)
+            onError(err)
         }
         var rentArray = [];
 
         rents.forEach(function (rent) {
             rentArray.push(rent);
         });
-        return callback(rentArray)
+        onSuccess(rentArray)
     });
 }
 
 module.exports = {
-    rent,
+    getAll,
 }
