@@ -13,7 +13,7 @@ const saverService = require('service/saver.service')
 
 router.get('/', getById)
 function getById(req, res, next) {
-    log.info(`-> ${req.baseUrl} - ${req.query.id} getById`, 'blue')
+    log.info(`-> ${req.baseUrl}/${req.query.id} getById`, 'blue')
     if (!cleanup.number(req.query.id)) {
         res.status(403).json({
             msg: 'no address found', error: 'address',
@@ -46,7 +46,7 @@ function getById(req, res, next) {
 
 router.post('/data', getByData)
 function getByData(req, res, next) {
-    log.info(`-> ${req.baseUrl} - ${req.body.id} getByData`, 'blue')
+    log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
     digData(selogerService.dataMapping(req.body),
         (data) => {
             res.json(data)
