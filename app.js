@@ -18,6 +18,8 @@ app.use('/logic-immo', require('./logicimmo/logicimmo.controller'))
 app.use('/lefigaro', require('./lefigaro/lefigaro.controller'))
 app.use('/orpi', require('./orpi/orpi.controller'))
 
+app.use('/stats', require('./stats/stats.controller'))
+
 Sentry.init({ dsn: process.env.SENTRY_DSN })
 
 // opencage api tester
