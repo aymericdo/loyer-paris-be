@@ -12,7 +12,7 @@ const saverService = require('service/saver.service')
 router.post('/data', getByData)
 
 function getByData(req, res, next) {
-    log.info(`-> ${req.baseUrl} getByData`, 'blue')
+    log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
     digData(papService.dataMapping(req.body),
         (data) => {
             res.json(data)
