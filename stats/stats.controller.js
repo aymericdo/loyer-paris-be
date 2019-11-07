@@ -14,12 +14,25 @@ function getMap(req, res, next) {
   rentService.getAll((data) => {
     const vegaMap = {
       "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-      "title": "Carte encadrement des loyers à Paris",
+      "title": {
+        "text": "Carte encadrement des loyers à Paris",
+        "color": "white",
+        "fontSize": 18
+      },
       "width": 700,
       "height": 500,
+      "padding": 5,
+      "background": "#0f0f0f",
+      "color": "white",
       "config": {
         "view": {
           "stroke": "transparent"
+        },
+        "legend": {
+          "labelColor": "white",
+          "labelFontSize": 12,
+          "titleColor": "white",
+          "titleFontSize": 16
         }
       },
       "layer": [
@@ -78,6 +91,64 @@ function getMap(req, res, next) {
         }
       ]
     }
+    res.json(vegaMap)
+  }, (err) => {
+    res.status(err.status).json(err)
+  })
+}
+
+router.get('/islegalpersurface', getLegalPerSurface)
+function getLegalPerSurface(req, res, next) {
+  log.info(`-> ${req.baseUrl} getMap`, 'blue')
+
+  rentService.getAll((data) => {
+    const vegaMap = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+      "width": 500,
+      "height": 400,
+      "padding": 5,
+      "title": {
+        "text": "Encandrement des loyers par surface",
+        "color": "white",
+        "fontSize": 18
+      },
+      "background": "#0f0f0f",
+      "color": "white",
+      "config": {
+        "legend": {
+          "labelColor": "white",
+          "labelFontSize": 12,
+          "titleColor": "white",
+          "titleFontSize": 16
+        }
+      },
+      "data": {
+        "values": data
+      },
+      "mark": { "type": "bar", "tooltip": true },
+      "encoding": {
+        "x": {
+          "bin": {
+            "step": 5
+          },
+          "field": "surface",
+          "type": "quantitative"
+        },
+        "y": {
+          "aggregate": "count",
+          "field": "isLegal",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "isLegal",
+          "type": "nominal",
+          "scale": {
+            "range": ["red", "green"]
+          }
+        }
+      }
+    }
+
     res.json(vegaMap)
   }, (err) => {
     res.status(err.status).json(err)
