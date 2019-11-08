@@ -16,13 +16,14 @@ function getMap(req, res, next) {
       "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
       "title": {
         "text": "Carte encadrement des loyers à Paris",
-        "color": "white",
-        "fontSize": 18
+        "color": "#fdcd56",
+        "fontSize": 22,
+        "fontFamily": "Garnett"
       },
       "width": 700,
       "height": 500,
       "padding": 5,
-      "background": "#0f0f0f",
+      "background": "#222222",
       "color": "white",
       "config": {
         "view": {
