@@ -16,13 +16,13 @@ function digForAddress(ad) {
     const postalCode = ad.postalCode || ad.cityLabel
         && (_digForPostalCode(ad.cityLabel) || _digForPostalCode2(ad.cityLabel))
         || ad.description && (_digForPostalCode(ad.description) || _digForPostalCode2(ad.description))
-    const address = ad.address || ad.description && _digForAddressInDescription(ad.description, { city, postalCode })
+    const address = ad.address || (ad.description && _digForAddressInText(ad.description, { city, postalCode })) || (ad.title && _digForAddressInText(ad.title, { city, postalCode }))
     return [address, postalCode, city]
 }
 
-function _digForAddressInDescription(description, { city, postalCode }) {
+function _digForAddressInText(text, { city, postalCode }) {
     const addressRe = new RegExp(regexString('address'))
-    const addressesFromRegex = description.match(addressRe)
+    const addressesFromRegex = text.match(addressRe)
     if (city && cleanup.string(city) === 'paris' && addressesFromRegex) {
         const result = addressesFromRegex.flatMap(address => {
             return addressService.getAddressInParis(address.trim(), { postalCode })
@@ -61,7 +61,7 @@ function digForYearBuilt(ad) {
 function digForHasFurniture(ad) {
     const furnitureFromTitle = ad.title && ad.title.match(regexString('furnished'))
     const furnitureFromDescription = ad.description && ad.description.match(regexString('furnished'))
-    return ad.furnished !== null && !!ad.furnished || (furnitureFromDescription && furnitureFromDescription.length > 0) || (furnitureFromTitle && furnitureFromTitle.length > 0) || null
+    return ad.furnished !== null ? !!ad.furnished : (furnitureFromDescription && furnitureFromDescription.length > 0) || (furnitureFromTitle && furnitureFromTitle.length > 0) || null
 }
 
 function digForSurface(ad) {

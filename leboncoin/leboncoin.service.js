@@ -29,7 +29,7 @@ function dataMapping(ad) {
         id: ad.id,
         cityLabel: cleanup.string(ad.cityLabel),
         description: cleanup.string(ad.body),
-        furnished: ad.furnished ? ad.furnished === 'Meublé' ? true : false : null,
+        furnished: ad.furnished ? ad.furnished === 'Meublé' ? true : ad.furnished === 'Non meublé' ? false : null : null,
         price: cleanup.price(ad.price),
         renter: cleanup.string(ad.renter),
         rooms: cleanup.number(ad.rooms),
