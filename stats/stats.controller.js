@@ -57,8 +57,15 @@ function getMap(req, res, next) {
             "transform": [
               { "filter": { "field": "latitude", "valid": true } },
               { "calculate": "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
-              { "calculate": "datum.hasFurniture === true ? 'Oui' : (datum.hasFurniture === false ? 'Non' : 'undefined')", "as": "hasFurniture" },
+              { "calculate": "datum.hasFurniture === true ? 'Oui' : (datum.hasFurniture === false ? 'Non' : 'Non renseigné')", "as": "hasFurniture" },
               { "calculate": "datum.renter ? datum.renter : 'Particulier'", "as": "renter" },
+              { "calculate": "datum.address ? datum.address : 'Non renseignée'", "as": "address" },
+              { "calculate": "datum.postalCode ? datum.postalCode : 'Non renseigné'", "as": "postalCode" },
+              { "calculate": "datum.roomCount ? datum.roomCount : 'Non renseigné'", "as": "roomCount" },
+              { "calculate": "datum.surface ? datum.surface : 'Non renseignée'", "as": "surface" },
+              { "calculate": "datum.yearBuilt ? datum.yearBuilt : 'Non renseignée'", "as": "yearBuilt" },
+              { "calculate": "datum.price ? datum.price : 'Non renseigné'", "as": "price" },
+              { "calculate": "datum.maxPrice ? datum.maxPrice : 'Non renseigné'", "as": "maxPrice" },
             ],
             "encoding": {
               "longitude": {
