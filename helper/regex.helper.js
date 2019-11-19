@@ -1,5 +1,5 @@
 const regex = {
-    address: /([0-9]*)?( )?(bis|b|ter)? (rue|avenue|passage|boulevard|faubourg|allee|quai|place|jardin|impasse|square|bd|cite) (?!(calme|tranquille)\b)( ?[a-zA-Z'’-]+){0,3}/g,
+    address: /([0-9]*)? ?(bis|b|ter)?,? (rue|avenue|passage|boulevard|faubourg|allee|quai|place|jardin|impasse|square|bd|cite) (?!(calme|tranquille)\b)( ?[a-zA-Z'’-]+){0,3}/g,
     postalCode: /\b75[0-9]{3}\b/g,
     postalCode2: /((?<=paris )[0-9]{1,2})|([0-9]{1,2} ?(?=er|ème|e))/g,
     roomCount: /([0-9]*|un|deux|trois|quatre|cinq|six|sept)? ?((piece))/g,
