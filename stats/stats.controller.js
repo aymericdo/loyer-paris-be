@@ -33,72 +33,72 @@ function getMap(req, res, next) {
 
     rentService.getAll((data) => {
       const vegaMap = {
-        ...vegaService.commonOpts("Carte encadrement des loyers à Paris"),
-        "layer": [
+        ...vegaService.commonOpts(),
+        layer: [
           {
-            "data": {
-              "format": { "type": "json", "property": "features" },
-              "values": parisGeodata
+            data: {
+              format: { type: "json", property: "features" },
+              values: parisGeodata
             },
-            "projection": { "type": "mercator" },
-            "mark": {
-              "type": "geoshape",
-              "fill": "lightgray",
-              "stroke": "white"
+            projection: { type: "mercator" },
+            mark: {
+              type: "geoshape",
+              fill: "lightgray",
+              stroke: "white"
             },
-            "encoding": {
-              "tooltip": { "field": "properties.l_qu", "type": "nominal" }
+            encoding: {
+              tooltip: { field: "properties.l_qu", type: "nominal" }
             }
           },
           {
-            "data": {
-              "values": data
+            data: {
+              values: data
             },
-            "transform": [
-              { "filter": { "field": "latitude", "valid": true } },
-              { "calculate": "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
-              { "calculate": "datum.hasFurniture === true ? 'Oui' : (datum.hasFurniture === false ? 'Non' : 'Non renseigné')", "as": "hasFurniture" },
-              { "calculate": "isValid(datum.renter) ? datum.renter : 'Particulier'", "as": "renter" },
-              { "calculate": "isValid(datum.address) ? datum.address : 'Non renseignée'", "as": "address" },
-              { "calculate": "isValid(datum.postalCode) ? datum.postalCode : 'Non renseigné'", "as": "postalCode" },
-              { "calculate": "isValid(datum.roomCount) ? datum.roomCount : 'Non renseigné'", "as": "roomCount" },
-              { "calculate": "isValid(datum.surface) ? datum.surface : 'Non renseignée'", "as": "surface" },
-              { "calculate": "isValid(datum.yearBuilt) ? datum.yearBuilt : 'Non renseignée'", "as": "yearBuilt" },
-              { "calculate": "isValid(datum.price) ? datum.price : 'Non renseigné'", "as": "price" },
-              { "calculate": "isValid(datum.maxPrice) ? datum.maxPrice : 'Non renseigné'", "as": "maxPrice" },
+            transform: [
+              { filter: { field: "latitude", valid: true } },
+              { calculate: "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
+              { calculate: "datum.hasFurniture === true ? 'Oui' : (datum.hasFurniture === false ? 'Non' : 'Non renseigné')", "as": "hasFurniture" },
+              { calculate: "isValid(datum.renter) ? datum.renter : 'Particulier'", "as": "renter" },
+              { calculate: "isValid(datum.address) ? datum.address : 'Non renseignée'", "as": "address" },
+              { calculate: "isValid(datum.postalCode) ? datum.postalCode : 'Non renseigné'", "as": "postalCode" },
+              { calculate: "isValid(datum.roomCount) ? datum.roomCount : 'Non renseigné'", "as": "roomCount" },
+              { calculate: "isValid(datum.surface) ? datum.surface : 'Non renseignée'", "as": "surface" },
+              { calculate: "isValid(datum.yearBuilt) ? datum.yearBuilt : 'Non renseignée'", "as": "yearBuilt" },
+              { calculate: "isValid(datum.price) ? datum.price : 'Non renseigné'", "as": "price" },
+              { calculate: "isValid(datum.maxPrice) ? datum.maxPrice : 'Non renseigné'", "as": "maxPrice" },
             ],
-            "encoding": {
-              "longitude": {
-                "field": "longitude",
-                "type": "quantitative"
+            encoding: {
+              longitude: {
+                field: "longitude",
+                type: "quantitative"
               },
-              "latitude": {
-                "field": "latitude",
-                "type": "quantitative"
+              latitude: {
+                field: "latitude",
+                type: "quantitative"
               },
-              "color": {
-                "field": "isLegal", "title": "Est légal ?", "type": "nominal", "scale": {
-                  "range": ["red", "green"]
+              color: {
+                field: "isLegal", title: "Est légal ?", type: "nominal", scale: {
+                  range: ["red", "green"]
                 }
               },
-              "tooltip": [
-                { "field": "address", "type": "nominal", "title": "Adresse" },
-                { "field": "renter", "type": "nominal", "title": "Loueur" },
-                { "field": "postalCode", "type": "ordinal", "title": "Code postal" },
-                { "field": "roomCount", "type": "quantitative", "title": "Nombre de pièce(s)" },
-                { "field": "surface", "type": "quantitative", "title": "Surface" },
-                { "field": "yearBuilt", "type": "nominal", "title": "Année de construction" },
-                { "field": "hasFurniture", "type": "nominal", "title": "Meublé" },
-                { "field": "price", "type": "quantitative", "title": "Prix affiché" },
-                { "field": "maxPrice", "type": "quantitative", "title": "Prix maximum" }
+              tooltip: [
+                { field: "address", type: "nominal", title: "Adresse" },
+                { field: "renter", type: "nominal", title: "Loueur" },
+                { field: "postalCode", type: "ordinal", title: "Code postal" },
+                { field: "roomCount", type: "quantitative", title: "Nombre de pièce(s)" },
+                { field: "surface", type: "quantitative", title: "Surface" },
+                { field: "yearBuilt", type: "nominal", title: "Année de construction" },
+                { field: "hasFurniture", type: "nominal", title: "Meublé" },
+                { field: "price", type: "quantitative", title: "Prix affiché" },
+                { field: "maxPrice", type: "quantitative", title: "Prix maximum" }
               ]
             },
-            "mark": {
-              "type": "circle",
-              "color": "red"
+            mark: {
+              type: "circle",
+              color: "red"
             }
           }
-        ]
+        ],
       }
       res.json(vegaMap)
     });
@@ -131,7 +131,7 @@ function getLegalPerSurface(req, res, next) {
 
     rentService.getAll((data) => {
       const vegaMap = {
-        ...vegaService.commonOpts,
+        ...vegaService.commonOpts(),
         "data": {
           "values": data
         },
