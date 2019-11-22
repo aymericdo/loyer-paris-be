@@ -13,7 +13,8 @@ function getCoordinate(address, addressInfo) {
     const postalCode = addressInfo && addressInfo.postalCode
     const city = addressInfo && addressInfo.city
     if (city && cleanup.string(city) === 'paris') {
-        const result = getAddressInParis(address, { postalCode })
+        const addressInParis = getAddressInParis(address, { postalCode })
+        const result = addressInParis && addressInParis.map(address => address.item)
         return Promise.resolve(result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] })
     } else {
         return opencage.geocode({ q: `${address} ${postalCode ? postalCode : ''} ${city ? city : ''}`, countrycode: 'fr' })
@@ -45,6 +46,7 @@ function getAddressInParis(q, addressInfo) {
     const options = {
         keys: ['fields.l_adr'],
         shouldSort: true,
+        includeScore: true,
         threshold: 0.5,
         tokenize: true,
         matchAllTokens: true,

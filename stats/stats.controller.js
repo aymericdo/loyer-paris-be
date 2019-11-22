@@ -107,6 +107,64 @@ function getMap(req, res, next) {
   })
 }
 
+router.get('/priceDifference', getPriceDifference)
+function getPriceDifference(req, res, next) {
+  log.info(`-> ${req.baseUrl} getMap`, 'blue')
+
+  const verifyCaptchaOptions = {
+    uri: "https://www.google.com/recaptcha/api/siteverify",
+    json: true,
+    form: {
+      secret: process.env.CAPTCHA_SECRET,
+      response: req.query.recaptchaToken
+    }
+  };
+
+  request.post(verifyCaptchaOptions, (err, response, body) => {
+    if (err) {
+      return res.status(500).json({ message: "oops, something went wrong on our side" });
+    }
+
+    if (!body.success) {
+      return res.status(500).json({ message: body["error-codes"].join(".") });
+    }
+
+    rentService.getAll((data) => {
+      const vegaMap = {
+        ...vegaService.commonOpts,
+        "autosize": {
+          "type": "fit",
+          "contains": "padding"
+        },
+        "data": {
+          "values": data
+        },
+        "mark": { "type": "bar", "tooltip": true },
+        "transform": [
+          { "calculate": "datum.price - datum.maxPrice", "as": "priceDifference" }
+        ],
+        "encoding": {
+          "x": {
+            "aggregate": "mean",
+            "field": "priceDifference",
+            "type": "quantitative",
+            "title": "Différence de prix moyen"
+          },
+          "y": {
+            "field": "postalCode",
+            "type": "ordinal",
+            "title": "Code postal"
+          }
+        }
+      }
+
+      res.json(vegaMap)
+    });
+  }, (err) => {
+    res.status(err.status).json(err)
+  })
+}
+
 router.get('/islegalpersurface', getLegalPerSurface)
 function getLegalPerSurface(req, res, next) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')

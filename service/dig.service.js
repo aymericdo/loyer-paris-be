@@ -26,7 +26,7 @@ function _digForAddressInText(text, { city, postalCode }) {
     if (city && cleanup.string(city) === 'paris' && addressesFromRegex) {
         const result = addressesFromRegex.flatMap(address => {
             return addressService.getAddressInParis(address.trim(), { postalCode })
-        }).filter(Boolean)
+        }).filter(Boolean).sort((a, b) => a.score - b.score).map(address => address.item)
         return result && result.length ?
             cleanup.string(addressesFromRegex[0]).match(/^\d+/gi, "") ?
                 cleanup.string(result[0].fields.l_adr) :
