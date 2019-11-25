@@ -25,9 +25,11 @@ function apiMapping(ad) {
 function dataMapping(ad) {
     return {
         id: ad.id,
+        charges: cleanup.price(ad.charges),
         cityLabel: cleanup.string(ad.cityLabel),
         description: cleanup.string(ad.description),
         furnished: ad.furnished,
+        hasCharges: ad.hasCharges,
         price: cleanup.price(ad.price),
         renter: cleanup.string(ad.renter),
         rooms: cleanup.number(ad.rooms),

@@ -3,11 +3,14 @@ const roundNumber = require('helper/round-number.helper')
 
 module.exports = ({
     address,
+    charges,
+    hasCharges,
     hasFurniture,
     isLegal,
     maxAuthorized,
     postalCode,
     price,
+    priceAfterCharges,
     roomCount,
     surface,
     yearBuilt,
@@ -22,6 +25,8 @@ module.exports = ({
             surface: { order: 3, value: surface },
             yearBuilt: { order: 4, value: yearBuilt },
             price: { order: 5, value: roundNumber(price) },
+            charges: { order: 6, value: roundNumber(charges) },
+            hasCharges: { order: 7, value: !charges && hasCharges != null ? hasCharges : null },
         },
         computedInfo: {
             neighborhood: { order: 0, value: match.fields.nom_quartier },
@@ -32,7 +37,7 @@ module.exports = ({
             min: { order: 5, value: roundNumber(+match.fields.min) },
             max: { order: 6, value: roundNumber(+match.fields.max) },
             maxAuthorized: { order: 7, value: maxAuthorized },
-            promoPercentage: { order: 8, value: !isLegal ? roundNumber(100 - (maxAuthorized * 100 / price)) : null },
+            promoPercentage: { order: 8, value: !isLegal ? roundNumber(100 - (maxAuthorized * 100 / priceAfterCharges)) : null },
         },
         isLegal,
     }

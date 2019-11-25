@@ -24,7 +24,7 @@ module.exports = ({
                 return (result.districts && result.districts.filter(Boolean).length ? result.districts.map(district => district.fields.c_qu).includes(rangeRent.fields.id_quartier) : true)
                     && (yearRange ? rangeRent.fields.epoque === yearRange : true)
                     && (roomCount ? +roomCount < 5 ? rangeRent.fields.piece === +roomCount : rangeRent.fields.piece === 4 : true)
-                    && (hasFurniture !== null ? hasFurniture ? rangeRent.fields.meuble_txt.match(/^meubl/g) : rangeRent.fields.meuble_txt.match(/^non meubl/g) : true)
+                    && (hasFurniture != null ? hasFurniture ? rangeRent.fields.meuble_txt.match(/^meubl/g) : rangeRent.fields.meuble_txt.match(/^non meubl/g) : true)
             })
 
             log.info('rent filter done')

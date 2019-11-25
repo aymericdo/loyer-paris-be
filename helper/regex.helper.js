@@ -3,7 +3,8 @@ const regex = {
     postalCode: /\b75[0-9]{3}\b/g,
     postalCode2: /((?<=paris )[0-9]{1,2})|([0-9]{1,2} ?(?=er|ème|e))/g,
     roomCount: /([0-9]*|un|deux|trois|quatre|cinq|six|sept)? ?((piece))/g,
-    furnished: /(?<!(non-|non ))\bmeuble/g
+    furnished: /(?<!(non-|non ))\bmeuble/g,
+    charges: /((?<=(charges locatives |charges |charge )(\D{0,4}))|(?<=\d{3,4}((|\.|,)\d{1,2})?(\D{0,5})?\+ ?))(\d{2,3}((|\.|,)\d{1,2})?)(?=( ?euros\b| ?€| ?e\b| ?eur\b| ?euro\b | ?(charge(s)?)\b))/g
 }
 
 module.exports = (value) => {

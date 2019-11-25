@@ -7,6 +7,7 @@ const roundNumber = require('helper/round-number.helper')
 const serializer = require('service/serializer.service')
 const rentFilter = require('service/rent-filter.service')
 const saverService = require('service/saver.service')
+const chargesService = require('service/charges.service')
 
 // routes
 router.post('/data', getByData)
@@ -30,6 +31,8 @@ function digData(ad, onSuccess, onError) {
     const [address, postalCode, city] = digService.digForAddress(ad)
     const renter = digService.digForRenter(ad)
     const stations = digService.digForStations(ad)
+    const charges = digService.digForCharges(ad)
+    const hasCharges = digService.digForHasCharges(ad)
 
     if (price && surface) {
         if (address || postalCode) {
@@ -48,6 +51,7 @@ function digData(ad, onSuccess, onError) {
                 }).then(({ match, coord }) => {
                     if (match) {
                         const maxAuthorized = roundNumber(+match.fields.max * surface)
+                        const priceAfterCharges = chargesService.subCharges(price, charges, hasCharges)
                         const isLegal = price <= maxAuthorized
 
                         saverService.rent({
@@ -71,11 +75,14 @@ function digData(ad, onSuccess, onError) {
 
                         onSuccess(serializer({
                             address,
+                            charges,
+                            hasCharges,
                             hasFurniture,
                             isLegal,
                             maxAuthorized,
                             postalCode,
                             price,
+                            priceAfterCharges,
                             roomCount,
                             surface,
                             yearBuilt,

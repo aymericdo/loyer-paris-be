@@ -47,7 +47,7 @@ function getAddressInParis(q, addressInfo) {
         keys: ['fields.l_adr'],
         shouldSort: true,
         includeScore: true,
-        threshold: 0.5,
+        threshold: 0.6,
         tokenize: true,
         matchAllTokens: true,
     }
