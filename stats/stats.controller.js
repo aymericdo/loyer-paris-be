@@ -22,89 +22,78 @@ function getMap(req, res, next) {
     }
   };
 
-  request.post(verifyCaptchaOptions, (err, response, body) => {
-    if (err) {
-      return res.status(500).json({ message: "oops, something went wrong on our side" });
-    }
 
-    if (!body.success) {
-      return res.status(500).json({ message: body["error-codes"].join(".") });
-    }
-
-    rentService.getAll((data) => {
-      const vegaMap = {
-        ...vegaService.commonOpts(),
-        layer: [
-          {
-            data: {
-              format: { type: "json", property: "features" },
-              values: parisGeodata
-            },
-            projection: { type: "mercator" },
-            mark: {
-              type: "geoshape",
-              fill: "lightgray",
-              stroke: "white"
-            },
-            encoding: {
-              tooltip: { field: "properties.l_qu", type: "nominal" }
-            }
+  rentService.getAll((data) => {
+    const vegaMap = {
+      ...vegaService.commonOpts(),
+      layer: [
+        {
+          data: {
+            format: { type: "json", property: "features" },
+            values: parisGeodata
           },
-          {
-            data: {
-              values: data
-            },
-            transform: [
-              { filter: { field: "latitude", valid: true } },
-              { calculate: "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
-              { calculate: "datum.hasFurniture === true ? 'Oui' : (datum.hasFurniture === false ? 'Non' : 'Non renseigné')", "as": "hasFurniture" },
-              { calculate: "isValid(datum.renter) ? datum.renter : 'Particulier'", "as": "renter" },
-              { calculate: "isValid(datum.address) ? datum.address : 'Non renseignée'", "as": "address" },
-              { calculate: "isValid(datum.postalCode) ? datum.postalCode : 'Non renseigné'", "as": "postalCode" },
-              { calculate: "isValid(datum.roomCount) ? datum.roomCount : 'Non renseigné'", "as": "roomCount" },
-              { calculate: "isValid(datum.surface) ? datum.surface : 'Non renseignée'", "as": "surface" },
-              { calculate: "isValid(datum.yearBuilt) ? datum.yearBuilt : 'Non renseignée'", "as": "yearBuilt" },
-              { calculate: "isValid(datum.price) ? datum.price : 'Non renseigné'", "as": "price" },
-              { calculate: "isValid(datum.maxPrice) ? datum.maxPrice : 'Non renseigné'", "as": "maxPrice" },
-            ],
-            encoding: {
-              longitude: {
-                field: "longitude",
-                type: "quantitative"
-              },
-              latitude: {
-                field: "latitude",
-                type: "quantitative"
-              },
-              color: {
-                field: "isLegal", title: "Est légal ?", type: "nominal", scale: {
-                  range: ["red", "green"]
-                }
-              },
-              tooltip: [
-                { field: "address", type: "nominal", title: "Adresse" },
-                { field: "renter", type: "nominal", title: "Loueur" },
-                { field: "postalCode", type: "ordinal", title: "Code postal" },
-                { field: "roomCount", type: "quantitative", title: "Nombre de pièce(s)" },
-                { field: "surface", type: "quantitative", title: "Surface" },
-                { field: "yearBuilt", type: "nominal", title: "Année de construction" },
-                { field: "hasFurniture", type: "nominal", title: "Meublé" },
-                { field: "price", type: "quantitative", title: "Prix affiché" },
-                { field: "maxPrice", type: "quantitative", title: "Prix maximum" }
-              ]
-            },
-            mark: {
-              type: "circle",
-              color: "red"
-            }
+          projection: { type: "mercator" },
+          mark: {
+            type: "geoshape",
+            fill: "lightgray",
+            stroke: "white"
+          },
+          encoding: {
+            tooltip: { field: "properties.l_qu", type: "nominal" }
           }
-        ],
-      }
-      res.json(vegaMap)
-    });
-  }, (err) => {
-    res.status(err.status).json(err)
-  })
+        },
+        {
+          data: {
+            values: data
+          },
+          transform: [
+            { filter: { field: "latitude", valid: true } },
+            { calculate: "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
+            { calculate: "datum.hasFurniture === true ? 'Oui' : (datum.hasFurniture === false ? 'Non' : 'Non renseigné')", "as": "hasFurniture" },
+            { calculate: "isValid(datum.renter) ? datum.renter : 'Particulier'", "as": "renter" },
+            { calculate: "isValid(datum.address) ? datum.address : 'Non renseignée'", "as": "address" },
+            { calculate: "isValid(datum.postalCode) ? datum.postalCode : 'Non renseigné'", "as": "postalCode" },
+            { calculate: "isValid(datum.roomCount) ? datum.roomCount : 'Non renseigné'", "as": "roomCount" },
+            { calculate: "isValid(datum.surface) ? datum.surface : 'Non renseignée'", "as": "surface" },
+            { calculate: "isValid(datum.yearBuilt) ? datum.yearBuilt : 'Non renseignée'", "as": "yearBuilt" },
+            { calculate: "isValid(datum.price) ? datum.price : 'Non renseigné'", "as": "price" },
+            { calculate: "isValid(datum.maxPrice) ? datum.maxPrice : 'Non renseigné'", "as": "maxPrice" },
+          ],
+          encoding: {
+            longitude: {
+              field: "longitude",
+              type: "quantitative"
+            },
+            latitude: {
+              field: "latitude",
+              type: "quantitative"
+            },
+            color: {
+              field: "isLegal", title: "Est légal ?", type: "nominal", scale: {
+                range: ["red", "green"]
+              }
+            },
+            tooltip: [
+              { field: "address", type: "nominal", title: "Adresse" },
+              { field: "renter", type: "nominal", title: "Loueur" },
+              { field: "postalCode", type: "ordinal", title: "Code postal" },
+              { field: "roomCount", type: "quantitative", title: "Nombre de pièce(s)" },
+              { field: "surface", type: "quantitative", title: "Surface" },
+              { field: "yearBuilt", type: "nominal", title: "Année de construction" },
+              { field: "hasFurniture", type: "nominal", title: "Meublé" },
+              { field: "price", type: "quantitative", title: "Prix affiché" },
+              { field: "maxPrice", type: "quantitative", title: "Prix maximum" }
+            ]
+          },
+          mark: {
+            type: "circle",
+            color: "red"
+          }
+        }
+      ],
+    }
+    res.json(vegaMap)
+  });
 }
 
 router.get('/priceDifference', getPriceDifference)
@@ -225,5 +214,57 @@ function getLegalPerSurface(req, res, next) {
     res.status(err.status).json(err)
   })
 }
+
+
+router.get('/welcome', getWelcomeText)
+function getWelcomeText(req, res, next) {
+  log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
+
+  rentService.getAll((rents) => {
+    let isLegalPercentage = Math.round(100 * rents.filter(rent => rent.isLegal).length / rents.length)
+    let postalCodeGroupedRents = groupBy(rents, "postalCode")
+    let extremePostalCode = getExtremePostalCode(postalCodeGroupedRents);
+    let worstPostalCode = extremePostalCode[0];
+    let bestPostalCode = extremePostalCode[1];
+    return res.json({
+      "NumberRents": rents.length,
+      "IsLegalPercentage": isLegalPercentage,
+      "WorstPostalCode": worstPostalCode,
+      "BestPostalCode": bestPostalCode
+    });
+  });
+}
+
+var groupBy = function (xs, key) {
+  return xs.reduce(function (rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
+
+function getExtremePostalCode(groupedRents) {
+  var worstPc = ""
+  var bestPc = ""
+  var bestLegal = 0
+  var worstLegal = 1
+  Object.keys(groupedRents).forEach(pc => {
+    let pc_rents = groupedRents[pc]
+    let legals = pc_rents.filter(rent => rent.isLegal).length
+    if (bestLegal < legals) {
+      bestPc = pc;
+      bestLegal = legals
+    }
+
+    if (worstLegal > legals) {
+      worstPc = pc;
+      worstLegal = legals
+    }
+  })
+  var worstNeighborhood = (worstPc.slice(-2)[0] === '0' ? worstPc.slice(-1) : worstPc.slice(-2))
+  var bestNeighborhood = (bestPc.slice(-2)[0] === '0' ? bestPc.slice(-1) : bestPc.slice(-2))
+  return [worstNeighborhood, bestNeighborhood]
+}
+
+
 
 module.exports = router;
