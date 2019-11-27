@@ -3,16 +3,14 @@ const express = require('express')
 const request = require('request')
 const router = express.Router()
 const log = require('helper/log.helper')
+const groupBy = require('helper/group-by.helper')
+const ip = require('helper/ip.helper')
 const rentService = require('db/rent.service')
 const vegaService = require('service/vega.service')
 
 const parisGeodata = JSON.parse(fs.readFileSync('json-data/quartier_paris_geodata.json', 'utf8'))
 
-// routes
-router.get('/map', getMap)
-function getMap(req, res, next) {
-  log.info(`-> ${req.baseUrl} getMap`, 'blue')
-
+router.use('/', function (req, res, next) {
   const verifyCaptchaOptions = {
     uri: "https://www.google.com/recaptcha/api/siteverify",
     json: true,
@@ -20,8 +18,33 @@ function getMap(req, res, next) {
       secret: process.env.CAPTCHA_SECRET,
       response: req.query.recaptchaToken
     }
-  };
+  }
 
+  if (ip.isIpCached(ip.getIp(req))) {
+    next()
+  } else {
+    ip.saveIp(ip.getIp(req))
+    request.post(verifyCaptchaOptions, (err, response, body) => {
+      if (err) {
+        return res.status(500).json({ message: "oops, something went wrong on our side" });
+      }
+
+      if (!body.success) {
+        return res.status(500).json({ message: body["error-codes"].join(".") });
+      }
+
+      next()
+    }, (err) => {
+      res.status(err.status).json(err)
+    })
+  }
+
+})
+
+// routes
+router.get('/map', getMap)
+function getMap(req, res, next) {
+  log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
   rentService.getAll((data) => {
     const vegaMap = {
@@ -96,125 +119,78 @@ function getMap(req, res, next) {
   });
 }
 
-router.get('/priceDifference', getPriceDifference)
+router.get('/price-difference', getPriceDifference)
 function getPriceDifference(req, res, next) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
-  const verifyCaptchaOptions = {
-    uri: "https://www.google.com/recaptcha/api/siteverify",
-    json: true,
-    form: {
-      secret: process.env.CAPTCHA_SECRET,
-      response: req.query.recaptchaToken
-    }
-  };
-
-  request.post(verifyCaptchaOptions, (err, response, body) => {
-    if (err) {
-      return res.status(500).json({ message: "oops, something went wrong on our side" });
-    }
-
-    if (!body.success) {
-      return res.status(500).json({ message: body["error-codes"].join(".") });
-    }
-
-    rentService.getAll((data) => {
-      const vegaMap = {
-        ...vegaService.commonOpts,
-        "autosize": {
-          "type": "fit",
-          "contains": "padding"
+  rentService.getAll((data) => {
+    const vegaMap = {
+      ...vegaService.commonOpts,
+      data: {
+        values: data
+      },
+      mark: { type: "bar", tooltip: true },
+      transform: [
+        { calculate: "datum.price - datum.maxPrice", as: "priceDifference" }
+      ],
+      encoding: {
+        x: {
+          aggregate: "mean",
+          field: "priceDifference",
+          type: "quantitative",
+          title: "Différence de prix moyen"
         },
-        "data": {
-          "values": data
-        },
-        "mark": { "type": "bar", "tooltip": true },
-        "transform": [
-          { "calculate": "datum.price - datum.maxPrice", "as": "priceDifference" }
-        ],
-        "encoding": {
-          "x": {
-            "aggregate": "mean",
-            "field": "priceDifference",
-            "type": "quantitative",
-            "title": "Différence de prix moyen"
-          },
-          "y": {
-            "field": "postalCode",
-            "type": "ordinal",
-            "title": "Code postal"
-          }
+        y: {
+          field: "postalCode",
+          type: "ordinal",
+          title: "Code postal"
         }
       }
+    }
 
-      res.json(vegaMap)
-    });
-  }, (err) => {
-    res.status(err.status).json(err)
-  })
+    res.json(vegaMap)
+  });
 }
 
-router.get('/islegalpersurface', getLegalPerSurface)
+router.get('/is-legal-per-surface', getLegalPerSurface)
 function getLegalPerSurface(req, res, next) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
-  const verifyCaptchaOptions = {
-    uri: "https://www.google.com/recaptcha/api/siteverify",
-    json: true,
-    form: {
-      secret: process.env.CAPTCHA_SECRET,
-      response: req.query.recaptchaToken
-    }
-  };
-
-  request.post(verifyCaptchaOptions, (err, response, body) => {
-    if (err) {
-      return res.status(500).json({ message: "oops, something went wrong on our side" });
-    }
-
-    if (!body.success) {
-      return res.status(500).json({ message: body["error-codes"].join(".") });
-    }
-
-    rentService.getAll((data) => {
-      const vegaMap = {
-        ...vegaService.commonOpts(),
-        "data": {
-          "values": data
+  rentService.getAll((data) => {
+    const vegaMap = {
+      ...vegaService.commonOpts(),
+      data: {
+        values: data
+      },
+      mark: { type: "bar", tooltip: true },
+      encoding: {
+        x: {
+          bin: {
+            step: 5
+          },
+          field: "surface",
+          title: "Surface",
+          type: "quantitative"
         },
-        "mark": { "type": "bar", "tooltip": true },
-        "encoding": {
-          "x": {
-            "bin": {
-              "step": 5
-            },
-            "field": "surface",
-            "title": "Surface",
-            "type": "quantitative"
-          },
-          "y": {
-            "aggregate": "count",
-            "field": "isLegal",
-            "title": "Est légal ?",
-            "type": "quantitative"
-          },
-          "color": {
-            "field": "isLegal",
-            "type": "nominal",
-            "scale": {
-              "range": ["red", "green"]
-            }
+        y: {
+          aggregate: "count",
+          field: "isLegal",
+          title: "Est légal ?",
+          type: "quantitative"
+        },
+        color: {
+          field: "isLegal",
+          type: "nominal",
+          scale: {
+            range: ["red", "green"]
           }
         }
       }
+    }
 
-      res.json(vegaMap)
-    });
-  }, (err) => {
-    res.status(err.status).json(err)
-  })
+    res.json(vegaMap)
+  });
 }
-
 
 router.get('/welcome', getWelcomeText)
 function getWelcomeText(req, res, next) {
@@ -226,37 +202,32 @@ function getWelcomeText(req, res, next) {
     let extremePostalCode = getExtremePostalCode(postalCodeGroupedRents);
     let worstPostalCode = extremePostalCode[0];
     let bestPostalCode = extremePostalCode[1];
+
     return res.json({
-      "NumberRents": rents.length,
-      "IsLegalPercentage": isLegalPercentage,
-      "WorstPostalCode": worstPostalCode,
-      "BestPostalCode": bestPostalCode
+      numberRents: rents.length,
+      isLegalPercentage: isLegalPercentage,
+      worstPostalCode: worstPostalCode,
+      bestPostalCode: bestPostalCode,
     });
   });
 }
-
-var groupBy = function (xs, key) {
-  return xs.reduce(function (rv, x) {
-    (rv[x[key]] = rv[x[key]] || []).push(x);
-    return rv;
-  }, {});
-};
 
 function getExtremePostalCode(groupedRents) {
   var worstPc = ""
   var bestPc = ""
   var bestLegal = 0
   var worstLegal = 1
+
   Object.keys(groupedRents).forEach(pc => {
-    let pc_rents = groupedRents[pc]
-    let legals = pc_rents.filter(rent => rent.isLegal).length
+    let pcRents = groupedRents[pc]
+    let legals = pcRents.filter(rent => rent.isLegal).length
     if (bestLegal < legals) {
-      bestPc = pc;
+      bestPc = pc
       bestLegal = legals
     }
 
     if (worstLegal > legals) {
-      worstPc = pc;
+      worstPc = pc
       worstLegal = legals
     }
   })
