@@ -13,6 +13,9 @@ router.get('/map', getMap)
 function getMap(req, res, next) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  console.log(ip)
+
   const verifyCaptchaOptions = {
     uri: "https://www.google.com/recaptcha/api/siteverify",
     json: true,
@@ -96,7 +99,7 @@ function getMap(req, res, next) {
   });
 }
 
-router.get('/priceDifference', getPriceDifference)
+router.get('/price-difference', getPriceDifference)
 function getPriceDifference(req, res, next) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
@@ -121,28 +124,24 @@ function getPriceDifference(req, res, next) {
     rentService.getAll((data) => {
       const vegaMap = {
         ...vegaService.commonOpts,
-        "autosize": {
-          "type": "fit",
-          "contains": "padding"
+        data: {
+          values: data
         },
-        "data": {
-          "values": data
-        },
-        "mark": { "type": "bar", "tooltip": true },
-        "transform": [
-          { "calculate": "datum.price - datum.maxPrice", "as": "priceDifference" }
+        mark: { type: "bar", tooltip: true },
+        transform: [
+          { calculate: "datum.price - datum.maxPrice", as: "priceDifference" }
         ],
-        "encoding": {
-          "x": {
-            "aggregate": "mean",
-            "field": "priceDifference",
-            "type": "quantitative",
-            "title": "Différence de prix moyen"
+        encoding: {
+          x: {
+            aggregate: "mean",
+            field: "priceDifference",
+            type: "quantitative",
+            title: "Différence de prix moyen"
           },
-          "y": {
-            "field": "postalCode",
-            "type": "ordinal",
-            "title": "Code postal"
+          y: {
+            field: "postalCode",
+            type: "ordinal",
+            title: "Code postal"
           }
         }
       }
@@ -154,7 +153,7 @@ function getPriceDifference(req, res, next) {
   })
 }
 
-router.get('/islegalpersurface', getLegalPerSurface)
+router.get('/is-legal-per-surface', getLegalPerSurface)
 function getLegalPerSurface(req, res, next) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
@@ -179,30 +178,30 @@ function getLegalPerSurface(req, res, next) {
     rentService.getAll((data) => {
       const vegaMap = {
         ...vegaService.commonOpts(),
-        "data": {
-          "values": data
+        data: {
+          values: data
         },
-        "mark": { "type": "bar", "tooltip": true },
-        "encoding": {
-          "x": {
-            "bin": {
-              "step": 5
+        mark: { type: "bar", tooltip: true },
+        encoding: {
+          x: {
+            bin: {
+              step: 5
             },
-            "field": "surface",
-            "title": "Surface",
-            "type": "quantitative"
+            field: "surface",
+            title: "Surface",
+            type: "quantitative"
           },
-          "y": {
-            "aggregate": "count",
-            "field": "isLegal",
-            "title": "Est légal ?",
-            "type": "quantitative"
+          y: {
+            aggregate: "count",
+            field: "isLegal",
+            title: "Est légal ?",
+            type: "quantitative"
           },
-          "color": {
-            "field": "isLegal",
-            "type": "nominal",
-            "scale": {
-              "range": ["red", "green"]
+          color: {
+            field: "isLegal",
+            type: "nominal",
+            scale: {
+              range: ["red", "green"]
             }
           }
         }
