@@ -3,6 +3,7 @@ const express = require('express')
 const request = require('request')
 const router = express.Router()
 const log = require('helper/log.helper')
+const ip = require('helper/ip.helper')
 const rentService = require('db/rent.service')
 const vegaService = require('service/vega.service')
 
@@ -22,15 +23,7 @@ function getMap(req, res, next) {
     }
   };
 
-  request.post(verifyCaptchaOptions, (err, response, body) => {
-    if (err) {
-      return res.status(500).json({ message: "oops, something went wrong on our side" });
-    }
-
-    if (!body.success) {
-      return res.status(500).json({ message: body["error-codes"].join(".") });
-    }
-
+  const getGraph = function () {
     rentService.getAll((data) => {
       const vegaMap = {
         ...vegaService.commonOpts(),
@@ -102,9 +95,27 @@ function getMap(req, res, next) {
       }
       res.json(vegaMap)
     });
-  }, (err) => {
-    res.status(err.status).json(err)
-  })
+  }
+
+  const requestIp = ip.getIp(req)
+  const isIpCached = ip.isIpCached(requestIp)
+
+  isIpCached ?
+    getGraph()
+    : request.post(verifyCaptchaOptions, (err, response, body) => {
+      if (err) {
+        return res.status(500).json({ message: "oops, something went wrong on our side" });
+      }
+
+      if (!body.success) {
+        return res.status(500).json({ message: body["error-codes"].join(".") });
+      }
+
+      getGraph()
+
+    }, (err) => {
+      res.status(err.status).json(err)
+    })
 }
 
 router.get('/priceDifference', getPriceDifference)
