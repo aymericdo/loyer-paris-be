@@ -221,12 +221,17 @@ function getWelcomeText(req, res, next) {
   log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
 
   rentService.getAll((rents) => {
-    let numberRents = rents.length
-    let isLegalPercentage = Math.round(100 * rents.map(rent => rent.isLegal).reduce((acc, x) => acc + x, 0) / rents.length)
-    let postalCodeGroupedRents = getMapGroupBy(rents, "postalCode")
-    let bestPostalCode = getExtremePostalCode(postalCodeGroupedRents, "best")
-    let worstPostalCode = getExtremePostalCode(postalCodeGroupedRents, "worst")
-    return res.json({ message: `Sur les ${numberRents} annonces étudiées, seulement ${isLegalPercentage}% sont légales. Le ${bestPostalCode}e est l'arrondissement où l'encadrement est le plus respecté contrairement au ${worstPostalCode}e qui à le plus d'annonces illégales.` });
+    let isLegalPercentage = Math.round(100 * rents.filter(rent => rent.isLegal).length / rents.length)
+    let postalCodeGroupedRents = groupBy(rents, "postalCode")
+    let extremePostalCode = getExtremePostalCode(postalCodeGroupedRents);
+    let worstPostalCode = extremePostalCode[0];
+    let bestPostalCode = extremePostalCode[1];
+    return res.json({
+      "NumberRents": rents.length,
+      "IsLegalPercentage": isLegalPercentage,
+      "WorstPostalCode": worstPostalCode,
+      "BestPostalCode": bestPostalCode
+    });
   });
 }
 
@@ -237,26 +242,27 @@ var groupBy = function (xs, key) {
   }, {});
 };
 
-function getMapGroupBy(xs, key) {
-  let grouped_rents = groupBy(xs, key)
-  var groupedMap = new Map();
-  for (const [key, grouped_r] of Object.entries(grouped_rents)) {
-    groupedMap.set(key, grouped_r);
-  }
-  return groupedMap
-}
-
-function getExtremePostalCode(grouped_map, comparison) {
-  var extremePc = ""
-  var extremeLegal = 0 ? comparison == "best" : 1
-  for (var [pc, grouped_r] of grouped_map) {
-    let legals = grouped_r.map(rent => rent.isLegal).reduce((acc, x) => acc + x, 0)
-    if ((comparison == "best" && extremeLegal < legals) || (comparison == "worst" && extremeLegal > legals)) {
-      extremePc = pc;
-      extremeLegal = legals
+function getExtremePostalCode(groupedRents) {
+  var worstPc = ""
+  var bestPc = ""
+  var bestLegal = 0
+  var worstLegal = 1
+  Object.keys(groupedRents).forEach(pc => {
+    let pc_rents = groupedRents[pc]
+    let legals = pc_rents.filter(rent => rent.isLegal).length
+    if (bestLegal < legals) {
+      bestPc = pc;
+      bestLegal = legals
     }
-  }
-  return (extremePc.slice(-2)[0] === '0' ? extremePc.slice(-1) : extremePc.slice(-2))
+
+    if (worstLegal > legals) {
+      worstPc = pc;
+      worstLegal = legals
+    }
+  })
+  var worstNeighborhood = (worstPc.slice(-2)[0] === '0' ? worstPc.slice(-1) : worstPc.slice(-2))
+  var bestNeighborhood = (bestPc.slice(-2)[0] === '0' ? bestPc.slice(-1) : bestPc.slice(-2))
+  return [worstNeighborhood, bestNeighborhood]
 }
 
 
