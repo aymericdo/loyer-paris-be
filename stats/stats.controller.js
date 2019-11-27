@@ -3,6 +3,7 @@ const express = require('express')
 const request = require('request')
 const router = express.Router()
 const log = require('helper/log.helper')
+const groupBy = require('helper/group-by.helper')
 const rentService = require('db/rent.service')
 const vegaService = require('service/vega.service')
 
@@ -225,37 +226,32 @@ function getWelcomeText(req, res, next) {
     let extremePostalCode = getExtremePostalCode(postalCodeGroupedRents);
     let worstPostalCode = extremePostalCode[0];
     let bestPostalCode = extremePostalCode[1];
+
     return res.json({
-      "NumberRents": rents.length,
-      "IsLegalPercentage": isLegalPercentage,
-      "WorstPostalCode": worstPostalCode,
-      "BestPostalCode": bestPostalCode
+      numberRents: rents.length,
+      isLegalPercentage: isLegalPercentage,
+      worstPostalCode: worstPostalCode,
+      bestPostalCode: bestPostalCode,
     });
   });
 }
-
-var groupBy = function (xs, key) {
-  return xs.reduce(function (rv, x) {
-    (rv[x[key]] = rv[x[key]] || []).push(x);
-    return rv;
-  }, {});
-};
 
 function getExtremePostalCode(groupedRents) {
   var worstPc = ""
   var bestPc = ""
   var bestLegal = 0
   var worstLegal = 1
+
   Object.keys(groupedRents).forEach(pc => {
-    let pc_rents = groupedRents[pc]
-    let legals = pc_rents.filter(rent => rent.isLegal).length
+    let pcRents = groupedRents[pc]
+    let legals = pcRents.filter(rent => rent.isLegal).length
     if (bestLegal < legals) {
-      bestPc = pc;
+      bestPc = pc
       bestLegal = legals
     }
 
     if (worstLegal > legals) {
-      worstPc = pc;
+      worstPc = pc
       worstLegal = legals
     }
   })
