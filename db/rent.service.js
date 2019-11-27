@@ -1,11 +1,11 @@
 const db = require('db')
 const Rent = db.Rent
 const log = require('helper/log.helper')
-const NodeCache = require("node-cache");
-const myCache = new NodeCache({ checkperiod: 60 * 15, deleteOnExpire: true });
+const NodeCache = require('node-cache')
+const dbCache = new NodeCache({ checkperiod: 60 * 15, deleteOnExpire: true })
 
 function getAll(onSuccess, onError) {
-    var data = myCache.get("data");
+    var data = dbCache.get('data')
     if (data != undefined) {
         log.info('Load cache of Rent DB')
         onSuccess(data)
@@ -15,12 +15,12 @@ function getAll(onSuccess, onError) {
             if (err) {
                 onError(err)
             }
-            var rentArray = [];
+            var rentArray = []
 
             rents.forEach(function (rent) {
-                rentArray.push(rent);
+                rentArray.push(rent)
             });
-            success = myCache.set("data", rentArray);
+            success = dbCache.set('data', rentArray)
             onSuccess(rentArray)
         });
     }

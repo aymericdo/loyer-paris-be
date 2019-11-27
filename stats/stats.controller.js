@@ -4,19 +4,13 @@ const request = require('request')
 const router = express.Router()
 const log = require('helper/log.helper')
 const groupBy = require('helper/group-by.helper')
+const ip = require('helper/ip.helper')
 const rentService = require('db/rent.service')
 const vegaService = require('service/vega.service')
 
 const parisGeodata = JSON.parse(fs.readFileSync('json-data/quartier_paris_geodata.json', 'utf8'))
 
-// routes
-router.get('/map', getMap)
-function getMap(req, res, next) {
-  log.info(`-> ${req.baseUrl} getMap`, 'blue')
-
-  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  console.log(ip)
-
+router.use('/', function (req, res, next) {
   const verifyCaptchaOptions = {
     uri: "https://www.google.com/recaptcha/api/siteverify",
     json: true,
@@ -24,8 +18,33 @@ function getMap(req, res, next) {
       secret: process.env.CAPTCHA_SECRET,
       response: req.query.recaptchaToken
     }
-  };
+  }
 
+  if (ip.isIpCached(ip.getIp(req))) {
+    next()
+  } else {
+    ip.saveIp(ip.getIp(req))
+    request.post(verifyCaptchaOptions, (err, response, body) => {
+      if (err) {
+        return res.status(500).json({ message: "oops, something went wrong on our side" });
+      }
+
+      if (!body.success) {
+        return res.status(500).json({ message: body["error-codes"].join(".") });
+      }
+
+      next()
+    }, (err) => {
+      res.status(err.status).json(err)
+    })
+  }
+
+})
+
+// routes
+router.get('/map', getMap)
+function getMap(req, res, next) {
+  log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
   rentService.getAll((data) => {
     const vegaMap = {
@@ -104,117 +123,74 @@ router.get('/price-difference', getPriceDifference)
 function getPriceDifference(req, res, next) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
-  const verifyCaptchaOptions = {
-    uri: "https://www.google.com/recaptcha/api/siteverify",
-    json: true,
-    form: {
-      secret: process.env.CAPTCHA_SECRET,
-      response: req.query.recaptchaToken
-    }
-  };
-
-  request.post(verifyCaptchaOptions, (err, response, body) => {
-    if (err) {
-      return res.status(500).json({ message: "oops, something went wrong on our side" });
-    }
-
-    if (!body.success) {
-      return res.status(500).json({ message: body["error-codes"].join(".") });
-    }
-
-    rentService.getAll((data) => {
-      const vegaMap = {
-        ...vegaService.commonOpts,
-        data: {
-          values: data
+  rentService.getAll((data) => {
+    const vegaMap = {
+      ...vegaService.commonOpts,
+      data: {
+        values: data
+      },
+      mark: { type: "bar", tooltip: true },
+      transform: [
+        { calculate: "datum.price - datum.maxPrice", as: "priceDifference" }
+      ],
+      encoding: {
+        x: {
+          aggregate: "mean",
+          field: "priceDifference",
+          type: "quantitative",
+          title: "Différence de prix moyen"
         },
-        mark: { type: "bar", tooltip: true },
-        transform: [
-          { calculate: "datum.price - datum.maxPrice", as: "priceDifference" }
-        ],
-        encoding: {
-          x: {
-            aggregate: "mean",
-            field: "priceDifference",
-            type: "quantitative",
-            title: "Différence de prix moyen"
-          },
-          y: {
-            field: "postalCode",
-            type: "ordinal",
-            title: "Code postal"
-          }
+        y: {
+          field: "postalCode",
+          type: "ordinal",
+          title: "Code postal"
         }
       }
+    }
 
-      res.json(vegaMap)
-    });
-  }, (err) => {
-    res.status(err.status).json(err)
-  })
+    res.json(vegaMap)
+  });
 }
 
 router.get('/is-legal-per-surface', getLegalPerSurface)
 function getLegalPerSurface(req, res, next) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
-  const verifyCaptchaOptions = {
-    uri: "https://www.google.com/recaptcha/api/siteverify",
-    json: true,
-    form: {
-      secret: process.env.CAPTCHA_SECRET,
-      response: req.query.recaptchaToken
-    }
-  };
-
-  request.post(verifyCaptchaOptions, (err, response, body) => {
-    if (err) {
-      return res.status(500).json({ message: "oops, something went wrong on our side" });
-    }
-
-    if (!body.success) {
-      return res.status(500).json({ message: body["error-codes"].join(".") });
-    }
-
-    rentService.getAll((data) => {
-      const vegaMap = {
-        ...vegaService.commonOpts(),
-        data: {
-          values: data
+  rentService.getAll((data) => {
+    const vegaMap = {
+      ...vegaService.commonOpts(),
+      data: {
+        values: data
+      },
+      mark: { type: "bar", tooltip: true },
+      encoding: {
+        x: {
+          bin: {
+            step: 5
+          },
+          field: "surface",
+          title: "Surface",
+          type: "quantitative"
         },
-        mark: { type: "bar", tooltip: true },
-        encoding: {
-          x: {
-            bin: {
-              step: 5
-            },
-            field: "surface",
-            title: "Surface",
-            type: "quantitative"
-          },
-          y: {
-            aggregate: "count",
-            field: "isLegal",
-            title: "Est légal ?",
-            type: "quantitative"
-          },
-          color: {
-            field: "isLegal",
-            type: "nominal",
-            scale: {
-              range: ["red", "green"]
-            }
+        y: {
+          aggregate: "count",
+          field: "isLegal",
+          title: "Est légal ?",
+          type: "quantitative"
+        },
+        color: {
+          field: "isLegal",
+          type: "nominal",
+          scale: {
+            range: ["red", "green"]
           }
         }
       }
+    }
 
-      res.json(vegaMap)
-    });
-  }, (err) => {
-    res.status(err.status).json(err)
-  })
+    res.json(vegaMap)
+  });
 }
-
 
 router.get('/welcome', getWelcomeText)
 function getWelcomeText(req, res, next) {
