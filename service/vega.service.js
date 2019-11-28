@@ -15,6 +15,13 @@ function commonOpts() {
                 labelFontSize: 12,
                 titleColor: "white",
                 titleFontSize: 16
+            },
+            axis: {
+                domainColor: "#fff",
+                gridColor: "#fff",
+                labelColor: "#fff",
+                tickColor: "#fff",
+                titleColor: "#fff",
             }
         }
     }

@@ -125,7 +125,7 @@ function getPriceDifference(req, res, next) {
 
   rentService.getAll((data) => {
     const vegaMap = {
-      ...vegaService.commonOpts,
+      ...vegaService.commonOpts(),
       data: {
         values: data
       },
@@ -138,13 +138,13 @@ function getPriceDifference(req, res, next) {
           aggregate: "mean",
           field: "priceDifference",
           type: "quantitative",
-          title: "Différence de prix moyen"
+          title: "Différence de prix moyen",
         },
         y: {
           field: "postalCode",
           type: "ordinal",
-          title: "Code postal"
-        }
+          title: "Code postal",
+        },
       }
     }
 
@@ -179,15 +179,15 @@ function getLegalPerSurface(req, res, next) {
           aggregate: "count",
           field: "isLegal",
           title: "Annonces légales",
-          type: "quantitative"
+          type: "quantitative",
         },
         color: {
           field: "isLegal",
           title: "Est légal ?",
           type: "nominal",
           scale: {
-            range: ["red", "green"]
-          }
+            range: ["red", "green"],
+          },
         }
       }
     }
