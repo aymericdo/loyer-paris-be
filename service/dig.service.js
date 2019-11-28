@@ -12,7 +12,7 @@ function digForCoordinates(ad) {
 }
 
 function digForAddress(ad) {
-    const city = ad.cityLabel && ad.cityLabel.match(/[A-Za-z]+/g) && ad.cityLabel.match(/[A-Za-z]+/g)[0]
+    const city = ad.cityLabel && ad.cityLabel.match(/[A-Za-z]+/g) && cleanup.string(ad.cityLabel.match(/[A-Za-z]+/g)[0])
     const postalCode = ad.postalCode || ad.cityLabel
         && (_digForPostalCode(ad.cityLabel) || _digForPostalCode2(ad.cityLabel))
         || ad.description && (_digForPostalCode(ad.description) || _digForPostalCode2(ad.description))
