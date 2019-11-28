@@ -178,7 +178,7 @@ function getLegalPerSurface(req, res, next) {
         y: {
           aggregate: "count",
           field: "isLegal",
-          title: "Annonces légales",
+          title: "Annonces",
           type: "quantitative",
         },
         color: {
