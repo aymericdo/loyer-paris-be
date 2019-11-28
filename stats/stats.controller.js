@@ -163,6 +163,9 @@ function getLegalPerSurface(req, res, next) {
         values: data
       },
       mark: { type: "bar", tooltip: true },
+      transform: [
+        { calculate: "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
+      ],
       encoding: {
         x: {
           bin: {
@@ -175,11 +178,12 @@ function getLegalPerSurface(req, res, next) {
         y: {
           aggregate: "count",
           field: "isLegal",
-          title: "Est légal ?",
+          title: "Annonces légales",
           type: "quantitative"
         },
         color: {
           field: "isLegal",
+          title: "Est légal ?",
           type: "nominal",
           scale: {
             range: ["red", "green"]
