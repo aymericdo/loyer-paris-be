@@ -20,7 +20,12 @@ const error = (message, color) => {
     Sentry.captureMessage(message)
 }
 
+const apiHit = () => {
+    Sentry.captureMessage('api hit', 'info')
+}
+
 module.exports = {
+    apiHit,
     info,
     error,
 }

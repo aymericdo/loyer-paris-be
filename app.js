@@ -2,6 +2,7 @@ require('rootpath')()
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const log = require('helper/log.helper')
 // const addressService = require('service/address.service')
 const Sentry = require('@sentry/node');
 
@@ -9,6 +10,11 @@ app.use(cors())
 app.use(express.json({
     type: ['application/json', 'text/plain']
 }))
+
+app.use('/', function (req, res, next) {
+    log.apiHit()
+    next()
+})
 
 app.use('/seloger', require('./seloger/seloger.controller'))
 app.use('/leboncoin', require('./leboncoin/leboncoin.controller'))
@@ -20,7 +26,10 @@ app.use('/orpi', require('./orpi/orpi.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 
-Sentry.init({ dsn: process.env.SENTRY_DSN })
+Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    environment: process.env.PROD ? 'production' : 'local',
+})
 
 // opencage api tester
 // app.get('/opencage', (req, res) => {
