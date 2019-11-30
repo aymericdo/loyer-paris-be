@@ -23,6 +23,7 @@ app.use('/pap', require('./pap/pap.controller'))
 app.use('/logic-immo', require('./logicimmo/logicimmo.controller'))
 app.use('/lefigaro', require('./lefigaro/lefigaro.controller'))
 app.use('/orpi', require('./orpi/orpi.controller'))
+app.use('/facebook', require('./facebook/facebook.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 

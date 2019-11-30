@@ -60,8 +60,16 @@ function digForYearBuilt(ad) {
 
 function digForHasFurniture(ad) {
     const furnitureFromTitle = ad.title && ad.title.match(regexString('furnished'))
+    const nonFurnitureFromTitle = ad.title && ad.title.match(regexString('nonFurnished'))
     const furnitureFromDescription = ad.description && ad.description.match(regexString('furnished'))
-    return ad.furnished != null ? !!ad.furnished : (furnitureFromDescription && furnitureFromDescription.length > 0) || (furnitureFromTitle && furnitureFromTitle.length > 0) || null
+    const nonFurnitureFromDescription = ad.description && ad.description.match(regexString('nonFurnished'))
+    return ad.furnished != null
+        ? !!ad.furnished
+        : (furnitureFromDescription && furnitureFromDescription.length > 0
+            || furnitureFromTitle && furnitureFromTitle.length > 0) ? true :
+            (nonFurnitureFromDescription && nonFurnitureFromDescription.length > 0
+                || nonFurnitureFromTitle && nonFurnitureFromTitle.length > 0) ? false :
+                null
 }
 
 function digForSurface(ad) {
