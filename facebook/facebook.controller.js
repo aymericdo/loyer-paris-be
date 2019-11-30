@@ -2,6 +2,12 @@ const express = require('express')
 const router = express.Router()
 const facebookService = require('./facebook.service')
 const log = require('helper/log.helper')
+const digService = require('service/dig.service')
+const roundNumber = require('helper/round-number.helper')
+const serializer = require('service/serializer.service')
+const rentFilter = require('service/rent-filter.service')
+const saverService = require('service/saver.service')
+const chargesService = require('service/charges.service')
 
 // routes
 router.post('/data', getByData)
