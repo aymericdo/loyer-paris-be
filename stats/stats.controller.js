@@ -132,7 +132,7 @@ function getPriceDifference(req, res, next) {
       mark: { type: "bar", tooltip: true },
       transform: [
         { calculate: "datum.price - datum.maxPrice", as: "priceDifference" },
-        { op: "count", field: "postalCode", as: "adNumber" }
+        // { op: "count", field: "postalCode", as: "adNumber" }
       ],
       encoding: {
         x: {
