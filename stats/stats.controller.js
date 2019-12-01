@@ -131,20 +131,26 @@ function getPriceDifference(req, res, next) {
       },
       mark: { type: "bar", tooltip: true },
       transform: [
-        { calculate: "datum.price - datum.maxPrice", as: "priceDifference" }
+        { calculate: "datum.price - datum.maxPrice", as: "priceDifference" },
+        { op: "count", field: "postalCode", as: "adNumber" }
       ],
       encoding: {
         x: {
           aggregate: "mean",
           field: "priceDifference",
           type: "quantitative",
-          title: "Différence de prix moyen",
+          title: "Différence de prix moyenne",
         },
         y: {
           field: "postalCode",
           type: "ordinal",
           title: "Code postal",
         },
+        tooltip: [
+          { field: "priceDifference", type: "quantitative", title: "Différence de prix moyenne" },
+          { field: "postalCode", type: "ordinal", title: "Code postal" },
+          { field: "adNumber", type: "quantitative", title: "Nombre d'annonces" },
+        ]
       }
     }
 
