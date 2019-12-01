@@ -149,7 +149,7 @@ function getPriceDifference(req, res, next) {
         tooltip: [
           { field: "priceDifference", type: "quantitative", title: "Différence de prix moyenne" },
           { field: "postalCode", type: "ordinal", title: "Code postal" },
-          { field: "adNumber", type: "quantitative", title: "Nombre d'annonces" },
+          // { field: "adNumber", type: "quantitative", title: "Nombre d'annonces" },
         ]
       }
     }
