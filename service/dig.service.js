@@ -16,6 +16,7 @@ function digForAddress(ad) {
     const postalCode = ad.postalCode || ad.cityLabel
         && (_digForPostalCode(ad.cityLabel) || _digForPostalCode2(ad.cityLabel))
         || ad.description && (_digForPostalCode(ad.description) || _digForPostalCode2(ad.description))
+        || ad.title && (_digForPostalCode(ad.title) || _digForPostalCode2(ad.title))
     const address = ad.address || (ad.description && _digForAddressInText(ad.description, { city, postalCode })) || (ad.title && _digForAddressInText(ad.title, { city, postalCode }))
     return [address, postalCode, city]
 }

@@ -3,6 +3,7 @@ const cleanup = require('helper/cleanup.helper')
 function dataMapping(ad) {
     return {
         id: ad.id,
+        address: cleanup.string(ad.address),
         cityLabel: cleanup.string(ad.cityLabel),
         description: cleanup.string(ad.description),
         furnished: ad.furnished,
