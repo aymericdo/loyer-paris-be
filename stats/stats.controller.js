@@ -146,11 +146,11 @@ function getPriceDifference(req, res, next) {
           type: "ordinal",
           title: "Code postal",
         },
-        tooltip: [
-          { field: "priceDifference", type: "quantitative", title: "Différence de prix moyenne" },
-          { field: "postalCode", type: "ordinal", title: "Code postal" },
-          // { field: "adNumber", type: "quantitative", title: "Nombre d'annonces" },
-        ]
+        // tooltip: [
+        //   { field: "priceDifference", type: "quantitative", title: "Différence de prix moyenne" },
+        //   { field: "postalCode", type: "ordinal", title: "Code postal" },
+        //   // { field: "adNumber", type: "quantitative", title: "Nombre d'annonces" },
+        // ]
       }
     }
 
