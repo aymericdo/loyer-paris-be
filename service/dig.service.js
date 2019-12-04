@@ -74,7 +74,9 @@ function digForHasFurniture(ad) {
 }
 
 function digForSurface(ad) {
-    return ad.surface
+    return ad.surface 
+        || ad.title && ad.title.match(regexString('surface')) && cleanup.number(ad.title.match(regexString('surface'))[0])
+        || ad.description && ad.description.match(regexString('surface')) && cleanup.number(ad.description.match(regexString('surface'))[0])
 }
 
 function digForPrice(ad) {
