@@ -51,7 +51,7 @@ function digData(ad, onSuccess, onError) {
                 }).then(({ match, coord }) => {
                     if (match) {
                         const maxAuthorized = roundNumber(+match.fields.max * surface)
-                        const priceAfterCharges = chargesService.subCharges(price, charges, hasCharges)
+                        const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
                         const isLegal = price <= maxAuthorized
 
                         saverService.rent({
