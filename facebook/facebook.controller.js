@@ -51,7 +51,7 @@ function digData(ad, onSuccess, onError) {
                 }).then(({ match, coord }) => {
                     if (match) {
                         const maxAuthorized = roundNumber(+match.fields.max * surface)
-                        const priceAfterCharges = chargesService.subCharges(price, charges, hasCharges)
+                        const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
                         const isLegal = price <= maxAuthorized
 
                         saverService.rent({
@@ -64,6 +64,7 @@ function digData(ad, onSuccess, onError) {
                             longitude: coord && coord.lng,
                             maxPrice: maxAuthorized,
                             postalCode,
+                            priceExcludingCharges,
                             price,
                             renter,
                             roomCount,
@@ -82,7 +83,7 @@ function digData(ad, onSuccess, onError) {
                             maxAuthorized,
                             postalCode,
                             price,
-                            priceAfterCharges,
+                            priceExcludingCharges: priceExcludingCharges,
                             roomCount,
                             surface,
                             yearBuilt,

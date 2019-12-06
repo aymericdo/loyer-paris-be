@@ -13,6 +13,7 @@ const schema = new Schema({
     roomCount: { type: Number, required: false },
     yearBuilt: { type: Number, required: false },
     price: { type: Number, required: false },
+    priceExcludingCharges: { type: Number, required: false },
     surface: { type: Number, required: false },
     maxPrice: { type: Number, required: false },
     isLegal: { type: Boolean, required: false },

@@ -10,7 +10,7 @@ module.exports = ({
     maxAuthorized,
     postalCode,
     price,
-    priceAfterCharges,
+    priceExcludingCharges,
     roomCount,
     surface,
     yearBuilt,
@@ -37,7 +37,7 @@ module.exports = ({
             min: { order: 5, value: roundNumber(+match.fields.min) },
             max: { order: 6, value: roundNumber(+match.fields.max) },
             maxAuthorized: { order: 7, value: maxAuthorized },
-            promoPercentage: { order: 8, value: !isLegal ? roundNumber(100 - (maxAuthorized * 100 / priceAfterCharges)) : null },
+            promoPercentage: { order: 8, value: !isLegal ? roundNumber(100 - (maxAuthorized * 100 / priceExcludingCharges)) : null },
         },
         isLegal,
     }

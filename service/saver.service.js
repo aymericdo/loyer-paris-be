@@ -20,6 +20,7 @@ function rent({
     renter,
     createdAt,
     stations,
+    priceExcludingCharges,
 }) {
     if (id) {
         const rent = new Rent({
@@ -35,6 +36,7 @@ function rent({
             ...(maxPrice == null || { maxPrice }),
             ...(postalCode == null || { postalCode }),
             ...(price == null || { price }),
+            ...(priceExcludingCharges == null || { priceExcludingCharges }),
             ...(renter == null || { renter }),
             ...(roomCount == null || { roomCount }),
             ...(stations == null || !stations.length || { stations }),
@@ -42,6 +44,7 @@ function rent({
             ...(yearBuilt == null || { yearBuilt }),
         })
         log.info('Rent saver start')
+        console.log(rent)
         rent.save()
             .then(() => {
                 log.info('Rent saved', 'green')
