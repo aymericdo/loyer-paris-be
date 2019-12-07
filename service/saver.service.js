@@ -44,7 +44,6 @@ function rent({
             ...(yearBuilt == null || { yearBuilt }),
         })
         log.info('Rent saver start')
-        console.log(rent)
         rent.save()
             .then(() => {
                 log.info('Rent saved', 'green')

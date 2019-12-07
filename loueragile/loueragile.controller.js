@@ -50,8 +50,6 @@ function digData(ad, onSuccess, onError) {
     const stations = digService.digForStations(ad)
     const charges = digService.digForCharges(ad)
     const hasCharges = digService.digForHasCharges(ad)
-    console.log(charges)
-    console.log(hasCharges)
 
     if (price && surface) {
         if (coordinates || address || postalCode) {
