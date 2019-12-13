@@ -73,7 +73,6 @@ function getMap(req, res, next) {
             { filter: { field: "latitude", valid: true } },
             { calculate: "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
             { calculate: "datum.hasFurniture === true ? 'Oui' : (datum.hasFurniture === false ? 'Non' : 'Non renseigné')", "as": "hasFurniture" },
-            { calculate: "isValid(datum.renter) ? datum.renter : 'Particulier'", "as": "renter" },
             { calculate: "isValid(datum.address) ? datum.address : 'Non renseignée'", "as": "address" },
             { calculate: "isValid(datum.postalCode) ? datum.postalCode : 'Non renseigné'", "as": "postalCode" },
             { calculate: "isValid(datum.roomCount) ? datum.roomCount : 'Non renseigné'", "as": "roomCount" },
@@ -98,7 +97,6 @@ function getMap(req, res, next) {
             },
             tooltip: [
               { field: "address", type: "nominal", title: "Adresse" },
-              { field: "renter", type: "nominal", title: "Loueur" },
               { field: "postalCode", type: "ordinal", title: "Code postal" },
               { field: "roomCount", type: "quantitative", title: "Nombre de pièce(s)" },
               { field: "surface", type: "quantitative", title: "Surface" },
@@ -131,8 +129,19 @@ function getPriceDifference(req, res, next) {
       },
       mark: { type: "bar", tooltip: true },
       transform: [
+        { filter: { field: "postalCode", valid: true } },
         { calculate: "datum.price - datum.maxPrice", as: "priceDifference" },
-        // { op: "count", field: "postalCode", as: "adNumber" }
+        {
+          joinaggregate: [{
+            op: "count",
+            field: "postalCode",
+            as: "countOfPostalCode"
+          }],
+          groupby: [
+            "postalCode"
+          ],
+        },
+        { filter: { field: "countOfPostalCode", gte: 5 } },
       ],
       encoding: {
         x: {
@@ -145,12 +154,33 @@ function getPriceDifference(req, res, next) {
           field: "postalCode",
           type: "ordinal",
           title: "Code postal",
+          sort: [
+            '75001',
+            '75002',
+            '75003',
+            '75004',
+            '75005',
+            '75006',
+            '75007',
+            '75008',
+            '75009',
+            '75010',
+            '75011',
+            '75012',
+            '75013',
+            '75014',
+            '75015',
+            '75016',
+            '75116',
+            '75017',
+            '75018',
+            '75019',
+            '75020',
+          ],
         },
-        // tooltip: [
-        //   { field: "priceDifference", type: "quantitative", title: "Différence de prix moyenne" },
-        //   { field: "postalCode", type: "ordinal", title: "Code postal" },
-        //   // { field: "adNumber", type: "quantitative", title: "Nombre d'annonces" },
-        // ]
+        tooltip: [
+          { field: "countOfPostalCode", title: "Nombre d'annonces" },
+        ]
       }
     }
 
@@ -170,6 +200,7 @@ function getLegalPerSurface(req, res, next) {
       },
       mark: { type: "bar", tooltip: true },
       transform: [
+        { filter: { field: "surface", lte: 100 } },
         { calculate: "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
       ],
       encoding: {
@@ -179,7 +210,7 @@ function getLegalPerSurface(req, res, next) {
           },
           field: "surface",
           title: "Surface",
-          type: "quantitative"
+          type: "quantitative",
         },
         y: {
           aggregate: "count",
