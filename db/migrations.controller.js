@@ -6,7 +6,7 @@ const migration1 = require('./migrations/1')
 router.post('/', runMigrations)
 
 function runMigrations(req, res, next) {
-    migration1()
+    // migration1()
     res.json('done')
 }
 
