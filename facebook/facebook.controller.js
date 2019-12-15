@@ -83,7 +83,7 @@ function digData(ad, onSuccess, onError) {
                             maxAuthorized,
                             postalCode,
                             price,
-                            priceExcludingCharges: priceExcludingCharges,
+                            priceExcludingCharges,
                             roomCount,
                             surface,
                             yearBuilt,

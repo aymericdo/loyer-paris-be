@@ -27,6 +27,8 @@ app.use('/facebook', require('./facebook/facebook.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 
+app.use('/migrations', require('./db/migrations.controller'))
+
 Sentry.init({
     dsn: process.env.SENTRY_DSN,
     environment: process.env.PROD ? 'production' : 'local',
