@@ -78,7 +78,7 @@ function getMap(req, res, next) {
             { calculate: "isValid(datum.roomCount) ? datum.roomCount : 'Non renseigné'", "as": "roomCount" },
             { calculate: "isValid(datum.surface) ? datum.surface : 'Non renseignée'", "as": "surface" },
             { calculate: "isValid(datum.yearBuilt) ? datum.yearBuilt : 'Non renseignée'", "as": "yearBuilt" },
-            { calculate: "isValid(datum.price) ? datum.price : 'Non renseigné'", "as": "price" },
+            { calculate: "isValid(datum.priceExcludingCharges) ? datum.priceExcludingCharges : 'Non renseigné'", "as": "priceExcludingCharges" },
             { calculate: "isValid(datum.maxPrice) ? datum.maxPrice : 'Non renseigné'", "as": "maxPrice" },
           ],
           encoding: {
@@ -102,7 +102,7 @@ function getMap(req, res, next) {
               { field: "surface", type: "quantitative", title: "Surface" },
               { field: "yearBuilt", type: "nominal", title: "Année de construction" },
               { field: "hasFurniture", type: "nominal", title: "Meublé" },
-              { field: "price", type: "quantitative", title: "Prix affiché" },
+              { field: "priceExcludingCharges", type: "quantitative", title: "Prix affiché" },
               { field: "maxPrice", type: "quantitative", title: "Prix maximum" }
             ]
           },
@@ -130,7 +130,7 @@ function getPriceDifference(req, res, next) {
       mark: { type: "bar", tooltip: true },
       transform: [
         { filter: { field: "postalCode", valid: true } },
-        { calculate: "datum.price - datum.maxPrice", as: "priceDifference" },
+        { calculate: "datum.priceExcludingCharges - datum.maxPrice", as: "priceDifference" },
         {
           joinaggregate: [{
             op: "count",
