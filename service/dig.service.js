@@ -4,6 +4,8 @@ const cleanup = require('helper/cleanup.helper')
 const addressService = require('service/address.service')
 const stationService = require('service/station.service')
 
+const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
+
 function digForCoordinates(ad) {
     return ad.coord ? {
         lng: ad.coord.lng,
@@ -84,7 +86,7 @@ function digForPrice(ad) {
 }
 
 function digForRenter(ad) {
-    return ad.renter
+    return possibleBadRenter.includes(ad.renter) ? null : ad.renter
 }
 
 function digForStations(ad) {

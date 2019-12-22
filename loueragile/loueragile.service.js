@@ -12,7 +12,7 @@ function apiMapping(ad) {
         furnished: ad.ad.furnished,
         postalCode: ad.ad.postal_code,
         price: ad.ad.rent,
-        renter: ad.ad.owner_type === 'Agence' ? cleanup.string(ad.ad.source) : null,
+        renter: ad.ad.owner_type === 'Agence' ? cleanup.string(ad.ad.source) : 'Particulier',
         rooms: ad.ad.room,
         surface: ad.ad.area,
         title: cleanup.string(ad.ad.title),

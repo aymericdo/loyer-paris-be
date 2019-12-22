@@ -1,4 +1,5 @@
 const cleanup = require('helper/cleanup.helper')
+const particulierToken = require('helper/particulier.helper')
 
 function apiMapping(ad) {
     const roomFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'rooms')
@@ -32,7 +33,7 @@ function dataMapping(ad) {
         furnished: ad.furnished ? ad.furnished === 'Meublé' ? true : ad.furnished === 'Non meublé' ? false : null : null,
         hasCharges: cleanup.string(ad.hasCharges) === 'oui' ? true : cleanup.string(ad.hasCharges) === 'non' ? false : null,
         price: cleanup.price(ad.price),
-        renter: cleanup.string(ad.renter),
+        renter: ad.renter ? cleanup.string(ad.renter) : particulierToken(),
         rooms: cleanup.number(ad.rooms),
         surface: cleanup.number(ad.surface),
         title: cleanup.string(ad.subject),

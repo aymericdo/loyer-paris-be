@@ -11,6 +11,7 @@ function dataMapping(ad) {
         furnished: ad.furnished,
         price: ad.price,
         postalCode: ad.postalCode,
+        renter: cleanup.string(ad.renter),
         rooms: ad.rooms,
         surface: ad.surface,
         title: cleanup.string(ad.title),
