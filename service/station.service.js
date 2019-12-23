@@ -20,7 +20,7 @@ function getCoordinate(station) {
 function getStations(description) {
     return [...new Set(parisStations.map(station => {
         if (station.tags && description.search(cleanup.string(station.tags.name)) !== -1) {
-            return station.tags.name
+            return cleanup.string(station.tags.name)
         }
     }).filter(Boolean))]
 }
