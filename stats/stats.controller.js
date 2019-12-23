@@ -67,19 +67,15 @@ function getMap(req, res, next) {
         },
         {
           data: {
-            values: data
+            values: data.reduce((prev, { isLegal, latitude, longitude }) => {
+              if (latitude && longitude) {
+                prev.push({ isLegal, latitude, longitude })
+              }
+              return prev
+            }, [])
           },
           transform: [
-            { filter: { field: "latitude", valid: true } },
             { calculate: "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
-            { calculate: "datum.hasFurniture === true ? 'Oui' : (datum.hasFurniture === false ? 'Non' : 'Non renseigné')", "as": "hasFurniture" },
-            { calculate: "isValid(datum.address) ? datum.address : 'Non renseignée'", "as": "address" },
-            { calculate: "isValid(datum.postalCode) ? datum.postalCode : 'Non renseigné'", "as": "postalCode" },
-            { calculate: "isValid(datum.roomCount) ? datum.roomCount : 'Non renseigné'", "as": "roomCount" },
-            { calculate: "isValid(datum.surface) ? datum.surface : 'Non renseignée'", "as": "surface" },
-            { calculate: "isValid(datum.yearBuilt) ? datum.yearBuilt : 'Non renseignée'", "as": "yearBuilt" },
-            { calculate: "isValid(datum.priceExcludingCharges) ? datum.priceExcludingCharges : 'Non renseigné'", "as": "priceExcludingCharges" },
-            { calculate: "isValid(datum.maxPrice) ? datum.maxPrice : 'Non renseigné'", "as": "maxPrice" },
           ],
           encoding: {
             longitude: {
@@ -115,11 +111,15 @@ function getPriceDifference(req, res, next) {
     const vegaMap = {
       ...vegaService.commonOpts(),
       data: {
-        values: data
+        values: data.reduce((prev, { maxPrice, postalCode, priceExcludingCharges }) => {
+          if (postalCode) {
+            prev.push({ maxPrice, postalCode, priceExcludingCharges })
+          }
+          return prev
+        }, [])
       },
       mark: { type: "bar", tooltip: true },
       transform: [
-        { filter: { field: "postalCode", valid: true } },
         { calculate: "datum.priceExcludingCharges - datum.maxPrice", as: "priceDifference" },
         {
           joinaggregate: [{
@@ -186,11 +186,15 @@ function getLegalPerSurface(req, res, next) {
     const vegaMap = {
       ...vegaService.commonOpts(),
       data: {
-        values: data
+        values: data.reduce((prev, { isLegal, surface }) => {
+          if (surface <= 100) {
+            prev.push({ isLegal, surface })
+          }
+          return prev
+        }, [])
       },
       mark: { type: "bar", tooltip: true },
       transform: [
-        { filter: { field: "surface", lte: 100 } },
         { calculate: "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
       ],
       encoding: {
