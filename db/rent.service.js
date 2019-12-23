@@ -15,13 +15,8 @@ function getAll(onSuccess, onError) {
             if (err) {
                 onError(err)
             }
-            var rentArray = []
-
-            rents.forEach(function (rent) {
-                rentArray.push(rent)
-            });
-            success = dbCache.set('data', rentArray)
-            onSuccess(rentArray)
+            success = dbCache.set('data', rents)
+            onSuccess(rents)
         });
     }
 }
