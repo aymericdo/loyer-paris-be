@@ -95,16 +95,6 @@ function getMap(req, res, next) {
                 range: ["red", "green"]
               }
             },
-            tooltip: [
-              { field: "address", type: "nominal", title: "Adresse" },
-              { field: "postalCode", type: "ordinal", title: "Code postal" },
-              { field: "roomCount", type: "quantitative", title: "Nombre de pièce(s)" },
-              { field: "surface", type: "quantitative", title: "Surface" },
-              { field: "yearBuilt", type: "nominal", title: "Année de construction" },
-              { field: "hasFurniture", type: "nominal", title: "Meublé" },
-              { field: "priceExcludingCharges", type: "quantitative", title: "Prix affiché" },
-              { field: "maxPrice", type: "quantitative", title: "Prix maximum" }
-            ]
           },
           mark: {
             type: "circle",
