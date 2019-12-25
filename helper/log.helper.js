@@ -20,8 +20,9 @@ const error = (message, color) => {
     Sentry.captureMessage(message)
 }
 
-const apiHit = () => {
-    Sentry.captureMessage('api hit', 'info')
+const apiHit = (isStats) => {
+    const message = `api hit ${isStats ? 'stats' : 'extension'}`
+    Sentry.captureMessage(message, 'info')
 }
 
 module.exports = {

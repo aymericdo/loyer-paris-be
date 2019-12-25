@@ -12,7 +12,8 @@ app.use(express.json({
 }))
 
 app.use('/', function (req, res, next) {
-    log.apiHit()
+    const isStats = req.url.split('/') && req.url.split('/')[1] === 'stats'
+    log.apiHit(isStats)
     next()
 })
 
