@@ -86,7 +86,7 @@ function digData(ad, onSuccess, onError) {
                     if (match) {
                         const maxAuthorized = roundNumber(+match.fields.max * surface)
                         const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
-                        const isLegal = price <= maxAuthorized
+                        const isLegal = priceExcludingCharges <= maxAuthorized
 
                         saverService.rent({
                             id: ad.id,
