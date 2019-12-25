@@ -3,7 +3,7 @@ function string(string) {
 }
 
 function price(price) {
-    return price && +price.replace(/\s|\.|,/g, '').match(/\d+/g)[0]
+    return price && price.replace(/\s|\.|,/g, '').match(/\d+/g) && +price.replace(/\s|\.|,/g, '').match(/\d+/g)[0]
 }
 
 function number(number) {
