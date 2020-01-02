@@ -40,7 +40,7 @@ function getById(req, res, next) {
 
 function digData(ad, onSuccess, onError) {
     const coordinates = digService.digForCoordinates(ad)
-    const yearBuilt = digService.digForYearBuilt(ad)
+    const yearBuilt = digService.digForYearBuilt(ad, coordinates)
     const roomCount = digService.digForRoomCount(ad)
     const hasFurniture = digService.digForHasFurniture(ad)
     const surface = digService.digForSurface(ad)

@@ -3,6 +3,7 @@ const regexString = require('helper/regex.helper')
 const cleanup = require('helper/cleanup.helper')
 const addressService = require('service/address.service')
 const stationService = require('service/station.service')
+const yearBuiltService = require('service/year-built.service')
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
 
@@ -57,8 +58,18 @@ function digForRoomCount(ad) {
     return (!!ad.rooms && ad.rooms) || stringToNumber(roomsFromTitle) || stringToNumber(roomsFromDescription)
 }
 
-function digForYearBuilt(ad) {
-    return ad.yearBuilt
+function digForYearBuilt(ad, coordinates) {
+    console.log(`lat ${coordinates.lat} lng ${coordinates.lng}`)
+    const parcelleCadastrale = coordinates.lat && coordinates.lng &&
+        yearBuiltService.getYearBuiltFromParcelleCadastrale(coordinates.lat, coordinates.lng)
+    console.log(`PARCELLE ${parcelleCadastrale.properties.n_sq_pc}`)
+    const yearBuiltFromParcelleCadastrale = parcelleCadastrale && parcelleCadastrale.properties &&
+        parcelleCadastrale.properties.n_sq_pc && yearBuiltService.getYearBuilt(parcelleCadastrale.properties.n_sq_pc)
+    console.log(`yearBuiltFromParcelleCadastrale ${yearBuiltFromParcelleCadastrale}`)
+    return ad.yearBuilt != null
+        ? !!ad.yearBuilt
+        : yearBuiltFromParcelleCadastrale != null ? yearBuiltFromParcelleCadastrale :
+            null
 }
 
 function digForHasFurniture(ad) {
