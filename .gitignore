@@ -1,3 +1,5 @@
 .env
 node_modules/**
 .vscode/
+json-data/PARCELLE_CADASTRALE**
+json-data/EMPRISE_BATIE**
