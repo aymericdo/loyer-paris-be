@@ -7,19 +7,25 @@ const yearBuiltService = require('service/year-built.service')
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
 
-function digForCoordinates(ad) {
-    return ad.coord ? {
+function digForCoordinates(ad, address, city, postalCode) {
+    const coordinatesFromAddress = addressService.getCoordinate(address, { city, postalCode })
+    console.log(coordinatesFromAddress)
+    const coordinatesFromAd = {
         lng: ad.coord.lng,
         lat: ad.coord.lat,
-    } : null
+    }
+    return ad.coord && ad.coord.lng.toString().length > 9 && ad.coord.lat.toString().length > 9 ?
+        coordinatesFromAd : coordinatesFromAddress != null ?
+            coordinatesFromAddress : coordinatesFromAd
 }
 
 function digForAddress(ad) {
-    const city = ad.cityLabel && ad.cityLabel.match(/[A-Za-z]+/g) && cleanup.string(ad.cityLabel.match(/[A-Za-z]+/g)[0])
     const postalCode = ad.postalCode || ad.cityLabel
         && (_digForPostalCode(ad.cityLabel) || _digForPostalCode2(ad.cityLabel))
         || ad.description && (_digForPostalCode(ad.description) || _digForPostalCode2(ad.description))
         || ad.title && (_digForPostalCode(ad.title) || _digForPostalCode2(ad.title))
+    const city = ad.cityLabel && ad.cityLabel.match(/[A-Za-z]+/g) && cleanup.string(ad.cityLabel.match(/[A-Za-z]+/g)[0])
+        || (postalCode && postalCode.toString().startsWith('75') ? 'paris' : null)
     const address = ad.address || (ad.description && _digForAddressInText(ad.description, { city, postalCode })) || (ad.title && _digForAddressInText(ad.title, { city, postalCode }))
     return [address, postalCode, city]
 }
@@ -58,18 +64,13 @@ function digForRoomCount(ad) {
     return (!!ad.rooms && ad.rooms) || stringToNumber(roomsFromTitle) || stringToNumber(roomsFromDescription)
 }
 
-function digForYearBuilt(ad, coordinates) {
-    console.log(`lat ${coordinates.lat} lng ${coordinates.lng}`)
-    const parcelleCadastrale = coordinates.lat && coordinates.lng &&
-        yearBuiltService.getYearBuiltFromParcelleCadastrale(coordinates.lat, coordinates.lng)
-    console.log(`PARCELLE ${parcelleCadastrale.properties.n_sq_pc}`)
-    const yearBuiltFromParcelleCadastrale = parcelleCadastrale && parcelleCadastrale.properties &&
-        parcelleCadastrale.properties.n_sq_pc && yearBuiltService.getYearBuilt(parcelleCadastrale.properties.n_sq_pc)
-    console.log(`yearBuiltFromParcelleCadastrale ${yearBuiltFromParcelleCadastrale}`)
+function digForYearBuilt(ad, coordinates, postalCode) {
+    const building = coordinates.lat && coordinates.lng &&
+        yearBuiltService.getBuilding(coordinates.lat, coordinates.lng, postalCode)
+    const yearBuiltFromBuilding = building && building.properties.an_const
     return ad.yearBuilt != null
         ? !!ad.yearBuilt
-        : yearBuiltFromParcelleCadastrale != null ? yearBuiltFromParcelleCadastrale :
-            null
+        : yearBuiltFromBuilding
 }
 
 function digForHasFurniture(ad) {

@@ -1,4 +1,5 @@
 const fs = require('fs')
+const turf = require('turf')
 const inside = require('point-in-polygon')
 
 const parcelle_cadastrale_paris = JSON.parse(fs.readFileSync('json-data/PARCELLE_CADASTRALE_PARIS.geojson', 'utf8'))
@@ -31,13 +32,25 @@ function getParcelleCadastrale(lat, lng) {
     return parcelle || null
 }
 
-function getYearBuiltFromParcelleCadastrale(n_sq_pc) {
-    const building = emprise_batie_paris.features.find(building => building.properties.n_sq_pc == n_sq_pc)
-    return building && building.an_const || null
+function getBuilding(lat, lng, postalCode) {
+    const building = emprise_batie_paris.features.find(building => inside([lng, lat], building.geometry.coordinates[0]))
+    const distances = emprise_batie_paris.features.filter(building => building.properties.n_sq_eb.toString().startsWith(postalCode))
+        .map(building => {
+            try {
+                const polygon = turf.polygon(building.geometry.coordinates)
+                const center = turf.centroid(polygon)
+                const to = turf.point([lat, lng])
+                return turf.distance(center, to)
+            } catch {
+                return
+            }
+        })
+    const indexOfMinValue = distances.reduce((iMin, x, i, arr) => x < arr[iMin] ? i : iMin, 0)
+    return building || emprise_batie_paris.features[indexOfMinValue] || null
 }
 
 module.exports = {
     getYearRange,
     getParcelleCadastrale,
-    getYearBuilt,
+    getBuilding,
 }

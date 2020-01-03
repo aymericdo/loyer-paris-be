@@ -39,13 +39,13 @@ function getById(req, res, next) {
 }
 
 function digData(ad, onSuccess, onError) {
-    const coordinates = digService.digForCoordinates(ad)
-    const yearBuilt = digService.digForYearBuilt(ad, coordinates)
     const roomCount = digService.digForRoomCount(ad)
     const hasFurniture = digService.digForHasFurniture(ad)
     const surface = digService.digForSurface(ad)
     const price = digService.digForPrice(ad)
     const [address, postalCode, city] = digService.digForAddress(ad)
+    const coordinates = digService.digForCoordinates(ad, address, postalCode, city)
+    const yearBuilt = digService.digForYearBuilt(ad, coordinates, postalCode)
     const renter = digService.digForRenter(ad)
     const stations = digService.digForStations(ad)
     const charges = digService.digForCharges(ad)
@@ -53,13 +53,11 @@ function digData(ad, onSuccess, onError) {
 
     if (price && surface) {
         if (coordinates || address || postalCode) {
-            if (city && !!city.length && city.toLowerCase() !== 'paris') {
+            if (!(city && cleanup.string(city) === 'paris')) {
                 log.error('not in Paris')
                 onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
             } else {
                 rentFilter({
-                    address,
-                    city,
                     coordinates,
                     hasFurniture,
                     postalCode,

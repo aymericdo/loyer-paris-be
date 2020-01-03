@@ -37,7 +37,7 @@ function digData(ad, onSuccess, onError) {
 
     if (price && surface) {
         if (coordinates || address || postalCode) {
-            if (city && !!city.length && city.toLowerCase() !== 'paris') {
+            if (!(city && cleanup.string(city) === 'paris')) {
                 log.error('not in Paris')
                 onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
             } else {
