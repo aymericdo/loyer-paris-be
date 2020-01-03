@@ -234,9 +234,8 @@ function getWelcomeText(req, res, next) {
   const isIllegalPercentage = Math.round(100 * rents.filter(rent => !rent.isLegal).length / rents.length)
   const lessThan35SquareMeters = rents.filter(rent => rent.surface < 35)
   const isSmallSurfaceIllegalPercentage = Math.round(100 * lessThan35SquareMeters.filter(rent => !rent.isLegal).length / lessThan35SquareMeters.length)
-  const postalCodeGroupedRents = groupBy(rents, "postalCode")
+  const postalCodeGroupedRents = groupBy(req.rents, "postalCode")
   const extremePostalCode = getExtremePostalCode(postalCodeGroupedRents)
-  console.log(extremePostalCode)
   const worstPostalCode = extremePostalCode[0]
   const bestPostalCode = extremePostalCode[1]
 
