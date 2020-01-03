@@ -231,12 +231,13 @@ function getWelcomeText(req, res, next) {
 
   const rents = req.rents
 
-  let isIllegalPercentage = Math.round(100 * rents.filter(rent => !rent.isLegal).length / rents.length)
-  let isSmallSurfaceIllegalPercentage = Math.round(100 * rents.filter(rent => rent.surface < 35 && !rent.isLegal).length / rents.length)
-  let postalCodeGroupedRents = groupBy(rents, "postalCode")
-  let extremePostalCode = getExtremePostalCode(postalCodeGroupedRents);
-  let worstPostalCode = extremePostalCode[0];
-  let bestPostalCode = extremePostalCode[1];
+  const isIllegalPercentage = Math.round(100 * rents.filter(rent => !rent.isLegal).length / rents.length)
+  const lessThan35SquareMeters = rents.filter(rent => rent.surface < 35)
+  const isSmallSurfaceIllegalPercentage = Math.round(100 * lessThan35SquareMeters.filter(rent => !rent.isLegal).length / lessThan35SquareMeters.length)
+  const postalCodeGroupedRents = groupBy(rents, "postalCode")
+  const extremePostalCode = getExtremePostalCode(postalCodeGroupedRents);
+  const worstPostalCode = extremePostalCode[0];
+  const bestPostalCode = extremePostalCode[1];
 
   return res.json({
     numberRents: rents.length,
