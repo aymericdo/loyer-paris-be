@@ -241,7 +241,7 @@ function getWelcomeText(req, res, next) {
   return res.json({
     numberRents: rents.length,
     isIllegalPercentage,
-    iSmallSurfaceIllegalPercentage,
+    isSmallSurfaceIllegalPercentage,
     worstPostalCode,
     bestPostalCode,
   });
