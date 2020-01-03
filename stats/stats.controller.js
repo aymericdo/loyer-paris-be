@@ -234,13 +234,14 @@ function getWelcomeText(req, res, next) {
   const isIllegalPercentage = Math.round(100 * rents.filter(rent => !rent.isLegal).length / rents.length)
   const lessThan35SquareMeters = rents.filter(rent => rent.surface < 35)
   const isSmallSurfaceIllegalPercentage = Math.round(100 * lessThan35SquareMeters.filter(rent => !rent.isLegal).length / lessThan35SquareMeters.length)
-  const postalCodeGroupedRents = groupBy(req.rents, "postalCode")
+  const postalCodeGroupedRents = groupBy(rents, "postalCode")
   const extremePostalCode = getExtremePostalCode(postalCodeGroupedRents)
   const worstPostalCode = extremePostalCode[0]
   const bestPostalCode = extremePostalCode[1]
 
   return res.json({
     numberRents: rents.length,
+    pivotSurface: 35,
     isIllegalPercentage,
     isSmallSurfaceIllegalPercentage,
     worstPostalCode,
@@ -249,26 +250,29 @@ function getWelcomeText(req, res, next) {
 }
 
 function getExtremePostalCode(groupedRents) {
-  var worstPc = ""
-  var bestPc = ""
-  var bestLegal = 0
-  var worstLegal = 1
+  let worstPc = ""
+  let bestPc = ""
+  let bestLegalsCount = 0
+  let worstLegalsCount = 0
 
   Object.keys(groupedRents).forEach(pc => {
-    let pcRents = groupedRents[pc]
-    let legals = pcRents.filter(rent => rent.isLegal).length
-    if (bestLegal < legals) {
+    if (isNaN(pc)) { return; }
+    const pcRents = groupedRents[pc]
+
+    const legalsRatio = pcRents.filter(rent => rent.isLegal).length / pcRents.length
+    if (bestLegalsCount < legalsRatio) {
       bestPc = pc
-      bestLegal = legals
+      bestLegalsCount = legalsRatio
     }
 
-    if (worstLegal > legals) {
+    const illegalsRatio = pcRents.filter(rent => !rent.isLegal).length / pcRents.length
+    if (worstLegalsCount < illegalsRatio) {
       worstPc = pc
-      worstLegal = legals
+      worstLegalsCount = illegalsRatio
     }
   })
-  var worstNeighborhood = (worstPc.slice(-2)[0] === '0' ? worstPc.slice(-1) : worstPc.slice(-2))
-  var bestNeighborhood = (bestPc.slice(-2)[0] === '0' ? bestPc.slice(-1) : bestPc.slice(-2))
+  const worstNeighborhood = worstPc.slice(-2)[0] === '0' ? worstPc.slice(-1) : worstPc.slice(-2)
+  const bestNeighborhood = bestPc.slice(-2)[0] === '0' ? bestPc.slice(-1) : bestPc.slice(-2)
   return [worstNeighborhood, bestNeighborhood]
 }
 
