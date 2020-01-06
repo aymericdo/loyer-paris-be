@@ -7,9 +7,37 @@ const yearBuiltService = require('service/year-built.service')
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
 
+function main(ad) {
+    const roomCount = digForRoomCount(ad)
+    const hasFurniture = digForHasFurniture(ad)
+    const surface = digForSurface(ad)
+    const price = digForPrice(ad)
+    const [address, postalCode, city] = digForAddress(ad)
+    const coordinates = digForCoordinates(ad, address, city, postalCode)
+    const yearBuilt = digForYearBuilt(ad, coordinates, postalCode)
+    const renter = digForRenter(ad)
+    const stations = digForStations(ad)
+    const charges = digForCharges(ad)
+    const hasCharges = digForHasCharges(ad)
+    return {
+        roomCount,
+        hasFurniture,
+        surface,
+        price,
+        address,
+        postalCode,
+        city,
+        coordinates,
+        yearBuilt,
+        renter,
+        stations,
+        charges,
+        hasCharges,
+    }
+}
+
 function digForCoordinates(ad, address, city, postalCode) {
     const coordinatesFromAddress = addressService.getCoordinate(address, { city, postalCode })
-    console.log(coordinatesFromAddress)
     const coordinatesFromAd = {
         lng: ad.coord.lng,
         lat: ad.coord.lat,
@@ -38,7 +66,7 @@ function _digForAddressInText(text, { city, postalCode }) {
             return addressService.getAddressInParis(address.trim().replace('bd ', 'boulevard '), { postalCode })
         }).filter(Boolean).sort((a, b) => a.score - b.score).map(address => address.item)
         return result && result.length ?
-            cleanup.string(addressesFromRegex[0]).match(/^\d+/gi, "") ?
+            cleanup.string(result[0].fields.l_adr).match(/^\d+/gi, "") ?
                 cleanup.string(result[0].fields.l_adr) :
                 cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() :
             addressesFromRegex[0].trim()
@@ -67,9 +95,9 @@ function digForRoomCount(ad) {
 function digForYearBuilt(ad, coordinates, postalCode) {
     const building = coordinates.lat && coordinates.lng &&
         yearBuiltService.getBuilding(coordinates.lat, coordinates.lng, postalCode)
-    const yearBuiltFromBuilding = building && building.properties.an_const
+    const yearBuiltFromBuilding = yearBuiltService.getYearBuiltFromBuilding(building)
     return ad.yearBuilt != null
-        ? !!ad.yearBuilt
+        ? [!!ad.yearBuilt]
         : yearBuiltFromBuilding
 }
 
@@ -114,6 +142,7 @@ function digForHasCharges(ad) {
 }
 
 module.exports = {
+    main,
     digForAddress,
     digForCharges,
     digForCoordinates,

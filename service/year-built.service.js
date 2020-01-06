@@ -9,21 +9,24 @@ function getYearRange(rangeRents, yearBuilt) {
     if (!yearBuilt) {
         return null
     }
-    const firstRangeRent = rangeRents.find((rangeRent) => {
-        const yearBuiltRange = rangeRent.fields.epoque
-            .split(/[\s-]+/)
-            .map(year => isNaN(year) ? year.toLowerCase() : +year)
+    const rangeRentsSorted = yearBuilt.map((yb) => {
+        return rangeRents.find((rangeRent) => {
+            const yearBuiltRange = rangeRent.fields.epoque
+                .split(/[\s-]+/)
+                .map(year => isNaN(year) ? year.toLowerCase() : +year)
 
-        return (typeof yearBuiltRange[0] === 'number') ?
-            yearBuiltRange[0] < yearBuilt && yearBuiltRange[1] >= yearBuilt
-            : (yearBuiltRange[0] === 'avant') ?
-                yearBuilt < yearBuiltRange[1]
-                : (yearBuiltRange[0] === 'apres') ?
-                    yearBuilt > yearBuiltRange[1]
-                    :
-                    false
-    })
+            return (typeof yearBuiltRange[0] === 'number') ?
+                yearBuiltRange[0] < yb && yearBuiltRange[1] >= yb
+                : (yearBuiltRange[0] === 'avant') ?
+                    yb < yearBuiltRange[1]
+                    : (yearBuiltRange[0] === 'apres') ?
+                        yb > yearBuiltRange[1]
+                        :
+                        false
+        })
+    }).sort(function (a, b) { return b.fields.max - a.fields.max })
 
+    const firstRangeRent = rangeRentsSorted && rangeRentsSorted[0]
     return firstRangeRent ? firstRangeRent.fields.epoque : null
 }
 
@@ -46,11 +49,23 @@ function getBuilding(lat, lng, postalCode) {
             }
         })
     const indexOfMinValue = distances.reduce((iMin, x, i, arr) => x < arr[iMin] ? i : iMin, 0)
-    return building || emprise_batie_paris.features[indexOfMinValue] || null
+    return building || emprise_batie_paris.features[indexOfMinValue]
+}
+
+function getYearBuiltFromBuilding(building) {
+    const yearBuilt = building && building.properties.an_const && [+building.properties.an_const]
+    const periodBuilt = building && building.properties.c_perconst &&
+        building.properties.c_perconst.toLowerCase().includes("avant") ?
+        [null, +building.properties.c_perconst.slice(-4)] :
+        building.properties.c_perconst.toLowerCase().includes("après") ?
+            [+building.properties.c_perconst.slice(-4), null] :
+            [+building.properties.c_perconst.slice(0, 4), +building.properties.c_perconst.slice(-4)]
+    return yearBuilt || periodBuilt
 }
 
 module.exports = {
     getYearRange,
     getParcelleCadastrale,
     getBuilding,
+    getYearBuiltFromBuilding,
 }

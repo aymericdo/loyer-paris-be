@@ -23,70 +23,61 @@ function getByData(req, res, next) {
 }
 
 function digData(ad, onSuccess, onError) {
-    const yearBuilt = digService.digForYearBuilt(ad)
-    const roomCount = digService.digForRoomCount(ad)
-    const hasFurniture = digService.digForHasFurniture(ad)
-    const surface = digService.digForSurface(ad)
-    const price = digService.digForPrice(ad)
-    const [address, postalCode, city] = digService.digForAddress(ad)
-    const renter = digService.digForRenter(ad)
-    const stations = digService.digForStations(ad)
-    const charges = digService.digForCharges(ad)
-    const hasCharges = digService.digForHasCharges(ad)
+    const digServiceData = digService.main(ad)
 
-    if (price && surface) {
-        if (address || postalCode) {
-            if (!(city && cleanup.string(city) === 'paris')) {
+    if (digServiceData.price && digServiceData.surface) {
+        if (digServiceData.address || digServiceData.postalCode) {
+            if (!(digServiceData.city && cleanup.string(digServiceData.city) === 'paris')) {
                 log.error('not in Paris')
                 onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
             } else {
                 rentFilter({
-                    address,
-                    city,
-                    hasFurniture,
-                    postalCode,
-                    roomCount,
-                    stations,
-                    yearBuilt,
-                }).then(({ match, coord }) => {
+                    address: digServiceData.address,
+                    city: digServiceData.city,
+                    hasFurniture: digServiceData.hasFurniture,
+                    postalCode: digServiceData.postalCode,
+                    roomCount: digServiceData.roomCount,
+                    stations: digServiceData.stations,
+                    yearBuilt: digServiceData.yearBuilt,
+                }).then(({ match }) => {
                     if (match) {
-                        const maxAuthorized = roundNumber(+match.fields.max * surface)
-                        const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
+                        const maxAuthorized = roundNumber(+match.fields.max * digServiceData.surface)
+                        const priceExcludingCharges = chargesService.subCharges(digServiceData.price, digServiceData.charges, digServiceData.hasCharges)
                         const isLegal = priceExcludingCharges <= maxAuthorized
 
                         saverService.rent({
                             id: ad.id,
-                            address,
-                            city,
-                            hasFurniture,
+                            address: digServiceData.address,
+                            city: digServiceData.city,
+                            hasFurniture: digServiceData.hasFurniture,
                             isLegal,
-                            latitude: coord && coord.lat,
-                            longitude: coord && coord.lng,
+                            latitude: digServiceData.coordinates && digServiceData.coordinates.lat,
+                            longitude: digServiceData.coordinates && digServiceData.coordinates.lng,
                             maxPrice: maxAuthorized,
-                            postalCode,
-                            price,
+                            postalCode: digServiceData.postalCode,
+                            price: digServiceData.price,
                             priceExcludingCharges,
-                            renter,
-                            roomCount,
-                            stations,
-                            surface,
+                            renter: digServiceData.renter,
+                            roomCount: digServiceData.roomCount,
+                            stations: digServiceData.stations,
+                            surface: digServiceData.surface,
                             website: 'pap',
-                            yearBuilt,
+                            yearBuilt: digServiceData.yearBuilt,
                         })
 
                         onSuccess(serializer({
-                            address,
-                            charges,
-                            hasCharges,
-                            hasFurniture,
+                            address: digServiceData.address,
+                            charges: digServiceData.charges,
+                            hasCharges: digServiceData.hasCharges,
+                            hasFurniture: digServiceData.hasFurniture,
                             isLegal,
                             maxAuthorized,
-                            postalCode,
-                            price,
+                            postalCode: digServiceData.postalCode,
+                            price: digServiceData.price,
                             priceExcludingCharges,
-                            roomCount,
-                            surface,
-                            yearBuilt,
+                            roomCount: digServiceData.roomCount,
+                            surface: digServiceData.surface,
+                            yearBuilt: digServiceData.yearBuilt,
                         }, match))
                     } else {
                         log.error('no match found')

@@ -30,7 +30,6 @@ module.exports = ({
             return rentList.length ?
                 {
                     match: rentList.reduce((prev, current) => (prev.fields.max > current.fields.max) ? prev : current),
-                    coord: result.coord,
                 }
                 :
                 null
