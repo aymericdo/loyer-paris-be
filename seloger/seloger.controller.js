@@ -58,19 +58,19 @@ function getByData(req, res, next) {
 
 function digData(ad, onSuccess, onError) {
     const {
-        roomCount,
-        hasFurniture,
-        surface,
-        price,
         address,
-        postalCode,
+        charges,
         city,
         coordinates,
-        yearBuilt,
-        renter,
-        stations,
-        charges,
         hasCharges,
+        hasFurniture,
+        postalCode,
+        price,
+        renter,
+        roomCount,
+        stations,
+        surface,
+        yearBuilt,
     } = digService.main(ad)
 
     if (price && surface) {
@@ -80,13 +80,13 @@ function digData(ad, onSuccess, onError) {
                 onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
             } else {
                 rentFilter({
-                    address: address,
-                    city: city,
-                    hasFurniture: hasFurniture,
-                    postalCode: postalCode,
-                    roomCount: roomCount,
-                    stations: stations,
-                    yearBuilt: yearBuilt,
+                    address,
+                    city,
+                    hasFurniture,
+                    postalCode,
+                    roomCount,
+                    stations,
+                    yearBuilt,
                 }).then(({ match }) => {
                     if (match) {
                         const maxAuthorized = roundNumber(+match.fields.max * surface)
@@ -95,37 +95,37 @@ function digData(ad, onSuccess, onError) {
 
                         saverService.rent({
                             id: ad.id,
-                            address: address,
-                            city: city,
-                            hasFurniture: hasFurniture,
+                            address,
+                            city,
+                            hasFurniture,
                             isLegal,
                             latitude: coordinates && coordinates.lat,
                             longitude: coordinates && coordinates.lng,
                             maxPrice: maxAuthorized,
-                            postalCode: postalCode,
-                            price: price,
+                            postalCode,
+                            price,
                             priceExcludingCharges,
-                            renter: renter,
-                            roomCount: roomCount,
-                            stations: stations,
-                            surface: surface,
+                            renter,
+                            roomCount,
+                            stations,
+                            surface,
                             website: 'seloger',
-                            yearBuilt: yearBuilt,
+                            yearBuilt,
                         })
 
                         onSuccess(serializer({
-                            address: address,
-                            charges: charges,
-                            hasCharges: hasCharges,
-                            hasFurniture: hasFurniture,
+                            address,
+                            charges,
+                            hasCharges,
+                            hasFurniture,
                             isLegal,
                             maxAuthorized,
-                            postalCode: postalCode,
-                            price: price,
+                            postalCode,
+                            price,
                             priceExcludingCharges,
-                            roomCount: roomCount,
-                            surface: surface,
-                            yearBuilt: yearBuilt,
+                            roomCount,
+                            surface,
+                            yearBuilt,
                         }, match))
                     } else {
                         log.error('no match found')

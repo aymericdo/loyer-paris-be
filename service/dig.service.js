@@ -20,19 +20,19 @@ function main(ad) {
     const charges = digForCharges(ad)
     const hasCharges = digForHasCharges(ad)
     return {
-        roomCount,
-        hasFurniture,
-        surface,
-        price,
         address,
-        postalCode,
+        charges,
         city,
         coordinates,
-        yearBuilt,
-        renter,
-        stations,
-        charges,
         hasCharges,
+        hasFurniture,
+        postalCode,
+        price,
+        renter,
+        roomCount,
+        stations,
+        surface,
+        yearBuilt,
     }
 }
 
@@ -97,7 +97,7 @@ function digForYearBuilt(ad, coordinates, postalCode) {
         yearBuiltService.getBuilding(coordinates.lat, coordinates.lng, postalCode)
     const yearBuiltFromBuilding = yearBuiltService.getYearBuiltFromBuilding(building)
     return ad.yearBuilt != null
-        ? [!!ad.yearBuilt]
+        ? [+ad.yearBuilt]
         : yearBuiltFromBuilding
 }
 
@@ -143,15 +143,4 @@ function digForHasCharges(ad) {
 
 module.exports = {
     main,
-    digForAddress,
-    digForCharges,
-    digForCoordinates,
-    digForHasCharges,
-    digForHasFurniture,
-    digForPrice,
-    digForRenter,
-    digForRoomCount,
-    digForSurface,
-    digForYearBuilt,
-    digForStations,
 }
