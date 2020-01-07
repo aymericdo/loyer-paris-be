@@ -96,7 +96,7 @@ function digForYearBuilt(ad, coordinates, postalCode) {
     const building = coordinates.lat && coordinates.lng &&
         yearBuiltService.getBuilding(coordinates.lat, coordinates.lng, postalCode)
     const yearBuiltFromBuilding = yearBuiltService.getYearBuiltFromBuilding(building)
-    return ad.yearBuilt != null
+    return ad.yearBuilt != null && !isNaN(ad.yearBuilt)
         ? [+ad.yearBuilt]
         : yearBuiltFromBuilding
 }
