@@ -23,25 +23,20 @@ function getByData(req, res, next) {
 }
 
 function digData(ad, onSuccess, onError) {
-    const {
-        address,
-        charges,
-        city,
-        coordinates,
-        hasCharges,
-        hasFurniture,
-        postalCode,
-        price,
-        renter,
-        roomCount,
-        stations,
-        surface,
-        yearBuilt,
-    } = digService.main(ad)
+    const yearBuilt = digService.digForYearBuilt(ad)
+    const roomCount = digService.digForRoomCount(ad)
+    const hasFurniture = digService.digForHasFurniture(ad)
+    const surface = digService.digForSurface(ad)
+    const price = digService.digForPrice(ad)
+    const [address, postalCode, city] = digService.digForAddress(ad)
+    const renter = digService.digForRenter(ad)
+    const stations = digService.digForStations(ad)
+    const charges = digService.digForCharges(ad)
+    const hasCharges = digService.digForHasCharges(ad)
 
     if (price && surface) {
         if (address || postalCode) {
-            if (!(city && cleanup.string(city) === 'paris')) {
+            if (city && !!city.length && city.toLowerCase() !== 'paris') {
                 log.error('not in Paris')
                 onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
             } else {
@@ -53,7 +48,7 @@ function digData(ad, onSuccess, onError) {
                     roomCount,
                     stations,
                     yearBuilt,
-                }).then(({ match }) => {
+                }).then(({ match, coord }) => {
                     if (match) {
                         const maxAuthorized = roundNumber(+match.fields.max * surface)
                         const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
@@ -65,8 +60,8 @@ function digData(ad, onSuccess, onError) {
                             city,
                             hasFurniture,
                             isLegal,
-                            latitude: coordinates && coordinates.lat,
-                            longitude: coordinates && coordinates.lng,
+                            latitude: coord && coord.lat,
+                            longitude: coord && coord.lng,
                             maxPrice: maxAuthorized,
                             postalCode,
                             price,
