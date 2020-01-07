@@ -5,6 +5,8 @@ const rangeRents = JSON.parse(fs.readFileSync('json-data/encadrements.json', 'ut
 const addressService = require('service/address.service')
 
 module.exports = ({
+    address,
+    city,
     coordinates,
     hasFurniture,
     postalCode,
@@ -14,7 +16,7 @@ module.exports = ({
 }) => {
     log.info('rent filter start')
 
-    return addressService.getDistricts(coordinates, postalCode, stations)
+    return addressService.getDistricts(city, coordinates, address, postalCode, stations)
         .then((result) => {
             const yearRange = yearBuiltService.getYearRange(rangeRents, yearBuilt)
 
@@ -30,6 +32,7 @@ module.exports = ({
             return rentList.length ?
                 {
                     match: rentList.reduce((prev, current) => (prev.fields.max > current.fields.max) ? prev : current),
+                    coord: result.coord,
                 }
                 :
                 null
