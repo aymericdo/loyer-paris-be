@@ -38,11 +38,12 @@ function main(ad) {
 
 function digForCoordinates(ad, address, city, postalCode) {
     const coordinatesFromAddress = addressService.getCoordinate(address, { city, postalCode })
-    const coordinatesFromAd = {
+    const coordinatesFromAd = ad.coord ? {
         lng: ad.coord.lng,
         lat: ad.coord.lat,
-    }
-    return ad.coord && ad.coord.lng.toString().length > 9 && ad.coord.lat.toString().length > 9 ?
+    } : null
+
+    return coordinatesFromAd && coordinatesFromAd.lng.toString().length > 9 && coordinatesFromAd.lat.toString().length > 9 ?
         coordinatesFromAd : coordinatesFromAddress != null ?
             coordinatesFromAddress : coordinatesFromAd
 }
