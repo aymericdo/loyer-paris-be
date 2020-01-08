@@ -1,2 +1,7 @@
-*.json filter=lfs diff=lfs merge=lfs -text
-*.geojson filter=lfs diff=lfs merge=lfs -text
+json-data/EMPRISE_BATIE_PARIS.geojson filter=lfs diff=lfs merge=lfs -text
+json-data/PARCELLE_CADASTRALE_PARIS.geojson filter=lfs diff=lfs merge=lfs -text
+json-data/adresse_paris.json filter=lfs diff=lfs merge=lfs -text
+json-data/encadrements.json filter=lfs diff=lfs merge=lfs -text
+json-data/metros_paris.json filter=lfs diff=lfs merge=lfs -text
+json-data/quartier_paris.json filter=lfs diff=lfs merge=lfs -text
+json-data/quartier_paris_geodata.json filter=lfs diff=lfs merge=lfs -text
