@@ -14,15 +14,16 @@ router.post('/data', getByData)
 
 function getByData(req, res, next) {
     log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
-    digData(orpiService.dataMapping(req.body),
-        (data) => {
+    digData(orpiService.dataMapping(req.body))
+        .then((data) => {
             res.json(data)
-        }, (err) => {
+        })
+        .catch((err) => {
             res.status(err.status).json(err)
         })
 }
 
-function digData(ad, onSuccess, onError) {
+async function digData(ad) {
     const {
         address,
         charges,
@@ -37,76 +38,69 @@ function digData(ad, onSuccess, onError) {
         stations,
         surface,
         yearBuilt,
-    } = digService.main(ad)
+    } = await digService.main(ad)
 
-    if (price && surface) {
-        if (coordinates || address || postalCode) {
-            if (!(city && cleanup.string(city) === 'paris')) {
-                log.error('not in Paris')
-                onError({ status: 400, msg: 'not in Paris bro', error: 'paris' })
-            } else {
-                rentFilter({
-                    address,
-                    city,
-                    coordinates,
-                    hasFurniture,
-                    postalCode,
-                    roomCount,
-                    stations,
-                    yearBuilt,
-                }).then(({ match }) => {
-                    if (match) {
-                        const maxAuthorized = roundNumber(+match.fields.max * surface)
-                        const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
-                        const isLegal = priceExcludingCharges <= maxAuthorized
+    errorEscape({
+        address,
+        city,
+        postalCode,
+        price,
+        surface,
+    })
 
-                        saverService.rent({
-                            id: ad.id,
-                            address,
-                            city,
-                            hasFurniture,
-                            isLegal,
-                            latitude: coordinates && coordinates.lat,
-                            longitude: coordinates && coordinates.lng,
-                            maxPrice: maxAuthorized,
-                            postalCode,
-                            price,
-                            priceExcludingCharges,
-                            renter,
-                            roomCount,
-                            stations,
-                            surface,
-                            website: 'orpi',
-                            yearBuilt,
-                        })
+    const { match } = rentFilter({
+        address,
+        city,
+        coordinates,
+        hasFurniture,
+        postalCode,
+        roomCount,
+        stations,
+        yearBuilt,
+    })
 
-                        onSuccess(serializer({
-                            address,
-                            charges,
-                            hasCharges,
-                            hasFurniture,
-                            isLegal,
-                            maxAuthorized,
-                            postalCode,
-                            price,
-                            priceExcludingCharges,
-                            roomCount,
-                            surface,
-                            yearBuilt,
-                        }, match))
-                    } else {
-                        log.error('no match found')
-                        onError({ status: 403, msg: 'no match found', error: 'address' })
-                    }
-                })
-            }
-        } else {
-            log.error('no address found')
-            onError({ status: 403, msg: 'no address found', error: 'address' })
-        }
+    if (match) {
+        const maxAuthorized = roundNumber(+match.fields.max * surface)
+        const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
+        const isLegal = priceExcludingCharges <= maxAuthorized
+
+        saverService.rent({
+            id: ad.id,
+            address,
+            city,
+            hasFurniture,
+            isLegal,
+            latitude: coordinates && coordinates.lat,
+            longitude: coordinates && coordinates.lng,
+            maxPrice: maxAuthorized,
+            postalCode,
+            price,
+            priceExcludingCharges,
+            renter,
+            roomCount,
+            stations,
+            surface,
+            website: 'orpi',
+            yearBuilt,
+        })
+
+        return serializer({
+            address,
+            charges,
+            hasCharges,
+            hasFurniture,
+            isLegal,
+            maxAuthorized,
+            postalCode,
+            price,
+            priceExcludingCharges,
+            roomCount,
+            surface,
+            yearBuilt,
+        }, match)
     } else {
-        log.error('minimal information not found')
-        onError({ status: 403, msg: 'minimal information not found', error: 'minimal' })
+        log.error('no match found')
+        throw { status: 403, msg: 'no match found', error: 'address' }
     }
 }
 

@@ -72,11 +72,11 @@ function getDistricts(coordinates, postalCode, stations) {
         && _getDistrictFromCoordinate(coordinates.lat, coordinates.lng)
 
     return districtFromCoordinate ?
-        Promise.resolve(districtFromCoordinate)
+        districtFromCoordinate
         : postalCode ?
-            Promise.resolve(_getDistrictFromPostalCode(postalCode, stations))
+            _getDistrictFromPostalCode(postalCode, stations)
             :
-            Promise.resolve({})
+            {}
 }
 
 function _getDistrictFromCoordinate(lat, lng) {

@@ -7,14 +7,14 @@ const yearBuiltService = require('service/year-built.service')
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
 
-function main(ad) {
+async function main(ad) {
     const roomCount = digForRoomCount(ad)
     const hasFurniture = digForHasFurniture(ad)
     const surface = digForSurface(ad)
     const price = digForPrice(ad)
     const [address, postalCode, city] = digForAddress(ad)
     const coordinates = digForCoordinates(ad, address, city, postalCode)
-    const yearBuilt = digForYearBuilt(ad, coordinates, postalCode)
+    const yearBuilt = await digForYearBuilt(ad, coordinates, postalCode)
     const renter = digForRenter(ad)
     const stations = digForStations(ad)
     const charges = digForCharges(ad)
@@ -93,10 +93,11 @@ function digForRoomCount(ad) {
     return (!!ad.rooms && ad.rooms) || stringToNumber(roomsFromTitle) || stringToNumber(roomsFromDescription)
 }
 
-function digForYearBuilt(ad, coordinates, postalCode) {
-    const building = coordinates.lat && coordinates.lng &&
-        yearBuiltService.getBuilding(coordinates.lat, coordinates.lng, postalCode)
-    const yearBuiltFromBuilding = yearBuiltService.getYearBuiltFromBuilding(building)
+async function digForYearBuilt(ad, coordinates, postalCode) {
+    const building = await (await coordinates.lat && coordinates.lng &&
+        yearBuiltService.getBuilding(coordinates.lat, coordinates.lng, postalCode))
+    const yearBuiltFromBuilding = building && yearBuiltService.getYearBuiltFromBuilding(building)
+
     return ad.yearBuilt != null && !isNaN(ad.yearBuilt)
         ? [+ad.yearBuilt]
         : yearBuiltFromBuilding
