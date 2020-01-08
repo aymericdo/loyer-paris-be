@@ -1,9 +1,12 @@
 const fs = require('fs')
 const turf = require('turf')
 const inside = require('point-in-polygon')
+// const json = require('big-json')
 
-const parcelle_cadastrale_paris = JSON.parse(fs.readFileSync('json-data/PARCELLE_CADASTRALE_PARIS.geojson', 'utf8'))
-const emprise_batie_paris = JSON.parse(fs.readFileSync('json-data/EMPRISE_BATIE_PARIS.geojson', 'utf8'))
+const empriseBatieParis = JSON.parse(fs.readFileSync('json-data/EMPRISE_BATIE_PARIS.geojson', 'utf8'))
+
+// const readStreamParcelleCadastraleParis = fs.createReadStream('json-data/PARCELLE_CADASTRALE_PARIS.geojson')
+// const parseStreamParcelleCadastraleParis = json.createParseStream()
 
 function getYearRange(rangeRents, yearBuilt) {
     if (!yearBuilt) {
@@ -30,14 +33,18 @@ function getYearRange(rangeRents, yearBuilt) {
     return firstRangeRent ? firstRangeRent.fields.epoque : null
 }
 
-function getParcelleCadastrale(lat, lng) {
-    const parcelle = parcelle_cadastrale_paris.features.find(parcelle => inside([lng, lat], parcelle.geometry.coordinates[0]))
-    return parcelle || null
-}
+// function getParcelleCadastrale(lat, lng) {
+//     parseStreamParcelleCadastraleParis.on('data', (parcelleCadastraleParis) => {
+//         const parcelle = parcelleCadastraleParis.features.find(parcelle => inside([lng, lat], parcelle.geometry.coordinates[0]))
+//         return parcelle || null
+//     })
+
+//     readStreamParcelleCadastraleParis.pipe(parseStreamParcelleCadastraleParis)
+// }
 
 function getBuilding(lat, lng, postalCode) {
-    const building = emprise_batie_paris.features.find(building => inside([lng, lat], building.geometry.coordinates[0]))
-    const distances = emprise_batie_paris.features.filter(building => building.properties.n_sq_eb.toString().startsWith(postalCode))
+    const building = empriseBatieParis.features.find(building => inside([lng, lat], building.geometry.coordinates[0]))
+    const distances = empriseBatieParis.features.filter(building => building.properties.n_sq_eb.toString().startsWith(postalCode))
         .map(building => {
             try {
                 const polygon = turf.polygon(building.geometry.coordinates)
@@ -49,7 +56,7 @@ function getBuilding(lat, lng, postalCode) {
             }
         })
     const indexOfMinValue = distances.reduce((iMin, x, i, arr) => x < arr[iMin] ? i : iMin, 0)
-    return building || emprise_batie_paris.features[indexOfMinValue]
+    return building || empriseBatieParis.features[indexOfMinValue]
 }
 
 function getYearBuiltFromBuilding(building) {
@@ -65,7 +72,7 @@ function getYearBuiltFromBuilding(building) {
 
 module.exports = {
     getYearRange,
-    getParcelleCadastrale,
+    // getParcelleCadastrale,
     getBuilding,
     getYearBuiltFromBuilding,
 }
