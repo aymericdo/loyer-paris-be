@@ -4,7 +4,6 @@ const log = require('helper/log.helper')
 const inside = require('point-in-polygon')
 const stationService = require('service/station.service')
 const Fuse = require('fuse.js')
-const cleanup = require('helper/cleanup.helper')
 
 const parisAddresses = JSON.parse(fs.readFileSync('json-data/adresse_paris.json', 'utf8'))
 const parisDistricts = JSON.parse(fs.readFileSync('json-data/quartier_paris.json', 'utf8'))
@@ -51,6 +50,10 @@ function getAddressInParis(q, addressInfo) {
         threshold: 0.6,
         tokenize: true,
         matchAllTokens: true,
+    }
+
+    if (!q) {
+        return null
     }
 
     const fuse = new Fuse(parisAddresses.filter(address => {
