@@ -1,10 +1,10 @@
-const fs = require('fs')
-const turf = require('turf')
-const inside = require('point-in-polygon')
-const json = require('big-json')
+// const fs = require('fs')
+// const turf = require('turf')
+// const inside = require('point-in-polygon')
+// const json = require('big-json')
 
-const empriseBatieParisReadStream = fs.createReadStream('json-data/EMPRISE_BATIE_PARIS.geojson');
-const empriseBatieParisParseStream = json.createParseStream();
+// const empriseBatieParisReadStream = fs.createReadStream('json-data/EMPRISE_BATIE_PARIS.geojson');
+// const empriseBatieParisParseStream = json.createParseStream();
 
 function getYearRange(rangeRents, yearBuilt) {
     if (!yearBuilt) {
