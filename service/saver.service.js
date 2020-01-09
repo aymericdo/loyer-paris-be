@@ -41,7 +41,7 @@ function rent({
             ...(roomCount != null && { roomCount }),
             ...(stations != null && stations.length && { stations }),
             ...(surface != null && { surface }),
-            ...(yearBuilt != null && { yearBuilt }),
+            ...(yearBuilt != null && yearBuilt.length && { yearBuilt }),
         })
         log.info('Rent saver start')
         rent.save()
