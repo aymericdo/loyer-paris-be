@@ -1,9 +1,9 @@
-const express = require('express')
+import express from 'express'
 const router = express.Router()
-const orpiService = require('./orpi.service')
+const logicimmoService = require('./logicimmo.service')
+const digService = require('service/dig.service')
 const log = require('helper/log.helper')
 const roundNumber = require('helper/round-number.helper')
-const digService = require('service/dig.service')
 const serializer = require('service/serializer.service')
 const rentFilter = require('service/rent-filter.service')
 const saverService = require('service/saver.service')
@@ -15,7 +15,7 @@ router.post('/data', getByData)
 
 function getByData(req, res, next) {
     log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
-    digData(orpiService.dataMapping(req.body))
+    digData(logicimmoService.dataMapping(req.body))
         .then((data) => {
             res.json(data)
         })
@@ -79,9 +79,9 @@ async function digData(ad) {
             priceExcludingCharges,
             renter,
             roomCount,
-            stations,
             surface,
-            website: 'orpi',
+            stations,
+            website: 'logicimmo',
             yearBuilt,
         })
 

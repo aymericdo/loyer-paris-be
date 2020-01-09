@@ -1,8 +1,8 @@
-const express = require('express')
+import express from 'express'
 const router = express.Router()
-const facebookService = require('./facebook.service')
-const log = require('helper/log.helper')
+const leboncoinService = require('./leboncoin.service')
 const digService = require('service/dig.service')
+const log = require('helper/log.helper')
 const roundNumber = require('helper/round-number.helper')
 const serializer = require('service/serializer.service')
 const rentFilter = require('service/rent-filter.service')
@@ -15,7 +15,7 @@ router.post('/data', getByData)
 
 function getByData(req, res, next) {
     log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
-    digData(facebookService.dataMapping(req.body))
+    digData(leboncoinService.dataMapping(req.body))
         .then((data) => {
             res.json(data)
         })
@@ -75,13 +75,13 @@ async function digData(ad) {
             longitude: coordinates && coordinates.lng,
             maxPrice: maxAuthorized,
             postalCode,
-            priceExcludingCharges,
             price,
+            priceExcludingCharges,
             renter,
             roomCount,
             stations,
             surface,
-            website: 'facebook',
+            website: 'leboncoin',
             yearBuilt,
         })
 

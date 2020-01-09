@@ -1,4 +1,4 @@
-const NodeCache = require('node-cache')
+import NodeCache from 'node-cache'
 const ipCache = new NodeCache({ checkperiod: 15, deleteOnExpire: true })
 
 function getIp(req) {

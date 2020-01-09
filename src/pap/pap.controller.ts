@@ -1,8 +1,8 @@
-const express = require('express')
+import express from 'express'
 const router = express.Router()
-const lefigaroService = require('./lefigaro.service')
-const digService = require('service/dig.service')
+const papService = require('./pap.service')
 const log = require('helper/log.helper')
+const digService = require('service/dig.service')
 const roundNumber = require('helper/round-number.helper')
 const serializer = require('service/serializer.service')
 const rentFilter = require('service/rent-filter.service')
@@ -15,7 +15,7 @@ router.post('/data', getByData)
 
 function getByData(req, res, next) {
     log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
-    digData(lefigaroService.dataMapping(req.body))
+    digData(papService.dataMapping(req.body))
         .then((data) => {
             res.json(data)
         })
@@ -81,7 +81,7 @@ async function digData(ad) {
             roomCount,
             stations,
             surface,
-            website: 'lefigaro',
+            website: 'pap',
             yearBuilt,
         })
 

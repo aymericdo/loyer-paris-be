@@ -1,11 +1,9 @@
-const express = require('express')
+import express from 'express'
 const router = express.Router()
-const request = require('request')
-const loueragileService = require('./loueragile.service')
+const lefigaroService = require('./lefigaro.service')
+const digService = require('service/dig.service')
 const log = require('helper/log.helper')
 const roundNumber = require('helper/round-number.helper')
-const cleanup = require('helper/cleanup.helper')
-const digService = require('service/dig.service')
 const serializer = require('service/serializer.service')
 const rentFilter = require('service/rent-filter.service')
 const saverService = require('service/saver.service')
@@ -13,31 +11,17 @@ const chargesService = require('service/charges.service')
 const errorEscape = require('service/error-escape.service')
 
 // routes
-router.get('/', getById)
-function getById(req, res, next) {
-    log.info(`-> ${req.baseUrl}/${req.query.id} getById`, 'blue')
-    if (!cleanup.number(req.query.id)) {
-        res.status(403).json({
-            msg: 'no address found', error: 'address',
+router.post('/data', getByData)
+
+function getByData(req, res, next) {
+    log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
+    digData(lefigaroService.dataMapping(req.body))
+        .then((data) => {
+            res.json(data)
         })
-    }
-    request({
-        url: `https://www.loueragile.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${req.query.id}`,
-    }, (error, response, body) => {
-        if (!body || !!error) {
-            log.error('l\'api de loueragile bug')
-            res.status(403).json({ status: 403, msg: 'l\'api de loueragile bug', error: 'api' })
-        } else {
-            log.info('loueragile fetched')
-            digData(loueragileService.apiMapping(JSON.parse(body)))
-                .then((data) => {
-                    res.json(data)
-                })
-                .catch((err) => {
-                    res.status(err.status).json(err)
-                })
-        }
-    })
+        .catch((err) => {
+            res.status(err.status).json(err)
+        })
 }
 
 async function digData(ad) {
@@ -97,7 +81,7 @@ async function digData(ad) {
             roomCount,
             stations,
             surface,
-            website: 'loueragile',
+            website: 'lefigaro',
             yearBuilt,
         })
 
@@ -106,6 +90,7 @@ async function digData(ad) {
             charges,
             hasCharges,
             hasFurniture,
+            isLegal,
             maxAuthorized,
             postalCode,
             price,

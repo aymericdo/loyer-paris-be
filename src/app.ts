@@ -1,17 +1,18 @@
 require('rootpath')()
-const express = require('express')
+import express from 'express'
+import { Request, Response, NextFunction } from 'express';
 const app = express()
-const cors = require('cors')
+import cors from 'cors'
 const log = require('helper/log.helper')
 // const addressService = require('service/address.service')
-const Sentry = require('@sentry/node');
+import Sentry from '@sentry/node'
 
 app.use(cors())
 app.use(express.json({
     type: ['application/json', 'text/plain']
 }))
 
-app.use('/', function (req, res, next) {
+app.use('/', function (req: Request, res: Response, next: NextFunction) {
     const isStats = req.url.split('/') && req.url.split('/')[1] === 'stats'
     log.apiHit(isStats)
     next()
