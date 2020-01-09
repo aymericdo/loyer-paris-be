@@ -94,8 +94,8 @@ function digForRoomCount(ad) {
 }
 
 async function digForYearBuilt(ad, coordinates, postalCode) {
-    const building = await (await coordinates.lat && coordinates.lng &&
-        yearBuiltService.getBuilding(coordinates.lat, coordinates.lng, postalCode))
+    const building = coordinates && coordinates.lat && coordinates.lng &&
+        await (await yearBuiltService.getBuilding(coordinates.lat, coordinates.lng, postalCode))
     const yearBuiltFromBuilding = building && yearBuiltService.getYearBuiltFromBuilding(building)
 
     return ad.yearBuilt != null && !isNaN(ad.yearBuilt)
