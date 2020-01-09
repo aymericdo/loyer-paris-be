@@ -10,6 +10,7 @@ const serializer = require('service/serializer.service')
 const rentFilter = require('service/rent-filter.service')
 const saverService = require('service/saver.service')
 const chargesService = require('service/charges.service')
+const errorEscape = require('service/error-escape.service')
 
 // routes
 router.get('/', getById)
