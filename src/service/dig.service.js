@@ -38,7 +38,7 @@ async function main(ad) {
 
 function digForCoordinates(ad, address, city, postalCode) {
     const coordinatesFromAddress = addressService.getCoordinate(address, { city, postalCode })
-    const coordinatesFromAd = ad.coord ? {
+    const coordinatesFromAd = ad.coord && ad.coord.lng && ad.coord.lat ? {
         lng: ad.coord.lng,
         lat: ad.coord.lat,
     } : null
