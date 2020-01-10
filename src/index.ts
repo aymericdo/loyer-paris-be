@@ -1,10 +1,8 @@
-require('rootpath')()
 import express from 'express'
 import { Request, Response, NextFunction } from 'express';
 const app = express()
 import cors from 'cors'
-const log = require('helper/log.helper')
-// const addressService = require('service/address.service')
+import * as log from './helper/log.helper'
 import Sentry from '@sentry/node'
 
 app.use(cors())
@@ -35,19 +33,6 @@ Sentry.init({
     dsn: process.env.SENTRY_DSN,
     environment: process.env.PROD ? 'production' : 'local',
 })
-
-// opencage api tester
-// app.get('/opencage', (req, res) => {
-//     addressService.getCoordinate(req.query.address)
-//         .then((info) => {
-//             res.json(info)
-//         })
-// })
-
-// address api tester
-// app.get('/address', (req, res) => {
-//     res.json(addressService.getAddressInParis(req.query.address, { postalCode: '75018' }))
-// })
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
