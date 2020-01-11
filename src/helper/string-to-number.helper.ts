@@ -1,4 +1,4 @@
-export const stringToNumber = (value) => {
+export const stringToNumber = (value: string): number => {
     const digit = {
         'un': 1,
         'deux': 2,
@@ -12,7 +12,7 @@ export const stringToNumber = (value) => {
     }
 
     if (value) {
-        if (isNaN(value)) {
+        if (isNaN(+value)) {
             if (Object.keys(digit).includes(value)) {
                 return digit[value]
             } else {

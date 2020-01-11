@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as cleanup from '../helper/cleanup.helper'
+import type { Coordinate } from './interfaces'
 const Fuse = require('fuse.js')
 
 let parisStations = null
@@ -8,7 +9,7 @@ fs.readFile(path.join(__dirname, '../json-data/metros_paris.json'), 'utf8', (err
     parisStations = JSON.parse(data)
 })
 
-export function getCoordinate(station) {
+export function getCoordinate(station: string): Coordinate {
     const options = {
         keys: ['tags.name'],
         shouldSort: true,
@@ -18,10 +19,10 @@ export function getCoordinate(station) {
     }
     const fuse = new Fuse(parisStations, options)
     const result = fuse.search(station)
-    return result && result.length && { lat: result[0].lat, lng: result[0].lon }
+    return result?.length && { lat: result[0].lat, lng: result[0].lon }
 }
 
-export function getStations(description) {
+export function getStations(description: string) {
     return [...new Set(parisStations.map(station => {
         if (station.tags && description.search(cleanup.string(station.tags.name)) !== -1) {
             return cleanup.string(station.tags.name)

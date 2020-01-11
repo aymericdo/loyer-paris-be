@@ -1,3 +1,3 @@
-export const roundNumber = (number, decimal = 2) => {
-    return number && typeof number === 'number' && +(number).toFixed(decimal)
+export const roundNumber = (number: number, decimal: number = 2): number => {
+    return +(number)?.toFixed(decimal)
 }

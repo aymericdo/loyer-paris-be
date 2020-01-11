@@ -1,20 +1,24 @@
-import * as fs from 'fs'
-import * as path from 'path'
-const express = require('express')
-const request = require('request')
+import express, { NextFunction, Request, Response } from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
+import request from 'request';
+import * as rentService from '../db/rent.service';
+import { groupBy } from '../helper/group-by.helper';
+import * as ip from '../helper/ip.helper';
+import * as log from '../helper/log.helper';
+import * as vegaService from '../service/vega.service';
 const router = express.Router()
-import * as log from '../helper/log.helper'
-import * as rentService from '../db/rent.service'
-import * as vegaService from '../service/vega.service'
-import * as ip from '../helper/ip.helper'
-import { groupBy } from '../helper/group-by.helper'
 
 let parisGeodata = null
 fs.readFile(path.join(__dirname, '../json-data/quartier_paris_geodata.json'), 'utf8', (error, data) => {
   parisGeodata = JSON.parse(data)
 })
 
-router.use('/', function (req, res, next) {
+interface RentRequest extends Request {
+  rents?: rentService.DataBaseItem[]
+}
+
+router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
   const verifyCaptchaOptions = {
     uri: "https://www.google.com/recaptcha/api/siteverify",
     json: true,
@@ -52,7 +56,7 @@ router.use('/', function (req, res, next) {
 
 // routes
 router.get('/map', getMap)
-function getMap(req, res, next) {
+function getMap(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
   const vegaMap = {
@@ -111,7 +115,7 @@ function getMap(req, res, next) {
 }
 
 router.get('/price-difference', getPriceDifference)
-function getPriceDifference(req, res, next) {
+function getPriceDifference(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} priceDifference`, 'blue')
 
   const vegaMap = {
@@ -184,7 +188,7 @@ function getPriceDifference(req, res, next) {
 }
 
 router.get('/is-legal-per-surface', getLegalPerSurface)
-function getLegalPerSurface(req, res, next) {
+function getLegalPerSurface(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} isLegalPerSurface`, 'blue')
 
   const vegaMap = {
@@ -231,7 +235,7 @@ function getLegalPerSurface(req, res, next) {
 }
 
 router.get('/welcome', getWelcomeText)
-function getWelcomeText(req, res, next) {
+function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
 
   const rents = req.rents
@@ -261,7 +265,7 @@ function getExtremePostalCode(groupedRents) {
   let worstLegalsCount = 0
 
   Object.keys(groupedRents).forEach(pc => {
-    if (isNaN(pc)) { return; }
+    if (isNaN(+pc)) { return; }
     const pcRents = groupedRents[pc]
 
     const legalsRatio = pcRents.filter(rent => rent.isLegal).length / pcRents.length

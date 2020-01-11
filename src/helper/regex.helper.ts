@@ -1,4 +1,4 @@
-export const regexString = (value) => {
+export const regexString = (value: string): string => {
     const regex = {
         address: /([0-9]+,?)? ?((bis|b|ter),?)? ?(rue|avenue|passage|boulevard|faubourg|allee|quai|place|jardin|impasse|square|bd|cite) (?!(calme|tranquille)\b)( ?[a-zA-Z'’-]+){0,3}/g,
         postalCode: /\b75[0-1][0-9]{2}\b/g,

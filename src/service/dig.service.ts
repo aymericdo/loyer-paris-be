@@ -4,10 +4,12 @@ import { stringToNumber } from '../helper/string-to-number.helper'
 import * as addressService from '../service/address.service'
 import * as stationService from '../service/station.service'
 import * as yearBuiltService from '../service/year-built.service'
+import type { Ad } from './interfaces'
+import type { DataBaseItem } from 'src/db/rent.service'
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
 
-export async function main(ad) {
+export async function main(ad: Ad) {
     const roomCount = digForRoomCount(ad)
     const hasFurniture = digForHasFurniture(ad)
     const surface = digForSurface(ad)
