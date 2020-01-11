@@ -2,11 +2,11 @@ const fs = require('fs')
 const express = require('express')
 const request = require('request')
 const router = express.Router()
-const log = require('helper/log.helper')
-const groupBy = require('helper/group-by.helper')
+import * as log from './../helper/log.helper'
 const ip = require('helper/ip.helper')
 const rentService = require('db/rent.service')
 const vegaService = require('service/vega.service')
+import { groupBy } from 'helper/group-by.helper'
 
 const parisGeodata = JSON.parse(fs.readFileSync('json-data/quartier_paris_geodata.json', 'utf8'))
 

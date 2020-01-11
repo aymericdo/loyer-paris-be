@@ -1,7 +1,7 @@
-const log = require('helper/log.helper')
-const cleanup = require('helper/cleanup.helper')
+import * as log from './../helper/log.helper'
+import * as cleanup from '../helper/cleanup.helper'
 
-module.exports = ({
+export const errorEscape = ({
     address,
     city,
     postalCode,

@@ -1,20 +1,14 @@
 import NodeCache from 'node-cache'
 const ipCache = new NodeCache({ checkperiod: 15, deleteOnExpire: true })
 
-function getIp(req) {
+export function getIp(req) {
     return req.header('x-forwarded-for') || req.connection.remoteAddress
 }
 
-function isIpCached(requestIp) {
+export function isIpCached(requestIp) {
     return ipCache.has(requestIp)
 }
 
-function saveIp(ip) {
+export function saveIp(ip) {
     return ipCache.set(ip, true)
-}
-
-module.exports = {
-    getIp,
-    isIpCached,
-    saveIp,
 }

@@ -1,6 +1,6 @@
 const fs = require('fs')
 const opencage = require('opencage-api-client')
-const log = require('helper/log.helper')
+import * as log from './../helper/log.helper'
 const inside = require('point-in-polygon')
 const stationService = require('service/station.service')
 const Fuse = require('fuse.js')
@@ -8,14 +8,14 @@ const Fuse = require('fuse.js')
 const parisAddresses = JSON.parse(fs.readFileSync('json-data/adresse_paris.json', 'utf8'))
 const parisDistricts = JSON.parse(fs.readFileSync('json-data/quartier_paris.json', 'utf8'))
 
-function getCoordinate(address, addressInfo) {
+export function getCoordinate(address, addressInfo) {
     const postalCode = addressInfo && addressInfo.postalCode
     const addressInParis = getAddressInParis(address, { postalCode })
     const result = addressInParis && addressInParis.map(address => address.item)
     return result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] }
 }
 
-function getCoordinateWithOpenCage(address, addressInfo) {
+export function getCoordinateWithOpenCage(address, addressInfo) {
     const postalCode = addressInfo && addressInfo.postalCode
     const city = addressInfo && addressInfo.city
     return opencage.geocode({ q: `${address} ${postalCode ? postalCode : ''} ${city ? city : ''}`, countrycode: 'fr' })
@@ -42,7 +42,7 @@ function getCoordinateWithOpenCage(address, addressInfo) {
         })
 }
 
-function getAddressInParis(q, addressInfo) {
+export function getAddressInParis(q, addressInfo) {
     const options = {
         keys: ['fields.l_adr'],
         shouldSort: true,
@@ -70,7 +70,7 @@ function getAddressInParis(q, addressInfo) {
     return result && result.length ? result : null
 }
 
-function getDistricts(coordinates, postalCode, stations) {
+export function getDistricts(coordinates, postalCode, stations) {
     const districtFromCoordinate = coordinates && coordinates.lng && coordinates.lat
         && _getDistrictFromCoordinate(coordinates.lat, coordinates.lng)
 
@@ -82,12 +82,12 @@ function getDistricts(coordinates, postalCode, stations) {
             {}
 }
 
-function _getDistrictFromCoordinate(lat, lng) {
+export function _getDistrictFromCoordinate(lat, lng) {
     const district = parisDistricts.find(district => inside([lng, lat], district.fields.geom.coordinates[0]))
     return district ? { districts: [district] } : null
 }
 
-function _getDistrictFromPostalCode(postalCode, stations) {
+export function _getDistrictFromPostalCode(postalCode, stations) {
     if (postalCode) {
         // 75010 -> 10 ; 75009 -> 9
         const code = postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2)
@@ -109,11 +109,4 @@ function _getDistrictFromPostalCode(postalCode, stations) {
     } else {
         return {}
     }
-}
-
-module.exports = {
-    getCoordinate,
-    getCoordinateWithOpenCage,
-    getAddressInParis,
-    getDistricts,
 }

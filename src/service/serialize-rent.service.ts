@@ -1,7 +1,7 @@
-const log = require('helper/log.helper')
-const roundNumber = require('helper/round-number.helper')
+import * as log from './../helper/log.helper'
+import { roundNumber } from '../helper/round-number.helper'
 
-module.exports = ({
+export const serializeRent = ({
     address,
     charges,
     hasCharges,

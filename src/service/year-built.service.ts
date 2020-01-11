@@ -6,7 +6,7 @@
 // const empriseBatieParisReadStream = fs.createReadStream('json-data/EMPRISE_BATIE_PARIS.geojson');
 // const empriseBatieParisParseStream = json.createParseStream();
 
-function getYearRange(rangeRents, yearBuilt) {
+export function getYearRange(rangeRents, yearBuilt) {
     if (!yearBuilt) {
         return null
     }
@@ -31,7 +31,7 @@ function getYearRange(rangeRents, yearBuilt) {
     return firstRangeRent ? firstRangeRent.fields.epoque : null
 }
 
-function getBuilding(lat, lng, postalCode) {
+export function getBuilding(lat, lng, postalCode) {
     return null
     // return new Promise(resolve => {
     //     empriseBatieParisParseStream.on('data', (empriseBatieParis) => {
@@ -55,7 +55,7 @@ function getBuilding(lat, lng, postalCode) {
     // })
 }
 
-function getYearBuiltFromBuilding(building) {
+export function getYearBuiltFromBuilding(building) {
     const yearBuilt = building && building.properties.an_const && [+building.properties.an_const]
     const periodBuilt = building && building.properties.c_perconst && (
         building.properties.c_perconst.toLowerCase().includes("avant") ?
@@ -65,10 +65,4 @@ function getYearBuiltFromBuilding(building) {
                 [+building.properties.c_perconst.slice(0, 4), +building.properties.c_perconst.slice(-4)]
     )
     return yearBuilt || periodBuilt
-}
-
-module.exports = {
-    getYearRange,
-    getBuilding,
-    getYearBuiltFromBuilding,
 }

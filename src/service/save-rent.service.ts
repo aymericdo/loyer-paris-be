@@ -1,32 +1,30 @@
 const db = require('db')
 const Rent = db.Rent
-const log = require('helper/log.helper')
+import * as log from './../helper/log.helper'
 
-function rent({
+export const saveRent = ({
     id,
-    website,
     address,
     city,
-    postalCode,
-    longitude,
-    latitude,
     hasFurniture,
-    roomCount,
-    yearBuilt,
-    price,
-    surface,
-    maxPrice,
     isLegal,
-    renter,
-    createdAt,
-    stations,
+    latitude,
+    longitude,
+    maxPrice,
+    postalCode,
+    price,
     priceExcludingCharges,
-}) {
+    renter,
+    roomCount,
+    stations,
+    surface,
+    website,
+    yearBuilt,
+}) => {
     if (id) {
         const rent = new Rent({
             id,
             website,
-            createdAt,
             ...(address != null && { address }),
             ...(city != null && { city }),
             ...(hasFurniture != null && { hasFurniture }),
@@ -56,8 +54,4 @@ function rent({
                 }
             })
     }
-}
-
-module.exports = {
-    rent,
 }

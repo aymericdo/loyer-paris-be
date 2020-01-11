@@ -1,7 +1,7 @@
 const clc = require('cli-color')
 const Sentry = require('@sentry/node')
 
-export const info = (message, color) => {
+export const info = (message, color?) => {
     const date = new Date()
     const log = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}] ${message}`
     if (color === 'red') {
@@ -15,7 +15,7 @@ export const info = (message, color) => {
     }
 }
 
-export const error = (message, color) => {
+export const error = (message, color?) => {
     info(message, color)
     Sentry.captureMessage(message)
 }

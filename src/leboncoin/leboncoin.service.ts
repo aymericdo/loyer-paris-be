@@ -1,5 +1,5 @@
-const cleanup = require('helper/cleanup.helper')
-const particulierToken = require('helper/particulier.helper')
+import * as cleanup from '../helper/cleanup.helper'
+import { particulierToken } from '../helper/particulier.helper'
 
 function apiMapping(ad) {
     const roomFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'rooms')
@@ -34,7 +34,7 @@ function dataMapping(ad) {
         hasCharges: cleanup.string(ad.hasCharges) === 'oui' ? true : cleanup.string(ad.hasCharges) === 'non' ? false : null,
         price: cleanup.price(ad.price),
         // TODO: to remove when next plugin version will be release : cleanup.string(ad.renter) !== 'false'
-        renter: ad.renter && cleanup.string(ad.renter) !== 'false' ? cleanup.string(ad.renter) : particulierToken(),
+        renter: ad.renter && cleanup.string(ad.renter) !== 'false' ? cleanup.string(ad.renter) : particulierToken,
         rooms: cleanup.number(ad.rooms),
         surface: cleanup.number(ad.surface),
         title: cleanup.string(ad.subject),

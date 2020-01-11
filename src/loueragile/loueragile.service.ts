@@ -1,4 +1,4 @@
-const cleanup = require('helper/cleanup.helper')
+import * as cleanup from '../helper/cleanup.helper'
 
 function apiMapping(ad) {
     return {

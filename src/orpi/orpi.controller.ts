@@ -1,14 +1,14 @@
 import express from 'express'
 const router = express.Router()
 const orpiService = require('./orpi.service')
-const log = require('helper/log.helper')
-const roundNumber = require('helper/round-number.helper')
+import * as log from './../helper/log.helper'
+import { roundNumber } from '../helper/round-number.helper'
 const digService = require('service/dig.service')
-const serializer = require('service/serializer.service')
-const rentFilter = require('service/rent-filter.service')
-const saverService = require('service/saver.service')
+import { serializeRent } from '../service/serialize-rent.service'
+import { rentFilter } from '../service/rent-filter.service'
+import { saveRent } from '../service/save-rent.service'
 const chargesService = require('service/charges.service')
-const errorEscape = require('service/error-escape.service')
+import { errorEscape } from '../service/error-escape.service'
 
 // routes
 router.post('/data', getByData)
@@ -50,8 +50,6 @@ async function digData(ad) {
     })
 
     const { match } = rentFilter({
-        address,
-        city,
         coordinates,
         hasFurniture,
         postalCode,
@@ -65,7 +63,7 @@ async function digData(ad) {
         const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
         const isLegal = priceExcludingCharges <= maxAuthorized
 
-        saverService.rent({
+        saveRent({
             id: ad.id,
             address,
             city,
@@ -85,7 +83,7 @@ async function digData(ad) {
             yearBuilt,
         })
 
-        return serializer({
+        return serializeRent({
             address,
             charges,
             hasCharges,

@@ -1,5 +1,5 @@
-const cleanup = require('helper/cleanup.helper')
-const particulierToken = require('helper/particulier.helper')
+import * as cleanup from '../helper/cleanup.helper'
+import { particulierToken } from '../helper/particulier.helper'
 
 function dataMapping(ad) {
     return {
@@ -10,7 +10,7 @@ function dataMapping(ad) {
         furnished: ad.furnished != null ? ad.furnished !== 'NC' ? true : false : null,
         hasCharges: ad.hasCharges,
         price: cleanup.price(ad.price),
-        renter: ad.renter ? cleanup.string(ad.renter) : particulierToken(),
+        renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
         rooms: cleanup.number(ad.rooms),
         surface: cleanup.number(ad.surface),
         title: cleanup.string(ad.title),

@@ -1,1 +1,1 @@
-module.exports = () => 'Particulier'
+export const particulierToken = 'Particulier'

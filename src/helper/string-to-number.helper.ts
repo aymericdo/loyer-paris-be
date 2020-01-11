@@ -1,16 +1,16 @@
-const digit = {
-    'un': 1,
-    'deux': 2,
-    'trois': 3,
-    'quatre': 4,
-    'cinq': 5,
-    'six': 6,
-    'sept': 7,
-    'huit': 8,
-    'neuf': 9,
-}
+export const stringToNumber = (value) => {
+    const digit = {
+        'un': 1,
+        'deux': 2,
+        'trois': 3,
+        'quatre': 4,
+        'cinq': 5,
+        'six': 6,
+        'sept': 7,
+        'huit': 8,
+        'neuf': 9,
+    }
 
-module.exports = (value) => {
     if (value) {
         if (isNaN(value)) {
             if (Object.keys(digit).includes(value)) {

@@ -1,9 +1,9 @@
-const stringToNumber = require('helper/string-to-number.helper')
-const regexString = require('helper/regex.helper')
-const cleanup = require('helper/cleanup.helper')
-const addressService = require('service/address.service')
-const stationService = require('service/station.service')
-const yearBuiltService = require('service/year-built.service')
+import * as cleanup from '../helper/cleanup.helper'
+import { regexString } from '../helper/regex.helper'
+import { stringToNumber } from '../helper/string-to-number.helper'
+import * as addressService from '../service/address.service'
+import * as stationService from '../service/station.service'
+import * as yearBuiltService from '../service/year-built.service'
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
 
@@ -67,7 +67,7 @@ function _digForAddressInText(text, { city, postalCode }) {
             return addressService.getAddressInParis(address.trim().replace('bd ', 'boulevard '), { postalCode })
         }).filter(Boolean).sort((a, b) => a.score - b.score).map(address => address.item)
         return result && result.length ?
-            cleanup.string(result[0].fields.l_adr).match(/^\d+/gi, "") ?
+            cleanup.string(result[0].fields.l_adr).match(/^\d+/gi) ?
                 cleanup.string(result[0].fields.l_adr) :
                 cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() :
             addressesFromRegex[0].trim()

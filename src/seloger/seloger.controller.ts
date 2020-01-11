@@ -4,14 +4,14 @@ const request = require('request')
 const xmlParser = require('xml2json')
 const selogerService = require('./seloger.service')
 const digService = require('service/dig.service')
-const log = require('helper/log.helper')
-const roundNumber = require('helper/round-number.helper')
-const cleanup = require('helper/cleanup.helper')
-const serializer = require('service/serializer.service')
-const rentFilter = require('service/rent-filter.service')
-const saverService = require('service/saver.service')
+import * as log from './../helper/log.helper'
+import { roundNumber } from '../helper/round-number.helper'
+import * as cleanup from '../helper/cleanup.helper'
+import { serializeRent } from '../service/serialize-rent.service'
+import { rentFilter } from '../service/rent-filter.service'
+import { saveRent } from '../service/save-rent.service'
 const chargesService = require('service/charges.service')
-const errorEscape = require('service/error-escape.service')
+import { errorEscape } from '../service/error-escape.service'
 
 router.get('/', getById)
 function getById(req, res, next) {
@@ -85,8 +85,6 @@ async function digData(ad) {
     })
 
     const { match } = rentFilter({
-        address,
-        city,
         coordinates,
         hasFurniture,
         postalCode,
@@ -100,7 +98,7 @@ async function digData(ad) {
         const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
         const isLegal = priceExcludingCharges <= maxAuthorized
 
-        saverService.rent({
+        saveRent({
             id: ad.id,
             address,
             city,
@@ -120,7 +118,7 @@ async function digData(ad) {
             yearBuilt,
         })
 
-        return serializer({
+        return serializeRent({
             address,
             charges,
             hasCharges,

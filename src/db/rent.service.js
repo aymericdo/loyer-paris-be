@@ -1,6 +1,6 @@
 const db = require('db')
 const Rent = db.Rent
-const log = require('helper/log.helper')
+import * as log from './../helper/log.helper'
 const NodeCache = require('node-cache')
 const dbCache = new NodeCache({ checkperiod: 60 * 15, deleteOnExpire: true })
 
