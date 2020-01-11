@@ -1,12 +1,19 @@
-const fs = require('fs')
+import * as fs from 'fs'
+import * as path from 'path'
 const opencage = require('opencage-api-client')
-import * as log from './../helper/log.helper'
 const inside = require('point-in-polygon')
-const stationService = require('service/station.service')
 const Fuse = require('fuse.js')
+import * as stationService from '../service/station.service'
 
-const parisAddresses = JSON.parse(fs.readFileSync('json-data/adresse_paris.json', 'utf8'))
-const parisDistricts = JSON.parse(fs.readFileSync('json-data/quartier_paris.json', 'utf8'))
+let parisAddresses = null
+fs.readFile(path.join(__dirname, 'json-data/adresse_paris.json'), 'utf8', (error, data) => {
+    parisAddresses = data
+})
+
+let parisDistricts = null
+fs.readFile(path.join(__dirname, 'json-data/quartier_paris.json'), 'utf8', (error, data) => {
+    parisDistricts = data
+})
 
 export function getCoordinate(address, addressInfo) {
     const postalCode = addressInfo && addressInfo.postalCode

@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 const app = express()
 import cors from 'cors'
 import * as log from './helper/log.helper'
-import Sentry from '@sentry/node'
+import * as Sentry from '@sentry/node'
 
 app.use(cors())
 app.use(express.json({

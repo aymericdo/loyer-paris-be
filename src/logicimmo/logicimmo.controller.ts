@@ -1,13 +1,13 @@
 import express from 'express'
 const router = express.Router()
-const logicimmoService = require('./logicimmo.service')
-const digService = require('service/dig.service')
+import * as logicimmoService from './logicimmo.service'
+import * as digService from '../service/dig.service'
 import * as log from './../helper/log.helper'
 import { roundNumber } from '../helper/round-number.helper'
 import { serializeRent } from '../service/serialize-rent.service'
 import { rentFilter } from '../service/rent-filter.service'
 import { saveRent } from '../service/save-rent.service'
-const chargesService = require('service/charges.service')
+import * as chargesService from '../service/charges.service'
 import { errorEscape } from '../service/error-escape.service'
 
 // routes

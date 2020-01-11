@@ -1,4 +1,4 @@
-function commonOpts() {
+export function commonOpts() {
     return {
         $schema: "https://vega.github.io/schema/vega-lite/v4.json",
         width: 700,
@@ -25,8 +25,4 @@ function commonOpts() {
             }
         }
     }
-}
-
-module.exports = {
-    commonOpts,
 }

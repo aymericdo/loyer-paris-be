@@ -3,7 +3,7 @@
 // const inside = require('point-in-polygon')
 // const json = require('big-json')
 
-// const empriseBatieParisReadStream = fs.createReadStream('json-data/EMPRISE_BATIE_PARIS.geojson');
+// const empriseBatieParisReadStream = fs.createReadStream('../json-data/EMPRISE_BATIE_PARIS.geojson');
 // const empriseBatieParisParseStream = json.createParseStream();
 
 export function getYearRange(rangeRents, yearBuilt) {

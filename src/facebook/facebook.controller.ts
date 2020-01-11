@@ -1,12 +1,12 @@
 import express from 'express'
 const router = express.Router()
-const facebookService = require('./facebook.service')
+import * as facebookService from './facebook.service'
 import * as log from './../helper/log.helper'
-const digService = require('service/dig.service')
+import * as digService from '../service/dig.service'
 import { serializeRent } from '../service/serialize-rent.service'
 import { rentFilter } from '../service/rent-filter.service'
 import { saveRent } from '../service/save-rent.service'
-const chargesService = require('service/charges.service')
+import * as chargesService from '../service/charges.service'
 import { errorEscape } from '../service/error-escape.service'
 import { roundNumber } from '../helper/round-number.helper'
 

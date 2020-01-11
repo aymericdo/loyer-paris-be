@@ -7,7 +7,7 @@ import * as yearBuiltService from '../service/year-built.service'
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
 
-async function main(ad) {
+export async function main(ad) {
     const roomCount = digForRoomCount(ad)
     const hasFurniture = digForHasFurniture(ad)
     const surface = digForSurface(ad)
@@ -141,8 +141,4 @@ function digForCharges(ad) {
 
 function digForHasCharges(ad) {
     return ad.hasCharges
-}
-
-module.exports = {
-    main,
 }

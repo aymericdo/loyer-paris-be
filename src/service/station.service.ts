@@ -1,8 +1,12 @@
-const fs = require('fs')
-const Fuse = require('fuse.js')
+import * as fs from 'fs'
+import * as path from 'path'
 import * as cleanup from '../helper/cleanup.helper'
+const Fuse = require('fuse.js')
 
-const parisStations = JSON.parse(fs.readFileSync('json-data/metros_paris.json', 'utf8'))
+let parisStations = null
+fs.readFile(path.join(__dirname, 'json-data/metros_paris.json'), 'utf8', (error, data) => {
+    parisStations = data
+})
 
 export function getCoordinate(station) {
     const options = {

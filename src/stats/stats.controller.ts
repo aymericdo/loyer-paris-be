@@ -1,14 +1,18 @@
-const fs = require('fs')
+import * as fs from 'fs'
+import * as path from 'path'
 const express = require('express')
 const request = require('request')
 const router = express.Router()
-import * as log from './../helper/log.helper'
-const ip = require('helper/ip.helper')
-const rentService = require('db/rent.service')
-const vegaService = require('service/vega.service')
-import { groupBy } from 'helper/group-by.helper'
+import * as log from '../helper/log.helper'
+import * as rentService from '../db/rent.service'
+import * as vegaService from '../service/vega.service'
+import * as ip from '../helper/ip.helper'
+import { groupBy } from '../helper/group-by.helper'
 
-const parisGeodata = JSON.parse(fs.readFileSync('json-data/quartier_paris_geodata.json', 'utf8'))
+let parisGeodata = null
+fs.readFile(path.join(__dirname, 'json-data/quartier_paris_geodata.json'), 'utf8', (error, data) => {
+  parisGeodata = data
+})
 
 router.use('/', function (req, res, next) {
   const verifyCaptchaOptions = {
@@ -20,29 +24,30 @@ router.use('/', function (req, res, next) {
     }
   }
 
-  rentService.getAll((data) => {
-    req.rents = data
+  rentService.getAll()
+    .then((data) => {
+      req.rents = data
 
-    if (ip.isIpCached(ip.getIp(req))) {
-      next()
-    } else {
-      ip.saveIp(ip.getIp(req))
-      request.post(verifyCaptchaOptions, (err, response, body) => {
-        if (err) {
-          return res.status(500).json({ message: "oops, something went wrong on our side" });
-        }
-
-        if (!body.success) {
-          return res.status(500).json({ message: body["error-codes"].join(".") });
-        }
-
+      if (ip.isIpCached(ip.getIp(req))) {
         next()
-      }, (err) => {
-        res.status(err.status).json(err)
-      })
-    }
-  })
+      } else {
+        ip.saveIp(ip.getIp(req))
+        request.post(verifyCaptchaOptions, (err, response, body) => {
+          if (err) {
+            return res.status(500).json({ message: "oops, something went wrong on our side" });
+          }
 
+          if (!body.success) {
+            return res.status(500).json({ message: body["error-codes"].join(".") });
+          }
+
+          next()
+        })
+      }
+    })
+    .catch((err) => {
+      res.status(err.status).json(err)
+    })
 })
 
 // routes
@@ -275,7 +280,5 @@ function getExtremePostalCode(groupedRents) {
   const bestNeighborhood = bestPc.slice(-2)[0] === '0' ? bestPc.slice(-1) : bestPc.slice(-2)
   return [worstNeighborhood, bestNeighborhood]
 }
-
-
 
 module.exports = router;

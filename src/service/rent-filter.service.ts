@@ -1,8 +1,13 @@
-const fs = require('fs')
-const yearBuiltService = require('service/year-built.service')
-import * as log from './../helper/log.helper'
-const rangeRents = JSON.parse(fs.readFileSync('json-data/encadrements.json', 'utf8'))
-const addressService = require('service/address.service')
+import * as fs from 'fs'
+import * as path from 'path'
+import * as yearBuiltService from '../service/year-built.service'
+import * as log from '../helper/log.helper'
+import * as addressService from '../service/address.service'
+
+let rangeRents = null
+fs.readFile(path.join(__dirname, 'json-data/encadrements.json'), 'utf8', (error, data) => {
+    rangeRents = data
+})
 
 export const rentFilter = ({
     coordinates,

@@ -1,4 +1,4 @@
-const db = require('db')
+const db = require('../db')
 const Rent = db.Rent
 import * as log from './../helper/log.helper'
 
