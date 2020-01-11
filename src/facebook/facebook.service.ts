@@ -1,7 +1,7 @@
 import * as cleanup from '../helper/cleanup.helper'
 import { particulierToken } from '../helper/particulier.helper'
 
-function dataMapping(ad) {
+export function dataMapping(ad) {
     return {
         id: ad.id,
         address: cleanup.string(ad.address),
@@ -14,8 +14,4 @@ function dataMapping(ad) {
         surface: cleanup.number(ad.surface),
         title: cleanup.string(ad.title),
     }
-}
-
-module.exports = {
-    dataMapping,
 }

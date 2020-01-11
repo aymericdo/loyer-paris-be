@@ -5,8 +5,8 @@ import * as log from '../helper/log.helper'
 import * as addressService from '../service/address.service'
 
 let rangeRents = null
-fs.readFile(path.join(__dirname, 'json-data/encadrements.json'), 'utf8', (error, data) => {
-    rangeRents = data
+fs.readFile(path.join(__dirname, '../json-data/encadrements.json'), 'utf8', (error, data) => {
+    rangeRents = JSON.parse(data)
 })
 
 export const rentFilter = ({

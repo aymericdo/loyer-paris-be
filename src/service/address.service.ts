@@ -6,13 +6,13 @@ const Fuse = require('fuse.js')
 import * as stationService from '../service/station.service'
 
 let parisAddresses = null
-fs.readFile(path.join(__dirname, 'json-data/adresse_paris.json'), 'utf8', (error, data) => {
-    parisAddresses = data
+fs.readFile(path.join(__dirname, '../json-data/adresse_paris.json'), 'utf8', (error, data) => {
+    parisAddresses = JSON.parse(data)
 })
 
 let parisDistricts = null
-fs.readFile(path.join(__dirname, 'json-data/quartier_paris.json'), 'utf8', (error, data) => {
-    parisDistricts = data
+fs.readFile(path.join(__dirname, '../json-data/quartier_paris.json'), 'utf8', (error, data) => {
+    parisDistricts = JSON.parse(data)
 })
 
 export function getCoordinate(address, addressInfo) {

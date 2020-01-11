@@ -1,6 +1,6 @@
 import * as cleanup from '../helper/cleanup.helper'
 
-function dataMapping(ad) {
+export function dataMapping(ad) {
     return {
         id: ad.id,
         charges: cleanup.price(ad.charges),
@@ -14,8 +14,4 @@ function dataMapping(ad) {
         surface: cleanup.number(ad.surface),
         title: cleanup.string(ad.title),
     }
-}
-
-module.exports = {
-    dataMapping,
 }

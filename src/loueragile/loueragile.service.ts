@@ -1,6 +1,6 @@
 import * as cleanup from '../helper/cleanup.helper'
 
-function apiMapping(ad) {
+export function apiMapping(ad) {
     return {
         id: ad.ad.id,
         cityLabel: ad.ad.city,
@@ -19,8 +19,4 @@ function apiMapping(ad) {
         yearBuilt: ad.yearBuilt,
         stations: ad.ad.stops.map(stop => cleanup.string(stop.name))
     }
-}
-
-module.exports = {
-    apiMapping,
 }

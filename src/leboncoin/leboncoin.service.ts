@@ -1,7 +1,7 @@
 import * as cleanup from '../helper/cleanup.helper'
 import { particulierToken } from '../helper/particulier.helper'
 
-function apiMapping(ad) {
+export function apiMapping(ad) {
     const roomFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'rooms')
     const furnitureFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'furnished' && detail.value === '1')
     const surfaceFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'square')
@@ -25,7 +25,7 @@ function apiMapping(ad) {
     }
 }
 
-function dataMapping(ad) {
+export function dataMapping(ad) {
     return {
         id: ad.id,
         cityLabel: cleanup.string(ad.cityLabel),
@@ -39,9 +39,4 @@ function dataMapping(ad) {
         surface: cleanup.number(ad.surface),
         title: cleanup.string(ad.subject),
     }
-}
-
-module.exports = {
-    apiMapping,
-    dataMapping,
 }

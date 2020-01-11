@@ -4,8 +4,8 @@ import * as cleanup from '../helper/cleanup.helper'
 const Fuse = require('fuse.js')
 
 let parisStations = null
-fs.readFile(path.join(__dirname, 'json-data/metros_paris.json'), 'utf8', (error, data) => {
-    parisStations = data
+fs.readFile(path.join(__dirname, '../json-data/metros_paris.json'), 'utf8', (error, data) => {
+    parisStations = JSON.parse(data)
 })
 
 export function getCoordinate(station) {

@@ -10,7 +10,7 @@ import * as ip from '../helper/ip.helper'
 import { groupBy } from '../helper/group-by.helper'
 
 let parisGeodata = null
-fs.readFile(path.join(__dirname, 'json-data/quartier_paris_geodata.json'), 'utf8', (error, data) => {
+fs.readFile(path.join(__dirname, '../json-data/quartier_paris_geodata.json'), 'utf8', (error, data) => {
   parisGeodata = data
 })
 

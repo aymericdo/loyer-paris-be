@@ -34,6 +34,7 @@ function getById(req, res, next) {
                     res.json(data)
                 })
                 .catch((err) => {
+                    console.log(err)
                     res.status(err.status).json(err)
                 })
         }
