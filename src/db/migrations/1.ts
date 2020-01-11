@@ -1,10 +1,10 @@
 const db = require('../../db')
 const Rent = db.Rent
 
-module.exports = () => {
+export const migration1 = () => {
     Rent.find({}, function (err, rents) {
         if (err) {
-            onError(err)
+            console.log(err)
         }
         let cpt = 0
         let cpt2 = 0

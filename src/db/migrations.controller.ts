@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const migration1 = require('./migrations/1')
+// import { migration1 } from './migrations/1'
 
 // routes
 router.post('/', runMigrations)
