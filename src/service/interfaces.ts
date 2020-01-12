@@ -9,13 +9,20 @@ export interface Coordinate {
 
 export interface Ad {
     id: number
-    address: string
-    cityLabel: string
+    address?: string
+    charges?: number
+    cityLabel?: string
+    coord?: Coordinate
     description: string
-    furnished: boolean
+    furnished?: boolean
+    hasCharges?: boolean
+    neighborhood?: string
+    postalCode?: string
     price: number
-    renter: string
-    rooms: number
+    renter?: string
+    rooms?: number
+    stations?: string[]
     surface: number
-    title: string
+    title?: string
+    yearBuilt?: number
 }

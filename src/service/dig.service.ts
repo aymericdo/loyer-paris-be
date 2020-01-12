@@ -4,7 +4,7 @@ import { stringToNumber } from '../helper/string-to-number.helper'
 import * as addressService from '../service/address.service'
 import * as stationService from '../service/station.service'
 import * as yearBuiltService from '../service/year-built.service'
-import type { Ad } from './interfaces'
+import type { Ad, AddressInfo, Coordinate } from './interfaces'
 import type { DataBaseItem } from 'src/db/rent.service'
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
@@ -38,7 +38,7 @@ export async function main(ad: Ad) {
     }
 }
 
-function digForCoordinates(ad, address, city, postalCode) {
+function digForCoordinates(ad: Ad, address: string, city: string, postalCode: string): Coordinate {
     const coordinatesFromAddress = addressService.getCoordinate(address, { city, postalCode })
     const coordinatesFromAd = ad.coord && ad.coord.lng && ad.coord.lat ? {
         lng: ad.coord.lng,
@@ -50,7 +50,7 @@ function digForCoordinates(ad, address, city, postalCode) {
             coordinatesFromAddress : coordinatesFromAd
 }
 
-function digForAddress(ad) {
+function digForAddress(ad: Ad): string[] {
     const postalCode = ad.postalCode || ad.cityLabel
         && (_digForPostalCode(ad.cityLabel) || _digForPostalCode2(ad.cityLabel))
         || ad.description && (_digForPostalCode(ad.description) || _digForPostalCode2(ad.description))
@@ -61,9 +61,9 @@ function digForAddress(ad) {
     return [address, postalCode, city]
 }
 
-function _digForAddressInText(text, { city, postalCode }) {
+function _digForAddressInText(text: string, { city, postalCode }: AddressInfo): string {
     const addressRe = new RegExp(regexString('address'))
-    const addressesFromRegex = text.match(addressRe)
+    const addressesFromRegex = text.match(addressRe) as any
     if (city && cleanup.string(city) === 'paris' && addressesFromRegex) {
         const result = addressesFromRegex.flatMap(address => {
             return addressService.getAddressInParis(address.trim().replace('bd ', 'boulevard '), { postalCode })
@@ -78,24 +78,24 @@ function _digForAddressInText(text, { city, postalCode }) {
     }
 }
 
-function _digForPostalCode(text) {
+function _digForPostalCode(text: string): string {
     const postalCodeRe = new RegExp(regexString('postalCode'))
     return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
 }
 
-function _digForPostalCode2(text) {
+function _digForPostalCode2(text: string): string {
     const postalCode2Re = new RegExp(regexString('postalCode2'))
     const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
     return match ? match.length === 1 ? `7500${match.trim()}` : `750${match.trim()}` : null
 }
 
-function digForRoomCount(ad) {
+function digForRoomCount(ad: Ad): number {
     const roomsFromTitle = ad.title && ad.title.match(regexString('roomCount')) && ad.title.match(regexString('roomCount'))[0]
     const roomsFromDescription = ad.description && ad.description.match(regexString('roomCount')) && ad.description.match(regexString('roomCount'))[0]
     return (!!ad.rooms && ad.rooms) || stringToNumber(roomsFromTitle) || stringToNumber(roomsFromDescription)
 }
 
-async function digForYearBuilt(ad, coordinates, postalCode) {
+async function digForYearBuilt(ad: Ad, coordinates: Coordinate, postalCode: string): Promise<number[]> {
     const building = coordinates && coordinates.lat && coordinates.lng &&
         await (await yearBuiltService.getBuilding(coordinates.lat, coordinates.lng, postalCode))
     const yearBuiltFromBuilding = building && yearBuiltService.getYearBuiltFromBuilding(building)
@@ -105,7 +105,7 @@ async function digForYearBuilt(ad, coordinates, postalCode) {
         : yearBuiltFromBuilding
 }
 
-function digForHasFurniture(ad) {
+function digForHasFurniture(ad: Ad): boolean {
     const furnitureFromTitle = ad.title && ad.title.match(regexString('furnished'))
     const nonFurnitureFromTitle = ad.title && ad.title.match(regexString('nonFurnished'))
     const furnitureFromDescription = ad.description && ad.description.match(regexString('furnished'))
@@ -119,28 +119,29 @@ function digForHasFurniture(ad) {
                 null
 }
 
-function digForSurface(ad) {
+function digForSurface(ad: Ad): number {
     return ad.surface
         || ad.title && ad.title.match(regexString('surface')) && cleanup.number(ad.title.match(regexString('surface'))[0])
         || ad.description && ad.description.match(regexString('surface')) && cleanup.number(ad.description.match(regexString('surface'))[0])
 }
 
-function digForPrice(ad) {
+function digForPrice(ad: Ad): number {
     return ad.price
 }
 
-function digForRenter(ad) {
+function digForRenter(ad: Ad): string {
     return possibleBadRenter.includes(ad.renter) ? null : ad.renter
 }
 
-function digForStations(ad) {
-    return ad.stations || ad.description && stationService.getStations(ad.description)
+function digForStations(ad: Ad): string[] {
+    const stationsFromDescription = stationService.getStations(ad?.description) as string[]
+    return ad.stations || stationsFromDescription
 }
 
-function digForCharges(ad) {
+function digForCharges(ad: Ad): number {
     return ad.charges || ad.description && ad.description.match(regexString('charges')) && cleanup.price(ad.description.match(regexString('charges'))[0])
 }
 
-function digForHasCharges(ad) {
+function digForHasCharges(ad: Ad): boolean {
     return ad.hasCharges
 }

@@ -1,6 +1,7 @@
 import * as cleanup from '../helper/cleanup.helper'
+import type { Ad } from 'src/service/interfaces'
 
-export function apiMapping(ad) {
+export function apiMapping(ad): Ad {
     return {
         id: ad.ad.id,
         cityLabel: ad.ad.city,

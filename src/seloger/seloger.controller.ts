@@ -12,6 +12,7 @@ import { rentFilter } from '../service/rent-filter.service'
 import { saveRent } from '../service/save-rent.service'
 import * as chargesService from '../service/charges.service'
 import { errorEscape } from '../service/error-escape.service'
+import type { Ad } from 'src/service/interfaces'
 
 router.get('/', getById)
 function getById(req, res, next) {
@@ -59,7 +60,7 @@ function getByData(req, res, next) {
         })
 }
 
-async function digData(ad) {
+async function digData(ad: Ad) {
     const {
         address,
         charges,
