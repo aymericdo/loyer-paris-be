@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as cleanup from '../helper/cleanup.helper'
-import type { Coordinate } from './interfaces'
+import { Coordinate } from './interfaces'
 const Fuse = require('fuse.js')
 
 let parisStations = null
@@ -19,7 +19,7 @@ export function getCoordinate(station: string): Coordinate {
     }
     const fuse = new Fuse(parisStations, options)
     const result = fuse.search(station)
-    return result?.length && { lat: result[0].lat, lng: result[0].lon }
+    return result && result.length && { lat: result[0].lat, lng: result[0].lon }
 }
 
 export function getStations(description: string) {

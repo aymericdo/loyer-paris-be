@@ -49,7 +49,7 @@ async function digData(ad) {
         surface,
     })
 
-    const { match } = rentFilter({
+    const adEncadrement = rentFilter({
         coordinates,
         hasFurniture,
         postalCode,
@@ -58,8 +58,8 @@ async function digData(ad) {
         yearBuilt,
     })
 
-    if (match) {
-        const maxAuthorized = roundNumber(+match.fields.max * surface)
+    if (adEncadrement) {
+        const maxAuthorized = roundNumber(+adEncadrement.fields.max * surface)
         const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
         const isLegal = priceExcludingCharges <= maxAuthorized
 
@@ -96,7 +96,7 @@ async function digData(ad) {
             roomCount,
             surface,
             yearBuilt,
-        }, match)
+        }, adEncadrement)
     } else {
         log.error('no match found')
         throw { status: 403, msg: 'no match found', error: 'address' }

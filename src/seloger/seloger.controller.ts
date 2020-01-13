@@ -12,7 +12,7 @@ import { rentFilter } from '../service/rent-filter.service'
 import { saveRent } from '../service/save-rent.service'
 import * as chargesService from '../service/charges.service'
 import { errorEscape } from '../service/error-escape.service'
-import type { Ad } from 'src/service/interfaces'
+import { Ad } from 'src/service/interfaces'
 
 router.get('/', getById)
 function getById(req, res, next) {
@@ -85,7 +85,7 @@ async function digData(ad: Ad) {
         surface,
     })
 
-    const { match } = rentFilter({
+    const adEncadrement = rentFilter({
         coordinates,
         hasFurniture,
         postalCode,
@@ -94,8 +94,8 @@ async function digData(ad: Ad) {
         yearBuilt,
     })
 
-    if (match) {
-        const maxAuthorized = roundNumber(+match.fields.max * surface)
+    if (adEncadrement) {
+        const maxAuthorized = roundNumber(+adEncadrement.fields.max * surface)
         const priceExcludingCharges = chargesService.subCharges(price, charges, hasCharges)
         const isLegal = priceExcludingCharges <= maxAuthorized
 
@@ -132,7 +132,7 @@ async function digData(ad: Ad) {
             roomCount,
             surface,
             yearBuilt,
-        }, match)
+        }, adEncadrement)
     } else {
         log.error('no match found')
         throw { status: 403, msg: 'no match found', error: 'address' }

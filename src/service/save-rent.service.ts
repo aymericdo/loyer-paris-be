@@ -1,6 +1,7 @@
 const db = require('../db')
 const Rent = db.Rent
 import * as log from './../helper/log.helper'
+import { SavedInfo } from './interfaces';
 
 export const saveRent = ({
     id,
@@ -20,7 +21,7 @@ export const saveRent = ({
     surface,
     website,
     yearBuilt,
-}) => {
+}: SavedInfo) => {
     if (id) {
         const rent = new Rent({
             id,

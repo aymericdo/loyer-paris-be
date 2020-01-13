@@ -1,5 +1,6 @@
 import * as log from './../helper/log.helper'
 import { roundNumber } from '../helper/round-number.helper'
+import { SerializedInfo, EncadrementItem } from './interfaces';
 
 export const serializeRent = ({
     address,
@@ -14,7 +15,7 @@ export const serializeRent = ({
     roomCount,
     surface,
     yearBuilt,
-}, match) => {
+}: SerializedInfo, match: EncadrementItem) => {
     log.info('sending data', 'green')
 
     return {

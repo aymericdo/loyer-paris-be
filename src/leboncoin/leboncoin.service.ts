@@ -1,6 +1,6 @@
 import * as cleanup from '../helper/cleanup.helper'
 import { particulierToken } from '../helper/particulier.helper'
-import type { Ad } from 'src/service/interfaces'
+import { Ad } from 'src/service/interfaces'
 
 export function apiMapping(ad): Ad {
     const roomFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'rooms')

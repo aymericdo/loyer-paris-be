@@ -4,7 +4,6 @@ import opencage from 'opencage-api-client'
 import inside from 'point-in-polygon'
 import Fuse from 'fuse.js'
 import * as stationService from '../service/station.service'
-import type { GeoJSON } from 'geojson'
 import { AddressInfo, Coordinate } from './interfaces'
 
 let parisAddresses: any = null
