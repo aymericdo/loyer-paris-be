@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 const router = express.Router()
 const request = require('request')
 import * as loueragileService from './loueragile.service'
@@ -11,10 +11,11 @@ import { rentFilter } from '../service/rent-filter.service'
 import { saveRent } from '../service/save-rent.service'
 import * as chargesService from '../service/charges.service'
 import { errorEscape } from '../service/error-escape.service'
+import { Ad } from '../service/interfaces';
 
 // routes
 router.get('/', getById)
-function getById(req, res, next) {
+function getById(req: Request, res: Response, next: NextFunction) {
     log.info(`-> ${req.baseUrl}/${req.query.id} getById`, 'blue')
     if (!cleanup.number(req.query.id)) {
         res.status(403).json({
@@ -23,7 +24,7 @@ function getById(req, res, next) {
     }
     request({
         url: `https://www.loueragile.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${req.query.id}`,
-    }, (error, response, body) => {
+    }, (error: Error, response: Response, body: string) => {
         if (!body || !!error) {
             log.error('l\'api de loueragile bug')
             res.status(403).json({ status: 403, msg: 'l\'api de loueragile bug', error: 'api' })
@@ -41,7 +42,7 @@ function getById(req, res, next) {
     })
 }
 
-async function digData(ad) {
+async function digData(ad: Ad) {
     const {
         address,
         charges,

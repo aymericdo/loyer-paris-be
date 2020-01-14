@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 const router = express.Router()
 import * as facebookService from './facebook.service'
 import * as log from './../helper/log.helper'
@@ -9,11 +9,12 @@ import { saveRent } from '../service/save-rent.service'
 import * as chargesService from '../service/charges.service'
 import { errorEscape } from '../service/error-escape.service'
 import { roundNumber } from '../helper/round-number.helper'
+import { Ad } from '../service/interfaces';
 
 // routes
 router.post('/data', getByData)
 
-function getByData(req, res, next) {
+function getByData(req: Request, res: Response, next: NextFunction) {
     log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
     digData(facebookService.dataMapping(req.body))
         .then((data) => {
@@ -24,7 +25,7 @@ function getByData(req, res, next) {
         })
 }
 
-async function digData(ad) {
+async function digData(ad: Ad) {
     const {
         address,
         charges,

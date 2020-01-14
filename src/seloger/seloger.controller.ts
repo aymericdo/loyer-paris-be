@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 const router = express.Router()
 const request = require('request')
 const xmlParser = require('xml2json')
@@ -15,7 +15,7 @@ import { errorEscape } from '../service/error-escape.service'
 import { Ad } from 'src/service/interfaces'
 
 router.get('/', getById)
-function getById(req, res, next) {
+function getById(req: Request, res: Response, next: NextFunction) {
     log.info(`-> ${req.baseUrl}/${req.query.id} getById`, 'blue')
     if (!cleanup.number(req.query.id)) {
         res.status(403).json({
@@ -24,7 +24,7 @@ function getById(req, res, next) {
     }
     request({
         url: `https://ws-seloger.svc.groupe-seloger.com/annonceDetail.xml?idAnnonce=${req.query.id}`,
-    }, (error, response, body) => {
+    }, (error: Error, response: Response, body: string) => {
         const ad = JSON.parse(xmlParser.toJson(body)).detailAnnonce
 
         if (!ad || !!error) {
@@ -49,7 +49,7 @@ function getById(req, res, next) {
 }
 
 router.post('/data', getByData)
-function getByData(req, res, next) {
+function getByData(req: Request, res: Response, next: NextFunction) {
     log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
     digData(selogerService.dataMapping(req.body))
         .then((data) => {
