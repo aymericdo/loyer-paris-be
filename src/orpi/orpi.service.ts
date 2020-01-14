@@ -1,7 +1,8 @@
 import * as cleanup from '../helper/cleanup.helper'
 import { Ad } from 'src/service/interfaces'
+import { OrpiMapping } from '../service/interfaces';
 
-export function dataMapping(ad): Ad {
+export function dataMapping(ad: OrpiMapping): Ad {
     return {
         id: ad.id,
         charges: cleanup.price(ad.charges),

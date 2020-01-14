@@ -1,7 +1,8 @@
 import * as cleanup from '../helper/cleanup.helper'
 import { Ad } from 'src/service/interfaces'
+import { LoueragileMapping } from '../service/interfaces';
 
-export function apiMapping(ad): Ad {
+export function apiMapping(ad: LoueragileMapping): Ad {
     return {
         id: ad.ad.id,
         cityLabel: ad.ad.city,

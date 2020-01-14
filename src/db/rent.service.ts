@@ -32,7 +32,7 @@ export async function getAll(): Promise<DataBaseItem[]> {
         return await data
     } else {
         log.info('Load Rent DB')
-        await Rent.find({}, async (err, rents) => {
+        await Rent.find({}, async (err: Error, rents: DataBaseItem[]) => {
             if (err) {
                 throw err
             }

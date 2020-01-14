@@ -1,8 +1,9 @@
-const db = require('../../db')
+import db from '../../db';
+import { DataBaseItem } from '../rent.service';
 const Rent = db.Rent
 
 export const migration1 = () => {
-    Rent.find({}, function (err, rents) {
+    Rent.find({}, function (err: Error, rents) {
         if (err) {
             console.log(err)
         }

@@ -1,8 +1,9 @@
 import * as cleanup from '../helper/cleanup.helper'
 import { particulierToken } from '../helper/particulier.helper'
 import { Ad } from 'src/service/interfaces'
+import { SelogerAPIMapping, SelogerMapping } from '../service/interfaces';
 
-export function apiMapping(ad): Ad {
+export function apiMapping(ad: SelogerAPIMapping): Ad {
     const roomFromDetail = ad.details && ad.details.detail.find(detail => detail.libelle === 'Pièces')
     const surfaceFromDetail = ad.details && ad.details.detail.find(detail => detail.libelle === 'Surface')
     const yearFromDetail = ad.details && ad.details.detail.find(detail => detail.libelle === 'Année de construction')
@@ -17,14 +18,14 @@ export function apiMapping(ad): Ad {
         postalCode: ad.cp,
         price: cleanup.price(ad.prix),
         renter: ad.contact && cleanup.string(ad.contact.nom),
-        rooms: ad.nbPieces || roomFromDetail && roomFromDetail.valeur,
+        rooms: ad.nbPieces || roomFromDetail && +roomFromDetail.valeur,
         surface: surfaceFromDetail && cleanup.number(surfaceFromDetail.valeur),
         title: cleanup.string(ad.titre),
-        yearBuilt: yearFromDetail && yearFromDetail.valeur,
+        yearBuilt: yearFromDetail && +yearFromDetail.valeur,
     }
 }
 
-export function dataMapping(ad) {
+export function dataMapping(ad: SelogerMapping) {
     return {
         id: ad.id,
         charges: cleanup.price(ad.charges),

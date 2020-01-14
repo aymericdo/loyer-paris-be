@@ -1,8 +1,9 @@
 import * as cleanup from '../helper/cleanup.helper'
 import { particulierToken } from '../helper/particulier.helper'
 import { Ad } from 'src/service/interfaces'
+import { PapMapping } from '../service/interfaces';
 
-export function dataMapping(ad): Ad {
+export function dataMapping(ad: PapMapping): Ad {
     return {
         id: ad.id,
         cityLabel: cleanup.string(ad.cityLabel),

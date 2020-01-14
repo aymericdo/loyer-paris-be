@@ -1,8 +1,8 @@
 import * as cleanup from '../helper/cleanup.helper'
 import { particulierToken } from '../helper/particulier.helper'
-import { Ad } from 'src/service/interfaces'
+import { Ad, LeboncoinAPIMapping, LeboncoinMapping } from '../service/interfaces';
 
-export function apiMapping(ad): Ad {
+export function apiMapping(ad: LeboncoinAPIMapping): Ad {
     const roomFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'rooms')
     const furnitureFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'furnished' && detail.value === '1')
     const surfaceFromDetail = ad.attributes && ad.attributes.find(detail => detail.key === 'square')
@@ -13,10 +13,10 @@ export function apiMapping(ad): Ad {
         title: cleanup.string(ad.subject),
         description: cleanup.string(ad.body),
         price: cleanup.price(ad.price[0]),
-        rooms: roomFromDetail && roomFromDetail.value,
+        rooms: roomFromDetail && +roomFromDetail.value,
         furnished: !!furnitureFromDetail,
         surface: surfaceFromDetail && cleanup.number(surfaceFromDetail.value),
-        yearBuilt: yearFromDetail && yearFromDetail.value,
+        yearBuilt: yearFromDetail && +yearFromDetail.value,
         coord: {
             lng: ad.location.lng,
             lat: ad.location.lat,
@@ -26,7 +26,7 @@ export function apiMapping(ad): Ad {
     }
 }
 
-export function dataMapping(ad) {
+export function dataMapping(ad: LeboncoinMapping): Ad {
     return {
         id: ad.id,
         cityLabel: cleanup.string(ad.cityLabel),

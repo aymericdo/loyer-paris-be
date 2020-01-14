@@ -1,8 +1,9 @@
 import * as cleanup from '../helper/cleanup.helper'
 import { particulierToken } from '../helper/particulier.helper'
 import { Ad } from 'src/service/interfaces'
+import { LogicimmoMapping } from '../service/interfaces';
 
-export function dataMapping(ad): Ad {
+export function dataMapping(ad: LogicimmoMapping): Ad {
     return {
         id: ad.id,
         charges: cleanup.price(ad.charges),
