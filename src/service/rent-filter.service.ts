@@ -5,7 +5,7 @@ import * as log from '../helper/log.helper'
 import * as addressService from '../service/address.service'
 import { DetectedInfo, EncadrementItem } from './interfaces';
 
-let rangeRents = null
+let rangeRents: EncadrementItem[] = null
 fs.readFile(path.join(__dirname, '../json-data/encadrements.json'), 'utf8', (error, data) => {
     rangeRents = JSON.parse(data)
 })

@@ -4,14 +4,14 @@ import opencage from 'opencage-api-client'
 import inside from 'point-in-polygon'
 import Fuse from 'fuse.js'
 import * as stationService from '../service/station.service'
-import { AddressInfo, Coordinate } from './interfaces'
+import { AddressInfo, Coordinate, AddressItem, DistrictItem } from './interfaces';
 
-let parisAddresses: any = null
+let parisAddresses: AddressItem[] = null
 fs.readFile(path.join(__dirname, '../json-data/adresse_paris.json'), 'utf8', (error, data) => {
     parisAddresses = JSON.parse(data)
 })
 
-let parisDistricts: any = null
+let parisDistricts: DistrictItem[] = null
 fs.readFile(path.join(__dirname, '../json-data/quartier_paris.json'), 'utf8', (error, data) => {
     parisDistricts = JSON.parse(data)
 })
