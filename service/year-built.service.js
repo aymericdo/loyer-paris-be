@@ -6,6 +6,9 @@
 // const empriseBatieParisReadStream = fs.createReadStream('json-data/EMPRISE_BATIE_PARIS.geojson');
 // const empriseBatieParisParseStream = json.createParseStream();
 
+const db = require('./db')
+const EmpriseBatie = db.EmpriseBatie
+
 function getYearRange(rangeRents, yearBuilt) {
     if (!yearBuilt) {
         return null
@@ -33,6 +36,13 @@ function getYearRange(rangeRents, yearBuilt) {
 
 function getBuilding(lat, lng, postalCode) {
     return null
+    // EmpriseBatie.find({}, function (err, baties) {
+    //     if (err) {
+    //         console.log(err)
+    //     }
+    // })
+
+
     // return new Promise(resolve => {
     //     empriseBatieParisParseStream.on('data', (empriseBatieParis) => {
     //         const building = empriseBatieParis.features.find(building => inside([lng, lat], building.geometry.coordinates[0]))
