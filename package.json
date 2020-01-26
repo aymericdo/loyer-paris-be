@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon",
     "start": "npm run dev",
-    "build": "tsc",
+    "build": "rimraf ./build && tsc",
     "lint": "eslint . & echo 'lint complete'",
     "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
     "prod": "tsc && node ./build/src/index.js",
@@ -43,6 +43,7 @@
   "devDependencies": {
     "@types/node": "^13.1.6",
     "nodemon": "^2.0.2",
+    "rimraf": "^3.0.0",
     "ts-node": "^8.6.0",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.4"
