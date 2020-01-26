@@ -4,14 +4,14 @@ const turf = require('turf')
 const inside = require('point-in-polygon')
 const json = require('big-json')
 
-const empriseBatieParisReadStream = fs.createReadStream(path.join(__dirname, '../json-data/EMPRISE_BATIE_PARIS.geojson'))
-const empriseBatieParisParseStream = json.createParseStream()
+// const empriseBatieParisReadStream = fs.createReadStream(path.join(__dirname, '../json-data/EMPRISE_BATIE_PARIS.geojson'))
+// const empriseBatieParisParseStream = json.createParseStream()
 
-let empriseBatieParis = null
-empriseBatieParisParseStream.on('data', (data) => {
-    empriseBatieParis = data
-})
-empriseBatieParisReadStream.pipe(empriseBatieParisParseStream)
+// let empriseBatieParis = null
+// empriseBatieParisParseStream.on('data', (data) => {
+//     empriseBatieParis = data
+// })
+// empriseBatieParisReadStream.pipe(empriseBatieParisParseStream)
 
 export function getYearRange(rangeRents, yearBuilt) {
     if (!yearBuilt) {
