@@ -4,7 +4,7 @@ const turf = require('turf')
 const inside = require('point-in-polygon')
 const json = require('big-json')
 
-// const empriseBatieParisReadStream = fs.createReadStream(path.join(__dirname, '../json-data/EMPRISE_BATIE_PARIS.geojson'))
+// const empriseBatieParisReadStream = fs.createReadStream(path.join('json-data/EMPRISE_BATIE_PARIS.geojson'))
 // const empriseBatieParisParseStream = json.createParseStream()
 
 // let empriseBatieParis = null

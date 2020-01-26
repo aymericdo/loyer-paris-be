@@ -7,12 +7,12 @@ import * as stationService from '../service/station.service'
 import { AddressInfo, Coordinate, AddressItem, DistrictItem } from './interfaces';
 
 let parisAddresses: AddressItem[] = null
-fs.readFile(path.join(__dirname, '../json-data/adresse_paris.json'), 'utf8', (error, data) => {
+fs.readFile(path.join('json-data/adresse_paris.json'), 'utf8', (error, data) => {
     parisAddresses = JSON.parse(data)
 })
 
 let parisDistricts: DistrictItem[] = null
-fs.readFile(path.join(__dirname, '../json-data/quartier_paris.json'), 'utf8', (error, data) => {
+fs.readFile(path.join('json-data/quartier_paris.json'), 'utf8', (error, data) => {
     parisDistricts = JSON.parse(data)
 })
 
