@@ -10,7 +10,7 @@ import * as vegaService from '../service/vega.service';
 const router = express.Router()
 
 let parisGeodata = null
-fs.readFile(path.join(__dirname, '../json-data/quartier_paris_geodata.json'), 'utf8', (error, data) => {
+fs.readFile(path.join('json-data/quartier_paris_geodata.json'), 'utf8', (error, data) => {
   parisGeodata = JSON.parse(data)
 })
 
