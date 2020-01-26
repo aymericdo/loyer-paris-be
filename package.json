@@ -12,7 +12,7 @@
     "prod": "tsc && node ./build/index.js",
     "debug": "tsc && node --inspect ./build/index.js"
   },
-  "author": "",
+  "author": "Aymeric & Thomas",
   "license": "ISC",
   "dependencies": {
     "@sentry/node": "^5.7.1",
