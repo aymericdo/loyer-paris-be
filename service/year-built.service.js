@@ -1,12 +1,4 @@
-// const fs = require('fs')
-// const turf = require('turf')
-// const inside = require('point-in-polygon')
-// const json = require('big-json')
-
-// const empriseBatieParisReadStream = fs.createReadStream('json-data/EMPRISE_BATIE_PARIS.geojson');
-// const empriseBatieParisParseStream = json.createParseStream();
-
-const db = require('./db')
+const db = require('./../db-emprise-batie')
 const EmpriseBatie = db.EmpriseBatie
 
 function getYearRange(rangeRents, yearBuilt) {
@@ -34,35 +26,21 @@ function getYearRange(rangeRents, yearBuilt) {
     return firstRangeRent ? firstRangeRent.fields.epoque : null
 }
 
-function getBuilding(lat, lng, postalCode) {
-    return null
-    // EmpriseBatie.find({}, function (err, baties) {
-    //     if (err) {
-    //         console.log(err)
-    //     }
-    // })
+async function getBuilding(lat, lng) {
+    return await EmpriseBatie.findOne({
+        geometry: {
+            $near: {
+                $geometry: { type: 'Point', coordinates: [lng, lat] },
+                $maxDistance: 20,
+            },
+        },
+    }, (err, batie) => {
+        if (err) {
+            console.log(err)
+        }
 
-
-    // return new Promise(resolve => {
-    //     empriseBatieParisParseStream.on('data', (empriseBatieParis) => {
-    //         const building = empriseBatieParis.features.find(building => inside([lng, lat], building.geometry.coordinates[0]))
-    //         const distances = empriseBatieParis.features.filter(building => building.properties.n_sq_eb.toString().startsWith(postalCode))
-    //             .map(building => {
-    //                 try {
-    //                     const polygon = turf.polygon(building.geometry.coordinates)
-    //                     const center = turf.centroid(polygon)
-    //                     const to = turf.point([lat, lng])
-    //                     return turf.distance(center, to)
-    //                 } catch {
-    //                     return
-    //                 }
-    //             })
-
-    //         const indexOfMinValue = distances.reduce((iMin, x, i, arr) => x < arr[iMin] ? i : iMin, 0)
-    //         resolve(building || empriseBatieParis.features[indexOfMinValue])
-    //     })
-    //     empriseBatieParisReadStream.pipe(empriseBatieParisParseStream);
-    // })
+        return batie
+    })
 }
 
 function getYearBuiltFromBuilding(building) {
@@ -77,7 +55,26 @@ function getYearBuiltFromBuilding(building) {
     return yearBuilt || periodBuilt
 }
 
+function getDateFormatted(periodBuilt) {
+    if (!periodBuilt) {
+        return null
+    }
+
+    if (periodBuilt.length > 1) {
+        if (periodBuilt[0] === null) {
+            return `Avant ${periodBuilt[1]}`
+        } else if (periodBuilt[1] === null) {
+            return `Après ${periodBuilt[0]}`
+        } else {
+            return `${periodBuilt[0]}-${periodBuilt[1]}`
+        }
+    } else {
+        return periodBuilt
+    }
+}
+
 module.exports = {
+    getDateFormatted,
     getYearRange,
     getBuilding,
     getYearBuiltFromBuilding,

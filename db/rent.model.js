@@ -26,4 +26,4 @@ schema.index({ id: 1, website: 1 }, { unique: true })
 
 schema.set('toJSON', { virtuals: true })
 
-module.exports = mongoose.model('Rent', schema)
+module.exports = schema

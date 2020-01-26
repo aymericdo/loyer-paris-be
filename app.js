@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const log = require('helper/log.helper')
-const Sentry = require('@sentry/node');
+const Sentry = require('@sentry/node')
 
 app.use(cors())
 app.use(express.json({

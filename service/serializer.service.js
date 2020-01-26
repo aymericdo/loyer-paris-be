@@ -1,5 +1,6 @@
 const log = require('helper/log.helper')
 const roundNumber = require('helper/round-number.helper')
+const yearBuiltService = require('service/year-built.service')
 
 module.exports = ({
     address,
@@ -23,7 +24,7 @@ module.exports = ({
             hasFurniture: { order: 1, value: hasFurniture },
             roomCount: { order: 2, value: roomCount },
             surface: { order: 3, value: surface },
-            yearBuilt: { order: 4, value: yearBuilt },
+            yearBuilt: { order: 4, value: yearBuiltService.getDateFormatted(yearBuilt) },
             price: { order: 5, value: roundNumber(price) },
             charges: { order: 6, value: roundNumber(charges) },
             hasCharges: { order: 7, value: !charges && hasCharges != null ? hasCharges : null },

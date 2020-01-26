@@ -14,7 +14,7 @@ async function main(ad) {
     const price = digForPrice(ad)
     const [address, postalCode, city] = digForAddress(ad)
     const coordinates = digForCoordinates(ad, address, city, postalCode)
-    const yearBuilt = await digForYearBuilt(ad, coordinates, postalCode)
+    const yearBuilt = await digForYearBuilt(ad, coordinates)
     const renter = digForRenter(ad)
     const stations = digForStations(ad)
     const charges = digForCharges(ad)
@@ -93,9 +93,9 @@ function digForRoomCount(ad) {
     return (!!ad.rooms && ad.rooms) || stringToNumber(roomsFromTitle) || stringToNumber(roomsFromDescription)
 }
 
-async function digForYearBuilt(ad, coordinates, postalCode) {
+async function digForYearBuilt(ad, coordinates) {
     const building = coordinates && coordinates.lat && coordinates.lng &&
-        await (await yearBuiltService.getBuilding(coordinates.lat, coordinates.lng, postalCode))
+        await yearBuiltService.getBuilding(coordinates.lat, coordinates.lng)
     const yearBuiltFromBuilding = building && yearBuiltService.getYearBuiltFromBuilding(building)
 
     return ad.yearBuilt != null && !isNaN(ad.yearBuilt)

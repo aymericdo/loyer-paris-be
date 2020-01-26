@@ -7,6 +7,8 @@ const schema = new Schema({
     properties: { type: Object, required: true },
 })
 
+schema.index({ 'geometry': '2dsphere' })
+
 schema.set('toJSON', { virtuals: true })
 
-module.exports = mongoose.model('EmpriseBatie', schema)
+module.exports = schema
