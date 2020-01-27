@@ -1,9 +1,9 @@
-import express from 'express'
-import { Request, Response, NextFunction } from 'express';
-const app = express()
+import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
-import * as log from './helper/log.helper'
+import 'module-alias/register';
+import * as log from '@helpers/log'
 import * as Sentry from '@sentry/node'
+const app = express()
 
 app.use(cors())
 app.use(express.json({
@@ -16,14 +16,14 @@ app.use('/', function (req: Request, res: Response, next: NextFunction) {
     next()
 })
 
-app.use('/seloger', require('./seloger/seloger.controller'))
-app.use('/leboncoin', require('./leboncoin/leboncoin.controller'))
-app.use('/loueragile', require('./loueragile/loueragile.controller'))
-app.use('/pap', require('./pap/pap.controller'))
-app.use('/logic-immo', require('./logicimmo/logicimmo.controller'))
-app.use('/lefigaro', require('./lefigaro/lefigaro.controller'))
-app.use('/orpi', require('./orpi/orpi.controller'))
-app.use('/facebook', require('./facebook/facebook.controller'))
+app.use('/seloger', require('./websites/seloger/seloger.controller'))
+app.use('/leboncoin', require('./websites/leboncoin/leboncoin.controller'))
+app.use('/loueragile', require('./websites/loueragile/loueragile.controller'))
+app.use('/pap', require('./websites/pap/pap.controller'))
+app.use('/logic-immo', require('./websites/logicimmo/logicimmo.controller'))
+app.use('/lefigaro', require('./websites/lefigaro/lefigaro.controller'))
+app.use('/orpi', require('./websites/orpi/orpi.controller'))
+app.use('/facebook', require('./websites/facebook/facebook.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 

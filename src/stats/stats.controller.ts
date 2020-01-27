@@ -3,10 +3,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import request from 'request';
 import * as rentService from '../db/rent.service';
-import { groupBy } from '../helper/group-by.helper';
-import * as ip from '../helper/ip.helper';
-import * as log from '../helper/log.helper';
-import * as vegaService from '../service/vega.service';
+import { groupBy } from '@helpers/group-by';
+import * as ip from '@helpers/ip';
+import * as log from '@helpers/log';
+import * as vegaService from '@services/vega';
 const router = express.Router()
 
 let parisGeodata = null

@@ -6,10 +6,18 @@
     "lib": [
       "es6"
     ],
-    "baseUrl": "./",
+    "baseUrl": "./src",
+    "paths": {
+      "@services/*": [
+        "services/*"
+      ],
+      "@helpers/*": [
+        "helpers/*"
+      ]
+    },
     "allowJs": true,
     "outDir": "build",
-    "rootDir": "src",
+    "rootDir": "./src",
     "strict": false,
     "noImplicitAny": false,
     "esModuleInterop": true,

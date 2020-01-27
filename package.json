@@ -29,6 +29,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fuse.js": "^3.4.5",
+    "module-alias": "^2.2.2",
     "mongoose": "^5.7.5",
     "node-cache": "^5.0.2",
     "opencage-api-client": "^0.5.0",
@@ -36,6 +37,10 @@
     "request": "^2.88.0",
     "rootpath": "^0.1.2",
     "xml2json": "^0.11.2"
+  },
+  "_moduleAliases": {
+    "@helpers": "build/helpers",
+    "@services": "build/services"
   },
   "devDependencies": {
     "@types/node": "^13.1.6",
