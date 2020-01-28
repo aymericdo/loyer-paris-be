@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon",
     "start": "npm run dev",
+    "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
     "build": "rimraf ./build && tsc",
     "lint": "eslint . & echo 'lint complete'",
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
+    "dev": "ts-node-dev --transpileOnly ./src/index.ts",
     "prod": "tsc && node ./build/index.js",
     "debug": "tsc && node --inspect ./build/index.js"
   },

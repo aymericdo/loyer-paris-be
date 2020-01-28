@@ -1,5 +1,4 @@
-const db = require('./../db-emprise-batie')
-const EmpriseBatie = db.EmpriseBatie
+import { EmpriseBatie } from './../db-emprise-batie'
 
 export function getYearRange(rangeRents, yearBuilt) {
     if (!yearBuilt) {

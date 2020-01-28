@@ -3,7 +3,7 @@ const router = express.Router()
 const request = require('request')
 const xmlParser = require('xml2json')
 import * as log from '@helpers/log'
-import * as digService from '@services/dig'
+import { main } from '@services/dig'
 import * as selogerService from './seloger.service'
 import { roundNumber } from '@helpers/round-number'
 import * as cleanup from '@helpers/cleanup'
@@ -75,7 +75,7 @@ async function digData(ad: Ad) {
         stations,
         surface,
         yearBuilt,
-    } = await digService.main(ad)
+    } = await main(ad)
 
     errorEscape({
         address,

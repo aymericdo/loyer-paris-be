@@ -16,7 +16,7 @@
       ]
     },
     "allowJs": true,
-    "outDir": "build",
+    "outDir": "./build",
     "rootDir": "./src",
     "strict": false,
     "noImplicitAny": false,

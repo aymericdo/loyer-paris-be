@@ -1,5 +1,4 @@
-const db = require('../db')
-const Rent = db.Rent
+import { Rent } from './../db'
 import * as log from '@helpers/log'
 import { SavedInfo } from './interfaces';
 

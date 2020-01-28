@@ -1,5 +1,4 @@
-const db = require('../db')
-const Rent = db.Rent
+import { Rent } from './../db'
 import * as log from '@helpers/log'
 const NodeCache = require('node-cache')
 const dbCache = new NodeCache({ checkperiod: 60 * 15, deleteOnExpire: true })
@@ -23,6 +22,7 @@ export interface DataBaseItem {
     renter?: string
     createdAt?: string
     stations?: string[]
+    save: () => void
 }
 
 export async function getAll(): Promise<DataBaseItem[]> {
