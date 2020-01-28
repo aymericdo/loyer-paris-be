@@ -1,12 +1,13 @@
-import express, { NextFunction, Request, Response } from 'express';
-import * as fs from 'fs';
-import * as path from 'path';
-import request from 'request';
-import * as rentService from '../db/rent.service';
-import { groupBy } from '../helper/group-by.helper';
-import * as ip from '../helper/ip.helper';
-import * as log from '../helper/log.helper';
-import * as vegaService from '../service/vega.service';
+import express, { NextFunction, Request, Response } from 'express'
+import * as fs from 'fs'
+import * as path from 'path'
+import request from 'request'
+import * as rentService from '../db/rent.service'
+import { DataBaseItem } from '@interfaces/shared'
+import { groupBy } from '@helpers/group-by'
+import * as ip from '@helpers/ip'
+import * as log from '@helpers/log'
+import * as vegaService from '@services/vega'
 const router = express.Router()
 
 let parisGeodata = null
@@ -15,7 +16,7 @@ fs.readFile(path.join('json-data/quartier_paris_geodata.json'), 'utf8', (error, 
 })
 
 interface RentRequest extends Request {
-  rents?: rentService.DataBaseItem[]
+  rents?: DataBaseItem[]
 }
 
 router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
@@ -38,11 +39,11 @@ router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
         ip.saveIp(ip.getIp(req))
         request.post(verifyCaptchaOptions, (err, response, body) => {
           if (err) {
-            return res.status(500).json({ message: "oops, something went wrong on our side" });
+            return res.status(500).json({ message: "oops, something went wrong on our side" })
           }
 
           if (!body.success) {
-            return res.status(500).json({ message: body["error-codes"].join(".") });
+            return res.status(500).json({ message: body["error-codes"].join(".") })
           }
 
           next()
@@ -255,7 +256,7 @@ function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
     isSmallSurfaceIllegalPercentage,
     worstPostalCode,
     bestPostalCode,
-  });
+  })
 }
 
 function getExtremePostalCode(groupedRents) {
@@ -265,7 +266,7 @@ function getExtremePostalCode(groupedRents) {
   let worstLegalsCount = 0
 
   Object.keys(groupedRents).forEach(pc => {
-    if (isNaN(+pc)) { return; }
+    if (isNaN(+pc)) { return }
     const pcRents = groupedRents[pc]
 
     const legalsRatio = pcRents.filter(rent => rent.isLegal).length / pcRents.length
@@ -285,4 +286,4 @@ function getExtremePostalCode(groupedRents) {
   return [worstNeighborhood, bestNeighborhood]
 }
 
-module.exports = router;
+module.exports = router

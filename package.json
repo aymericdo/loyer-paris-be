@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon",
     "start": "npm run dev",
+    "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
     "build": "rimraf ./build && tsc",
     "lint": "eslint . & echo 'lint complete'",
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
+    "dev": "ts-node-dev --transpileOnly ./src/index.ts",
     "prod": "tsc && node ./build/index.js",
     "debug": "tsc && node --inspect ./build/index.js"
   },
@@ -24,21 +24,24 @@
     "@types/node-cache": "^4.2.5",
     "@types/point-in-polygon": "^1.0.0",
     "@types/request": "^2.48.4",
-    "@types/turf": "^3.5.32",
     "@types/xml2json": "^0.11.0",
-    "big-json": "^3.1.0",
     "cli-color": "^2.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fuse.js": "^3.4.5",
+    "module-alias": "^2.2.2",
     "mongoose": "^5.7.5",
     "node-cache": "^5.0.2",
     "opencage-api-client": "^0.5.0",
     "point-in-polygon": "^1.0.1",
     "request": "^2.88.0",
-    "rootpath": "^0.1.2",
-    "turf": "^3.0.14",
-    "xml2json": "^0.11.2"
+    "rootpath": "^0.1.2"
+  },
+  "_moduleAliases": {
+    "@helpers": "build/helpers",
+    "@services": "build/services",
+    "@interfaces": "build/interfaces",
+    "@db": "build/db"
   },
   "devDependencies": {
     "@types/node": "^13.1.6",
