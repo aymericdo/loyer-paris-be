@@ -1,6 +1,6 @@
+import 'module-alias/register'
 import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
-import 'module-alias/register'
 import * as log from '@helpers/log'
 import * as Sentry from '@sentry/node'
 const app = express()
