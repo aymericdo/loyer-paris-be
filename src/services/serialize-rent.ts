@@ -1,7 +1,23 @@
 import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { getDateFormatted } from '@services/year-built'
-import { SerializedInfo, EncadrementItem } from './interfaces';
+import { EncadrementItem } from '@interfaces/json-item'
+
+interface SerializedInfo {
+    address: string
+    charges: number
+    hasCharges: boolean
+    hasFurniture: boolean
+    isLegal: boolean
+    maxAuthorized: number
+    postalCode: string
+    price: number
+    priceExcludingCharges: number
+    roomCount: number
+    surface: number
+    yearBuilt: number[]
+}
+
 
 export const serializeRent = ({
     address,

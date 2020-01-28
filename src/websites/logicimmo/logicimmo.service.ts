@@ -1,7 +1,7 @@
 import * as cleanup from '@helpers/cleanup'
 import { particulierToken } from '@helpers/particulier'
-import { Ad } from '@services/interfaces'
-import { LogicimmoMapping } from '@services/interfaces';
+import { Ad } from '@interfaces/ad'
+import { LogicimmoMapping } from '@interfaces/mapping'
 
 export function dataMapping(ad: LogicimmoMapping): Ad {
     return {

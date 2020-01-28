@@ -1,6 +1,6 @@
 import * as cleanup from '@helpers/cleanup'
-import { Ad } from '@services/interfaces'
-import { LoueragileMapping } from '@services/interfaces';
+import { Ad } from '@interfaces/ad'
+import { LoueragileMapping } from '@interfaces/mapping'
 
 export function apiMapping(ad: LoueragileMapping): Ad {
     return {

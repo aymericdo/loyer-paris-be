@@ -1,29 +1,8 @@
 import { Rent } from './../db'
+import { DataBaseItem } from '@interfaces/shared'
 import * as log from '@helpers/log'
 const NodeCache = require('node-cache')
 const dbCache = new NodeCache({ checkperiod: 60 * 15, deleteOnExpire: true })
-
-export interface DataBaseItem {
-    id: string
-    website: string
-    address?: string
-    city?: string
-    postalCode?: string
-    longitude?: string
-    latitude?: string
-    hasFurniture?: boolean
-    roomCount?: number
-    yearBuilt?: number[]
-    price?: number
-    priceExcludingCharges?: number
-    surface?: number
-    maxPrice?: number
-    isLegal?: boolean
-    renter?: string
-    createdAt?: string
-    stations?: string[]
-    save: () => void
-}
 
 export async function getAll(): Promise<DataBaseItem[]> {
     const data = dbCache.get('data')

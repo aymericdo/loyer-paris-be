@@ -8,7 +8,7 @@ import { rentFilter } from '@services/rent-filter'
 import { saveRent } from '@services/save-rent'
 import * as chargesService from '@services/charges'
 import { errorEscape } from '@services/error-escape'
-import { Ad } from '@services/interfaces';
+import { Ad } from '@interfaces/ad'
 const router = express.Router()
 
 // routes

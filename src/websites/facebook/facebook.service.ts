@@ -1,6 +1,7 @@
 import * as cleanup from '@helpers/cleanup'
 import { particulierToken } from '@helpers/particulier'
-import { Ad, FacebookMapping } from '@services/interfaces'
+import { FacebookMapping } from '@interfaces/mapping'
+import { Ad } from '@interfaces/ad'
 
 export function dataMapping(ad: FacebookMapping): Ad {
     return {

@@ -1,7 +1,8 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as cleanup from '@helpers/cleanup'
-import { Coordinate, MetroItem } from './interfaces';
+import { MetroItem } from '@interfaces/json-item'
+import { Coordinate } from '@interfaces/shared'
 const Fuse = require('fuse.js')
 
 let parisStations: MetroItem[] = null

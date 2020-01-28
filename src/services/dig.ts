@@ -4,7 +4,8 @@ import { stringToNumber } from '@helpers/string-to-number'
 import * as addressService from '@services/address'
 import * as stationService from '@services/station'
 import * as yearBuiltService from '@services/year-built'
-import { Ad, AddressInfo, Coordinate } from './interfaces'
+import { Ad } from '@interfaces/ad'
+import { AddressInfo, Coordinate } from '@interfaces/shared'
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
 

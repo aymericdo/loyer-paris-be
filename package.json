@@ -35,12 +35,12 @@
     "opencage-api-client": "^0.5.0",
     "point-in-polygon": "^1.0.1",
     "request": "^2.88.0",
-    "rootpath": "^0.1.2",
-    "xml2json": "^0.11.2"
+    "rootpath": "^0.1.2"
   },
   "_moduleAliases": {
     "@helpers": "build/helpers",
-    "@services": "build/services"
+    "@services": "build/services",
+    "@interfaces": "build/interfaces"
   },
   "devDependencies": {
     "@types/node": "^13.1.6",

@@ -4,7 +4,8 @@ import opencage from 'opencage-api-client'
 import inside from 'point-in-polygon'
 import Fuse from 'fuse.js'
 import * as stationService from '@services/station'
-import { AddressInfo, Coordinate, AddressItem, DistrictItem } from './interfaces';
+import { AddressInfo, Coordinate } from '@interfaces/shared'
+import { AddressItem, DistrictItem } from '@interfaces/json-item'
 
 let parisAddresses: AddressItem[] = null
 fs.readFile(path.join('json-data/adresse_paris.json'), 'utf8', (error, data) => {
@@ -69,7 +70,7 @@ export function getAddressInParis(q: string, addressInfo: AddressInfo) {
             return true
         }
 
-        // 75010 -> 10; 75009 -> 9
+        // 75010 -> 10 75009 -> 9
         const code = (addressInfo.postalCode.slice(-2)[0] === '0' ? addressInfo.postalCode.slice(-1) : addressInfo.postalCode.slice(-2))
         return code ? address.fields.c_ar === +code : true
     }), options)
@@ -96,7 +97,7 @@ export function _getDistrictFromCoordinate(lat: string, lng: string) {
 
 export function _getDistrictFromPostalCode(postalCode: string, stations: string[]) {
     if (postalCode) {
-        // 75010 -> 10 ; 75009 -> 9
+        // 75010 -> 10  75009 -> 9
         const code = postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2)
 
         let stationDistricts = []

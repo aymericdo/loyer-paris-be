@@ -1,6 +1,25 @@
 import { Rent } from './../db'
 import * as log from '@helpers/log'
-import { SavedInfo } from './interfaces';
+
+interface SavedInfo {
+    id: number
+    address: string
+    city: string
+    hasFurniture: boolean
+    isLegal: boolean
+    latitude: string
+    longitude: string
+    maxPrice: number
+    postalCode: string
+    price: number
+    priceExcludingCharges: number
+    renter: string
+    roomCount: number
+    stations: string[]
+    surface: number
+    website: string
+    yearBuilt: number[]
+}
 
 export const saveRent = ({
     id,

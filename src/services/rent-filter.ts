@@ -3,7 +3,17 @@ import * as path from 'path'
 import * as yearBuiltService from '@services/year-built'
 import * as log from '@helpers/log'
 import * as addressService from '@services/address'
-import { DetectedInfo, EncadrementItem } from './interfaces';
+import { EncadrementItem } from '@interfaces/json-item'
+import { Coordinate } from '@interfaces/shared'
+
+interface DetectedInfo {
+    coordinates: Coordinate
+    hasFurniture: boolean
+    postalCode: string
+    roomCount: number
+    stations: string[]
+    yearBuilt: number[]
+}
 
 let rangeRents: EncadrementItem[] = null
 fs.readFile(path.join('json-data/encadrements.json'), 'utf8', (error, data) => {

@@ -1,6 +1,6 @@
 import * as cleanup from '@helpers/cleanup'
-import { Ad } from '@services/interfaces'
-import { OrpiMapping } from '@services/interfaces';
+import { Ad } from '@interfaces/ad'
+import { OrpiMapping } from '@interfaces/mapping'
 
 export function dataMapping(ad: OrpiMapping): Ad {
     return {

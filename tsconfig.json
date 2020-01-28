@@ -13,6 +13,9 @@
       ],
       "@helpers/*": [
         "helpers/*"
+      ],
+      "@interfaces/*": [
+        "interfaces/*"
       ]
     },
     "allowJs": true,

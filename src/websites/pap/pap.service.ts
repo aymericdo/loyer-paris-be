@@ -1,7 +1,7 @@
 import * as cleanup from '@helpers/cleanup'
 import { particulierToken } from '@helpers/particulier'
-import { Ad } from '@services/interfaces'
-import { PapMapping } from '@services/interfaces';
+import { Ad } from '@interfaces/ad'
+import { PapMapping } from '@interfaces/mapping'
 
 export function dataMapping(ad: PapMapping): Ad {
     return {

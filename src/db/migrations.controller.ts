@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express'
 import { Rent } from './../db'
-import { DataBaseItem } from './rent.service'
+import { DataBaseItem } from '@interfaces/shared'
 const router = express.Router()
 
 // routes
@@ -20,7 +20,7 @@ function runMigrations(req: Request, res: Response, next: NextFunction) {
                 rent['priceExcludingCharges'] = rent.price
                 rent.save()
             }
-        });
+        })
         console.log(cpt)
         console.log(cpt2)
     })

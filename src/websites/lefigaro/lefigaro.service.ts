@@ -1,6 +1,6 @@
 import * as cleanup from '@helpers/cleanup'
-import { Ad } from '@services/interfaces'
-import { LefigaroMapping } from '@services/interfaces';
+import { Ad } from '@interfaces/ad'
+import { LefigaroMapping } from '@interfaces/mapping'
 
 export function dataMapping(ad: LefigaroMapping): Ad {
     return {
