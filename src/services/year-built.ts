@@ -1,21 +1,28 @@
 import { EmpriseBatie } from '@db/db'
+import { EncadrementItem } from '@interfaces/json-item'
 
-export function getYearRange(rangeRents, yearBuilt) {
+export function getYearRange(rangeRents: EncadrementItem[], yearBuilt): string {
     if (!yearBuilt) {
         return null
     }
-    const rangeRentsSorted = yearBuilt.map((yb) => {
-        return rangeRents.find((rangeRent) => {
-            const yearBuiltRange = rangeRent.fields.epoque
-                .split(/[\s-]+/)
-                .map(year => isNaN(year) ? year.toLowerCase() : +year)
 
-            return (typeof yearBuiltRange[0] === 'number') ?
-                yearBuiltRange[0] < yb && yearBuiltRange[1] >= yb
-                : (yearBuiltRange[0] === 'avant') ?
-                    yb < yearBuiltRange[1]
-                    : (yearBuiltRange[0] === 'apres') ?
-                        yb > yearBuiltRange[1]
+    const yearBuiltRange = yearBuilt.length > 1 ?
+        Array.from({ length: yearBuilt[1] - yearBuilt[0] + 1 }, (v, k) => yearBuilt[0] + k)
+        :
+        yearBuilt
+
+    const rangeRentsSorted = yearBuiltRange.map((yb: number) => {
+        return rangeRents.find((rangeRent: EncadrementItem) => {
+            const encadrementYearBuilt: (string | number)[] = rangeRent.fields.epoque
+                .split(/[\s-]+/)
+                .map((year: any) => isNaN(year) ? year.toLowerCase() : +year)
+
+            return (typeof encadrementYearBuilt[0] === 'number') ?
+                encadrementYearBuilt[0] < yb && encadrementYearBuilt[1] >= yb
+                : (encadrementYearBuilt[0] === 'avant') ?
+                    yb < encadrementYearBuilt[1]
+                    : (encadrementYearBuilt[0] === 'apres') ?
+                        yb > encadrementYearBuilt[1]
                         :
                         false
         })
