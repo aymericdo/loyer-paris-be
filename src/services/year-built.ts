@@ -1,4 +1,4 @@
-import { EmpriseBatie } from './../db-emprise-batie'
+import { EmpriseBatie } from '@db/db'
 
 export function getYearRange(rangeRents, yearBuilt) {
     if (!yearBuilt) {

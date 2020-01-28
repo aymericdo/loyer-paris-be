@@ -1,4 +1,4 @@
-import { Rent } from './../db'
+import { Rent } from './db'
 import { DataBaseItem } from '@interfaces/shared'
 import * as log from '@helpers/log'
 const NodeCache = require('node-cache')

@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express'
-import { Rent } from './../db'
+import { Rent } from './db'
 import { DataBaseItem } from '@interfaces/shared'
 const router = express.Router()
 

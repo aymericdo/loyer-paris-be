@@ -1,4 +1,4 @@
-import { Rent } from './../db'
+import { Rent } from '@db/db'
 import * as log from '@helpers/log'
 
 interface SavedInfo {

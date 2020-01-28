@@ -40,7 +40,8 @@
   "_moduleAliases": {
     "@helpers": "build/helpers",
     "@services": "build/services",
-    "@interfaces": "build/interfaces"
+    "@interfaces": "build/interfaces",
+    "@db": "build/db"
   },
   "devDependencies": {
     "@types/node": "^13.1.6",

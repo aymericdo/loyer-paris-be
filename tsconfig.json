@@ -16,6 +16,9 @@
       ],
       "@interfaces/*": [
         "interfaces/*"
+      ],
+      "@db/*": [
+        "db/*"
       ]
     },
     "allowJs": true,
