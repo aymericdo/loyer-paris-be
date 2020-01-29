@@ -1,22 +1,30 @@
 import { EmpriseBatie } from '@db/db'
 import { EncadrementItem } from '@interfaces/json-item'
 
-export function getYearRange(rangeRents: EncadrementItem[], yearBuilt): string {
+export function getEncadrementEpoqueDates(encadrementEpoque: string[], yearBuilt: number[]): string[] {
     if (!yearBuilt) {
         return null
     }
 
-    const yearBuiltRange = yearBuilt.length > 1 ?
-        Array.from({ length: yearBuilt[1] - yearBuilt[0] + 1 }, (v, k) => yearBuilt[0] + k)
+    const oldestYear: number = 1700
+    const currentYear: number = new Date().getFullYear()
+
+    const yearBuiltRange: number[] = yearBuilt.length === 2 ?
+        yearBuilt[0] === null ?
+            Array.from({ length: yearBuilt[1] - oldestYear + 1 }, (v, k) => oldestYear + k)
+            : yearBuilt[1] === null ?
+                Array.from({ length: currentYear - yearBuilt[0] + 1 }, (v, k) => yearBuilt[0] + k)
+                :
+                Array.from({ length: yearBuilt[1] - yearBuilt[0] + 1 }, (v, k) => yearBuilt[0] + k)
         :
         yearBuilt
 
-    const rangeRentsSorted = yearBuiltRange.map((yb: number) => {
-        return rangeRents.find((rangeRent: EncadrementItem) => {
-            const encadrementYearBuilt: (string | number)[] = rangeRent.fields.epoque
-                .split(/[\s-]+/)
-                .map((year: any) => isNaN(year) ? year.toLowerCase() : +year)
+    return encadrementEpoque.filter((epoque: string) => {
+        const encadrementYearBuilt: (string | number)[] = epoque
+            .split(/[\s-]+/)
+            .map((year: any) => isNaN(year) ? year.toLowerCase() : +year)
 
+        return yearBuiltRange.some((yb: number) => {
             return (typeof encadrementYearBuilt[0] === 'number') ?
                 encadrementYearBuilt[0] < yb && encadrementYearBuilt[1] >= yb
                 : (encadrementYearBuilt[0] === 'avant') ?
@@ -26,10 +34,7 @@ export function getYearRange(rangeRents: EncadrementItem[], yearBuilt): string {
                         :
                         false
         })
-    }).sort(function (a, b) { return b.fields.max - a.fields.max })
-
-    const firstRangeRent = rangeRentsSorted && rangeRentsSorted[0]
-    return firstRangeRent ? firstRangeRent.fields.epoque : null
+    })
 }
 
 export async function getBuilding(lat, lng) {

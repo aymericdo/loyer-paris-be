@@ -15,10 +15,7 @@ interface DetectedInfo {
     yearBuilt: number[]
 }
 
-let rangeRents: EncadrementItem[] = null
-fs.readFile(path.join('json-data/encadrements.json'), 'utf8', (error, data) => {
-    rangeRents = JSON.parse(data)
-})
+const rangeRents: EncadrementItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements.json'), 'utf8'))
 
 export const rentFilter = ({
     coordinates,
@@ -30,12 +27,20 @@ export const rentFilter = ({
 }: DetectedInfo): EncadrementItem => {
     log.info('rent filter start')
 
-    const result = addressService.getDistricts(coordinates, postalCode, stations)
-    const yearRange = yearBuiltService.getYearRange(rangeRents, yearBuilt)
+    const encadrementEpoque = rangeRents.reduce((prev, rent) => {
+        if (!prev.includes(rent.fields.epoque)) {
+            prev.push(rent.fields.epoque)
+        }
+
+        return prev
+    }, [])
+
+    const districtsMatched = addressService.getDistricts(coordinates, postalCode, stations)
+    const epoqueDates = yearBuiltService.getEncadrementEpoqueDates(encadrementEpoque, yearBuilt)
 
     const rentList = rangeRents.filter((rangeRent) => {
-        return (result.districts && result.districts.filter(Boolean).length ? result.districts.map(district => district.fields.c_qu).includes(rangeRent.fields.id_quartier) : true)
-            && (yearRange ? rangeRent.fields.epoque === yearRange : true)
+        return (districtsMatched.districts && districtsMatched.districts.filter(Boolean).length ? districtsMatched.districts.map(district => district.fields.c_qu).includes(rangeRent.fields.id_quartier) : true)
+            && (epoqueDates ? epoqueDates.includes(rangeRent.fields.epoque) : true)
             && (roomCount ? +roomCount < 5 ? rangeRent.fields.piece === +roomCount : rangeRent.fields.piece === 4 : true)
             && (hasFurniture != null ? hasFurniture ? rangeRent.fields.meuble_txt.match(/^meubl/g) : rangeRent.fields.meuble_txt.match(/^non meubl/g) : true)
     })

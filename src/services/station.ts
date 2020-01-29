@@ -5,10 +5,7 @@ import { MetroItem } from '@interfaces/json-item'
 import { Coordinate } from '@interfaces/shared'
 const Fuse = require('fuse.js')
 
-let parisStations: MetroItem[] = null
-fs.readFile(path.join('json-data/metros_paris.json'), 'utf8', (error, data) => {
-    parisStations = JSON.parse(data)
-})
+const parisStations: MetroItem[] = JSON.parse(fs.readFileSync(path.join('json-data/metros_paris.json'), 'utf8'))
 
 export function getCoordinate(station: string): Coordinate {
     const options = {

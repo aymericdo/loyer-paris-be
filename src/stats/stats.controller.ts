@@ -10,10 +10,7 @@ import * as log from '@helpers/log'
 import * as vegaService from '@services/vega'
 const router = express.Router()
 
-let parisGeodata = null
-fs.readFile(path.join('json-data/quartier_paris_geodata.json'), 'utf8', (error, data) => {
-  parisGeodata = JSON.parse(data)
-})
+const parisGeodata = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'))
 
 interface RentRequest extends Request {
   rents?: DataBaseItem[]

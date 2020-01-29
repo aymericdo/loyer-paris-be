@@ -7,15 +7,8 @@ import * as stationService from '@services/station'
 import { AddressInfo, Coordinate } from '@interfaces/shared'
 import { AddressItem, DistrictItem } from '@interfaces/json-item'
 
-let parisAddresses: AddressItem[] = null
-fs.readFile(path.join('json-data/adresse_paris.json'), 'utf8', (error, data) => {
-    parisAddresses = JSON.parse(data)
-})
-
-let parisDistricts: DistrictItem[] = null
-fs.readFile(path.join('json-data/quartier_paris.json'), 'utf8', (error, data) => {
-    parisDistricts = JSON.parse(data)
-})
+const parisAddresses: AddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
+const parisDistricts: DistrictItem[] = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris.json'), 'utf8'))
 
 export function getCoordinate(address: string, addressInfo: AddressInfo): Coordinate {
     const postalCode = addressInfo?.postalCode
@@ -91,7 +84,7 @@ export function getDistricts(coordinates: Coordinate, postalCode: string, statio
 }
 
 export function _getDistrictFromCoordinate(lat: string, lng: string) {
-    const district = parisDistricts.find(district => inside([+lng, +lat], district.fields.geom.coordinates[0]))
+    const district = lng && lat && parisDistricts.find(district => inside([+lng, +lat], district.fields.geom.coordinates[0]))
     return district ? { districts: [district] } : null
 }
 
