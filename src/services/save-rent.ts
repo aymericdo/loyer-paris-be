@@ -7,8 +7,8 @@ interface SavedInfo {
     city: string
     hasFurniture: boolean
     isLegal: boolean
-    latitude: string
-    longitude: string
+    latitude: number
+    longitude: number
     maxPrice: number
     postalCode: string
     price: number

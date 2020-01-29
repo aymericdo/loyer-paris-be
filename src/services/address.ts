@@ -12,8 +12,8 @@ const parisDistricts: DistrictItem[] = JSON.parse(fs.readFileSync(path.join('jso
 
 export function getCoordinate(address: string, addressInfo: AddressInfo): Coordinate {
     const postalCode = addressInfo?.postalCode
-    const addressInParis = getAddressInParis(address, { postalCode }) as any // TO BE PRECISED
-    const result = addressInParis?.map(address => address.item)
+    const addressInParis = getAddressInParis(address, { postalCode })
+    const result: AddressItem[] = addressInParis?.map(address => address.item)
     return result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] }
 }
 
@@ -44,7 +44,7 @@ export function getCoordinateWithOpenCage(address: string, addressInfo: AddressI
         })
 }
 
-export function getAddressInParis(q: string, addressInfo: AddressInfo) {
+export function getAddressInParis(q: string, addressInfo: AddressInfo): { item: AddressItem }[] {
     const options = {
         keys: ['fields.l_adr'],
         shouldSort: true,
@@ -68,7 +68,7 @@ export function getAddressInParis(q: string, addressInfo: AddressInfo) {
         return code ? address.fields.c_ar === +code : true
     }), options)
 
-    const result = fuse.search(q)
+    const result: { item: AddressItem }[] = fuse.search(q) as any
     return result?.length ? result : null
 }
 
@@ -83,7 +83,7 @@ export function getDistricts(coordinates: Coordinate, postalCode: string, statio
             {}
 }
 
-export function _getDistrictFromCoordinate(lat: string, lng: string) {
+export function _getDistrictFromCoordinate(lat: number, lng: number) {
     const district = lng && lat && parisDistricts.find(district => inside([+lng, +lat], district.fields.geom.coordinates[0]))
     return district ? { districts: [district] } : null
 }

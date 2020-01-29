@@ -4,8 +4,8 @@ export interface AddressInfo {
 }
 
 export interface Coordinate {
-    lat: string
-    lng: string
+    lat: number
+    lng: number
 }
 
 export interface DataBaseItem {

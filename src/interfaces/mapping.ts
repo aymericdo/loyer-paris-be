@@ -74,8 +74,8 @@ export interface LoueragileMapping {
     ad: {
         id: number
         city: string
-        lng: string
-        lat: string
+        lng: number
+        lat: number
         description: string
         furnished: boolean
         postal_code: string
