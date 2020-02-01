@@ -36,7 +36,12 @@ function getById(req: Request, res: Response, next: NextFunction) {
                 })
                 .catch((err) => {
                     console.log(err)
-                    res.status(err.status).json(err)
+                    if (err.status) {
+                        res.status(err.status).json(err)
+                    } else {
+                        log.error('Error 500')
+                        res.status(500).json(err)
+                    }
                 })
         }
     })

@@ -19,7 +19,13 @@ function getByData(req: Request, res: Response, next: NextFunction) {
             res.json(data)
         })
         .catch((err) => {
-            res.status(err.status).json(err)
+            console.log(err)
+            if (err.status) {
+                res.status(err.status).json(err)
+            } else {
+                log.error('Error 500')
+                res.status(500).json(err)
+            }
         })
 }
 

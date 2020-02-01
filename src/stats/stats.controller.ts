@@ -48,7 +48,13 @@ router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
       }
     })
     .catch((err) => {
-      res.status(err.status).json(err)
+      console.log(err)
+      if (err.status) {
+        res.status(err.status).json(err)
+      } else {
+        log.error('Error 500')
+        res.status(500).json(err)
+      }
     })
 })
 
