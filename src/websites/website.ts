@@ -6,19 +6,33 @@ import { rentFilter } from '@services/rent-filter'
 import { roundNumber } from '@helpers/round-number'
 import { errorEscape } from '@services/error-escape'
 import { saveRent } from '@services/save-rent'
-import { subCharges } from '@services/charges'
-import { main } from '@services/dig'
+import { subCharges } from '@helpers/charges'
+import {
+    digForRoomCount,
+    digForHasFurniture,
+    digForSurface,
+    digForPrice,
+    digForAddress,
+    digForCoordinates,
+    digForYearBuilt,
+    digForRenter,
+    digForStations,
+    digForCharges,
+    digForHasCharges,
+} from '@services/dig'
 
 export abstract class Website {
     website = null
+    id = null
     body = null
 
     constructor(props) {
+        this.id = props.id
         this.body = props.body
     }
 
     public analyse(res: Response): void {
-        this.digData(this.dataMapping(this.body))
+        this.digData(this.mapping(this.body))
             .then((data) => {
                 res.json(data)
             })
@@ -33,24 +47,20 @@ export abstract class Website {
             })
     }
 
-    public abstract dataMapping(ad): Ad
+    public abstract mapping(ad): Ad
 
     public async digData(ad: Ad) {
-        const {
-            address,
-            charges,
-            city,
-            coordinates,
-            hasCharges,
-            hasFurniture,
-            postalCode,
-            price,
-            renter,
-            roomCount,
-            stations,
-            surface,
-            yearBuilt,
-        } = await main(ad)
+        const roomCount = digForRoomCount(ad)
+        const hasFurniture = digForHasFurniture(ad)
+        const surface = digForSurface(ad)
+        const price = digForPrice(ad)
+        const [address, postalCode, city] = digForAddress(ad)
+        const coordinates = digForCoordinates(ad, address, city, postalCode)
+        const yearBuilt = await digForYearBuilt(ad, coordinates)
+        const renter = digForRenter(ad)
+        const stations = digForStations(ad)
+        const charges = digForCharges(ad)
+        const hasCharges = digForHasCharges(ad)
 
         errorEscape({
             address,

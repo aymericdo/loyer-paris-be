@@ -7,7 +7,7 @@ import { Website } from '../website'
 export class LeBonCoin extends Website {
     website = 'leboncoin'
 
-    public dataMapping(ad: LeboncoinMapping): Ad {
+    public mapping(ad: LeboncoinMapping): Ad {
         return {
             id: ad.id,
             cityLabel: cleanup.string(ad.cityLabel),

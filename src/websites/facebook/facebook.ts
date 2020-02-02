@@ -3,11 +3,10 @@ import { Ad } from '@interfaces/ad'
 import { particulierToken } from '@helpers/particulier'
 import { FacebookMapping } from '@interfaces/mapping'
 import { Website } from '../website'
-
 export class Facebook extends Website {
     website = 'facebook'
 
-    public dataMapping(ad: FacebookMapping): Ad {
+    public mapping(ad: FacebookMapping): Ad {
         return {
             id: ad.id,
             address: cleanup.string(ad.address),
