@@ -7,7 +7,8 @@ import { Website } from '../website'
 export class LeBonCoin extends Website {
     website = 'leboncoin'
 
-    public mapping(ad: LeboncoinMapping): Ad {
+    public async mapping(): Promise<Ad> {
+        const ad: LeboncoinMapping = this.body as LeboncoinMapping
         return {
             id: ad.id,
             cityLabel: cleanup.string(ad.cityLabel),

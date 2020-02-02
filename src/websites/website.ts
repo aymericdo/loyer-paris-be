@@ -20,11 +20,12 @@ import {
     digForCharges,
     digForHasCharges,
 } from '@services/dig'
+import { Mapping } from '@interfaces/mapping'
 
 export abstract class Website {
-    website = null
-    id = null
-    body = null
+    website: string = null
+    id: string = null
+    body: Mapping = null
 
     constructor(props) {
         this.id = props.id
@@ -32,7 +33,7 @@ export abstract class Website {
     }
 
     public analyse(res: Response): void {
-        this.digData(this.mapping(this.body))
+        this.digData()
             .then((data) => {
                 res.json(data)
             })
@@ -47,9 +48,11 @@ export abstract class Website {
             })
     }
 
-    public abstract mapping(ad): Ad
+    public async abstract mapping(): Promise<Ad>
 
-    public async digData(ad: Ad) {
+    public async digData() {
+        const ad: Ad = await this.mapping()
+
         const roomCount = digForRoomCount(ad)
         const hasFurniture = digForHasFurniture(ad)
         const surface = digForSurface(ad)
