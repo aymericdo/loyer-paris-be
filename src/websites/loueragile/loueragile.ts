@@ -1,6 +1,6 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
-const request = require('request')
+import axios from 'axios'
 import { LoueragileMapping } from '@interfaces/mapping'
 import { Website } from '../website'
 import * as log from '@helpers/log'
@@ -13,18 +13,15 @@ export class LouerAgile extends Website {
             throw { status: 403, msg: 'no address found', error: 'address' }
         }
 
-        await request({
-            url: `https://www.loueragile.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${this.id}`,
-        }, async (error: Error, response: Response, body: string) => {
-            if (!body || !!error) {
-                log.error('l\'api de loueragile bug')
-                throw { status: 403, msg: 'l\'api de loueragile bug', error: 'api' }
-            } else {
-                log.info('loueragile fetched')
-                this.body = JSON.parse(body)
-                return await this.body
-            }
-        })
+        try {
+            const response = await axios.get(`https://www.loueragile.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${this.id}`)
+            log.info('loueragile fetched')
+            const data = response.data
+            this.body = data
+        } catch (error) {
+            log.error('l\'api de loueragile bug')
+            throw { status: 403, msg: 'l\'api de loueragile bug', error: 'api' }
+        }
     }
 
     public mapping(ad: LoueragileMapping): Ad {

@@ -8,10 +8,7 @@ router.get('/', getById)
 async function getById(req: Request, res: Response, next: NextFunction) {
     log.info(`-> ${req.baseUrl}/${req.query.id} getById`, 'blue')
     const loueragile = new LouerAgile({ id: req.query.id })
-    console.log('tamere1')
-    const truc = await loueragile.fetching()
-    console.log(truc)
-    console.log('tamere')
+    await loueragile.fetching()
     loueragile.analyse(res)
 }
 
