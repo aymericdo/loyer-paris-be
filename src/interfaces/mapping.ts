@@ -1,5 +1,16 @@
 import { Coordinate } from '@interfaces/shared'
 
+export type Mapping =
+    FacebookMapping |
+    LeboncoinMapping |
+    LeboncoinAPIMapping |
+    LefigaroMapping |
+    LogicimmoMapping |
+    LoueragileMapping |
+    OrpiMapping |
+    PapMapping |
+    SelogerMapping
+
 export interface FacebookMapping {
     id: number
     address: string

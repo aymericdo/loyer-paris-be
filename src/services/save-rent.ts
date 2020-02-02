@@ -60,14 +60,14 @@ export const saveRent = ({
             ...(surface != null && { surface }),
             ...(yearBuilt != null && yearBuilt.length && { yearBuilt }),
         })
-        log.info('Rent saver start')
+        log.info('rent saver start')
         rent.save()
             .then(() => {
-                log.info('Rent saved', 'green')
+                log.info('rent saved', 'green')
             })
             .catch(err => {
                 if (err.code === 11000) {
-                    log.info('⚠️  Rent already saved', 'red')
+                    log.info('⚠️  rent already saved', 'red')
                 } else {
                     console.log(err)
                 }

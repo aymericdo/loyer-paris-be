@@ -9,36 +9,7 @@ import { AddressInfo, Coordinate } from '@interfaces/shared'
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
 
-export async function main(ad: Ad) {
-    const roomCount = digForRoomCount(ad)
-    const hasFurniture = digForHasFurniture(ad)
-    const surface = digForSurface(ad)
-    const price = digForPrice(ad)
-    const [address, postalCode, city] = digForAddress(ad)
-    const coordinates = digForCoordinates(ad, address, city, postalCode)
-    const yearBuilt = await digForYearBuilt(ad, coordinates)
-    const renter = digForRenter(ad)
-    const stations = digForStations(ad)
-    const charges = digForCharges(ad)
-    const hasCharges = digForHasCharges(ad)
-    return {
-        address,
-        charges,
-        city,
-        coordinates,
-        hasCharges,
-        hasFurniture,
-        postalCode,
-        price,
-        renter,
-        roomCount,
-        stations,
-        surface,
-        yearBuilt,
-    }
-}
-
-function digForCoordinates(ad: Ad, address: string, city: string, postalCode: string): Coordinate {
+export function digForCoordinates(ad: Ad, address: string, city: string, postalCode: string): Coordinate {
     const coordinatesFromAddress = addressService.getCoordinate(address, { city, postalCode })
     const coordinatesFromAd = ad.coord && ad.coord.lng && ad.coord.lat ? {
         lng: ad.coord.lng,
@@ -50,7 +21,7 @@ function digForCoordinates(ad: Ad, address: string, city: string, postalCode: st
             coordinatesFromAddress : coordinatesFromAd
 }
 
-function digForAddress(ad: Ad): string[] {
+export function digForAddress(ad: Ad): string[] {
     const postalCode = ad.postalCode || ad.cityLabel
         && (_digForPostalCode(ad.cityLabel) || _digForPostalCode2(ad.cityLabel))
         || ad.description && (_digForPostalCode(ad.description) || _digForPostalCode2(ad.description))
@@ -89,13 +60,13 @@ function _digForPostalCode2(text: string): string {
     return match ? match.length === 1 ? `7500${match.trim()}` : `750${match.trim()}` : null
 }
 
-function digForRoomCount(ad: Ad): number {
+export function digForRoomCount(ad: Ad): number {
     const roomsFromTitle = ad.title && ad.title.match(regexString('roomCount')) && ad.title.match(regexString('roomCount'))[0]
     const roomsFromDescription = ad.description && ad.description.match(regexString('roomCount')) && ad.description.match(regexString('roomCount'))[0]
     return (!!ad.rooms && ad.rooms) || stringToNumber(roomsFromTitle) || stringToNumber(roomsFromDescription)
 }
 
-async function digForYearBuilt(ad: Ad, coordinates: Coordinate): Promise<number[]> {
+export async function digForYearBuilt(ad: Ad, coordinates: Coordinate): Promise<number[]> {
     const building = coordinates && coordinates.lat && coordinates.lng &&
         await yearBuiltService.getBuilding(coordinates.lat, coordinates.lng)
     const yearBuiltFromBuilding = building && yearBuiltService.getYearBuiltFromBuilding(building)
@@ -105,7 +76,7 @@ async function digForYearBuilt(ad: Ad, coordinates: Coordinate): Promise<number[
         : yearBuiltFromBuilding
 }
 
-function digForHasFurniture(ad: Ad): boolean {
+export function digForHasFurniture(ad: Ad): boolean {
     const furnitureFromTitle = ad.title && ad.title.match(regexString('furnished'))
     const nonFurnitureFromTitle = ad.title && ad.title.match(regexString('nonFurnished'))
     const furnitureFromDescription = ad.description && ad.description.match(regexString('furnished'))
@@ -119,29 +90,29 @@ function digForHasFurniture(ad: Ad): boolean {
                 null
 }
 
-function digForSurface(ad: Ad): number {
+export function digForSurface(ad: Ad): number {
     return ad.surface
         || ad.title && ad.title.match(regexString('surface')) && cleanup.number(ad.title.match(regexString('surface'))[0])
         || ad.description && ad.description.match(regexString('surface')) && cleanup.number(ad.description.match(regexString('surface'))[0])
 }
 
-function digForPrice(ad: Ad): number {
+export function digForPrice(ad: Ad): number {
     return ad.price
 }
 
-function digForRenter(ad: Ad): string {
+export function digForRenter(ad: Ad): string {
     return possibleBadRenter.includes(ad.renter) ? null : ad.renter
 }
 
-function digForStations(ad: Ad): string[] {
+export function digForStations(ad: Ad): string[] {
     const stationsFromDescription = stationService.getStations(ad?.description) as string[]
     return ad.stations || stationsFromDescription
 }
 
-function digForCharges(ad: Ad): number {
+export function digForCharges(ad: Ad): number {
     return ad.charges || ad.description && ad.description.match(regexString('charges')) && cleanup.price(ad.description.match(regexString('charges'))[0])
 }
 
-function digForHasCharges(ad: Ad): boolean {
+export function digForHasCharges(ad: Ad): boolean {
     return ad.hasCharges
 }
