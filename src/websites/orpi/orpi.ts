@@ -13,7 +13,10 @@ export class Orpi extends Website {
             id: ad.id,
             charges: cleanup.price(ad.charges),
             cityLabel: cleanup.string(ad.cityLabel),
-            coord: ad.coord,
+            coord: {
+                lat: +ad.coord.lat,
+                lng: +ad.coord.lng,
+            },
             description: cleanup.string(ad.description),
             hasCharges: ad.hasCharges,
             furnished: ad.furnished,
