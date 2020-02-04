@@ -40,7 +40,7 @@ export const rentFilter = ({
 
     const rentList = rangeRents.filter((rangeRent) => {
         return (districtsMatched.districts && districtsMatched.districts.filter(Boolean).length ? districtsMatched.districts.map(district => district.fields.c_qu).includes(rangeRent.fields.id_quartier) : true)
-            && (epoqueDates ? epoqueDates.includes(rangeRent.fields.epoque) : true)
+            && (epoqueDates && epoqueDates.length ? epoqueDates.includes(rangeRent.fields.epoque) : true)
             && (roomCount ? +roomCount < 5 ? rangeRent.fields.piece === +roomCount : rangeRent.fields.piece === 4 : true)
             && (hasFurniture != null ? hasFurniture ? rangeRent.fields.meuble_txt.match(/^meubl/g) : rangeRent.fields.meuble_txt.match(/^non meubl/g) : true)
     })

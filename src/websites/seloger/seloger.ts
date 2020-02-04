@@ -22,6 +22,7 @@ export class SeLoger extends Website {
             rooms: cleanup.number(ad.rooms),
             surface: cleanup.number(ad.surface),
             title: cleanup.string(ad.title),
+            yearBuilt: !!ad.yearBuilt && cleanup.number(ad.yearBuilt)
         }
     }
 }

@@ -145,4 +145,5 @@ export interface SelogerMapping {
     rooms: string
     surface: string
     title: string
+    yearBuilt: string
 }
