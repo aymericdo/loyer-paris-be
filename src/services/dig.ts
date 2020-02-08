@@ -71,7 +71,7 @@ export async function digForYearBuilt(ad: Ad, coordinates: Coordinate): Promise<
         await yearBuiltService.getBuilding(coordinates.lat, coordinates.lng)
     const yearBuiltFromBuilding = building && yearBuiltService.getYearBuiltFromBuilding(building)
 
-    return ad.yearBuilt != null && !isNaN(ad.yearBuilt)
+    return ad.yearBuilt && ad.yearBuilt != null && !isNaN(ad.yearBuilt)
         ? [+ad.yearBuilt]
         : yearBuiltFromBuilding
 }

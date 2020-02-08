@@ -16,8 +16,7 @@ export class LeBonCoin extends Website {
             furnished: ad.furnished ? ad.furnished === 'Meublé' ? true : ad.furnished === 'Non meublé' ? false : null : null,
             hasCharges: cleanup.string(ad.hasCharges) === 'oui' ? true : cleanup.string(ad.hasCharges) === 'non' ? false : null,
             price: cleanup.price(ad.price),
-            // TODO: to remove when next plugin version will be release : cleanup.string(ad.renter) !== 'false'
-            renter: ad.renter && cleanup.string(ad.renter) !== 'false' ? cleanup.string(ad.renter) : particulierToken,
+            renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
             rooms: cleanup.number(ad.rooms),
             surface: cleanup.number(ad.surface),
             title: cleanup.string(ad.subject),

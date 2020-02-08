@@ -1,5 +1,4 @@
 import { EmpriseBatie } from '@db/db'
-import { EncadrementItem } from '@interfaces/json-item'
 
 export function getEncadrementEpoqueDates(encadrementEpoque: string[], yearBuilt: number[]): string[] {
     if (!yearBuilt) {
