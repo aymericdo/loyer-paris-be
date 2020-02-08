@@ -4,7 +4,7 @@ import * as log from '@helpers/log'
 import { serializeRent } from '@services/serialize-rent'
 import { rentFilter } from '@services/rent-filter'
 import { roundNumber } from '@helpers/round-number'
-import { errorEscape } from '@services/error-escape'
+import { errorEscape, noMoreData } from '@services/error-escape'
 import { saveRent } from '@services/save-rent'
 import { subCharges } from '@helpers/charges'
 import {
@@ -51,6 +51,10 @@ export abstract class Website {
     public async abstract mapping(): Promise<Ad>
 
     public async digData() {
+        if (this.body.noMoreData) {
+            noMoreData()
+        }
+
         const ad: Ad = await this.mapping()
 
         const roomCount = digForRoomCount(ad)

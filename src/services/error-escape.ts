@@ -19,3 +19,8 @@ export const errorEscape = ({
         throw { status: 400, msg: 'not in Paris bro', error: 'paris' }
     }
 }
+
+export const noMoreData = () => {
+    log.error('NO MORE DATA !')
+    throw { status: 403, msg: 'no more data', error: 'minimal' }
+}

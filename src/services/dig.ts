@@ -105,7 +105,7 @@ export function digForRenter(ad: Ad): string {
 }
 
 export function digForStations(ad: Ad): string[] {
-    const stationsFromDescription = stationService.getStations(ad?.description) as string[]
+    const stationsFromDescription = ad?.description && stationService.getStations(ad.description) as string[]
     return ad.stations || stationsFromDescription
 }
 
