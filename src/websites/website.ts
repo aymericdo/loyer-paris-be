@@ -51,7 +51,7 @@ export abstract class Website {
     public async abstract mapping(): Promise<Ad>
 
     public async digData() {
-        if (this.body.noMoreData) {
+        if (this.body && this.body.noMoreData) {
             noMoreData()
         }
 
