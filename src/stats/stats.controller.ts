@@ -44,8 +44,7 @@ router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
           }
 
           next()
-        })
-      }
+        }
     })
     .catch((err) => {
       console.log(err)
@@ -234,6 +233,45 @@ function getLegalPerSurface(req: RentRequest, res: Response, next: NextFunction)
       }
     }
   }
+
+  res.json(vegaMap)
+}
+
+router.get('/adoption', getAdoptionRate)
+function getAdoptionRate(req: RentRequest, res: Response, next: NextFunction) {
+  log.info(`-> ${req.baseUrl} adoption`, 'blue')
+
+  const vegaMap = {
+    ...vegaService.commonOpts(),
+    data: {
+      values: req.rents.reduce((prev, { createdAt, surface }) => {
+        if (surface <= 100) {
+          prev.push({ createdAt })
+        }
+        return prev
+      }, [])
+    },
+    mark: { type: "line", tooltip: true, interpolate: "monotone" },
+    transform: [{
+      sort: [{ field: "createdAt" }],
+      window: [{ op: "count", field: "count", as: "cumulative_count" }],
+      frame: [null, 0]
+    }],
+    encoding: {
+      x: {
+        field: "createdAt",
+        title: "Date",
+        type: "temporal",
+        timeUnit: "yearmonthdate"
+      },
+      y: {
+        field: "cumulative_count",
+        title: "Nombre d'annonces",
+        type: "quantitative",
+      }
+    }
+  }
+  vegaMap.config["mark"] = { color: "#FBC652" }
 
   res.json(vegaMap)
 }
