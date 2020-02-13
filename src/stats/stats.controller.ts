@@ -44,7 +44,8 @@ router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
           }
 
           next()
-        }
+        })
+      }
     })
     .catch((err) => {
       console.log(err)
