@@ -11,7 +11,7 @@ export class Pap extends Website {
         const ad: PapMapping = this.body as PapMapping
 
         return {
-            id: ad.id,
+            id: ad.id.toString(),
             cityLabel: cleanup.string(ad.cityLabel),
             description: cleanup.string(ad.description),
             price: cleanup.price(ad.price),

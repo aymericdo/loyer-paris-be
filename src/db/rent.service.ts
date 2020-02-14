@@ -20,3 +20,12 @@ export async function getAll(): Promise<DataBaseItem[]> {
         })
     }
 }
+
+export async function getAdById(id: string, website: string): Promise<DataBaseItem> {
+    return await Rent.findOne({ id, website }, (err: Error, rent: DataBaseItem) => {
+        if (err) {
+            throw err
+        }
+        return rent
+    })
+}

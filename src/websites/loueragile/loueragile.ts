@@ -14,7 +14,7 @@ export class LouerAgile extends Website {
         const ad: LoueragileMapping = this.body as LoueragileMapping
 
         return {
-            id: ad.ad.id,
+            id: ad.ad.id.toString(),
             cityLabel: ad.ad.city,
             coord: {
                 lng: ad.ad.lng,

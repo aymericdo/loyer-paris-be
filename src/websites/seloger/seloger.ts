@@ -11,7 +11,7 @@ export class SeLoger extends Website {
         const ad: SelogerMapping = this.body as SelogerMapping
 
         return {
-            id: ad.id,
+            id: ad.id.toString(),
             charges: cleanup.price(ad.charges),
             cityLabel: cleanup.string(ad.cityLabel),
             description: cleanup.string(ad.description),

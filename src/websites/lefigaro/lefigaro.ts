@@ -10,7 +10,7 @@ export class LeFigaro extends Website {
         const ad: LefigaroMapping = this.body as LefigaroMapping
 
         return {
-            id: ad.id,
+            id: ad.id.toString(),
             charges: cleanup.price(ad.charges),
             cityLabel: ad.cityLabel,
             description: cleanup.string(ad.description),

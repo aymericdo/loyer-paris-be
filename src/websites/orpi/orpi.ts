@@ -10,7 +10,7 @@ export class Orpi extends Website {
         const ad: OrpiMapping = this.body as OrpiMapping
 
         return {
-            id: ad.id,
+            id: ad.id.toString(),
             charges: cleanup.price(ad.charges),
             cityLabel: cleanup.string(ad.cityLabel),
             coord: {

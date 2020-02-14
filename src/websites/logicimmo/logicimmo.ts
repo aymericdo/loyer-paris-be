@@ -11,7 +11,7 @@ export class LogicImmo extends Website {
         const ad: LogicimmoMapping = this.body as LogicimmoMapping
 
         return {
-            id: ad.id,
+            id: ad.id.toString(),
             charges: cleanup.price(ad.charges),
             cityLabel: cleanup.string(ad.cityLabel),
             description: cleanup.string(ad.description),

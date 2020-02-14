@@ -1,7 +1,7 @@
 import { Coordinate } from '@interfaces/shared'
 
 export interface Ad {
-    id: number
+    id: string
     address?: string
     charges?: number
     cityLabel?: string

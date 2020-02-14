@@ -24,3 +24,8 @@ export const apiHit = (isStats: boolean) => {
     const message = `api hit ${isStats ? 'stats' : 'extension'}`
     Sentry.captureMessage(message, 'info')
 }
+
+export const priceHasChanged = () => {
+    const message = 'price has changed'
+    Sentry.captureMessage(message, 'info')
+}

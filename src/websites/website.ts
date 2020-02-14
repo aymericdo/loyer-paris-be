@@ -91,7 +91,7 @@ export abstract class Website {
             const priceExcludingCharges = subCharges(price, charges, hasCharges)
             const isLegal = priceExcludingCharges <= maxAuthorized
 
-            saveRent({
+            await saveRent({
                 id: ad.id,
                 address,
                 city,

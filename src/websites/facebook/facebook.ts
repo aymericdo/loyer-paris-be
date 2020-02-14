@@ -9,7 +9,7 @@ export class Facebook extends Website {
     public async mapping(): Promise<Ad> {
         const ad: FacebookMapping = this.body as FacebookMapping
         return {
-            id: ad.id,
+            id: ad.id.toString(),
             address: cleanup.string(ad.address),
             cityLabel: cleanup.string(ad.cityLabel),
             description: cleanup.string(ad.description),

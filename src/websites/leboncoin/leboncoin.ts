@@ -10,7 +10,7 @@ export class LeBonCoin extends Website {
     public async mapping(): Promise<Ad> {
         const ad: LeboncoinMapping = this.body as LeboncoinMapping
         return {
-            id: ad.id,
+            id: ad.id.toString(),
             cityLabel: cleanup.string(ad.cityLabel),
             description: cleanup.string(ad.body),
             furnished: ad.furnished ? ad.furnished === 'Meublé' ? true : ad.furnished === 'Non meublé' ? false : null : null,

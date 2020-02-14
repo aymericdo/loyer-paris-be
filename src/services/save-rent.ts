@@ -1,8 +1,9 @@
 import { Rent } from '@db/db'
 import * as log from '@helpers/log'
+import { getAdById } from '@db/rent.service'
 
 interface SavedInfo {
-    id: number
+    id: string
     address: string
     city: string
     hasFurniture: boolean
@@ -21,7 +22,7 @@ interface SavedInfo {
     yearBuilt: number[]
 }
 
-export const saveRent = ({
+export const saveRent = async ({
     id,
     address,
     city,
@@ -41,6 +42,11 @@ export const saveRent = ({
     yearBuilt,
 }: SavedInfo) => {
     if (id) {
+        const findSimilarAd = await getAdById(id, website)
+        if (findSimilarAd && findSimilarAd.priceExcludingCharges !== priceExcludingCharges) {
+            log.priceHasChanged()
+        }
+
         const rent = new Rent({
             id,
             website,
