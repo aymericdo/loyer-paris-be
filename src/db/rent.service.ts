@@ -37,8 +37,8 @@ export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
     })
 }
 
-export async function getWelcomeData(): Promise<{ isLegal: boolean, surface: number }[]> {
-    return await Rent.find({}, { isLegal: 1, surface: 1 }, (err: Error, rents: { isLegal: boolean, surface: number }[]) => {
+export async function getWelcomeData(): Promise<{ isLegal: boolean, surface: number, postalCode: string }[]> {
+    return await Rent.find({}, { isLegal: 1, surface: 1, postalCode: 1 }, (err: Error, rents: { isLegal: boolean, surface: number, postalCode: string }[]) => {
         if (err) {
             throw err
         }
