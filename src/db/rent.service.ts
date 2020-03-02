@@ -1,24 +1,49 @@
 import { Rent } from './db'
 import { DataBaseItem } from '@interfaces/shared'
-import * as log from '@helpers/log'
-const NodeCache = require('node-cache')
-const dbCache = new NodeCache({ checkperiod: 60 * 15, deleteOnExpire: true })
 
-export async function getAll(): Promise<DataBaseItem[]> {
-    const data = dbCache.get('data')
-    if (data != undefined) {
-        log.info('load cache of Rent DB')
-        return await data
-    } else {
-        log.info('load Rent DB')
-        return await Rent.find({}, (err: Error, rents: DataBaseItem[]) => {
-            if (err) {
-                throw err
-            }
-            dbCache.set('data', rents)
-            return rents
-        })
-    }
+export async function getMapData(): Promise<{ isLegal: boolean, latitude: number, longitude: number }[]> {
+    return await Rent.find({ latitude: { $exists: true }, longitude: { $exists: true } }, { isLegal: 1, latitude: 1, longitude: 1 }, (err: Error, rents: { isLegal: boolean, latitude: number, longitude: number }[]) => {
+        if (err) {
+            throw err
+        }
+        return rents
+    })
+}
+
+export async function getPriceDiffData(): Promise<{ maxPrice: number, postalCode: string, priceExcludingCharges: number }[]> {
+    return await Rent.find({ postalCode: { $exists: true } }, { maxPrice: 1, postalCode: 1, priceExcludingCharges: 1 }, (err: Error, rents: { maxPrice: number, postalCode: string, priceExcludingCharges: number }[]) => {
+        if (err) {
+            throw err
+        }
+        return rents
+    })
+}
+
+export async function getLegalPerSurfaceData(): Promise<{ isLegal: boolean, surface: number }[]> {
+    return await Rent.find({ surface: { $lte: 100 } }, { isLegal: 1, surface: 1 }, (err: Error, rents: { isLegal: boolean, surface: number }[]) => {
+        if (err) {
+            throw err
+        }
+        return rents
+    })
+}
+
+export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
+    return await Rent.find({}, { createdAt: 1 }, (err: Error, rents: { createdAt: string }[]) => {
+        if (err) {
+            throw err
+        }
+        return rents
+    })
+}
+
+export async function getWelcomeData(): Promise<{ isLegal: boolean, surface: number }[]> {
+    return await Rent.find({}, { isLegal: 1, surface: 1 }, (err: Error, rents: { isLegal: boolean, surface: number }[]) => {
+        if (err) {
+            throw err
+        }
+        return rents
+    })
 }
 
 export async function getAdById(id: string, website: string): Promise<DataBaseItem> {
