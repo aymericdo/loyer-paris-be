@@ -1,11 +1,11 @@
 import * as cleanup from '@helpers/cleanup'
 import { regexString } from '@helpers/regex'
 import { stringToNumber } from '@helpers/string-to-number'
+import { Ad } from '@interfaces/ad'
+import { AddressInfo, Coordinate } from '@interfaces/shared'
 import * as addressService from '@services/address'
 import * as stationService from '@services/station'
 import * as yearBuiltService from '@services/year-built'
-import { Ad } from '@interfaces/ad'
-import { AddressInfo, Coordinate } from '@interfaces/shared'
 
 const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
 
@@ -40,7 +40,7 @@ function _digForAddressInText(text: string, { city, postalCode }: AddressInfo): 
             return addressService.getAddressInParis(address.trim().replace('bd ', 'boulevard '), { postalCode })
         }).filter(Boolean).sort((a, b) => a.score - b.score).map(address => address.item)
         return result && result.length ?
-            cleanup.string(result[0].fields.l_adr).match(/^\d+/gi) ?
+            cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi) ?
                 cleanup.string(result[0].fields.l_adr) :
                 cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() :
             addressesFromRegex[0].trim()
