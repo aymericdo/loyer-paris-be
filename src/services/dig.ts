@@ -24,8 +24,8 @@ export function digForCoordinates(ad: Ad, address: string, city: string, postalC
 export function digForAddress(ad: Ad): string[] {
     const postalCode = ad.postalCode || ad.cityLabel
         && (_digForPostalCode(ad.cityLabel) || _digForPostalCode2(ad.cityLabel))
-        || ad.description && (_digForPostalCode(ad.description) || _digForPostalCode2(ad.description))
         || ad.title && (_digForPostalCode(ad.title) || _digForPostalCode2(ad.title))
+        || ad.description && (_digForPostalCode(ad.description) || _digForPostalCode2(ad.description))
     const city = ad.cityLabel && ad.cityLabel.match(/[A-Za-z]+/g) && cleanup.string(ad.cityLabel.match(/[A-Za-z]+/g)[0])
         || (postalCode && postalCode.toString().startsWith('75') ? 'paris' : null)
     const address = ad.address || (ad.description && _digForAddressInText(ad.description, { city, postalCode })) || (ad.title && _digForAddressInText(ad.title, { city, postalCode }))

@@ -1,26 +1,14 @@
-import { Response } from 'express'
-import { Ad } from '@interfaces/ad'
-import * as log from '@helpers/log'
-import { serializeRent } from '@services/serialize-rent'
-import { rentFilter } from '@services/rent-filter'
-import { roundNumber } from '@helpers/round-number'
-import { errorEscape, noMoreData } from '@services/error-escape'
-import { saveRent } from '@services/save-rent'
 import { subCharges } from '@helpers/charges'
-import {
-    digForRoomCount,
-    digForHasFurniture,
-    digForSurface,
-    digForPrice,
-    digForAddress,
-    digForCoordinates,
-    digForYearBuilt,
-    digForRenter,
-    digForStations,
-    digForCharges,
-    digForHasCharges,
-} from '@services/dig'
+import * as log from '@helpers/log'
+import { roundNumber } from '@helpers/round-number'
+import { Ad } from '@interfaces/ad'
 import { Mapping } from '@interfaces/mapping'
+import { digForAddress, digForCharges, digForCoordinates, digForHasCharges, digForHasFurniture, digForPrice, digForRenter, digForRoomCount, digForStations, digForSurface, digForYearBuilt } from '@services/dig'
+import { errorEscape, noMoreData } from '@services/error-escape'
+import { rentFilter } from '@services/rent-filter'
+import { saveRent } from '@services/save-rent'
+import { serializeRent } from '@services/serialize-rent'
+import { Response } from 'express'
 
 export abstract class Website {
     website: string = null
@@ -62,6 +50,7 @@ export abstract class Website {
         const surface = digForSurface(ad)
         const price = digForPrice(ad)
         const [address, postalCode, city] = digForAddress(ad)
+        console.log(postalCode)
         const coordinates = digForCoordinates(ad, address, city, postalCode)
         const yearBuilt = await digForYearBuilt(ad, coordinates)
         const renter = digForRenter(ad)
