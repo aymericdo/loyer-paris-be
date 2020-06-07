@@ -1,5 +1,5 @@
-import * as log from '@helpers/log'
 import * as cleanup from '@helpers/cleanup'
+import * as log from '@helpers/log'
 
 export const errorEscape = ({
     address,
@@ -17,6 +17,9 @@ export const errorEscape = ({
     } else if (!(city && cleanup.string(city) === 'paris')) {
         log.error('not in Paris')
         throw { status: 400, msg: 'not in Paris bro', error: 'paris' }
+    } else if (price > 10000) {
+        log.error('not a rent')
+        throw { status: 400, msg: 'not a rent', error: 'purchase' }
     }
 }
 
