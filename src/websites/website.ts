@@ -50,7 +50,6 @@ export abstract class Website {
         const surface = digForSurface(ad)
         const price = digForPrice(ad)
         const [address, postalCode, city] = digForAddress(ad)
-        console.log(postalCode)
         const coordinates = digForCoordinates(ad, address, city, postalCode)
         const yearBuilt = await digForYearBuilt(ad, coordinates)
         const renter = digForRenter(ad)

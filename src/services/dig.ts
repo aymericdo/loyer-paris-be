@@ -57,7 +57,7 @@ function _digForPostalCode(text: string): string {
 function _digForPostalCode2(text: string): string {
     const postalCode2Re = new RegExp(regexString('postalCode2'))
     const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
-    return match ? match.length === 1 ? `7500${match.trim()}` : `750${match.trim()}` : null
+    return match ? match.trim().length === 1 ? `7500${match.trim()}` : `750${match.trim()}` : null
 }
 
 export function digForRoomCount(ad: Ad): number {
