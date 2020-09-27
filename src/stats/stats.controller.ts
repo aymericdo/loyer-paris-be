@@ -8,6 +8,7 @@ import { groupBy } from '@helpers/group-by'
 import * as ip from '@helpers/ip'
 import * as log from '@helpers/log'
 import * as vegaService from '@services/vega'
+import { postalCodePossibilities } from '@helpers/postal-code'
 const router = express.Router()
 
 const parisGeodata = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'))
@@ -149,29 +150,7 @@ function getPriceDifference(req: RentRequest, res: Response, next: NextFunction)
             field: "postalCode",
             type: "ordinal",
             title: "Code postal",
-            sort: [
-              '75001',
-              '75002',
-              '75003',
-              '75004',
-              '75005',
-              '75006',
-              '75007',
-              '75008',
-              '75009',
-              '75010',
-              '75011',
-              '75012',
-              '75013',
-              '75014',
-              '75015',
-              '75016',
-              '75116',
-              '75017',
-              '75018',
-              '75019',
-              '75020',
-            ],
+            sort: postalCodePossibilities,
           },
           tooltip: [
             { field: "countOfPostalCode", title: "Nombre d'annonces" },
