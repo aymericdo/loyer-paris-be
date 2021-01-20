@@ -1,11 +1,11 @@
 import * as cleanup from '@helpers/cleanup'
 import { regexString } from '@helpers/regex'
 import { stringToNumber } from '@helpers/string-to-number'
-import { Ad } from '@interfaces/ad'
-import { AddressInfo, Coordinate } from '@interfaces/shared'
-import * as addressService from '@services/address'
+import { Ad, CleanAd } from '@interfaces/ad'
+import { Coordinate } from '@interfaces/shared'
 import * as stationService from '@services/station'
-import * as yearBuiltService from '@services/year-built'
+import { StationService } from '@services/station'
+import { YearBuiltService } from '@services/year-built'
 import { AddressService } from './address';
 
 export class DigService {
@@ -17,7 +17,37 @@ export class DigService {
         this.ad = ad;
     }
 
-    public digForAddress(): [string, string, string, Coordinate] {
+    async digInAd(): Promise<CleanAd> {
+        const roomCount = this.digForRoomCount()
+        const hasFurniture = this.digForHasFurniture()
+        const surface = this.digForSurface()
+        const price = this.digForPrice()
+        const [address, postalCode, city, coordinates] = this.digForAddress()
+        const yearBuilt = await this.digForYearBuilt(coordinates)
+        const renter = this.digForRenter()
+        const stations = this.digForStations()
+        const charges = this.digForCharges()
+        const hasCharges = this.digForHasCharges()
+
+        return {
+            id: this.ad.id,
+            roomCount,
+            hasFurniture,
+            surface,
+            price,
+            address,
+            postalCode,
+            city,
+            coordinates,
+            yearBuilt,
+            renter,
+            stations,
+            charges,
+            hasCharges,
+        }
+    }
+
+    private digForAddress(): [string, string, string, Coordinate] {
         const addressService = new AddressService(this.ad)
 
         const postalCode = addressService.getPostalCode()
@@ -27,26 +57,26 @@ export class DigService {
 
         return [address, postalCode, city, coordinates]
     }
-    
-    public digForRoomCount(): number {
+
+    private digForRoomCount(): number {
         const roomsFromTitle = this.ad.title && this.ad.title.match(regexString('roomCount')) && this.ad.title.match(regexString('roomCount'))[0]
         const roomsFromDescription = this.ad.description && this.ad.description.match(regexString('roomCount')) && this.ad.description.match(regexString('roomCount'))[0]
         return (!!this.ad.rooms && this.ad.rooms) || stringToNumber(roomsFromTitle) || stringToNumber(roomsFromDescription)
     }
-    
-    public async digForYearBuilt(coordinates: Coordinate | null): Promise<number[]> {
+
+    private async digForYearBuilt(coordinates?: Coordinate): Promise<number[]> {
         if (this.ad.yearBuilt && this.ad.yearBuilt != null && !isNaN(this.ad.yearBuilt)) {
             return [+this.ad.yearBuilt]
         } else {
             const building = coordinates && coordinates.lat && coordinates.lng &&
-                await yearBuiltService.getBuilding(coordinates.lat, coordinates.lng)
-            const yearBuiltFromBuilding = building && yearBuiltService.getYearBuiltFromBuilding(building)
+                await YearBuiltService.getBuilding(coordinates.lat, coordinates.lng)
+            const yearBuiltFromBuilding = building && YearBuiltService.getYearBuiltFromBuilding(building)
     
             return yearBuiltFromBuilding
         }
     }
-    
-    public digForHasFurniture(): boolean {
+
+    private digForHasFurniture(): boolean {
         const furnitureFromTitle = this.ad.title && this.ad.title.match(regexString('furnished'))
         const nonFurnitureFromTitle = this.ad.title && this.ad.title.match(regexString('nonFurnished'))
         const furnitureFromDescription = this.ad.description && this.ad.description.match(regexString('furnished'))
@@ -59,32 +89,32 @@ export class DigService {
                     || nonFurnitureFromTitle && nonFurnitureFromTitle.length > 0) ? false :
                     null
     }
-    
-    public digForSurface(): number {
+
+    private digForSurface(): number {
         return this.ad.surface
             || this.ad.title && this.ad.title.match(regexString('surface')) && cleanup.number(this.ad.title.match(regexString('surface'))[0])
             || this.ad.description && this.ad.description.match(regexString('surface')) && cleanup.number(this.ad.description.match(regexString('surface'))[0])
     }
-    
-    public digForPrice(): number {
+
+    private digForPrice(): number {
         return this.ad.price
     }
-    
-    public digForRenter(): string {
+
+    private digForRenter(): string {
         const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
         return possibleBadRenter.includes(this.ad.renter) ? null : this.ad.renter
     }
-    
-    public digForStations(): string[] {
-        const stationsFromDescription = this.ad?.description && stationService.getStations(this.ad.description) as string[]
+
+    private digForStations(): string[] {
+        const stationsFromDescription = this.ad?.description && StationService.getStations(this.ad.description) as string[]
         return this.ad.stations || stationsFromDescription
     }
-    
-    public digForCharges(): number {
+
+    private digForCharges(): number {
         return this.ad.charges || this.ad.description?.match(regexString('charges')) && cleanup.price(this.ad.description.match(regexString('charges'))[0])
     }
-    
-    public digForHasCharges(): boolean {
+
+    private digForHasCharges(): boolean {
         return this.ad.hasCharges
     }
 }

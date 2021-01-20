@@ -8,7 +8,7 @@ import * as log from '@helpers/log'
 export class LouerAgile extends Website {
     website = 'loueragile'
 
-    public async mapping(): Promise<Ad> {
+    async mapping(): Promise<Ad> {
         await this.fetching()
 
         const ad: LoueragileMapping = this.body as LoueragileMapping

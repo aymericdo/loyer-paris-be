@@ -6,7 +6,7 @@ import { Website } from '../website'
 export class LeFigaro extends Website {
     website = 'lefigaro'
 
-    public async mapping(): Promise<Ad> {
+    async mapping(): Promise<Ad> {
         const ad: LefigaroMapping = this.body as LefigaroMapping
 
         return {

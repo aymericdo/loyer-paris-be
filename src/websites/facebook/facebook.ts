@@ -6,7 +6,7 @@ import { Website } from '../website'
 export class Facebook extends Website {
     website = 'facebook'
 
-    public async mapping(): Promise<Ad> {
+    async mapping(): Promise<Ad> {
         const ad: FacebookMapping = this.body as FacebookMapping
         return {
             id: ad.id.toString(),

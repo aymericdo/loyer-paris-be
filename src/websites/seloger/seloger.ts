@@ -7,7 +7,7 @@ import { Website } from '../website'
 export class SeLoger extends Website {
     website = 'seloger'
 
-    public async mapping(): Promise<Ad> {
+    async mapping(): Promise<Ad> {
         const ad: SelogerMapping = this.body as SelogerMapping
 
         return {

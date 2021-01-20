@@ -5,78 +5,68 @@ import { getAdById } from '@db/rent.service'
 interface SavedInfo {
     id: string
     address: string
-    city: string
-    hasFurniture: boolean
+    city?: string
+    hasFurniture?: boolean
     isLegal: boolean
-    latitude: number
-    longitude: number
+    latitude?: number
+    longitude?: number
     maxPrice: number
     postalCode: string
     price: number
     priceExcludingCharges: number
-    renter: string
-    roomCount: number
-    stations: string[]
+    renter?: string
+    roomCount?: number
+    stations?: string[]
     surface: number
     website: string
-    yearBuilt: number[]
+    yearBuilt?: number[]
 }
 
-export const saveRent = async ({
-    id,
-    address,
-    city,
-    hasFurniture,
-    isLegal,
-    latitude,
-    longitude,
-    maxPrice,
-    postalCode,
-    price,
-    priceExcludingCharges,
-    renter,
-    roomCount,
-    stations,
-    surface,
-    website,
-    yearBuilt,
-}: SavedInfo) => {
-    if (id) {
-        const findSimilarAd = await getAdById(id, website)
-        if (findSimilarAd && findSimilarAd.priceExcludingCharges !== priceExcludingCharges) {
-            log.priceHasChanged()
-        }
+export class SaveRentService {
+    adToSave: SavedInfo = null
 
-        const rent = new Rent({
-            id,
-            website,
-            ...(address != null && { address }),
-            ...(city != null && { city }),
-            ...(hasFurniture != null && { hasFurniture }),
-            ...(isLegal != null && { isLegal }),
-            ...(latitude != null && { latitude }),
-            ...(longitude != null && { longitude }),
-            ...(maxPrice != null && { maxPrice }),
-            ...(postalCode != null && { postalCode }),
-            ...(price != null && { price }),
-            ...(priceExcludingCharges != null && { priceExcludingCharges }),
-            ...(renter != null && { renter }),
-            ...(roomCount != null && { roomCount }),
-            ...(stations != null && stations.length && { stations }),
-            ...(surface != null && { surface }),
-            ...(yearBuilt != null && yearBuilt.length && { yearBuilt }),
-        })
-        log.info('rent saver start')
-        rent.save()
-            .then(() => {
-                log.info('rent saved', 'green')
+    constructor(adToSave: SavedInfo) {
+        this.adToSave = adToSave
+    }
+
+    async save(): Promise<void> {
+        if (this.adToSave.id) {
+            const findSimilarAd = await getAdById(this.adToSave.id, this.adToSave.website)
+            if (findSimilarAd && findSimilarAd.priceExcludingCharges !== this.adToSave.priceExcludingCharges) {
+                log.priceHasChanged()
+            }
+    
+            const rent = new Rent({
+                id: this.adToSave.id,
+                website: this.adToSave.website,
+                address: this.adToSave.address,
+                isLegal: this.adToSave.isLegal,
+                maxPrice: this.adToSave.maxPrice,
+                postalCode: this.adToSave.postalCode,
+                price: this.adToSave.price,
+                priceExcludingCharges: this.adToSave.priceExcludingCharges,
+                surface: this.adToSave.surface,
+                ...(this.adToSave.city != null && { city: this.adToSave.city }),
+                ...(this.adToSave.hasFurniture != null && { hasFurniture: this.adToSave.hasFurniture }),
+                ...(this.adToSave.latitude != null && { latitude: this.adToSave.latitude }),
+                ...(this.adToSave.longitude != null && { longitude: this.adToSave.longitude }),
+                ...(this.adToSave.renter != null && { renter: this.adToSave.renter }),
+                ...(this.adToSave.roomCount != null && { roomCount: this.adToSave.roomCount }),
+                ...(this.adToSave.stations != null && this.adToSave.stations.length && { stations: this.adToSave.stations }),
+                ...(this.adToSave.yearBuilt != null && this.adToSave.yearBuilt.length && { yearBuilt: this.adToSave.yearBuilt }),
             })
-            .catch(err => {
-                if (err.code === 11000) {
-                    log.info('⚠️  rent already saved', 'red')
-                } else {
-                    console.log(err)
-                }
-            })
+            log.info('rent saver start')
+            rent.save()
+                .then(() => {
+                    log.info('rent saved', 'green')
+                })
+                .catch(err => {
+                    if (err.code === 11000) {
+                        log.info('⚠️  rent already saved', 'red')
+                    } else {
+                        console.log(err)
+                    }
+                })
+        }
     }
 }

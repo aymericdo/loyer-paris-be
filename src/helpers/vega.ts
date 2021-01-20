@@ -1,4 +1,4 @@
-export function commonOpts() {
+export const vegaCommonOpt = () => {
     return {
         $schema: "https://vega.github.io/schema/vega-lite/v4.json",
         width: 700,

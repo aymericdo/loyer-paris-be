@@ -19,3 +19,20 @@ export interface Ad {
     title?: string
     yearBuilt?: number
 }
+
+export interface CleanAd {
+    id: string
+    roomCount?: number
+    hasFurniture?: boolean
+    surface: number
+    price: number
+    address: string
+    postalCode: string
+    city?: string
+    coordinates?: Coordinate
+    yearBuilt?: number[]
+    renter?: string
+    stations?: string[]
+    charges?: number
+    hasCharges?: boolean
+}

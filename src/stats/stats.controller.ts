@@ -1,13 +1,13 @@
 import express, { NextFunction, Request, Response } from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
-import request from 'request'
+import axios from 'axios'
 import * as rentService from '../db/rent.service'
 import { DataBaseItem } from '@interfaces/shared'
 import { groupBy } from '@helpers/group-by'
 import * as ip from '@helpers/ip'
 import * as log from '@helpers/log'
-import * as vegaService from '@services/vega'
+import { vegaCommonOpt } from '@helpers/vega'
 import { postalCodePossibilities } from '@helpers/postal-code'
 const router = express.Router()
 
@@ -18,30 +18,29 @@ interface RentRequest extends Request {
 }
 
 router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
-  const verifyCaptchaOptions = {
-    uri: "https://www.google.com/recaptcha/api/siteverify",
-    json: true,
-    form: {
-      secret: process.env.CAPTCHA_SECRET,
-      response: req.query.recaptchaToken
-    }
-  }
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
 
   if (ip.isIpCached(ip.getIp(req))) {
     next()
   } else {
     ip.saveIp(ip.getIp(req))
-    request.post(verifyCaptchaOptions, (err, response, body) => {
-      if (err) {
-        return res.status(500).json({ message: "oops, something went wrong on our side" })
-      }
-
-      if (!body.success) {
-        return res.status(500).json({ message: body["error-codes"].join(".") })
-      }
-
-      next()
+    axios.post(url, {}, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+      },
     })
+      .then((response) => {
+        if (!response.data.success) {
+          return res.status(500).json({
+            message: response.data["error-codes"].join("."),
+          })
+        }
+
+        next()
+      })
+      .catch(() => {
+        return res.status(500).json({ message: "oops, something went wrong on our side" })
+      })
   }
 })
 
@@ -53,7 +52,7 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
   rentService.getMapData()
     .then((data) => {
       const vegaMap = {
-        ...vegaService.commonOpts(),
+        ...vegaCommonOpt(),
         layer: [
           {
             data: {
@@ -120,7 +119,7 @@ function getPriceDifference(req: RentRequest, res: Response, next: NextFunction)
     .then((data) => {
 
       const vegaMap = {
-        ...vegaService.commonOpts(),
+        ...vegaCommonOpt(),
         data: {
           values: data,
         },
@@ -178,7 +177,7 @@ function getLegalPerSurface(req: RentRequest, res: Response, next: NextFunction)
   rentService.getLegalPerSurfaceData()
     .then((data) => {
       const vegaMap = {
-        ...vegaService.commonOpts(),
+        ...vegaCommonOpt(),
         data: {
           values: data,
         },
@@ -232,7 +231,7 @@ function getAdoptionRate(req: RentRequest, res: Response, next: NextFunction) {
   rentService.getAdoptionData()
     .then((data) => {
       const vegaMap = {
-        ...vegaService.commonOpts(),
+        ...vegaCommonOpt(),
         data: {
           values: data,
         },

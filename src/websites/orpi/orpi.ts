@@ -6,7 +6,7 @@ import { Website } from '../website'
 export class Orpi extends Website {
     website = 'orpi'
 
-    public async mapping(): Promise<Ad> {
+    async mapping(): Promise<Ad> {
         const ad: OrpiMapping = this.body as OrpiMapping
 
         return {

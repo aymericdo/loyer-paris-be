@@ -7,7 +7,7 @@ import { Website } from '../website'
 export class LogicImmo extends Website {
     website = 'logicimmo'
 
-    public async mapping(): Promise<Ad> {
+    async mapping(): Promise<Ad> {
         const ad: LogicimmoMapping = this.body as LogicimmoMapping
 
         return {

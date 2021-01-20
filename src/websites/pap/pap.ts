@@ -7,7 +7,7 @@ import { Website } from '../website'
 export class Pap extends Website {
     website = 'pap'
 
-    public async mapping(): Promise<Ad> {
+    async mapping(): Promise<Ad> {
         const ad: PapMapping = this.body as PapMapping
 
         return {

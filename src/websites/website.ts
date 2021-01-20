@@ -1,14 +1,14 @@
 import { subCharges } from '@helpers/charges'
 import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
-import { Ad } from '@interfaces/ad'
+import { Ad, CleanAd } from '@interfaces/ad'
+import { EncadrementItem } from '@interfaces/json-item'
 import { Mapping } from '@interfaces/mapping'
-import { Coordinate } from '@interfaces/shared'
 import { DigService } from '@services/dig'
-import { errorEscape, noMoreData } from '@services/error-escape'
-import { rentFilter } from '@services/rent-filter'
-import { saveRent } from '@services/save-rent'
-import { serializeRent } from '@services/serialize-rent'
+import { ErrorService } from '@services/error-escape'
+import { RentFilterService } from '@services/filter-rent'
+import { SaveRentService } from '@services/save-rent'
+import { SerializeRentService } from '@services/serialize-rent'
 import { Response } from 'express'
 
 export abstract class Website {
@@ -21,7 +21,7 @@ export abstract class Website {
         this.body = props.body
     }
 
-    public analyse(res: Response): void {
+    analyse(res: Response): void {
         this.digData()
             .then((data) => {
                 res.json(data)
@@ -37,84 +37,42 @@ export abstract class Website {
             })
     }
 
-    public abstract mapping(): Promise<Ad>
+    abstract mapping(): Promise<Ad>
 
-    public async digData() {
+    async digData() {
         if (this.body && this.body.noMoreData) {
-            noMoreData()
+            ErrorService.noMoreData()
         }
 
         const ad: Ad = await this.mapping()
 
-        const digService = new DigService(ad)
+        const cleanAd: CleanAd = await new DigService(ad).digInAd()
 
-        const roomCount = digService.digForRoomCount()
-        const hasFurniture = digService.digForHasFurniture()
-        const surface = digService.digForSurface()
-        const price = digService.digForPrice()
-        const [address, postalCode, city, coordinates] = digService.digForAddress()
-        const yearBuilt = await digService.digForYearBuilt(coordinates)
-        const renter = digService.digForRenter()
-        const stations = digService.digForStations()
-        const charges = digService.digForCharges()
-        const hasCharges = digService.digForHasCharges()
+        ErrorService.errorEscape(cleanAd)
 
-        errorEscape({
-            address,
-            city,
-            postalCode,
-            price,
-            surface,
-        })
-
-        const adEncadrement = rentFilter({
-            coordinates,
-            hasFurniture,
-            postalCode,
-            roomCount,
-            stations,
-            yearBuilt,
-        })
+        const adEncadrement: EncadrementItem = new RentFilterService(cleanAd).filter()
 
         if (adEncadrement) {
-            const maxAuthorized = roundNumber(+adEncadrement.fields.max * surface)
-            const priceExcludingCharges = subCharges(price, charges, hasCharges)
+            const maxAuthorized = roundNumber(+adEncadrement.fields.max * cleanAd.surface)
+            const priceExcludingCharges = subCharges(cleanAd.price, cleanAd.charges, cleanAd.hasCharges)
             const isLegal = priceExcludingCharges <= maxAuthorized
 
-            await saveRent({
-                id: ad.id,
-                address,
-                city,
-                hasFurniture,
+            await new SaveRentService({
+                ...cleanAd,
                 isLegal,
-                latitude: coordinates && coordinates.lat,
-                longitude: coordinates && coordinates.lng,
+                latitude: cleanAd.coordinates?.lat,
+                longitude: cleanAd.coordinates?.lng,
                 maxPrice: maxAuthorized,
-                postalCode,
-                price,
                 priceExcludingCharges,
-                renter,
-                roomCount,
-                stations,
-                surface,
                 website: this.website,
-                yearBuilt,
-            })
+            }).save()
 
-            return serializeRent({
-                address,
-                charges,
-                hasCharges,
-                hasFurniture,
+            return new SerializeRentService({
+                ...cleanAd,
                 isLegal,
                 maxAuthorized,
-                postalCode,
-                price,
                 priceExcludingCharges,
-                roomCount,
-                surface,
-                yearBuilt,
-            }, adEncadrement)
+            }, adEncadrement).serialize()
         } else {
             log.error('no match found')
             throw { status: 403, msg: 'no match found', error: 'address' }
