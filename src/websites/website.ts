@@ -3,7 +3,8 @@ import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { Ad } from '@interfaces/ad'
 import { Mapping } from '@interfaces/mapping'
-import { digForAddress, digForCharges, digForCoordinates, digForHasCharges, digForHasFurniture, digForPrice, digForRenter, digForRoomCount, digForStations, digForSurface, digForYearBuilt } from '@services/dig'
+import { Coordinate } from '@interfaces/shared'
+import { DigService } from '@services/dig'
 import { errorEscape, noMoreData } from '@services/error-escape'
 import { rentFilter } from '@services/rent-filter'
 import { saveRent } from '@services/save-rent'
@@ -36,7 +37,7 @@ export abstract class Website {
             })
     }
 
-    public async abstract mapping(): Promise<Ad>
+    public abstract mapping(): Promise<Ad>
 
     public async digData() {
         if (this.body && this.body.noMoreData) {
@@ -45,17 +46,18 @@ export abstract class Website {
 
         const ad: Ad = await this.mapping()
 
-        const roomCount = digForRoomCount(ad)
-        const hasFurniture = digForHasFurniture(ad)
-        const surface = digForSurface(ad)
-        const price = digForPrice(ad)
-        const [address, postalCode, city] = digForAddress(ad)
-        const coordinates = digForCoordinates(ad, address, city, postalCode)
-        const yearBuilt = await digForYearBuilt(ad, coordinates)
-        const renter = digForRenter(ad)
-        const stations = digForStations(ad)
-        const charges = digForCharges(ad)
-        const hasCharges = digForHasCharges(ad)
+        const digService = new DigService(ad)
+
+        const roomCount = digService.digForRoomCount()
+        const hasFurniture = digService.digForHasFurniture()
+        const surface = digService.digForSurface()
+        const price = digService.digForPrice()
+        const [address, postalCode, city, coordinates] = digService.digForAddress()
+        const yearBuilt = await digService.digForYearBuilt(coordinates)
+        const renter = digService.digForRenter()
+        const stations = digService.digForStations()
+        const charges = digService.digForCharges()
+        const hasCharges = digService.digForHasCharges()
 
         errorEscape({
             address,

@@ -6,117 +6,85 @@ import { AddressInfo, Coordinate } from '@interfaces/shared'
 import * as addressService from '@services/address'
 import * as stationService from '@services/station'
 import * as yearBuiltService from '@services/year-built'
-import { postalCodePossibilities } from '@helpers/postal-code'
+import { AddressService } from './address';
 
-const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
+export class DigService {
+    ad: Ad = null
 
-export function digForCoordinates(ad: Ad, address: string, city: string, postalCode: string): Coordinate {
-    const coordinatesFromAddress = addressService.getCoordinate(address, { city, postalCode })
-    const coordinatesFromAd = ad.coord && ad.coord.lng && ad.coord.lat ? {
-        lng: ad.coord.lng,
-        lat: ad.coord.lat,
-    } : null
-
-    return coordinatesFromAd && coordinatesFromAd.lng.toString().length > 9 && coordinatesFromAd.lat.toString().length > 9 ?
-        coordinatesFromAd : coordinatesFromAddress != null ?
-            coordinatesFromAddress : coordinatesFromAd
-}
-
-export function digForAddress(ad: Ad): string[] {
-    let postalCode = ad.postalCode || ad.cityLabel
-        && (_digForPostalCode(ad.cityLabel) || _digForPostalCode2(ad.cityLabel))
-        || ad.title && (_digForPostalCode(ad.title) || _digForPostalCode2(ad.title))
-        || ad.description && (_digForPostalCode(ad.description) || _digForPostalCode2(ad.description))
-
-    postalCode = postalCode && postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null;
-
-    const city = ad.cityLabel && ad.cityLabel.match(/[A-Za-z]+/g) && cleanup.string(ad.cityLabel.match(/[A-Za-z]+/g)[0])
-        || (postalCode && postalCode.toString().startsWith('75') ? 'paris' : null)
-    const address = ad.address || (ad.description && _digForAddressInText(ad.description, { city, postalCode })) || (ad.title && _digForAddressInText(ad.title, { city, postalCode }))
-    return [address, postalCode, city]
-}
-
-function _digForAddressInText(text: string, { city, postalCode }: AddressInfo): string {
-    const addressRe = new RegExp(regexString('address'))
-    const addressesFromRegex = text.match(addressRe) as any
-    if (city && cleanup.string(city) === 'paris' && addressesFromRegex) {
-        const result = addressesFromRegex.flatMap(address => {
-            return addressService.getAddressInParis(address.trim().replace('bd ', 'boulevard '), { postalCode })
-        }).filter(Boolean).sort((a, b) => a.score - b.score).map(address => address.item)
-        return result && result.length ?
-            cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi) ?
-                cleanup.string(result[0].fields.l_adr) :
-                cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() :
-            addressesFromRegex[0].trim()
-    } else {
-        return addressesFromRegex && addressesFromRegex[0].trim()
+    constructor (
+        ad: Ad,
+    ) {
+        this.ad = ad;
     }
-}
 
-function _digForPostalCode(text: string): string {
-    const postalCodeRe = new RegExp(regexString('postalCode'))
-    return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
-}
+    public digForAddress(): [string, string, string, Coordinate] {
+        const addressService = new AddressService(this.ad)
 
-function _digForPostalCode2(text: string): string {
-    const postalCode2Re = new RegExp(regexString('postalCode2'))
-    const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
-    return match ? match.trim().length === 1 ? `7500${match.trim()}` : `750${match.trim()}` : null
-}
+        const postalCode = addressService.getPostalCode()
+        const city = addressService.getCity()
+        const address = addressService.getAddress()
+        const coordinates = addressService.getCoordinate()
 
-export function digForRoomCount(ad: Ad): number {
-    const roomsFromTitle = ad.title && ad.title.match(regexString('roomCount')) && ad.title.match(regexString('roomCount'))[0]
-    const roomsFromDescription = ad.description && ad.description.match(regexString('roomCount')) && ad.description.match(regexString('roomCount'))[0]
-    return (!!ad.rooms && ad.rooms) || stringToNumber(roomsFromTitle) || stringToNumber(roomsFromDescription)
-}
-
-export async function digForYearBuilt(ad: Ad, coordinates: Coordinate): Promise<number[]> {
-    const building = coordinates && coordinates.lat && coordinates.lng &&
-        await yearBuiltService.getBuilding(coordinates.lat, coordinates.lng)
-    const yearBuiltFromBuilding = building && yearBuiltService.getYearBuiltFromBuilding(building)
-
-    return ad.yearBuilt && ad.yearBuilt != null && !isNaN(ad.yearBuilt)
-        ? [+ad.yearBuilt]
-        : yearBuiltFromBuilding
-}
-
-export function digForHasFurniture(ad: Ad): boolean {
-    const furnitureFromTitle = ad.title && ad.title.match(regexString('furnished'))
-    const nonFurnitureFromTitle = ad.title && ad.title.match(regexString('nonFurnished'))
-    const furnitureFromDescription = ad.description && ad.description.match(regexString('furnished'))
-    const nonFurnitureFromDescription = ad.description && ad.description.match(regexString('nonFurnished'))
-    return ad.furnished != null
-        ? !!ad.furnished
-        : (furnitureFromDescription && furnitureFromDescription.length > 0
-            || furnitureFromTitle && furnitureFromTitle.length > 0) ? true :
-            (nonFurnitureFromDescription && nonFurnitureFromDescription.length > 0
-                || nonFurnitureFromTitle && nonFurnitureFromTitle.length > 0) ? false :
-                null
-}
-
-export function digForSurface(ad: Ad): number {
-    return ad.surface
-        || ad.title && ad.title.match(regexString('surface')) && cleanup.number(ad.title.match(regexString('surface'))[0])
-        || ad.description && ad.description.match(regexString('surface')) && cleanup.number(ad.description.match(regexString('surface'))[0])
-}
-
-export function digForPrice(ad: Ad): number {
-    return ad.price
-}
-
-export function digForRenter(ad: Ad): string {
-    return possibleBadRenter.includes(ad.renter) ? null : ad.renter
-}
-
-export function digForStations(ad: Ad): string[] {
-    const stationsFromDescription = ad?.description && stationService.getStations(ad.description) as string[]
-    return ad.stations || stationsFromDescription
-}
-
-export function digForCharges(ad: Ad): number {
-    return ad.charges || ad.description && ad.description.match(regexString('charges')) && cleanup.price(ad.description.match(regexString('charges'))[0])
-}
-
-export function digForHasCharges(ad: Ad): boolean {
-    return ad.hasCharges
+        return [address, postalCode, city, coordinates]
+    }
+    
+    public digForRoomCount(): number {
+        const roomsFromTitle = this.ad.title && this.ad.title.match(regexString('roomCount')) && this.ad.title.match(regexString('roomCount'))[0]
+        const roomsFromDescription = this.ad.description && this.ad.description.match(regexString('roomCount')) && this.ad.description.match(regexString('roomCount'))[0]
+        return (!!this.ad.rooms && this.ad.rooms) || stringToNumber(roomsFromTitle) || stringToNumber(roomsFromDescription)
+    }
+    
+    public async digForYearBuilt(coordinates: Coordinate | null): Promise<number[]> {
+        if (this.ad.yearBuilt && this.ad.yearBuilt != null && !isNaN(this.ad.yearBuilt)) {
+            return [+this.ad.yearBuilt]
+        } else {
+            const building = coordinates && coordinates.lat && coordinates.lng &&
+                await yearBuiltService.getBuilding(coordinates.lat, coordinates.lng)
+            const yearBuiltFromBuilding = building && yearBuiltService.getYearBuiltFromBuilding(building)
+    
+            return yearBuiltFromBuilding
+        }
+    }
+    
+    public digForHasFurniture(): boolean {
+        const furnitureFromTitle = this.ad.title && this.ad.title.match(regexString('furnished'))
+        const nonFurnitureFromTitle = this.ad.title && this.ad.title.match(regexString('nonFurnished'))
+        const furnitureFromDescription = this.ad.description && this.ad.description.match(regexString('furnished'))
+        const nonFurnitureFromDescription = this.ad.description && this.ad.description.match(regexString('nonFurnished'))
+        return this.ad.furnished != null
+            ? !!this.ad.furnished
+            : (furnitureFromDescription && furnitureFromDescription.length > 0
+                || furnitureFromTitle && furnitureFromTitle.length > 0) ? true :
+                (nonFurnitureFromDescription && nonFurnitureFromDescription.length > 0
+                    || nonFurnitureFromTitle && nonFurnitureFromTitle.length > 0) ? false :
+                    null
+    }
+    
+    public digForSurface(): number {
+        return this.ad.surface
+            || this.ad.title && this.ad.title.match(regexString('surface')) && cleanup.number(this.ad.title.match(regexString('surface'))[0])
+            || this.ad.description && this.ad.description.match(regexString('surface')) && cleanup.number(this.ad.description.match(regexString('surface'))[0])
+    }
+    
+    public digForPrice(): number {
+        return this.ad.price
+    }
+    
+    public digForRenter(): string {
+        const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
+        return possibleBadRenter.includes(this.ad.renter) ? null : this.ad.renter
+    }
+    
+    public digForStations(): string[] {
+        const stationsFromDescription = this.ad?.description && stationService.getStations(this.ad.description) as string[]
+        return this.ad.stations || stationsFromDescription
+    }
+    
+    public digForCharges(): number {
+        return this.ad.charges || this.ad.description?.match(regexString('charges')) && cleanup.price(this.ad.description.match(regexString('charges'))[0])
+    }
+    
+    public digForHasCharges(): boolean {
+        return this.ad.hasCharges
+    }
 }

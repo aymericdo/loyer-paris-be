@@ -37,7 +37,8 @@
     "node-cache": "^5.0.2",
     "opencage-api-client": "^0.10.0",
     "point-in-polygon": "^1.0.1",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "typescript-memoize": "^1.0.0-alpha.4"
   },
   "_moduleAliases": {
     "@helpers": "build/helpers",

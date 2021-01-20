@@ -3,6 +3,7 @@
     "target": "es5",
     "downlevelIteration": true,
     "module": "commonjs",
+    "experimentalDecorators": true,
     "lib": [
       "es6"
     ],

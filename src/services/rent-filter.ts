@@ -5,6 +5,7 @@ import * as log from '@helpers/log'
 import * as addressService from '@services/address'
 import { EncadrementItem } from '@interfaces/json-item'
 import { Coordinate } from '@interfaces/shared'
+import { DistrictService } from './district'
 
 interface DetectedInfo {
     coordinates: Coordinate
@@ -35,7 +36,8 @@ export const rentFilter = ({
         return prev
     }, [])
 
-    const districtsMatched = addressService.getDistricts(coordinates, postalCode, stations)
+    const districtService = new DistrictService(coordinates, postalCode, stations)
+    const districtsMatched = districtService.getDistricts()
     const epoqueDates = yearBuiltService.getEncadrementEpoqueDates(encadrementEpoque, yearBuilt)
 
     const rentList = rangeRents.filter((rangeRent) => {

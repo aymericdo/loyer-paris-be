@@ -1,113 +1,159 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import opencage from 'opencage-api-client'
-import inside from 'point-in-polygon'
+import * as cleanup from '@helpers/cleanup'
 import Fuse from 'fuse.js'
-import * as stationService from '@services/station'
 import { AddressInfo, Coordinate } from '@interfaces/shared'
-import { AddressItem, DistrictItem } from '@interfaces/json-item'
+import { AddressItem } from '@interfaces/json-item'
+import { postalCodePossibilities } from '@helpers/postal-code'
+import { Ad } from '@interfaces/ad'
+import { regexString } from '@helpers/regex'
+import { Memoize } from 'typescript-memoize'
 
 const parisAddresses: AddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
-const parisDistricts: DistrictItem[] = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris.json'), 'utf8'))
 
-export function getCoordinate(address: string, addressInfo: AddressInfo): Coordinate {
-    const postalCode = addressInfo?.postalCode
-    const addressInParis = getAddressInParis(address, { postalCode })
-    const result: AddressItem[] = addressInParis?.map(address => address.item)
-    return result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] }
-}
+export class AddressService {
+    ad: Ad = null
 
-// export function getCoordinateWithOpenCage(address: string, addressInfo: AddressInfo): Coordinate {
-//     const postalCode = addressInfo?.postalCode
-//     const city = addressInfo?.city
-//     return opencage.geocode({ q: `${address} ${postalCode ? postalCode : ''} ${city ? city : ''}`, countrycode: 'fr' })
-//         .then(data => {
-//             if (data.status.code == 200) {
-//                 if (data.results.length > 0) {
-//                     const place = data.results[0]
-//                     return {
-//                         lat: place.geometry.lat,
-//                         lng: place.geometry.lng,
-//                     }
-//                 }
-//             } else if (data.status.code == 402) {
-//                 console.log('hit free-trial daily limit')
-//                 console.log('become a customer: https://opencagedata.com/pricing')
-//             } else {
-//                 // other possible response codes:
-//                 // https://opencagedata.com/api#codes
-//                 console.log('error', data.status.message)
-//             }
-//         })
-//         .catch(error => {
-//             console.log('error', error.message)
-//         })
-// }
-
-export function getAddressInParis(q: string, addressInfo: AddressInfo): { item: AddressItem }[] {
-    const options = {
-        keys: ['fields.l_adr'],
-        shouldSort: true,
-        includeScore: true,
-        threshold: 0.6,
-        tokenize: true,
-        matchAllTokens: true,
+    constructor (
+        ad: Ad,
+    ) {
+        this.ad = ad;
     }
 
-    if (!q) {
-        return null
+    @Memoize()
+    getPostalCode() {
+        let postalCode = this.ad.postalCode || this.ad.cityLabel
+            && (this.digForPostalCode(this.ad.cityLabel) || this.digForPostalCode2(this.ad.cityLabel))
+            || this.ad.title && (this.digForPostalCode(this.ad.title) || this.digForPostalCode2(this.ad.title))
+            || this.ad.description && (this.digForPostalCode(this.ad.description) || this.digForPostalCode2(this.ad.description))
+    
+        return postalCode && postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null;
     }
 
-    const fuse = new Fuse(parisAddresses.filter(address => {
-        if (!(addressInfo && addressInfo.postalCode)) {
-            return true
-        }
-
-        // 75010 -> 10 75009 -> 9
-        const code = (addressInfo.postalCode.slice(-2)[0] === '0' ? addressInfo.postalCode.slice(-1) : addressInfo.postalCode.slice(-2))
-        return code ? address.fields.c_ar === +code : true
-    }), options)
-
-    const result: { item: AddressItem }[] = fuse.search(q) as any
-    return result?.length ? result : null
-}
-
-export function getDistricts(coordinates: Coordinate, postalCode: string, stations: string[]) {
-    const districtFromCoordinate = _getDistrictFromCoordinate(coordinates?.lat, coordinates?.lng)
-
-    return districtFromCoordinate ?
-        districtFromCoordinate
-        : postalCode ?
-            _getDistrictFromPostalCode(postalCode, stations)
-            :
-            {}
-}
-
-export function _getDistrictFromCoordinate(lat: number, lng: number) {
-    const district = lng && lat && parisDistricts.find(district => inside([+lng, +lat], district.fields.geom.coordinates[0]))
-    return district ? { districts: [district] } : null
-}
-
-export function _getDistrictFromPostalCode(postalCode: string, stations: string[]) {
-    if (postalCode) {
-        // 75010 -> 10  75009 -> 9
-        const code = postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2)
-
-        let stationDistricts = []
-        if (stations) {
-            stationDistricts = stations.map(station => {
-                const coord = stationService.getCoordinate(station)
-                const district = coord && parisDistricts.find(district => inside([+coord.lng, +coord.lat], district.fields.geom.coordinates[0]))
-                return district && district.fields.l_qu
-            }).filter(Boolean)
-        }
-
-        return {
-            districts: parisDistricts.filter(district => {
-                return district.fields.c_ar === +code && (stationDistricts.length ? stationDistricts.includes(district.fields.l_qu) : true)
-            })
-        }
-    } else {
-        return {}
+    @Memoize()
+    getCity() {
+        return this.ad.cityLabel?.match(/[A-Za-z]+/g) && cleanup.string(this.ad.cityLabel.match(/[A-Za-z]+/g)[0])
+            || (this.getPostalCode() && this.getPostalCode().toString().startsWith('75') ? 'paris' : null)
     }
+
+    @Memoize()
+    getAddress() {
+        const city = this.getCity()
+        const postalCode = this.getPostalCode()
+        return this.ad.address || (this.ad.description && this.digForAddressInText(this.ad.description, { city, postalCode })) || (this.ad.title && this.digForAddressInText(this.ad.title, { city, postalCode }))
+    }
+
+    getCoordinate(): Coordinate {
+        const coordinatesFromAd = this.ad.coord?.lng && this.ad.coord?.lat ? {
+            lng: this.ad.coord.lng,
+            lat: this.ad.coord.lat,
+        } : null
+
+        if (coordinatesFromAd && coordinatesFromAd.lng.toString().length > 9 && coordinatesFromAd.lat.toString().length > 9) {
+            return coordinatesFromAd
+        } else {
+            const address = this.getAddress()
+            const postalCode = this.getPostalCode()
+
+            if (address?.match(/^\d+/gi)) {
+                const addressInParis = this.getAddressInParis(address, { postalCode })
+                const result: AddressItem[] = addressInParis?.map(address => address.item)
+                const coordinatesFromAddress = result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] }
+
+                if (coordinatesFromAddress != null) {
+                    return coordinatesFromAddress
+                } else {
+                    return coordinatesFromAd
+                }
+            } else {
+                return null
+            }
+        }
+    }
+
+    private digForPostalCode(text: string): string {
+        const postalCodeRe = new RegExp(regexString('postalCode'))
+        return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
+    }
+    
+    private digForPostalCode2(text: string): string {
+        const postalCode2Re = new RegExp(regexString('postalCode2'))
+        const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
+        return match ? match.trim().length === 1 ? `7500${match.trim()}` : `750${match.trim()}` : null
+    }
+
+    private digForAddressInText(text: string, { city, postalCode }: AddressInfo): string {
+        const addressRe = new RegExp(regexString('address'))
+        const addressesFromRegex = text.match(addressRe) as any
+        if (city && cleanup.string(city) === 'paris' && addressesFromRegex) {
+            const result = addressesFromRegex.flatMap(address => {
+                return this.getAddressInParis(address.trim().replace('bd ', 'boulevard '), { postalCode })
+            }).filter(Boolean).sort((a, b) => a.score - b.score).map(address => address.item)
+            return result && result.length ?
+                cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi) ?
+                    cleanup.string(result[0].fields.l_adr) :
+                    cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() :
+                addressesFromRegex[0].trim()
+        } else {
+            return addressesFromRegex && addressesFromRegex[0].trim()
+        }
+    }
+
+    @Memoize()
+    private getAddressInParis(q: string, addressInfo: AddressInfo): { item: AddressItem }[] {
+        const options = {
+            keys: ['fields.l_adr'],
+            shouldSort: true,
+            includeScore: true,
+            threshold: 0.6,
+            tokenize: true,
+            matchAllTokens: true,
+        }
+
+        if (!q) {
+            return null
+        }
+    
+        const fuse = new Fuse(parisAddresses.filter(address => {
+            if (!(addressInfo && addressInfo.postalCode)) {
+                return true
+            }
+    
+            // 75010 -> 10 75009 -> 9
+            const code = (addressInfo.postalCode.slice(-2)[0] === '0' ? addressInfo.postalCode.slice(-1) : addressInfo.postalCode.slice(-2))
+            return code ? address.fields.c_ar === +code : true
+        }), options)
+    
+        const result: { item: AddressItem }[] = fuse.search(q) as any
+        return result?.length ? result : null
+    }
+    
+    // private function getCoordinateWithOpenCage(address: string, addressInfo: AddressInfo): Coordinate {
+    //     const postalCode = addressInfo?.postalCode
+    //     const city = addressInfo?.city
+    //     return opencage.geocode({ q: `${address} ${postalCode ? postalCode : ''} ${city ? city : ''}`, countrycode: 'fr' })
+    //         .then(data => {
+    //             if (data.status.code == 200) {
+    //                 if (data.results.length > 0) {
+    //                     const place = data.results[0]
+    //                     return {
+    //                         lat: place.geometry.lat,
+    //                         lng: place.geometry.lng,
+    //                     }
+    //                 }
+    //             } else if (data.status.code == 402) {
+    //                 console.log('hit free-trial daily limit')
+    //                 console.log('become a customer: https://opencagedata.com/pricing')
+    //             } else {
+    //                 // other possible response codes:
+    //                 // https://opencagedata.com/api#codes
+    //                 console.log('error', data.status.message)
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log('error', error.message)
+    //         })
+    // }
 }
+
+

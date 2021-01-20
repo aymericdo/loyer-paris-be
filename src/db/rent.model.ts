@@ -22,7 +22,7 @@ const schema = new Schema({
     stations: { type: [String], required: false, default: undefined },
 })
 
-schema.index({ id: 1, website: 1 }, { unique: true })
+schema.index({ id: 1, website: 1, priceExcludingCharges: 1 }, { unique: true })
 
 schema.set('toJSON', { virtuals: true })
 
