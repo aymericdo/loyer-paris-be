@@ -11,7 +11,7 @@ const schema = new Schema({
     latitude: { type: String, required: false },
     hasFurniture: { type: Boolean, required: false },
     roomCount: { type: Number, required: false },
-    yearBuilt: { type: [Number], required: false },
+    yearBuilt: { type: [Number], required: false, default: undefined },
     price: { type: Number, required: false },
     priceExcludingCharges: { type: Number, required: false },
     surface: { type: Number, required: false },
