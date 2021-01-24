@@ -1,5 +1,5 @@
 import { Rent } from './db'
-import { DataBaseItem } from '@interfaces/shared'
+import { DataBaseItem } from '@interfaces/database-item'
 
 export async function getMapData(): Promise<{ isLegal: boolean, latitude: number, longitude: number }[]> {
     return await Rent.find({ latitude: { $exists: true }, longitude: { $exists: true } }, { isLegal: 1, latitude: 1, longitude: 1 }, (err: Error, rents: { isLegal: boolean, latitude: number, longitude: number }[]) => {

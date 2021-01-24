@@ -1,11 +1,12 @@
-import { subCharges } from '@helpers/charges'
+import { getPriceExcludingCharges } from '@helpers/charges'
 import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { Ad, CleanAd } from '@interfaces/ad'
 import { EncadrementItem } from '@interfaces/json-item'
 import { Mapping } from '@interfaces/mapping'
+import { ApiError } from '@interfaces/shared'
+import { ApiErrorsService, ErrorCode } from '@services/api-errors'
 import { DigService } from '@services/dig'
-import { ErrorService } from '@services/error-escape'
 import { RentFilterService } from '@services/filter-rent'
 import { SaveRentService } from '@services/save-rent'
 import { SerializeRentService } from '@services/serialize-rent'
@@ -13,11 +14,9 @@ import { Response } from 'express'
 
 export abstract class Website {
     website: string = null
-    id: string = null
     body: Mapping = null
 
-    constructor(props) {
-        this.id = props.id
+    constructor(props: { body: Mapping }) {
         this.body = props.body
     }
 
@@ -26,12 +25,12 @@ export abstract class Website {
             .then((data) => {
                 res.json(data)
             })
-            .catch((err) => {
-                console.log(err)
-                if (err.status) {
-                    res.status(err.status).json(err)
+            .catch((err: ApiError) => {
+                if (err.error) {
+                    const status = ApiErrorsService.getStatus(err)
+                    res.status(status).json(err)
                 } else {
-                    log.error('Error 500')
+                    log.error('ERROR 500')
                     res.status(500).json(err)
                 }
             })
@@ -40,21 +39,19 @@ export abstract class Website {
     abstract mapping(): Promise<Ad>
 
     async digData() {
-        if (this.body && this.body.noMoreData) {
-            ErrorService.noMoreData()
-        }
-
         const ad: Ad = await this.mapping()
 
-        const cleanAd: CleanAd = await new DigService(ad).digInAd()
+        if (!this.body || this.body.noMoreData) {
+            throw { error: ErrorCode.Minimal, msg: 'no more data' }
+        }
 
-        ErrorService.errorEscape(cleanAd)
+        const cleanAd: CleanAd = await new DigService(ad).digInAd()
 
         const adEncadrement: EncadrementItem = new RentFilterService(cleanAd).filter()
 
         if (adEncadrement) {
             const maxAuthorized = roundNumber(+adEncadrement.fields.max * cleanAd.surface)
-            const priceExcludingCharges = subCharges(cleanAd.price, cleanAd.charges, cleanAd.hasCharges)
+            const priceExcludingCharges = getPriceExcludingCharges(cleanAd.price, cleanAd.charges, cleanAd.hasCharges)
             const isLegal = priceExcludingCharges <= maxAuthorized
 
             await new SaveRentService({
@@ -74,8 +71,7 @@ export abstract class Website {
                 priceExcludingCharges,
             }, adEncadrement).serialize()
         } else {
-            log.error('no match found')
-            throw { status: 403, msg: 'no match found', error: 'address' }
+            throw { error: ErrorCode.Filter, msg: 'no match found' }
         }
     }
 }

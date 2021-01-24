@@ -3,10 +3,10 @@ import { regexString } from '@helpers/regex'
 import { stringToNumber } from '@helpers/string-to-number'
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
-import * as stationService from '@services/station'
 import { StationService } from '@services/station'
 import { YearBuiltService } from '@services/year-built'
-import { AddressService } from './address';
+import { AddressService } from './address'
+import { ErrorCode } from './api-errors'
 
 export class DigService {
     ad: Ad = null
@@ -14,7 +14,7 @@ export class DigService {
     constructor (
         ad: Ad,
     ) {
-        this.ad = ad;
+        this.ad = ad
     }
 
     async digInAd(): Promise<CleanAd> {
@@ -55,6 +55,14 @@ export class DigService {
         const address = addressService.getAddress()
         const coordinates = addressService.getCoordinate()
 
+        if (!address && !postalCode && !coordinates) {
+            throw { error: ErrorCode.Address, msg: 'address not found' }
+        }
+
+        if (city !== 'paris') {
+            throw { error: ErrorCode.City, msg: 'city not found in the list' }
+        }
+
         return [address, postalCode, city, coordinates]
     }
 
@@ -91,12 +99,26 @@ export class DigService {
     }
 
     private digForSurface(): number {
-        return this.ad.surface
+        const surface = this.ad.surface
             || this.ad.title && this.ad.title.match(regexString('surface')) && cleanup.number(this.ad.title.match(regexString('surface'))[0])
             || this.ad.description && this.ad.description.match(regexString('surface')) && cleanup.number(this.ad.description.match(regexString('surface'))[0])
+
+        if (!surface) {
+            throw { error: ErrorCode.Minimal, msg: 'surface not found' }
+        }
+
+        return surface
     }
 
     private digForPrice(): number {
+        if (!this.ad.price) {
+            throw { error: ErrorCode.Minimal, msg: 'price not found' }
+        } else if (this.ad.price > 10000) {
+            throw { error: ErrorCode.Price, msg: 'too expensive to be a rent' }
+        } else if (this.ad.price < 100) {
+            throw { error: ErrorCode.Price, msg: 'too cheap to be a rent' }
+        }
+
         return this.ad.price
     }
 

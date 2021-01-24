@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as cleanup from '@helpers/cleanup'
 import Fuse from 'fuse.js'
-import { AddressInfo, Coordinate } from '@interfaces/shared'
+import { Coordinate } from '@interfaces/shared'
 import { AddressItem } from '@interfaces/json-item'
 import { postalCodePossibilities } from '@helpers/postal-code'
 import { Ad } from '@interfaces/ad'
@@ -11,13 +11,17 @@ import { Memoize } from 'typescript-memoize'
 
 const parisAddresses: AddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
 
+interface AddressInfo {
+    postalCode: string
+    city?: string
+}
 export class AddressService {
     ad: Ad = null
 
     constructor (
         ad: Ad,
     ) {
-        this.ad = ad;
+        this.ad = ad
     }
 
     @Memoize()
@@ -27,7 +31,7 @@ export class AddressService {
             || this.ad.title && (this.digForPostalCode(this.ad.title) || this.digForPostalCode2(this.ad.title))
             || this.ad.description && (this.digForPostalCode(this.ad.description) || this.digForPostalCode2(this.ad.description))
     
-        return postalCode && postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null;
+        return postalCode && postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
     }
 
     @Memoize()
@@ -49,26 +53,25 @@ export class AddressService {
             lat: this.ad.coord.lat,
         } : null
 
-        if (coordinatesFromAd && coordinatesFromAd.lng.toString().length > 9 && coordinatesFromAd.lat.toString().length > 9) {
+        if (coordinatesFromAd?.lng.toString().length > 9 && coordinatesFromAd?.lat.toString().length > 9) {
             return coordinatesFromAd
         } else {
             const address = this.getAddress()
             const postalCode = this.getPostalCode()
 
+            // Try to find coord if the address precision is good enough (with number)
             if (address?.match(/^\d+/gi)) {
-                const addressInParis = this.getAddressInParis(address, { postalCode })
-                const result: AddressItem[] = addressInParis?.map(address => address.item)
-                const coordinatesFromAddress = result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] }
-
-                if (coordinatesFromAddress != null) {
-                    return coordinatesFromAddress
-                } else {
-                    return coordinatesFromAd
-                }
+                return this.coordinateFromAddress(address, postalCode) || coordinatesFromAd
             } else {
-                return null
+                return coordinatesFromAd
             }
         }
+    }
+
+    coordinateFromAddress(address: string, postalCode: string) {
+        const addressInParis = this.getAddressInParis(address, { postalCode })
+        const result: AddressItem[] = addressInParis?.map(address => address.item)
+        return result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] }
     }
 
     private digForPostalCode(text: string): string {
@@ -93,7 +96,7 @@ export class AddressService {
                 cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi) ?
                     cleanup.string(result[0].fields.l_adr) :
                     cleanup.string(result[0].fields.l_adr).replace(/^\d+/gi, "").trim() :
-                addressesFromRegex[0].trim()
+                null
         } else {
             return addressesFromRegex && addressesFromRegex[0].trim()
         }
@@ -105,7 +108,7 @@ export class AddressService {
             keys: ['fields.l_adr'],
             shouldSort: true,
             includeScore: true,
-            threshold: 0.6,
+            threshold: 0.5,
             tokenize: true,
             matchAllTokens: true,
         }

@@ -1,9 +1,10 @@
 import 'module-alias/register'
 import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
-import * as log from '@helpers/log'
+import dotenv from 'dotenv'
 import * as Sentry from '@sentry/node'
 const app = express()
+dotenv.config()
 
 app.use(cors())
 app.use(express.json({
@@ -11,14 +12,12 @@ app.use(express.json({
 }))
 
 app.use('/', function (req: Request, res: Response, next: NextFunction) {
-    const isStats = req.url.split('/') && req.url.split('/')[1] === 'stats'
-    log.apiHit(isStats)
     next()
 })
 
 app.use('/seloger', require('./websites/seloger/seloger.controller'))
 app.use('/leboncoin', require('./websites/leboncoin/leboncoin.controller'))
-app.use('/loueragile', require('./websites/loueragile/loueragile.controller'))
+app.use('/jinka', require('./websites/loueragile/loueragile.controller'))
 app.use('/pap', require('./websites/pap/pap.controller'))
 app.use('/logic-immo', require('./websites/logicimmo/logicimmo.controller'))
 app.use('/lefigaro', require('./websites/lefigaro/lefigaro.controller'))

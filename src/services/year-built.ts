@@ -40,7 +40,7 @@ export class YearBuiltService {
         })
     }
     
-    static async getBuilding(lat, lng) {
+    static async getBuilding(lat: number, lng: number) {
         return await EmpriseBatie.findOne({
             geometry: {
                 $near: {

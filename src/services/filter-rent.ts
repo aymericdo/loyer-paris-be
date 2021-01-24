@@ -3,13 +3,15 @@ import * as path from 'path'
 import * as log from '@helpers/log'
 import { EncadrementItem } from '@interfaces/json-item'
 import { DistrictService } from './district'
-import { CleanAd } from '@interfaces/ad'
+import { Ad, CleanAd } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
+import { AddressService } from './address'
+import { Coordinate } from '@interfaces/shared'
 
 const rangeRents: EncadrementItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements.json'), 'utf8'))
 
 export class RentFilterService {
-    cleanAd: CleanAd = null;
+    cleanAd: CleanAd = null
     
     constructor(
         cleanAd: CleanAd,
@@ -20,20 +22,24 @@ export class RentFilterService {
     filter(): EncadrementItem {
         log.info('rent filter start')
 
-        const rangeTime = rangeRents.reduce((prev, rent) => {
-            if (!prev.includes(rent.fields.epoque)) {
-                prev.push(rent.fields.epoque)
-            }
-    
-            return prev
-        }, [])
-    
-        const districtsMatched = new DistrictService(this.cleanAd.coordinates, this.cleanAd.postalCode, this.cleanAd.stations).getDistricts()
+        // Extract possible range time from rangeRents (json-data/encadrements.json)
+        const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Apres 1990']
+
+        const currentCoordinates: Coordinate = this.cleanAd.coordinates ?
+            this.cleanAd.coordinates
+        :
+            // approximate coordinates
+            new AddressService({
+                ...this.cleanAd,
+                yearBuilt: null,
+            } as Ad).coordinateFromAddress(this.cleanAd.address, this.cleanAd.postalCode)
+
+        const districtsMatched = new DistrictService(currentCoordinates, this.cleanAd.postalCode, this.cleanAd.stations).getDistricts()
         const timeDates = YearBuiltService.getRangeTimeDates(rangeTime, this.cleanAd.yearBuilt)
     
         const rentList = rangeRents.filter((rangeRent) => {
-            return (districtsMatched.districts && districtsMatched.districts.filter(Boolean).length ? districtsMatched.districts.map(district => district.fields.c_qu).includes(rangeRent.fields.id_quartier) : true)
-                && (timeDates && timeDates.length ? timeDates.includes(rangeRent.fields.epoque) : true)
+            return (districtsMatched.map(district => district.fields.c_qu).includes(rangeRent.fields.id_quartier))
+                && (timeDates?.length ? timeDates.includes(rangeRent.fields.epoque) : true)
                 && (this.cleanAd.roomCount ? +this.cleanAd.roomCount < 5 ? rangeRent.fields.piece === +this.cleanAd.roomCount : rangeRent.fields.piece === 4 : true)
                 && (this.cleanAd.hasFurniture != null ? this.cleanAd.hasFurniture ? rangeRent.fields.meuble_txt.match(/^meubl/g) : rangeRent.fields.meuble_txt.match(/^non meubl/g) : true)
         })

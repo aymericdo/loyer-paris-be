@@ -20,4 +20,4 @@ export const postalCodePossibilities = [
   '75018',
   '75019',
   '75020',
-];
+]

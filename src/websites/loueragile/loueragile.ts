@@ -1,12 +1,19 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import axios from 'axios'
-import { LoueragileMapping } from '@interfaces/mapping'
+import { LoueragileMapping, Mapping } from '@interfaces/mapping'
 import { Website } from '../website'
 import * as log from '@helpers/log'
+import { ErrorCode } from '@services/api-errors'
 
 export class LouerAgile extends Website {
     website = 'loueragile'
+    id: string = null
+
+    constructor(props: { body: Mapping, id: string }) {
+        super(props)
+        this.id = props.id
+    }
 
     async mapping(): Promise<Ad> {
         await this.fetching()
@@ -35,17 +42,16 @@ export class LouerAgile extends Website {
 
     private async fetching(): Promise<void> {
         if (!cleanup.number(this.id)) {
-            throw { status: 403, msg: 'no address found', error: 'address' }
+            throw { error: ErrorCode.Minimal, msg: 'jinka id not found' }
         }
 
         try {
-            const response = await axios.get(`https://www.loueragile.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${this.id}`)
+            const response = await axios.get(`https://api.jinka.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${this.id}`)
             log.info('loueragile fetched')
             const data = response.data
             this.body = data
         } catch (error) {
-            log.error('l\'api de loueragile bug')
-            throw { status: 403, msg: 'l\'api de loueragile bug', error: 'api' }
+            throw { error: ErrorCode.Partner, msg: 'jinka not responding' }
         }
     }
 }

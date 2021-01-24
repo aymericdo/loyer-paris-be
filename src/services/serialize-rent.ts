@@ -65,10 +65,9 @@ export class SerializeRentService {
                 roomCount: { order: 2, value: +this.encadrementItem.fields.piece },
                 surface: { order: 3, value: surface },
                 dateRange: { order: 4, value: this.encadrementItem.fields.epoque },
-                min: { order: 5, value: roundNumber(+this.encadrementItem.fields.min) },
-                max: { order: 6, value: roundNumber(+this.encadrementItem.fields.max) },
-                maxAuthorized: { order: 7, value: maxAuthorized },
-                promoPercentage: { order: 8, value: !isLegal ? roundNumber(100 - (maxAuthorized * 100 / priceExcludingCharges)) : null },
+                max: { order: 5, value: !isLegal ? roundNumber(+this.encadrementItem.fields.max): null },
+                maxAuthorized: { order: 6, value: !isLegal ? maxAuthorized : null },
+                promoPercentage: { order: 7, value: !isLegal ? roundNumber(100 - (maxAuthorized * 100 / priceExcludingCharges)) : null },
             },
             isLegal,
         }

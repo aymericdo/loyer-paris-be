@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as cleanup from '@helpers/cleanup'
 import { MetroItem } from '@interfaces/json-item'
 import { Coordinate } from '@interfaces/shared'
-const Fuse = require('fuse.js')
+import Fuse from 'fuse.js'
 
 const parisStations: MetroItem[] = JSON.parse(fs.readFileSync(path.join('json-data/metros_paris.json'), 'utf8'))
 

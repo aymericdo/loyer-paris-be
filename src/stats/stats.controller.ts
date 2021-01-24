@@ -3,12 +3,12 @@ import * as fs from 'fs'
 import * as path from 'path'
 import axios from 'axios'
 import * as rentService from '../db/rent.service'
-import { DataBaseItem } from '@interfaces/shared'
+import { DataBaseItem } from '@interfaces/database-item'
 import { groupBy } from '@helpers/group-by'
-import * as ip from '@helpers/ip'
 import * as log from '@helpers/log'
 import { vegaCommonOpt } from '@helpers/vega'
 import { postalCodePossibilities } from '@helpers/postal-code'
+import { IpService } from '../services/ip'
 const router = express.Router()
 
 const parisGeodata = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'))
@@ -20,10 +20,12 @@ interface RentRequest extends Request {
 router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
   const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
 
-  if (ip.isIpCached(ip.getIp(req))) {
+  const ipService = new IpService(req)
+
+  if (ipService.isIpCached()) {
     next()
   } else {
-    ip.saveIp(ip.getIp(req))
+    ipService.saveIp()
     axios.post(url, {}, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"

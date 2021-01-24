@@ -30,7 +30,7 @@ export interface LeboncoinMapping {
     cityLabel: string
     body: string
     furnished: string
-    hasCharges: string
+    hasCharges: boolean
     price: string
     renter: string
     rooms: string

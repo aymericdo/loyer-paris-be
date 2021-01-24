@@ -1,5 +1,6 @@
-const clc = require('cli-color')
-const Sentry = require('@sentry/node')
+import clc from 'cli-color'
+import * as Sentry from '@sentry/node';
+import { Severity } from '@sentry/node';
 
 export const info = (message: string, color?: string) => {
     const date = new Date()
@@ -17,15 +18,9 @@ export const info = (message: string, color?: string) => {
 
 export const error = (message: string, color?: string) => {
     info(message, color)
-    Sentry.captureMessage(message)
-}
-
-export const apiHit = (isStats: boolean) => {
-    const message = `api hit ${isStats ? 'stats' : 'extension'}`
-    Sentry.captureMessage(message, 'info')
+    Sentry.captureMessage(message, Severity.Error)
 }
 
 export const priceHasChanged = () => {
-    const message = 'price has changed'
-    Sentry.captureMessage(message, 'info')
+    Sentry.captureMessage('price has changed', Severity.Info)
 }
