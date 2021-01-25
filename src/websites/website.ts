@@ -39,11 +39,11 @@ export abstract class Website {
     abstract mapping(): Promise<Ad>
 
     async digData() {
-        const ad: Ad = await this.mapping()
-
         if (!this.body || this.body.noMoreData) {
             throw { error: ErrorCode.Minimal, msg: 'no more data' }
         }
+
+        const ad: Ad = await this.mapping()
 
         const cleanAd: CleanAd = await new DigService(ad).digInAd()
 

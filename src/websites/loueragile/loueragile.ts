@@ -50,6 +50,10 @@ export class LouerAgile extends Website {
             log.info('loueragile fetched')
             const data = response.data
             this.body = data
+
+            if (!this.body) {
+                throw { error: ErrorCode.Minimal, msg: 'no more data' }
+            }
         } catch (error) {
             throw { error: ErrorCode.Partner, msg: 'jinka not responding' }
         }
