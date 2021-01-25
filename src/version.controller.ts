@@ -3,7 +3,7 @@ const router = express.Router()
 
 router.get('/', getIsExtensionUpToDate)
 function getIsExtensionUpToDate(req: Request, res: Response, next: NextFunction) {
-    const currentVersion = '5.1.0'
+    const currentVersion = '5.1.0' // should be 5.1.1 when chrome web store will be unlock
     const version = req.query.version
     res.json(currentVersion > version)
 }
