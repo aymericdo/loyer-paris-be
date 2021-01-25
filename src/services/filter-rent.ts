@@ -3,10 +3,8 @@ import * as path from 'path'
 import * as log from '@helpers/log'
 import { EncadrementItem } from '@interfaces/json-item'
 import { DistrictService } from './district'
-import { Ad, CleanAd } from '@interfaces/ad'
+import { CleanAd } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
-import { AddressService } from './address'
-import { Coordinate } from '@interfaces/shared'
 
 const rangeRents: EncadrementItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements.json'), 'utf8'))
 
@@ -25,16 +23,12 @@ export class RentFilterService {
         // Extract possible range time from rangeRents (json-data/encadrements.json)
         const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Apres 1990']
 
-        const currentCoordinates: Coordinate = this.cleanAd.coordinates ?
-            this.cleanAd.coordinates
-        :
-            // approximate coordinates
-            new AddressService({
-                ...this.cleanAd,
-                yearBuilt: null,
-            } as Ad).coordinateFromAddress(this.cleanAd.address, this.cleanAd.postalCode)
+        const districtsMatched = new DistrictService(
+            this.cleanAd.coordinates || this.cleanAd.blurryCoordinates,
+            this.cleanAd.postalCode,
+            this.cleanAd.stations
+        ).getDistricts()
 
-        const districtsMatched = new DistrictService(currentCoordinates, this.cleanAd.postalCode, this.cleanAd.stations).getDistricts()
         const timeDates = YearBuiltService.getRangeTimeDates(rangeTime, this.cleanAd.yearBuilt)
     
         const rentList = rangeRents.filter((rangeRent) => {

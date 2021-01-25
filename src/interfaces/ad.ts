@@ -30,6 +30,7 @@ export interface CleanAd {
     postalCode: string
     city?: string
     coordinates?: Coordinate
+    blurryCoordinates?: Coordinate
     yearBuilt?: number[]
     renter?: string
     stations?: string[]

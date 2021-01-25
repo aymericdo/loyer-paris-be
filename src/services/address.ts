@@ -47,7 +47,7 @@ export class AddressService {
         return this.ad.address || (this.ad.description && this.digForAddressInText(this.ad.description, { city, postalCode })) || (this.ad.title && this.digForAddressInText(this.ad.title, { city, postalCode }))
     }
 
-    getCoordinate(): Coordinate {
+    getCoordinate(blurry = false): Coordinate {
         const coordinatesFromAd = this.ad.coord?.lng && this.ad.coord?.lat ? {
             lng: this.ad.coord.lng,
             lat: this.ad.coord.lat,
@@ -60,7 +60,7 @@ export class AddressService {
             const postalCode = this.getPostalCode()
 
             // Try to find coord if the address precision is good enough (with number)
-            if (address?.match(/^\d+/gi)) {
+            if (blurry || address?.match(/^\d+/gi)) {
                 return this.coordinateFromAddress(address, postalCode) || coordinatesFromAd
             } else {
                 return coordinatesFromAd

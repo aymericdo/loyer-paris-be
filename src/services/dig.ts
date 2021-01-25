@@ -22,7 +22,7 @@ export class DigService {
         const hasFurniture = this.digForHasFurniture()
         const surface = this.digForSurface()
         const price = this.digForPrice()
-        const [address, postalCode, city, coordinates] = this.digForAddress()
+        const [address, postalCode, city, coordinates, blurryCoordinates] = this.digForAddress()
         const yearBuilt = await this.digForYearBuilt(coordinates)
         const renter = this.digForRenter()
         const stations = this.digForStations()
@@ -39,6 +39,7 @@ export class DigService {
             postalCode,
             city,
             coordinates,
+            blurryCoordinates,
             yearBuilt,
             renter,
             stations,
@@ -47,13 +48,14 @@ export class DigService {
         }
     }
 
-    private digForAddress(): [string, string, string, Coordinate] {
+    private digForAddress(): [string, string, string, Coordinate, Coordinate] {
         const addressService = new AddressService(this.ad)
 
         const postalCode = addressService.getPostalCode()
         const city = addressService.getCity()
         const address = addressService.getAddress()
         const coordinates = addressService.getCoordinate()
+        const blurryCoordinates = addressService.getCoordinate(true)
 
         if (!address && !postalCode && !coordinates) {
             throw { error: ErrorCode.Address, msg: 'address not found' }
@@ -63,7 +65,7 @@ export class DigService {
             throw { error: ErrorCode.City, msg: 'city not found in the list' }
         }
 
-        return [address, postalCode, city, coordinates]
+        return [address, postalCode, city, coordinates, blurryCoordinates]
     }
 
     private digForRoomCount(): number {
