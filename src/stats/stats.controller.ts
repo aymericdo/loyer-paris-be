@@ -272,6 +272,54 @@ function getAdoptionRate(req: RentRequest, res: Response, next: NextFunction) {
     })
 }
 
+router.get('/price-variation', (req: RentRequest, res: Response, next: NextFunction) => {
+  log.info(`-> ${req.baseUrl} priceVariation`, 'blue')
+
+  rentService.getPriceDiffData()
+    .then((data) => {
+
+      const vegaMap = {
+        ...vegaCommonOpt(),
+        data: {
+          values: data,
+        },
+        mark: { type: 'area' , color: '#f03434', tooltip: true},
+        transform: [
+          {filter: 'datum.priceExcludingCharges > datum.maxPrice'},
+          {
+            calculate: 'datum.priceExcludingCharges - datum.maxPrice',
+            as: 'priceDifference'
+          }
+        ],
+        encoding: {
+          y: {
+            aggregate: 'median',
+            field: 'priceDifference',
+            type: 'quantitative',
+            title: 'Différence de prix médiane'
+          },
+          x: {
+            field: 'createdAt',
+            title: 'Date',
+            type: 'temporal',
+            timeUnit: 'yearmonth'
+          }
+        },
+      }
+
+      res.json(vegaMap)
+    })
+    .catch((err) => {
+      console.log(err)
+      if (err.status) {
+        res.status(err.status).json(err)
+      } else {
+        log.error('Error 500')
+        res.status(500).json(err)
+      }
+    })
+})
+
 router.get('/welcome', getWelcomeText)
 function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
@@ -283,7 +331,7 @@ function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
       const isIllegalPercentage = Math.round(100 * rents.filter(rent => !rent.isLegal).length / rents.length)
       const lessThan35SquareMeters = rents.filter(rent => rent.surface < 35)
       const isSmallSurfaceIllegalPercentage = Math.round(100 * lessThan35SquareMeters.filter(rent => !rent.isLegal).length / lessThan35SquareMeters.length)
-      const postalCodeGroupedRents = groupBy(rents, "postalCode")
+      const postalCodeGroupedRents = groupBy(rents, 'postalCode')
       const extremePostalCode = getExtremePostalCode(postalCodeGroupedRents)
       const worstPostalCode = extremePostalCode[0]
       const bestPostalCode = extremePostalCode[1]
