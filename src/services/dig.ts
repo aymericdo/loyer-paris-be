@@ -62,7 +62,7 @@ export class DigService {
         }
 
         if (city !== 'paris') {
-            throw { error: ErrorCode.City, msg: 'city not found in the list' }
+            throw { error: ErrorCode.City, msg: `city "${city}" not found in the list` }
         }
 
         return [address, postalCode, city, coordinates, blurryCoordinates]
@@ -116,9 +116,9 @@ export class DigService {
         if (!this.ad.price) {
             throw { error: ErrorCode.Minimal, msg: 'price not found' }
         } else if (this.ad.price > 10000) {
-            throw { error: ErrorCode.Price, msg: 'too expensive to be a rent' }
+            throw { error: ErrorCode.Price, msg: `price "${this.ad.price}" too expensive to be a rent` }
         } else if (this.ad.price < 100) {
-            throw { error: ErrorCode.Price, msg: 'too cheap to be a rent' }
+            throw { error: ErrorCode.Price, msg:  `price "${this.ad.price}" too cheap to be a rent` }
         }
 
         return this.ad.price
