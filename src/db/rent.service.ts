@@ -19,6 +19,15 @@ export async function getPriceDiffData(): Promise<{ maxPrice: number, postalCode
     })
 }
 
+export async function getPriceVarData(): Promise<{ maxPrice: number, postalCode: string, priceExcludingCharges: number }[]> {
+    return await Rent.find({ createdAt: { $exists: true } }, { createdAt: 1, maxPrice: 1, priceExcludingCharges: 1 }, (err: Error, rents: { createdAt: string, maxPrice: number, priceExcludingCharges: number }[]) => {
+        if (err) {
+            throw err
+        }
+        return rents
+    })
+}
+
 export async function getLegalPerSurfaceData(): Promise<{ isLegal: boolean, surface: number }[]> {
     return await Rent.find({ surface: { $lte: 100 } }, { isLegal: 1, surface: 1 }, (err: Error, rents: { isLegal: boolean, surface: number }[]) => {
         if (err) {

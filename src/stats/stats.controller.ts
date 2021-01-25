@@ -275,7 +275,7 @@ function getAdoptionRate(req: RentRequest, res: Response, next: NextFunction) {
 router.get('/price-variation', (req: RentRequest, res: Response, next: NextFunction) => {
   log.info(`-> ${req.baseUrl} priceVariation`, 'blue')
 
-  rentService.getPriceDiffData()
+  rentService.getPriceVarData()
     .then((data) => {
 
       const vegaMap = {
@@ -302,7 +302,7 @@ router.get('/price-variation', (req: RentRequest, res: Response, next: NextFunct
             field: 'createdAt',
             title: 'Date',
             type: 'temporal',
-            timeUnit: 'yearmonth'
+            timeUnit: 'yearweek'
           }
         },
       }
