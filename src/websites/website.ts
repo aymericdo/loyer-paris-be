@@ -39,7 +39,7 @@ export abstract class Website {
     abstract mapping(): Promise<Ad>
 
     async digData() {
-        if (!this.body || this.body.noMoreData) {
+        if (this.body?.noMoreData) {
             throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}` }
         }
 
