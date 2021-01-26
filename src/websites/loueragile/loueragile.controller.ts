@@ -4,10 +4,11 @@ import * as log from '@helpers/log'
 import { LouerAgile } from './loueragile'
 
 // routes
-router.get('/', getById)
-function getById(req: Request, res: Response, next: NextFunction) {
-    log.info(`-> ${req.baseUrl}/${req.query.id} getById`, 'blue')
-    const loueragile = new LouerAgile({ body: null, id: req.query.id as string })
+router.post('/data', getByData)
+function getByData(req: Request, res: Response, next: NextFunction) {
+    log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
+
+    const loueragile = new LouerAgile({ body: req.body, id: req.body.id as string })
     loueragile.analyse(res)
 }
 

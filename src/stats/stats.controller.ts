@@ -25,7 +25,6 @@ router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
   if (ipService.isIpCached()) {
     next()
   } else {
-    ipService.saveIp()
     axios.post(url, {}, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
@@ -36,6 +35,8 @@ router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
           return res.status(500).json({
             message: response.data["error-codes"].join("."),
           })
+        } else {
+          ipService.saveIp()
         }
 
         next()
@@ -138,14 +139,14 @@ function getPriceDifference(req: RentRequest, res: Response, next: NextFunction)
               "postalCode"
             ],
           },
-          { filter: { field: "countOfPostalCode", gte: 5 } },
+          { filter: 'datum.isLegal === false' },
         ],
         encoding: {
           x: {
             aggregate: "mean",
             field: "priceDifference",
             type: "quantitative",
-            title: "Différence de prix moyenne",
+            title: "Différence moyenne entre le prix appliqué et le prix maximum (annonces illégales)",
           },
           y: {
             field: "postalCode",
@@ -285,7 +286,7 @@ router.get('/price-variation', (req: RentRequest, res: Response, next: NextFunct
         },
         mark: { type: 'area' , color: '#f03434', tooltip: true },
         transform: [
-          { filter: 'datum.priceExcludingCharges > datum.maxPrice' },
+          { filter: 'datum.isLegal === false' },
           {
             calculate: 'datum.priceExcludingCharges - datum.maxPrice',
             as: 'priceDifference'
@@ -293,10 +294,10 @@ router.get('/price-variation', (req: RentRequest, res: Response, next: NextFunct
         ],
         encoding: {
           y: {
-            aggregate: 'median',
+            aggregate: "median",
             field: 'priceDifference',
             type: 'quantitative',
-            title: 'Différence de prix médiane'
+            title: 'Différence entre prix théorique et prix pratiqué en €'
           },
           x: {
             field: 'createdAt',
@@ -305,6 +306,90 @@ router.get('/price-variation', (req: RentRequest, res: Response, next: NextFunct
             timeUnit: 'yearweek'
           }
         },
+      }
+
+      res.json(vegaMap)
+    })
+    .catch((err) => {
+      console.log(err)
+      if (err.status) {
+        res.status(err.status).json(err)
+      } else {
+        log.error('Error 500')
+        res.status(500).json(err)
+      }
+    })
+})
+
+router.get('/is-legal-variation', (req: RentRequest, res: Response, next: NextFunction) => {
+  log.info(`-> ${req.baseUrl} isLegalVariation`, 'blue')
+
+  rentService.getPriceVarData()
+    .then((data) => {
+
+      const vegaMap = {
+        ...vegaCommonOpt(),
+        data: {
+          values: data,
+        },
+        transform: [
+          { timeUnit: "yearweek", field: "createdAt", as: "date" },
+          {
+            joinaggregate: [{
+              op: "count",
+              field: "id",
+              as: "NumberAds"
+            }],
+            groupby: [
+              "date"
+            ]
+          },
+          { filter: "datum.isLegal === false" },
+          {
+            joinaggregate: [{
+              op: "count",
+              field: "isLegal",
+              as: "NumberIllegal"
+            }],
+            groupby: [
+              "date"
+            ]
+          },
+          { calculate: "datum.NumberIllegal / datum.NumberAds * 100", as: "PercentOfTotal" },
+        ],
+        layer: [
+          {
+            mark: {
+              type: "area",
+              color: "#f03434",
+              tooltip: true
+            },
+            encoding: {
+              y: {
+                field: "PercentOfTotal",
+                type: "quantitative",
+                title: "Pourcentage"
+              },
+              x: {
+                field: "date",
+                title: "Date",
+                type: "temporal"
+              }
+            }
+          },
+          {
+            mark: { type: "line", color: "#fdcd56" },
+            transform: [{ loess: "PercentOfTotal", on: "date" }],
+            encoding: {
+              y: {
+                field: "PercentOfTotal", type: "quantitative"
+              },
+              x: {
+                field: "date", title: "Date", type: "temporal"
+              }
+            }
+          }
+        ]
       }
 
       res.json(vegaMap)

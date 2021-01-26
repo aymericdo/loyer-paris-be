@@ -40,7 +40,7 @@ export abstract class Website {
 
     async digData() {
         if (this.body?.noMoreData) {
-            throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}` }
+            throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}/${this.body.platform}` }
         }
 
         const ad: Ad = await this.mapping()

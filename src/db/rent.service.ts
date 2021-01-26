@@ -11,7 +11,7 @@ export async function getMapData(): Promise<{ isLegal: boolean, latitude: number
 }
 
 export async function getPriceDiffData(): Promise<{ maxPrice: number, postalCode: string, priceExcludingCharges: number }[]> {
-    return await Rent.find({ postalCode: { $exists: true } }, { maxPrice: 1, postalCode: 1, priceExcludingCharges: 1 }, (err: Error, rents: { maxPrice: number, postalCode: string, priceExcludingCharges: number }[]) => {
+    return await Rent.find({ postalCode: { $exists: true } }, { maxPrice: 1, postalCode: 1, priceExcludingCharges: 1, isLegal: 1 }, (err: Error, rents: { maxPrice: number, postalCode: string, priceExcludingCharges: number, isLegal: number }[]) => {
         if (err) {
             throw err
         }
@@ -20,7 +20,7 @@ export async function getPriceDiffData(): Promise<{ maxPrice: number, postalCode
 }
 
 export async function getPriceVarData(): Promise<{ maxPrice: number, postalCode: string, priceExcludingCharges: number }[]> {
-    return await Rent.find({ createdAt: { $exists: true } }, { createdAt: 1, maxPrice: 1, priceExcludingCharges: 1 }, (err: Error, rents: { createdAt: string, maxPrice: number, priceExcludingCharges: number }[]) => {
+    return await Rent.find({ createdAt: { $exists: true } }, { createdAt: 1, maxPrice: 1, priceExcludingCharges: 1, isLegal: 1 }, (err: Error, rents: { isLegal: boolean, createdAt: string, maxPrice: number, priceExcludingCharges: number }[]) => {
         if (err) {
             throw err
         }

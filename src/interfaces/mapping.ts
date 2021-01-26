@@ -10,7 +10,7 @@ export type Mapping =
         OrpiMapping |
         PapMapping |
         SelogerMapping) &
-    { noMoreData?: boolean }
+    { noMoreData?: boolean, platform?: string }
 
 export interface FacebookMapping {
     id: number
