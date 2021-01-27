@@ -146,7 +146,7 @@ function getPriceDifference(req: RentRequest, res: Response, next: NextFunction)
             aggregate: "mean",
             field: "priceDifference",
             type: "quantitative",
-            title: "Différence moyenne entre le prix appliqué et le prix maximum (annonces illégales)",
+            title: "Différence moyenne entre prix pratiqué et prix théorique (annonces illégales)",
           },
           y: {
             field: "postalCode",
@@ -297,7 +297,7 @@ router.get('/price-variation', (req: RentRequest, res: Response, next: NextFunct
             aggregate: "median",
             field: 'priceDifference',
             type: 'quantitative',
-            title: 'Différence entre prix théorique et prix pratiqué en €'
+            title: 'Différence entre prix pratiqué et prix théorique en €'
           },
           x: {
             field: 'createdAt',
