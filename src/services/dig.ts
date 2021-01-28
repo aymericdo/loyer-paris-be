@@ -57,12 +57,12 @@ export class DigService {
         const coordinates = addressService.getCoordinate()
         const blurryCoordinates = addressService.getCoordinate(true)
 
-        if (!address && !postalCode && !coordinates) {
-            throw { error: ErrorCode.Address, msg: 'address not found' }
-        }
-
         if (city !== 'paris') {
             throw { error: ErrorCode.City, msg: `city "${city}" not found in the list` }
+        }
+
+        if (!address && !postalCode && !coordinates) {
+            throw { error: ErrorCode.Address, msg: 'address not found' }
         }
 
         return [address, postalCode, city, coordinates, blurryCoordinates]
