@@ -36,7 +36,7 @@ export class AddressService {
 
     @Memoize()
     getCity() {
-        return this.ad.cityLabel?.match(/[A-Za-z]+/g) && cleanup.string(this.ad.cityLabel.match(/[A-Za-z]+/g)[0])
+        return this.ad.cityLabel?.match(/[A-Za-z -]+/g) && cleanup.string(this.ad.cityLabel.match(/[A-Za-z -]+/g)[0])
             || (this.getPostalCode() && this.getPostalCode().toString().startsWith('75') ? 'paris' : null)
     }
 
