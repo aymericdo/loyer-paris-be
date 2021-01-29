@@ -18,7 +18,7 @@ export class SeLoger extends Website {
             furnished: ad.furnished,
             hasCharges: ad.hasCharges,
             price: cleanup.price(ad.price),
-            renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
+            renter: ad.renter ? cleanup.string(ad.renter) : null,
             rooms: cleanup.number(ad.rooms),
             surface: cleanup.number(ad.surface),
             title: cleanup.string(ad.title),
