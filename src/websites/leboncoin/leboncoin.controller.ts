@@ -7,7 +7,7 @@ import { LeBonCoin } from './leboncoin'
 router.post('/data', getByData)
 
 function getByData(req: Request, res: Response, next: NextFunction) {
-    log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
+    log.info(`-> ${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`, 'blue')
     const leboncoin = new LeBonCoin({ body: req.body })
     leboncoin.analyse(res)
 }

@@ -7,7 +7,7 @@ import { LeFigaro } from './lefigaro'
 router.post('/data', getByData)
 
 function getByData(req: Request, res: Response, next: NextFunction) {
-    log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
+    log.info(`-> ${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`, 'blue')
     const leFigaro = new LeFigaro({ body: req.body })
     leFigaro.analyse(res)
 }

@@ -47,7 +47,7 @@ export class LouerAgile extends Website {
 
         try {
             const response = await axios.get(`https://api.jinka.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${this.id}`)
-            log.info('loueragile fetched')
+            log.info('jinka fetched')
             const data = response.data
             this.body = data
 

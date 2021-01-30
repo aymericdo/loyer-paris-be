@@ -7,7 +7,7 @@ const router = express.Router()
 router.post('/data', getByData)
 
 function getByData(req: Request, res: Response, next: NextFunction) {
-    log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
+    log.info(`-> ${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`, 'blue')
     const pap = new Pap({ body: req.body })
     pap.analyse(res)
 }

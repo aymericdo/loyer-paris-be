@@ -31,7 +31,7 @@ export class SerializeRentService {
     }
 
     serialize() {
-        log.info('sending data', 'green')
+        log.info('serializing answer', 'green')
 
         const {
             address,

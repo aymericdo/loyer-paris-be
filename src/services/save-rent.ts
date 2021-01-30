@@ -55,14 +55,14 @@ export class SaveRentService {
                 ...(this.adToSave.stations != null && this.adToSave.stations.length && { stations: this.adToSave.stations }),
                 ...(this.adToSave.yearBuilt != null && this.adToSave.yearBuilt.length && { yearBuilt: this.adToSave.yearBuilt }),
             })
-            log.info('rent saver start')
+            log.info('saving ad')
             rent.save()
                 .then(() => {
-                    log.info('rent saved', 'green')
+                    log.info('ad saved', 'green')
                 })
                 .catch(err => {
                     if (err.code === 11000) {
-                        log.info('⚠️  rent already saved', 'red')
+                        log.info('⚠️  ad already saved', 'red')
                     } else {
                         console.log(err)
                     }

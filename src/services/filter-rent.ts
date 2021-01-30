@@ -18,8 +18,6 @@ export class RentFilterService {
     }
 
     filter(): EncadrementItem {
-        log.info('rent filter start')
-
         // Extract possible range time from rangeRents (json-data/encadrements.json)
         const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Apres 1990']
 
@@ -38,7 +36,6 @@ export class RentFilterService {
                 && (this.cleanAd.hasFurniture != null ? this.cleanAd.hasFurniture ? rangeRent.fields.meuble_txt.match(/^meubl/g) : rangeRent.fields.meuble_txt.match(/^non meubl/g) : true)
         })
     
-        log.info('rent filter done')
         // Get the worst case scenario
         return rentList.length ? rentList.reduce((prev, current) => (prev.fields.max > current.fields.max) ? prev : current) : null
     }

@@ -7,7 +7,7 @@ import { LogicImmo } from './logicimmo'
 router.post('/data', getByData)
 
 function getByData(req: Request, res: Response, next: NextFunction) {
-    log.info(`-> ${req.baseUrl}/${req.body.id} getByData`, 'blue')
+    log.info(`-> ${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`, 'blue')
     const logicimmo = new LogicImmo({ body: req.body })
     logicimmo.analyse(res)
 }
