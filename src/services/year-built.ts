@@ -1,32 +1,32 @@
 import { EmpriseBatie } from '@db/db'
 
 export class YearBuiltService {
-    constructor() {}
+    constructor() { }
 
     static getRangeTimeDates(rangeTime: string[], yearBuilt: number[]): string[] {
         if (!yearBuilt) {
             return null
         }
-    
+
         const oldestYear: number = 1700
         const currentYear: number = new Date().getFullYear()
-    
+
         const yearBuiltRange: number[] = yearBuilt.length === 2 ?
             yearBuilt[0] === null ?
                 Array.from({ length: yearBuilt[1] - oldestYear + 1 }, (v, k) => oldestYear + k)
-            :
+                :
                 yearBuilt[1] === null ?
                     Array.from({ length: currentYear - yearBuilt[0] + 1 }, (v, k) => yearBuilt[0] + k)
-                :
+                    :
                     Array.from({ length: yearBuilt[1] - yearBuilt[0] + 1 }, (v, k) => yearBuilt[0] + k)
             :
-                yearBuilt
-    
+            yearBuilt
+
         return rangeTime.filter((time: string) => {
             const rangeYearBuilt: (string | number)[] = time
                 .split(/[\s-]+/)
                 .map((year: any) => isNaN(year) ? year.toLowerCase() : +year)
-    
+
             return yearBuiltRange.some((yb: number) => {
                 return (typeof rangeYearBuilt[0] === 'number') ?
                     rangeYearBuilt[0] < yb && rangeYearBuilt[1] >= yb
@@ -39,7 +39,7 @@ export class YearBuiltService {
             })
         })
     }
-    
+
     static async getBuilding(lat: number, lng: number) {
         return await EmpriseBatie.findOne({
             geometry: {
@@ -52,11 +52,11 @@ export class YearBuiltService {
             if (err) {
                 console.log(err)
             }
-    
+
             return batie
         })
     }
-    
+
     static getYearBuiltFromBuilding(building) {
         const yearBuilt = building && building.properties.an_const && [+building.properties.an_const]
         const periodBuilt = building && building.properties.c_perconst && (
@@ -68,12 +68,12 @@ export class YearBuiltService {
         )
         return yearBuilt || periodBuilt
     }
-    
+
     static getDateFormatted(periodBuilt) {
         if (!periodBuilt) {
             return null
         }
-    
+
         if (periodBuilt.length > 1) {
             if (periodBuilt[0] === null) {
                 return `Avant ${periodBuilt[1]}`

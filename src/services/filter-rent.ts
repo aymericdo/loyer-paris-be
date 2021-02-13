@@ -1,19 +1,20 @@
+import { CleanAd } from '@interfaces/ad'
+import { EncadrementItem } from '@interfaces/json-item'
+import { YearBuiltService } from '@services/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
-import * as log from '@helpers/log'
-import { EncadrementItem } from '@interfaces/json-item'
 import { DistrictService } from './district'
-import { CleanAd } from '@interfaces/ad'
-import { YearBuiltService } from '@services/year-built'
-
-const rangeRents: EncadrementItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements.json'), 'utf8'))
 
 export class RentFilterService {
+    city: string
     cleanAd: CleanAd = null
-    
+    rangeRents: EncadrementItem[]
+
     constructor(
+        city: string,
         cleanAd: CleanAd,
     ) {
+        this.city = city
         this.cleanAd = cleanAd
     }
 
@@ -22,20 +23,29 @@ export class RentFilterService {
         const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Apres 1990']
 
         const districtsMatched = new DistrictService(
+            this.city,
             this.cleanAd.coordinates || this.cleanAd.blurryCoordinates,
             this.cleanAd.postalCode,
             this.cleanAd.stations
         ).getDistricts()
 
         const timeDates = YearBuiltService.getRangeTimeDates(rangeTime, this.cleanAd.yearBuilt)
-    
-        const rentList = rangeRents.filter((rangeRent) => {
+
+        switch (this.city) {
+            case "paris": {
+                this.rangeRents = JSON.parse(fs.readFileSync(path.join('json-data/encadrements.json'), 'utf8'))
+            }
+            case "lille": {
+                this.rangeRents = JSON.parse(fs.readFileSync(path.join('encadrement-des-loyers-a-lille-lomme-et-hellemmes-referentiel.json'), 'utf8'))
+            }
+        }
+        const rentList = this.rangeRents.filter((rangeRent) => {
             return (districtsMatched.map(district => district.fields.c_qu).includes(rangeRent.fields.id_quartier))
                 && (timeDates?.length ? timeDates.includes(rangeRent.fields.epoque) : true)
                 && (this.cleanAd.roomCount ? +this.cleanAd.roomCount < 5 ? rangeRent.fields.piece === +this.cleanAd.roomCount : rangeRent.fields.piece === 4 : true)
                 && (this.cleanAd.hasFurniture != null ? this.cleanAd.hasFurniture ? rangeRent.fields.meuble_txt.match(/^meubl/g) : rangeRent.fields.meuble_txt.match(/^non meubl/g) : true)
         })
-    
+
         // Get the worst case scenario
         return rentList.length ? rentList.reduce((prev, current) => (prev.fields.max > current.fields.max) ? prev : current) : null
     }

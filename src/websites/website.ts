@@ -1,4 +1,5 @@
 import { getPriceExcludingCharges } from '@helpers/charges'
+import * as cleanup from '@helpers/cleanup'
 import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { Ad, CleanAd } from '@interfaces/ad'
@@ -11,6 +12,7 @@ import { RentFilterService } from '@services/filter-rent'
 import { SaveRentService } from '@services/save-rent'
 import { SerializeRentService } from '@services/serialize-rent'
 import { Response } from 'express'
+
 
 export abstract class Website {
     website: string = null
@@ -44,10 +46,10 @@ export abstract class Website {
         }
 
         const ad: Ad = await this.mapping()
+        const city = cleanup.string(ad.cityLabel)
+        const cleanAd: CleanAd = await new DigService(city, ad).digInAd()
 
-        const cleanAd: CleanAd = await new DigService(ad).digInAd()
-
-        const adEncadrement: EncadrementItem = new RentFilterService(cleanAd).filter()
+        const adEncadrement: EncadrementItem = new RentFilterService(city, cleanAd).filter()
 
         if (adEncadrement) {
             const maxAuthorized = roundNumber(+adEncadrement.fields.max * cleanAd.surface)

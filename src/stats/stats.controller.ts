@@ -284,7 +284,7 @@ router.get('/price-variation', (req: RentRequest, res: Response, next: NextFunct
         data: {
           values: data,
         },
-        mark: { type: 'area' , color: '#f03434', tooltip: true },
+        mark: { type: 'area', color: '#f03434', tooltip: true },
         transform: [
           { filter: 'datum.isLegal === false' },
           {
