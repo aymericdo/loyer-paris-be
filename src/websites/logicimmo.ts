@@ -1,19 +1,20 @@
 import * as cleanup from '@helpers/cleanup'
-import { Ad } from '@interfaces/ad'
 import { particulierToken } from '@helpers/particulier'
-import { FacebookMapping } from '@interfaces/mapping'
-import { Website } from '../website'
-export class Facebook extends Website {
-    website = 'facebook'
+import { Ad } from '@interfaces/ad'
+import { MapStrategy } from '@interfaces/mappers'
+import { LogicimmoMapping } from '@interfaces/mapping'
 
-    async mapping(): Promise<Ad> {
-        const ad: FacebookMapping = this.body as FacebookMapping
+export class LogicImmoMapper implements MapStrategy {
+    async mapping(body: any): Promise<Ad> {
+        const ad: LogicimmoMapping = body as LogicimmoMapping
+
         return {
             id: ad.id.toString(),
-            address: cleanup.string(ad.address),
+            charges: cleanup.price(ad.charges),
             cityLabel: cleanup.string(ad.cityLabel),
             description: cleanup.string(ad.description),
-            furnished: ad.furnished,
+            furnished: ad.furnished != null ? ad.furnished !== 'NC' ? true : false : null,
+            hasCharges: ad.hasCharges,
             price: cleanup.price(ad.price),
             renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
             rooms: cleanup.number(ad.rooms),

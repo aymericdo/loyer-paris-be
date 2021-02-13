@@ -1,13 +1,11 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
+import { MapStrategy } from '@interfaces/mappers'
 import { OrpiMapping } from '@interfaces/mapping'
-import { Website } from '../website'
 
-export class Orpi extends Website {
-    website = 'orpi'
-
-    async mapping(): Promise<Ad> {
-        const ad: OrpiMapping = this.body as OrpiMapping
+export class OrpiMapper implements MapStrategy {
+    async mapping(body: any): Promise<Ad> {
+        const ad: OrpiMapping = body as OrpiMapping
 
         return {
             id: ad.id.toString(),

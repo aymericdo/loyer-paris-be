@@ -1,24 +1,31 @@
+import { FacebookMapper } from "websites/facebook";
+import { LeBonCoinMapper } from "websites/leboncoin";
+import { LeFigaroMapper } from "websites/lefigaro";
+import { LogicImmoMapper } from "websites/logicimmo";
+import { OrpiMapper } from "websites/orpi";
+import { PapMapper } from "websites/pap";
+import { SelogerMapper } from "websites/seloger";
 import { Ad } from "./ad";
 
-interface MapStrategy {
-    mapping(): Promise<Ad>;
+export interface MapStrategy {
+    mapping(body: string): Promise<Ad>;
 }
 
 export class Mapper implements MapStrategy {
-    constructor(private website: string) { }
+    constructor(private website: string, private body: any) { }
     MapperStrategyFactory = new MapperStrategyFactory();
 
     mapping(): Promise<Ad> {
-        return this.MapperStrategyFactory.getMapperStrategy(this.website).mapping();
+        return this.MapperStrategyFactory.getMapperStrategy(this.website).mapping(this.body);
     }
 }
 
 class MapperStrategyFactory {
     facebookMapper = new FacebookMapper();
-    leboncoinMapper = new LeboncoinMapper();
-    lefigaroMapper = new LefigaroMapper();
-    logicimmoMapper = new LogicimmoMapper()
-    loueragileMapper = new LoueragileMapper();
+    leboncoinMapper = new LeBonCoinMapper();
+    lefigaroMapper = new LeFigaroMapper();
+    logicimmoMapper = new LogicImmoMapper()
+    loueragileMapper = new NoMapper();
     orpiMapper = new OrpiMapper();
     papMapper = new PapMapper();
     selogerMapper = new SelogerMapper();
@@ -56,57 +63,8 @@ class MapperStrategyFactory {
         }
     }
 }
-
-export class FacebookMapper implements MapStrategy {
-    mapping(): Promise<Ad> {
-        return (Promise.resolve() as unknown) as Promise<Ad>;
-    }
-}
-
-export class LeboncoinMapper implements MapStrategy {
-    mapping(): Promise<Ad> {
-        return (Promise.resolve() as unknown) as Promise<Ad>;
-    }
-}
-
-export class LefigaroMapper implements MapStrategy {
-    mapping(): Promise<Ad> {
-        return (Promise.resolve() as unknown) as Promise<Ad>;
-    }
-}
-
-export class LogicimmoMapper implements MapStrategy {
-    mapping(): Promise<Ad> {
-        return (Promise.resolve() as unknown) as Promise<Ad>;
-    }
-}
-
-export class LoueragileMapper implements MapStrategy {
-    mapping(): Promise<Ad> {
-        return (Promise.resolve() as unknown) as Promise<Ad>;
-    }
-}
-
-export class OrpiMapper implements MapStrategy {
-    mapping(): Promise<Ad> {
-        return (Promise.resolve() as unknown) as Promise<Ad>;
-    }
-}
-
-export class PapMapper implements MapStrategy {
-    mapping(): Promise<Ad> {
-        return (Promise.resolve() as unknown) as Promise<Ad>;
-    }
-}
-
-export class SelogerMapper implements MapStrategy {
-    mapping(): Promise<Ad> {
-        return (Promise.resolve() as unknown) as Promise<Ad>;
-    }
-}
-
 export class NoMapper implements MapStrategy {
-    mapping(): Promise<Ad> {
+    mapping(_: string): Promise<Ad> {
         return (Promise.resolve() as unknown) as Promise<Ad>;
     }
 }

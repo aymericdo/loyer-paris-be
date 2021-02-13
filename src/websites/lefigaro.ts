@@ -1,13 +1,11 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
+import { MapStrategy } from '@interfaces/mappers'
 import { LefigaroMapping } from '@interfaces/mapping'
-import { Website } from '../website'
 
-export class LeFigaro extends Website {
-    website = 'lefigaro'
-
-    async mapping(): Promise<Ad> {
-        const ad: LefigaroMapping = this.body as LefigaroMapping
+export class LeFigaroMapper implements MapStrategy {
+    async mapping(body: any): Promise<Ad> {
+        const ad: LefigaroMapping = body as LefigaroMapping
 
         return {
             id: ad.id.toString(),

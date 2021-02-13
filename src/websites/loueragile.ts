@@ -2,7 +2,7 @@ import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import axios from 'axios'
 import { LoueragileMapping, Mapping } from '@interfaces/mapping'
-import { Website } from '../website'
+import { Website } from './website'
 import * as log from '@helpers/log'
 import { ErrorCode } from '@services/api-errors'
 

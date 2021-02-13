@@ -1,14 +1,12 @@
-import { particulierToken } from '@helpers/particulier'
 import * as cleanup from '@helpers/cleanup'
+import { particulierToken } from '@helpers/particulier'
 import { Ad } from '@interfaces/ad'
+import { MapStrategy } from '@interfaces/mappers'
 import { LeboncoinMapping } from '@interfaces/mapping'
-import { Website } from '../website'
 
-export class LeBonCoin extends Website {
-    website = 'leboncoin'
-
-    async mapping(): Promise<Ad> {
-        const ad: LeboncoinMapping = this.body as LeboncoinMapping
+export class LeBonCoinMapper implements MapStrategy {
+    async mapping(body: any): Promise<Ad> {
+        const ad: LeboncoinMapping = body as LeboncoinMapping
         return {
             id: ad.id.toString(),
             cityLabel: cleanup.string(ad.cityLabel),

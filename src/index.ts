@@ -15,14 +15,7 @@ app.use('/', function (req: Request, res: Response, next: NextFunction) {
     next()
 })
 
-app.use('/seloger', require('./websites/seloger/seloger.controller'))
-app.use('/leboncoin', require('./websites/leboncoin/leboncoin.controller'))
-app.use('/jinka', require('./websites/loueragile/loueragile.controller'))
-app.use('/pap', require('./websites/pap/pap.controller'))
-app.use('/logic-immo', require('./websites/logicimmo/logicimmo.controller'))
-app.use('/lefigaro', require('./websites/lefigaro/lefigaro.controller'))
-app.use('/orpi', require('./websites/orpi/orpi.controller'))
-app.use('/facebook', require('./websites/facebook/facebook.controller'))
+app.use('/websites', require('./websites/websites.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 

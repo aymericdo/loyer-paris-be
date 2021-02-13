@@ -1,14 +1,12 @@
 import * as cleanup from '@helpers/cleanup'
 import { particulierToken } from '@helpers/particulier'
 import { Ad } from '@interfaces/ad'
+import { MapStrategy } from '@interfaces/mappers'
 import { PapMapping } from '@interfaces/mapping'
-import { Website } from '../website'
 
-export class Pap extends Website {
-    website = 'pap'
-
-    async mapping(): Promise<Ad> {
-        const ad: PapMapping = this.body as PapMapping
+export class PapMapper implements MapStrategy {
+    async mapping(body: any): Promise<Ad> {
+        const ad: PapMapping = body as PapMapping
 
         return {
             id: ad.id.toString(),
