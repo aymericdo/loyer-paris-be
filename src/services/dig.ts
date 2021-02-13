@@ -11,7 +11,7 @@ import { ErrorCode } from './api-errors'
 export class DigService {
     ad: Ad = null
 
-    constructor (
+    constructor(
         ad: Ad,
     ) {
         this.ad = ad
@@ -81,7 +81,7 @@ export class DigService {
             const building = coordinates && coordinates.lat && coordinates.lng &&
                 await YearBuiltService.getBuilding(coordinates.lat, coordinates.lng)
             const yearBuiltFromBuilding = building && YearBuiltService.getYearBuiltFromBuilding(building)
-    
+
             return yearBuiltFromBuilding
         }
     }
@@ -118,7 +118,7 @@ export class DigService {
         } else if (this.ad.price > 10000) {
             throw { error: ErrorCode.Price, msg: `price "${this.ad.price}" too expensive to be a rent` }
         } else if (this.ad.price < 100) {
-            throw { error: ErrorCode.Price, msg:  `price "${this.ad.price}" too cheap to be a rent` }
+            throw { error: ErrorCode.Price, msg: `price "${this.ad.price}" too cheap to be a rent` }
         }
 
         return this.ad.price

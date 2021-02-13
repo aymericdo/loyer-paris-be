@@ -2,7 +2,9 @@ import { getPriceExcludingCharges } from '@helpers/charges'
 import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { Ad, CleanAd } from '@interfaces/ad'
+import { Digger } from '@interfaces/diggers'
 import { EncadrementItem } from '@interfaces/json-item'
+import { Mapper } from '@interfaces/mappers'
 import { Mapping } from '@interfaces/mapping'
 import { ApiError } from '@interfaces/shared'
 import { ApiErrorsService, ErrorCode } from '@services/api-errors'
@@ -42,6 +44,12 @@ export abstract class Website {
         if (this.body?.noMoreData) {
             throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}/${this.body.platform}` }
         }
+
+        // Preview du refacto
+        // const mapper = new Mapper(this.website)
+        // const ad = await mapper.mapping()
+        // const digger = new Digger(ad.cityLabel)
+        // const cleanAd = digger.digInAd()
 
         const ad: Ad = await this.mapping()
 
