@@ -49,16 +49,12 @@ export class DigService {
     private digForAddress(): [string, string, string, string[], Coordinate, Coordinate] {
         const addressService = new AddressService(this.ad)
 
+        const city = addressService.city
         const postalCode = addressService.getPostalCode()
-        const city = addressService.getCity()
         const address = addressService.getAddress()
         const stations = addressService.getStations()
         const coordinates = addressService.getCoordinate()
         const blurryCoordinates = addressService.getCoordinate(true)
-
-        if (city !== 'paris') {
-            throw { error: ErrorCode.City, msg: `city "${city}" not found in the list` }
-        }
 
         if (!address && !postalCode && !coordinates) {
             throw { error: ErrorCode.Address, msg: 'address not found' }

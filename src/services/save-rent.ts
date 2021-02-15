@@ -46,7 +46,7 @@ export class SaveRentService {
                 price: this.adToSave.price,
                 priceExcludingCharges: this.adToSave.priceExcludingCharges,
                 surface: this.adToSave.surface,
-                ...(this.adToSave.city != null && { city: this.adToSave.city }),
+                city: this.adToSave.city,
                 ...(this.adToSave.hasFurniture != null && { hasFurniture: this.adToSave.hasFurniture }),
                 ...(this.adToSave.latitude != null && { latitude: this.adToSave.latitude }),
                 ...(this.adToSave.longitude != null && { longitude: this.adToSave.longitude }),
