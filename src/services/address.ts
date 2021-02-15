@@ -74,7 +74,7 @@ export class AddressService {
 
     getStations(): string[] {
         const stationsFromDescription: MetroItem[] = this.ad?.description && new StationService(this.ad.description).getStations()
-        return this.ad.stations || stationsFromDescription && this.nearestPointInPostalCode(stationsFromDescription)
+        return this.ad.stations || stationsFromDescription && (this.getPostalCode() && this.nearestPointInPostalCode(stationsFromDescription))
     }
 
     addressFromCoordinate(coord: Coordinate): string {
@@ -109,13 +109,21 @@ export class AddressService {
                 return addressesInParis && addressesInParis.map(res => ({ ...res, hasStreetNumber }))
             }).filter(Boolean).sort((a, b) => a.score - b.score)
 
-            const resultInPostalCode = this.nearestAddressInPostalCode(result)
+            if (this.getPostalCode()) {
+                const resultInPostalCode = this.nearestAddressInPostalCode(result)
 
-            return resultInPostalCode ?
-                !!resultInPostalCode[1] ?
-                    cleanup.string(resultInPostalCode[0]) :
-                    cleanup.string(resultInPostalCode[0]).replace(/^\d+/gi, "").trim() :
-                null
+                return resultInPostalCode ?
+                    !!resultInPostalCode[1] ?
+                        cleanup.string(resultInPostalCode[0]) :
+                        cleanup.string(resultInPostalCode[0]).replace(/^\d+/gi, "").trim() :
+                    null
+            } else {
+                return result.length ?
+                    cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi) ?
+                        cleanup.string(result[0].item.fields.l_adr) :
+                        cleanup.string(result[0].item.fields.l_adr).replace(/^\d+/gi, "").trim() :
+                    null
+            }
         } else {
             return addressesFromRegex && cleanup.address(addressesFromRegex[0])
         }
@@ -141,6 +149,9 @@ export class AddressService {
 
     private nearestPointInPostalCode(metroItems: MetroItem[]): string[] {
         const postalCodePolygon = this.distanceService.getPolyFromPostalCode()
+
+        if (!postalCodePolygon) return null
+
         const pointByDist = metroItems.map(metro => {
             const point = [metro.lon, metro.lat]
             if (inside(point, postalCodePolygon)) {
@@ -163,7 +174,6 @@ export class AddressService {
             if (bah.dist < 0.0025) {
                 this.blurryCoordinates = { lng: bah.point[0], lat: bah.point[1] }
             }
-
         }
 
         return pointByDist.reduce((prev, point) => {
@@ -176,6 +186,9 @@ export class AddressService {
 
     private nearestAddressInPostalCode(addressesInParis: { item: AddressItem, hasStreetNumber: boolean, score: number }[]): [string, boolean] {
         const postalCodePolygon = this.distanceService.getPolyFromPostalCode()
+
+        if (!postalCodePolygon) return null
+
         const pointByDist = addressesInParis.map(address => {
             const point = address.item.fields.geom.coordinates;
             if (inside(point, postalCodePolygon)) {
