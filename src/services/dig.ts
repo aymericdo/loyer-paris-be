@@ -2,21 +2,23 @@ import * as cleanup from '@helpers/cleanup'
 import { regexString } from '@helpers/regex'
 import { stringToNumber } from '@helpers/string-to-number'
 import { Ad, CleanAd } from '@interfaces/ad'
+import { AddressDigger } from '@interfaces/addressdigger'
 import { Coordinate } from '@interfaces/shared'
 import { StationService } from '@services/station'
 import { YearBuiltService } from '@services/year-built'
 import { AddressService } from './address'
 import { ErrorCode } from './api-errors'
+import { CityInfo } from './city'
 
 export class DigService {
-    city: string
+    cityInfo: CityInfo
     ad: Ad = null
 
     constructor(
-        city: string,
+        cityInfo: CityInfo,
         ad: Ad,
     ) {
-        this.city = city
+        this.cityInfo = cityInfo
         this.ad = ad
     }
 
@@ -25,12 +27,14 @@ export class DigService {
         const hasFurniture = this.digForHasFurniture()
         const surface = this.digForSurface()
         const price = this.digForPrice()
-        const [address, postalCode, city, coordinates, blurryCoordinates] = this.digForAddress()
-        const yearBuilt = await this.digForYearBuilt(coordinates)
         const renter = this.digForRenter()
-        const stations = this.digForStations()
         const charges = this.digForCharges()
         const hasCharges = this.digForHasCharges()
+
+        const addressDigger = new AddressDigger(this.cityInfo.city)
+        const [address, coordinates, blurryCoordinates] = addressDigger.digForAddress()
+        const yearBuilt = await this.digForYearBuilt(coordinates)
+        const stations = this.digForStations()
 
         return {
             id: this.ad.id,
@@ -39,8 +43,8 @@ export class DigService {
             surface,
             price,
             address,
-            postalCode,
-            city,
+            postalCode: this.cityInfo.postalCode,
+            city: this.cityInfo.city,
             coordinates,
             blurryCoordinates,
             yearBuilt,
@@ -51,16 +55,14 @@ export class DigService {
         }
     }
 
-    private digForAddress(): [string, string, string, Coordinate, Coordinate] {
+    private digForAddress(): [string, Coordinate, Coordinate] {
         const addressService = new AddressService(this.ad)
 
-        const postalCode = addressService.getPostalCode()
-        const city = addressService.getCity()
         const address = addressService.getAddress()
         const coordinates = addressService.getCoordinate()
         const blurryCoordinates = addressService.getCoordinate(true)
 
-        if (city !== 'paris') {
+        if (!["paris", "lille"].includes(city)) {
             throw { error: ErrorCode.City, msg: `city "${city}" not found in the list` }
         }
 
@@ -68,7 +70,7 @@ export class DigService {
             throw { error: ErrorCode.Address, msg: 'address not found' }
         }
 
-        return [address, postalCode, city, coordinates, blurryCoordinates]
+        return [address, coordinates, blurryCoordinates]
     }
 
     private digForRoomCount(): number {

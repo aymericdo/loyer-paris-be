@@ -6,7 +6,9 @@ import { Ad, CleanAd } from '@interfaces/ad'
 import { EncadrementItem } from '@interfaces/json-item'
 import { Mapping } from '@interfaces/mapping'
 import { ApiError } from '@interfaces/shared'
+import { AddressService } from '@services/address'
 import { ApiErrorsService, ErrorCode } from '@services/api-errors'
+import { CityService } from '@services/city'
 import { DigService } from '@services/dig'
 import { RentFilterService } from '@services/filter-rent'
 import { SaveRentService } from '@services/save-rent'
@@ -44,36 +46,40 @@ export abstract class Website {
         if (this.body?.noMoreData) {
             throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}/${this.body.platform}` }
         }
+        try {
+            const ad: Ad = await this.mapping()
+            const cityService = new CityService(ad)
+            const cityInfo = cityService.getCityInfo()
+            const cleanAd: CleanAd = await new DigService(cityInfo.city, ad).digInAd()
 
-        const ad: Ad = await this.mapping()
-        const city = cleanup.string(ad.cityLabel)
-        const cleanAd: CleanAd = await new DigService(city, ad).digInAd()
+            const adEncadrement: EncadrementItem = new RentFilterService(cityInfo.city, cleanAd).filter()
 
-        const adEncadrement: EncadrementItem = new RentFilterService(city, cleanAd).filter()
+            if (adEncadrement) {
+                const maxAuthorized = roundNumber(+adEncadrement.fields.max * cleanAd.surface)
+                const priceExcludingCharges = getPriceExcludingCharges(cleanAd.price, cleanAd.charges, cleanAd.hasCharges)
+                const isLegal = priceExcludingCharges <= maxAuthorized
 
-        if (adEncadrement) {
-            const maxAuthorized = roundNumber(+adEncadrement.fields.max * cleanAd.surface)
-            const priceExcludingCharges = getPriceExcludingCharges(cleanAd.price, cleanAd.charges, cleanAd.hasCharges)
-            const isLegal = priceExcludingCharges <= maxAuthorized
+                await new SaveRentService({
+                    ...cleanAd,
+                    isLegal,
+                    latitude: cleanAd.coordinates?.lat,
+                    longitude: cleanAd.coordinates?.lng,
+                    maxPrice: maxAuthorized,
+                    priceExcludingCharges,
+                    website: this.website,
+                }).save()
 
-            await new SaveRentService({
-                ...cleanAd,
-                isLegal,
-                latitude: cleanAd.coordinates?.lat,
-                longitude: cleanAd.coordinates?.lng,
-                maxPrice: maxAuthorized,
-                priceExcludingCharges,
-                website: this.website,
-            }).save()
-
-            return new SerializeRentService({
-                ...cleanAd,
-                isLegal,
-                maxAuthorized,
-                priceExcludingCharges,
-            }, adEncadrement).serialize()
-        } else {
-            throw { error: ErrorCode.Filter, msg: 'no match found' }
+                return new SerializeRentService({
+                    ...cleanAd,
+                    isLegal,
+                    maxAuthorized,
+                    priceExcludingCharges,
+                }, adEncadrement).serialize()
+            } else {
+                throw { error: ErrorCode.Filter, msg: 'no match found' }
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 }

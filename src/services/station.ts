@@ -12,19 +12,21 @@ export class StationService {
 
     constructor(city: string) {
         this.city = city
+        if (this.city === "paris") {
+            this.keys = ["tags.name"]
+            this.stations = JSON.parse(fs.readFileSync(path.join('json-data/metros_paris.json'), 'utf8'))
+        }
+        else if (this.city === "lille") {
+            this.keys = ["fields.stop_name"]
+            this.stations = JSON.parse(fs.readFileSync(path.join('json-data/transport_arret_transpole-point.json'), 'utf8'))
+        }
+        else {
+            console.error("city not correct for district")
+        }
+
     }
 
     getCoordinate(station: string): Coordinate {
-        switch (this.city) {
-            case "paris": {
-                this.keys = ["tags.name"]
-                this.stations = JSON.parse(fs.readFileSync(path.join('json-data/metros_paris.json'), 'utf8'))
-            }
-            case "lille": {
-                this.keys = ["fields.stop_name"]
-                this.stations = JSON.parse(fs.readFileSync(path.join('transport_arret_transpole-point.json'), 'utf8'))
-            }
-        }
         const options = {
             keys: this.keys,
             shouldSort: true,
@@ -48,7 +50,7 @@ export class StationService {
     }
 
     getStations(description: string): string[] {
-        return [...new Set(this.stations.map(station => {
+        return this.stations && [...new Set(this.stations.map(station => {
             if (station.tags && description.search(cleanup.string(station.tags.name)) !== -1) {
                 return cleanup.string(station.tags.name)
             }

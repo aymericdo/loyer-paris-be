@@ -1,50 +1,30 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import * as cleanup from '@helpers/cleanup'
-import Fuse from 'fuse.js'
-import { Coordinate } from '@interfaces/shared'
-import { AddressItem } from '@interfaces/json-item'
-import { postalCodePossibilities } from '@helpers/postal-code'
-import { Ad } from '@interfaces/ad'
-import { regexString } from '@helpers/regex'
-import { Memoize } from 'typescript-memoize'
+import * as cleanup from '@helpers/cleanup';
+import { regexString } from "@helpers/regex";
+import { Ad } from "@interfaces/ad";
+import { AddressDigStrategy, AddressInfo } from "@interfaces/addressdigger";
+import { AddressItem } from "@interfaces/json-item";
+import { Coordinate } from "@interfaces/shared";
+import { CityInfo } from "@services/city";
+import Fuse from "fuse.js";
+import { Memoize } from "typescript-memoize";
 
-const parisAddresses: AddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
 
-interface AddressInfo {
-    postalCode: string
-    city?: string
-}
-export class AddressService {
-    ad: Ad = null
-
+export class ParisAddressDigger implements AddressDigStrategy {
+    cityInfo: CityInfo;
+    ad: Ad;
     constructor(
-        ad: Ad,
+        cityInfo: CityInfo,
     ) {
+        this.cityInfo = cityInfo
+    }
+
+    digForAddress(ad: Ad): Promise<AddressInfo> {
         this.ad = ad
+        return (Promise.resolve() as unknown) as Promise<AddressInfo>;
     }
 
-    @Memoize()
-    getPostalCode() {
-        let postalCode = this.ad.postalCode || this.ad.cityLabel
-            && (this.digForPostalCode(this.ad.cityLabel) || this.digForPostalCode2(this.ad.cityLabel))
-            || this.ad.title && (this.digForPostalCode(this.ad.title) || this.digForPostalCode2(this.ad.title))
-            || this.ad.description && (this.digForPostalCode(this.ad.description) || this.digForPostalCode2(this.ad.description))
-
-        return postalCode && postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
-    }
-
-    @Memoize()
-    getCity() {
-        return this.ad.cityLabel?.match(/[A-Za-z -]+/g) && cleanup.string(this.ad.cityLabel.match(/[A-Za-z -]+/g)[0])
-            || (this.getPostalCode() && this.getPostalCode().toString().startsWith('75') ? 'paris' : null)
-    }
-
-    @Memoize()
     getAddress() {
-        const city = this.getCity()
-        const postalCode = this.getPostalCode()
-        return this.ad.address || (this.ad.description && this.digForAddressInText(this.ad.description, { city, postalCode })) || (this.ad.title && this.digForAddressInText(this.ad.title, { city, postalCode }))
+        return this.ad.address || (this.ad.description && this.digForAddressInText(this.ad.description, this.cityInfo)) || (this.ad.title && this.digForAddressInText(this.ad.title, this.cityInfo))
     }
 
     getCoordinate(blurry = false): Coordinate {
@@ -57,7 +37,7 @@ export class AddressService {
             return coordinatesFromAd
         } else {
             const address = this.getAddress()
-            const postalCode = this.getPostalCode()
+            const postalCode = this.cityInfo.postalCode
 
             // Try to find coord if the address precision is good enough (with number)
             if (blurry || address?.match(/^\d+/gi)) {
@@ -69,7 +49,7 @@ export class AddressService {
     }
 
     coordinateFromAddress(address: string, postalCode: string) {
-        const addressInParis = this.getAddressInParis(address, { postalCode })
+        const addressInParis = this.getAddressInParis(address, { this.cityInfo.postalCode })
         const result: AddressItem[] = addressInParis?.map(address => address.item)
         return result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] }
     }
@@ -85,7 +65,7 @@ export class AddressService {
         return match ? match.trim().length === 1 ? `7500${match.trim()}` : `750${match.trim()}` : null
     }
 
-    private digForAddressInText(text: string, { city, postalCode }: AddressInfo): string {
+    private digForAddressInText(text: string, { city, postalCode }: CityInfo): string {
         const addressRe = new RegExp(regexString('address'))
         const addressesFromRegex = text.match(addressRe) as any
         if (city && cleanup.string(city) === 'paris' && addressesFromRegex) {
@@ -103,7 +83,7 @@ export class AddressService {
     }
 
     @Memoize()
-    private getAddressInParis(q: string, addressInfo: AddressInfo): { item: AddressItem }[] {
+    private getAddressInParis(q: string, cityInfo: CityInfo): { item: AddressItem }[] {
         const options = {
             keys: ['fields.l_adr'],
             shouldSort: true,
@@ -131,5 +111,3 @@ export class AddressService {
         return result?.length ? result : null
     }
 }
-
-

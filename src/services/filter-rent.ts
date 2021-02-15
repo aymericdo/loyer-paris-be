@@ -16,6 +16,15 @@ export class RentFilterService {
     ) {
         this.city = city
         this.cleanAd = cleanAd
+        if (this.city === "paris") {
+            this.rangeRents = JSON.parse(fs.readFileSync(path.join('json-data/encadrements.json'), 'utf8'))
+        }
+        else if (this.city === "lille") {
+            this.rangeRents = JSON.parse(fs.readFileSync(path.join('json-data/encadrement-des-loyers-a-lille-lomme-et-hellemmes-referentiel.json'), 'utf8'))
+        }
+        else {
+            console.error("city not correct for district")
+        }
     }
 
     filter(): EncadrementItem {
@@ -31,14 +40,6 @@ export class RentFilterService {
 
         const timeDates = YearBuiltService.getRangeTimeDates(rangeTime, this.cleanAd.yearBuilt)
 
-        switch (this.city) {
-            case "paris": {
-                this.rangeRents = JSON.parse(fs.readFileSync(path.join('json-data/encadrements.json'), 'utf8'))
-            }
-            case "lille": {
-                this.rangeRents = JSON.parse(fs.readFileSync(path.join('encadrement-des-loyers-a-lille-lomme-et-hellemmes-referentiel.json'), 'utf8'))
-            }
-        }
         const rentList = this.rangeRents.filter((rangeRent) => {
             return (districtsMatched.map(district => district.fields.c_qu).includes(rangeRent.fields.id_quartier))
                 && (timeDates?.length ? timeDates.includes(rangeRent.fields.epoque) : true)

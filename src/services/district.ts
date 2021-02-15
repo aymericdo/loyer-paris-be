@@ -22,23 +22,24 @@ export class DistrictService {
         this.coordinates = coordinates
         this.postalCode = postalCode
         this.stations = stations
+        if (this.city === "paris") {
+            this.districts = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris.json'), 'utf8'))
+        }
+        else if (this.city === "lille") {
+            this.districts = JSON.parse(fs.readFileSync(path.join('json-data/encadrement-des-loyers-a-lille-lomme-et-hellemmes-zonage.json'), 'utf8'))
+        }
+        else {
+            console.error("city not correct for district")
+        }
     }
 
     getDistricts(): DistrictItem[] {
-        switch (this.city) {
-            case "paris": {
-                this.districts = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris.json'), 'utf8'))
-            }
-            case "lille": {
-                this.districts = JSON.parse(fs.readFileSync(path.join('encadrement-des-loyers-a-lille-lomme-et-hellemmes-zonage.json'), 'utf8'))
-            }
-        }
         const districtFromCoordinate = this.coordinates && this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
         return districtFromCoordinate ?
             districtFromCoordinate
             :
-            this.getDistrictFromPostalCode(this.postalCode, this.stations)
+            this.city === "paris" && this.getDistrictFromPostalCode(this.postalCode, this.stations)
     }
 
     private getDistrictFromCoordinate(lat: number, lng: number): DistrictItem[] {
@@ -51,17 +52,9 @@ export class DistrictService {
         if (postalCode) {
             // 75010 -> 10  75009 -> 9
             const code = postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2)
-            switch (this.city) {
-                case "paris": {
-                    this.districts = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris.json'), 'utf8'))
-                }
-                case "lille": {
-                    this.districts = JSON.parse(fs.readFileSync(path.join('encadrement-des-loyers-a-lille-lomme-et-hellemmes-zonage.json'), 'utf8'))
-                }
-            }
 
             let stationDistricts = []
-            if (stations) {
+            if (stations && stations.length > 0) {
                 stationDistricts = stations.map(station => {
                     const coord = stationService.getCoordinate(station)
                     const district = coord && this.districts.find(district => inside([+coord.lng, +coord.lat], district.fields.geom.coordinates[0]))
