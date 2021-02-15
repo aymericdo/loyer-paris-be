@@ -30,6 +30,7 @@ export abstract class Website {
                     const status = ApiErrorsService.getStatus(err)
                     res.status(status).json(err)
                 } else {
+                    console.log(err)
                     log.error('ERROR 500')
                     res.status(500).json(err)
                 }

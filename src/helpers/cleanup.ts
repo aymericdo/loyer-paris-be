@@ -11,3 +11,9 @@ export function number(number: string): number {
     const match = number?.replace(/,/g, '.').match(/\d+((\.|,|)\d+)?/g)
     return match != null ? +match[0] : null
 }
+
+export function address(string: string): string {
+    const blackList = ['commercante']
+    if (blackList.some(w => string.includes(w))) return null
+    return string.trim().replace('bd ', 'boulevard ')
+}

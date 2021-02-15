@@ -13,7 +13,7 @@ export interface AddressItem {
         geom_x_y: number[]
         geom: {
             type: string
-            coordinates: number[][][]
+            coordinates: number[]
         }
         n_sq_ar: number
         b_hors75: string
@@ -23,34 +23,47 @@ export interface AddressItem {
     }
     geometry: {
         type: string
-        coordinates: number[][][]
+        coordinates: number[]
     }
     record_timestamp: string
 }
 
 export interface DistrictItem {
-    datasetid: string
-    recordid: string
-    fields: {
+    type: "Feature";
+    geometry: {
+        type: "Polygon"
+        coordinates: number[][][]
+    }
+    properties: {
         n_sq_qu: number
         perimetre: string
         geom_x_y: number[]
         c_qu: number
         surface: number
         l_qu: string
-        geom: {
-            type: string
-            coordinates: number[][][]
-        }
         n_sq_ar: number
         c_quinsee: number
         c_ar: number
     }
+}
+
+export interface ArrondissementItem {
+    type: "Feature";
     geometry: {
-        type: string
+        type: "Polygon"
         coordinates: number[][][]
     }
-    record_timestamp: string
+    properties: {
+        n_sq_co: number
+        n_sq_qu: number
+        perimetre: string
+        geom_x_y: number[]
+        surface: number
+        l_aroff: string
+        n_sq_ar: number
+        c_arinsee: number
+        c_ar: number
+    }
 }
 
 export interface EncadrementItem {

@@ -3,7 +3,6 @@ import { regexString } from '@helpers/regex'
 import { stringToNumber } from '@helpers/string-to-number'
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
-import { StationService } from '@services/station'
 import { YearBuiltService } from '@services/year-built'
 import { AddressService } from './address'
 import { ErrorCode } from './api-errors'
@@ -22,10 +21,9 @@ export class DigService {
         const hasFurniture = this.digForHasFurniture()
         const surface = this.digForSurface()
         const price = this.digForPrice()
-        const [address, postalCode, city, coordinates, blurryCoordinates] = this.digForAddress()
+        const [address, postalCode, city, stations, coordinates, blurryCoordinates] = this.digForAddress()
         const yearBuilt = await this.digForYearBuilt(coordinates)
         const renter = this.digForRenter()
-        const stations = this.digForStations()
         const charges = this.digForCharges()
         const hasCharges = this.digForHasCharges()
 
@@ -48,12 +46,13 @@ export class DigService {
         }
     }
 
-    private digForAddress(): [string, string, string, Coordinate, Coordinate] {
+    private digForAddress(): [string, string, string, string[], Coordinate, Coordinate] {
         const addressService = new AddressService(this.ad)
 
         const postalCode = addressService.getPostalCode()
         const city = addressService.getCity()
         const address = addressService.getAddress()
+        const stations = addressService.getStations()
         const coordinates = addressService.getCoordinate()
         const blurryCoordinates = addressService.getCoordinate(true)
 
@@ -65,7 +64,7 @@ export class DigService {
             throw { error: ErrorCode.Address, msg: 'address not found' }
         }
 
-        return [address, postalCode, city, coordinates, blurryCoordinates]
+        return [address, postalCode, city, stations, coordinates, blurryCoordinates]
     }
 
     private digForRoomCount(): number {
@@ -127,11 +126,6 @@ export class DigService {
     private digForRenter(): string {
         const possibleBadRenter = ['seloger', 'loueragile', 'leboncoin', 'lefigaro', 'pap', 'orpi', 'logicimmo']
         return possibleBadRenter.includes(this.ad.renter) ? null : this.ad.renter
-    }
-
-    private digForStations(): string[] {
-        const stationsFromDescription = this.ad?.description && StationService.getStations(this.ad.description) as string[]
-        return this.ad.stations || stationsFromDescription
     }
 
     private digForCharges(): number {
