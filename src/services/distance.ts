@@ -31,6 +31,7 @@ export class DistanceService {
 
   @Memoize()
   getPolyFromPostalCode(): number[][] {
+    if (!this.postalCode) return null
     // 75010 -> 10 75009 -> 9
     const code = (this.postalCode.slice(-2)[0] === '0' ? this.postalCode.slice(-1) : this.postalCode.slice(-2))
     return parisArrondissements.features.find(a => a.properties.c_ar === +code).geometry.coordinates[0]

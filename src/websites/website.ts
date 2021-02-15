@@ -47,7 +47,6 @@ export abstract class Website {
         const ad: Ad = await this.mapping()
 
         const cleanAd: CleanAd = await new DigService(ad).digInAd()
-
         const adEncadrement: EncadrementItem = new RentFilterService(cleanAd).filter()
 
         if (adEncadrement) {
