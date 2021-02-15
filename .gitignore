@@ -4,3 +4,4 @@ node_modules/**
 build/**
 src/json-data/EMPRISE_BATIE_PARIS.geojson
 .DS_Store
+build/**

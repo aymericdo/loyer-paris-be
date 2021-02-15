@@ -1,8 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import * as cleanup from '@helpers/cleanup'
 import { MetroItem } from '@interfaces/json-item'
-import { Coordinate } from '@interfaces/shared'
 import Fuse from 'fuse.js'
 
 export class StationService {
@@ -29,10 +27,8 @@ export class StationService {
     getCoordinate(station: string): Coordinate {
         const options = {
             keys: this.keys,
-            shouldSort: true,
-            threshold: 0.3,
-            tokenize: true,
-            matchAllTokens: true,
+            threshold: 0.2,
+            includeScore: true,
         }
         const fuse = new Fuse(this.stations, options)
         const result: any = fuse.search(station)
@@ -49,11 +45,21 @@ export class StationService {
         return result && result.length && { lat: result[0].lat, lng: result[0].lon }
     }
 
-    getStations(description: string): string[] {
-        return this.stations && [...new Set(this.stations.map(station => {
-            if (station.tags && description.search(cleanup.string(station.tags.name)) !== -1) {
-                return cleanup.string(station.tags.name)
-            }
-        }).filter(Boolean))]
+    getStations(): MetroItem[] {
+        const options = {
+            keys: ['tags.name'],
+            threshold: 0.2,
+            includeScore: true,
+        }
+
+        if (!this.description) {
+            return null
+        }
+
+        const fuse = new Fuse(parisStations, options)
+        return this.description.split(' ').map((word) => {
+            const res = word.length > 3 && fuse.search(word, { limit: 1 }) as { score: number, item: MetroItem }[]
+            return res && res.length && res[0]
+        }).filter(Boolean).sort((a, b) => a.score - b.score).map(a => a.item)
     }
 }

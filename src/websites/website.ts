@@ -34,6 +34,7 @@ export abstract class Website {
                     const status = ApiErrorsService.getStatus(err)
                     res.status(status).json(err)
                 } else {
+                    console.log(err)
                     log.error('ERROR 500')
                     res.status(500).json(err)
                 }
@@ -52,7 +53,14 @@ export abstract class Website {
             const cityInfo = cityService.getCityInfo()
             const cleanAd: CleanAd = await new DigService(cityInfo.city, ad).digInAd()
 
+<<<<<<< HEAD
             const adEncadrement: EncadrementItem = new RentFilterService(cityInfo.city, cleanAd).filter()
+=======
+        const ad: Ad = await this.mapping()
+
+        const cleanAd: CleanAd = await new DigService(ad).digInAd()
+        const adEncadrement: EncadrementItem = new RentFilterService(cleanAd).filter()
+>>>>>>> 1e3b4c8e5fbff1c4d60c311ad7dafdc1c47760a1
 
             if (adEncadrement) {
                 const maxAuthorized = roundNumber(+adEncadrement.fields.max * cleanAd.surface)

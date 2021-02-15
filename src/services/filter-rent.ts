@@ -5,6 +5,8 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { DistrictService } from './district'
 
+const rangeRents: EncadrementItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris.json'), 'utf8'))
+
 export class RentFilterService {
     city: string
     cleanAd: CleanAd = null
@@ -28,14 +30,14 @@ export class RentFilterService {
     }
 
     filter(): EncadrementItem {
-        // Extract possible range time from rangeRents (json-data/encadrements.json)
+        // Extract possible range time from rangeRents (json-data/encadrements_*.json)
         const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Apres 1990']
 
         const districtsMatched = new DistrictService(
             this.city,
             this.cleanAd.coordinates || this.cleanAd.blurryCoordinates,
             this.cleanAd.postalCode,
-            this.cleanAd.stations
+            this.cleanAd.coordinates || this.cleanAd.blurryCoordinates,
         ).getDistricts()
 
         const timeDates = YearBuiltService.getRangeTimeDates(rangeTime, this.cleanAd.yearBuilt)

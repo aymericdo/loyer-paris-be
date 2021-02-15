@@ -3,7 +3,6 @@ import { DistrictItem } from "@interfaces/json-item"
 import path from "path"
 import inside from "point-in-polygon"
 import { Coordinate } from '@interfaces/shared'
-import { StationService } from '@services/station'
 
 export class DistrictService {
     city: string
@@ -16,12 +15,10 @@ export class DistrictService {
         city: string,
         coordinates: Coordinate,
         postalCode: string,
-        stations: string[],
     ) {
         this.city = city
         this.coordinates = coordinates
         this.postalCode = postalCode
-        this.stations = stations
         if (this.city === "paris") {
             this.districts = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris.json'), 'utf8'))
         }
@@ -39,34 +36,24 @@ export class DistrictService {
         return districtFromCoordinate ?
             districtFromCoordinate
             :
-            this.city === "paris" && this.getDistrictFromPostalCode(this.postalCode, this.stations)
-    }
-
-    private getDistrictFromCoordinate(lat: number, lng: number): DistrictItem[] {
-        const district = this.districts.find(district => inside([+lng, +lat], district.fields.geom.coordinates[0]))
-        return district ? [district] : []
+            this.city === "paris" && this.getDistrictFromPostalCode()
     }
 
     private getDistrictFromPostalCode(postalCode: string, stations: string[]): DistrictItem[] {
         const stationService = new StationService(this.city)
         if (postalCode) {
             // 75010 -> 10  75009 -> 9
-            const code = postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2)
-
-            let stationDistricts = []
-            if (stations && stations.length > 0) {
-                stationDistricts = stations.map(station => {
-                    const coord = stationService.getCoordinate(station)
-                    const district = coord && this.districts.find(district => inside([+coord.lng, +coord.lat], district.fields.geom.coordinates[0]))
-                    return district && district.fields.l_qu
-                }).filter(Boolean)
-            }
-
-            return this.districts.filter(district => {
-                return district.fields.c_ar === +code && (stationDistricts.length ? stationDistricts.includes(district.fields.l_qu) : true)
+            const code = this.postalCode.slice(-2)[0] === '0' ? this.postalCode.slice(-1) : this.postalCode.slice(-2)
+            return parisDistricts.features.filter(district => {
+                return district.properties.c_ar === +code;
             })
         } else {
             return []
         }
+    }
+
+    private getDistrictFromCoordinate(lat: number, lng: number): DistrictItem[] {
+        const district = parisDistricts.features.find(district => inside([+lng, +lat], district.geometry.coordinates[0]))
+        return district ? [district] : []
     }
 }
