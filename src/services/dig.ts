@@ -2,6 +2,7 @@ import * as cleanup from '@helpers/cleanup'
 import { regexString } from '@helpers/regex'
 import { stringToNumber } from '@helpers/string-to-number'
 import { Ad, CleanAd } from '@interfaces/ad'
+import { AddressDigger } from '@interfaces/addressdigger'
 import { Coordinate } from '@interfaces/shared'
 import { YearBuiltService } from '@services/year-built'
 import { AddressService } from './address'
@@ -9,11 +10,14 @@ import { ErrorCode } from './api-errors'
 
 export class DigService {
     ad: Ad = null
+    city: string
 
-    constructor (
+    constructor(
         ad: Ad,
+        city: string
     ) {
         this.ad = ad
+        this.city = city
     }
 
     async digInAd(): Promise<CleanAd> {
@@ -21,7 +25,8 @@ export class DigService {
         const hasFurniture = this.digForHasFurniture()
         const surface = this.digForSurface()
         const price = this.digForPrice()
-        const [address, postalCode, city, stations, coordinates, blurryCoordinates] = this.digForAddress()
+        const adressDigger = new AddressDigger(this.city)
+        const { address, postalCode, city, stations, coordinates, blurryCoordinates } = adressDigger.digForAddress(this.ad)
         const yearBuilt = await this.digForYearBuilt(coordinates)
         const renter = this.digForRenter()
         const charges = this.digForCharges()
@@ -76,7 +81,7 @@ export class DigService {
             const building = coordinates && coordinates.lat && coordinates.lng &&
                 await YearBuiltService.getBuilding(coordinates.lat, coordinates.lng)
             const yearBuiltFromBuilding = building && YearBuiltService.getYearBuiltFromBuilding(building)
-    
+
             return yearBuiltFromBuilding
         }
     }
@@ -113,7 +118,7 @@ export class DigService {
         } else if (this.ad.price > 10000) {
             throw { error: ErrorCode.Price, msg: `price "${this.ad.price}" too expensive to be a rent` }
         } else if (this.ad.price < 100) {
-            throw { error: ErrorCode.Price, msg:  `price "${this.ad.price}" too cheap to be a rent` }
+            throw { error: ErrorCode.Price, msg: `price "${this.ad.price}" too cheap to be a rent` }
         }
 
         return this.ad.price
