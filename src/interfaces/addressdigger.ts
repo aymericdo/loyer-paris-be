@@ -12,7 +12,7 @@ export interface AddressInfo {
 }
 
 export interface AddressDigStrategy {
-    digForAddress(ad: Ad): Promise<AddressInfo>;
+    digForAddress(ad: Ad): AddressInfo;
 }
 
 export class AddressDigger implements AddressDigStrategy {
@@ -23,7 +23,7 @@ export class AddressDigger implements AddressDigStrategy {
         this.cityInfo = cityInfo
     }
 
-    digForAddress(ad: Ad): Promise<AddressInfo> {
+    digForAddress(ad: Ad): AddressInfo {
         const addressDiggerStrategyFactory = new AddressDiggerStrategyFactory(this.cityInfo);
         return addressDiggerStrategyFactory.getDiggerStrategy(this.cityInfo.city).digForAddress(ad);
     }
@@ -64,7 +64,7 @@ export class NoAddressDigger implements AddressDigStrategy {
     ) {
         this.cityInfo = cityInfo
     }
-    digForAddress(ad: Ad): Promise<AddressInfo> {
+    digForAddress(ad: Ad): AddressInfo {
         throw { error: ErrorCode.City, msg: `city not ${this.cityInfo.city} found in the list` }
     }
 }

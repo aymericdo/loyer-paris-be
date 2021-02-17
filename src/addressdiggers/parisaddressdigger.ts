@@ -5,9 +5,12 @@ import { AddressDigStrategy, AddressInfo } from "@interfaces/addressdigger";
 import { AddressItem } from "@interfaces/json-item";
 import { Coordinate } from "@interfaces/shared";
 import { CityInfo } from "@services/city";
+import * as fs from 'fs';
 import Fuse from "fuse.js";
+import path from "path";
 import { Memoize } from "typescript-memoize";
 
+const parisAddresses: AddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
 
 export class ParisAddressDigger implements AddressDigStrategy {
     cityInfo: CityInfo;
@@ -18,9 +21,11 @@ export class ParisAddressDigger implements AddressDigStrategy {
         this.cityInfo = cityInfo
     }
 
-    digForAddress(ad: Ad): Promise<AddressInfo> {
+    digForAddress(ad: Ad): AddressInfo {
         this.ad = ad
-        return (Promise.resolve() as unknown) as Promise<AddressInfo>;
+        const address = this.getAddress()
+        const coordinate = this.getCoordinate()
+        return "" as unknown as AddressInfo;
     }
 
     getAddress() {
@@ -49,7 +54,7 @@ export class ParisAddressDigger implements AddressDigStrategy {
     }
 
     coordinateFromAddress(address: string, postalCode: string) {
-        const addressInParis = this.getAddressInParis(address, { this.cityInfo.postalCode })
+        const addressInParis = this.getAddressInParis(address, this.cityInfo)
         const result: AddressItem[] = addressInParis?.map(address => address.item)
         return result && { lat: result[0].fields.geom_x_y[0], lng: result[0].fields.geom_x_y[1] }
     }
@@ -98,12 +103,13 @@ export class ParisAddressDigger implements AddressDigStrategy {
         }
 
         const fuse = new Fuse(parisAddresses.filter(address => {
-            if (!(addressInfo && addressInfo.postalCode)) {
+            if (!(this.cityInfo && this.cityInfo.postalCode)) {
                 return true
             }
 
             // 75010 -> 10 75009 -> 9
-            const code = (addressInfo.postalCode.slice(-2)[0] === '0' ? addressInfo.postalCode.slice(-1) : addressInfo.postalCode.slice(-2))
+            const code = (this.cityInfo.postalCode.slice(-2)[0] === '0' ?
+                this.cityInfo.postalCode.slice(-1) : this.cityInfo.postalCode.slice(-2))
             return code ? address.fields.c_ar === +code : true
         }), options)
 

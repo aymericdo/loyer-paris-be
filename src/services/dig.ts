@@ -26,17 +26,13 @@ export class DigService {
         const hasFurniture = this.digForHasFurniture()
         const surface = this.digForSurface()
         const price = this.digForPrice()
-<<<<<<< HEAD
-=======
-        const [address, postalCode, city, stations, coordinates, blurryCoordinates] = this.digForAddress()
-        const yearBuilt = await this.digForYearBuilt(coordinates)
->>>>>>> 1e3b4c8e5fbff1c4d60c311ad7dafdc1c47760a1
         const renter = this.digForRenter()
         const charges = this.digForCharges()
         const hasCharges = this.digForHasCharges()
 
-        const addressDigger = new AddressDigger(this.cityInfo.city)
-        const [address, coordinates, blurryCoordinates] = addressDigger.digForAddress()
+        const addressDigger = new AddressDigger(this.cityInfo)
+        const { address, coordinates, blurryCoordinates } = addressDigger.digForAddress(this.ad)
+
         const yearBuilt = await this.digForYearBuilt(coordinates)
         const stations = this.digForStations()
 
@@ -57,33 +53,6 @@ export class DigService {
             charges,
             hasCharges,
         }
-    }
-
-<<<<<<< HEAD
-    private digForAddress(): [string, Coordinate, Coordinate] {
-=======
-    private digForAddress(): [string, string, string, string[], Coordinate, Coordinate] {
->>>>>>> 1e3b4c8e5fbff1c4d60c311ad7dafdc1c47760a1
-        const addressService = new AddressService(this.ad)
-
-        const address = addressService.getAddress()
-        const stations = addressService.getStations()
-        const coordinates = addressService.getCoordinate()
-        const blurryCoordinates = addressService.getCoordinate(true)
-
-        if (!["paris", "lille"].includes(city)) {
-            throw { error: ErrorCode.City, msg: `city "${city}" not found in the list` }
-        }
-
-        if (!address && !postalCode && !coordinates) {
-            throw { error: ErrorCode.Address, msg: 'address not found' }
-        }
-
-<<<<<<< HEAD
-        return [address, coordinates, blurryCoordinates]
-=======
-        return [address, postalCode, city, stations, coordinates, blurryCoordinates]
->>>>>>> 1e3b4c8e5fbff1c4d60c311ad7dafdc1c47760a1
     }
 
     private digForRoomCount(): number {
