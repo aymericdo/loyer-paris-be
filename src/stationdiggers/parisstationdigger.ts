@@ -10,7 +10,7 @@ import path from "path";
 import inside from 'point-in-polygon';
 
 
-const parisStations: ParisStationItem[] = JSON.parse(fs.readFileSync(path.join('json-data/metros_stations.json'), 'utf8'))
+const parisStations: ParisStationItem[] = JSON.parse(fs.readFileSync(path.join('json-data/stations_paris.json'), 'utf8'))
 
 export class ParisStationDigger implements StationDigStrategy {
     distanceService: DistanceService;
@@ -21,9 +21,6 @@ export class ParisStationDigger implements StationDigStrategy {
         this.distanceService = new DistanceService(postalCode)
         return ad.stations || stationsFromDescription && (postalCode && this.nearestPointInPostalCode(stationsFromDescription))
 
-    }
-    getPostalCode() {
-        throw new Error('Method not implemented.');
     }
 
     private getStationsFromFile(description: string): ParisStationItem[] {

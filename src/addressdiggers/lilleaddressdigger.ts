@@ -1,16 +1,14 @@
 import * as cleanup from '@helpers/cleanup';
-import { min } from "@helpers/functions";
 import { postalCodePossibilities } from "@helpers/postal-code";
 import { regexString } from "@helpers/regex";
 import { Ad } from "@interfaces/ad";
 import { AddressDiggerOutput, AddressDigStrategy } from "@interfaces/addressdigger";
-import { LilleAddressItem, LilleStationItem, ParisAddressItem } from "@interfaces/json-item";
+import { ParisAddressItem } from "@interfaces/json-item";
 import { Coordinate } from "@interfaces/shared";
 import { DistanceService } from "@services/distance";
 import * as fs from 'fs';
 import Fuse from "fuse.js";
 import path from "path";
-import inside from "point-in-polygon";
 import { Memoize } from "typescript-memoize";
 
 
@@ -129,81 +127,5 @@ export class LilleAddressDigger implements AddressDigStrategy {
 
         const fuse = new Fuse(lilleAddresses, options)
         return fuse.search(cleanAddress, { limit }) as { item: ParisAddressItem, score: number }[];
-    }
-
-    private nearestPointInPostalCode(metroItems: LilleStationItem[]): string[] {
-        const postalCodePolygon = this.distanceService.getPolyFromPostalCode()
-
-        if (!postalCodePolygon) return null
-
-        const pointByDist = metroItems.map(metro => {
-            const point = [metro.fields.stop_coordinates[0], metro.fields.stop_coordinates[1]]
-            if (inside(point, postalCodePolygon)) {
-                return { point, dist: 0, name: metro.fields.stop_name }
-            } else {
-                // Get the closest coord but in the right postalCode
-                return { ...this.distanceService.distanceToPoly(point as [number, number], postalCodePolygon as [number, number][]), name: metro.fields.stop_name };
-            }
-        });
-
-        if (!pointByDist.length) return null
-
-        if (pointByDist[0].dist === 0) {
-            const insidePostalCodeCase = pointByDist[0] as { name: string, point: number[] };
-            this.blurryCoordinates = { lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] };
-        } else {
-            const bah = min(pointByDist, 'dist')
-
-            // marge d'erreur : 250m
-            if (bah.dist < 0.0025) {
-                this.blurryCoordinates = { lng: bah.point[0], lat: bah.point[1] }
-            }
-        }
-
-        return pointByDist.reduce((prev, point) => {
-            if (point.dist < 0.0025 && prev.every(elem => elem !== point.name)) {
-                prev.push(point.name);
-            }
-            return prev;
-        }, []);
-    }
-
-    private nearestAddressInPostalCode(addressesCompleted: { item: LilleAddressItem, hasStreetNumber: boolean, score: number }[]): [string, boolean] {
-        const postalCodePolygon = this.distanceService.getPolyFromPostalCode()
-
-        if (!postalCodePolygon) return null
-
-        const pointByDist = addressesCompleted.map(address => {
-            const point = address.item.fields.geo_point_2d;
-            if (inside(point, postalCodePolygon)) {
-                return { point, dist: 0, name: `${address.item.fields.typevoie} ${address.item.fields.nomvoie}`, hasStreetNumber: address.hasStreetNumber }
-            } else {
-                // Get the closest coord but in the right postalCode
-                return this.distanceService.distanceToPoly(point as [number, number], postalCodePolygon as [number, number][]);
-            }
-        });
-
-        if (!pointByDist.length) return null
-
-        if (pointByDist[0].dist === 0) {
-            const insidePostalCodeCase = pointByDist[0] as { name: string, hasStreetNumber: boolean, point: number[] };
-            insidePostalCodeCase.hasStreetNumber ?
-                this.coordinates = { lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] }
-                :
-                this.blurryCoordinates = { lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] };
-            return [insidePostalCodeCase.name, !!insidePostalCodeCase.hasStreetNumber];
-        } else {
-            const bah = min(pointByDist, 'dist')
-
-            // marge d'erreur : 250m
-            if (bah.dist > 0.0025) {
-                return null;
-            }
-
-            const coord = { lng: bah.point[0], lat: bah.point[1] }
-            this.blurryCoordinates = { ...coord };
-            // Convert the best coord approximation in string addr
-            return [this.addressFromCoordinate(coord), false]
-        }
     }
 }
