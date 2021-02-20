@@ -51,23 +51,6 @@ export class DigService {
         }
     }
 
-    private digForAddress(): [string, string, string, string[], Coordinate, Coordinate] {
-        const addressService = new AddressService(this.ad)
-
-        const city = addressService.city
-        const postalCode = addressService.getPostalCode()
-        const address = addressService.getAddress()
-        const stations = addressService.getStations()
-        const coordinates = addressService.getCoordinate()
-        const blurryCoordinates = addressService.getCoordinate(true)
-
-        if (!address && !postalCode && !coordinates) {
-            throw { error: ErrorCode.Address, msg: 'address not found' }
-        }
-
-        return [address, postalCode, city, stations, coordinates, blurryCoordinates]
-    }
-
     private digForRoomCount(): number {
         const roomsFromTitle = this.ad.title && this.ad.title.match(regexString('roomCount')) && this.ad.title.match(regexString('roomCount'))[0]
         const roomsFromDescription = this.ad.description && this.ad.description.match(regexString('roomCount')) && this.ad.description.match(regexString('roomCount'))[0]

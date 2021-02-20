@@ -146,6 +146,7 @@ export interface LilleEncadrementItem {
     fields: {
         loyer_de_reference_minore_meublees: number
         majoration_unitaire_du_loyer_de_reference_meublees: number
+        zone: number
         loyer_de_reference_meublees: number
         loyer_de_reference_majore_non_meublees: number
         loyer_de_reference_minore_non_meublees: number

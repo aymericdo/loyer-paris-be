@@ -1,11 +1,12 @@
 import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
+import { EncadrementItem, LilleEncadrementItem, ParisEncadrementItem } from '@interfaces/json-item'
 import { YearBuiltService } from '@services/year-built'
-import { ParisEncadrementItem } from '@interfaces/json-item'
 
 interface SerializedInfo {
     address: string
     charges?: number
+    city?: string
     hasCharges?: boolean
     hasFurniture?: boolean
     isLegal: boolean
@@ -20,11 +21,11 @@ interface SerializedInfo {
 
 export class SerializeRentService {
     serializedInfo: SerializedInfo = null
-    encadrementItem: ParisEncadrementItem = null
+    encadrementItem: EncadrementItem = null
 
     constructor(
         serializedInfo: SerializedInfo,
-        encadrementItem: ParisEncadrementItem,
+        encadrementItem: EncadrementItem,
     ) {
         this.serializedInfo = serializedInfo
         this.encadrementItem = encadrementItem
@@ -60,7 +61,10 @@ export class SerializeRentService {
                 hasCharges: { order: 7, value: !charges && hasCharges != null ? hasCharges : null },
             },
             computedInfo: {
-                neighborhood: { order: 0, value: this.encadrementItem.fields.nom_quartier },
+                neighborhood: {
+                    order: 0, value: this.serializedInfo.city === "paris" ? (this.encadrementItem as ParisEncadrementItem).fields.nom_quartier :
+                        this.serializedInfo.city === "lille" ? (this.encadrementItem as LilleEncadrementItem).fields.zone : null
+                },
                 hasFurniture: { order: 1, value: !!this.encadrementItem.fields.meuble_txt.match(/^meubl/g) },
                 roomCount: { order: 2, value: +this.encadrementItem.fields.piece },
                 surface: { order: 3, value: surface },

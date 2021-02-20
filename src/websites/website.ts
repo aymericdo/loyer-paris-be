@@ -3,8 +3,9 @@ import * as cleanup from '@helpers/cleanup'
 import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { Ad, CleanAd } from '@interfaces/ad'
-import { ParisEncadrementItem } from '@interfaces/json-item'
+import { EncadrementItem, LilleEncadrementItem, ParisEncadrementItem } from '@interfaces/json-item'
 import { Mapping } from '@interfaces/mapping'
+import { RentFilter } from '@interfaces/rentfilter'
 import { ApiError } from '@interfaces/shared'
 import { ApiErrorsService, ErrorCode } from '@services/api-errors'
 import { DigService } from '@services/dig'
@@ -49,10 +50,14 @@ export abstract class Website {
         const ad: Ad = await this.mapping()
         const city = ad.cityLabel?.match(/[A-Za-z -]+/g) && cleanup.string(ad.cityLabel.match(/[A-Za-z -]+/g)[0])
         const cleanAd: CleanAd = await new DigService(ad, city).digInAd()
-        const adEncadrement: ParisEncadrementItem = new RentFilterService(cleanAd).filter()
+        const rentFilter = new RentFilter(city)
+        const adEncadrement: EncadrementItem = rentFilter.filter(cleanAd)
+
 
         if (adEncadrement) {
-            const maxAuthorized = roundNumber(+adEncadrement.fields.max * cleanAd.surface)
+            const maxAuthorized = city === "paris" ? roundNumber(+(adEncadrement as ParisEncadrementItem).fields.max * cleanAd.surface) :
+                city === "lille" ? roundNumber(+(adEncadrement as LilleEncadrementItem).fields.loyer_de_reference_majore_meublees * cleanAd.surface) :
+                    null
             const priceExcludingCharges = getPriceExcludingCharges(cleanAd.price, cleanAd.charges, cleanAd.hasCharges)
             const isLegal = priceExcludingCharges <= maxAuthorized
 
