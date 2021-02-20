@@ -1,7 +1,7 @@
 import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { YearBuiltService } from '@services/year-built'
-import { EncadrementItem } from '@interfaces/json-item'
+import { ParisEncadrementItem } from '@interfaces/json-item'
 
 interface SerializedInfo {
     address: string
@@ -20,11 +20,11 @@ interface SerializedInfo {
 
 export class SerializeRentService {
     serializedInfo: SerializedInfo = null
-    encadrementItem: EncadrementItem = null
+    encadrementItem: ParisEncadrementItem = null
 
     constructor(
         serializedInfo: SerializedInfo,
-        encadrementItem: EncadrementItem,
+        encadrementItem: ParisEncadrementItem,
     ) {
         this.serializedInfo = serializedInfo
         this.encadrementItem = encadrementItem
@@ -65,7 +65,7 @@ export class SerializeRentService {
                 roomCount: { order: 2, value: +this.encadrementItem.fields.piece },
                 surface: { order: 3, value: surface },
                 dateRange: { order: 4, value: this.encadrementItem.fields.epoque },
-                max: { order: 5, value: !isLegal ? roundNumber(+this.encadrementItem.fields.max): null },
+                max: { order: 5, value: !isLegal ? roundNumber(+this.encadrementItem.fields.max) : null },
                 maxAuthorized: { order: 6, value: !isLegal ? maxAuthorized : null },
                 promoPercentage: { order: 7, value: !isLegal ? roundNumber(100 - (maxAuthorized * 100 / priceExcludingCharges)) : null },
             },

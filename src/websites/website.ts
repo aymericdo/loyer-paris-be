@@ -3,7 +3,7 @@ import * as cleanup from '@helpers/cleanup'
 import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { Ad, CleanAd } from '@interfaces/ad'
-import { EncadrementItem } from '@interfaces/json-item'
+import { ParisEncadrementItem } from '@interfaces/json-item'
 import { Mapping } from '@interfaces/mapping'
 import { ApiError } from '@interfaces/shared'
 import { ApiErrorsService, ErrorCode } from '@services/api-errors'
@@ -49,7 +49,7 @@ export abstract class Website {
         const ad: Ad = await this.mapping()
         const city = ad.cityLabel?.match(/[A-Za-z -]+/g) && cleanup.string(ad.cityLabel.match(/[A-Za-z -]+/g)[0])
         const cleanAd: CleanAd = await new DigService(ad, city).digInAd()
-        const adEncadrement: EncadrementItem = new RentFilterService(cleanAd).filter()
+        const adEncadrement: ParisEncadrementItem = new RentFilterService(cleanAd).filter()
 
         if (adEncadrement) {
             const maxAuthorized = roundNumber(+adEncadrement.fields.max * cleanAd.surface)

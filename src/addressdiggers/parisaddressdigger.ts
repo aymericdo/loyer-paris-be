@@ -4,8 +4,9 @@ import { postalCodePossibilities } from "@helpers/postal-code";
 import { regexString } from "@helpers/regex";
 import { Ad } from "@interfaces/ad";
 import { AddressDiggerOutput, AddressDigStrategy } from "@interfaces/addressdigger";
-import { AddressItem, MetroItem } from "@interfaces/json-item";
+import { ParisAddressItem, ParisStationItem } from "@interfaces/json-item";
 import { Coordinate } from "@interfaces/shared";
+import { StationDigger } from '@interfaces/stationdigger';
 import { DistanceService } from "@services/distance";
 import * as fs from 'fs';
 import Fuse from "fuse.js";
@@ -14,7 +15,7 @@ import inside from "point-in-polygon";
 import { Memoize } from "typescript-memoize";
 
 
-const parisAddresses: AddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
+const parisAddresses: ParisAddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
 
 export class ParisAddressDigger implements AddressDigStrategy {
     city: string;
@@ -25,20 +26,22 @@ export class ParisAddressDigger implements AddressDigStrategy {
     blurryCoordinates: Coordinate
     ad: Ad
     distanceService: DistanceService;
+    stationDigger: StationDigger
     constructor(
         city: string,
     ) {
         this.city = city
         this.distanceService = new DistanceService(this.getPostalCode())
+        this.stationDigger = new StationDigger(this.city)
     }
 
     digForAddress(ad: Ad): AddressDiggerOutput {
         this.ad = ad
         this.postalCode = this.getPostalCode()
         this.address = this.getAddress()
-        this.stations = this.getStations()
         this.coordinates = this.getCoordinate()
         this.blurryCoordinates = this.getCoordinate(true)
+        this.stations = this.stationDigger.getStations(ad, this.postalCode)
         return { address: this.address, postalCode: this.postalCode, city: this.city, stations: this.stations, coordinates: this.coordinates, blurryCoordinates: this.blurryCoordinates }
     }
 
@@ -85,7 +88,7 @@ export class ParisAddressDigger implements AddressDigStrategy {
                 prev = { dist, current }
             }
             return prev;
-        }, {} as { current: AddressItem, dist: number }))?.current?.fields?.l_adr;
+        }, {} as { current: ParisAddressItem, dist: number }))?.current?.fields?.l_adr;
     }
 
     private digForPostalCode(text: string): string {
@@ -123,7 +126,7 @@ export class ParisAddressDigger implements AddressDigStrategy {
     }
 
     @Memoize()
-    private getAddressCompleted(q: string, limit: number): { item: AddressItem, score: number }[] {
+    private getAddressCompleted(q: string, limit: number): { item: ParisAddressItem, score: number }[] {
         const options = {
             keys: ['l_adr'],
             includeScore: true,
@@ -137,10 +140,10 @@ export class ParisAddressDigger implements AddressDigStrategy {
         }
 
         const fuse = new Fuse(parisAddresses, options)
-        return fuse.search(cleanAddress, { limit }) as { item: AddressItem, score: number }[];
+        return fuse.search(cleanAddress, { limit }) as { item: ParisAddressItem, score: number }[];
     }
 
-    private nearestPointInPostalCode(metroItems: MetroItem[]): string[] {
+    private nearestPointInPostalCode(metroItems: ParisStationItem[]): string[] {
         const postalCodePolygon = this.distanceService.getPolyFromPostalCode()
 
         if (!postalCodePolygon) return null
@@ -177,7 +180,7 @@ export class ParisAddressDigger implements AddressDigStrategy {
         }, []);
     }
 
-    private nearestAddressInPostalCode(addressesCompleted: { item: AddressItem, hasStreetNumber: boolean, score: number }[]): [string, boolean] {
+    private nearestAddressInPostalCode(addressesCompleted: { item: ParisAddressItem, hasStreetNumber: boolean, score: number }[]): [string, boolean] {
         const postalCodePolygon = this.distanceService.getPolyFromPostalCode()
 
         if (!postalCodePolygon) return null

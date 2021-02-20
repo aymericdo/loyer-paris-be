@@ -1,10 +1,10 @@
-import { AddressItem } from "@interfaces/json-item";
+import { LilleAddressItem, ParisAddressItem } from "@interfaces/json-item";
 import path from "path";
 import * as fs from 'fs'
 import { ErrorCode } from "./api-errors";
 
-const parisAddresses: AddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
-const lilleAddresses: AddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_lille.json'), 'utf8'))
+const parisAddresses: ParisAddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
+const lilleAddresses: LilleAddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_lille.json'), 'utf8'))
 
 export const cityList = {
   paris: {
@@ -20,7 +20,7 @@ export const cityList = {
 export class CityService {
   city: string;
 
-  constructor (
+  constructor(
     city: string,
   ) {
     this.city = city;

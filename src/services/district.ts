@@ -1,11 +1,11 @@
 import * as fs from 'fs'
-import { DistrictItem } from "@interfaces/json-item"
+import { LilleDistrictItem, ParisDistrictItem } from "@interfaces/json-item"
 import path from "path"
 import inside from "point-in-polygon"
 import { Coordinate } from '@interfaces/shared'
 
-const parisDistricts: { features: DistrictItem[] } = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'))
-const lilleDistricts: { features: DistrictItem[] } = JSON.parse(fs.readFileSync(path.join('json-data/quartier_lille_geodata.json'), 'utf8'))
+const parisDistricts: { features: ParisDistrictItem[] } = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'))
+const lilleDistricts: { features: LilleDistrictItem[] } = JSON.parse(fs.readFileSync(path.join('json-data/quartier_lille_geodata.json'), 'utf8'))
 
 const districts = {
     paris: parisDistricts,
@@ -17,7 +17,7 @@ export class DistrictService {
     coordinates: Coordinate = null
     postalCode: string = null
 
-    constructor (
+    constructor(
         city: string,
         postalCode: string,
         coordinates?: Coordinate,
@@ -27,16 +27,16 @@ export class DistrictService {
         this.postalCode = postalCode
     }
 
-    getDistricts(): DistrictItem[] {
-      const districtFromCoordinate = this.coordinates && this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
+    getDistricts(): ParisDistrictItem[] {
+        const districtFromCoordinate = this.coordinates && this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
-      return districtFromCoordinate ?
+        return districtFromCoordinate ?
             districtFromCoordinate
-        :
+            :
             this.getDistrictFromPostalCode()
     }
 
-    getDistrictFromPostalCode(): DistrictItem[] {
+    getDistrictFromPostalCode(): ParisDistrictItem[] {
         if (this.postalCode) {
             // 75010 -> 10  75009 -> 9
             const code = this.postalCode.slice(-2)[0] === '0' ? this.postalCode.slice(-1) : this.postalCode.slice(-2)
@@ -49,7 +49,7 @@ export class DistrictService {
         }
     }
 
-    private getDistrictFromCoordinate(lat: number, lng: number): DistrictItem[] {
+    private getDistrictFromCoordinate(lat: number, lng: number): ParisDistrictItem[] {
         const district = districts[this.city].features.find(district => inside([+lng, +lat], district.geometry.coordinates[0]))
         return district ? [district] : []
     }

@@ -4,7 +4,7 @@ import { postalCodePossibilities } from "@helpers/postal-code";
 import { regexString } from "@helpers/regex";
 import { Ad } from "@interfaces/ad";
 import { AddressDiggerOutput, AddressDigStrategy } from "@interfaces/addressdigger";
-import { AddressItem, MetroItem } from "@interfaces/json-item";
+import { LilleAddressItem, LilleStationItem, ParisAddressItem } from "@interfaces/json-item";
 import { Coordinate } from "@interfaces/shared";
 import { DistanceService } from "@services/distance";
 import * as fs from 'fs';
@@ -14,7 +14,7 @@ import inside from "point-in-polygon";
 import { Memoize } from "typescript-memoize";
 
 
-const lilleAddresses: AddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_lille.json'), 'utf8'))
+const lilleAddresses: ParisAddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_lille.json'), 'utf8'))
 
 export class LilleAddressDigger implements AddressDigStrategy {
     address: string
@@ -83,7 +83,7 @@ export class LilleAddressDigger implements AddressDigStrategy {
                 prev = { dist, current }
             }
             return prev;
-        }, {} as { current: AddressItem, dist: number }))?.current?.fields?.l_adr;
+        }, {} as { current: ParisAddressItem, dist: number }))?.current?.fields?.l_adr;
     }
 
     private digForPostalCode(text: string): string {
@@ -114,7 +114,7 @@ export class LilleAddressDigger implements AddressDigStrategy {
     }
 
     @Memoize()
-    private getAddressCompleted(q: string, limit: number): { item: AddressItem, score: number }[] {
+    private getAddressCompleted(q: string, limit: number): { item: ParisAddressItem, score: number }[] {
         const options = {
             keys: ['auto_adres'],
             includeScore: true,
@@ -128,21 +128,21 @@ export class LilleAddressDigger implements AddressDigStrategy {
         }
 
         const fuse = new Fuse(lilleAddresses, options)
-        return fuse.search(cleanAddress, { limit }) as { item: AddressItem, score: number }[];
+        return fuse.search(cleanAddress, { limit }) as { item: ParisAddressItem, score: number }[];
     }
 
-    private nearestPointInPostalCode(metroItems: MetroItem[]): string[] {
+    private nearestPointInPostalCode(metroItems: LilleStationItem[]): string[] {
         const postalCodePolygon = this.distanceService.getPolyFromPostalCode()
 
         if (!postalCodePolygon) return null
 
         const pointByDist = metroItems.map(metro => {
-            const point = [metro.lon, metro.lat]
+            const point = [metro.fields.stop_coordinates[0], metro.fields.stop_coordinates[1]]
             if (inside(point, postalCodePolygon)) {
-                return { point, dist: 0, name: metro.tags.name }
+                return { point, dist: 0, name: metro.fields.stop_name }
             } else {
                 // Get the closest coord but in the right postalCode
-                return { ...this.distanceService.distanceToPoly(point as [number, number], postalCodePolygon as [number, number][]), name: metro.tags.name };
+                return { ...this.distanceService.distanceToPoly(point as [number, number], postalCodePolygon as [number, number][]), name: metro.fields.stop_name };
             }
         });
 
@@ -168,15 +168,15 @@ export class LilleAddressDigger implements AddressDigStrategy {
         }, []);
     }
 
-    private nearestAddressInPostalCode(addressesCompleted: { item: AddressItem, hasStreetNumber: boolean, score: number }[]): [string, boolean] {
+    private nearestAddressInPostalCode(addressesCompleted: { item: LilleAddressItem, hasStreetNumber: boolean, score: number }[]): [string, boolean] {
         const postalCodePolygon = this.distanceService.getPolyFromPostalCode()
 
         if (!postalCodePolygon) return null
 
         const pointByDist = addressesCompleted.map(address => {
-            const point = address.item.fields.geom.coordinates;
+            const point = address.item.fields.geo_point_2d;
             if (inside(point, postalCodePolygon)) {
-                return { point, dist: 0, name: address.item.fields.l_adr, hasStreetNumber: address.hasStreetNumber }
+                return { point, dist: 0, name: `${address.item.fields.typevoie} ${address.item.fields.nomvoie}`, hasStreetNumber: address.hasStreetNumber }
             } else {
                 // Get the closest coord but in the right postalCode
                 return this.distanceService.distanceToPoly(point as [number, number], postalCodePolygon as [number, number][]);

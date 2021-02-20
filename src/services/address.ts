@@ -1,16 +1,16 @@
 import * as cleanup from '@helpers/cleanup'
+import { min } from '@helpers/functions'
+import { postalCodePossibilities } from '@helpers/postal-code'
+import { regexString } from '@helpers/regex'
+import { Ad } from '@interfaces/ad'
+import { ParisAddressItem, ParisStationItem } from '@interfaces/json-item'
+import { Coordinate } from '@interfaces/shared'
 import Fuse from 'fuse.js'
 import inside from "point-in-polygon"
-import { Coordinate } from '@interfaces/shared'
-import { AddressItem, MetroItem } from '@interfaces/json-item'
-import { postalCodePossibilities } from '@helpers/postal-code'
-import { Ad } from '@interfaces/ad'
-import { regexString } from '@helpers/regex'
 import { Memoize } from 'typescript-memoize'
-import { min } from '@helpers/functions'
-import { DistanceService } from './distance';
-import { StationService } from './station'
 import { cityList, CityService } from './city'
+import { DistanceService } from './distance'
+import { StationService } from './station'
 
 interface AddressInfo {
     postalCode: string
@@ -22,7 +22,7 @@ export class AddressService extends CityService {
     blurryCoordinates: Coordinate;
     distanceService: DistanceService;
 
-    constructor (
+    constructor(
         ad: Ad,
     ) {
         super(ad.cityLabel?.match(/[A-Za-z -]+/g) && cleanup.string(ad.cityLabel.match(/[A-Za-z -]+/g)[0]))
@@ -36,7 +36,7 @@ export class AddressService extends CityService {
             && (this.digForPostalCode(this.ad.cityLabel) || this.digForPostalCode2(this.ad.cityLabel))
             || this.ad.title && (this.digForPostalCode(this.ad.title) || this.digForPostalCode2(this.ad.title))
             || this.ad.description && (this.digForPostalCode(this.ad.description) || this.digForPostalCode2(this.ad.description))
-    
+
         return postalCode && postalCodePossibilities[this.city].includes(postalCode.toString()) ? postalCode : null
     }
 
@@ -66,7 +66,7 @@ export class AddressService extends CityService {
 
     getStations(): string[] {
         if (this.city !== 'paris') return []
-        const stationsFromDescription: MetroItem[] = this.ad?.description && new StationService(this.ad.description).getStations()
+        const stationsFromDescription: ParisStationItem[] = this.ad?.description && new StationService(this.ad.description).getStations()
         return this.ad.stations || stationsFromDescription && (this.getPostalCode() && this.nearestPointInPostalCode(stationsFromDescription))
     }
 
@@ -77,14 +77,14 @@ export class AddressService extends CityService {
                 prev = { dist, current }
             }
             return prev;
-        }, {} as { current: AddressItem, dist: number }))?.current?.fields?.l_adr;
+        }, {} as { current: ParisAddressItem, dist: number }))?.current?.fields?.l_adr;
     }
 
     private digForPostalCode(text: string): string {
         const postalCodeRe = new RegExp(regexString(`postalCode_${this.city}`))
         return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
     }
-    
+
     private digForPostalCode2(text: string): string {
         const postalCode2Re = new RegExp(regexString(`postalCode2_${this.city}`))
         if (!postalCode2Re) return null
@@ -102,7 +102,7 @@ export class AddressService extends CityService {
                 const addresses = this.getAddressCompleted(address, maxResult / addressesFromRegex.length > 0 ? maxResult / addressesFromRegex.length : 1)
                 return addresses && addresses.map(res => ({ ...res, hasStreetNumber }))
             }).filter(Boolean).sort((a, b) => a.score - b.score)
-            
+
             if (this.city === 'paris' && this.getPostalCode()) {
                 const resultInPostalCode = this.nearestAddressInPostalCode(result)
 
@@ -124,7 +124,7 @@ export class AddressService extends CityService {
     }
 
     @Memoize()
-    private getAddressCompleted(q: string, limit: number): { item: AddressItem, score: number }[] {
+    private getAddressCompleted(q: string, limit: number): { item: ParisAddressItem, score: number }[] {
         const options = {
             keys: [`fields.${cityList[this.city].addressesField}`],
             includeScore: true,
@@ -138,10 +138,10 @@ export class AddressService extends CityService {
         }
 
         const fuse = new Fuse(cityList[this.city].addresses, options)
-        return fuse.search(cleanAddress, { limit }) as { item: AddressItem, score: number }[];
+        return fuse.search(cleanAddress, { limit }) as { item: ParisAddressItem, score: number }[];
     }
 
-    private nearestPointInPostalCode(metroItems: MetroItem[]): string[] {
+    private nearestPointInPostalCode(metroItems: ParisStationItem[]): string[] {
         const postalCodePolygon = this.distanceService.getPolyFromPostalCode()
 
         if (!postalCodePolygon) return null
@@ -178,7 +178,7 @@ export class AddressService extends CityService {
         }, []);
     }
 
-    private nearestAddressInPostalCode(addressesCompleted: { item: AddressItem, hasStreetNumber: boolean, score: number }[]): [string, boolean] {
+    private nearestAddressInPostalCode(addressesCompleted: { item: ParisAddressItem, hasStreetNumber: boolean, score: number }[]): [string, boolean] {
         const postalCodePolygon = this.distanceService.getPolyFromPostalCode()
 
         if (!postalCodePolygon) return null
@@ -197,9 +197,9 @@ export class AddressService extends CityService {
 
         if (pointByDist[0].dist === 0) {
             const insidePostalCodeCase = pointByDist[0] as { name: string, hasStreetNumber: boolean, point: number[] };
-            insidePostalCodeCase.hasStreetNumber ? 
+            insidePostalCodeCase.hasStreetNumber ?
                 this.coordinates = { lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] }
-            :
+                :
                 this.blurryCoordinates = { lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] };
             return [insidePostalCodeCase.name, !!insidePostalCodeCase.hasStreetNumber];
         } else {

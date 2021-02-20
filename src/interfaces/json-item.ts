@@ -1,4 +1,5 @@
-export interface AddressItem {
+export type AddressItem = ParisAddressItem | LilleAddressItem
+export interface ParisAddressItem {
     datasetid: string
     recordid: string
     fields: {
@@ -28,7 +29,37 @@ export interface AddressItem {
     record_timestamp: string
 }
 
-export interface DistrictItem {
+export interface LilleAddressItem {
+    datasetid: string
+    recordid: string
+    fields: {
+        auto_adres: string
+        ccomvoi: number
+        insee: number
+        rivoli_id: number
+        cpostal: string
+        objectid: number
+        auto_match: string
+        nomcom: string
+        geo_point_2d: number[]
+        numero: number
+        typevoie: string
+        geo_shape: {
+            type: string
+            coordinates: number[]
+        }
+        comm_id: string
+        nomvoie: string
+    }
+    geometry: {
+        type: string
+        coordinates: number[]
+    }
+    record_timestamp: string
+}
+
+export type DistrictItem = ParisDistrictItem | LilleDistrictItem
+export interface ParisDistrictItem {
     type: "Feature";
     geometry: {
         type: "Polygon"
@@ -44,6 +75,18 @@ export interface DistrictItem {
         n_sq_ar: number
         c_quinsee: number
         c_ar: number
+    }
+}
+
+export interface LilleDistrictItem {
+    type: "Feature";
+    geometry: {
+        type: "Polygon"
+        coordinates: number[][][]
+    }
+    properties: {
+        zonage: string
+        geo_point_2d: number[]
     }
 }
 
@@ -66,7 +109,9 @@ export interface ArrondissementItem {
     }
 }
 
-export interface EncadrementItem {
+export type EncadrementItem = ParisEncadrementItem | LilleEncadrementItem
+
+export interface ParisEncadrementItem {
     datasetid: string
     recordid: string
     fields: {
@@ -95,7 +140,25 @@ export interface EncadrementItem {
     record_timestamp: string
 }
 
-export interface MetroItem {
+export interface LilleEncadrementItem {
+    datasetid: string
+    recordid: string
+    fields: {
+        loyer_de_reference_minore_meublees: number
+        majoration_unitaire_du_loyer_de_reference_meublees: number
+        loyer_de_reference_meublees: number
+        loyer_de_reference_majore_non_meublees: number
+        loyer_de_reference_minore_non_meublees: number
+        loyer_de_reference_non_meublees: number
+        epoque_construction: string
+        loyer_de_reference_majore_meublees: number
+        nb_pieces: string
+    }
+    record_timestamp: string
+}
+
+export type StationItem = ParisStationItem | LilleStationItem
+export interface ParisStationItem {
     type: string
     id: number
     lat: number
@@ -117,4 +180,24 @@ export interface MetroItem {
         wikidata: string
         wikipedia: string
     }
+}
+
+export interface LilleStationItem {
+    datasetid: string
+    recordid: string
+    fields: {
+        wheelchair_boarding: string
+        zone_id: string
+        stop_id: string
+        parent_station: string
+        stop_coordinates: number[]
+        stop_desc: string
+        stop_name: string
+        location_type: string
+    }
+    geometry: {
+        type: string
+        coordinates: number[]
+    }
+    record_timestamp: string
 }
