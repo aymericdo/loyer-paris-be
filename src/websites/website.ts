@@ -15,9 +15,11 @@ import { Response } from 'express'
 export abstract class Website {
     website: string = null
     body: Mapping = null
+    isV2: boolean = null
 
-    constructor(props: { body: Mapping }) {
+    constructor(props: { body: Mapping, id?: string }, v2: boolean = false) {
         this.body = props.body
+        this.isV2 = v2
     }
 
     analyse(res: Response): void {

@@ -4,8 +4,11 @@ import { stringToNumber } from '@helpers/string-to-number'
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
 import { YearBuiltService } from '@services/year-built'
-import { AddressService } from './address'
 import { ErrorCode } from './api-errors'
+import { AvailableCities, CityService } from './address/city'
+import { LilleAddressService } from './address/lille-address'
+import { ParisAddressService } from './address/paris-address'
+import { AddressService } from './address/strategy/address.strategy'
 
 export class DigService {
     ad: Ad = null
@@ -17,11 +20,13 @@ export class DigService {
     }
 
     async digInAd(): Promise<CleanAd> {
+        const city: AvailableCities = CityService.findCity(this.ad)
+
+        const [address, postalCode, stations, coordinates, blurryCoordinates] = this.digForAddress(city)
         const roomCount = this.digForRoomCount()
         const hasFurniture = this.digForHasFurniture()
         const surface = this.digForSurface()
         const price = this.digForPrice()
-        const [address, postalCode, city, stations, coordinates, blurryCoordinates] = this.digForAddress()
         const yearBuilt = await this.digForYearBuilt(coordinates)
         const renter = this.digForRenter()
         const charges = this.digForCharges()
@@ -46,10 +51,14 @@ export class DigService {
         }
     }
 
-    private digForAddress(): [string, string, string, string[], Coordinate, Coordinate] {
-        const addressService = new AddressService(this.ad)
+    private digForAddress(city: AvailableCities): [string, string, string[], Coordinate, Coordinate] {
+        const addressService = new AddressService(city)
+        // let addressService: AddressService;
+        // switch(city) {
+        //     case 'paris': addressService = new ParisAddressService(this.ad); break;
+        //     case 'lille': addressService = new LilleAddressService(this.ad); break;
+        // }
 
-        const city = addressService.city
         const postalCode = addressService.getPostalCode()
         const address = addressService.getAddress()
         const stations = addressService.getStations()
@@ -60,7 +69,7 @@ export class DigService {
             throw { error: ErrorCode.Address, msg: 'address not found' }
         }
 
-        return [address, postalCode, city, stations, coordinates, blurryCoordinates]
+        return [address, postalCode, stations, coordinates, blurryCoordinates]
     }
 
     private digForRoomCount(): number {

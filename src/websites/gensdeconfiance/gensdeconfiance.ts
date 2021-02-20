@@ -1,13 +1,14 @@
 import * as cleanup from '@helpers/cleanup'
-import { SelogerMapping } from '@interfaces/mapping'
+import { GensdeconfianceMapping } from '@interfaces/mapping'
 import { Ad } from '@interfaces/ad'
 import { Website } from '../website'
+import { particulierToken } from '../../helpers/particulier';
 
-export class SeLoger extends Website {
-    website = 'seloger'
+export class Gensdeconfiance extends Website {
+    website = 'gensdeconfiance'
 
     async mapping(): Promise<Ad> {
-        const ad: SelogerMapping = this.body as SelogerMapping
+        const ad: GensdeconfianceMapping = this.body as GensdeconfianceMapping
 
         if (this.isV2) {
             console.log(this.body)
@@ -16,15 +17,13 @@ export class SeLoger extends Website {
                 id: ad.id.toString(),
                 charges: cleanup.price(ad.charges),
                 cityLabel: cleanup.string(ad.cityLabel),
+                address: cleanup.string(ad.address),
                 description: cleanup.string(ad.description),
-                furnished: ad.furnished,
                 hasCharges: ad.hasCharges,
                 price: cleanup.price(ad.price),
-                renter: ad.renter ? cleanup.string(ad.renter) : null,
-                rooms: cleanup.number(ad.rooms),
+                renter: particulierToken,
                 surface: cleanup.number(ad.surface),
                 title: cleanup.string(ad.title),
-                yearBuilt: !!ad.yearBuilt && cleanup.number(ad.yearBuilt)
             }
         }
     }

@@ -10,8 +10,8 @@ export class LouerAgile extends Website {
     website = 'loueragile'
     id: string = null
 
-    constructor(props: { body: Mapping, id: string }) {
-        super(props)
+    constructor(props: { body: Mapping, id: string }, v2: boolean = false) {
+        super(props, v2)
         this.id = props.id
     }
 

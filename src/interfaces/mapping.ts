@@ -9,6 +9,7 @@ export type Mapping =
         LoueragileMapping |
         OrpiMapping |
         PapMapping |
+        GensdeconfianceMapping |
         SelogerMapping) &
     { noMoreData?: boolean, platform?: string }
 
@@ -147,4 +148,16 @@ export interface SelogerMapping {
     surface: string
     title: string
     yearBuilt: string
+}
+
+export interface GensdeconfianceMapping {
+    id: number
+    charges: string
+    cityLabel: string
+    description: string
+    hasCharges: boolean
+    price: string
+    address: string
+    surface: string
+    title: string
 }
