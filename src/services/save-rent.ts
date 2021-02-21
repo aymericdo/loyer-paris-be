@@ -5,7 +5,7 @@ import { getAdById } from '@db/rent.service'
 interface SavedInfo {
     id: string
     address: string
-    city?: string
+    city: string
     hasFurniture?: boolean
     isLegal: boolean
     latitude?: number

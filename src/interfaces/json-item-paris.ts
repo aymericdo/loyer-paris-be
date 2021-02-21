@@ -1,4 +1,4 @@
-export interface AddressItem {
+export interface ParisAddressItem {
     datasetid: string
     recordid: string
     fields: {
@@ -28,7 +28,7 @@ export interface AddressItem {
     record_timestamp: string
 }
 
-export interface DistrictItem {
+export interface ParisDistrictItem {
     type: "Feature";
     geometry: {
         type: "Polygon"
@@ -66,7 +66,7 @@ export interface ArrondissementItem {
     }
 }
 
-export interface EncadrementItem {
+export interface ParisEncadrementItem {
     datasetid: string
     recordid: string
     fields: {

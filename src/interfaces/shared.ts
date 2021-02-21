@@ -4,3 +4,8 @@ export interface Coordinate {
 }
 
 export interface ApiError { error: string, msg: string }
+
+export interface AddressItem {
+    address: string;
+    coordinate: Coordinate;
+}

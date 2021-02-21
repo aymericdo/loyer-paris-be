@@ -1,177 +1,173 @@
-// import * as cleanup from '@helpers/cleanup'
-// import Fuse from 'fuse.js'
-// import inside from "point-in-polygon"
-// import { Coordinate } from '@interfaces/shared'
-// import { AddressItem, MetroItem } from '@interfaces/json-item'
-// import { postalCodePossibilities } from '@helpers/postal-code'
-// import { Ad } from '@interfaces/ad'
-// import { regexString } from '@helpers/regex'
-// import { Memoize } from 'typescript-memoize'
-// import { min } from '@helpers/functions'
-// import { DistanceService } from '../distance';
-// import { cityList } from './city'
+import * as cleanup from '@helpers/cleanup'
+import inside from "point-in-polygon"
+import { AddressItem, Coordinate } from '@interfaces/shared'
+import { postalCodePossibilities } from '@helpers/postal-code'
+import { Ad } from '@interfaces/ad'
+import { regexString } from '@helpers/regex'
+import { Memoize } from 'typescript-memoize'
+import { min } from '@helpers/functions'
+import { DistanceService } from '../distance';
+import { AvailableCities } from './city'
 
-// export abstract class AddressService {
-//     ad: Ad = null;
-//     city: string = null
-//     coordinates: Coordinate;
-//     blurryCoordinates: Coordinate;
+export abstract class AddressService {
+    ad: Ad = null;
+    city: AvailableCities = null
+    coordinates: Coordinate;
+    blurryCoordinates: Coordinate;
 
-//     constructor (
-//         ad: Ad,
-//     ) {
-//         this.ad = ad
-//     }
+    constructor (
+        ad: Ad,
+    ) {
+        this.ad = ad
+    }
 
-//     @Memoize()
-//     distanceService() {
-//         return new DistanceService(this.getPostalCode());
-//     }
-
-//     @Memoize()
-//     getPostalCode() {
-//         let postalCode = this.digForPostalCode(this.ad.postalCode)
-//         || this.ad.cityLabel && (this.digForPostalCode(this.ad.cityLabel) || this.digForPostalCode2(this.ad.cityLabel))
-//         || this.ad.title && (this.digForPostalCode(this.ad.title) || this.digForPostalCode2(this.ad.title))
-//         || this.ad.description && (this.digForPostalCode(this.ad.description) || this.digForPostalCode2(this.ad.description))
+    @Memoize()
+    getPostalCode() {
+        let postalCode = this.ad.postalCode && this.digForPostalCode(this.ad.postalCode)
+            || this.ad.cityLabel && (this.digForPostalCode(this.ad.cityLabel) || this.digForPostalCode2(this.ad.cityLabel))
+            || this.ad.title && (this.digForPostalCode(this.ad.title) || this.digForPostalCode2(this.ad.title))
+            || this.ad.description && (this.digForPostalCode(this.ad.description) || this.digForPostalCode2(this.ad.description))
     
-//         return postalCode && postalCodePossibilities[this.city].includes(postalCode.toString()) ? postalCode : null
-//     }
+        return postalCode && postalCodePossibilities[this.city].includes(postalCode.toString()) ? postalCode : null
+    }
 
-//     @Memoize()
-//     getAddress() {
-//         return (this.ad.address && this.digForAddressInText(this.ad.address))
-//             || (this.ad.description && this.digForAddressInText(this.ad.description))
-//             || (this.ad.title && this.digForAddressInText(this.ad.title))
-//     }
+    @Memoize()
+    getAddress() {
+        return (this.ad.address && this.digForAddressInText(this.ad.address))
+            || (this.ad.description && this.digForAddressInText(this.ad.description))
+            || (this.ad.title && this.digForAddressInText(this.ad.title))
+    }
 
-//     getCoordinate(blurry = false): Coordinate {
-//         const coordinatesFromAd = this.ad.coord?.lng && this.ad.coord?.lat ? {
-//             lng: this.ad.coord.lng,
-//             lat: this.ad.coord.lat,
-//         } : null
+    getCoordinate(blurry = false): Coordinate {
+        const coordinatesFromAd = this.ad.coord?.lng && this.ad.coord?.lat ? {
+            lng: this.ad.coord.lng,
+            lat: this.ad.coord.lat,
+        } : null
 
-//         if (coordinatesFromAd?.lng.toString().length > 9 && coordinatesFromAd?.lat.toString().length > 9) {
-//             return coordinatesFromAd
-//         } else {
-//             if (blurry) {
-//                 return this.blurryCoordinates || coordinatesFromAd;
-//             } else {
-//                 return this.coordinates || coordinatesFromAd;
-//             }
-//         }
-//     }
+        if (coordinatesFromAd?.lng.toString().length > 9 && coordinatesFromAd?.lat.toString().length > 9) {
+            return coordinatesFromAd
+        } else {
+            if (blurry) {
+                return this.blurryCoordinates || coordinatesFromAd;
+            } else {
+                return this.coordinates || coordinatesFromAd;
+            }
+        }
+    }
 
-//     getStations(): string[] {
-//         return []
-//     }
+    getStations(): string[] {
+        return []
+    }
 
-//     protected digForPostalCode(text: string): string {
-//         const postalCodeRe = new RegExp(regexString(`postalCode_${this.city}`));
-//         return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim();
-//     }
+    abstract getAddressCompleted(q: string, limit: number): { item: AddressItem, score: number }[]
+    abstract getTargetPolygon(): number[][]
+    abstract addressFromCoordinate(coord: Coordinate): string
+
+    protected digForPostalCode(text: string): string {
+        const postalCodeRe = new RegExp(regexString(`postalCode_${this.city}`));
+        return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim();
+    }
     
-//     protected digForPostalCode2(_text: string): string {
-//         return null;
-//     }
+    protected digForPostalCode2(_text: string): string {
+        return null;
+    }
 
-//     private addressFromCoordinate(coord: Coordinate): string {
-//         return (cityList[this.city].addresses.reduce((prev, current) => {
-//             const dist = DistanceService.getDistanceFromLatLonInKm(coord.lat, coord.lng, current.fields.geom.coordinates[1], current.fields.geom.coordinates[0])
-//             if (dist < prev.dist || !prev.dist) {
-//                 prev = { dist, current }
-//             }
-//             return prev;
-//         }, {} as { current: AddressItem, dist: number }))?.current?.fields[cityList[this.city].addressesField];
-//     }
+    protected setCoordinates(coord: Coordinate, hasStreetNumber: boolean): void {
+        if (hasStreetNumber) {
+            this.coordinates = { ...coord }
+        } else {
+            this.blurryCoordinates = { ...coord }
+        }
+    }
 
-//     private digForAddressInText(text: string): string {
-//         const addressRe = new RegExp(regexString('address'))
-//         const addressesFromRegex = text.match(addressRe) as string[]
-//         if (addressesFromRegex) {
-//             const maxResult = 10
-//             const result = addressesFromRegex.flatMap(address => {
-//                 const hasStreetNumber: boolean = !!cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi)
-//                 const addresses = this.getAddressCompleted(address, maxResult / addressesFromRegex.length > 0 ? maxResult / addressesFromRegex.length : 1)
-//                 return addresses && addresses.map(res => ({ ...res, hasStreetNumber }))
-//             }).filter(Boolean).sort((a, b) => a.score - b.score)
-            
-//             if (this.getPostalCode()) {
-//                 const resultInPostalCode = this.nearestAddressInPostalCode(result)
+    private digForAddressInText(text: string): string {
+        const addressRe = new RegExp(regexString('address'))
+        const addressesFromRegex = text.match(addressRe) as string[]
+        if (addressesFromRegex) {
+            const sanitizedAddresses = this.sanitizeAddresses(addressesFromRegex)
+            const maxResult = 10
+            let bigScoreFound: boolean = false;
+            const result = sanitizedAddresses.flatMap(address => {
+                if (bigScoreFound) return null
+                const hasStreetNumber: boolean = !!cleanup.string(address.trim()).match(/^\d+/gi)
+                const addresses: { item: AddressItem, score: number }[] = this.getAddressCompleted(address, maxResult / sanitizedAddresses.length > 0 ? maxResult / sanitizedAddresses.length : 1)
+                bigScoreFound = addresses && addresses[0].score < 0.15
+                return addresses && addresses.map(res => ({ ...res, hasStreetNumber }))
+            }).filter(Boolean).sort((a, b) => a.score - b.score)
 
-//                 return resultInPostalCode ?
-//                     !!resultInPostalCode[1] ?
-//                         cleanup.string(resultInPostalCode[0]) :
-//                         cleanup.string(resultInPostalCode[0]).replace(/^\d+/gi, "").trim() :
-//                     null
-//             } else {
-//                 return result.length ?
-//                     cleanup.string(addressesFromRegex[0].trim()).match(/^\d+/gi) ?
-//                         cleanup.string(result[0].item.fields[cityList[this.city].addressesField]) :
-//                         cleanup.string(result[0].item.fields[cityList[this.city].addressesField]).replace(/^\d+/gi, "").trim() :
-//                     null
-//             }
-//         } else {
-//             return addressesFromRegex && cleanup.address(addressesFromRegex[0])
-//         }
-//     }
+            if (result?.length) {
+                this.setCoordinates(result[0].item.coordinate, result[0].hasStreetNumber)
 
-//     @Memoize()
-//     private getAddressCompleted(q: string, limit: number): { item: AddressItem, score: number }[] {
-//         const options = {
-//             keys: [`fields.${cityList[this.city].addressesField}`],
-//             includeScore: true,
-//             threshold: 0.5,
-//         }
+                // More precision with polygon that we are targeting for sure
+                const resultInPostalCode = this.nearestAddressInTargetPolygon(result)
+                return resultInPostalCode ? (
+                    resultInPostalCode.hasStreetNumber ?
+                        cleanup.string(resultInPostalCode.address) :
+                        cleanup.string(resultInPostalCode.address).replace(/^\d+/gi, "").trim()
+                    ) : result[0].hasStreetNumber ?
+                        cleanup.string(result[0].item.address) :
+                        cleanup.string(result[0].item.address).replace(/^\d+/gi, "").trim()
+            } else {
+                return null
+            }
+        } else {
+            return null
+        }
+    }
 
-//         const cleanAddress = cleanup.address(q)
+    private sanitizeAddresses(addressesFromRegex: string[]): string[] {
+        if (addressesFromRegex.length > 2
+            && addressesFromRegex.some(a => ['rue', 'avenue', 'passage', 'boulevard', 'faubourg', 'bd'].some(t => a.includes(t)))) {
+            // removing "place", "jardin" or other not relevant stuff if we have enough stock
+           return addressesFromRegex.filter(a => ['rue', 'avenue', 'passage', 'boulevard', 'faubourg', 'bd'].some(t => a.includes(t)))  
+        } else {
+            return addressesFromRegex
+        }
+    }
 
-//         if (!cleanAddress) {
-//             return null
-//         }
+    private nearestAddressInTargetPolygon(
+        addressesCompleted: { item: AddressItem, hasStreetNumber: boolean, score: number }[]
+      ): { address: string, hasStreetNumber: boolean } {
+        const targetPolygon = this.getTargetPolygon()
 
-//         const fuse = new Fuse(cityList[this.city].addresses, options)
-//         return fuse.search(cleanAddress, { limit }) as { item: AddressItem, score: number }[];
-//     }
-
-//     private nearestAddressInPostalCode(addressesCompleted: { item: AddressItem, hasStreetNumber: boolean, score: number }[]): [string, boolean] {
-//         const postalCodePolygon = this.distanceService().getPolyFromPostalCode()
-
-//         if (!postalCodePolygon) return null
-
-//         const pointByDist = addressesCompleted.map(address => {
-//             const point = address.item.fields.geom.coordinates;
-//             if (inside(point, postalCodePolygon)) {
-//                 return { point, dist: 0, name: address.item.fields[cityList[this.city].addressesField], hasStreetNumber: address.hasStreetNumber }
-//             } else {
-//                 // Get the closest coord but in the right postalCode
-//                 return this.distanceService().distanceToPoly(point as [number, number], postalCodePolygon as [number, number][]);
-//             }
-//         });
-
-//         if (!pointByDist.length) return null
-
-//         if (pointByDist[0].dist === 0) {
-//             const insidePostalCodeCase = pointByDist[0] as { name: string, hasStreetNumber: boolean, point: number[] };
-//             insidePostalCodeCase.hasStreetNumber ? 
-//                 this.coordinates = { lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] }
-//             :
-//                 this.blurryCoordinates = { lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] };
-//             return [insidePostalCodeCase.name, !!insidePostalCodeCase.hasStreetNumber];
-//         } else {
-//             const bah = min(pointByDist, 'dist')
-
-//             // marge d'erreur : 250m
-//             if (bah.dist > 0.0025) {
-//                 return null;
-//             }
-
-//             const coord = { lng: bah.point[0], lat: bah.point[1] }
-//             this.blurryCoordinates = { ...coord };
-//             // Convert the best coord approximation in string addr
-//             return [this.addressFromCoordinate(coord), false]
-//         }
-//     }
-// }
+        if (!targetPolygon) return null
+    
+        const pointByDist = addressesCompleted.map(address => {
+            const point = [address.item.coordinate.lng, address.item.coordinate.lat];
+    
+            if (inside(point, targetPolygon)) {
+              return { point, dist: 0, address: address.item.address, hasStreetNumber: address.hasStreetNumber }
+            } else {
+              // Get the closest coord but in the right target
+              return DistanceService.distanceToPoly(point as [number, number], targetPolygon as [number, number][]);
+            }
+        });
+    
+        if (!pointByDist.length) return null
+    
+        if (pointByDist[0].dist === 0) {
+            const insidePostalCodeCase = pointByDist[0] as { address: string, hasStreetNumber: boolean, point: number[] };
+            this.setCoordinates({ lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] }, insidePostalCodeCase.hasStreetNumber)
+    
+            return { ...insidePostalCodeCase }
+        } else {
+            const bah = min(pointByDist, 'dist')
+    
+            // marge d'erreur : 250m (je crois)
+            const confidenceThreshold = 0.0025
+            if (bah.dist > confidenceThreshold) {
+                return null;
+            }
+    
+            const coord = { lng: bah.point[0], lat: bah.point[1] }
+            this.setCoordinates(coord, false)
+            return {
+                // Convert the best coord approximation in address string
+                address: this.addressFromCoordinate(coord),
+                hasStreetNumber: false,
+            };
+        }
+    }
+}
 
 

@@ -8,7 +8,7 @@ import { ErrorCode } from './api-errors'
 import { AvailableCities, CityService } from './address/city'
 import { LilleAddressService } from './address/lille-address'
 import { ParisAddressService } from './address/paris-address'
-import { AddressService } from './address/strategy/address.strategy'
+import { AddressService } from './address/address'
 
 export class DigService {
     ad: Ad = null
@@ -27,7 +27,8 @@ export class DigService {
         const hasFurniture = this.digForHasFurniture()
         const surface = this.digForSurface()
         const price = this.digForPrice()
-        const yearBuilt = await this.digForYearBuilt(coordinates)
+        // Very edgy case : if 'paris', we have a YearBuilt fallback thanks to emprise batie data
+        const yearBuilt = await this.digForYearBuilt(city === 'paris' ? coordinates : null)
         const renter = this.digForRenter()
         const charges = this.digForCharges()
         const hasCharges = this.digForHasCharges()
@@ -52,12 +53,11 @@ export class DigService {
     }
 
     private digForAddress(city: AvailableCities): [string, string, string[], Coordinate, Coordinate] {
-        const addressService = new AddressService(city)
-        // let addressService: AddressService;
-        // switch(city) {
-        //     case 'paris': addressService = new ParisAddressService(this.ad); break;
-        //     case 'lille': addressService = new LilleAddressService(this.ad); break;
-        // }
+        let addressService: AddressService;
+        switch (city) {
+            case 'paris': addressService = new ParisAddressService(this.ad); break;
+            case 'lille': addressService = new LilleAddressService(this.ad); break;
+        }
 
         const postalCode = addressService.getPostalCode()
         const address = addressService.getAddress()

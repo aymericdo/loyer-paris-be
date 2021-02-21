@@ -30,7 +30,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "fuse.js": "^3.4.5",
+    "fuse.js": "^6.4.6",
     "module-alias": "^2.2.2",
     "mongoose": "^5.7.5",
     "node-cache": "^5.0.2",

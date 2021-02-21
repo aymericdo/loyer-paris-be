@@ -1,7 +1,7 @@
 import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
+import { FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
-import { EncadrementItem } from '@interfaces/json-item'
 
 interface SerializedInfo {
     address: string
@@ -20,14 +20,14 @@ interface SerializedInfo {
 
 export class SerializeRentService {
     serializedInfo: SerializedInfo = null
-    encadrementItem: EncadrementItem = null
+    filteredResult: FilteredResult = null
 
     constructor(
         serializedInfo: SerializedInfo,
-        encadrementItem: EncadrementItem,
+        filteredResult: FilteredResult,
     ) {
         this.serializedInfo = serializedInfo
-        this.encadrementItem = encadrementItem
+        this.filteredResult = filteredResult
     }
 
     serialize() {
@@ -60,12 +60,12 @@ export class SerializeRentService {
                 hasCharges: { order: 7, value: !charges && hasCharges != null ? hasCharges : null },
             },
             computedInfo: {
-                neighborhood: { order: 0, value: this.encadrementItem.fields.nom_quartier },
-                hasFurniture: { order: 1, value: !!this.encadrementItem.fields.meuble_txt.match(/^meubl/g) },
-                roomCount: { order: 2, value: +this.encadrementItem.fields.piece },
+                neighborhood: { order: 0, value: this.filteredResult.districtName },
+                hasFurniture: { order: 1, value: this.filteredResult.isFurnished },
+                roomCount: { order: 2, value: this.filteredResult.roomCount },
                 surface: { order: 3, value: surface },
-                dateRange: { order: 4, value: this.encadrementItem.fields.epoque },
-                max: { order: 5, value: !isLegal ? roundNumber(+this.encadrementItem.fields.max): null },
+                dateRange: { order: 4, value: this.filteredResult.yearBuilt },
+                max: { order: 5, value: !isLegal ? roundNumber(this.filteredResult.maxPrice): null },
                 maxAuthorized: { order: 6, value: !isLegal ? maxAuthorized : null },
                 promoPercentage: { order: 7, value: !isLegal ? roundNumber(100 - (maxAuthorized * 100 / priceExcludingCharges)) : null },
             },
