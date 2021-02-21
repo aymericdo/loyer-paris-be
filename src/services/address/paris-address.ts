@@ -53,6 +53,7 @@ export class ParisAddressService extends AddressService {
     return result ? result.map((r) => ({
       item: {
         address: r.item.fields.l_adr,
+        postalCode: this.postalCodeFormat(r.item.fields.c_ar.toString()),
         coordinate: {
           lng: r.item.fields.geom.coordinates[0],
           lat: r.item.fields.geom.coordinates[1],
@@ -144,9 +145,20 @@ export class ParisAddressService extends AddressService {
   private getPolyFromPostalCode(): number[][] {
     if (!this.getPostalCode()) return null // Bretelles + ceinture
 
-    const postalCode = this.getPostalCode()
-    // 75010 -> 10 75009 -> 9
-    const code = (postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2))
+    const code = this.postalCodeReformat(this.getPostalCode())
     return parisArrondissements.features.find(a => a.properties.c_ar === +code).geometry.coordinates[0]
+  }
+  
+  private postalCodeFormat(postalCode: string): string {
+    // 10 -> 75010 9 -> 75009
+    return (postalCode.length === 1) ?
+      `7500${postalCode}`
+    :
+      `750${postalCode}`
+  }
+
+  private postalCodeReformat(postalCode: string): string {
+    // 75010 -> 10 75009 -> 9
+    return (postalCode.slice(-2)[0] === '0' ? postalCode.slice(-1) : postalCode.slice(-2))
   }
 }

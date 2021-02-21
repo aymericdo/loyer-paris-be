@@ -23,7 +23,7 @@ export abstract class AddressService {
 
     @Memoize()
     getPostalCode() {
-        let postalCode = this.ad.postalCode && this.digForPostalCode(this.ad.postalCode)
+        const postalCode = this.ad.postalCode && this.digForPostalCode(this.ad.postalCode)
             || this.ad.cityLabel && (this.digForPostalCode(this.ad.cityLabel) || this.digForPostalCode2(this.ad.cityLabel))
             || this.ad.title && (this.digForPostalCode(this.ad.title) || this.digForPostalCode2(this.ad.title))
             || this.ad.description && (this.digForPostalCode(this.ad.description) || this.digForPostalCode2(this.ad.description))

@@ -36,6 +36,7 @@ export class LilleAddressService extends AddressService {
       return result ? result.map((r) => ({
         item: {
           address: r.item.fields.auto_adres,
+          postalCode: r.item.fields.cpostal.toString(),
           coordinate: {
             lng: r.item.geometry.coordinates[0],
             lat: r.item.geometry.coordinates[1],
