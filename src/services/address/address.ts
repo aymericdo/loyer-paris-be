@@ -72,8 +72,8 @@ export abstract class AddressService {
         return null;
     }
 
-    protected setCoordinates(coord: Coordinate, hasStreetNumber: boolean): void {
-        if (hasStreetNumber) {
+    protected setCoordinates(coord: Coordinate, streetNumber: number): void {
+        if (streetNumber) {
             this.coordinates = { ...coord }
         } else {
             this.blurryCoordinates = { ...coord }
@@ -89,23 +89,23 @@ export abstract class AddressService {
             let bigScoreFound: boolean = false;
             const result = sanitizedAddresses.flatMap(address => {
                 if (bigScoreFound) return null
-                const hasStreetNumber: boolean = !!cleanup.string(address.trim()).match(/^\d+/gi)
+                const streetNumber: number = +cleanup.string(address.trim()).match(/^\d+/gi)
                 const addresses: { item: AddressItem, score: number }[] = this.getAddressCompleted(address, maxResult / sanitizedAddresses.length > 0 ? maxResult / sanitizedAddresses.length : 1)
                 bigScoreFound = addresses && addresses[0].score < 0.15
-                return addresses && addresses.map(res => ({ ...res, hasStreetNumber }))
+                return addresses && addresses.map(res => ({ ...res, streetNumber }))
             }).filter(Boolean).sort((a, b) => a.score - b.score)
 
             if (result?.length) {
-                this.setCoordinates(result[0].item.coordinate, result[0].hasStreetNumber)
+                this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
 
                 // More precision with polygon that we are targeting for sure
                 const resultInPostalCode = this.nearestAddressInTargetPolygon(result)
                 return resultInPostalCode ? (
-                    resultInPostalCode.hasStreetNumber ?
-                        cleanup.string(resultInPostalCode.address) :
+                    resultInPostalCode.streetNumber ?
+                        cleanup.string(resultInPostalCode.address).replace(/^\d+/gi, resultInPostalCode.streetNumber.toString()) :
                         cleanup.string(resultInPostalCode.address).replace(/^\d+/gi, "").trim()
-                    ) : result[0].hasStreetNumber ?
-                        cleanup.string(result[0].item.address) :
+                    ) : result[0].streetNumber ?
+                        cleanup.string(result[0].item.address).replace(/^\d+/gi, result[0].streetNumber.toString())  :
                         cleanup.string(result[0].item.address).replace(/^\d+/gi, "").trim()
             } else {
                 return null
@@ -126,8 +126,8 @@ export abstract class AddressService {
     }
 
     private nearestAddressInTargetPolygon(
-        addressesCompleted: { item: AddressItem, hasStreetNumber: boolean, score: number }[]
-      ): { address: string, hasStreetNumber: boolean } {
+        addressesCompleted: { item: AddressItem, streetNumber: number, score: number }[]
+      ): { address: string, streetNumber: number } {
         const targetPolygon = this.getTargetPolygon()
 
         if (!targetPolygon) return null
@@ -136,7 +136,7 @@ export abstract class AddressService {
             const point = [address.item.coordinate.lng, address.item.coordinate.lat];
     
             if (inside(point, targetPolygon)) {
-              return { point, dist: 0, address: address.item.address, hasStreetNumber: address.hasStreetNumber }
+              return { point, dist: 0, address: address.item.address, streetNumber: address.streetNumber }
             } else {
               // Get the closest coord but in the right target
               return DistanceService.distanceToPoly(point as [number, number], targetPolygon as [number, number][]);
@@ -146,8 +146,8 @@ export abstract class AddressService {
         if (!pointByDist.length) return null
     
         if (pointByDist[0].dist === 0) {
-            const insidePostalCodeCase = pointByDist[0] as { address: string, hasStreetNumber: boolean, point: number[] };
-            this.setCoordinates({ lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] }, insidePostalCodeCase.hasStreetNumber)
+            const insidePostalCodeCase = pointByDist[0] as { address: string, streetNumber: number, point: number[] };
+            this.setCoordinates({ lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] }, insidePostalCodeCase.streetNumber)
     
             return { ...insidePostalCodeCase }
         } else {
@@ -160,11 +160,11 @@ export abstract class AddressService {
             }
     
             const coord = { lng: bah.point[0], lat: bah.point[1] }
-            this.setCoordinates(coord, false)
+            this.setCoordinates(coord, null)
             return {
                 // Convert the best coord approximation in address string
                 address: this.addressFromCoordinate(coord),
-                hasStreetNumber: false,
+                streetNumber: null,
             };
         }
     }

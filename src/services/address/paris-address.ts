@@ -93,12 +93,12 @@ export class ParisAddressService extends AddressService {
 
     if (pointsByDist[0].dist === 0) {
       const insidePostalCodeCase = pointsByDist[0] as { name: string, dist: number, point: Coordinate };
-      this.setCoordinates(insidePostalCodeCase.point, false)
+      this.setCoordinates(insidePostalCodeCase.point, null)
     } else {
       const bah = min(pointsByDist, 'dist')
 
       if (bah.dist < confidenceThreshold) {
-        this.setCoordinates(bah.point, false)
+        this.setCoordinates(bah.point, null)
       }
     }
 
