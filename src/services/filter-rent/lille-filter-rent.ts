@@ -26,7 +26,7 @@ export class LilleFilterRentService {
         ).getDistricts()
 
         const timeDates: string[] = this.dateFormatting(YearBuiltService.getRangeTimeDates(rangeTime, this.cleanAd.yearBuilt))
-        
+
         const rentList = rangeRentsLille.filter((rangeRent) => {
             return (districtsMatched?.length ? districtsMatched.map(district => district.properties.zonage).includes(rangeRent.fields.zone) : true)
               && (timeDates?.length ? timeDates.includes(rangeRent.fields.epoque_construction) : true)
@@ -36,12 +36,10 @@ export class LilleFilterRentService {
         const isFurnished = this.cleanAd.hasFurniture != null && this.cleanAd.hasFurniture
 
         // Get the worst case scenario
-        const worstCase = rentList.length ? (
-          isFurnished ?
+        const worstCase = isFurnished ?
             rentList.reduce((prev, current) => (prev.fields.loyer_de_reference_majore_meublees > current.fields.loyer_de_reference_majore_meublees) ? prev : current)
           :
             rentList.reduce((prev, current) => (prev.fields.loyer_de_reference_majore_non_meublees > current.fields.loyer_de_reference_majore_non_meublees) ? prev : current)
-        ) : null
 
         return {
           maxPrice: isFurnished ? +worstCase.fields.loyer_de_reference_majore_meublees : +worstCase.fields.loyer_de_reference_majore_non_meublees,

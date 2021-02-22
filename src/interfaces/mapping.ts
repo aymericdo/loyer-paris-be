@@ -142,7 +142,6 @@ export interface SelogerMapping {
     furnished: boolean
     hasCharges: boolean
     price: string
-    postalCode: string
     renter: string
     rooms: string
     surface: string

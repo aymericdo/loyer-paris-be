@@ -12,6 +12,7 @@ function getByData(req: Request, res: Response, next: NextFunction) {
 
 router.post('/data/v2', getByDataV2)
 function getByDataV2(req: Request, res: Response, next: NextFunction) {
+    log.info(`-> v2/${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`, 'blue')
     const seloger = new SeLoger({ body: req.body }, true)
     seloger.analyse(res)
 }

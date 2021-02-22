@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "14.x"
+    "node": "15.x"
   },
   "scripts": {
     "start": "npm run dev",
@@ -31,6 +31,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "fuse.js": "^6.4.6",
+    "jsdom": "^16.4.0",
     "module-alias": "^2.2.2",
     "mongoose": "^5.7.5",
     "node-cache": "^5.0.2",

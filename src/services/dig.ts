@@ -59,8 +59,9 @@ export class DigService {
             case 'lille': addressService = new LilleAddressService(this.ad); break;
         }
 
-        const postalCode = addressService.getPostalCode()
+        // Order is important here
         const address = addressService.getAddress()
+        const postalCode = addressService.getPostalCode()
         const stations = addressService.getStations()
         const coordinates = addressService.getCoordinate()
         const blurryCoordinates = addressService.getCoordinate(true)

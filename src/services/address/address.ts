@@ -12,30 +12,22 @@ import { AvailableCities } from './city'
 export abstract class AddressService {
     ad: Ad = null;
     city: AvailableCities = null
+    postalCode: string;
     coordinates: Coordinate;
     blurryCoordinates: Coordinate;
 
-    constructor (
-        ad: Ad,
-    ) {
+    constructor (ad: Ad) {
         this.ad = ad
     }
 
-    @Memoize()
-    getPostalCode() {
-        const postalCode = this.ad.postalCode && this.digForPostalCode(this.ad.postalCode)
-            || this.ad.cityLabel && (this.digForPostalCode(this.ad.cityLabel) || this.digForPostalCode2(this.ad.cityLabel))
-            || this.ad.title && (this.digForPostalCode(this.ad.title) || this.digForPostalCode2(this.ad.title))
-            || this.ad.description && (this.digForPostalCode(this.ad.description) || this.digForPostalCode2(this.ad.description))
-    
-        return postalCode && postalCodePossibilities[this.city].includes(postalCode.toString()) ? postalCode : null
-    }
-
-    @Memoize()
     getAddress() {
         return (this.ad.address && this.digForAddressInText(this.ad.address))
             || (this.ad.description && this.digForAddressInText(this.ad.description))
             || (this.ad.title && this.digForAddressInText(this.ad.title))
+    }
+
+    getPostalCode(): string {
+        return this.postalCode || this.digForPostalCode()
     }
 
     getCoordinate(blurry = false): Coordinate {
@@ -63,7 +55,17 @@ export abstract class AddressService {
     abstract getTargetPolygon(): number[][]
     abstract addressFromCoordinate(coord: Coordinate): string
 
-    protected digForPostalCode(text: string): string {
+    @Memoize()
+    private digForPostalCode(): string {
+        const postalCode = this.ad.postalCode && this.digForPostalCode1(this.ad.postalCode)
+            || this.ad.cityLabel && (this.digForPostalCode1(this.ad.cityLabel) || this.digForPostalCode2(this.ad.cityLabel))
+            || this.ad.title && (this.digForPostalCode1(this.ad.title) || this.digForPostalCode2(this.ad.title))
+            || this.ad.description && (this.digForPostalCode1(this.ad.description) || this.digForPostalCode2(this.ad.description))
+    
+        return postalCode && postalCodePossibilities[this.city].includes(postalCode.toString()) ? postalCode : null
+    }
+
+    protected digForPostalCode1(text: string): string {
         const postalCodeRe = new RegExp(regexString(`postalCode_${this.city}`));
         return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim();
     }
@@ -78,6 +80,10 @@ export abstract class AddressService {
         } else {
             this.blurryCoordinates = { ...coord }
         }
+    }
+
+    protected setPostalCode(postalCode: string): void {
+        this.postalCode = postalCode
     }
 
     private digForAddressInText(text: string): string {
@@ -97,6 +103,7 @@ export abstract class AddressService {
 
             if (result?.length) {
                 this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
+                this.setPostalCode(result[0].item.postalCode)
 
                 // More precision with polygon that we are targeting for sure
                 const resultInPostalCode = this.nearestAddressInTargetPolygon(result)
@@ -132,24 +139,26 @@ export abstract class AddressService {
 
         if (!targetPolygon) return null
     
-        const pointByDist = addressesCompleted.map(address => {
-            const point = [address.item.coordinate.lng, address.item.coordinate.lat];
-    
-            if (inside(point, targetPolygon)) {
-              return { point, dist: 0, address: address.item.address, streetNumber: address.streetNumber }
-            } else {
-              // Get the closest coord but in the right target
-              return DistanceService.distanceToPoly(point as [number, number], targetPolygon as [number, number][]);
-            }
-        });
+        const pointByDist: { point: number[], dist: number, item: AddressItem, streetNumber: number }[] =
+            addressesCompleted.map(address => {
+                const point = [address.item.coordinate.lng, address.item.coordinate.lat];
+        
+                if (inside(point, targetPolygon)) {
+                    return { point, dist: 0, item: address.item, streetNumber: address.streetNumber }
+                } else {
+                    // Get the closest coord but in the right target
+                    const { point: resPoint, dist } = DistanceService.distanceToPoly(point as [number, number], targetPolygon as [number, number][])
+                    return { point: resPoint, dist, item: address.item, streetNumber: address.streetNumber }
+                }
+            });
     
         if (!pointByDist.length) return null
     
         if (pointByDist[0].dist === 0) {
-            const insidePostalCodeCase = pointByDist[0] as { address: string, streetNumber: number, point: number[] };
+            const insidePostalCodeCase = pointByDist[0] as { item: AddressItem, streetNumber: number, point: number[] };
             this.setCoordinates({ lng: insidePostalCodeCase.point[0], lat: insidePostalCodeCase.point[1] }, insidePostalCodeCase.streetNumber)
-    
-            return { ...insidePostalCodeCase }
+
+            return { address: insidePostalCodeCase.item.address, streetNumber: insidePostalCodeCase.streetNumber }
         } else {
             const bah = min(pointByDist, 'dist')
     

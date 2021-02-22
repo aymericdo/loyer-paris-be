@@ -6,9 +6,6 @@ export const cityList = ['paris', 'lille'];
 export type AvailableCities = typeof cityList[number];
 
 export class CityService {
-  constructor (
-  ) { }
-
   static findCity(ad: Ad): AvailableCities {
     const city = ad.cityLabel?.match(/[A-Za-z -]+/g) && cleanup.string(ad.cityLabel.match(/[A-Za-z -]+/g)[0]);
 
