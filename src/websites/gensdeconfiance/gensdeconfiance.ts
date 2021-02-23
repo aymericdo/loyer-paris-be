@@ -3,28 +3,33 @@ import { GensdeconfianceMapping } from '@interfaces/mapping'
 import { Ad } from '@interfaces/ad'
 import { Website } from '../website'
 import { particulierToken } from '../../helpers/particulier';
+import { GensdeconfianceScrapping } from './gensdeconfiance.scrapping';
 
 export class Gensdeconfiance extends Website {
     website = 'gensdeconfiance'
 
     async mapping(): Promise<Ad> {
-        const ad: GensdeconfianceMapping = this.body as GensdeconfianceMapping
-
+        let ad: GensdeconfianceMapping = null;
         if (this.isV2) {
-            console.log(this.body)
-        } else {
-            return {
-                id: ad.id.toString(),
-                charges: cleanup.price(ad.charges),
-                cityLabel: cleanup.string(ad.cityLabel),
-                address: cleanup.string(ad.address),
-                description: cleanup.string(ad.description),
-                hasCharges: ad.hasCharges,
-                price: cleanup.price(ad.price),
-                renter: particulierToken,
-                surface: cleanup.number(ad.surface),
-                title: cleanup.string(ad.title),
+            ad = {
+                ...GensdeconfianceScrapping.scrap(JSON.parse((this.body as any).data)),
+                id: (this.body as any).id,
             }
+        }
+
+        ad = ad || this.body as GensdeconfianceMapping
+
+        return {
+            id: ad.id.toString(),
+            charges: cleanup.price(ad.charges),
+            cityLabel: cleanup.string(ad.cityLabel),
+            address: cleanup.string(ad.address),
+            description: cleanup.string(ad.description),
+            hasCharges: ad.hasCharges,
+            price: cleanup.price(ad.price),
+            renter: particulierToken,
+            surface: cleanup.number(ad.surface),
+            title: cleanup.string(ad.title),
         }
     }
 }

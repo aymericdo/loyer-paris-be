@@ -3,7 +3,6 @@ import { regexString } from '@helpers/regex';
 import { ArrondissementItem, MetroItem, ParisAddressItem } from '@interfaces/json-item-paris';
 import { ParisStationService } from '@services/address/paris-station';
 import Fuse from 'fuse.js';
-import * as cleanup from '@helpers/cleanup'
 import inside from 'point-in-polygon';
 import { Memoize } from 'typescript-memoize';
 import { AddressService } from './address';
@@ -11,8 +10,7 @@ import { AddressItem, Coordinate } from '@interfaces/shared';
 import { DistanceService } from '@services/distance';
 import * as fs from 'fs'
 import path from "path";
-
-import * as log from '@helpers/log'
+import { cityList } from './city';
 
 const parisAddresses: ParisAddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
 const parisArrondissements: { features: ArrondissementItem[] } = JSON.parse(fs.readFileSync(path.join('json-data/arrondissements_paris_geodata.json'), 'utf8'))
@@ -37,19 +35,17 @@ export class ParisAddressService extends AddressService {
   }
 
   digForPostalCode2(text: string): string {
-    const postalCode2Re = new RegExp(regexString(`postalCode2_${this.city}`))
+    const postalCode2Re = new RegExp(cityList[this.city].postalCodeRegex[1]);
     const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
     return match ? match.trim().length === 1 ? `7500${match.trim()}` : `750${match.trim()}` : null
   }
 
   @Memoize()
-  getAddressCompleted(q: string, limit: number): { item: AddressItem, score: number }[] {
-    const cleanAddress = cleanup.address(q, this.city)
-
-    if (!cleanAddress) {
+  getAddressCompleted(address: string, limit: number): { item: AddressItem, score: number }[] {
+    if (!address) {
         return null
     }
-    const result = parisFuse.search(cleanAddress, { limit }) as { item: ParisAddressItem, score: number }[]
+    const result = parisFuse.search(address, { limit }) as { item: ParisAddressItem, score: number }[]
     return result ? result.map((r) => ({
       item: {
         address: r.item.fields.l_adr,

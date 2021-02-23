@@ -17,5 +17,5 @@ export function number(number: string): number {
 export function address(string: string, city: AvailableCities): string {
     const blackList = ['commercante', 'navette']
     if (blackList.some(w => string.includes(w))) return null
-    return string.trim().replace('bd ', 'boulevard ').replace(city, '')
+    return string.trim().replace('bd ', 'boulevard ').replace(city as string, '')
 }

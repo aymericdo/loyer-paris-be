@@ -51,8 +51,12 @@ export abstract class Website {
         const cleanAd: CleanAd = await new DigService(ad).digInAd()
         let filteredResult: FilteredResult = null;
         switch (cleanAd.city) {
-            case 'paris': filteredResult = new ParisFilterRentService(cleanAd).filter(); break;
-            case 'lille': filteredResult = new LilleFilterRentService(cleanAd).filter(); break;
+            case 'paris':
+                filteredResult = new ParisFilterRentService(cleanAd).filter(); break;
+            case 'lille':
+            case 'hellemmes':
+            case 'lomme':
+                filteredResult = new LilleFilterRentService(cleanAd).filter(); break;
         }
 
         if (filteredResult) {

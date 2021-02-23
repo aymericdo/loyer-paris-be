@@ -7,8 +7,8 @@ import { DataBaseItem } from '@interfaces/database-item'
 import { groupBy } from '@helpers/functions'
 import * as log from '@helpers/log'
 import { vegaCommonOpt } from '@helpers/vega'
-import { postalCodePossibilities } from '@helpers/postal-code'
 import { IpService } from '../services/ip'
+import { cityList } from '@services/address/city'
 const router = express.Router()
 
 const parisGeodata = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'))
@@ -152,7 +152,7 @@ function getPriceDifference(req: RentRequest, res: Response, next: NextFunction)
             field: "postalCode",
             type: "ordinal",
             title: "Code postal",
-            sort: postalCodePossibilities,
+            sort: cityList.paris.postalCodePossibilities,
           },
           tooltip: [
             { field: "countOfPostalCode", title: "Nombre d'annonces" },

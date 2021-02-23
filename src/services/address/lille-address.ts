@@ -1,4 +1,3 @@
-import * as cleanup from '@helpers/cleanup'
 import { AddressService } from "./address";
 import Fuse from 'fuse.js';
 import { Memoize } from 'typescript-memoize';
@@ -25,14 +24,12 @@ export class LilleAddressService extends AddressService {
   city = 'lille'
 
   @Memoize()
-  getAddressCompleted(q: string, limit: number): { item: AddressItem, score: number }[] {
-      const cleanAddress = cleanup.address(q, this.city)
-
-      if (!cleanAddress) {
+  getAddressCompleted(address: string, limit: number): { item: AddressItem, score: number }[] {
+      if (!address) {
           return null
       }
 
-      const result = lilleFuse.search(cleanAddress, { limit }) as { item: LilleAddressItem, score: number }[]
+      const result = lilleFuse.search(address, { limit }) as { item: LilleAddressItem, score: number }[]
       return result ? result.map((r) => ({
         item: {
           address: r.item.fields.auto_adres,

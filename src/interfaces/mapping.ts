@@ -126,8 +126,6 @@ export interface PapMapping {
     cityLabel: string
     description: string
     price: string
-    postalCode: string
-    renter: string
     rooms: string
     surface: string
     title: string

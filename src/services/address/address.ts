@@ -1,13 +1,12 @@
 import * as cleanup from '@helpers/cleanup'
 import inside from "point-in-polygon"
 import { AddressItem, Coordinate } from '@interfaces/shared'
-import { postalCodePossibilities } from '@helpers/postal-code'
 import { Ad } from '@interfaces/ad'
 import { regexString } from '@helpers/regex'
 import { Memoize } from 'typescript-memoize'
 import { min } from '@helpers/functions'
 import { DistanceService } from '../distance';
-import { AvailableCities } from './city'
+import { AvailableCities, cityList } from './city'
 
 export abstract class AddressService {
     ad: Ad = null;
@@ -62,11 +61,11 @@ export abstract class AddressService {
             || this.ad.title && (this.digForPostalCode1(this.ad.title) || this.digForPostalCode2(this.ad.title))
             || this.ad.description && (this.digForPostalCode1(this.ad.description) || this.digForPostalCode2(this.ad.description))
     
-        return postalCode && postalCodePossibilities[this.city].includes(postalCode.toString()) ? postalCode : null
+        return postalCode && cityList[this.city].postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
     }
 
     protected digForPostalCode1(text: string): string {
-        const postalCodeRe = new RegExp(regexString(`postalCode_${this.city}`));
+        const postalCodeRe = new RegExp(cityList[this.city].postalCodeRegex[0]);
         return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim();
     }
     
@@ -96,8 +95,9 @@ export abstract class AddressService {
             const result = sanitizedAddresses.flatMap(address => {
                 if (bigScoreFound) return null
                 const streetNumber: number = +cleanup.string(address.trim()).match(/^\d+/gi)
-                const addresses: { item: AddressItem, score: number }[] = this.getAddressCompleted(address, maxResult / sanitizedAddresses.length > 0 ? maxResult / sanitizedAddresses.length : 1)
-                bigScoreFound = addresses && addresses[0].score < 0.15
+                const cleanAddress = cleanup.address(address, this.city)
+                const addresses: { item: AddressItem, score: number }[] = this.getAddressCompleted(cleanAddress, maxResult / sanitizedAddresses.length > 0 ? maxResult / sanitizedAddresses.length : 1)
+                bigScoreFound = addresses?.length && addresses[0].score < 0.15
                 return addresses && addresses.map(res => ({ ...res, streetNumber }))
             }).filter(Boolean).sort((a, b) => a.score - b.score)
 

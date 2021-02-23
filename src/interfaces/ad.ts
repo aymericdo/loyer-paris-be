@@ -1,4 +1,5 @@
 import { Coordinate } from '@interfaces/shared'
+import { AvailableCities } from '@services/address/city';
 
 export interface Ad {
     id: string
@@ -28,7 +29,7 @@ export interface CleanAd {
     price: number
     address: string
     postalCode: string
-    city: string
+    city: AvailableCities
     coordinates?: Coordinate
     blurryCoordinates?: Coordinate
     yearBuilt?: number[]

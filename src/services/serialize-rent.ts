@@ -2,11 +2,13 @@ import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
+import { AvailableCities } from '@services/address/city';
 
 interface SerializedInfo {
     address: string
     charges?: number
     hasCharges?: boolean
+    city: AvailableCities
     hasFurniture?: boolean
     isLegal: boolean
     maxAuthorized: number
@@ -36,6 +38,7 @@ export class SerializeRentService {
         const {
             address,
             charges,
+            city,
             hasCharges,
             hasFurniture,
             isLegal,
@@ -50,7 +53,7 @@ export class SerializeRentService {
 
         return {
             detectedInfo: {
-                address: { order: 0, value: `${address ? address : ''} ${postalCode ? postalCode : ''}`.trim() },
+                address: { order: 0, value: `${address || ''}${postalCode ? address ? ' ' + postalCode : postalCode : ''}${address || postalCode ? ', ' : ''}${city}` },
                 hasFurniture: { order: 1, value: hasFurniture },
                 roomCount: { order: 2, value: roomCount },
                 surface: { order: 3, value: surface },

@@ -3,13 +3,21 @@ import { particulierToken } from '@helpers/particulier'
 import { Ad } from '@interfaces/ad'
 import { LogicimmoMapping } from '@interfaces/mapping'
 import { Website } from '../website'
+import { LogicimmoScrapping } from './logicimmo.scrapping'
 
 export class LogicImmo extends Website {
     website = 'logicimmo'
 
     async mapping(): Promise<Ad> {
-        const ad: LogicimmoMapping = this.body as LogicimmoMapping
+        let ad: LogicimmoMapping = null;
+        if (this.isV2) {
+            ad = {
+                ...LogicimmoScrapping.scrap(JSON.parse((this.body as any).data)),
+                id: (this.body as any).id,
+            }
+        }
 
+        ad = ad || this.body as LogicimmoMapping
         return {
             id: ad.id.toString(),
             charges: cleanup.price(ad.charges),

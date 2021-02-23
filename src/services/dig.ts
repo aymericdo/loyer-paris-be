@@ -55,8 +55,12 @@ export class DigService {
     private digForAddress(city: AvailableCities): [string, string, string[], Coordinate, Coordinate] {
         let addressService: AddressService;
         switch (city) {
-            case 'paris': addressService = new ParisAddressService(this.ad); break;
-            case 'lille': addressService = new LilleAddressService(this.ad); break;
+            case 'paris':
+                addressService = new ParisAddressService(this.ad); break;
+            case 'lille':
+            case 'hellemmes':
+            case 'lomme':
+                addressService = new LilleAddressService(this.ad); break;
         }
 
         // Order is important here

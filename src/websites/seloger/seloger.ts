@@ -2,7 +2,7 @@ import * as cleanup from '@helpers/cleanup'
 import { SelogerMapping } from '@interfaces/mapping'
 import { Ad } from '@interfaces/ad'
 import { Website } from '../website'
-import { SelogerScrapping } from './seloger-scrapping';
+import { SelogerScrapping } from './seloger.scrapping';
 
 export class SeLoger extends Website {
     website = 'seloger'
