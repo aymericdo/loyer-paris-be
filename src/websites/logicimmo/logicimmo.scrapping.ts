@@ -1,10 +1,11 @@
 import { LogicimmoMapping } from "@interfaces/mapping"
+import { virtualConsole } from '@helpers/jsdome';
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class LogicimmoScrapping {
   static scrap(data: string): LogicimmoMapping {
-    const { document } = new JSDOM(data).window
+    const { document } = new JSDOM(data, { virtualConsole: virtualConsole() }).window
 
     const title = document.querySelector('h2.offerMainFeatures')
     const description = document.querySelector('div.offer-description-text')

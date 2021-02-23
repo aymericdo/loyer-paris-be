@@ -1,6 +1,7 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { OrpiMapping } from '@interfaces/mapping'
+import { ErrorCode } from '@services/api-errors'
 import { Website } from '../website'
 import { OrpiScrapping } from './orpi.scrapping'
 
@@ -13,6 +14,10 @@ export class Orpi extends Website {
             ad = {
                 ...OrpiScrapping.scrap(JSON.parse((this.body as any).data)),
                 id: (this.body as any).id,
+            }
+
+            if (!ad) {
+                throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}/${this.body.platform}` }
             }
         }
 

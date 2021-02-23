@@ -15,8 +15,9 @@ export abstract class AddressService {
     coordinates: Coordinate;
     blurryCoordinates: Coordinate;
 
-    constructor (ad: Ad) {
+    constructor (city: AvailableCities, ad: Ad) {
         this.ad = ad
+        this.city = city
     }
 
     getAddress() {
@@ -56,6 +57,11 @@ export abstract class AddressService {
 
     @Memoize()
     private digForPostalCode(): string {
+        // for hellemmes and lomme
+        if (cityList[this.city].postalCodePossibilities.length === 1) {
+            return cityList[this.city].postalCodePossibilities[0]
+        }
+
         const postalCode = this.ad.postalCode && this.digForPostalCode1(this.ad.postalCode)
             || this.ad.cityLabel && (this.digForPostalCode1(this.ad.cityLabel) || this.digForPostalCode2(this.ad.cityLabel))
             || this.ad.title && (this.digForPostalCode1(this.ad.title) || this.digForPostalCode2(this.ad.title))

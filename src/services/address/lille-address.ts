@@ -9,25 +9,23 @@ import { LilleAddressItem } from '@interfaces/json-item-lille';
 
 const lilleAddresses: LilleAddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_lille.json'), 'utf8'))
 
-const options = {
-  keys: ['fields.auto_adres'],
-  includeScore: true,
-  threshold: 0.5,
-  minMatchCharLength: 3,
-}
-
-const index = Fuse.createIndex(options.keys, lilleAddresses)
-
-const lilleFuse = new Fuse(lilleAddresses, options, index)
-
 export class LilleAddressService extends AddressService {
-  city = 'lille'
-
   @Memoize()
   getAddressCompleted(address: string, limit: number): { item: AddressItem, score: number }[] {
       if (!address) {
           return null
       }
+
+      const options = {
+        keys: ['fields.auto_adres'],
+        includeScore: true,
+        threshold: 0.5,
+        minMatchCharLength: 3,
+      }
+      
+      const index = Fuse.createIndex(options.keys, lilleAddresses.filter(address => address.fields.nomcom.toLowerCase() === this.city))
+      
+      const lilleFuse = new Fuse(lilleAddresses, options, index)
 
       const result = lilleFuse.search(address, { limit }) as { item: LilleAddressItem, score: number }[]
       return result ? result.map((r) => ({

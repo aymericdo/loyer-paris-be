@@ -1,10 +1,11 @@
+import { virtualConsole } from "@helpers/jsdome"
 import { SelogerMapping } from "@interfaces/mapping"
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class SelogerScrapping {
   static scrap(data: string): SelogerMapping {
-    const { document } = new JSDOM(data).window
+    const { document } = new JSDOM(data, { virtualConsole: virtualConsole() }).window
 
     const title = document.querySelector('.detail-title.title1') || document.querySelector('.Title__ShowcaseTitleContainer-sc-4479bn-0')
     const description = document.querySelector('div.description-bien > section.categorie > p') || document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.dMkXAI') || document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.koqVoo')

@@ -56,11 +56,11 @@ export class DigService {
         let addressService: AddressService;
         switch (city) {
             case 'paris':
-                addressService = new ParisAddressService(this.ad); break;
+                addressService = new ParisAddressService('paris', this.ad); break;
             case 'lille':
             case 'hellemmes':
             case 'lomme':
-                addressService = new LilleAddressService(this.ad); break;
+                addressService = new LilleAddressService(city, this.ad); break;
         }
 
         // Order is important here

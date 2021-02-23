@@ -1,10 +1,11 @@
+import { virtualConsole } from "@helpers/jsdome"
 import { PapMapping } from "@interfaces/mapping"
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class PapScrapping {
   static scrap(data: string): PapMapping {
-    const { document } = new JSDOM(data).window
+    const { document } = new JSDOM(data, { virtualConsole: virtualConsole() }).window
 
     const title = document.querySelector('h1.item-title')
     const description = document.querySelector('.item-description > div > p')

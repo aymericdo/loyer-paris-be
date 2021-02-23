@@ -13,7 +13,7 @@ function getByData(req: Request, res: Response, next: NextFunction) {
 
 router.post('/data/v2', getByDataV2)
 function getByDataV2(req: Request, res: Response, next: NextFunction) {
-    log.info(`-> v2/${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`, 'blue')
+    log.info(`-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`, 'blue')
     const orpi = new Orpi({ body: req.body }, true)
     orpi.analyse(res)
 }

@@ -1,10 +1,11 @@
+import { virtualConsole } from "@helpers/jsdome"
 import { OrpiMapping } from "@interfaces/mapping"
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class OrpiScrapping {
   static scrap(data: string): OrpiMapping {
-    const { document } = new JSDOM(data).window
+    const { document } = new JSDOM(data, { virtualConsole: virtualConsole() }).window
 
     const dataDOM = document.querySelector('[data-component=estate-bookmark]')
     const dataElement = JSON.parse(dataDOM.dataset.eulerianAction)

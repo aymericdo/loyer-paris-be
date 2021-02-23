@@ -30,7 +30,7 @@ export class LilleFilterRentService {
         const rentList = rangeRentsLille.filter((rangeRent) => {
             return (districtsMatched?.length ? districtsMatched.map(district => district.properties.zonage).includes(rangeRent.fields.zone) : true)
               && (timeDates?.length ? timeDates.includes(rangeRent.fields.epoque_construction) : true)
-              && (this.cleanAd.roomCount ? +this.cleanAd.roomCount < 5 ? +rangeRent.fields.nb_pieces === +this.cleanAd.roomCount : +rangeRent.fields.nb_pieces === 4 : true)
+              && (this.cleanAd.roomCount ? +this.cleanAd.roomCount < 4 ? +rangeRent.fields.nb_pieces === +this.cleanAd.roomCount : rangeRent.fields.nb_pieces === '4 et +' : true)
         })
 
         const isFurnished = this.cleanAd.hasFurniture != null && this.cleanAd.hasFurniture

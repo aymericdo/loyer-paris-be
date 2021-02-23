@@ -26,8 +26,6 @@ const index = Fuse.createIndex(options.keys, parisAddresses)
 
 const parisFuse = new Fuse(parisAddresses, options, index)
 export class ParisAddressService extends AddressService {
-  city = 'paris'
-
   getStations(): string[] {
     const stations: MetroItem[] = this.ad.stations && ParisStationService.getStations(this.ad.stations)
       || this.ad.description && ParisStationService.getStations(this.ad.description.split(' '))

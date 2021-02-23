@@ -42,10 +42,6 @@ export abstract class Website {
     abstract mapping(): Promise<Ad>
 
     async digData() {
-        if (this.body?.noMoreData) {
-            throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}/${this.body.platform}` }
-        }
-
         const ad: Ad = await this.mapping()
 
         const cleanAd: CleanAd = await new DigService(ad).digInAd()

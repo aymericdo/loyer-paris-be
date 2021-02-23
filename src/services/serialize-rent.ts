@@ -51,9 +51,11 @@ export class SerializeRentService {
             yearBuilt,
         } = this.serializedInfo
 
+        const cityCapitalize = (city as string).charAt(0).toUpperCase() + (city as string).slice(1)
+
         return {
             detectedInfo: {
-                address: { order: 0, value: `${address || ''}${postalCode ? address ? ' ' + postalCode : postalCode : ''}${address || postalCode ? ', ' : ''}${city}` },
+                address: { order: 0, value: `${address || ''}${postalCode ? address ? ' ' + postalCode : postalCode : ''}${address || postalCode ? ', ' : ''}${cityCapitalize}` },
                 hasFurniture: { order: 1, value: hasFurniture },
                 roomCount: { order: 2, value: roomCount },
                 surface: { order: 3, value: surface },
