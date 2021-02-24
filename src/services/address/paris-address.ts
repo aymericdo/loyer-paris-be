@@ -71,7 +71,7 @@ export class ParisAddressService extends AddressService {
   getTargetPolygon(): number[][] {
     let targetPolygon = null
 
-    if (this.getPostalCode()) {
+    if (this.digForPostalCode()) {
       targetPolygon = this.getPolyFromPostalCode()
     }
 
@@ -137,9 +137,9 @@ export class ParisAddressService extends AddressService {
 
   @Memoize()
   private getPolyFromPostalCode(): number[][] {
-    if (!this.getPostalCode()) return null // Bretelles + ceinture
+    if (!this.digForPostalCode()) return null // Bretelles + ceinture
 
-    const code = this.postalCodeReformat(this.getPostalCode())
+    const code = this.postalCodeReformat(this.digForPostalCode())
     return parisArrondissements.features.find(a => a.properties.c_ar === +code).geometry.coordinates[0]
   }
   

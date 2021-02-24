@@ -56,7 +56,7 @@ export abstract class AddressService {
     abstract addressFromCoordinate(coord: Coordinate): string
 
     @Memoize()
-    private digForPostalCode(): string {
+    digForPostalCode(): string {
         // for hellemmes and lomme
         if (cityList[this.city].postalCodePossibilities.length === 1) {
             return cityList[this.city].postalCodePossibilities[0]
@@ -94,6 +94,7 @@ export abstract class AddressService {
     private digForAddressInText(text: string): string {
         const addressRe = new RegExp(regexString('address'))
         const addressesFromRegex = text.match(addressRe) as string[]
+
         if (addressesFromRegex) {
             const sanitizedAddresses = this.sanitizeAddresses(addressesFromRegex)
             const maxResult = 10
