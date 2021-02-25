@@ -77,6 +77,7 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
               values: data,
             },
             transform: [
+              { filter: { "field": "datum.city", "equal": "paris" } },
               { calculate: "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
             ],
             encoding: {
@@ -128,6 +129,7 @@ function getPriceDifference(req: RentRequest, res: Response, next: NextFunction)
         },
         mark: { type: "bar", tooltip: true },
         transform: [
+          { filter: { "field": "datum.city", "equal": "paris" } },
           { calculate: "datum.priceExcludingCharges - datum.maxPrice", as: "priceDifference" },
           {
             joinaggregate: [{
@@ -186,6 +188,7 @@ function getLegalPerSurface(req: RentRequest, res: Response, next: NextFunction)
         },
         mark: { type: "bar", tooltip: true },
         transform: [
+          { filter: { "field": "datum.city", "equal": "paris" } },
           { calculate: "datum.isLegal ? 'Oui' : 'Non'", "as": "isLegal" },
         ],
         encoding: {
@@ -284,8 +287,9 @@ router.get('/price-variation', (req: RentRequest, res: Response, next: NextFunct
         data: {
           values: data,
         },
-        mark: { type: 'area' , color: '#f03434', tooltip: true },
+        mark: { type: 'area', color: '#f03434', tooltip: true },
         transform: [
+          { filter: { "field": "datum.city", "equal": "paris" } },
           { filter: 'datum.isLegal === false' },
           {
             calculate: 'datum.priceExcludingCharges - datum.maxPrice',
@@ -333,6 +337,7 @@ router.get('/is-legal-variation', (req: RentRequest, res: Response, next: NextFu
           values: data,
         },
         transform: [
+          { filter: { "field": "datum.city", "equal": "paris" } },
           { timeUnit: "yearweek", field: "createdAt", as: "date" },
           {
             joinaggregate: [{
