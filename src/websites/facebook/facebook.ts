@@ -22,7 +22,6 @@ export class Facebook extends Website {
         }
 
         ad = ad || this.body as FacebookMapping
-        console.log(ad)
         return {
             id: ad.id.toString(),
             address: cleanup.string(ad.address),
