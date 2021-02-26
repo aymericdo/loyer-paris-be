@@ -4,13 +4,13 @@ import { roundNumber } from '@helpers/round-number'
 import { Ad, CleanAd, FilteredResult } from '@interfaces/ad'
 import { Mapping } from '@interfaces/mapping'
 import { ApiError } from '@interfaces/shared'
+import { AvailableCities, CityService } from '@services/city'
 import { ApiErrorsService, ErrorCode } from '@services/api-errors'
-import { DigService } from '@services/dig'
-import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
-import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
+import { GeoFinderService } from '@services/geofinder'
 import { SaveRentService } from '@services/save-rent'
 import { SerializeRentService } from '@services/serialize-rent'
 import { Response } from 'express'
+import { RentFilter } from '@rentfilters/rentfilter'
 
 export abstract class Website {
     website: string = null
@@ -47,13 +47,10 @@ export abstract class Website {
         }
 
         const ad: Ad = await this.mapping()
-
-        const cleanAd: CleanAd = await new DigService(ad).digInAd()
-        let filteredResult: FilteredResult = null;
-        switch (cleanAd.city) {
-            case 'paris': filteredResult = new ParisFilterRentService(cleanAd).filter(); break;
-            case 'lille': filteredResult = new LilleFilterRentService(cleanAd).filter(); break;
-        }
+        const city: AvailableCities = CityService.findCity(ad)
+        const cleanAd: CleanAd = await new GeoFinderService(city, ad).digInAd()
+        const rentFilter = new RentFilter(city)
+        const filteredResult: FilteredResult = rentFilter.filter(cleanAd)
 
         if (filteredResult) {
             const maxAuthorized = roundNumber(filteredResult.maxPrice * cleanAd.surface)

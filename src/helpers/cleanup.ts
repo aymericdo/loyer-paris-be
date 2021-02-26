@@ -1,4 +1,4 @@
-import { AvailableCities } from "@services/address/city"
+import { AvailableCities } from "@services/city"
 
 export function string(string: string): string {
     return string?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
