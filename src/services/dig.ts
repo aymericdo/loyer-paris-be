@@ -4,8 +4,11 @@ import { stringToNumber } from '@helpers/string-to-number'
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
 import { YearBuiltService } from '@services/year-built'
-import { AddressService } from './address'
 import { ErrorCode } from './api-errors'
+import { AvailableCities, CityService } from './address/city'
+import { LilleAddressService } from './address/lille-address'
+import { ParisAddressService } from './address/paris-address'
+import { AddressService } from './address/address'
 
 export class DigService {
     ad: Ad = null
@@ -17,12 +20,15 @@ export class DigService {
     }
 
     async digInAd(): Promise<CleanAd> {
+        const city: AvailableCities = CityService.findCity(this.ad)
+
+        const [address, postalCode, stations, coordinates, blurryCoordinates] = this.digForAddress(city)
         const roomCount = this.digForRoomCount()
         const hasFurniture = this.digForHasFurniture()
         const surface = this.digForSurface()
         const price = this.digForPrice()
-        const [address, postalCode, city, stations, coordinates, blurryCoordinates] = this.digForAddress()
-        const yearBuilt = await this.digForYearBuilt(coordinates)
+        // Very edgy case : if 'paris', we have a YearBuilt fallback thanks to emprise batie data
+        const yearBuilt = await this.digForYearBuilt(city === 'paris' ? coordinates : null)
         const renter = this.digForRenter()
         const charges = this.digForCharges()
         const hasCharges = this.digForHasCharges()
@@ -46,25 +52,29 @@ export class DigService {
         }
     }
 
-    private digForAddress(): [string, string, string, string[], Coordinate, Coordinate] {
-        const addressService = new AddressService(this.ad)
+    private digForAddress(city: AvailableCities): [string, string, string[], Coordinate, Coordinate] {
+        let addressService: AddressService;
+        switch (city) {
+            case 'paris':
+                addressService = new ParisAddressService('paris', this.ad); break;
+            case 'lille':
+            case 'hellemmes':
+            case 'lomme':
+                addressService = new LilleAddressService(city, this.ad); break;
+        }
 
-        const postalCode = addressService.getPostalCode()
-        const city = addressService.getCity()
+        // Order is important here
         const address = addressService.getAddress()
+        const postalCode = addressService.getPostalCode()
         const stations = addressService.getStations()
         const coordinates = addressService.getCoordinate()
         const blurryCoordinates = addressService.getCoordinate(true)
-
-        if (city !== 'paris') {
-            throw { error: ErrorCode.City, msg: `city "${city}" not found in the list` }
-        }
 
         if (!address && !postalCode && !coordinates) {
             throw { error: ErrorCode.Address, msg: 'address not found' }
         }
 
-        return [address, postalCode, city, stations, coordinates, blurryCoordinates]
+        return [address, postalCode, stations, coordinates, blurryCoordinates]
     }
 
     private digForRoomCount(): number {

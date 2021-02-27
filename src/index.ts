@@ -8,12 +8,15 @@ dotenv.config()
 
 app.use(cors())
 app.use(express.json({
-    type: ['application/json', 'text/plain']
+    limit: '1mb',
+    type: ['application/json', 'text/plain'],
 }))
 
-app.use('/', function (req: Request, res: Response, next: NextFunction) {
-    next()
-})
+app.use(express.urlencoded({
+    limit: '1mb',
+    extended: true,
+    parameterLimit: 50000,
+}))
 
 app.use('/seloger', require('./websites/seloger/seloger.controller'))
 app.use('/leboncoin', require('./websites/leboncoin/leboncoin.controller'))
@@ -23,6 +26,7 @@ app.use('/logic-immo', require('./websites/logicimmo/logicimmo.controller'))
 app.use('/lefigaro', require('./websites/lefigaro/lefigaro.controller'))
 app.use('/orpi', require('./websites/orpi/orpi.controller'))
 app.use('/facebook', require('./websites/facebook/facebook.controller'))
+app.use('/gensdeconfiance', require('./websites/gensdeconfiance/gensdeconfiance.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 

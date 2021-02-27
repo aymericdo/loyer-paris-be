@@ -1,20 +1,10 @@
 import * as fs from 'fs'
 import { min } from "@helpers/functions";
-import { ArrondissementItem } from "@interfaces/json-item";
+import { ArrondissementItem } from "@interfaces/json-item-paris";
 import path from "path";
 import { Memoize } from 'typescript-memoize';
 
-const parisArrondissements: { features: ArrondissementItem[] } = JSON.parse(fs.readFileSync(path.join('json-data/arrondissements_paris_geodata.json'), 'utf8'))
-
 export class DistanceService {
-  postalCode: string
-
-  constructor (
-    postalCode: string,
-  ) {
-    this.postalCode = postalCode;
-  }
-
   static getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
     var R = 6371; // Radius of the earth in km
     var dLat = this.deg2rad(lat2-lat1);  // deg2rad below
@@ -29,15 +19,7 @@ export class DistanceService {
     return d;
   }
 
-  @Memoize()
-  getPolyFromPostalCode(): number[][] {
-    if (!this.postalCode) return null
-    // 75010 -> 10 75009 -> 9
-    const code = (this.postalCode.slice(-2)[0] === '0' ? this.postalCode.slice(-1) : this.postalCode.slice(-2))
-    return parisArrondissements.features.find(a => a.properties.c_ar === +code).geometry.coordinates[0]
-  }
-
-  distanceToPoly(point: [number, number], poly: [number, number][]): { point: [number, number], dist: number } {
+  static distanceToPoly(point: [number, number], poly: [number, number][]): { point: [number, number], dist: number } {
     const result: { point: [number, number], dist: number}[] = poly.map((p1: [number, number], index: number) => {
         const prev = (index == 0 ? poly.length : index) - 1;
         const p2 = poly[prev];
@@ -82,19 +64,19 @@ export class DistanceService {
     return deg * (Math.PI/180)
   }
 
-  private vlen(vector: [number, number]): number {
+  private static vlen(vector: [number, number]): number {
     return Math.sqrt(vector[0]*vector[0] + vector[1] * vector[1]);
   }
     
-  private vsub(v1: [number, number], v2: [number, number]): [number, number] {
+  private static vsub(v1: [number, number], v2: [number, number]): [number, number] {
       return [v1[0] - v2[0], v1[1] - v2[1]];
   }
     
-  private vscale(vector: [number, number], factor: number): [number, number] {
+  private static vscale(vector: [number, number], factor: number): [number, number] {
       return [vector[0] * factor, vector[1] * factor];
   }
     
-  private vnorm(v: [number, number]): [number, number] {
+  private static vnorm(v: [number, number]): [number, number] {
       return [-v[1], v[0]];
   }
 }

@@ -12,4 +12,11 @@ function getByData(req: Request, res: Response, next: NextFunction) {
     loueragile.analyse(res)
 }
 
+router.post('/data/v2', getByDataV2)
+function getByDataV2(req: Request, res: Response, next: NextFunction) {
+    log.info(`-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`, 'blue')
+    const loueragile = new LouerAgile({ body: req.body, id: req.body.id as string }, true)
+    loueragile.analyse(res)
+}
+
 module.exports = router

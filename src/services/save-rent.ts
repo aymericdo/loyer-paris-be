@@ -1,11 +1,12 @@
 import { Rent } from '@db/db'
 import * as log from '@helpers/log'
 import { getAdById } from '@db/rent.service'
+import { AvailableCities } from '@services/address/city';
 
 interface SavedInfo {
     id: string
     address: string
-    city?: string
+    city: AvailableCities
     hasFurniture?: boolean
     isLegal: boolean
     latitude?: number
@@ -35,18 +36,18 @@ export class SaveRentService {
             if (findSimilarAd && findSimilarAd.priceExcludingCharges !== this.adToSave.priceExcludingCharges) {
                 log.priceHasChanged()
             }
-    
+
             const rent = new Rent({
                 id: this.adToSave.id,
                 website: this.adToSave.website,
-                address: this.adToSave.address,
                 isLegal: this.adToSave.isLegal,
                 maxPrice: this.adToSave.maxPrice,
-                postalCode: this.adToSave.postalCode,
                 price: this.adToSave.price,
                 priceExcludingCharges: this.adToSave.priceExcludingCharges,
                 surface: this.adToSave.surface,
-                ...(this.adToSave.city != null && { city: this.adToSave.city }),
+                city: this.adToSave.city,
+                ...(this.adToSave.address != null && { address: this.adToSave.address }),
+                ...(this.adToSave.postalCode != null && { postalCode: this.adToSave.postalCode }),
                 ...(this.adToSave.hasFurniture != null && { hasFurniture: this.adToSave.hasFurniture }),
                 ...(this.adToSave.latitude != null && { latitude: this.adToSave.latitude }),
                 ...(this.adToSave.longitude != null && { longitude: this.adToSave.longitude }),

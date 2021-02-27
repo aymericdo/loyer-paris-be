@@ -2,14 +2,27 @@ import * as cleanup from '@helpers/cleanup'
 import { particulierToken } from '@helpers/particulier'
 import { Ad } from '@interfaces/ad'
 import { LogicimmoMapping } from '@interfaces/mapping'
+import { ErrorCode } from '@services/api-errors'
 import { Website } from '../website'
+import { LogicimmoScrapping } from './logicimmo.scrapping'
 
 export class LogicImmo extends Website {
     website = 'logicimmo'
 
     async mapping(): Promise<Ad> {
-        const ad: LogicimmoMapping = this.body as LogicimmoMapping
+        let ad: LogicimmoMapping = null;
+        if (this.isV2) {
+            ad = {
+                ...LogicimmoScrapping.scrap(JSON.parse((this.body as any).data)),
+                id: (this.body as any).id,
+            }
 
+            if (!ad) {
+                throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}/${this.body.platform}` }
+            }
+        }
+
+        ad = ad || this.body as LogicimmoMapping
         return {
             id: ad.id.toString(),
             charges: cleanup.price(ad.charges),

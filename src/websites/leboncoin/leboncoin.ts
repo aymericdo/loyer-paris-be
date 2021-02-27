@@ -3,12 +3,26 @@ import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { LeboncoinMapping } from '@interfaces/mapping'
 import { Website } from '../website'
+import { LeboncoinScrapping } from './leboncoin.scrapping'
+import { ErrorCode } from '@services/api-errors'
 
 export class LeBonCoin extends Website {
     website = 'leboncoin'
 
     async mapping(): Promise<Ad> {
-        const ad: LeboncoinMapping = this.body as LeboncoinMapping
+        let ad: LeboncoinMapping = null;
+        if (this.isV2) {
+            ad = {
+                ...LeboncoinScrapping.scrap(JSON.parse((this.body as any).data)),
+                id: (this.body as any).id,
+            }
+
+            if (!ad) {
+                throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}/${this.body.platform}` }
+            }
+        }
+
+        ad = ad || this.body as LeboncoinMapping
         return {
             id: ad.id.toString(),
             cityLabel: cleanup.string(ad.cityLabel),

@@ -30,16 +30,35 @@ export class YearBuiltService {
             return yearBuiltRange.some((yb: number) => {
                 return (typeof rangeYearBuilt[0] === 'number') ?
                     rangeYearBuilt[0] < yb && rangeYearBuilt[1] >= yb
-                    : (rangeYearBuilt[0] === 'avant') ?
-                        yb < rangeYearBuilt[1]
-                        : (rangeYearBuilt[0] === 'apres') ?
-                            yb > rangeYearBuilt[1]
-                            :
-                            false
+                : (rangeYearBuilt[0] === 'avant') ?
+                    yb < rangeYearBuilt[1]
+                : (rangeYearBuilt[0] === 'apres') ?
+                    yb > rangeYearBuilt[1]
+                :
+                    false
             })
         })
     }
+
+    static getDateFormatted(periodBuilt: number[]): string {
+        if (!periodBuilt) {
+            return null
+        }
     
+        if (periodBuilt.length > 1) {
+            if (periodBuilt[0] === null) {
+                return `Avant ${periodBuilt[1]}`
+            } else if (periodBuilt[1] === null) {
+                return `Après ${periodBuilt[0]}`
+            } else {
+                return `${periodBuilt[0]}-${periodBuilt[1]}`
+            }
+        } else {
+            return periodBuilt.toString()
+        }
+    }
+
+    // Pour paris only ↴
     static async getBuilding(lat: number, lng: number) {
         return await EmpriseBatie.findOne({
             geometry: {
@@ -68,23 +87,4 @@ export class YearBuiltService {
         )
         return yearBuilt || periodBuilt
     }
-    
-    static getDateFormatted(periodBuilt) {
-        if (!periodBuilt) {
-            return null
-        }
-    
-        if (periodBuilt.length > 1) {
-            if (periodBuilt[0] === null) {
-                return `Avant ${periodBuilt[1]}`
-            } else if (periodBuilt[1] === null) {
-                return `Après ${periodBuilt[0]}`
-            } else {
-                return `${periodBuilt[0]}-${periodBuilt[1]}`
-            }
-        } else {
-            return periodBuilt
-        }
-    }
-
 }

@@ -1,3 +1,5 @@
+import { AvailableCities } from "@services/address/city"
+
 export function string(string: string): string {
     return string?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
 }
@@ -12,8 +14,8 @@ export function number(number: string): number {
     return match != null ? +match[0] : null
 }
 
-export function address(string: string): string {
-    const blackList = ['commercante']
+export function address(string: string, city: AvailableCities): string {
+    const blackList = ['commercante', 'navette']
     if (blackList.some(w => string.includes(w))) return null
-    return string.trim().replace('bd ', 'boulevard ')
+    return string.trim().replace('bd ', 'boulevard ').replace(city as string, '')
 }
