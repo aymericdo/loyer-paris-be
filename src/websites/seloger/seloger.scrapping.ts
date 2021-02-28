@@ -9,13 +9,10 @@ export class SelogerScrapping {
 
     const title = document.querySelector('.detail-title.title1') || document.querySelector('.Title__ShowcaseTitleContainer-sc-4479bn-0')
     const description = document.querySelector('div.description-bien > section.categorie > p') || document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.dMkXAI') || document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.koqVoo')
-    const price = document.getElementById('price') || document.querySelector('.Summary__Text-sc-1wkzvu-6.Summary__PriceText-sc-1wkzvu-9.fulWhK') || document.querySelector('.Summarystyled__PriceContainer-tzuaot-7')
+    const price = document.querySelector('[class^=Summarystyled__PriceContainer]')
     const cityLabel = document.querySelector("#neighborhood-map > p > strong")
     const renter = document.querySelector('.agence-title') || document.querySelector('.LightSummary__Title-f6k8ax-2.kqLAJb') || document.querySelector('.LightSummary__Title-f6k8ax-1.lnUnld') || document.querySelector("#agence-info > div.Agency__PrimaryBlock-sc-1rsw64j-5.dNsjKe > h3")
-    const itemTags = (document.querySelector('.resume ul.criterion > li') && [...document.querySelectorAll('.resume ul.criterion > li')])
-        || (document.querySelector('.Summary__TagsWrapper-sc-1wkzvu-7.emAUgN > div') && [...document.querySelectorAll('.Summary__TagsWrapper-sc-1wkzvu-7.emAUgN > div')])
-        || (document.querySelector('.Summarystyled__TagsWrapper-tzuaot-19 > div') && [...document.querySelectorAll('.Summarystyled__TagsWrapper-tzuaot-19 > div')])
-        || (document.querySelector('.TagsWithIcon__TagContainer-j1x9om-1') && [...document.querySelectorAll('.TagsWithIcon__TagContainer-j1x9om-1')])
+    const itemTags = (document.querySelector('[class^=Summarystyled__TagsWrapper] > div') && [...document.querySelectorAll('[class^=Summarystyled__TagsWrapper] > div')]) || []
     const optionsSection = (document.querySelector('section.categorie .criteria-wrapper > div') && [...document.querySelectorAll('section.categorie .criteria-wrapper > div')]) || (document.querySelector('.GeneralList__List-sc-9gtpjm-0.BAyYz > li') && [...document.querySelectorAll('.GeneralList__List-sc-9gtpjm-0.BAyYz > li')])
     const chargesElement = document.querySelector('section.categorie.with-padding-bottom .sh-text-light') || document.querySelector('#a-propos-de-ce-prix .TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.dMkXAI > div')
 
