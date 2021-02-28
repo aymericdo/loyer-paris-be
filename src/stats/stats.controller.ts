@@ -8,7 +8,7 @@ import { groupBy } from '@helpers/functions'
 import * as log from '@helpers/log'
 import { vegaCommonOpt } from '@helpers/vega'
 import { IpService } from '../services/ip'
-import { cityList } from '@services/address/city'
+import { cityList } from '@services/city'
 const router = express.Router()
 
 const parisGeodata = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'))

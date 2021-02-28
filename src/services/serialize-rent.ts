@@ -2,7 +2,7 @@ import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
-import { AvailableCities } from '@services/address/city';
+import { AvailableCities } from '@services/city';
 
 interface SerializedInfo {
     address: string

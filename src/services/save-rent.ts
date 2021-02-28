@@ -1,7 +1,7 @@
 import { Rent } from '@db/db'
 import * as log from '@helpers/log'
 import { getAdById } from '@db/rent.service'
-import { AvailableCities } from '@services/address/city';
+import { AvailableCities } from '@services/city';
 
 interface SavedInfo {
     id: string

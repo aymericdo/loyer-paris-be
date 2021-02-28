@@ -20,6 +20,15 @@
       ],
       "@db/*": [
         "db/*"
+      ],
+      "@stationdiggers/*": [
+        "stationdiggers/*"
+      ],
+      "@addressdiggers/*": [
+        "addressdiggers/*"
+      ],
+      "@rentfilters/*": [
+        "rentfilters/*"
       ]
     },
     "allowJs": true,

@@ -1,8 +1,8 @@
 export interface LilleDistrictItem {
   type: "Feature";
   geometry: {
-      type: "Polygon"
-      coordinates: number[][][]
+    type: "Polygon"
+    coordinates: number[][][]
   };
   properties: {
     zonage: number,
@@ -54,5 +54,25 @@ export interface LilleAddressItem {
     type: string,
     coordinates: [number, number]
   },
+  record_timestamp: string
+}
+
+export interface LilleStationItem {
+  datasetid: string
+  recordid: string
+  fields: {
+    wheelchair_boarding: string
+    zone_id: string
+    stop_id: string
+    parent_station: string
+    stop_coordinates: number[]
+    stop_desc: string
+    stop_name: string
+    location_type: string
+  }
+  geometry: {
+    type: string
+    coordinates: number[]
+  }
   record_timestamp: string
 }
