@@ -4,8 +4,7 @@ import path from "path"
 import inside from "point-in-polygon"
 import { Coordinate } from '@interfaces/shared'
 import { LilleDistrictItem } from '@interfaces/json-item-lille'
-
-const lilleDistricts: { features: LilleDistrictItem[] } = JSON.parse(fs.readFileSync(path.join('json-data/quartier_lille_geodata.json'), 'utf8'))
+import { Memoize } from 'typescript-memoize'
 
 export class LilleDistrictService {
     coordinates: Coordinate = null
@@ -28,8 +27,13 @@ export class LilleDistrictService {
             null
     }
 
+    @Memoize()
+    private lilleDistrictJson(): { features: LilleDistrictItem[] } {
+      return JSON.parse(fs.readFileSync(path.join('json-data/quartier_lille_geodata.json'), 'utf8'));
+    }
+
     private getDistrictFromCoordinate(lat: number, lng: number): LilleDistrictItem[] {
-        const district = lilleDistricts.features.find(district => inside([+lng, +lat], district.geometry.coordinates[0]))
+        const district = this.lilleDistrictJson().features.find(district => inside([+lng, +lat], district.geometry.coordinates[0]))
         return district ? [district] : []
     }
 }

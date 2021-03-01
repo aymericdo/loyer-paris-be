@@ -4,8 +4,7 @@ import { ParisEncadrementItem } from '@interfaces/json-item-paris'
 import { CleanAd, FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
 import { ParisDistrictService } from '@services/filter-rent/paris-district'
-
-const rangeRentsParis: ParisEncadrementItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris.json'), 'utf8'))
+import { Memoize } from 'typescript-memoize'
 
 export class ParisFilterRentService {
     cleanAd: CleanAd = null
@@ -27,7 +26,7 @@ export class ParisFilterRentService {
 
         const timeDates: string[] = YearBuiltService.getRangeTimeDates(rangeTime, this.cleanAd.yearBuilt)
 
-        const rentList = rangeRentsParis.filter((rangeRent) => {
+        const rentList = this.rangeRentsParisJson().filter((rangeRent) => {
             return (districtsMatched?.length ? districtsMatched.map(district => district.properties.c_qu).includes(rangeRent.fields.id_quartier) : true)
               && (timeDates?.length ? timeDates.includes(rangeRent.fields.epoque) : true)
               && (this.cleanAd.roomCount ? +this.cleanAd.roomCount < 5 ? rangeRent.fields.piece === +this.cleanAd.roomCount : rangeRent.fields.piece === 4 : true)
@@ -45,5 +44,10 @@ export class ParisFilterRentService {
           roomCount: +worstCase.fields.piece,
           yearBuilt: worstCase.fields.epoque,
         }
+    }
+
+    @Memoize()
+    private rangeRentsParisJson(): ParisEncadrementItem[] {
+      return JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris.json'), 'utf8'))
     }
 }

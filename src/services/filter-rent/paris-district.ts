@@ -3,8 +3,7 @@ import { ParisDistrictItem } from "@interfaces/json-item-paris"
 import path from "path"
 import inside from "point-in-polygon"
 import { Coordinate } from '@interfaces/shared'
-
-const parisDistricts: { features: ParisDistrictItem[] } = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'))
+import { Memoize } from 'typescript-memoize'
 
 export class ParisDistrictService {
     coordinates: Coordinate = null
@@ -32,7 +31,7 @@ export class ParisDistrictService {
             // 75010 -> 10  75009 -> 9
             const code = this.postalCode.slice(-2)[0] === '0' ? this.postalCode.slice(-1) : this.postalCode.slice(-2)
 
-            return parisDistricts.features.filter(district => {
+            return this.parisDistrictsJson().features.filter(district => {
                 return district.properties.c_ar === +code;
             })
         } else {
@@ -41,7 +40,12 @@ export class ParisDistrictService {
     }
 
     private getDistrictFromCoordinate(lat: number, lng: number): ParisDistrictItem[] {
-        const district = parisDistricts.features.find(district => inside([+lng, +lat], district.geometry.coordinates[0]))
+        const district = this.parisDistrictsJson().features.find(district => inside([+lng, +lat], district.geometry.coordinates[0]))
         return district ? [district] : []
+    }
+
+    @Memoize()
+    private parisDistrictsJson(): { features: ParisDistrictItem[] } {
+      return JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'));
     }
 }

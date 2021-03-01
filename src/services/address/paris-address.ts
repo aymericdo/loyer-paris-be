@@ -1,5 +1,4 @@
 import { min } from '@helpers/functions';
-import { regexString } from '@helpers/regex';
 import { ArrondissementItem, MetroItem, ParisAddressItem } from '@interfaces/json-item-paris';
 import { ParisStationService } from '@services/address/paris-station';
 import Fuse from 'fuse.js';
@@ -12,23 +11,11 @@ import * as fs from 'fs'
 import path from "path";
 import { cityList } from './city';
 
-const parisAddresses: ParisAddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
-const parisArrondissements: { features: ArrondissementItem[] } = JSON.parse(fs.readFileSync(path.join('json-data/arrondissements_paris_geodata.json'), 'utf8'))
-
-const options = {
-  keys: ['fields.l_adr'],
-  includeScore: true,
-  threshold: 0.5,
-  minMatchCharLength: 3,
-}
-
-const index = Fuse.createIndex(options.keys, parisAddresses)
-
-const parisFuse = new Fuse(parisAddresses, options, index)
 export class ParisAddressService extends AddressService {
   getStations(): string[] {
-    const stations: MetroItem[] = this.ad.stations && ParisStationService.getStations(this.ad.stations)
-      || this.ad.description && ParisStationService.getStations(this.ad.description.split(' '))
+    const parisStationService = new ParisStationService()
+    const stations: MetroItem[] = this.ad.stations && parisStationService.getStations(this.ad.stations)
+      || this.ad.description && parisStationService.getStations(this.ad.description.split(' '))
     return stations && this.nearestStationInTargetPolygon(stations)
   }
 
@@ -43,6 +30,18 @@ export class ParisAddressService extends AddressService {
     if (!address) {
         return null
     }
+
+    const options = {
+      keys: ['fields.l_adr'],
+      includeScore: true,
+      threshold: 0.5,
+      minMatchCharLength: 3,
+    }
+    
+    const index = Fuse.createIndex(options.keys, this.parisAddressesJson())
+
+    const parisFuse = new Fuse(this.parisAddressesJson(), options, index)
+
     const result = parisFuse.search(address, { limit }) as { item: ParisAddressItem, score: number }[]
     return result ? result.map((r) => ({
       item: {
@@ -58,7 +57,7 @@ export class ParisAddressService extends AddressService {
   }
 
   addressFromCoordinate(coord: Coordinate): string {
-    return (parisAddresses.reduce((prev, current) => {
+    return (this.parisAddressesJson().reduce((prev, current) => {
         const dist = DistanceService.getDistanceFromLatLonInKm(coord.lat, coord.lng, current.fields.geom.coordinates[1], current.fields.geom.coordinates[0])
         if (dist < prev.dist || !prev.dist) {
             prev = { dist, current }
@@ -140,7 +139,17 @@ export class ParisAddressService extends AddressService {
     if (!this.digForPostalCode()) return null // Bretelles + ceinture
 
     const code = this.postalCodeReformat(this.digForPostalCode())
-    return parisArrondissements.features.find(a => a.properties.c_ar === +code).geometry.coordinates[0]
+    return this.parisArrondissementsJson().features.find(a => a.properties.c_ar === +code).geometry.coordinates[0]
+  }
+
+  @Memoize()
+  private parisAddressesJson(): ParisAddressItem[] {
+    return JSON.parse(fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8'))
+  }
+
+  @Memoize()
+  private parisArrondissementsJson(): { features: ArrondissementItem[] } {
+    return JSON.parse(fs.readFileSync(path.join('json-data/arrondissements_paris_geodata.json'), 'utf8'))
   }
   
   private postalCodeFormat(postalCode: string): string {

@@ -7,11 +7,9 @@ import { DataBaseItem } from '@interfaces/database-item'
 import { groupBy } from '@helpers/functions'
 import * as log from '@helpers/log'
 import { vegaCommonOpt } from '@helpers/vega'
-import { IpService } from '../services/ip'
+import { IpService } from '@services/ip'
 import { cityList } from '@services/address/city'
 const router = express.Router()
-
-const parisGeodata = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'))
 
 interface RentRequest extends Request {
   rents?: DataBaseItem[]
@@ -51,6 +49,8 @@ router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
 router.get('/map', getMap)
 function getMap(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
+
+  const parisGeodata = JSON.parse(fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8'));
 
   rentService.getMapData()
     .then((data) => {

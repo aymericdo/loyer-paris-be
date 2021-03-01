@@ -7,8 +7,6 @@ import { AddressItem, Coordinate } from '@interfaces/shared';
 import { DistanceService } from '@services/distance';
 import { LilleAddressItem } from '@interfaces/json-item-lille';
 
-const lilleAddresses: LilleAddressItem[] = JSON.parse(fs.readFileSync(path.join('json-data/adresse_lille.json'), 'utf8'))
-
 export class LilleAddressService extends AddressService {
   @Memoize()
   getAddressCompleted(address: string, limit: number): { item: AddressItem, score: number }[] {
@@ -22,10 +20,10 @@ export class LilleAddressService extends AddressService {
         threshold: 0.5,
         minMatchCharLength: 3,
       }
-      
-      const index = Fuse.createIndex(options.keys, lilleAddresses.filter(address => address.fields.nomcom.toLowerCase() === this.city))
-      
-      const lilleFuse = new Fuse(lilleAddresses, options, index)
+
+      const index = Fuse.createIndex(options.keys, this.lilleAddressesJson().filter(address => address.fields.nomcom.toLowerCase() === this.city))
+
+      const lilleFuse = new Fuse(this.lilleAddressesJson(), options, index)
 
       const result = lilleFuse.search(address, { limit }) as { item: LilleAddressItem, score: number }[]
       return result ? result.map((r) => ({
@@ -42,7 +40,7 @@ export class LilleAddressService extends AddressService {
   }
 
   addressFromCoordinate(coord: Coordinate): string {
-    return (lilleAddresses.reduce((prev, current) => {
+    return (this.lilleAddressesJson().reduce((prev, current) => {
         const dist = DistanceService.getDistanceFromLatLonInKm(coord.lat, coord.lng, current.geometry.coordinates[1], current.geometry.coordinates[0])
         if (dist < prev.dist || !prev.dist) {
             prev = { dist, current }
@@ -55,5 +53,10 @@ export class LilleAddressService extends AddressService {
   // Lille, it's happening...
   getTargetPolygon(): number[][] {
     return null
+  }
+
+  @Memoize()
+  private lilleAddressesJson(): LilleAddressItem[] {
+    return JSON.parse(fs.readFileSync(path.join('json-data/adresse_lille.json'), 'utf8'));
   }
 }
