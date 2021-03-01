@@ -1,10 +1,10 @@
 import { virtualConsole } from "@helpers/jsdome";
-import { FacebookMapping } from "@interfaces/mapping";
+import { BellesDemeuresMapping } from "@interfaces/mapping";
 import jsdom from "jsdom";
 const { JSDOM } = jsdom;
 
 export class BellesDemeuresScrapping {
-  static scrap(data: string): FacebookMapping {
+  static scrap(data: string): BellesDemeuresMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),
     }).window;
@@ -47,7 +47,7 @@ export class BellesDemeuresScrapping {
     features.forEach((feature) => {
       if (feature.textContent.match(/M²/g)) {
         surface = feature;
-      } else if (feature.textContent.match(/Pièces/g)) {
+      } else if (feature.textContent.match(/Pièce/g)) {
         rooms = feature;
       }
     });
@@ -67,11 +67,12 @@ export class BellesDemeuresScrapping {
       cityLabel,
       description: description && description.textContent,
       furnished,
-      price: price && price.textContent,
-      renter: renter ? renter.getAttribute("title") : null,
-      rooms: rooms && rooms.textContent,
-      surface: surface && surface.textContent,
-      title: title && title.textContent,
+      price: price?.textContent,
+      hasCharges: price?.textContent?.includes('CC'),
+      renter: renter?.getAttribute("title"),
+      rooms: rooms?.textContent,
+      surface: surface?.textContent,
+      title: title?.textContent,
     };
   }
 }

@@ -1,7 +1,7 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { particulierToken } from '@helpers/particulier'
-import { FacebookMapping } from '@interfaces/mapping'
+import { LuxResidenceMapping } from '@interfaces/mapping'
 import { Website } from '../website'
 import { LuxResidenceScrapping } from './lux-residence.scrapping'
 import { ErrorCode } from '@services/api-errors'
@@ -9,7 +9,7 @@ export class LuxResidence extends Website {
     website = 'luxresidence'
 
     async mapping(): Promise<Ad> {
-        let ad: FacebookMapping = null;
+        let ad: LuxResidenceMapping = null;
         if (this.isV2) {
             ad = {
                 ...LuxResidenceScrapping.scrap(JSON.parse((this.body as any).data)),
@@ -21,7 +21,7 @@ export class LuxResidence extends Website {
             }
         }
 
-        ad = ad || this.body as FacebookMapping
+        ad = ad || this.body as LuxResidenceMapping
         return {
             id: ad.id.toString(),
             cityLabel: cleanup.string(ad.cityLabel),
@@ -31,7 +31,6 @@ export class LuxResidence extends Website {
             renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
             rooms: cleanup.number(ad.rooms),
             surface: cleanup.number(ad.surface),
-            title: cleanup.string(ad.title),
         }
     }
 }

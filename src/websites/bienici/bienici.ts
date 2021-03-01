@@ -1,18 +1,18 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { particulierToken } from '@helpers/particulier'
-import { BellesDemeuresMapping } from '@interfaces/mapping'
+import { BienIciMapping } from '@interfaces/mapping'
 import { Website } from '../website'
-import { BellesDemeuresScrapping } from './bellesdemeures.scrapping'
+import { BienIciScrapping } from './bienici.scrapping'
 import { ErrorCode } from '@services/api-errors'
-export class BellesDemeures extends Website {
-    website = 'bellesdemeures'
+export class BienIci extends Website {
+    website = 'bienici'
 
     async mapping(): Promise<Ad> {
-        let ad: BellesDemeuresMapping = null;
+        let ad: BienIciMapping = null;
         if (this.isV2) {
             ad = {
-                ...BellesDemeuresScrapping.scrap(JSON.parse((this.body as any).data)),
+                ...BienIciScrapping.scrap(JSON.parse((this.body as any).data)),
                 id: (this.body as any).id,
             }
 
@@ -21,7 +21,7 @@ export class BellesDemeures extends Website {
             }
         }
 
-        ad = ad || this.body as BellesDemeuresMapping
+        ad = ad || this.body as BienIciMapping
         return {
             id: ad.id.toString(),
             cityLabel: cleanup.string(ad.cityLabel),
@@ -30,6 +30,8 @@ export class BellesDemeures extends Website {
             price: cleanup.price(ad.price),
             renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
             rooms: cleanup.number(ad.rooms),
+            hasCharges: ad.hasCharges,
+            charges: cleanup.number(ad.charges),
             surface: cleanup.number(ad.surface),
             title: cleanup.string(ad.title),
         }

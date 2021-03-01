@@ -1,42 +1,32 @@
 import { virtualConsole } from "@helpers/jsdome"
-import { FacebookMapping } from "@interfaces/mapping"
+import { LuxResidenceMapping } from "@interfaces/mapping"
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class LuxResidenceScrapping {
-  static scrap(data: string): FacebookMapping {
+  static scrap(data: string): LuxResidenceMapping {
     const { document } = new JSDOM(data, { virtualConsole: virtualConsole() }).window
-    
-    const title = document.querySelector("div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemVille")
-    const description = document.querySelector("#wrapper > div.detail > div > div.detailWrapInfos > div.detailDesc.wrapMain > p.detailDescSummary")
-    const price = document.querySelector("div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemPrice")
-    const renter = document.querySelector("#wrapper > div.detail > div > div.detailWrapInfos > div.wrapMain.agencyContactContainer.js_contact_wrapper > aside > div.agencyContactPanels.js_panel > span > picture > img")
-    const cityLabel = document.querySelector("div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemVille")
 
-    const features = [...document.querySelectorAll('div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecs > ul > li')]
-    const features2 = [...document.querySelectorAll('#wrapper > div.detail > div > div.detailWrapInfos > div:nth-child(5) > div:nth-child(2) > ul > li > ul > li')]
+    const description = document.querySelector("#descriptionSection > div")
+    const price = document.querySelector("#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.price")
+    const renter = document.querySelector("#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.agency > span.agencyName")
+    const cityLabel = document.querySelector("#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.city")
+    const furnished = document.querySelector("#detailsTab > div > div.detailsBlock.plus > ul > li.singleCriteria.furnished")
 
-    let furnished = false
+    const features = [...document.querySelectorAll('#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.criteria > span')]
+
     let surface = null
     let rooms = null
 
     features.forEach(feature => {
-      if (feature.textContent.match(/m²/g)) {
+      if (feature.textContent.match(/m2/g)) {
         surface = feature
       } else if (feature.textContent.match(/pièce/g)) {
         rooms = feature
-      } else if (feature.textContent.match(/Meublé/g)) {
-        furnished = feature
       }
     })
 
-    features2.forEach(feature => {
-      if (feature.textContent.match(/Meublé/g)) {
-        furnished = true
-      }
-    })
-
-    if (!title && !description && !price && !cityLabel) {
+    if (!description && !price && !cityLabel) {
       return null
     }
 
@@ -44,12 +34,11 @@ export class LuxResidenceScrapping {
       id: null,
       cityLabel: cityLabel && cityLabel.textContent,
       description: description && description.textContent,
-      furnished,
+      furnished: furnished && !!furnished.textContent,
       price: price && price.textContent,
-      renter: renter ? renter.getAttribute('title') : null,
+      renter: renter && renter.textContent,
       rooms: rooms && rooms.textContent,
       surface: surface && surface.textContent,
-      title: title && title.textContent,
     }
   }
 }
