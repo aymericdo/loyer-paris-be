@@ -11,13 +11,12 @@ export async function getMapData(): Promise<{ isLegal: boolean, latitude: number
 }
 
 export async function getPriceDiffData(): Promise<{ maxPrice: number, postalCode: string, priceExcludingCharges: number }[]> {
-    // return await Rent.find({ postalCode: { $exists: true } }, { maxPrice: 1, postalCode: 1, priceExcludingCharges: 1, isLegal: 1, city: 1 }, (err: Error, rents: { maxPrice: number, postalCode: string, priceExcludingCharges: number, isLegal: number, city: string }[]) => {
-    //     if (err) {
-    //         throw err
-    //     }
-    //     return rents
-    // })
-    return [];
+    return await Rent.find({ postalCode: { $exists: true } }, { maxPrice: 1, postalCode: 1, priceExcludingCharges: 1, isLegal: 1, city: 1 }, (err: Error, rents: { maxPrice: number, postalCode: string, priceExcludingCharges: number, isLegal: number, city: string }[]) => {
+        if (err) {
+            throw err
+        }
+        return rents
+    })
 }
 
 export async function getPriceVarData(): Promise<{ maxPrice: number, postalCode: string, priceExcludingCharges: number }[]> {
