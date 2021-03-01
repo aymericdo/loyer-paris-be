@@ -27,6 +27,8 @@ app.use('/lefigaro', require('./websites/lefigaro/lefigaro.controller'))
 app.use('/orpi', require('./websites/orpi/orpi.controller'))
 app.use('/facebook', require('./websites/facebook/facebook.controller'))
 app.use('/gensdeconfiance', require('./websites/gensdeconfiance/gensdeconfiance.controller'))
+app.use('/bellesdemeures', require('./websites/bellesdemeures/bellesdemeures.controller'))
+app.use('/lux-residence', require('./websites/lux-residence/lux-residence.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 

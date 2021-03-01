@@ -124,7 +124,7 @@ export class DigService {
     private digForPrice(): number {
         if (!this.ad.price) {
             throw { error: ErrorCode.Minimal, msg: 'price not found' }
-        } else if (this.ad.price > 10000) {
+        } else if (this.ad.price > 30000) {
             throw { error: ErrorCode.Price, msg: `price "${this.ad.price}" too expensive to be a rent` }
         } else if (this.ad.price < 100) {
             throw { error: ErrorCode.Price, msg:  `price "${this.ad.price}" too cheap to be a rent` }
