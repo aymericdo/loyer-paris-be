@@ -23,6 +23,11 @@ export class Pap extends Website {
         }
 
         ad = ad || this.body as PapMapping
+
+        if (!ad.id) {
+          throw { error: ErrorCode.Other, msg: `not a rent` }
+        }
+
         return {
             id: ad.id.toString(),
             cityLabel: cleanup.string(ad.cityLabel),
