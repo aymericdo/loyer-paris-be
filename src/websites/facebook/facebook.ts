@@ -17,14 +17,13 @@ export class Facebook extends Website {
             }
 
             if (!ad) {
-                throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}/${this.body.platform}` }
+              throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}/${this.body.platform}` }
             }
         }
 
         ad = ad || this.body as FacebookMapping
         return {
             id: ad.id.toString(),
-            address: cleanup.string(ad.address),
             cityLabel: cleanup.string(ad.cityLabel),
             description: cleanup.string(ad.description),
             furnished: ad.furnished,

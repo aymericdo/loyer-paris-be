@@ -15,7 +15,6 @@ export type Mapping =
 
 export interface FacebookMapping {
     id: number
-    address: string
     cityLabel: string
     description: string
     furnished: boolean

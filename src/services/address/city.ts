@@ -42,7 +42,7 @@ export class CityService {
     const cityName = cleanup.string(ad.cityLabel);
 
     if (!cityName || !cityName?.length) {
-      throw { error: ErrorCode.Minimal, msg: 'city not found' }
+      throw { error: ErrorCode.City, msg: 'city not found' }
     }
 
     // TODO : Fuzzy search ?
