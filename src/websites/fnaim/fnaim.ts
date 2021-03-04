@@ -21,7 +21,6 @@ export class Fnaim extends Website {
         }
 
         ad = ad || this.body as FnaimMapping
-        console.log(ad)
         return {
             id: ad.id.toString(),
             cityLabel: cleanup.string(ad.cityLabel),

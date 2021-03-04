@@ -21,7 +21,6 @@ export class Superimmo extends Website {
         }
 
         ad = ad || this.body as SuperimmoMapping
-        console.log(ad)
         return {
             id: ad.id.toString(),
             cityLabel: cleanup.string(ad.cityLabel),
