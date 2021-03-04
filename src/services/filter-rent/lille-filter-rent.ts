@@ -23,7 +23,7 @@ export class LilleFilterRentService {
         this.cleanAd.postalCode,
         this.cleanAd.coordinates || this.cleanAd.blurryCoordinates,
     ).getDistricts()
-
+    
     const timeDates: string[] = this.dateFormatting(YearBuiltService.getRangeTimeDates(rangeTime, this.cleanAd.yearBuilt))
 
     const rentList = this.rangeRentsLilleJson().filter((rangeRent) => {
@@ -32,7 +32,7 @@ export class LilleFilterRentService {
           && (this.cleanAd.roomCount ? +this.cleanAd.roomCount < 4 ? +rangeRent.fields.nb_pieces === +this.cleanAd.roomCount : rangeRent.fields.nb_pieces === '4 et +' : true)
     })
 
-    const isFurnished = this.cleanAd.hasFurniture != null && this.cleanAd.hasFurniture
+    const isFurnished = this.cleanAd.hasFurniture === null ? true : this.cleanAd.hasFurniture
 
     // Get the worst case scenario
     const worstCase = isFurnished ?
@@ -52,7 +52,7 @@ export class LilleFilterRentService {
 
   private dateFormatting(timeDates: string[]): string[] {
     if (timeDates?.length) {
-      timeDates.map(d => {
+      return timeDates.map(d => {
         switch (d) {
           case 'Apres 1990': return '> 1990'
           case '1971-1990': return '1971 - 1990'
