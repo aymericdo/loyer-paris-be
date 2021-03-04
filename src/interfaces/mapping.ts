@@ -75,13 +75,11 @@ export interface LogicimmoMapping {
   charges: string;
   cityLabel: string;
   description: string;
-  furnished: string;
-  hasCharges: boolean;
+  furnished: boolean;
   price: string;
   renter: string;
   rooms: string;
   surface: string;
-  title: string;
 }
 
 export interface LoueragileMapping {

@@ -27,6 +27,7 @@ export class LogicImmo extends Website {
           msg: `no more data for ${this.website}/${this.body.platform}`,
         };
       }
+
       ad = {
         ...scrap,
         id: this.body.id,
@@ -39,14 +40,11 @@ export class LogicImmo extends Website {
       charges: cleanup.price(ad.charges),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
-      furnished:
-        ad.furnished != null ? (ad.furnished !== "NC" ? true : false) : null,
-      hasCharges: ad.hasCharges,
+      furnished: ad.furnished,
       price: cleanup.price(ad.price),
       renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
       rooms: cleanup.number(ad.rooms),
       surface: cleanup.number(ad.surface),
-      title: cleanup.string(ad.title),
     };
   }
 }
