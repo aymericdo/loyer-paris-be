@@ -54,6 +54,10 @@ export class LefigaroScrapping {
       return null;
     }
 
+    if (!title.textContent.includes('Location')) {
+      throw { error: ErrorCode.Other, msg: `not a rent` }
+    }
+
     return {
       id: null,
       cityLabel: cityLabel && cityLabel.textContent,
