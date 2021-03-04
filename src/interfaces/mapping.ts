@@ -14,10 +14,10 @@ export type Mapping = (
   | LuxResidenceMapping
   | BellesDemeuresMapping
   | BienIciMapping
-) & { noMoreData?: boolean; platform?: string };
+) & { noMoreData?: boolean; platform?: string, id: string, data: string };
 
 export interface FacebookMapping {
-  id: number;
+  id: string;
   cityLabel: string;
   description: string;
   furnished: boolean;
@@ -29,7 +29,7 @@ export interface FacebookMapping {
 }
 
 export interface LeboncoinMapping {
-  id: number;
+  id: string;
   cityLabel: string;
   body: string;
   furnished: string;
@@ -42,8 +42,8 @@ export interface LeboncoinMapping {
 }
 
 export interface LeboncoinAPIMapping {
-  id: number;
-  list_id: number;
+  id: string;
+  list_id: string;
   subject: string;
   body: string;
   price: string[];
@@ -57,7 +57,7 @@ export interface LeboncoinAPIMapping {
 }
 
 export interface LefigaroMapping {
-  id: number;
+  id: string;
   charges: string;
   cityLabel: string;
   description: string;
@@ -71,7 +71,7 @@ export interface LefigaroMapping {
 }
 
 export interface LogicimmoMapping {
-  id: number;
+  id: string;
   charges: string;
   cityLabel: string;
   description: string;
@@ -87,7 +87,7 @@ export interface LogicimmoMapping {
 export interface LoueragileMapping {
   yearBuilt: number;
   ad: {
-    id: number;
+    id: string;
     city: string;
     lng: number;
     lat: number;
@@ -107,7 +107,7 @@ export interface LoueragileMapping {
 }
 
 export interface OrpiMapping {
-  id: number;
+  id: string;
   charges: string;
   cityLabel: string;
   coord: Coordinate;
@@ -124,7 +124,7 @@ export interface OrpiMapping {
 }
 
 export interface PapMapping {
-  id: number;
+  id: string;
   cityLabel: string;
   description: string;
   price: string;
@@ -135,7 +135,7 @@ export interface PapMapping {
 }
 
 export interface SelogerMapping {
-  id: number;
+  id: string;
   charges: string;
   cityLabel: string;
   description: string;
@@ -150,7 +150,7 @@ export interface SelogerMapping {
 }
 
 export interface GensdeconfianceMapping {
-  id: number;
+  id: string;
   charges: string;
   cityLabel: string;
   description: string;
@@ -163,7 +163,7 @@ export interface GensdeconfianceMapping {
 }
 
 export interface LuxResidenceMapping {
-  id: number;
+  id: string;
   cityLabel: string;
   description: string;
   furnished: boolean;
@@ -174,7 +174,7 @@ export interface LuxResidenceMapping {
 }
 
 export interface BellesDemeuresMapping {
-  id: number;
+  id: string;
   title: string;
   cityLabel: string;
   description: string;
@@ -187,7 +187,7 @@ export interface BellesDemeuresMapping {
 }
 
 export interface BienIciMapping {
-  id: number;
+  id: string;
   title: string;
   cityLabel: string;
   description: string;
@@ -201,7 +201,7 @@ export interface BienIciMapping {
 }
 
 export interface FnaimMapping {
-  id: number;
+  id: string;
   title: string;
   cityLabel: string;
   description: string;
@@ -215,7 +215,7 @@ export interface FnaimMapping {
 }
 
 export interface SuperimmoMapping {
-  id: number;
+  id: string;
   title: string;
   cityLabel: string;
   description: string;

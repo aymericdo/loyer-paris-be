@@ -1,37 +1,49 @@
-import * as cleanup from '@helpers/cleanup'
-import { Ad } from '@interfaces/ad'
-import { particulierToken } from '@helpers/particulier'
-import { FacebookMapping } from '@interfaces/mapping'
-import { Website } from '../website'
-import { FacebookScrapping } from './facebook.scrapping'
-import { ErrorCode } from '@services/api-errors'
+import * as cleanup from "@helpers/cleanup";
+import { Ad } from "@interfaces/ad";
+import { particulierToken } from "@helpers/particulier";
+import { FacebookMapping } from "@interfaces/mapping";
+import { Website } from "../website";
+import { FacebookScrapping } from "./facebook.scrapping";
+import { ErrorCode } from "@services/api-errors";
 export class Facebook extends Website {
-    website = 'facebook'
+  website = "facebook";
 
-    async mapping(): Promise<Ad> {
-        let ad: FacebookMapping = null;
-        if (this.isV2) {
-            ad = {
-                ...FacebookScrapping.scrap(JSON.parse((this.body as any).data)),
-                id: (this.body as any).id,
-            }
+  async mapping(): Promise<Ad> {
+    let ad: FacebookMapping = null;
+    if (this.isV2) {
+      if (!this.body.id) {
+        throw {
+          error: ErrorCode.Minimal,
+          msg: `no more id for ${this.website}/${this.body.platform}`,
+        };
+      }
 
-            if (!ad) {
-              throw { error: ErrorCode.Minimal, msg: `no more data for ${this.website}/${this.body.platform}` }
-            }
-        }
+      const scrap = FacebookScrapping.scrap(JSON.parse(this.body.data));
 
-        ad = ad || this.body as FacebookMapping
-        return {
-            id: ad.id.toString(),
-            cityLabel: cleanup.string(ad.cityLabel),
-            description: cleanup.string(ad.description),
-            furnished: ad.furnished,
-            price: cleanup.price(ad.price),
-            renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
-            rooms: cleanup.number(ad.rooms),
-            surface: cleanup.number(ad.surface),
-            title: cleanup.string(ad.title),
-        }
+      if (!scrap) {
+        throw {
+          error: ErrorCode.Minimal,
+          msg: `no more data for ${this.website}/${this.body.platform}`,
+        };
+      }
+
+      ad = {
+        ...scrap,
+        id: this.body.id,
+      };
     }
+
+    ad = ad || (this.body as FacebookMapping);
+    return {
+      id: ad.id.toString(),
+      cityLabel: cleanup.string(ad.cityLabel),
+      description: cleanup.string(ad.description),
+      furnished: ad.furnished,
+      price: cleanup.price(ad.price),
+      renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
+      rooms: cleanup.number(ad.rooms),
+      surface: cleanup.number(ad.surface),
+      title: cleanup.string(ad.title),
+    };
+  }
 }
