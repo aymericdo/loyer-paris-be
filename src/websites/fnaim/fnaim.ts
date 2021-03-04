@@ -1,17 +1,17 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
-import { BienIciMapping } from '@interfaces/mapping'
+import { FnaimMapping } from '@interfaces/mapping'
 import { Website } from '../website'
-import { BienIciScrapping } from './bienici.scrapping'
+import { FnaimScrapping } from './fnaim.scrapping'
 import { ErrorCode } from '@services/api-errors'
-export class BienIci extends Website {
-    website = 'bienici'
+export class Fnaim extends Website {
+    website = 'fnaim'
 
     async mapping(): Promise<Ad> {
-        let ad: BienIciMapping = null;
+        let ad: FnaimMapping = null;
         if (this.isV2) {
             ad = {
-                ...BienIciScrapping.scrap(JSON.parse((this.body as any).data)),
+                ...FnaimScrapping.scrap(JSON.parse((this.body as any).data)),
                 id: (this.body as any).id,
             }
 
@@ -20,17 +20,18 @@ export class BienIci extends Website {
             }
         }
 
-        ad = ad || this.body as BienIciMapping
+        ad = ad || this.body as FnaimMapping
+        console.log(ad)
         return {
             id: ad.id.toString(),
             cityLabel: cleanup.string(ad.cityLabel),
             description: cleanup.string(ad.description),
-            furnished: ad.furnished,
             price: cleanup.price(ad.price),
             renter: ad.renter ? cleanup.string(ad.renter) : null,
             rooms: cleanup.number(ad.rooms),
             hasCharges: ad.hasCharges,
             charges: cleanup.number(ad.charges),
+            yearBuilt: cleanup.number(ad.yearBuilt),
             surface: cleanup.number(ad.surface),
             title: cleanup.string(ad.title),
         }

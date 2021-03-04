@@ -1,6 +1,5 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
-import { particulierToken } from '@helpers/particulier'
 import { LuxResidenceMapping } from '@interfaces/mapping'
 import { Website } from '../website'
 import { LuxResidenceScrapping } from './lux-residence.scrapping'
@@ -28,7 +27,7 @@ export class LuxResidence extends Website {
             description: cleanup.string(ad.description),
             furnished: ad.furnished,
             price: cleanup.price(ad.price),
-            renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
+            renter: ad.renter ? cleanup.string(ad.renter) : null,
             rooms: cleanup.number(ad.rooms),
             surface: cleanup.number(ad.surface),
         }

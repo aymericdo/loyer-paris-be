@@ -30,6 +30,8 @@ app.use('/gensdeconfiance', require('./websites/gensdeconfiance/gensdeconfiance.
 app.use('/bellesdemeures', require('./websites/bellesdemeures/bellesdemeures.controller'))
 app.use('/lux-residence', require('./websites/lux-residence/lux-residence.controller'))
 app.use('/bienici', require('./websites/bienici/bienici.controller'))
+app.use('/fnaim', require('./websites/fnaim/fnaim.controller'))
+app.use('/superimmo', require('./websites/superimmo/superimmo.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 

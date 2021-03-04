@@ -199,3 +199,31 @@ export interface BienIciMapping {
   renter: string;
   surface: string;
 }
+
+export interface FnaimMapping {
+  id: number;
+  title: string;
+  cityLabel: string;
+  description: string;
+  hasCharges: boolean;
+  charges: string;
+  price: string;
+  rooms: string;
+  yearBuilt: string;
+  renter: string;
+  surface: string;
+}
+
+export interface SuperimmoMapping {
+  id: number;
+  title: string;
+  cityLabel: string;
+  description: string;
+  hasCharges: boolean;
+  charges: string;
+  price: string;
+  rooms: string;
+  yearBuilt: string;
+  renter: string;
+  surface: string;
+}
