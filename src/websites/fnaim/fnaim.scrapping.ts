@@ -1,5 +1,6 @@
 import { virtualConsole } from "@helpers/jsdome";
 import { FnaimMapping } from "@interfaces/mapping";
+import { ErrorCode } from "@services/api-errors";
 import jsdom from "jsdom";
 const { JSDOM } = jsdom;
 
@@ -9,6 +10,7 @@ export class FnaimScrapping {
       virtualConsole: virtualConsole(),
     }).window;
 
+    const tabs = [...document.querySelectorAll("#annonceFiche > div.ariane > span > a > span")]
     const title = document.querySelector("#annonceFiche > div.annonce_fiche.fiche > header > div.titreButtons > h1")
     const description = document.querySelector("#annonceFiche > div.annonce_fiche.fiche > div:nth-child(5) > p")
     const price = document.querySelector("#annonceFiche > div.annonce_fiche.fiche > header > div.left > h3 > span")
@@ -26,6 +28,17 @@ export class FnaimScrapping {
     let surface = null;
     let rooms = null;
     let yearBuilt = null;
+
+    let isRent = null;
+    tabs.forEach((tab) => {
+      if (tab.textContent?.toLowerCase()?.match(/louer appartement/g)) {
+        isRent = true;
+      }
+    })
+
+    if (!isRent) {
+      throw { error: ErrorCode.Other, msg: `not a rent` }
+    }
 
     features.forEach((feature) => {
       if (feature.textContent.match(/m²/g)) {

@@ -11,6 +11,7 @@ export class SelogerScrapping {
     const description = document.querySelector('div.description-bien > section.categorie > p') || document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.dMkXAI') || document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.koqVoo')
     const price = document.querySelector('[class^=Summarystyled__PriceContainer]')
     const cityLabel = document.querySelector("#neighborhood-map > p > strong")
+      || document.querySelector("#root > div > main > div > div > div > p > span[class^=Localisationstyled]")
     const renter = document.querySelector('.agence-title') || document.querySelector('.LightSummary__Title-f6k8ax-2.kqLAJb') || document.querySelector('.LightSummary__Title-f6k8ax-1.lnUnld') || document.querySelector("#agence-info > div.Agency__PrimaryBlock-sc-1rsw64j-5.dNsjKe > h3")
     const itemTags = (document.querySelector('[class^=Summarystyled__TagsWrapper] > div') && [...document.querySelectorAll('[class^=Summarystyled__TagsWrapper] > div')]) || []
     const optionsSection = (document.querySelector('section.categorie .criteria-wrapper > div') && [...document.querySelectorAll('section.categorie .criteria-wrapper > div')]) || (document.querySelector('.GeneralList__List-sc-9gtpjm-0.BAyYz > li') && [...document.querySelectorAll('.GeneralList__List-sc-9gtpjm-0.BAyYz > li')])
