@@ -58,7 +58,7 @@ export class SelogerScrapping {
         return null
     }
 
-    const cityLabelText = cityLabel && cityLabel.textContent.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace('a', '')
+    const cityLabelText = cityLabel && cityLabel.textContent
 
     return {
         id: null,
