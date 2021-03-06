@@ -52,6 +52,7 @@ export class FacebookScrapping {
 
     return {
       id: null,
+      address: cityLabel && cityLabel.textContent,
       cityLabel: cityLabel && cityLabel.textContent,
       description: description && description.textContent,
       furnished: furnished && furnished.textContent ? true : false,

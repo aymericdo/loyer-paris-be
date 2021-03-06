@@ -36,6 +36,7 @@ export class Facebook extends Website {
     ad = ad || (this.body as FacebookMapping);
     return {
       id: ad.id.toString(),
+      address: cleanup.string(ad.address),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
       furnished: ad.furnished,

@@ -19,6 +19,7 @@ export type Mapping = (
 export interface FacebookMapping {
   id: string;
   cityLabel: string;
+  address: string;
   description: string;
   furnished: boolean;
   price: string;
