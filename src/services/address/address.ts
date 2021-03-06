@@ -27,7 +27,7 @@ export abstract class AddressService {
     }
 
     getPostalCode(): string {
-        return this.postalCode || this.digForPostalCode()
+      return this.postalCode || this.digForPostalCode()
     }
 
     getCoordinate(blurry = false): Coordinate {
@@ -66,8 +66,8 @@ export abstract class AddressService {
             || this.ad.cityLabel && (this.digForPostalCode1(this.ad.cityLabel) || this.digForPostalCode2(this.ad.cityLabel))
             || this.ad.title && (this.digForPostalCode1(this.ad.title) || this.digForPostalCode2(this.ad.title))
             || this.ad.description && (this.digForPostalCode1(this.ad.description) || this.digForPostalCode2(this.ad.description))
-    
-        return postalCode && cityList[this.city].postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
+
+            return postalCode && cityList[this.city].postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
     }
 
     protected digForPostalCode1(text: string): string {
@@ -110,7 +110,8 @@ export abstract class AddressService {
 
             if (result?.length) {
                 this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
-                this.setPostalCode(result[0].item.postalCode)
+                // Not sure about that anymore...
+                // this.setPostalCode(result[0].item.postalCode)
 
                 // More precision with polygon that we are targeting for sure
                 const resultInPostalCode = this.nearestAddressInTargetPolygon(result)
