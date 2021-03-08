@@ -1,4 +1,4 @@
-import { Rent } from './db'
+import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
 
 export async function getMapData(): Promise<{ isLegal: boolean, latitude: number, longitude: number }[]> {

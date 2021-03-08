@@ -14,7 +14,7 @@ export type Mapping = (
   | LuxResidenceMapping
   | BellesDemeuresMapping
   | BienIciMapping
-) & { noMoreData?: boolean; platform?: string, id: string, data: string };
+) & { noMoreData?: boolean; platform: string, id: string, data?: string };
 
 export interface FacebookMapping {
   id: string;

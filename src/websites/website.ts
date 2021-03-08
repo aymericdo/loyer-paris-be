@@ -16,25 +16,27 @@ export abstract class Website {
     website: string = null
     body: Mapping = null
     isV2: boolean = null
+    res: Response = null
 
-    constructor(props: { body: Mapping, id?: string }, v2: boolean = false) {
-        this.body = props.body
-        this.isV2 = v2
+    constructor(res: Response, props: { body: Mapping, id?: string }, v2: boolean = false) {
+      this.res = res
+      this.body = props.body
+      this.isV2 = v2
     }
 
-    analyse(res: Response): void {
+    analyse(): void {
         this.digData()
             .then((data) => {
-                res.json(data)
+                this.res.json(data)
             })
             .catch((err: ApiError) => {
                 if (err.error) {
                     const status = ApiErrorsService.getStatus(err)
-                    res.status(status).json(err)
+                    this.res.status(status).json(err)
                 } else {
                     console.log(err)
                     log.error('ERROR 500')
-                    res.status(500).json(err)
+                    this.res.status(500).json(err)
                 }
             })
     }
@@ -61,7 +63,17 @@ export abstract class Website {
             const isLegal = priceExcludingCharges <= maxAuthorized
 
             await new SaveRentService({
-                ...cleanAd,
+                id: cleanAd.id, 
+                address: cleanAd.address, 
+                city: cleanAd.city, 
+                hasFurniture: cleanAd.hasFurniture, 
+                postalCode: cleanAd.postalCode, 
+                price: cleanAd.price, 
+                renter: cleanAd.renter, 
+                roomCount: cleanAd.roomCount, 
+                stations: cleanAd.stations, 
+                surface: cleanAd.surface,
+                yearBuilt: cleanAd.yearBuilt, 
                 isLegal,
                 latitude: cleanAd.coordinates?.lat,
                 longitude: cleanAd.coordinates?.lng,

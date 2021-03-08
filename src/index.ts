@@ -1,5 +1,5 @@
 import 'module-alias/register'
-import express, { Request, Response, NextFunction } from 'express'
+import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import * as Sentry from '@sentry/node'
@@ -35,11 +35,11 @@ app.use('/superimmo', require('./websites/superimmo/superimmo.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 
-app.use('/version', require('./version.controller'))
+app.use('/version', require('./version/version.controller'))
 
 Sentry.init({
     dsn: process.env.SENTRY_DSN,
-    environment: process.env.PROD ? 'production' : 'local',
+    environment: process.env.CURRENT_ENV === 'prod' ? 'production' : 'local',
 })
 
 const port = process.env.PORT || 3000

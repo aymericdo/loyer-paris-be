@@ -20,6 +20,9 @@
       ],
       "@db/*": [
         "db/*"
+      ],
+      "@websites/*": [
+        "websites/*"
       ]
     },
     "allowJs": true,

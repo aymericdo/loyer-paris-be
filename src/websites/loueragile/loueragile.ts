@@ -5,13 +5,14 @@ import { LoueragileMapping, Mapping } from '@interfaces/mapping'
 import { Website } from '../website'
 import * as log from '@helpers/log'
 import { ErrorCode } from '@services/api-errors'
+import { Response } from 'express'
 
 export class LouerAgile extends Website {
     website = 'loueragile'
     id: string = null
 
-    constructor(props: { body: Mapping, id: string }, v2: boolean = false) {
-        super(props, v2)
+    constructor(res: Response, props: { body: Mapping, id: string }, v2: boolean = false) {
+        super(res, props, v2)
         this.id = props.id
     }
 

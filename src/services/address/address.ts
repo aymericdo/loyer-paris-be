@@ -7,6 +7,7 @@ import { Memoize } from 'typescript-memoize'
 import { min } from '@helpers/functions'
 import { DistanceService } from '../distance';
 import { AvailableCities, cityList } from './city'
+import * as log from '@helpers/log'
 
 export abstract class AddressService {
     ad: Ad = null;

@@ -38,9 +38,7 @@ export class ParisAddressService extends AddressService {
       minMatchCharLength: 3,
     }
     
-    const index = Fuse.createIndex(options.keys, this.parisAddressesJson())
-
-    const parisFuse = new Fuse(this.parisAddressesJson(), options, index)
+    const parisFuse = new Fuse(this.parisAddressesJson(), options)
 
     const result = parisFuse.search(address, { limit }) as { item: ParisAddressItem, score: number }[]
     return result ? result.map((r) => ({

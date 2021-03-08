@@ -10,7 +10,7 @@
     "start": "npm run dev",
     "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
     "build": "rimraf ./build && tsc",
-    "lint": "eslint . & echo 'lint complete'",
+    "test": "jest --testEnvironment=node --detectOpenHandles",
     "dev": "ts-node-dev --transpile-only ./src/index.ts",
     "prod": "tsc && node ./build/index.js",
     "debug": "tsc && node --inspect ./build/index.js"
@@ -42,14 +42,44 @@
     "@helpers": "build/helpers",
     "@services": "build/services",
     "@interfaces": "build/interfaces",
-    "@db": "build/db"
+    "@db": "build/db",
+    "@websites": "build/websites"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.3",
+    "@types/jest": "^26.0.20",
     "@types/node": "^13.1.6",
+    "jest": "^26.6.3",
     "nodemon": "^2.0.2",
     "rimraf": "^3.0.0",
+    "ts-jest": "^26.5.3",
     "ts-node": "^8.6.0",
     "ts-node-dev": "^1.1.1",
     "typescript": "^3.7.4"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src/"
+    ],
+    "preset": "@shelf/jest-mongodb",
+    "watchPathIgnorePatterns": ["globalConfig"],
+    "setupFiles": [
+      "dotenv/config",
+      "<rootDir>/src/jest-setup.ts"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.+(ts|tsx|js)",
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ],
+    "moduleNameMapper": {
+      "@helpers/(.*)": "<rootDir>/src/helpers/$1",
+      "@services/(.*)": "<rootDir>/src/services/$1",
+      "@interfaces/(.*)": "<rootDir>/src/interfaces/$1",
+      "@db/(.*)": "<rootDir>/src/db/$1",
+      "@websites/(.*)": "<rootDir>/src/websites/$1"
+    },
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    }
   }
 }
