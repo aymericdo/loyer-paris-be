@@ -28,7 +28,7 @@ describe("seloger", () => {
     SaveRentServiceMock.mockClear();
   });
 
-  test("returns clean ad", async () => {
+  test("returns clean ad", async (done) => {
     const body = {
       id: "234523",
       cityLabel: "Paris 75011",
@@ -41,7 +41,7 @@ describe("seloger", () => {
       rooms: "2 pièces",
       surface: "40m2",
       yearBuilt: null,
-      title: "Joli 2 pièce boulevard voltaire",
+      title: "Joli 2 pièce bd valtair, 3 rue jean macé",
       platform: "chrome",
     };
 
@@ -57,26 +57,28 @@ describe("seloger", () => {
     expect(SaveRentServiceMock).toHaveBeenCalledTimes(1);
     expect(data).toEqual({
       detectedInfo: {
-        address: { order: 0, value: "boulevard voltaire 75011, Paris" },
+        address: { order: 0, value: "3 rue jean mace 75011, Paris" },
         hasFurniture: { order: 1, value: true },
         roomCount: { order: 2, value: 2 },
         surface: { order: 3, value: 40 },
-        yearBuilt: { order: 4, value: null },
+        yearBuilt: { order: 4, value: "1900" },
         price: { order: 5, value: 1400 },
         charges: { order: 6, value: 45 },
         hasCharges: { order: 7, value: null },
       },
       computedInfo: {
-        neighborhood: { order: 0, value: "Folie-Méricourt" },
+        neighborhood: { order: 0, value: "Sainte-Marguerite" },
         hasFurniture: { order: 1, value: true },
         roomCount: { order: 2, value: 2 },
         surface: { order: 3, value: 40 },
         dateRange: { order: 4, value: "Avant 1946" },
-        max: { order: 5, value: 32.76 },
-        maxAuthorized: { order: 6, value: 1310.4 },
-        promoPercentage: { order: 7, value: 3.29 },
+        max: { order: 5, value: 33.36 },
+        maxAuthorized: { order: 6, value: 1334.4 },
+        promoPercentage: { order: 7, value: 1.52 },
       },
       isLegal: false,
     });
+
+    done();
   });
 });

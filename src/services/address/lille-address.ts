@@ -9,8 +9,8 @@ import { LilleAddressItem } from '@interfaces/json-item-lille';
 
 export class LilleAddressService extends AddressService {
   @Memoize()
-  getAddressCompleted(address: string, limit: number): { item: AddressItem, score: number }[] {
-      if (!address) {
+  getAddressCompleted(query: string,): { item: AddressItem, score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[] {
+      if (!query) {
           return null
       }
 
@@ -25,7 +25,7 @@ export class LilleAddressService extends AddressService {
 
       const lilleFuse = new Fuse(this.lilleAddressesJson(), options, index)
 
-      const result = lilleFuse.search(address, { limit }) as { item: LilleAddressItem, score: number }[]
+      const result = lilleFuse.search(query, { limit: 10 }) as { item: LilleAddressItem, score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[]
       return result ? result.map((r) => ({
         item: {
           address: r.item.fields.auto_adres,
@@ -36,6 +36,7 @@ export class LilleAddressService extends AddressService {
           },
         },
         score: r.score,
+        matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
       })) : []
   }
 
