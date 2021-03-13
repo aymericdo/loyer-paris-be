@@ -123,6 +123,7 @@ export abstract class AddressService {
                     return result[0].streetNumber ?
                         cleanup.string(result[0].item.address).replace(/^\d+/g, result[0].streetNumber.toString()) :
                         cleanup.string(result[0].item.address).replace(/^\d+/g, "").trim()
+
                 }
             } else {
                 return null

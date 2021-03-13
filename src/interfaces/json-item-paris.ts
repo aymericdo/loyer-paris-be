@@ -95,7 +95,7 @@ export interface ParisEncadrementItem {
     record_timestamp: string
 }
 
-export interface MetroItem {
+export interface ParisStationItem {
     type: string
     id: number
     lat: number

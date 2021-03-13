@@ -51,3 +51,23 @@ out body;
 >;
 out skel qt;
 `
+
+export interface LilleStationItem {
+  datasetid: string
+  recordid: string
+  fields: {
+    wheelchair_boarding: string
+    zone_id: string
+    stop_id: string
+    parent_station: string
+    stop_coordinates: number[]
+    stop_desc: string
+    stop_name: string
+    location_type: string
+  }
+  geometry: {
+    type: string
+    coordinates: number[]
+  }
+  record_timestamp: string
+}

@@ -5,11 +5,31 @@ import path from "path";
 import * as fs from 'fs';
 import { AddressItem, Coordinate } from '@interfaces/shared';
 import { DistanceService } from '@services/distance';
-import { LilleAddressItem } from '@interfaces/json-item-lille';
+import { LilleAddressItem, LilleStationItem } from '@interfaces/json-item-lille';
+import { LilleStationService } from "./lille-station";
 
 export class LilleAddressService extends AddressService {
+  getStations(): string[] {
+    // const lilleStationService = new LilleStationService();
+    // const stations: LilleStationItem[] =
+    //   (this.ad.stations && lilleStationService.getStations(this.ad.stations)) ||
+    //   (this.ad.description &&
+    //     lilleStationService.getStations(this.ad.description.split(" ")));
+    // return stations && this.nearestStations(stations);
+    // commented for now
+    return []
+  }
+
+  nearestStations(stations: LilleStationItem[]): string[] {
+    return stations
+      .filter(station =>
+        station.fields.stop_desc.includes(this.postalCode))
+      .map(station =>
+        station.fields.stop_name)
+  }
+
   @Memoize()
-  getAddressCompleted(query: string,): { item: AddressItem, score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[] {
+  getAddressCompleted(query: string): { item: AddressItem, score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[] {
     if (!query) {
       return null
     }

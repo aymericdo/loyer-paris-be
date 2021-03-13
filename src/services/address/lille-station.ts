@@ -1,16 +1,16 @@
 import * as fs from "fs";
 import * as path from "path";
-import { ParisStationItem } from "@interfaces/json-item-paris";
 import Fuse from "fuse.js";
 import { Memoize } from "typescript-memoize";
+import { LilleStationItem } from "@interfaces/json-item-lille";
 
-export class ParisStationService {
+export class LilleStationService {
   constructor() { }
 
-  getStations(words: string[]): ParisStationItem[] {
+  getStations(words: string[]): LilleStationItem[] {
     const options = {
-      keys: ["tags.name"],
-      threshold: 0.2,
+      keys: ["fields.stop_name"],
+      threshold: 0.05,
       includeScore: true,
     };
 
@@ -18,7 +18,7 @@ export class ParisStationService {
       return null;
     }
 
-    const parisStations: ParisStationItem[] = this.parisStationsJson();
+    const parisStations: LilleStationItem[] = this.lilleStationsJson();
     const fuse = new Fuse(parisStations, options);
     return words
       .map((word) => {
@@ -26,7 +26,7 @@ export class ParisStationService {
           word.length > 3 &&
           (fuse.search(word, { limit: 1 }) as {
             score: number;
-            item: ParisStationItem;
+            item: LilleStationItem;
           }[]);
         return res && res.length && res[0];
       })
@@ -36,7 +36,7 @@ export class ParisStationService {
   }
 
   @Memoize()
-  private parisStationsJson(): ParisStationItem[] {
-    return JSON.parse(fs.readFileSync(path.join('json-data/metros_paris.json'), 'utf8'))
+  private lilleStationsJson(): LilleStationItem[] {
+    return JSON.parse(fs.readFileSync(path.join('json-data/metros_lille.json'), 'utf8'))
   }
 }
