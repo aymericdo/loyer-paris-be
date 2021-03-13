@@ -112,6 +112,7 @@ describe("seloger", () => {
       const data = await seloger.digData();
 
       expect(SaveRentServiceMock).toHaveBeenCalledTimes(1);
+      console.log(data)
       expect(data).toEqual({
         detectedInfo: {
           address: { order: 0, value: "59260, Lille" },

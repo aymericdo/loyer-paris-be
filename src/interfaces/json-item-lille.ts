@@ -1,8 +1,8 @@
 export interface LilleDistrictItem {
   type: "Feature";
   geometry: {
-      type: "Polygon"
-      coordinates: number[][][]
+    type: "Polygon"
+    coordinates: number[][][]
   };
   properties: {
     zonage: number,
@@ -29,30 +29,25 @@ export interface LilleEncadrementItem {
 }
 
 export interface LilleAddressItem {
-  datasetid: string
-  recordid: string
-  fields: {
-    auto_adres: string
-    ccomvoi: number
-    insee: number
-    rivoli_id: number
-    cpostal: number
-    objectid: number
-    auto_match: string
-    nomcom: string
-    geo_point_2d: [number, number]
-    numero: number
-    typevoie: string
-    geo_shape: {
-      type: string,
-      coordinates: [number, number]
-    },
-    comm_id: string
-    nomvoie: string
-  },
-  geometry: {
-    type: string,
-    coordinates: [number, number]
-  },
-  record_timestamp: string
+  type: string
+  id: number
+  lat: number
+  lon: number
+  nodes: number[]
+  tags: {
+    city: string
+    postcode: string,
+    address: string
+  }
 }
+` Generated with this request on https://overpass-turbo.eu/
+[out:json];
+(
+  node["addr:street"]({{geocodeBbox:Lille}});
+  way["addr:street"]({{geocodeBbox:Lille}});
+  relation["addr:street"]({{geocodeBbox:Lille}});
+);
+out body;
+>;
+out skel qt;
+`
