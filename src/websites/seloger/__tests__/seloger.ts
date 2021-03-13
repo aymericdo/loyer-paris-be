@@ -114,7 +114,7 @@ describe("seloger", () => {
       expect(SaveRentServiceMock).toHaveBeenCalledTimes(1);
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: "59260, Lille" },
+          address: { order: 0, value: "rue ferdinand mathias 59260, Lille" },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: 1 },
           surface: { order: 3, value: 20 },
@@ -124,14 +124,14 @@ describe("seloger", () => {
           hasCharges: { order: 7, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: "Zone 1" },
+          neighborhood: { order: 0, value: "Zone 2" },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: 1 },
           surface: { order: 3, value: 20 },
           dateRange: { order: 4, value: "< 1946" },
-          max: { order: 5, value: 22.4 },
-          maxAuthorized: { order: 6, value: 448 },
-          promoPercentage: { order: 7, value: 15.47 },
+          max: { order: 5, value: 21.2 },
+          maxAuthorized: { order: 6, value: 424 },
+          promoPercentage: { order: 7, value: 20 },
         },
         isLegal: false,
       });

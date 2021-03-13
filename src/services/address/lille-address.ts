@@ -5,48 +5,71 @@ import path from "path";
 import * as fs from 'fs';
 import { AddressItem, Coordinate } from '@interfaces/shared';
 import { DistanceService } from '@services/distance';
-import { LilleAddressItem } from '@interfaces/json-item-lille';
+import { LilleAddressItem, LilleStationItem } from '@interfaces/json-item-lille';
+import { LilleStationService } from "./lille-station";
 
 export class LilleAddressService extends AddressService {
+  getStations(): string[] {
+    // const lilleStationService = new LilleStationService();
+    // const stations: LilleStationItem[] =
+    //   (this.ad.stations && lilleStationService.getStations(this.ad.stations)) ||
+    //   (this.ad.description &&
+    //     lilleStationService.getStations(this.ad.description.split(" ")));
+    // return stations && this.nearestStations(stations);
+    // commented for now
+    return []
+  }
+
+  nearestStations(stations: LilleStationItem[]): string[] {
+    return stations
+      .filter(station =>
+        station.fields.stop_desc.includes(this.postalCode))
+      .map(station =>
+        station.fields.stop_name)
+  }
+
   @Memoize()
-  getAddressCompleted(query: string,): { item: AddressItem, score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[] {
-      if (!query) {
-          return null
-      }
+  getAddressCompleted(query: string): { item: AddressItem, score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[] {
+    if (!query) {
+      return null
+    }
 
-      const options = {
-        keys: ['fields.auto_adres'],
-        includeScore: true,
-        threshold: 0.5,
-        minMatchCharLength: 3,
-      }
+    const options = {
+      keys: ['tags.address'],
+      includeScore: true,
+      includeMatches: true,
+      useExtendedSearch: true,
+      threshold: 0.5,
+      minMatchCharLength: 3,
+      ignoreLocation: true
+    }
 
-      const index = Fuse.createIndex(options.keys, this.lilleAddressesJson().filter(address => address.fields.nomcom.toLowerCase() === this.city))
+    const index = Fuse.createIndex(options.keys, this.lilleAddressesJson())
 
-      const lilleFuse = new Fuse(this.lilleAddressesJson(), options, index)
+    const lilleFuse = new Fuse(this.lilleAddressesJson(), options, index)
 
-      const result = lilleFuse.search(query, { limit: 10 }) as { item: LilleAddressItem, score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[]
-      return result ? result.map((r) => ({
-        item: {
-          address: r.item.fields.auto_adres,
-          postalCode: r.item.fields.cpostal.toString(),
-          coordinate: {
-            lng: r.item.geometry.coordinates[0],
-            lat: r.item.geometry.coordinates[1],
-          },
+    const result = lilleFuse.search(query, { limit: 10 }) as { item: LilleAddressItem, score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[]
+    return result ? result.map((r) => ({
+      item: {
+        address: r.item.tags.address,
+        postalCode: r.item.tags.postcode,
+        coordinate: {
+          lng: +r.item.lon,
+          lat: +r.item.lat,
         },
-        score: r.score,
-        matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
-      })) : []
+      },
+      score: r.score,
+      matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
+    })) : []
   }
 
   addressFromCoordinate(coord: Coordinate): string {
     return (this.lilleAddressesJson().reduce((prev, current) => {
-        const dist = DistanceService.getDistanceFromLatLonInKm(coord.lat, coord.lng, current.geometry.coordinates[1], current.geometry.coordinates[0])
-        if (dist < prev.dist || !prev.dist) {
-            prev = { dist, current }
-        }
-        return prev;
+      const dist = DistanceService.getDistanceFromLatLonInKm(coord.lat, coord.lng, current.lat, current.lon)
+      if (dist < prev.dist || !prev.dist) {
+        prev = { dist, current }
+      }
+      return prev;
     }, {} as { current: any, dist: number }))?.current?.fields?.auto_adres;
   }
 
@@ -58,6 +81,6 @@ export class LilleAddressService extends AddressService {
 
   @Memoize()
   private lilleAddressesJson(): LilleAddressItem[] {
-    return JSON.parse(fs.readFileSync(path.join('json-data/adresse_lille.json'), 'utf8'));
+    return JSON.parse(fs.readFileSync(path.join('json-data/adresse_lille.json'), 'utf8')).elements;
   }
 }

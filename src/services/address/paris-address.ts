@@ -1,7 +1,7 @@
 import { min } from "@helpers/functions";
 import {
   ArrondissementItem,
-  MetroItem,
+  ParisStationItem,
   ParisAddressItem,
 } from "@interfaces/json-item-paris";
 import { ParisStationService } from "@services/address/paris-station";
@@ -20,7 +20,7 @@ import { cityList } from "./city";
 export class ParisAddressService extends AddressService {
   getStations(): string[] {
     const parisStationService = new ParisStationService();
-    const stations: MetroItem[] =
+    const stations: ParisStationItem[] =
       (this.ad.stations && parisStationService.getStations(this.ad.stations)) ||
       (this.ad.description &&
         parisStationService.getStations(this.ad.description.split(" ")));
@@ -63,17 +63,17 @@ export class ParisAddressService extends AddressService {
     }[];
     return result
       ? result.map((r) => ({
-          item: {
-            address: r.item.fields.l_adr,
-            postalCode: this.postalCodeFormat(r.item.fields.c_ar.toString()),
-            coordinate: {
-              lng: r.item.fields.geom.coordinates[0],
-              lat: r.item.fields.geom.coordinates[1],
-            },
+        item: {
+          address: r.item.fields.l_adr,
+          postalCode: this.postalCodeFormat(r.item.fields.c_ar.toString()),
+          coordinate: {
+            lng: r.item.fields.geom.coordinates[0],
+            lat: r.item.fields.geom.coordinates[1],
           },
-          score: r.score,
-          matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
-        }))
+        },
+        score: r.score,
+        matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
+      }))
       : [];
   }
 
@@ -103,7 +103,7 @@ export class ParisAddressService extends AddressService {
     return targetPolygon;
   }
 
-  private nearestStationInTargetPolygon(stations: MetroItem[]): string[] {
+  private nearestStationInTargetPolygon(stations: ParisStationItem[]): string[] {
     const pointsByDist: {
       point: Coordinate;
       dist: number;
@@ -142,7 +142,7 @@ export class ParisAddressService extends AddressService {
   }
 
   private augmentElementItemList(
-    stations: MetroItem[]
+    stations: ParisStationItem[]
   ): { point: Coordinate; dist: number; name: string }[] {
     const targetPolygon = this.getTargetPolygon();
     if (!targetPolygon) return null;

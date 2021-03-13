@@ -16,19 +16,19 @@ export abstract class AddressService {
     coordinates: Coordinate;
     blurryCoordinates: Coordinate;
 
-    constructor (city: AvailableCities, ad: Ad) {
+    constructor(city: AvailableCities, ad: Ad) {
         this.ad = ad
         this.city = city
     }
 
     getAddress(): string {
         return (this.ad.address && this.digForAddressInText(this.ad.address))
-          || (this.ad.title && this.digForAddressInText(this.ad.title))
-          || (this.ad.description && this.digForAddressInText(this.ad.description))
+            || (this.ad.title && this.digForAddressInText(this.ad.title))
+            || (this.ad.description && this.digForAddressInText(this.ad.description))
     }
 
     getPostalCode(): string {
-      return this.postalCode || this.digForPostalCode()
+        return this.postalCode || this.digForPostalCode()
     }
 
     getCoordinate(blurry = false): Coordinate {
@@ -68,14 +68,14 @@ export abstract class AddressService {
             || this.ad.title && (this.digForPostalCode1(this.ad.title) || this.digForPostalCode2(this.ad.title))
             || this.ad.description && (this.digForPostalCode1(this.ad.description) || this.digForPostalCode2(this.ad.description))
 
-            return postalCode && cityList[this.city].postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
+        return postalCode && cityList[this.city].postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
     }
 
     protected digForPostalCode1(text: string): string {
         const postalCodeRe = new RegExp(cityList[this.city].postalCodeRegex[0]);
         return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim();
     }
-    
+
     protected digForPostalCode2(_text: string): string {
         return null;
     }
@@ -100,10 +100,10 @@ export abstract class AddressService {
             const addressesQuery = this.querifyAddresses(addressesFromRegex)
             const addresses: { item: AddressItem, score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[] = this.getAddressCompleted(addressesQuery)
             const rawAddresses = this.unquerifyAddresses(addressesQuery);
-            
+
             const result = addresses.map(res => ({
-              ...res,
-              streetNumber: this.findStreetNumber(rawAddresses, res.matches[0]),
+                ...res,
+                streetNumber: this.findStreetNumber(rawAddresses, res.matches[0]),
             }))
 
             if (result?.length) {
@@ -111,14 +111,20 @@ export abstract class AddressService {
                 // Not sure about that anymore...
                 // this.setPostalCode(result[0].item.postalCode)
 
-                // More precision with polygon that we are targeting for sure
-                const resultInPostalCode = this.nearestAddressInTargetPolygon(result)
-
-                return resultInPostalCode ? (
-                    resultInPostalCode.streetNumber ?
-                        cleanup.string(resultInPostalCode.address).replace(/^\d+/g, resultInPostalCode.streetNumber.toString()) :
-                        cleanup.string(resultInPostalCode.address).replace(/^\d+/g, "").trim()
+                if (this.city === "paris") {
+                    // More precision with polygon that we are targeting for sure
+                    const resultInPostalCode = this.nearestAddressInTargetPolygon(result)
+                    return resultInPostalCode ? (
+                        resultInPostalCode.streetNumber ?
+                            cleanup.string(resultInPostalCode.address).replace(/^\d+/g, resultInPostalCode.streetNumber.toString()) :
+                            cleanup.string(resultInPostalCode.address).replace(/^\d+/g, "").trim()
                     ) : null;
+                } else {
+                    return result[0].streetNumber ?
+                        cleanup.string(result[0].item.address).replace(/^\d+/g, result[0].streetNumber.toString()) :
+                        cleanup.string(result[0].item.address).replace(/^\d+/g, "").trim()
+
+                }
             } else {
                 return null
             }
@@ -128,35 +134,35 @@ export abstract class AddressService {
     }
 
     private querifyAddresses(addressesFromRegex: string[]): string {
-      return addressesFromRegex
-        .map(a => cleanup.address(a, this.city) ? `"${cleanup.address(a, this.city)}"` : null)
-        .filter(Boolean).join(' | ');
+        return addressesFromRegex
+            .map(a => cleanup.address(a, this.city) ? `"${cleanup.address(a, this.city)}"` : null)
+            .filter(Boolean).join(' | ');
     }
 
     private unquerifyAddresses(query: string): string[] {
-      return query.split(' | ').map(q => q.substring(1, q.length - 1));
+        return query.split(' | ').map(q => q.substring(1, q.length - 1));
     }
 
     private findStreetNumber(rawAddresses: string[], match: Fuse.FuseResultMatch): number {
-      const toHighlight: string[] = match.indices.map(indice => match.value.slice(indice[0], indice[1]+1).trim())
-      const matchRawAddress: string = rawAddresses.reduce((prev: [number, string], addr: string) => {
-        const currentCpt = toHighlight.filter(high => addr.includes(high.toLowerCase())).length;
-        return (currentCpt > prev[0]) ? [currentCpt, addr] : prev;
-      }, [0, null])[1] as string;
-      return +cleanup.string(matchRawAddress)?.match(/^\d+/g) || null
+        const toHighlight: string[] = match.indices.map(indice => match.value.slice(indice[0], indice[1] + 1).trim())
+        const matchRawAddress: string = rawAddresses.reduce((prev: [number, string], addr: string) => {
+            const currentCpt = toHighlight.filter(high => addr.includes(high.toLowerCase())).length;
+            return (currentCpt > prev[0]) ? [currentCpt, addr] : prev;
+        }, [0, null])[1] as string;
+        return +cleanup.string(matchRawAddress)?.match(/^\d+/g) || null
     }
 
     private nearestAddressInTargetPolygon(
         addressesCompleted: { item: AddressItem, streetNumber: number, score: number }[]
-      ): { address: string, streetNumber: number } {
+    ): { address: string, streetNumber: number } {
         const targetPolygon = this.getTargetPolygon()
 
         if (!targetPolygon) return null
-    
+
         const pointByDist: { point: number[], dist: number, item: AddressItem, streetNumber: number }[] =
             addressesCompleted.map(address => {
                 const point = [address.item.coordinate.lng, address.item.coordinate.lat];
-        
+
                 if (inside(point, targetPolygon)) {
                     return { point, dist: 0, item: address.item, streetNumber: address.streetNumber }
                 } else {
@@ -178,12 +184,12 @@ export abstract class AddressService {
 
         const coord = { lng: bah.point[0], lat: bah.point[1] }
         if (bah.dist === 0) {
-          this.setCoordinates(coord, bah.streetNumber)
-          return { address: bah.item.address, streetNumber: bah.streetNumber }
+            this.setCoordinates(coord, bah.streetNumber)
+            return { address: bah.item.address, streetNumber: bah.streetNumber }
         } else {
-          this.setCoordinates(coord, null)
-          // Convert the best coord approximation in address string
-          return { address: this.addressFromCoordinate(coord), streetNumber: null };
+            this.setCoordinates(coord, null)
+            // Convert the best coord approximation in address string
+            return { address: this.addressFromCoordinate(coord), streetNumber: null };
         }
     }
 }

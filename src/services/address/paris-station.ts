@@ -1,13 +1,13 @@
 import * as fs from "fs";
 import * as path from "path";
-import { MetroItem } from "@interfaces/json-item-paris";
+import { ParisStationItem } from "@interfaces/json-item-paris";
 import Fuse from "fuse.js";
 import { Memoize } from "typescript-memoize";
 
 export class ParisStationService {
-  constructor() {}
+  constructor() { }
 
-  getStations(words: string[]): MetroItem[] {
+  getStations(words: string[]): ParisStationItem[] {
     const options = {
       keys: ["tags.name"],
       threshold: 0.2,
@@ -18,7 +18,7 @@ export class ParisStationService {
       return null;
     }
 
-    const parisStations: MetroItem[] = this.parisStationsJson();
+    const parisStations: ParisStationItem[] = this.parisStationsJson();
     const fuse = new Fuse(parisStations, options);
     return words
       .map((word) => {
@@ -26,7 +26,7 @@ export class ParisStationService {
           word.length > 3 &&
           (fuse.search(word, { limit: 1 }) as {
             score: number;
-            item: MetroItem;
+            item: ParisStationItem;
           }[]);
         return res && res.length && res[0];
       })
@@ -36,7 +36,7 @@ export class ParisStationService {
   }
 
   @Memoize()
-  private parisStationsJson(): MetroItem[] {
+  private parisStationsJson(): ParisStationItem[] {
     return JSON.parse(fs.readFileSync(path.join('json-data/metros_paris.json'), 'utf8'))
   }
 }
