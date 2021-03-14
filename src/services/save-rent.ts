@@ -3,9 +3,10 @@ import * as log from '@helpers/log'
 import { getAdById } from '@db/rent.service'
 import { AvailableCities } from '@services/address/city';
 
-interface SavedInfo {
+export interface SavedInfo {
     id: string
     address: string
+    district: string
     city: AvailableCities
     hasFurniture?: boolean
     isLegal: boolean
@@ -42,6 +43,7 @@ export class SaveRentService {
                 website: this.adToSave.website,
                 isLegal: this.adToSave.isLegal,
                 maxPrice: this.adToSave.maxPrice,
+                district: this.adToSave.district,
                 price: this.adToSave.price,
                 priceExcludingCharges: this.adToSave.priceExcludingCharges,
                 surface: this.adToSave.surface,
