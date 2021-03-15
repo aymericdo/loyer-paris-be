@@ -1,6 +1,7 @@
 import { virtualConsole } from '@helpers/jsdome'
 import { LeboncoinMapping } from '@interfaces/mapping'
 import jsdom from 'jsdom'
+import { ErrorCode } from '@services/api-errors'
 const { JSDOM } = jsdom
 
 export class LeboncoinScrapping {
