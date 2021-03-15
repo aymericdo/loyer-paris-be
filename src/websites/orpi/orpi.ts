@@ -1,39 +1,39 @@
-import * as cleanup from "@helpers/cleanup";
-import { Ad } from "@interfaces/ad";
-import { OrpiMapping } from "@interfaces/mapping";
-import { ErrorCode } from "@services/api-errors";
-import { Website } from "../website";
-import { OrpiScrapping } from "./orpi.scrapping";
+import * as cleanup from '@helpers/cleanup'
+import { Ad } from '@interfaces/ad'
+import { OrpiMapping } from '@interfaces/mapping'
+import { ErrorCode } from '@services/api-errors'
+import { Website } from '../website'
+import { OrpiScrapping } from './orpi.scrapping'
 
 export class Orpi extends Website {
-  website = "orpi";
+  website = 'orpi'
 
   async mapping(): Promise<Ad> {
-    let ad: OrpiMapping = null;
+    let ad: OrpiMapping = null
     if (this.isV2) {
       if (!this.body.id) {
         throw {
           error: ErrorCode.Minimal,
           msg: `no more id for ${this.website}/${this.body.platform}`,
-        };
+        }
       }
 
-      const scrap = OrpiScrapping.scrap(JSON.parse(this.body.data));
+      const scrap = OrpiScrapping.scrap(JSON.parse(this.body.data))
 
       if (!scrap) {
         throw {
           error: ErrorCode.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
-        };
+        }
       }
 
       ad = {
         ...scrap,
         id: this.body.id,
-      };
+      }
     }
 
-    ad = ad || (this.body as OrpiMapping);
+    ad = ad || (this.body as OrpiMapping)
     return {
       id: ad.id.toString(),
       charges: cleanup.price(ad.charges),
@@ -52,6 +52,6 @@ export class Orpi extends Website {
       surface: ad.surface,
       title: cleanup.string(ad.title),
       yearBuilt: !!ad.yearBuilt && ad.yearBuilt,
-    };
+    }
   }
 }
