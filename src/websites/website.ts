@@ -19,9 +19,9 @@ export abstract class Website {
     res: Response = null
 
     constructor(res: Response, props: { body: Mapping, id?: string }, v2: boolean = false) {
-      this.res = res
-      this.body = props.body
-      this.isV2 = v2
+        this.res = res
+        this.body = props.body
+        this.isV2 = v2
     }
 
     analyse(): void {
@@ -63,17 +63,17 @@ export abstract class Website {
             const isLegal = priceExcludingCharges <= maxAuthorized
 
             await new SaveRentService({
-                id: cleanAd.id, 
-                address: cleanAd.address, 
-                city: cleanAd.city, 
-                hasFurniture: cleanAd.hasFurniture, 
-                postalCode: cleanAd.postalCode, 
-                price: cleanAd.price, 
-                renter: cleanAd.renter, 
-                roomCount: cleanAd.roomCount, 
-                stations: cleanAd.stations, 
+                id: cleanAd.id,
+                address: cleanAd.address,
+                city: cleanAd.city,
+                hasFurniture: cleanAd.hasFurniture,
+                postalCode: cleanAd.postalCode,
+                price: cleanAd.price,
+                renter: cleanAd.renter,
+                roomCount: cleanAd.roomCount,
+                stations: cleanAd.stations,
                 surface: cleanAd.surface,
-                yearBuilt: cleanAd.yearBuilt, 
+                yearBuilt: cleanAd.yearBuilt,
                 isLegal,
                 latitude: cleanAd.coordinates?.lat,
                 longitude: cleanAd.coordinates?.lng,
