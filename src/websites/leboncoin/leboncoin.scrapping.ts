@@ -53,7 +53,7 @@ export class LeboncoinScrapping {
     if (
       cleanup
         .string(errorContainer?.textContent)
-        .includes('cette annonce est desactivee')
+        ?.includes('cette annonce est desactivee')
     ) {
       throw { error: ErrorCode.Other, msg: `deactivated ad` }
     }
