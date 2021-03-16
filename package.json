@@ -39,6 +39,7 @@
     "mongoose": "^5.7.5",
     "node-cache": "^5.0.2",
     "point-in-polygon": "^1.0.1",
+    "prettier": "^2.2.1",
     "typescript-memoize": "^1.0.0-alpha.4"
   },
   "_moduleAliases": {
