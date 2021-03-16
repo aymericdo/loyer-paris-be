@@ -1,5 +1,5 @@
-import { connectionString } from "../config";
-const mongoose = require("mongoose");
+import { connectionString } from '../config'
+const mongoose = require('mongoose')
 
 const rentConnection = mongoose.createConnection(
   process.env.MONGODB_URI || connectionString,
@@ -8,7 +8,7 @@ const rentConnection = mongoose.createConnection(
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }
-);
+)
 
 const empriseBatieConnection = mongoose.createConnection(
   process.env.MONGODB_URI_EMPRISE_BATIE || connectionString,
@@ -17,13 +17,13 @@ const empriseBatieConnection = mongoose.createConnection(
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }
-);
+)
 
-const rentSchema = require("./rent.model");
-const empriseBatieSchema = require("./emprisebatie.model");
+const rentSchema = require('./rent.model')
+const empriseBatieSchema = require('./emprisebatie.model')
 
-export const Rent = rentConnection.model("Rent", rentSchema);
+export const Rent = rentConnection.model('Rent', rentSchema)
 export const EmpriseBatie = empriseBatieConnection.model(
-  "Batie",
+  'Batie',
   empriseBatieSchema
-);
+)

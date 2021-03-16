@@ -1,0 +1,28 @@
+on:
+  pull_request:
+    branches: [master]
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "15.x"
+      -  name: Prettify code
+         uses: creyD/prettier_action@v3.1
+         with:
+            prettier_options: --write **/*.{js,ts}
+            same_commit: true
+         env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test
+        run: |
+          npm run test
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4.1.2
+        with:
+          commit_message: Apply formatting changes
+          branch: ${{ github.head_ref }}
