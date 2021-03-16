@@ -1,0 +1,8 @@
+.env
+.globalConfig.json
+node_modules/**
+.vscode/
+build/**
+.DS_Store
+globalConfig.json
+src/db/migration.ts

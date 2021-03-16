@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "downlevelIteration": true,
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "lib": [
+      "es2019"
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "@services/*": [
+        "services/*"
+      ],
+      "@helpers/*": [
+        "helpers/*"
+      ],
+      "@interfaces/*": [
+        "interfaces/*"
+      ],
+      "@db/*": [
+        "db/*"
+      ],
+      "@websites/*": [
+        "websites/*"
+      ]
+    },
+    "allowJs": true,
+    "outDir": "./build",
+    "rootDir": "./src",
+    "strict": false,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  }
+}
