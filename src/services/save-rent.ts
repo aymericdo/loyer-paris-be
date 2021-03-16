@@ -1,34 +1,33 @@
-import { Rent } from "@db/db";
-import * as log from "@helpers/log";
-import { getAdById } from "@db/rent.service";
-import { AvailableCities } from "@services/address/city";
+import { Rent } from '@db/db'
+import * as log from '@helpers/log'
+import { getAdById } from '@db/rent.service'
+import { AvailableCities } from '@services/address/city'
 
-export interface SavedInfo {
-  id: string;
-  address: string;
-  district: string;
-  city: AvailableCities;
-  hasFurniture?: boolean;
-  isLegal: boolean;
-  latitude?: number;
-  longitude?: number;
-  maxPrice: number;
-  postalCode: string;
-  price: number;
-  priceExcludingCharges: number;
-  renter?: string;
-  roomCount?: number;
-  stations?: string[];
-  surface: number;
-  website: string;
-  yearBuilt?: number[];
+interface SavedInfo {
+  id: string
+  address: string
+  city: AvailableCities
+  hasFurniture?: boolean
+  isLegal: boolean
+  latitude?: number
+  longitude?: number
+  maxPrice: number
+  postalCode: string
+  price: number
+  priceExcludingCharges: number
+  renter?: string
+  roomCount?: number
+  stations?: string[]
+  surface: number
+  website: string
+  yearBuilt?: number[]
 }
 
 export class SaveRentService {
-  adToSave: SavedInfo = null;
+  adToSave: SavedInfo = null
 
   constructor(adToSave: SavedInfo) {
-    this.adToSave = adToSave;
+    this.adToSave = adToSave
   }
 
   async save(): Promise<void> {
@@ -36,13 +35,13 @@ export class SaveRentService {
       const findSimilarAd = await getAdById(
         this.adToSave.id,
         this.adToSave.website
-      );
+      )
       if (
         findSimilarAd &&
         findSimilarAd.priceExcludingCharges !==
           this.adToSave.priceExcludingCharges
       ) {
-        log.priceHasChanged();
+        log.priceHasChanged()
       }
 
       const rent = new Rent({
@@ -50,7 +49,6 @@ export class SaveRentService {
         website: this.adToSave.website,
         isLegal: this.adToSave.isLegal,
         maxPrice: this.adToSave.maxPrice,
-        district: this.adToSave.district,
         price: this.adToSave.price,
         priceExcludingCharges: this.adToSave.priceExcludingCharges,
         surface: this.adToSave.surface,
@@ -82,20 +80,20 @@ export class SaveRentService {
           this.adToSave.yearBuilt.length && {
             yearBuilt: this.adToSave.yearBuilt,
           }),
-      });
-      log.info("saving ad");
+      })
+      log.info('saving ad')
       rent
         .save()
         .then(() => {
-          log.info("ad saved", "green");
+          log.info('ad saved', 'green')
         })
         .catch((err) => {
           if (err.code === 11000) {
-            log.info("⚠️  ad already saved", "red");
+            log.info('⚠️  ad already saved', 'red')
           } else {
-            console.log(err);
+            console.log(err)
           }
-        });
+        })
     }
   }
 }

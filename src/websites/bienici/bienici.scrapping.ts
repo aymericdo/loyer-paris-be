@@ -1,57 +1,57 @@
-import { virtualConsole } from "@helpers/jsdome";
-import { BienIciMapping } from "@interfaces/mapping";
-import jsdom from "jsdom";
-const { JSDOM } = jsdom;
+import { virtualConsole } from '@helpers/jsdome'
+import { BienIciMapping } from '@interfaces/mapping'
+import jsdom from 'jsdom'
+const { JSDOM } = jsdom
 
 export class BienIciScrapping {
   static scrap(data: string): BienIciMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),
-    }).window;
+    }).window
 
     const title = document.querySelector(
-      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1"
-    );
+      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1'
+    )
     const description = document.querySelector(
-      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.description"
-    );
+      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.description'
+    )
     const price = document.querySelector(
-      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.thePrice"
-    );
+      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.thePrice'
+    )
     const charges = document.querySelector(
-      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice div.feesInfos"
-    );
+      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice div.feesInfos'
+    )
     const hasCharges = document.querySelector(
-      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.perMonth"
-    );
+      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.perMonth'
+    )
     const renter = document.querySelector(
-      "#public > div.contactSection > div.contactToggleInfo.contactButton.scrollUp > div.contactToggleName > div.contact-name"
-    );
+      '#public > div.contactSection > div.contactToggleInfo.contactButton.scrollUp > div.contactToggleName > div.contact-name'
+    )
     const cityLabel = document.querySelector(
-      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1 > span"
-    );
+      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1 > span'
+    )
     const features = [
       ...document.querySelectorAll(
-        "[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.detailsSection.detailsSection_aboutThisProperty > div.allDetails > .labelInfo"
+        '[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.detailsSection.detailsSection_aboutThisProperty > div.allDetails > .labelInfo'
       ),
-    ];
+    ]
 
-    let furnished = false;
-    let surface = null;
-    let rooms = null;
+    let furnished = false
+    let surface = null
+    let rooms = null
 
     features.forEach((feature) => {
       if (feature.textContent.match(/m²/g)) {
-        surface = feature;
+        surface = feature
       } else if (feature.textContent.match(/pièce/g)) {
-        rooms = feature;
+        rooms = feature
       } else if (feature.textContent.match(/Meublé/g)) {
-        furnished = true;
+        furnished = true
       }
-    });
+    })
 
     if (!title && !description && !price && !cityLabel) {
-      return null;
+      return null
     }
 
     return {
@@ -60,14 +60,14 @@ export class BienIciScrapping {
       description: description && description.textContent,
       furnished,
       price: price?.textContent,
-      hasCharges: !!hasCharges?.textContent?.includes("charges comprises"),
+      hasCharges: !!hasCharges?.textContent?.includes('charges comprises'),
       charges:
         charges?.textContent?.match(/\d+/)?.length &&
         charges?.textContent?.match(/\d+/)[0],
-      renter: renter?.getAttribute("title"),
+      renter: renter?.getAttribute('title'),
       rooms: rooms?.textContent,
       surface: surface?.textContent,
       title: title?.textContent,
-    };
+    }
   }
 }

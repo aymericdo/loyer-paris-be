@@ -29,15 +29,15 @@ router.use("/", function (req: RentRequest, res: Response, next: NextFunction) {
         {},
         {
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
           },
         }
       )
       .then((response) => {
         if (!response.data.success) {
           return res.status(500).json({
-            message: response.data["error-codes"].join("."),
-          });
+            message: response.data['error-codes'].join('.'),
+          })
         } else {
           ipService.saveIp();
         }
@@ -47,8 +47,8 @@ router.use("/", function (req: RentRequest, res: Response, next: NextFunction) {
       .catch(() => {
         return res
           .status(500)
-          .json({ message: "oops, something went wrong on our side" });
-      });
+          .json({ message: 'oops, something went wrong on our side' })
+      })
   }
 });
 
@@ -58,8 +58,8 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getMap`, "blue");
 
   const parisGeodata = JSON.parse(
-    fs.readFileSync(path.join("json-data/quartier_paris_geodata.json"), "utf8")
-  );
+    fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8')
+  )
 
   rentService
     .getMapData()
@@ -69,17 +69,17 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
         layer: [
           {
             data: {
-              format: { type: "json", property: "features" },
+              format: { type: 'json', property: 'features' },
               values: parisGeodata,
             },
-            projection: { type: "mercator" },
+            projection: { type: 'mercator' },
             mark: {
-              type: "geoshape",
-              fill: "lightgray",
-              stroke: "white",
+              type: 'geoshape',
+              fill: 'lightgray',
+              stroke: 'white',
             },
             encoding: {
-              tooltip: { field: "properties.l_qu", type: "nominal" },
+              tooltip: { field: 'properties.l_qu', type: 'nominal' },
             },
           },
           {
@@ -88,29 +88,29 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
             },
             transform: [
               { filter: "datum.city === 'paris'" },
-              { calculate: "datum.isLegal ? 'Oui' : 'Non'", as: "isLegal" },
+              { calculate: "datum.isLegal ? 'Oui' : 'Non'", as: 'isLegal' },
             ],
             encoding: {
               longitude: {
-                field: "longitude",
-                type: "quantitative",
+                field: 'longitude',
+                type: 'quantitative',
               },
               latitude: {
-                field: "latitude",
-                type: "quantitative",
+                field: 'latitude',
+                type: 'quantitative',
               },
               color: {
-                field: "isLegal",
-                title: "Est légal ?",
-                type: "nominal",
+                field: 'isLegal',
+                title: 'Est légal ?',
+                type: 'nominal',
                 scale: {
-                  range: ["red", "green"],
+                  range: ['red', 'green'],
                 },
               },
             },
             mark: {
-              type: "circle",
-              color: "red",
+              type: 'circle',
+              color: 'red',
             },
           },
         ],
@@ -128,13 +128,13 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
     });
 }
 
-router.get("/price-difference", getPriceDifference);
+router.get('/price-difference', getPriceDifference)
 function getPriceDifference(
   req: RentRequest,
   res: Response,
   next: NextFunction
 ) {
-  log.info(`-> ${req.baseUrl} priceDifference`, "blue");
+  log.info(`-> ${req.baseUrl} priceDifference`, 'blue')
 
   rentService
     .getPriceDiffData()
@@ -144,42 +144,42 @@ function getPriceDifference(
         data: {
           values: data,
         },
-        mark: { type: "bar", tooltip: true },
+        mark: { type: 'bar', tooltip: true },
         transform: [
           { filter: "datum.city === 'paris'" },
           {
-            calculate: "datum.priceExcludingCharges - datum.maxPrice",
-            as: "priceDifference",
+            calculate: 'datum.priceExcludingCharges - datum.maxPrice',
+            as: 'priceDifference',
           },
           {
             joinaggregate: [
               {
-                op: "count",
-                field: "postalCode",
-                as: "countOfPostalCode",
+                op: 'count',
+                field: 'postalCode',
+                as: 'countOfPostalCode',
               },
             ],
-            groupby: ["postalCode"],
+            groupby: ['postalCode'],
           },
           { filter: "datum.isLegal === false" },
         ],
         encoding: {
           x: {
-            aggregate: "mean",
-            field: "priceDifference",
-            type: "quantitative",
+            aggregate: 'mean',
+            field: 'priceDifference',
+            type: 'quantitative',
             title:
-              "Différence moyenne entre prix pratiqué et prix théorique (annonces illégales)",
+              'Différence moyenne entre prix pratiqué et prix théorique (annonces illégales)',
           },
           y: {
-            field: "postalCode",
-            type: "ordinal",
-            title: "Code postal",
+            field: 'postalCode',
+            type: 'ordinal',
+            title: 'Code postal',
             sort: cityList.paris.postalCodePossibilities,
           },
-          tooltip: [{ field: "countOfPostalCode", title: "Nombre d'annonces" }],
+          tooltip: [{ field: 'countOfPostalCode', title: "Nombre d'annonces" }],
         },
-      };
+      }
 
       res.json(vegaMap);
     })
@@ -194,13 +194,13 @@ function getPriceDifference(
     });
 }
 
-router.get("/is-legal-per-surface", getLegalPerSurface);
+router.get('/is-legal-per-surface', getLegalPerSurface)
 function getLegalPerSurface(
   req: RentRequest,
   res: Response,
   next: NextFunction
 ) {
-  log.info(`-> ${req.baseUrl} isLegalPerSurface`, "blue");
+  log.info(`-> ${req.baseUrl} isLegalPerSurface`, 'blue')
 
   rentService
     .getLegalPerSurfaceData()
@@ -210,36 +210,36 @@ function getLegalPerSurface(
         data: {
           values: data,
         },
-        mark: { type: "bar", tooltip: true },
+        mark: { type: 'bar', tooltip: true },
         transform: [
           { filter: "datum.city === 'paris'" },
-          { calculate: "datum.isLegal ? 'Oui' : 'Non'", as: "isLegal" },
+          { calculate: "datum.isLegal ? 'Oui' : 'Non'", as: 'isLegal' },
         ],
         encoding: {
           x: {
             bin: {
               step: 5,
             },
-            field: "surface",
-            title: "Surface",
-            type: "quantitative",
+            field: 'surface',
+            title: 'Surface',
+            type: 'quantitative',
           },
           y: {
-            aggregate: "count",
-            field: "isLegal",
-            title: "Annonces",
-            type: "quantitative",
+            aggregate: 'count',
+            field: 'isLegal',
+            title: 'Annonces',
+            type: 'quantitative',
           },
           color: {
-            field: "isLegal",
-            title: "Est légal ?",
-            type: "nominal",
+            field: 'isLegal',
+            title: 'Est légal ?',
+            type: 'nominal',
             scale: {
-              range: ["red", "green"],
+              range: ['red', 'green'],
             },
           },
         },
-      };
+      }
 
       res.json(vegaMap);
     })
@@ -266,29 +266,29 @@ function getAdoptionRate(req: RentRequest, res: Response, next: NextFunction) {
         data: {
           values: data,
         },
-        mark: { type: "line", tooltip: true, interpolate: "monotone" },
+        mark: { type: 'line', tooltip: true, interpolate: 'monotone' },
         transform: [
           {
-            sort: [{ field: "createdAt" }],
-            window: [{ op: "count", field: "count", as: "cumulative_count" }],
+            sort: [{ field: 'createdAt' }],
+            window: [{ op: 'count', field: 'count', as: 'cumulative_count' }],
             frame: [null, 0],
           },
         ],
         encoding: {
           x: {
-            field: "createdAt",
-            title: "Date",
-            type: "temporal",
-            timeUnit: "yearmonthdate",
+            field: 'createdAt',
+            title: 'Date',
+            type: 'temporal',
+            timeUnit: 'yearmonthdate',
           },
           y: {
-            field: "cumulative_count",
+            field: 'cumulative_count',
             title: "Nombre d'annonces",
-            type: "quantitative",
+            type: 'quantitative',
           },
         },
-      };
-      vegaMap.config["mark"] = { color: "#FBC652" };
+      }
+      vegaMap.config['mark'] = { color: '#FBC652' }
 
       res.json(vegaMap);
     })
@@ -300,13 +300,13 @@ function getAdoptionRate(req: RentRequest, res: Response, next: NextFunction) {
         log.error("Error 500");
         res.status(500).json(err);
       }
-    });
+    })
 }
 
 router.get(
-  "/price-variation",
+  '/price-variation',
   (req: RentRequest, res: Response, next: NextFunction) => {
-    log.info(`-> ${req.baseUrl} priceVariation`, "blue");
+    log.info(`-> ${req.baseUrl} priceVariation`, 'blue')
 
     rentService
       .getPriceVarData()
@@ -316,49 +316,49 @@ router.get(
           data: {
             values: data,
           },
-          mark: { type: "area", color: "#f03434", tooltip: true },
+          mark: { type: 'area', color: '#f03434', tooltip: true },
           transform: [
             { filter: "datum.city === 'paris'" },
-            { filter: "datum.isLegal === false" },
+            { filter: 'datum.isLegal === false' },
             {
-              calculate: "datum.priceExcludingCharges - datum.maxPrice",
-              as: "priceDifference",
+              calculate: 'datum.priceExcludingCharges - datum.maxPrice',
+              as: 'priceDifference',
             },
           ],
           encoding: {
             y: {
-              aggregate: "median",
-              field: "priceDifference",
-              type: "quantitative",
-              title: "Différence entre prix pratiqué et prix théorique en €",
+              aggregate: 'median',
+              field: 'priceDifference',
+              type: 'quantitative',
+              title: 'Différence entre prix pratiqué et prix théorique en €',
             },
             x: {
-              field: "createdAt",
-              title: "Date",
-              type: "temporal",
-              timeUnit: "yearweek",
+              field: 'createdAt',
+              title: 'Date',
+              type: 'temporal',
+              timeUnit: 'yearweek',
             },
           },
-        };
+        }
 
-        res.json(vegaMap);
+        res.json(vegaMap)
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err)
         if (err.status) {
-          res.status(err.status).json(err);
+          res.status(err.status).json(err)
         } else {
-          log.error("Error 500");
-          res.status(500).json(err);
+          log.error('Error 500')
+          res.status(500).json(err)
         }
-      });
+      })
   }
-);
+)
 
 router.get(
-  "/is-legal-variation",
+  '/is-legal-variation',
   (req: RentRequest, res: Response, next: NextFunction) => {
-    log.info(`-> ${req.baseUrl} isLegalVariation`, "blue");
+    log.info(`-> ${req.baseUrl} isLegalVariation`, 'blue')
 
     rentService
       .getPriceVarData()
@@ -370,84 +370,84 @@ router.get(
           },
           transform: [
             { filter: "datum.city === 'paris'" },
-            { timeUnit: "yearweek", field: "createdAt", as: "date" },
+            { timeUnit: 'yearweek', field: 'createdAt', as: 'date' },
             {
               joinaggregate: [
                 {
-                  op: "count",
-                  field: "id",
-                  as: "NumberAds",
+                  op: 'count',
+                  field: 'id',
+                  as: 'NumberAds',
                 },
               ],
-              groupby: ["date"],
+              groupby: ['date'],
             },
-            { filter: "datum.isLegal === false" },
+            { filter: 'datum.isLegal === false' },
             {
               joinaggregate: [
                 {
-                  op: "count",
-                  field: "isLegal",
-                  as: "NumberIllegal",
+                  op: 'count',
+                  field: 'isLegal',
+                  as: 'NumberIllegal',
                 },
               ],
-              groupby: ["date"],
+              groupby: ['date'],
             },
             {
-              calculate: "datum.NumberIllegal / datum.NumberAds * 100",
-              as: "PercentOfTotal",
+              calculate: 'datum.NumberIllegal / datum.NumberAds * 100',
+              as: 'PercentOfTotal',
             },
           ],
           layer: [
             {
               mark: {
-                type: "area",
-                color: "#f03434",
+                type: 'area',
+                color: '#f03434',
                 tooltip: true,
               },
               encoding: {
                 y: {
-                  field: "PercentOfTotal",
-                  type: "quantitative",
-                  title: "Pourcentage",
+                  field: 'PercentOfTotal',
+                  type: 'quantitative',
+                  title: 'Pourcentage',
                 },
                 x: {
-                  field: "date",
-                  title: "Date",
-                  type: "temporal",
+                  field: 'date',
+                  title: 'Date',
+                  type: 'temporal',
                 },
               },
             },
             {
-              mark: { type: "line", color: "#fdcd56" },
-              transform: [{ loess: "PercentOfTotal", on: "date" }],
+              mark: { type: 'line', color: '#fdcd56' },
+              transform: [{ loess: 'PercentOfTotal', on: 'date' }],
               encoding: {
                 y: {
-                  field: "PercentOfTotal",
-                  type: "quantitative",
+                  field: 'PercentOfTotal',
+                  type: 'quantitative',
                 },
                 x: {
-                  field: "date",
-                  title: "Date",
-                  type: "temporal",
+                  field: 'date',
+                  title: 'Date',
+                  type: 'temporal',
                 },
               },
             },
           ],
-        };
+        }
 
-        res.json(vegaMap);
+        res.json(vegaMap)
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err)
         if (err.status) {
-          res.status(err.status).json(err);
+          res.status(err.status).json(err)
         } else {
-          log.error("Error 500");
-          res.status(500).json(err);
+          log.error('Error 500')
+          res.status(500).json(err)
         }
-      });
+      })
   }
-);
+)
 
 router.get("/welcome", getWelcomeText);
 function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
@@ -456,20 +456,20 @@ function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
   rentService
     .getWelcomeData()
     .then((data) => {
-      const rents = data;
+      const rents = data
 
       const isIllegalPercentage = Math.round(
         (100 * rents.filter((rent) => !rent.isLegal).length) / rents.length
-      );
-      const lessThan35SquareMeters = rents.filter((rent) => rent.surface < 35);
+      )
+      const lessThan35SquareMeters = rents.filter((rent) => rent.surface < 35)
       const isSmallSurfaceIllegalPercentage = Math.round(
         (100 * lessThan35SquareMeters.filter((rent) => !rent.isLegal).length) /
           lessThan35SquareMeters.length
-      );
-      const postalCodeGroupedRents = groupBy(rents, "postalCode");
-      const extremePostalCode = getExtremePostalCode(postalCodeGroupedRents);
-      const worstPostalCode = extremePostalCode[0];
-      const bestPostalCode = extremePostalCode[1];
+      )
+      const postalCodeGroupedRents = groupBy(rents, 'postalCode')
+      const extremePostalCode = getExtremePostalCode(postalCodeGroupedRents)
+      const worstPostalCode = extremePostalCode[0]
+      const bestPostalCode = extremePostalCode[1]
 
       return res.json({
         numberRents: rents.length,
@@ -492,36 +492,36 @@ function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
 }
 
 function getExtremePostalCode(groupedRents) {
-  let worstPc = "";
-  let bestPc = "";
-  let bestLegalsCount = 0;
-  let worstLegalsCount = 0;
+  let worstPc = ''
+  let bestPc = ''
+  let bestLegalsCount = 0
+  let worstLegalsCount = 0
 
   Object.keys(groupedRents).forEach((pc) => {
     if (isNaN(+pc)) {
-      return;
+      return
     }
-    const pcRents = groupedRents[pc];
+    const pcRents = groupedRents[pc]
 
     const legalsRatio =
-      pcRents.filter((rent) => rent.isLegal).length / pcRents.length;
+      pcRents.filter((rent) => rent.isLegal).length / pcRents.length
     if (bestLegalsCount < legalsRatio) {
       bestPc = pc;
       bestLegalsCount = legalsRatio;
     }
 
     const illegalsRatio =
-      pcRents.filter((rent) => !rent.isLegal).length / pcRents.length;
+      pcRents.filter((rent) => !rent.isLegal).length / pcRents.length
     if (worstLegalsCount < illegalsRatio) {
       worstPc = pc;
       worstLegalsCount = illegalsRatio;
     }
-  });
+  })
   const worstNeighborhood =
-    worstPc.slice(-2)[0] === "0" ? worstPc.slice(-1) : worstPc.slice(-2);
+    worstPc.slice(-2)[0] === '0' ? worstPc.slice(-1) : worstPc.slice(-2)
   const bestNeighborhood =
-    bestPc.slice(-2)[0] === "0" ? bestPc.slice(-1) : bestPc.slice(-2);
-  return [worstNeighborhood, bestNeighborhood];
+    bestPc.slice(-2)[0] === '0' ? bestPc.slice(-1) : bestPc.slice(-2)
+  return [worstNeighborhood, bestNeighborhood]
 }
 
-module.exports = router;
+module.exports = router

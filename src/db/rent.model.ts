@@ -6,7 +6,6 @@ const schema = new Schema({
   website: { type: String, required: true },
   address: { type: String, required: false },
   city: { type: String, required: false },
-  district: { type: String, required: false },
   postalCode: { type: String, required: false },
   longitude: { type: String, required: false },
   latitude: { type: String, required: false },
@@ -21,7 +20,7 @@ const schema = new Schema({
   renter: { type: String, required: false },
   createdAt: { type: Date, default: Date.now },
   stations: { type: [String], required: false, default: undefined },
-});
+})
 
 schema.index({ id: 1, website: 1, priceExcludingCharges: 1 }, { unique: true });
 

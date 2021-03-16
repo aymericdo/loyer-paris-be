@@ -9,19 +9,19 @@ export const stringToNumber = (value: string): number => {
     sept: 7,
     huit: 8,
     neuf: 9,
-  };
+  }
 
   if (value) {
     if (isNaN(+value)) {
       if (Object.keys(digit).includes(value)) {
-        return digit[value];
+        return digit[value]
       } else {
-        return null;
+        return null
       }
     } else {
-      return +value;
+      return +value
     }
   } else {
-    return null;
+    return null
   }
-};
+}

@@ -1,13 +1,13 @@
 export interface LilleDistrictItem {
-  type: "Feature";
+  type: 'Feature'
   geometry: {
-    type: "Polygon";
-    coordinates: number[][][];
-  };
+    type: 'Polygon'
+    coordinates: number[][][]
+  }
   properties: {
-    zonage: number;
-    geo_point_2d: [number, number];
-  };
+    zonage: number
+    geo_point_2d: [number, number]
+  }
 }
 
 export interface LilleEncadrementItem {
@@ -35,12 +35,12 @@ export interface LilleAddressItem {
   lon: number;
   nodes: number[];
   tags: {
-    city: string;
-    postcode: string;
-    address: string;
-  };
+    city: string
+    postcode: string
+    address: string
+  }
 }
-` Generated with this request on https://overpass-turbo.eu/
+;` Generated with this request on https://overpass-turbo.eu/
 [out:json];
 (
   node["addr:street"]({{geocodeBbox:Lille}});
@@ -66,8 +66,8 @@ export interface LilleStationItem {
     location_type: string;
   };
   geometry: {
-    type: string;
-    coordinates: number[];
-  };
-  record_timestamp: string;
+    type: string
+    coordinates: number[]
+  }
+  record_timestamp: string
 }

@@ -7,25 +7,25 @@ import { ParisDistrictService } from "@services/filter-rent/paris-district";
 import { Memoize } from "typescript-memoize";
 
 export class ParisFilterRentService {
-  cleanAd: CleanAd = null;
+  cleanAd: CleanAd = null
 
   constructor(cleanAd: CleanAd) {
-    this.cleanAd = cleanAd;
+    this.cleanAd = cleanAd
   }
 
   filter(): FilteredResult {
     // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
-    const rangeTime = ["Avant 1946", "1971-1990", "1946-1970", "Apres 1990"];
+    const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Apres 1990']
 
     const districtsMatched = new ParisDistrictService(
       this.cleanAd.postalCode,
       this.cleanAd.coordinates || this.cleanAd.blurryCoordinates
-    ).getDistricts();
+    ).getDistricts()
 
     const timeDates: string[] = YearBuiltService.getRangeTimeDates(
       rangeTime,
       this.cleanAd.yearBuilt
-    );
+    )
 
     const rentList = this.rangeRentsParisJson().filter((rangeRent) => {
       return (
@@ -47,15 +47,15 @@ export class ParisFilterRentService {
             ? rangeRent.fields.meuble_txt.match(/^meubl/g)
             : rangeRent.fields.meuble_txt.match(/^non meubl/g)
           : true)
-      );
-    });
+      )
+    })
 
     // Get the worst case scenario
     const worstCase = rentList.length
       ? rentList.reduce((prev, current) =>
           prev.fields.max > current.fields.max ? prev : current
         )
-      : null;
+      : null
 
     return {
       maxPrice: +worstCase.fields.max,
@@ -64,13 +64,13 @@ export class ParisFilterRentService {
       isFurnished: !!worstCase.fields.meuble_txt.match(/^meubl/g),
       roomCount: +worstCase.fields.piece,
       yearBuilt: worstCase.fields.epoque,
-    };
+    }
   }
 
   @Memoize()
   private rangeRentsParisJson(): ParisEncadrementItem[] {
     return JSON.parse(
-      fs.readFileSync(path.join("json-data/encadrements_paris.json"), "utf8")
-    );
+      fs.readFileSync(path.join('json-data/encadrements_paris.json'), 'utf8')
+    )
   }
 }

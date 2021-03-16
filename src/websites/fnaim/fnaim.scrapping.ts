@@ -1,58 +1,56 @@
-import { virtualConsole } from "@helpers/jsdome";
-import { FnaimMapping } from "@interfaces/mapping";
-import { ErrorCode } from "@services/api-errors";
-import jsdom from "jsdom";
-const { JSDOM } = jsdom;
+import { virtualConsole } from '@helpers/jsdome'
+import { FnaimMapping } from '@interfaces/mapping'
+import { ErrorCode } from '@services/api-errors'
+import jsdom from 'jsdom'
+const { JSDOM } = jsdom
 
 export class FnaimScrapping {
   static scrap(data: string): FnaimMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),
-    }).window;
+    }).window
 
     const tabs = [
       ...document.querySelectorAll(
-        "#annonceFiche > div.ariane > span > a > span"
+        '#annonceFiche > div.ariane > span > a > span'
       ),
-    ];
+    ]
     const title = document.querySelector(
-      "#annonceFiche > div.annonce_fiche.fiche > header > div.titreButtons > h1"
-    );
+      '#annonceFiche > div.annonce_fiche.fiche > header > div.titreButtons > h1'
+    )
     const description = document.querySelector(
-      "#annonceFiche > div.annonce_fiche.fiche > div:nth-child(5) > p"
-    );
+      '#annonceFiche > div.annonce_fiche.fiche > div:nth-child(5) > p'
+    )
     const price = document.querySelector(
-      "#annonceFiche > div.annonce_fiche.fiche > header > div.left > h3 > span"
-    );
+      '#annonceFiche > div.annonce_fiche.fiche > header > div.left > h3 > span'
+    )
     const chargesNode = document.querySelector(
-      "#annonceFiche > div.annonce_fiche.fiche > div.description > p"
-    );
+      '#annonceFiche > div.annonce_fiche.fiche > div.description > p'
+    )
     const hasCharges = document.querySelector(
-      "#annonceFiche > div.annonce_fiche.fiche > header > div.left > span"
-    );
+      '#annonceFiche > div.annonce_fiche.fiche > header > div.left > span'
+    )
     const renter = document.querySelector(
-      "#annonceFiche > div.annonce_fiche.fiche > div.caracteristique.agence > div > div.coordonnees > div > a"
-    );
+      '#annonceFiche > div.annonce_fiche.fiche > div.caracteristique.agence > div > div.coordonnees > div > a'
+    )
     const cityLabel = document.querySelector(
-      "#annonceFiche > div.annonce_fiche.fiche > ul > li.picto.lieu > div > div[itemprop=address]"
-    );
+      '#annonceFiche > div.annonce_fiche.fiche > ul > li.picto.lieu > div > div[itemprop=address]'
+    )
     const features = [
       ...document.querySelectorAll(
-        "#annonceFiche > div.annonce_fiche.fiche > ul > li"
+        '#annonceFiche > div.annonce_fiche.fiche > ul > li'
       ),
-    ];
-    const features2 = [
-      ...document.querySelectorAll("#logementBlock > ul > li"),
-    ];
+    ]
+    const features2 = [...document.querySelectorAll('#logementBlock > ul > li')]
 
-    let surface = null;
-    let rooms = null;
-    let yearBuilt = null;
+    let surface = null
+    let rooms = null
+    let yearBuilt = null
 
-    let isRent = null;
+    let isRent = null
     tabs.forEach((tab) => {
       if (tab.textContent?.toLowerCase()?.match(/louer appartement/g)) {
-        isRent = true;
+        isRent = true
       }
     });
 
@@ -62,20 +60,20 @@ export class FnaimScrapping {
 
     features.forEach((feature) => {
       if (feature.textContent.match(/m²/g)) {
-        surface = feature;
+        surface = feature
       } else if (feature.textContent.match(/Pièce/g)) {
-        rooms = feature;
+        rooms = feature
       }
-    });
+    })
 
     features2.forEach((feature) => {
       if (feature.textContent.match(/Année de construction/g)) {
-        yearBuilt = feature;
+        yearBuilt = feature
       }
-    });
+    })
 
     if (!title && !description && !price && !cityLabel) {
-      return null;
+      return null
     }
 
     const charges =
@@ -84,7 +82,7 @@ export class FnaimScrapping {
       ) &&
       chargesNode?.textContent?.match(
         /(?<=- )\d+(?= € par mois de provision pour charges)/g
-      )[0];
+      )[0]
 
     return {
       id: null,
@@ -93,13 +91,13 @@ export class FnaimScrapping {
       price: price?.textContent,
       hasCharges: !!hasCharges?.textContent
         ?.toLowerCase()
-        .includes("charges comprises"),
+        .includes('charges comprises'),
       charges,
       renter: renter?.textContent,
       rooms: rooms?.textContent,
       yearBuilt: yearBuilt?.textContent,
       surface: surface?.textContent,
       title: title?.textContent,
-    };
+    }
   }
 }

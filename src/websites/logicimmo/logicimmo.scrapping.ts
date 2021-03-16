@@ -1,69 +1,69 @@
-import { LogicimmoMapping } from "@interfaces/mapping";
-import { virtualConsole } from "@helpers/jsdome";
-import jsdom from "jsdom";
-const { JSDOM } = jsdom;
+import { LogicimmoMapping } from '@interfaces/mapping'
+import { virtualConsole } from '@helpers/jsdome'
+import jsdom from 'jsdom'
+const { JSDOM } = jsdom
 
 export class LogicimmoScrapping {
   static scrap(data: string): LogicimmoMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),
-    }).window;
+    }).window
 
     const description = document.querySelector(
-      "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div:nth-child(6) > div.blocDescrProperty > article > p.descrProperty"
-    );
+      'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div:nth-child(6) > div.blocDescrProperty > article > p.descrProperty'
+    )
     const price = document.querySelector(
-      "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > ul > li.infoPriceBox > span"
-    );
+      'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > ul > li.infoPriceBox > span'
+    )
     const cityLabel = document.querySelector(
-      "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressBottomBlock > strong > em"
-    );
+      'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressBottomBlock > strong > em'
+    )
     const renter = document.querySelector(
-      "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span"
-    );
+      'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span'
+    )
 
     const chargeNode = [
       ...document.querySelectorAll(
-        "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl"
+        'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl'
       ),
-    ];
+    ]
 
     const offerCriteria = [
-      ...document.querySelectorAll("#dtlTechniqueBox > li.dtlTechiqueItm"),
-    ];
+      ...document.querySelectorAll('#dtlTechniqueBox > li.dtlTechiqueItm'),
+    ]
     const itemTags = [
       ...document.querySelectorAll(
-        "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressTopBlock > .propertyTypeInfos > em.feature"
+        'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressTopBlock > .propertyTypeInfos > em.feature'
       ),
-    ];
+    ]
 
-    let charges = null;
+    let charges = null
     chargeNode.forEach((elem) => {
       if (elem.textContent.match(/Charges Locatives/g)) {
-        charges = elem;
+        charges = elem
       }
-    });
+    })
 
-    let furnished = null;
+    let furnished = null
     offerCriteria.forEach((criteria) => {
       if (criteria.textContent.match(/Meublé/g)) {
-        furnished = criteria;
+        furnished = criteria
       }
-    });
+    })
 
-    let surface = null;
-    let rooms = null;
+    let surface = null
+    let rooms = null
 
     itemTags.forEach((tag) => {
       if (tag.textContent.match(/m²/g)) {
-        surface = tag;
+        surface = tag
       } else if (tag.textContent.match(/p./g)) {
-        rooms = tag;
+        rooms = tag
       }
-    });
+    })
 
     if (!description && !price && !cityLabel) {
-      return null;
+      return null
     }
 
     return {
@@ -76,6 +76,6 @@ export class LogicimmoScrapping {
       renter: renter && renter.textContent,
       rooms: rooms && rooms.textContent,
       surface: surface && surface.textContent,
-    };
+    }
   }
 }

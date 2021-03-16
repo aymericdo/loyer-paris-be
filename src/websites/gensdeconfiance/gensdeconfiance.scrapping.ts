@@ -1,40 +1,40 @@
-import { virtualConsole } from "@helpers/jsdome";
-import { GensdeconfianceMapping } from "@interfaces/mapping";
-import jsdom from "jsdom";
-import { particulierToken } from "../../helpers/particulier";
-const { JSDOM } = jsdom;
+import { virtualConsole } from '@helpers/jsdome'
+import { GensdeconfianceMapping } from '@interfaces/mapping'
+import jsdom from 'jsdom'
+import { particulierToken } from '../../helpers/particulier'
+const { JSDOM } = jsdom
 
 export class GensdeconfianceScrapping {
   static scrap(data: string): GensdeconfianceMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),
-    }).window;
+    }).window
 
-    const title = document.querySelector("#post-title");
-    const description = document.querySelector("#ad-description");
+    const title = document.querySelector('#post-title')
+    const description = document.querySelector('#ad-description')
     const price = document.querySelector(
-      "#col-ad > div.price-table > div:nth-child(1) > div.price-table__value"
-    );
+      '#col-ad > div.price-table > div:nth-child(1) > div.price-table__value'
+    )
     const charges = document.querySelector(
-      "#col-ad > div.price-table > div:nth-child(2) > div.price-table__value"
-    );
-    const address = document.querySelector("#ad-address > p");
-    const cityLabel = document.querySelector("#post-title-breadcrumb > small");
-    const surface = document.querySelector("#ad-extra-fields-nb_square_meters");
+      '#col-ad > div.price-table > div:nth-child(2) > div.price-table__value'
+    )
+    const address = document.querySelector('#ad-address > p')
+    const cityLabel = document.querySelector('#post-title-breadcrumb > small')
+    const surface = document.querySelector('#ad-extra-fields-nb_square_meters')
     const renter = document.querySelector(
-      "#post-title-badges > span.label.label-default.label-inverse.m-r.m-b-2sm"
-    );
+      '#post-title-badges > span.label.label-default.label-inverse.m-r.m-b-2sm'
+    )
 
     if (!title) {
-      return null;
+      return null
     }
 
     const cityLabelText =
       cityLabel &&
       cityLabel.textContent
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .split("—")[1];
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .split('—')[1]
 
     return {
       id: null,

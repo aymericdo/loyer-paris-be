@@ -5,11 +5,11 @@ export class YearBuiltService {
 
   static getRangeTimeDates(rangeTime: string[], yearBuilt: number[]): string[] {
     if (!yearBuilt) {
-      return null;
+      return null
     }
 
-    const oldestYear: number = 1700;
-    const currentYear: number = new Date().getFullYear();
+    const oldestYear: number = 1700
+    const currentYear: number = new Date().getFullYear()
 
     const yearBuiltRange: number[] =
       yearBuilt.length === 2
@@ -27,40 +27,40 @@ export class YearBuiltService {
               { length: yearBuilt[1] - yearBuilt[0] + 1 },
               (v, k) => yearBuilt[0] + k
             )
-        : yearBuilt;
+        : yearBuilt
 
     return rangeTime.filter((time: string) => {
       const rangeYearBuilt: (string | number)[] = time
         .split(/[\s-]+/)
-        .map((year: any) => (isNaN(year) ? year.toLowerCase() : +year));
+        .map((year: any) => (isNaN(year) ? year.toLowerCase() : +year))
 
       return yearBuiltRange.some((yb: number) => {
-        return typeof rangeYearBuilt[0] === "number"
+        return typeof rangeYearBuilt[0] === 'number'
           ? rangeYearBuilt[0] < yb && rangeYearBuilt[1] >= yb
-          : rangeYearBuilt[0] === "avant"
+          : rangeYearBuilt[0] === 'avant'
           ? yb < rangeYearBuilt[1]
-          : rangeYearBuilt[0] === "apres"
+          : rangeYearBuilt[0] === 'apres'
           ? yb > rangeYearBuilt[1]
-          : false;
-      });
-    });
+          : false
+      })
+    })
   }
 
   static getDateFormatted(periodBuilt: number[]): string {
     if (!periodBuilt) {
-      return null;
+      return null
     }
 
     if (periodBuilt.length > 1) {
       if (periodBuilt[0] === null) {
-        return `Avant ${periodBuilt[1]}`;
+        return `Avant ${periodBuilt[1]}`
       } else if (periodBuilt[1] === null) {
-        return `Après ${periodBuilt[0]}`;
+        return `Après ${periodBuilt[0]}`
       } else {
-        return `${periodBuilt[0]}-${periodBuilt[1]}`;
+        return `${periodBuilt[0]}-${periodBuilt[1]}`
       }
     } else {
-      return periodBuilt.toString();
+      return periodBuilt.toString()
     }
   }
 
@@ -70,35 +70,35 @@ export class YearBuiltService {
       {
         geometry: {
           $near: {
-            $geometry: { type: "Point", coordinates: [lng, lat] },
+            $geometry: { type: 'Point', coordinates: [lng, lat] },
             $maxDistance: 20,
           },
         },
       },
       (err, batie) => {
         if (err) {
-          console.log(err);
+          console.log(err)
         }
 
-        return batie;
+        return batie
       }
-    );
+    )
   }
 
   static getYearBuiltFromBuilding(building) {
     const yearBuilt = building &&
-      building.properties.an_const && [+building.properties.an_const];
+      building.properties.an_const && [+building.properties.an_const]
     const periodBuilt =
       building &&
       building.properties.c_perconst &&
-      (building.properties.c_perconst.toLowerCase().includes("avant")
+      (building.properties.c_perconst.toLowerCase().includes('avant')
         ? [null, +building.properties.c_perconst.slice(-4)]
-        : building.properties.c_perconst.toLowerCase().includes("après")
+        : building.properties.c_perconst.toLowerCase().includes('après')
         ? [+building.properties.c_perconst.slice(-4), null]
         : [
             +building.properties.c_perconst.slice(0, 4),
             +building.properties.c_perconst.slice(-4),
-          ]);
-    return yearBuilt || periodBuilt;
+          ])
+    return yearBuilt || periodBuilt
   }
 }

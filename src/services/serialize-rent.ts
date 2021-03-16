@@ -1,36 +1,36 @@
-import * as log from "@helpers/log";
-import { roundNumber } from "@helpers/round-number";
-import { FilteredResult } from "@interfaces/ad";
-import { YearBuiltService } from "@services/year-built";
-import { AvailableCities } from "@services/address/city";
+import * as log from '@helpers/log'
+import { roundNumber } from '@helpers/round-number'
+import { FilteredResult } from '@interfaces/ad'
+import { YearBuiltService } from '@services/year-built'
+import { AvailableCities } from '@services/address/city'
 
 interface SerializedInfo {
-  address: string;
-  charges?: number;
-  hasCharges?: boolean;
-  city: AvailableCities;
-  hasFurniture?: boolean;
-  isLegal: boolean;
-  maxAuthorized: number;
-  postalCode: string;
-  price: number;
-  priceExcludingCharges: number;
-  roomCount?: number;
-  surface: number;
-  yearBuilt?: number[];
+  address: string
+  charges?: number
+  hasCharges?: boolean
+  city: AvailableCities
+  hasFurniture?: boolean
+  isLegal: boolean
+  maxAuthorized: number
+  postalCode: string
+  price: number
+  priceExcludingCharges: number
+  roomCount?: number
+  surface: number
+  yearBuilt?: number[]
 }
 
 export class SerializeRentService {
-  serializedInfo: SerializedInfo = null;
-  filteredResult: FilteredResult = null;
+  serializedInfo: SerializedInfo = null
+  filteredResult: FilteredResult = null
 
   constructor(serializedInfo: SerializedInfo, filteredResult: FilteredResult) {
-    this.serializedInfo = serializedInfo;
-    this.filteredResult = filteredResult;
+    this.serializedInfo = serializedInfo
+    this.filteredResult = filteredResult
   }
 
   serialize() {
-    log.info("serializing answer", "green");
+    log.info('serializing answer', 'green')
 
     const {
       address,
@@ -46,18 +46,18 @@ export class SerializeRentService {
       roomCount,
       surface,
       yearBuilt,
-    } = this.serializedInfo;
+    } = this.serializedInfo
 
     const cityCapitalize =
-      (city as string).charAt(0).toUpperCase() + (city as string).slice(1);
+      (city as string).charAt(0).toUpperCase() + (city as string).slice(1)
 
     return {
       detectedInfo: {
         address: {
           order: 0,
-          value: `${address || ""}${
-            postalCode ? (address ? " " + postalCode : postalCode) : ""
-          }${address || postalCode ? ", " : ""}${cityCapitalize}`,
+          value: `${address || ''}${
+            postalCode ? (address ? ' ' + postalCode : postalCode) : ''
+          }${address || postalCode ? ', ' : ''}${cityCapitalize}`,
         },
         hasFurniture: { order: 1, value: hasFurniture },
         roomCount: { order: 2, value: roomCount },
@@ -92,6 +92,6 @@ export class SerializeRentService {
         },
       },
       isLegal,
-    };
+    }
   }
 }

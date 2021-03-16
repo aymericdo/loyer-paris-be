@@ -1,69 +1,69 @@
-import { virtualConsole } from "@helpers/jsdome";
-import { SuperimmoMapping } from "@interfaces/mapping";
-import jsdom from "jsdom";
-const { JSDOM } = jsdom;
+import { virtualConsole } from '@helpers/jsdome'
+import { SuperimmoMapping } from '@interfaces/mapping'
+import jsdom from 'jsdom'
+const { JSDOM } = jsdom
 
 export class SuperimmoScrapping {
   static scrap(data: string): SuperimmoMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),
-    }).window;
+    }).window
 
     const title = document.querySelector(
-      "body > main > div > div.content.fiche > header:nth-child(1) > h1"
-    );
+      'body > main > div > div.content.fiche > header:nth-child(1) > h1'
+    )
     const subtitle = document.querySelector(
-      "body > main > div > div.content.fiche > p.resume"
-    );
+      'body > main > div > div.content.fiche > p.resume'
+    )
     const description = document.querySelector(
-      "body > main > div > div.content.fiche > p.description"
-    );
+      'body > main > div > div.content.fiche > p.description'
+    )
     const price = document.querySelector(
-      "body > main > div > div.content.fiche > header:nth-child(1) > b > span"
-    );
+      'body > main > div > div.content.fiche > header:nth-child(1) > b > span'
+    )
     const hasCharges = document.querySelector(
-      "body > main > div > div.content.fiche > header:nth-child(1) > b > span"
-    );
+      'body > main > div > div.content.fiche > header:nth-child(1) > b > span'
+    )
     const renter = document.querySelector(
-      "body > main > div > div.content.fiche > div.row.section_lg > aside > div.block_agence > div > header > div.media-body"
-    );
+      'body > main > div > div.content.fiche > div.row.section_lg > aside > div.block_agence > div > header > div.media-body'
+    )
     const cityLabel = document.querySelector(
-      "body > main > div > div.content.fiche > header:nth-child(1) > h1 > span"
-    );
+      'body > main > div > div.content.fiche > header:nth-child(1) > h1 > span'
+    )
     const features = [
       ...document.querySelectorAll(
-        "body > main > div > div.content.fiche > div.pictos > div.picto"
+        'body > main > div > div.content.fiche > div.pictos > div.picto'
       ),
-    ];
+    ]
     const features2 = [
       ...document.querySelectorAll(
-        "body > main > div > div.content.fiche > section > table > tbody > tr > td"
+        'body > main > div > div.content.fiche > section > table > tbody > tr > td'
       ),
-    ];
+    ]
 
-    let surface = null;
-    let rooms = null;
-    let charges = null;
-    let yearBuilt = null;
+    let surface = null
+    let rooms = null
+    let charges = null
+    let yearBuilt = null
 
     features.forEach((feature) => {
       if (feature.textContent.match(/m²/g)) {
-        surface = feature;
+        surface = feature
       } else if (feature.textContent.match(/pièce/g)) {
-        rooms = feature;
+        rooms = feature
       }
-    });
+    })
 
     features2.forEach((feature) => {
       if (feature.textContent.match(/Année de construction/g)) {
-        yearBuilt = feature;
+        yearBuilt = feature
       } else if (feature.textContent.match(/Charges/g)) {
-        charges = feature;
+        charges = feature
       }
-    });
+    })
 
     if (!title && !description && !price && !cityLabel) {
-      return null;
+      return null
     }
 
     return {
@@ -78,6 +78,6 @@ export class SuperimmoScrapping {
       surface: surface?.textContent,
       yearBuilt: yearBuilt?.textContent,
       title: `${title?.textContent} ${subtitle?.textContent}`,
-    };
+    }
   }
 }

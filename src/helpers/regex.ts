@@ -6,11 +6,11 @@ export const regexString = (value: string): string => {
     nonFurnished: /(non-|non )\bmeuble/g,
     charges: /((?<=(charges locatives |charges |charge )(\D{0,4}))|(?<=\d{3,4}((|\.|,)\d{1,2})?(\D{0,5})?\+ ?))(\d{2,3}((|\.|,)\d{1,2})?)(?=( ?euros\b| ?€| ?e\b| ?eur\b| ?euro\b | ?(charge(s)?)\b))/g,
     surface: /(9|\d{2})(?= ?(m2\b|metre|m²))/g,
-  };
+  }
 
   if (Object.keys(regex).includes(value)) {
-    return regex[value];
+    return regex[value]
   } else {
-    return null;
+    return null
   }
-};
+}

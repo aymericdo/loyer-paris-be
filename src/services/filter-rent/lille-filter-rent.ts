@@ -7,10 +7,10 @@ import { LilleEncadrementItem } from "@interfaces/json-item-lille";
 import { Memoize } from "typescript-memoize";
 
 export class LilleFilterRentService {
-  cleanAd: CleanAd = null;
+  cleanAd: CleanAd = null
 
   constructor(cleanAd: CleanAd) {
-    this.cleanAd = cleanAd;
+    this.cleanAd = cleanAd
   }
 
   filter(): FilteredResult {
@@ -20,11 +20,11 @@ export class LilleFilterRentService {
     const districtsMatched = new LilleDistrictService(
       this.cleanAd.postalCode,
       this.cleanAd.coordinates || this.cleanAd.blurryCoordinates
-    ).getDistricts();
+    ).getDistricts()
 
     const timeDates: string[] = this.dateFormatting(
       YearBuiltService.getRangeTimeDates(rangeTime, this.cleanAd.yearBuilt)
-    );
+    )
 
     const rentList = this.rangeRentsLilleJson().filter((rangeRent) => {
       return (
@@ -39,13 +39,13 @@ export class LilleFilterRentService {
         (this.cleanAd.roomCount
           ? +this.cleanAd.roomCount < 4
             ? +rangeRent.fields.nb_pieces === +this.cleanAd.roomCount
-            : rangeRent.fields.nb_pieces === "4 et +"
+            : rangeRent.fields.nb_pieces === '4 et +'
           : true)
-      );
-    });
+      )
+    })
 
     const isFurnished =
-      this.cleanAd.hasFurniture === null ? true : this.cleanAd.hasFurniture;
+      this.cleanAd.hasFurniture === null ? true : this.cleanAd.hasFurniture
 
     // Get the worst case scenario
     const worstCase = isFurnished
@@ -60,7 +60,7 @@ export class LilleFilterRentService {
           current.fields.loyer_de_reference_majore_non_meublees
             ? prev
             : current
-        );
+        )
 
     return {
       maxPrice: isFurnished
@@ -80,16 +80,16 @@ export class LilleFilterRentService {
     if (timeDates?.length) {
       return timeDates.map((d) => {
         switch (d) {
-          case "Apres 1990":
-            return "> 1990";
-          case "1971-1990":
-            return "1971 - 1990";
-          case "1946-1970":
-            return "1946 - 1970";
-          case "Avant 1946":
-            return "< 1946";
+          case 'Apres 1990':
+            return '> 1990'
+          case '1971-1990':
+            return '1971 - 1990'
+          case '1946-1970':
+            return '1946 - 1970'
+          case 'Avant 1946':
+            return '< 1946'
           default:
-            return "";
+            return ''
         }
       });
     } else {
@@ -100,7 +100,7 @@ export class LilleFilterRentService {
   @Memoize()
   private rangeRentsLilleJson(): LilleEncadrementItem[] {
     return JSON.parse(
-      fs.readFileSync(path.join("json-data/encadrements_lille.json"), "utf8")
-    );
+      fs.readFileSync(path.join('json-data/encadrements_lille.json'), 'utf8')
+    )
   }
 }

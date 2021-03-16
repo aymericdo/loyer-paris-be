@@ -1,33 +1,33 @@
-import { virtualConsole } from "@helpers/jsdome";
-import { LuxResidenceMapping } from "@interfaces/mapping";
-import jsdom from "jsdom";
-const { JSDOM } = jsdom;
+import { virtualConsole } from '@helpers/jsdome'
+import { LuxResidenceMapping } from '@interfaces/mapping'
+import jsdom from 'jsdom'
+const { JSDOM } = jsdom
 
 export class LuxResidenceScrapping {
   static scrap(data: string): LuxResidenceMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),
-    }).window;
+    }).window
 
-    const description = document.querySelector("#descriptionSection > div");
+    const description = document.querySelector('#descriptionSection > div')
     const price = document.querySelector(
-      "#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.price"
-    );
+      '#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.price'
+    )
     const renter = document.querySelector(
-      "#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.agency > span.agencyName"
-    );
+      '#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.agency > span.agencyName'
+    )
     const cityLabel = document.querySelector(
-      "#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.city"
-    );
+      '#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.city'
+    )
     const furnished = document.querySelector(
-      "#detailsTab > div > div.detailsBlock.plus > ul > li.singleCriteria.furnished"
-    );
+      '#detailsTab > div > div.detailsBlock.plus > ul > li.singleCriteria.furnished'
+    )
 
     const features = [
       ...document.querySelectorAll(
-        "#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.criteria > span"
+        '#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.criteria > span'
       ),
-    ];
+    ]
 
     let surface = null;
     let rooms = null;

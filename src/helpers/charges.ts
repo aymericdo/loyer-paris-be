@@ -7,5 +7,5 @@ export function getPriceExcludingCharges(
     ? price - charges
     : hasCharges
     ? price - (10 * price) / 100
-    : price;
+    : price
 }

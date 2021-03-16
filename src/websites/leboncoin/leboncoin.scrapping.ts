@@ -1,9 +1,7 @@
-import { virtualConsole } from "@helpers/jsdome";
-import * as cleanup from "@helpers/cleanup";
-import { LeboncoinMapping } from "@interfaces/mapping";
-import jsdom from "jsdom";
-import { ErrorCode } from "@services/api-errors";
-const { JSDOM } = jsdom;
+import { virtualConsole } from '@helpers/jsdome'
+import { LeboncoinMapping } from '@interfaces/mapping'
+import jsdom from 'jsdom'
+const { JSDOM } = jsdom
 
 export class LeboncoinScrapping {
   static scrap(data: string): LeboncoinMapping {
@@ -11,11 +9,7 @@ export class LeboncoinScrapping {
       virtualConsole: virtualConsole(),
     }).window;
 
-    const errorContainer = document.querySelector(
-      "[data-qa-id=adview_error_container]"
-    );
-
-    const subject = document.querySelector("[data-qa-id=adview_title]");
+    const subject = document.querySelector('[data-qa-id=adview_title]')
     const body = document.querySelector(
       "[data-qa-id=adview_description_container] > div > span"
     );
@@ -49,14 +43,6 @@ export class LeboncoinScrapping {
     const furnished = document.querySelector(
       "#grid > article div div[data-qa-id=criteria_item_furnished] > div > p._3eNLO._137P-.P4PEa._35DXM"
     );
-
-    if (
-      cleanup
-        .string(errorContainer?.textContent)
-        ?.includes("cette annonce est desactivee")
-    ) {
-      throw { error: ErrorCode.Other, msg: `deactivated ad` };
-    }
 
     if (!subject && !body && !body2 && !price && !cityLabel) {
       return null;

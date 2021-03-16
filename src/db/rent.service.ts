@@ -10,18 +10,18 @@ export async function getMapData(): Promise<
     (
       err: Error,
       rents: {
-        isLegal: boolean;
-        latitude: number;
-        longitude: number;
-        city: string;
+        isLegal: boolean
+        latitude: number
+        longitude: number
+        city: string
       }[]
     ) => {
       if (err) {
-        throw err;
+        throw err
       }
-      return rents;
+      return rents
     }
-  );
+  )
 }
 
 export async function getPriceDiffData(): Promise<
@@ -39,19 +39,19 @@ export async function getPriceDiffData(): Promise<
     (
       err: Error,
       rents: {
-        maxPrice: number;
-        postalCode: string;
-        priceExcludingCharges: number;
-        isLegal: number;
-        city: string;
+        maxPrice: number
+        postalCode: string
+        priceExcludingCharges: number
+        isLegal: number
+        city: string
       }[]
     ) => {
       if (err) {
-        throw err;
+        throw err
       }
-      return rents;
+      return rents
     }
-  );
+  )
 }
 
 export async function getPriceVarData(): Promise<
@@ -69,19 +69,19 @@ export async function getPriceVarData(): Promise<
     (
       err: Error,
       rents: {
-        isLegal: boolean;
-        createdAt: string;
-        maxPrice: number;
-        priceExcludingCharges: number;
-        city: string;
+        isLegal: boolean
+        createdAt: string
+        maxPrice: number
+        priceExcludingCharges: number
+        city: string
       }[]
     ) => {
       if (err) {
-        throw err;
+        throw err
       }
-      return rents;
+      return rents
     }
-  );
+  )
 }
 
 export async function getLegalPerSurfaceData(): Promise<
@@ -95,11 +95,11 @@ export async function getLegalPerSurfaceData(): Promise<
       rents: { isLegal: boolean; surface: number; city: string }[]
     ) => {
       if (err) {
-        throw err;
+        throw err
       }
-      return rents;
+      return rents
     }
-  );
+  )
 }
 
 export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
@@ -108,29 +108,29 @@ export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
     { createdAt: 1 },
     (err: Error, rents: { createdAt: string }[]) => {
       if (err) {
-        throw err;
+        throw err
       }
-      return rents;
+      return rents
     }
-  );
+  )
 }
 
 export async function getWelcomeData(): Promise<
   { isLegal: boolean; surface: number; postalCode: string }[]
 > {
   return await Rent.find(
-    { city: "paris" },
+    { city: 'paris' },
     { isLegal: 1, surface: 1, postalCode: 1 },
     (
       err: Error,
       rents: { isLegal: boolean; surface: number; postalCode: string }[]
     ) => {
       if (err) {
-        throw err;
+        throw err
       }
-      return rents;
+      return rents
     }
-  );
+  )
 }
 
 export async function getAdById(
@@ -141,9 +141,9 @@ export async function getAdById(
     { id, website },
     (err: Error, rent: DataBaseItem) => {
       if (err) {
-        throw err;
+        throw err
       }
-      return rent;
+      return rent
     }
-  );
+  )
 }

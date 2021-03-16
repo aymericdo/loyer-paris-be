@@ -1,1 +1,1 @@
-process.env.CURRENT_ENV = "test";
+process.env.CURRENT_ENV = 'test'
