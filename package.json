@@ -13,7 +13,8 @@
     "test": "jest --testEnvironment=node --detectOpenHandles --forceExit",
     "dev": "ts-node-dev --transpile-only ./src/index.ts",
     "prod": "tsc && node ./build/index.js",
-    "debug": "tsc && node --inspect ./build/index.js"
+    "debug": "tsc && node --inspect ./build/index.js",
+    "format": "prettier --write '**/*.ts'"
   },
   "author": "Aymeric & Thomas",
   "license": "ISC",
