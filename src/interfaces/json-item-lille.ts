@@ -1,13 +1,13 @@
 export interface LilleDistrictItem {
-  type: "Feature";
+  type: 'Feature'
   geometry: {
-    type: "Polygon"
+    type: 'Polygon'
     coordinates: number[][][]
-  };
+  }
   properties: {
-    zonage: number,
-    geo_point_2d: [number, number];
-  };
+    zonage: number
+    geo_point_2d: [number, number]
+  }
 }
 
 export interface LilleEncadrementItem {
@@ -36,11 +36,11 @@ export interface LilleAddressItem {
   nodes: number[]
   tags: {
     city: string
-    postcode: string,
+    postcode: string
     address: string
   }
 }
-` Generated with this request on https://overpass-turbo.eu/
+;` Generated with this request on https://overpass-turbo.eu/
 [out:json];
 (
   node["addr:street"]({{geocodeBbox:Lille}});

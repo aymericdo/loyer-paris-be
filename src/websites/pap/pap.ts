@@ -1,43 +1,43 @@
-import * as cleanup from "@helpers/cleanup";
-import { particulierToken } from "@helpers/particulier";
-import { Ad } from "@interfaces/ad";
-import { PapMapping } from "@interfaces/mapping";
-import { ErrorCode } from "@services/api-errors";
-import { Website } from "../website";
-import { PapScrapping } from "./pap.scrapping";
+import * as cleanup from '@helpers/cleanup'
+import { particulierToken } from '@helpers/particulier'
+import { Ad } from '@interfaces/ad'
+import { PapMapping } from '@interfaces/mapping'
+import { ErrorCode } from '@services/api-errors'
+import { Website } from '../website'
+import { PapScrapping } from './pap.scrapping'
 
 export class Pap extends Website {
-  website = "pap";
+  website = 'pap'
 
   async mapping(): Promise<Ad> {
-    let ad: PapMapping = null;
+    let ad: PapMapping = null
     if (this.isV2) {
       if (!this.body.id) {
         throw {
           error: ErrorCode.Minimal,
           msg: `no more id for ${this.website}/${this.body.platform}`,
-        };
+        }
       }
 
-      const scrap = PapScrapping.scrap(JSON.parse(this.body.data));
+      const scrap = PapScrapping.scrap(JSON.parse(this.body.data))
 
       if (!scrap) {
         throw {
           error: ErrorCode.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
-        };
+        }
       }
 
       ad = {
         ...scrap,
         id: this.body.id,
-      };
+      }
     }
 
-    ad = ad || (this.body as PapMapping);
+    ad = ad || (this.body as PapMapping)
 
     if (!ad.id) {
-      throw { error: ErrorCode.Other, msg: `not a rent` };
+      throw { error: ErrorCode.Other, msg: `not a rent` }
     }
 
     return {
@@ -51,6 +51,6 @@ export class Pap extends Website {
       title: cleanup.string(ad.title),
       stations:
         ad.stations && ad.stations.map((station) => cleanup.string(station)),
-    };
+    }
   }
 }

@@ -1,39 +1,39 @@
-import * as cleanup from "@helpers/cleanup";
-import { GensdeconfianceMapping } from "@interfaces/mapping";
-import { Ad } from "@interfaces/ad";
-import { Website } from "../website";
-import { particulierToken } from "../../helpers/particulier";
-import { GensdeconfianceScrapping } from "./gensdeconfiance.scrapping";
-import { ErrorCode } from "@services/api-errors";
+import * as cleanup from '@helpers/cleanup'
+import { GensdeconfianceMapping } from '@interfaces/mapping'
+import { Ad } from '@interfaces/ad'
+import { Website } from '../website'
+import { particulierToken } from '../../helpers/particulier'
+import { GensdeconfianceScrapping } from './gensdeconfiance.scrapping'
+import { ErrorCode } from '@services/api-errors'
 
 export class Gensdeconfiance extends Website {
-  website = "gensdeconfiance";
+  website = 'gensdeconfiance'
 
   async mapping(): Promise<Ad> {
-    let ad: GensdeconfianceMapping = null;
+    let ad: GensdeconfianceMapping = null
     if (this.isV2) {
       if (!this.body.id) {
         throw {
           error: ErrorCode.Minimal,
           msg: `no more id for ${this.website}/${this.body.platform}`,
-        };
+        }
       }
 
-      const scrap = GensdeconfianceScrapping.scrap(JSON.parse(this.body.data));
+      const scrap = GensdeconfianceScrapping.scrap(JSON.parse(this.body.data))
 
       if (!scrap) {
         throw {
           error: ErrorCode.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
-        };
+        }
       }
       ad = {
         ...scrap,
         id: this.body.id,
-      };
+      }
     }
 
-    ad = ad || (this.body as GensdeconfianceMapping);
+    ad = ad || (this.body as GensdeconfianceMapping)
 
     return {
       id: ad.id.toString(),
@@ -46,6 +46,6 @@ export class Gensdeconfiance extends Website {
       renter: particulierToken,
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),
-    };
+    }
   }
 }
