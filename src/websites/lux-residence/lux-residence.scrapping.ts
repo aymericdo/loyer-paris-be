@@ -1,33 +1,47 @@
-import { virtualConsole } from "@helpers/jsdome"
-import { LuxResidenceMapping } from "@interfaces/mapping"
-import jsdom from 'jsdom'
-const { JSDOM } = jsdom
+import { virtualConsole } from "@helpers/jsdome";
+import { LuxResidenceMapping } from "@interfaces/mapping";
+import jsdom from "jsdom";
+const { JSDOM } = jsdom;
 
 export class LuxResidenceScrapping {
   static scrap(data: string): LuxResidenceMapping {
-    const { document } = new JSDOM(data, { virtualConsole: virtualConsole() }).window
+    const { document } = new JSDOM(data, {
+      virtualConsole: virtualConsole(),
+    }).window;
 
-    const description = document.querySelector("#descriptionSection > div")
-    const price = document.querySelector("#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.price")
-    const renter = document.querySelector("#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.agency > span.agencyName")
-    const cityLabel = document.querySelector("#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.city")
-    const furnished = document.querySelector("#detailsTab > div > div.detailsBlock.plus > ul > li.singleCriteria.furnished")
+    const description = document.querySelector("#descriptionSection > div");
+    const price = document.querySelector(
+      "#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.price"
+    );
+    const renter = document.querySelector(
+      "#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.agency > span.agencyName"
+    );
+    const cityLabel = document.querySelector(
+      "#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.city"
+    );
+    const furnished = document.querySelector(
+      "#detailsTab > div > div.detailsBlock.plus > ul > li.singleCriteria.furnished"
+    );
 
-    const features = [...document.querySelectorAll('#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.criteria > span')]
+    const features = [
+      ...document.querySelectorAll(
+        "#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.criteria > span"
+      ),
+    ];
 
-    let surface = null
-    let rooms = null
+    let surface = null;
+    let rooms = null;
 
-    features.forEach(feature => {
+    features.forEach((feature) => {
       if (feature.textContent.match(/m2/g)) {
-        surface = feature
+        surface = feature;
       } else if (feature.textContent.match(/pièce/g)) {
-        rooms = feature
+        rooms = feature;
       }
-    })
+    });
 
     if (!description && !price && !cityLabel) {
-      return null
+      return null;
     }
 
     return {
@@ -39,6 +53,6 @@ export class LuxResidenceScrapping {
       renter: renter && renter.textContent,
       rooms: rooms && rooms.textContent,
       surface: surface && surface.textContent,
-    }
+    };
   }
 }

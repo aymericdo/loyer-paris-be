@@ -5,7 +5,7 @@ import { Memoize } from "typescript-memoize";
 import { LilleStationItem } from "@interfaces/json-item-lille";
 
 export class LilleStationService {
-  constructor() { }
+  constructor() {}
 
   getStations(words: string[]): LilleStationItem[] {
     const options = {
@@ -37,6 +37,8 @@ export class LilleStationService {
 
   @Memoize()
   private lilleStationsJson(): LilleStationItem[] {
-    return JSON.parse(fs.readFileSync(path.join('json-data/metros_lille.json'), 'utf8'))
+    return JSON.parse(
+      fs.readFileSync(path.join("json-data/metros_lille.json"), "utf8")
+    );
   }
 }

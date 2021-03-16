@@ -9,15 +9,31 @@ export class BienIciScrapping {
       virtualConsole: virtualConsole(),
     }).window;
 
-    const title = document.querySelector("[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1");
-    const description = document.querySelector("[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.description")
-    const price = document.querySelector("[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.thePrice")
-    const charges = document.querySelector("[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice div.feesInfos")
-    const hasCharges = document.querySelector("[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.perMonth")
-    const renter = document.querySelector("#public > div.contactSection > div.contactToggleInfo.contactButton.scrollUp > div.contactToggleName > div.contact-name");
-    const cityLabel = document.querySelector("[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1 > span");
+    const title = document.querySelector(
+      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1"
+    );
+    const description = document.querySelector(
+      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.description"
+    );
+    const price = document.querySelector(
+      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.thePrice"
+    );
+    const charges = document.querySelector(
+      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice div.feesInfos"
+    );
+    const hasCharges = document.querySelector(
+      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.perMonth"
+    );
+    const renter = document.querySelector(
+      "#public > div.contactSection > div.contactToggleInfo.contactButton.scrollUp > div.contactToggleName > div.contact-name"
+    );
+    const cityLabel = document.querySelector(
+      "[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1 > span"
+    );
     const features = [
-      ...document.querySelectorAll("[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.detailsSection.detailsSection_aboutThisProperty > div.allDetails > .labelInfo"),
+      ...document.querySelectorAll(
+        "[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.detailsSection.detailsSection_aboutThisProperty > div.allDetails > .labelInfo"
+      ),
     ];
 
     let furnished = false;
@@ -44,8 +60,10 @@ export class BienIciScrapping {
       description: description && description.textContent,
       furnished,
       price: price?.textContent,
-      hasCharges: !!hasCharges?.textContent?.includes('charges comprises'),
-      charges: charges?.textContent?.match(/\d+/)?.length && charges?.textContent?.match(/\d+/)[0],
+      hasCharges: !!hasCharges?.textContent?.includes("charges comprises"),
+      charges:
+        charges?.textContent?.match(/\d+/)?.length &&
+        charges?.textContent?.match(/\d+/)[0],
       renter: renter?.getAttribute("title"),
       rooms: rooms?.textContent,
       surface: surface?.textContent,

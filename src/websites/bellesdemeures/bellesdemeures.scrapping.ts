@@ -36,9 +36,11 @@ export class BellesDemeuresScrapping {
       ),
     ];
 
-    const cityLabel = cityLabelNode?.textContent?.split('•').length ?
-      cityLabelNode.textContent.split('•')[cityLabelNode.textContent.split('•').length - 1] : 
-      cityLabelNode?.textContent;
+    const cityLabel = cityLabelNode?.textContent?.split("•").length
+      ? cityLabelNode.textContent.split("•")[
+          cityLabelNode.textContent.split("•").length - 1
+        ]
+      : cityLabelNode?.textContent;
 
     let furnished = false;
     let surface = null;
@@ -68,7 +70,7 @@ export class BellesDemeuresScrapping {
       description: description && description.textContent,
       furnished,
       price: price?.textContent,
-      hasCharges: price?.textContent?.includes('CC'),
+      hasCharges: price?.textContent?.includes("CC"),
       renter: renter?.getAttribute("title"),
       rooms: rooms?.textContent,
       surface: surface?.textContent,

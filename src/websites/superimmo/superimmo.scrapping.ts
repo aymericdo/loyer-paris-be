@@ -9,18 +9,36 @@ export class SuperimmoScrapping {
       virtualConsole: virtualConsole(),
     }).window;
 
-    const title = document.querySelector("body > main > div > div.content.fiche > header:nth-child(1) > h1")
-    const subtitle = document.querySelector("body > main > div > div.content.fiche > p.resume")
-    const description = document.querySelector("body > main > div > div.content.fiche > p.description")
-    const price = document.querySelector("body > main > div > div.content.fiche > header:nth-child(1) > b > span")
-    const hasCharges = document.querySelector("body > main > div > div.content.fiche > header:nth-child(1) > b > span")
-    const renter = document.querySelector("body > main > div > div.content.fiche > div.row.section_lg > aside > div.block_agence > div > header > div.media-body")
-    const cityLabel = document.querySelector("body > main > div > div.content.fiche > header:nth-child(1) > h1 > span")
+    const title = document.querySelector(
+      "body > main > div > div.content.fiche > header:nth-child(1) > h1"
+    );
+    const subtitle = document.querySelector(
+      "body > main > div > div.content.fiche > p.resume"
+    );
+    const description = document.querySelector(
+      "body > main > div > div.content.fiche > p.description"
+    );
+    const price = document.querySelector(
+      "body > main > div > div.content.fiche > header:nth-child(1) > b > span"
+    );
+    const hasCharges = document.querySelector(
+      "body > main > div > div.content.fiche > header:nth-child(1) > b > span"
+    );
+    const renter = document.querySelector(
+      "body > main > div > div.content.fiche > div.row.section_lg > aside > div.block_agence > div > header > div.media-body"
+    );
+    const cityLabel = document.querySelector(
+      "body > main > div > div.content.fiche > header:nth-child(1) > h1 > span"
+    );
     const features = [
-      ...document.querySelectorAll("body > main > div > div.content.fiche > div.pictos > div.picto"),
+      ...document.querySelectorAll(
+        "body > main > div > div.content.fiche > div.pictos > div.picto"
+      ),
     ];
     const features2 = [
-      ...document.querySelectorAll("body > main > div > div.content.fiche > section > table > tbody > tr > td"),
+      ...document.querySelectorAll(
+        "body > main > div > div.content.fiche > section > table > tbody > tr > td"
+      ),
     ];
 
     let surface = null;
@@ -54,7 +72,7 @@ export class SuperimmoScrapping {
       description: description?.textContent,
       charges: charges?.textContent,
       price: price?.textContent,
-      hasCharges: !!hasCharges?.textContent?.includes('CC'),
+      hasCharges: !!hasCharges?.textContent?.includes("CC"),
       renter: renter?.textContent,
       rooms: rooms?.textContent,
       surface: surface?.textContent,

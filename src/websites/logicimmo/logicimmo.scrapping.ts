@@ -15,10 +15,18 @@ export class LogicimmoScrapping {
     const price = document.querySelector(
       "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > ul > li.infoPriceBox > span"
     );
-    const cityLabel = document.querySelector("body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressBottomBlock > strong > em")
-    const renter = document.querySelector("body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span");
+    const cityLabel = document.querySelector(
+      "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressBottomBlock > strong > em"
+    );
+    const renter = document.querySelector(
+      "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span"
+    );
 
-    const chargeNode = [...document.querySelectorAll("body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl")]
+    const chargeNode = [
+      ...document.querySelectorAll(
+        "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl"
+      ),
+    ];
 
     const offerCriteria = [
       ...document.querySelectorAll("#dtlTechniqueBox > li.dtlTechiqueItm"),
@@ -28,14 +36,14 @@ export class LogicimmoScrapping {
         "body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressTopBlock > .propertyTypeInfos > em.feature"
       ),
     ];
-    
+
     let charges = null;
     chargeNode.forEach((elem) => {
       if (elem.textContent.match(/Charges Locatives/g)) {
         charges = elem;
       }
     });
-    
+
     let furnished = null;
     offerCriteria.forEach((criteria) => {
       if (criteria.textContent.match(/Meublé/g)) {

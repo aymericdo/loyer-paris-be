@@ -5,7 +5,7 @@ import Fuse from "fuse.js";
 import { Memoize } from "typescript-memoize";
 
 export class ParisStationService {
-  constructor() { }
+  constructor() {}
 
   getStations(words: string[]): ParisStationItem[] {
     const options = {
@@ -37,6 +37,8 @@ export class ParisStationService {
 
   @Memoize()
   private parisStationsJson(): ParisStationItem[] {
-    return JSON.parse(fs.readFileSync(path.join('json-data/metros_paris.json'), 'utf8'))
+    return JSON.parse(
+      fs.readFileSync(path.join("json-data/metros_paris.json"), "utf8")
+    );
   }
 }

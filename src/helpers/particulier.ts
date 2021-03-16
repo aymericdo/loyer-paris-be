@@ -1,1 +1,1 @@
-export const particulierToken = 'Particulier'
+export const particulierToken = "Particulier";

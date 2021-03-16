@@ -17,9 +17,7 @@ export class Superimmo extends Website {
         };
       }
 
-      const scrap = SuperimmoScrapping.scrap(
-        JSON.parse(this.body.data)
-      );
+      const scrap = SuperimmoScrapping.scrap(JSON.parse(this.body.data));
 
       if (!scrap) {
         throw {

@@ -39,8 +39,12 @@ export class ParisAddressService extends AddressService {
 
   @Memoize()
   getAddressCompleted(
-    query: string,
-  ): { item: AddressItem; score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[] {
+    query: string
+  ): {
+    item: AddressItem;
+    score: number;
+    matches: ReadonlyArray<Fuse.FuseResultMatch>;
+  }[] {
     if (!query) {
       return null;
     }
@@ -63,17 +67,17 @@ export class ParisAddressService extends AddressService {
     }[];
     return result
       ? result.map((r) => ({
-        item: {
-          address: r.item.fields.l_adr,
-          postalCode: this.postalCodeFormat(r.item.fields.c_ar.toString()),
-          coordinate: {
-            lng: r.item.fields.geom.coordinates[0],
-            lat: r.item.fields.geom.coordinates[1],
+          item: {
+            address: r.item.fields.l_adr,
+            postalCode: this.postalCodeFormat(r.item.fields.c_ar.toString()),
+            coordinate: {
+              lng: r.item.fields.geom.coordinates[0],
+              lat: r.item.fields.geom.coordinates[1],
+            },
           },
-        },
-        score: r.score,
-        matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
-      }))
+          score: r.score,
+          matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
+        }))
       : [];
   }
 
@@ -103,7 +107,9 @@ export class ParisAddressService extends AddressService {
     return targetPolygon;
   }
 
-  private nearestStationInTargetPolygon(stations: ParisStationItem[]): string[] {
+  private nearestStationInTargetPolygon(
+    stations: ParisStationItem[]
+  ): string[] {
     const pointsByDist: {
       point: Coordinate;
       dist: number;

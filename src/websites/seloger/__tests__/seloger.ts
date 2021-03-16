@@ -1,6 +1,6 @@
 import { SaveRentService } from "@services/save-rent";
 import { SeLoger } from "../seloger";
-const { MongoClient } = require('mongodb');
+const { MongoClient } = require("mongodb");
 jest.mock("@services/save-rent");
 
 const SaveRentServiceMock = SaveRentService as jest.MockedClass<
@@ -16,7 +16,7 @@ describe("seloger", () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    db = await connection.db('Rent');
+    db = await connection.db("Rent");
   });
 
   afterAll(async () => {
@@ -90,7 +90,8 @@ describe("seloger", () => {
         id: "234523",
         cityLabel: "à Lille (59260)",
         charges: "65",
-        description: "Flatlooker vous permet de visiter et louer votre logement 100% en ligne. A côté de l'arrêt Mairie d'Helemmes, Flatlooker vous propose un T2 en location Rue Ferdinand Mathias au deuxième étage, meublé dans une résidence calme et agréable. Appartement entièrement rénové.Votre pièce principale dispose d'un canapé, d'une table basse, d'un grand miroir et d'un placard de rangement. Côté cuisine vous trouverez un évier, des plaques de cuisson, une hotte aspirante, un réfrigérateur, un micro-ondes, de nombreux placards et tiroirs de rangement avec de la vaisselle. Dans votre chambre vous trouverez un lit double avec étagèresDans votre salle d'eau, vous disposerez d'une belle cabine de douche, des toilettes, une vasque avec miroir et des tiroirs de rangements.Belles prestations pour ce T2 en location spacieux, lumineux et calme.Les charges comprennent l'eau courante, l'eau chaude, le chauffage, l'électricité internet et l'entretien des parties communes. Commodités: MÉTRO (LIGNE 1) Arrêts Mairie d'Hellemmes et Square Flandres => 5min à pied Lille Centre et Gares => 5min de métroBus et V Lille à 5 min à pied FACSUniversité Lille 3 => 15min à pied Université Lille 1 => 10min en métro COMPLEXE SPORTIF avec piscine, terrain de tennis etc à 10min à piedCOMMERCESSupermarché à 150m Pharmacies; boulangeries; restaurants; bars au bout de la rueMarché les mercredi et samedi à 5min à piedPARC=> 5min à pied",
+        description:
+          "Flatlooker vous permet de visiter et louer votre logement 100% en ligne. A côté de l'arrêt Mairie d'Helemmes, Flatlooker vous propose un T2 en location Rue Ferdinand Mathias au deuxième étage, meublé dans une résidence calme et agréable. Appartement entièrement rénové.Votre pièce principale dispose d'un canapé, d'une table basse, d'un grand miroir et d'un placard de rangement. Côté cuisine vous trouverez un évier, des plaques de cuisson, une hotte aspirante, un réfrigérateur, un micro-ondes, de nombreux placards et tiroirs de rangement avec de la vaisselle. Dans votre chambre vous trouverez un lit double avec étagèresDans votre salle d'eau, vous disposerez d'une belle cabine de douche, des toilettes, une vasque avec miroir et des tiroirs de rangements.Belles prestations pour ce T2 en location spacieux, lumineux et calme.Les charges comprennent l'eau courante, l'eau chaude, le chauffage, l'électricité internet et l'entretien des parties communes. Commodités: MÉTRO (LIGNE 1) Arrêts Mairie d'Hellemmes et Square Flandres => 5min à pied Lille Centre et Gares => 5min de métroBus et V Lille à 5 min à pied FACSUniversité Lille 3 => 15min à pied Université Lille 1 => 10min en métro COMPLEXE SPORTIF avec piscine, terrain de tennis etc à 10min à piedCOMMERCESSupermarché à 150m Pharmacies; boulangeries; restaurants; bars au bout de la rueMarché les mercredi et samedi à 5min à piedPARC=> 5min à pied",
         furnished: true,
         hasCharges: true,
         price: "595 €cc",
