@@ -101,12 +101,12 @@ export abstract class AddressService {
             const addresses: { item: AddressItem, score: number, matches: ReadonlyArray<Fuse.FuseResultMatch> }[] = this.getAddressCompleted(addressesQuery)
             const rawAddresses = this.unquerifyAddresses(addressesQuery);
 
-            const result = addresses.map(res => ({
-                ...res,
-                streetNumber: this.findStreetNumber(rawAddresses, res.matches[0]),
-            }))
+            if (addresses?.length) {
+                const result = addresses.map(res => ({
+                    ...res,
+                    streetNumber: this.findStreetNumber(rawAddresses, res.matches[0]),
+                }))
 
-            if (result?.length) {
                 this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
                 // Not sure about that anymore...
                 // this.setPostalCode(result[0].item.postalCode)
