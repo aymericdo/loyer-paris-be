@@ -116,7 +116,7 @@ export class ParisAddressService extends AddressService {
       name: string
     }[] = this.augmentElementItemList(stations)
 
-    if (!pointsByDist.length) return null
+    if (!pointsByDist?.length) return null
 
     // marge d'erreur : 250m
     const confidenceThreshold = 0.0025
