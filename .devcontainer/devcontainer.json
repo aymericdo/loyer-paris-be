@@ -1,0 +1,24 @@
+{
+  "name": "paris-loyer-be",
+  "image": "node:15",
+  "forwardPorts": [3000],
+  "extensions": [
+    "usernamehw.errorlens",
+    "ms-vscode.vscode-typescript-next",
+    "ionutvmi.path-autocomplete",
+    "christian-kohler.path-intellisense",
+    "esbenp.prettier-vscode",
+    "visualstudioexptteam.vscodeintellicode"
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "errorLens.addNumberOfDiagnostics": true,
+    "errorLens.addAnnotationTextPrefixes": true,
+    "errorLens.enabledDiagnosticLevels": ["error", "warning", "hint", "info"],
+    "[javascript][typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+  },
+  "postCreateCommand": "npm install"
+}
