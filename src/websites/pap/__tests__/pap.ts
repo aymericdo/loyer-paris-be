@@ -13,11 +13,11 @@ describe('pap', () => {
   let db: any
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(process.env.MONGODB_URI, {
+    connection = await MongoClient.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    db = await connection.db('Rent')
+    db = await connection.db()
   })
 
   afterAll(async () => {
@@ -25,12 +25,12 @@ describe('pap', () => {
     await db.close()
   })
 
-  beforeEach(() => {
+  beforeEach(async () => {
     SaveRentServiceMock.mockClear()
   })
 
   describe('paris', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       const body: Mapping = {
         id: 'r421900951',
         cityLabel: 'paris 11e (75011)',
@@ -136,13 +136,11 @@ describe('pap', () => {
         },
         isLegal: false,
       })
-
-      done()
     })
   })
 
   describe('lille', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       const body: Mapping = {
         id: 'r435801923',
         cityLabel: 'lille (59000)',
@@ -197,8 +195,6 @@ describe('pap', () => {
         },
         isLegal: true,
       })
-
-      done()
     })
   })
 })

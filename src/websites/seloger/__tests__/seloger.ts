@@ -12,11 +12,11 @@ describe('seloger', () => {
   let db: any
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(process.env.MONGODB_URI, {
+    connection = await MongoClient.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    db = await connection.db('Rent')
+    db = await connection.db()
   })
 
   afterAll(async () => {
@@ -24,12 +24,12 @@ describe('seloger', () => {
     await db.close()
   })
 
-  beforeEach(() => {
+  beforeEach(async () => {
     SaveRentServiceMock.mockClear()
   })
 
   describe('paris', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       const body = {
         id: '234523',
         cityLabel: 'Paris 75011',
@@ -79,13 +79,11 @@ describe('seloger', () => {
         },
         isLegal: false,
       })
-
-      done()
     })
   })
 
   describe('lille', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       const body = {
         id: '234523',
         cityLabel: 'à Lille (59260)',
@@ -136,8 +134,6 @@ describe('seloger', () => {
         },
         isLegal: false,
       })
-
-      done()
     })
   })
 })
