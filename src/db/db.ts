@@ -1,8 +1,9 @@
-import { connectionString } from '../config'
 const mongoose = require('mongoose')
 
+const localConnectionString = 'mongodb://localhost/loyer-paris-be'
+
 const rentConnection = mongoose.createConnection(
-  process.env.MONGODB_URI || connectionString,
+  process.env.MONGODB_URI || localConnectionString,
   {
     useCreateIndex: true,
     useNewUrlParser: true,
@@ -11,7 +12,7 @@ const rentConnection = mongoose.createConnection(
 )
 
 const empriseBatieConnection = mongoose.createConnection(
-  process.env.MONGODB_URI_EMPRISE_BATIE || connectionString,
+  process.env.MONGODB_URI_EMPRISE_BATIE || localConnectionString,
   {
     useCreateIndex: true,
     useNewUrlParser: true,
