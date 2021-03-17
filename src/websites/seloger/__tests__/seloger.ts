@@ -1,6 +1,5 @@
 import { SaveRentService } from '@services/save-rent'
 import { SeLoger } from '../seloger'
-const { MongoClient } = require('mongodb')
 jest.mock('@services/save-rent')
 
 const SaveRentServiceMock = SaveRentService as jest.MockedClass<
@@ -8,22 +7,6 @@ const SaveRentServiceMock = SaveRentService as jest.MockedClass<
 >
 
 describe('seloger', () => {
-  let connection: any
-  let db: any
-
-  beforeAll(async () => {
-    connection = await MongoClient.connect(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    db = await connection.db()
-  })
-
-  afterAll(async () => {
-    await connection.close()
-    await db.close()
-  })
-
   beforeEach(async () => {
     SaveRentServiceMock.mockClear()
   })
