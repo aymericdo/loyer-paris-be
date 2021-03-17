@@ -12,9 +12,9 @@ export default async (): Promise<Config.InitialOptions> => {
       '/node_modules/',
       'jest.config.ts',
       'jest-mongodb.config.ts',
-      '<rootDir>/src/jest-config/jest.setup.ts',
+      'jest.setup.ts',
     ],
-    setupFiles: ['dotenv/config', '<rootDir>/src/jest-config/jest.setup.ts'],
+    setupFiles: ['dotenv/config', '<rootDir>/jest.setup.ts'],
     testMatch: [
       '**/__tests__/**/*.+(ts|tsx|js)',
       '**/?(*.)+(spec|test).+(ts|tsx|js)',
