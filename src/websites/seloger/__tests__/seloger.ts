@@ -55,7 +55,7 @@ describe('seloger', () => {
             surface: { order: 3, value: 40 },
             dateRange: { order: 4, value: 'Apres 1990' },
             max: { order: 5, value: 33.6 },
-            maxAuthorized: { order: 6, value: 1334 },
+            maxAuthorized: { order: 6, value: 1344 },
             promoPercentage: { order: 7, value: 0.81 },
           },
           isLegal: false,
