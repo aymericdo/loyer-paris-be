@@ -1,20 +1,18 @@
-import { SaveRentService } from '@services/save-rent'
-import { SeLoger } from '../seloger'
-jest.mock('@services/save-rent')
+jest.useFakeTimers()
 
-const SaveRentServiceMock = SaveRentService as jest.MockedClass<
-  typeof SaveRentService
->
+import { Mapping } from '@interfaces/mapping'
+import { SeLoger } from '../seloger'
+const mongoose = require('mongoose')
 
 describe('seloger', () => {
-  beforeEach(async () => {
-    SaveRentServiceMock.mockClear()
+  afterAll(async () => {
+    await mongoose.connection.close()
   })
 
   describe('paris', () => {
     test('returns clean ad', async (done) => {
       try {
-        const body = {
+        const body: Mapping = {
           id: '234523',
           cityLabel: 'Paris 75011',
           charges: '45E',
@@ -39,7 +37,6 @@ describe('seloger', () => {
 
         const data = await seloger.digData()
 
-        expect(SaveRentServiceMock).toHaveBeenCalledTimes(1)
         expect(data).toEqual({
           detectedInfo: {
             address: { order: 0, value: '3 rue jean mace 75011, Paris' },
@@ -100,7 +97,6 @@ describe('seloger', () => {
 
         const data = await seloger.digData()
 
-        expect(SaveRentServiceMock).toHaveBeenCalledTimes(1)
         expect(data).toEqual({
           detectedInfo: {
             address: { order: 0, value: 'rue ferdinand mathias 59260, Lille' },

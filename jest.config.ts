@@ -4,9 +4,10 @@ const { defaults: tsjPreset } = require('ts-jest/presets')
 
 export default async (): Promise<Config.InitialOptions> => {
   return {
+    testEnvironment: 'node',
     preset: '@shelf/jest-mongodb',
     roots: ['<rootDir>/src/'],
-    testTimeout: 30000,
+    testTimeout: 120000,
     watchPathIgnorePatterns: [
       'globalConfig',
       '/node_modules/',

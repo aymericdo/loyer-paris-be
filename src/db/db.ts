@@ -20,6 +20,9 @@ const empriseBatieConnection = mongoose.createConnection(
   }
 )
 
+console.log('zizi')
+console.log(process.env.MONGODB_URI_EMPRISE_BATIE)
+
 const rentSchema = require('./rent.model')
 const empriseBatieSchema = require('./emprisebatie.model')
 

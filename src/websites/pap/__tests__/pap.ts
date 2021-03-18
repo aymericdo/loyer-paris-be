@@ -1,16 +1,12 @@
-import { Mapping } from '@interfaces/mapping'
-import { SaveRentService } from '@services/save-rent'
-import { Pap } from '../pap'
-const { MongoClient } = require('mongodb')
-jest.mock('@services/save-rent')
+jest.useFakeTimers()
 
-const SaveRentServiceMock = SaveRentService as jest.MockedClass<
-  typeof SaveRentService
->
+import { Mapping } from '@interfaces/mapping'
+import { Pap } from '../pap'
+const mongoose = require('mongoose')
 
 describe('pap', () => {
-  beforeEach(async () => {
-    SaveRentServiceMock.mockClear()
+  afterAll(async () => {
+    await mongoose.connection.close()
   })
 
   describe('paris', () => {
@@ -49,7 +45,6 @@ describe('pap', () => {
 
         const data = await pap.digData()
 
-        expect(SaveRentServiceMock).toHaveBeenCalledTimes(1)
         expect(data).toEqual({
           detectedInfo: {
             address: {
@@ -163,7 +158,6 @@ describe('pap', () => {
 
         const data = await pap.digData()
 
-        expect(SaveRentServiceMock).toHaveBeenCalledTimes(1)
         expect(data).toEqual({
           detectedInfo: {
             address: { order: 0, value: '59000, Lille' },
