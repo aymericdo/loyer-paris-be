@@ -15,42 +15,42 @@ interface RentRequest extends Request {
   rents?: DataBaseItem[]
 }
 
-router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
-  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
+// router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
+//   const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
 
-  const ipService = new IpService(req)
+//   const ipService = new IpService(req)
 
-  if (ipService.isIpCached()) {
-    next()
-  } else {
-    axios
-      .post(
-        url,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-          },
-        }
-      )
-      .then((response) => {
-        if (!response.data.success) {
-          return res.status(500).json({
-            message: response.data['error-codes'].join('.'),
-          })
-        } else {
-          ipService.saveIp()
-        }
+//   if (ipService.isIpCached()) {
+//     next()
+//   } else {
+//     axios
+//       .post(
+//         url,
+//         {},
+//         {
+//           headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+//           },
+//         }
+//       )
+//       .then((response) => {
+//         if (!response.data.success) {
+//           return res.status(500).json({
+//             message: response.data['error-codes'].join('.'),
+//           })
+//         } else {
+//           ipService.saveIp()
+//         }
 
-        next()
-      })
-      .catch(() => {
-        return res
-          .status(500)
-          .json({ message: 'oops, something went wrong on our side' })
-      })
-  }
-})
+//         next()
+//       })
+//       .catch(() => {
+//         return res
+//           .status(500)
+//           .json({ message: 'oops, something went wrong on our side' })
+//       })
+//   }
+// })
 
 // routes
 router.get('/map', getMap)
@@ -114,6 +114,90 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
             },
           },
         ],
+      }
+      res.json(vegaMap)
+    })
+    .catch((err) => {
+      console.log(err)
+      if (err.status) {
+        res.status(err.status).json(err)
+      } else {
+        log.error('Error 500')
+        res.status(500).json(err)
+      }
+    })
+}
+
+router.get('/chloropleth-map', getChloroplethMap)
+function getChloroplethMap(
+  req: RentRequest,
+  res: Response,
+  next: NextFunction
+) {
+  log.info(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
+
+  const parisGeodata = JSON.parse(
+    fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8')
+  )
+
+  rentService
+    .getChloroplethMapData()
+    .then((data) => {
+      const reduced = data
+        .map((d: any) => d._doc)
+        .reduce(function (m, d: any) {
+          if (!m[d.district]) {
+            m[d.district] = { ...d, count: 1 }
+            return m
+          }
+          m[d.district].isLegal += d.isLegal ? 1 : 0
+          m[d.district].count += 1
+          return m
+        }, {})
+      const result = Object.keys(reduced).map(function (k) {
+        const item = reduced[k]
+        return {
+          district: item.district,
+          isIlegal: Math.round((1 - item.isLegal / item.count) * 100) / 100,
+        }
+      })
+
+      const vegaMap = {
+        ...vegaCommonOpt(),
+        data: {
+          format: { type: 'json', property: 'features' },
+          values: parisGeodata,
+        },
+        transform: [
+          {
+            lookup: 'properties.l_qu',
+            from: {
+              data: {
+                values: result,
+              },
+              key: 'district',
+              fields: ['isIlegal'],
+            },
+          },
+        ],
+        projection: {
+          type: 'mercator',
+        },
+        mark: 'geoshape',
+        encoding: {
+          color: {
+            field: 'isIlegal',
+            type: 'quantitative',
+            scale: { scheme: 'reds' },
+          },
+          tooltip: [
+            {
+              field: 'isIlegal',
+              type: 'quantitative',
+              title: "Pourcentage d'annonces à surveiller",
+            },
+          ],
+        },
       }
       res.json(vegaMap)
     })

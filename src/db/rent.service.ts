@@ -24,6 +24,31 @@ export async function getMapData(): Promise<
   )
 }
 
+export async function getChloroplethMapData(): Promise<
+  { isLegal: boolean; district: string }[]
+> {
+  return await Rent.find(
+    {
+      latitude: { $exists: true },
+      longitude: { $exists: true },
+      city: 'paris',
+    },
+    { isLegal: 1, district: 1 },
+    (
+      err: Error,
+      rents: {
+        isLegal: boolean
+        district: string
+      }[]
+    ) => {
+      if (err) {
+        throw err
+      }
+      return rents
+    }
+  )
+}
+
 export async function getPriceDiffData(): Promise<
   { maxPrice: number; postalCode: string; priceExcludingCharges: number }[]
 > {
