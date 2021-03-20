@@ -9,12 +9,12 @@
   "scripts": {
     "start": "npm run dev",
     "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
-    "build": "rimraf ./build && tsc",
+    "build": "rimraf ./app/build && tsc",
     "test": "jest --forceExit",
     "test:watch": "jest --watch --forceExit",
     "dev": "ts-node-dev --transpile-only ./src/index.ts",
-    "prod": "tsc && node ./build/index.js",
-    "debug": "tsc && node --inspect ./build/index.js"
+    "prod": "tsc && node ./app/build/index.js",
+    "debug": "tsc && node --inspect ./app/build/index.js"
   },
   "author": "Aymeric & Thomas",
   "license": "ISC",

@@ -14,7 +14,7 @@
       "@websites/*": ["websites/*"]
     },
     "allowJs": true,
-    "outDir": "./build",
+    "outDir": "./app/build",
     "strict": false,
     "noImplicitAny": false,
     "esModuleInterop": true,
