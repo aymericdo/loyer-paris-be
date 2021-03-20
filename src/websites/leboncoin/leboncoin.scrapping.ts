@@ -48,10 +48,6 @@ export class LeboncoinScrapping {
       return null
     }
 
-    console.log('test')
-    console.log(isPro)
-    console.log(isPro.textContent)
-
     return {
       id: null,
       body:
