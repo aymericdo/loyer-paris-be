@@ -128,6 +128,104 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
     })
 }
 
+router.get('/chloropleth-map', getChloroplethMap)
+function getChloroplethMap(
+  req: RentRequest,
+  res: Response,
+  next: NextFunction
+) {
+  log.info(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
+
+  const parisGeodata = JSON.parse(
+    fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8')
+  )
+
+  rentService
+    .getChloroplethMapData()
+    .then((data) => {
+      const reduced: {
+        [district: string]: { isLegal: number; count: number }
+      } = data.reduce((m, d: { isLegal: boolean; district: string }) => {
+        if (!m[d.district]) {
+          m[d.district] = {
+            count: 1,
+            isLegal: d.isLegal ? 1 : 0,
+          }
+        } else {
+          if (d.isLegal) {
+            m[d.district].isLegal += 1
+          }
+          m[d.district].count += 1
+        }
+        return m
+      }, {})
+
+      const result = Object.keys(reduced).map((district: string) => {
+        const value = reduced[district]
+        return {
+          district,
+          isIllegal: Math.round((1 - value.isLegal / value.count) * 100) / 100,
+        }
+      })
+
+      const vegaMap = {
+        ...vegaCommonOpt(),
+        data: {
+          format: { type: 'json', property: 'features' },
+          values: parisGeodata,
+        },
+        transform: [
+          {
+            lookup: 'properties.l_qu',
+            from: {
+              data: {
+                values: result,
+              },
+              key: 'district',
+              fields: ['isIllegal', 'district'],
+            },
+          },
+        ],
+        projection: {
+          type: 'mercator',
+        },
+        mark: 'geoshape',
+        encoding: {
+          color: {
+            field: 'isIllegal',
+            type: 'quantitative',
+            format: '.0%',
+            scale: { scheme: 'reds' },
+            title: '% illégalité',
+          },
+          tooltip: [
+            {
+              field: 'isIllegal',
+              type: 'quantitative',
+              format: '.0%',
+              title: 'Annonces à surveiller',
+            },
+            {
+              field: 'district',
+              type: 'nominal',
+              title: 'Quartier',
+            },
+          ],
+        },
+      }
+      res.json(vegaMap)
+    })
+    .catch((err) => {
+      console.log(err)
+      if (err.status) {
+        res.status(err.status).json(err)
+      } else {
+        log.error('Error 500')
+        res.status(500).json(err)
+      }
+    })
+}
+
 router.get('/price-difference', getPriceDifference)
 function getPriceDifference(
   req: RentRequest,

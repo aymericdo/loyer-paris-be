@@ -6,6 +6,7 @@ import { AvailableCities } from '@services/address/city'
 interface SavedInfo {
   id: string
   address: string
+  district: string
   city: AvailableCities
   hasFurniture?: boolean
   isLegal: boolean
@@ -53,6 +54,7 @@ export class SaveRentService {
         priceExcludingCharges: this.adToSave.priceExcludingCharges,
         surface: this.adToSave.surface,
         city: this.adToSave.city,
+        district: this.adToSave.district,
         ...(this.adToSave.address != null && {
           address: this.adToSave.address,
         }),
