@@ -1,1 +1,1 @@
-web: node --max-old-space-size=4096 build/index.js
+web: node --max-old-space-size=4096 ./build/index.js
