@@ -13,8 +13,8 @@
     "test": "jest --forceExit",
     "test:watch": "jest --watch --forceExit",
     "dev": "ts-node-dev --transpile-only ./src/index.ts",
-    "prod": "tsc && node ./build/index.js",
-    "debug": "tsc && node --inspect ./build/index.js"
+    "prod": "tsc && node ./build/src/index.js",
+    "debug": "tsc && node --inspect ./build/src/index.js"
   },
   "author": "Aymeric & Thomas",
   "license": "ISC",

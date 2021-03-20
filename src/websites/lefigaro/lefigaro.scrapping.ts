@@ -11,6 +11,7 @@ export class LefigaroScrapping {
     }).window
 
     const title = document.querySelector('#contenu > .container-h1 > h1')
+
     const description = document.querySelector(
       'div.container-paragraph > p.description'
     )
@@ -51,12 +52,12 @@ export class LefigaroScrapping {
       }
     })
 
-    if (!title || !hasMonthlyPrice) {
-      return null
-    }
-
     if (!title.textContent.includes('Location')) {
       throw { error: ErrorCode.Other, msg: `not a rent` }
+    }
+
+    if (!title || !hasMonthlyPrice) {
+      return null
     }
 
     return {
