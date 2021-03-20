@@ -203,7 +203,7 @@ function getChloroplethMap(
               field: 'isIllegal',
               type: 'quantitative',
               format: '.0%',
-              title: "Annonces à surveiller",
+              title: 'Annonces à surveiller',
             },
             {
               field: 'district',
