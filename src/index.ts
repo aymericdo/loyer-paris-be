@@ -49,6 +49,7 @@ app.use('/superimmo', require('./websites/superimmo/superimmo.controller'))
 app.use('/stats', require('./stats/stats.controller'))
 
 app.use('/version', require('./version/version.controller'))
+// app.use('/migration', require('./db/migration.ts'))
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,

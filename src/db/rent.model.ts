@@ -18,6 +18,7 @@ const schema = new Schema({
   maxPrice: { type: Number, required: false },
   isLegal: { type: Boolean, required: false },
   renter: { type: String, required: false },
+  district: { type: String, required: false },
   createdAt: { type: Date, default: Date.now },
   stations: { type: [String], required: false, default: undefined },
 })

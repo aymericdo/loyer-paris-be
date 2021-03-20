@@ -78,6 +78,7 @@ export abstract class Website {
         id: cleanAd.id,
         address: cleanAd.address,
         city: cleanAd.city,
+        district: filteredResult.districtName,
         hasFurniture: cleanAd.hasFurniture,
         postalCode: cleanAd.postalCode,
         price: cleanAd.price,

@@ -15,42 +15,42 @@ interface RentRequest extends Request {
   rents?: DataBaseItem[]
 }
 
-// router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
-//   const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
+router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
 
-//   const ipService = new IpService(req)
+  const ipService = new IpService(req)
 
-//   if (ipService.isIpCached()) {
-//     next()
-//   } else {
-//     axios
-//       .post(
-//         url,
-//         {},
-//         {
-//           headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-//           },
-//         }
-//       )
-//       .then((response) => {
-//         if (!response.data.success) {
-//           return res.status(500).json({
-//             message: response.data['error-codes'].join('.'),
-//           })
-//         } else {
-//           ipService.saveIp()
-//         }
+  if (ipService.isIpCached()) {
+    next()
+  } else {
+    axios
+      .post(
+        url,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          },
+        }
+      )
+      .then((response) => {
+        if (!response.data.success) {
+          return res.status(500).json({
+            message: response.data['error-codes'].join('.'),
+          })
+        } else {
+          ipService.saveIp()
+        }
 
-//         next()
-//       })
-//       .catch(() => {
-//         return res
-//           .status(500)
-//           .json({ message: 'oops, something went wrong on our side' })
-//       })
-//   }
-// })
+        next()
+      })
+      .catch(() => {
+        return res
+          .status(500)
+          .json({ message: 'oops, something went wrong on our side' })
+      })
+  }
+})
 
 // routes
 router.get('/map', getMap)
@@ -143,22 +143,28 @@ function getChloroplethMap(
   rentService
     .getChloroplethMapData()
     .then((data) => {
-      const reduced = data
-        .map((d: any) => d._doc)
-        .reduce(function (m, d: any) {
-          if (!m[d.district]) {
-            m[d.district] = { ...d, count: 1 }
-            return m
+      const reduced: {
+        [district: string]: { isLegal: number; count: number }
+      } = data.reduce((m, d: { isLegal: boolean; district: string }) => {
+        if (!m[d.district]) {
+          m[d.district] = {
+            count: 1,
+            isLegal: d.isLegal ? 1 : 0,
           }
-          m[d.district].isLegal += d.isLegal ? 1 : 0
+        } else {
+          if (d.isLegal) {
+            m[d.district].isLegal += 1
+          }
           m[d.district].count += 1
-          return m
-        }, {})
-      const result = Object.keys(reduced).map(function (k) {
-        const item = reduced[k]
+        }
+        return m
+      }, {})
+
+      const result = Object.keys(reduced).map((district: string) => {
+        const value = reduced[district]
         return {
-          district: item.district,
-          isIlegal: Math.round((1 - item.isLegal / item.count) * 100) / 100,
+          district,
+          isIllegal: Math.round((1 - value.isLegal / value.count) * 100) / 100,
         }
       })
 
@@ -176,7 +182,7 @@ function getChloroplethMap(
                 values: result,
               },
               key: 'district',
-              fields: ['isIlegal'],
+              fields: ['isIllegal', 'district'],
             },
           },
         ],
@@ -186,15 +192,23 @@ function getChloroplethMap(
         mark: 'geoshape',
         encoding: {
           color: {
-            field: 'isIlegal',
+            field: 'isIllegal',
             type: 'quantitative',
+            format: '.0%',
             scale: { scheme: 'reds' },
+            title: '% illégalité',
           },
           tooltip: [
             {
-              field: 'isIlegal',
+              field: 'isIllegal',
               type: 'quantitative',
-              title: "Pourcentage d'annonces à surveiller",
+              format: '.0%',
+              title: "Annonces à surveiller",
+            },
+            {
+              field: 'district',
+              type: 'nominal',
+              title: 'Quartier',
             },
           ],
         },

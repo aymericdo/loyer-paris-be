@@ -46,7 +46,7 @@ export async function getChloroplethMapData(): Promise<
       }
       return rents
     }
-  )
+  ).lean()
 }
 
 export async function getPriceDiffData(): Promise<
