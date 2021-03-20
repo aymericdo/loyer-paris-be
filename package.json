@@ -10,7 +10,8 @@
     "start": "npm run dev",
     "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
     "build": "rimraf ./build && tsc",
-    "test": "jest --testEnvironment=node --detectOpenHandles",
+    "test": "jest --forceExit",
+    "test:watch": "jest --watch --forceExit",
     "dev": "ts-node-dev --transpile-only ./src/index.ts",
     "prod": "tsc && node ./build/index.js",
     "debug": "tsc && node --inspect ./build/index.js"
@@ -41,11 +42,11 @@
     "typescript-memoize": "^1.0.0-alpha.4"
   },
   "_moduleAliases": {
-    "@helpers": "build/helpers",
-    "@services": "build/services",
-    "@interfaces": "build/interfaces",
-    "@db": "build/db",
-    "@websites": "build/websites"
+    "@helpers": "build/src/helpers",
+    "@services": "build/src/services",
+    "@interfaces": "build/src/interfaces",
+    "@db": "build/src/db",
+    "@websites": "build/src/websites"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.3",
@@ -58,33 +59,5 @@
     "ts-node": "^8.6.0",
     "ts-node-dev": "^1.1.1",
     "typescript": "^3.7.4"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src/"
-    ],
-    "testTimeout": 30000,
-    "preset": "@shelf/jest-mongodb",
-    "watchPathIgnorePatterns": [
-      "globalConfig"
-    ],
-    "setupFiles": [
-      "dotenv/config",
-      "<rootDir>/src/jest-setup.ts"
-    ],
-    "testMatch": [
-      "**/__tests__/**/*.+(ts|tsx|js)",
-      "**/?(*.)+(spec|test).+(ts|tsx|js)"
-    ],
-    "moduleNameMapper": {
-      "@helpers/(.*)": "<rootDir>/src/helpers/$1",
-      "@services/(.*)": "<rootDir>/src/services/$1",
-      "@interfaces/(.*)": "<rootDir>/src/interfaces/$1",
-      "@db/(.*)": "<rootDir>/src/db/$1",
-      "@websites/(.*)": "<rootDir>/src/websites/$1"
-    },
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
-    }
   }
 }
