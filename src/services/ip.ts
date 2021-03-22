@@ -2,7 +2,8 @@ import { Request } from 'express'
 import NodeCache from 'node-cache'
 
 const ipCache: NodeCache = new NodeCache({
-  checkperiod: 15,
+  // checkperiod: 15,
+  checkperiod: 600,
   deleteOnExpire: true,
 })
 
