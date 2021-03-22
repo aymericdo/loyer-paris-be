@@ -16,9 +16,7 @@
     "errorLens.addNumberOfDiagnostics": true,
     "errorLens.addAnnotationTextPrefixes": true,
     "errorLens.enabledDiagnosticLevels": ["error", "warning", "hint", "info"],
-    "[javascript][typescript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "postCreateCommand": "npm install"
 }

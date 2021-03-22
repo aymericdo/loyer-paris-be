@@ -24,14 +24,14 @@ export async function getMapData(): Promise<
   )
 }
 
-export async function getChloroplethMapData(): Promise<
-  { isLegal: boolean; district: string }[]
-> {
+export async function getChloroplethMapData(
+  city: string
+): Promise<{ isLegal: boolean; district: string }[]> {
   return await Rent.find(
     {
       latitude: { $exists: true },
       longitude: { $exists: true },
-      city: 'paris',
+      city: city,
     },
     { isLegal: 1, district: 1 },
     (
@@ -79,11 +79,13 @@ export async function getPriceDiffData(): Promise<
   )
 }
 
-export async function getPriceVarData(): Promise<
+export async function getPriceVarData(
+  city: string
+): Promise<
   { maxPrice: number; postalCode: string; priceExcludingCharges: number }[]
 > {
   return await Rent.find(
-    { createdAt: { $exists: true } },
+    { createdAt: { $exists: true }, city: city },
     {
       createdAt: 1,
       maxPrice: 1,
@@ -140,15 +142,15 @@ export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
   )
 }
 
-export async function getWelcomeData(): Promise<
-  { isLegal: boolean; surface: number; postalCode: string }[]
-> {
+export async function getWelcomeData(
+  city: string
+): Promise<{ isLegal: boolean; surface: number; district: string }[]> {
   return await Rent.find(
-    { city: 'paris' },
-    { isLegal: 1, surface: 1, postalCode: 1 },
+    { city: city },
+    { isLegal: 1, surface: 1, district: 1 },
     (
       err: Error,
-      rents: { isLegal: boolean; surface: number; postalCode: string }[]
+      rents: { isLegal: boolean; surface: number; district: string }[]
     ) => {
       if (err) {
         throw err

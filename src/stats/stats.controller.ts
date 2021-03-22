@@ -13,6 +13,7 @@ const router = express.Router()
 
 interface RentRequest extends Request {
   rents?: DataBaseItem[]
+  city?: string
 }
 
 router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
@@ -135,13 +136,27 @@ function getChloroplethMap(
   next: NextFunction
 ) {
   log.info(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
-
-  const parisGeodata = JSON.parse(
-    fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8')
-  )
+  const city = req.city || 'lille'
+  let geodata: any
+  switch (city) {
+    case 'paris':
+      geodata = JSON.parse(
+        fs.readFileSync(
+          path.join('json-data/quartier_paris_geodata.json'),
+          'utf8'
+        )
+      )
+    case 'lille':
+      geodata = JSON.parse(
+        fs.readFileSync(
+          path.join('json-data/quartier_lille_geodata.json'),
+          'utf8'
+        )
+      )
+  }
 
   rentService
-    .getChloroplethMapData()
+    .getChloroplethMapData(city)
     .then((data) => {
       const reduced: {
         [district: string]: { isLegal: number; count: number }
@@ -172,7 +187,7 @@ function getChloroplethMap(
         ...vegaCommonOpt(),
         data: {
           format: { type: 'json', property: 'features' },
-          values: parisGeodata,
+          values: geodata,
         },
         transform: [
           {
@@ -459,7 +474,7 @@ router.get(
     log.info(`-> ${req.baseUrl} isLegalVariation`, 'blue')
 
     rentService
-      .getPriceVarData()
+      .getPriceVarData(req.city || 'paris')
       .then((data) => {
         const vegaMap = {
           ...vegaCommonOpt(),
@@ -498,7 +513,7 @@ router.get(
           layer: [
             {
               mark: {
-                type: 'area',
+                type: 'line',
                 color: '#f03434',
                 tooltip: true,
               },
@@ -552,7 +567,7 @@ function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
 
   rentService
-    .getWelcomeData()
+    .getWelcomeData(req.city || 'paris')
     .then((data) => {
       const rents = data
 
@@ -564,18 +579,18 @@ function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
         (100 * lessThan35SquareMeters.filter((rent) => !rent.isLegal).length) /
           lessThan35SquareMeters.length
       )
-      const postalCodeGroupedRents = groupBy(rents, 'postalCode')
-      const extremePostalCode = getExtremePostalCode(postalCodeGroupedRents)
-      const worstPostalCode = extremePostalCode[0]
-      const bestPostalCode = extremePostalCode[1]
+      const districtGroupedRents = groupBy(rents, 'district')
+      const extremeDistrict = getExtremeDistrict(districtGroupedRents)
+      const worstDistrict = extremeDistrict[0]
+      const bestDistrict = extremeDistrict[1]
 
       return res.json({
         numberRents: rents.length,
         pivotSurface: 35,
         isIllegalPercentage,
         isSmallSurfaceIllegalPercentage,
-        worstPostalCode,
-        bestPostalCode,
+        worstDistrict,
+        bestDistrict,
       })
     })
     .catch((err) => {
@@ -589,37 +604,32 @@ function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
     })
 }
 
-function getExtremePostalCode(groupedRents) {
-  let worstPc = ''
-  let bestPc = ''
+function getExtremeDistrict(groupedRents) {
+  let worstDistrict = ''
+  let bestDistrict = ''
   let bestLegalsCount = 0
   let worstLegalsCount = 0
 
-  Object.keys(groupedRents).forEach((pc) => {
-    if (isNaN(+pc)) {
-      return
-    }
-    const pcRents = groupedRents[pc]
+  Object.keys(groupedRents).forEach((district) => {
+    const districtRents = groupedRents[district]
 
     const legalsRatio =
-      pcRents.filter((rent) => rent.isLegal).length / pcRents.length
+      districtRents.filter((rent) => rent.isLegal).length / districtRents.length
     if (bestLegalsCount < legalsRatio) {
-      bestPc = pc
+      console.log
+      bestDistrict = district
       bestLegalsCount = legalsRatio
     }
 
     const illegalsRatio =
-      pcRents.filter((rent) => !rent.isLegal).length / pcRents.length
+      districtRents.filter((rent) => !rent.isLegal).length /
+      districtRents.length
     if (worstLegalsCount < illegalsRatio) {
-      worstPc = pc
+      worstDistrict = district
       worstLegalsCount = illegalsRatio
     }
   })
-  const worstNeighborhood =
-    worstPc.slice(-2)[0] === '0' ? worstPc.slice(-1) : worstPc.slice(-2)
-  const bestNeighborhood =
-    bestPc.slice(-2)[0] === '0' ? bestPc.slice(-1) : bestPc.slice(-2)
-  return [worstNeighborhood, bestNeighborhood]
+  return [worstDistrict, bestDistrict]
 }
 
 module.exports = router
