@@ -16,14 +16,20 @@ interface RentRequest extends Request {
   city?: string
 }
 
-router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
-  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
+router.get('/need-captcha', getNeedCaptcha)
+function getNeedCaptcha(req: RentRequest, res: Response, next: NextFunction) {
+  log.info(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
+  const ipService = new IpService(req)
+  res.status(200).json(!ipService.isIpCached())
+}
 
+router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
   const ipService = new IpService(req)
 
   if (ipService.isIpCached()) {
     next()
   } else {
+    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
     axios
       .post(
         url,
@@ -54,7 +60,7 @@ router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
 })
 
 // routes
-router.get('/map', getMap)
+router.get('/map/:city', getMap)
 function getMap(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
 
@@ -129,14 +135,14 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
     })
 }
 
-router.get('/chloropleth-map', getChloroplethMap)
+router.get('/chloropleth-map/:city', getChloroplethMap)
 function getChloroplethMap(
   req: RentRequest,
   res: Response,
   next: NextFunction
 ) {
   log.info(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
-  const city = req.city || 'lille'
+  const city = req.params.city
   let geodata: any
   switch (city) {
     case 'paris':
@@ -146,6 +152,7 @@ function getChloroplethMap(
           'utf8'
         )
       )
+      break
     case 'lille':
       geodata = JSON.parse(
         fs.readFileSync(
@@ -153,6 +160,7 @@ function getChloroplethMap(
           'utf8'
         )
       )
+      break
   }
 
   rentService
@@ -241,7 +249,7 @@ function getChloroplethMap(
     })
 }
 
-router.get('/price-difference', getPriceDifference)
+router.get('/price-difference/:city', getPriceDifference)
 function getPriceDifference(
   req: RentRequest,
   res: Response,
@@ -259,7 +267,7 @@ function getPriceDifference(
         },
         mark: { type: 'bar', tooltip: true },
         transform: [
-          { filter: "datum.city === 'paris'" },
+          { filter: `datum.city === '${req.params.city}'` },
           {
             calculate: 'datum.priceExcludingCharges - datum.maxPrice',
             as: 'priceDifference',
@@ -307,7 +315,7 @@ function getPriceDifference(
     })
 }
 
-router.get('/is-legal-per-surface', getLegalPerSurface)
+router.get('/is-legal-per-surface/:city', getLegalPerSurface)
 function getLegalPerSurface(
   req: RentRequest,
   res: Response,
@@ -325,7 +333,7 @@ function getLegalPerSurface(
         },
         mark: { type: 'bar', tooltip: true },
         transform: [
-          { filter: "datum.city === 'paris'" },
+          { filter: `datum.city === '${req.params.city}'` },
           { calculate: "datum.isLegal ? 'Oui' : 'Non'", as: 'isLegal' },
         ],
         encoding: {
@@ -417,12 +425,11 @@ function getAdoptionRate(req: RentRequest, res: Response, next: NextFunction) {
 }
 
 router.get(
-  '/price-variation',
+  '/price-variation/:city',
   (req: RentRequest, res: Response, next: NextFunction) => {
     log.info(`-> ${req.baseUrl} priceVariation`, 'blue')
-
     rentService
-      .getPriceVarData()
+      .getPriceVarData(req.params.city)
       .then((data) => {
         const vegaMap = {
           ...vegaCommonOpt(),
@@ -431,7 +438,7 @@ router.get(
           },
           mark: { type: 'area', color: '#f03434', tooltip: true },
           transform: [
-            { filter: "datum.city === 'paris'" },
+            { filter: `datum.city === '${req.params.city}'` },
             { filter: 'datum.isLegal === false' },
             {
               calculate: 'datum.priceExcludingCharges - datum.maxPrice',
@@ -469,12 +476,12 @@ router.get(
 )
 
 router.get(
-  '/is-legal-variation',
+  '/is-legal-variation/:city',
   (req: RentRequest, res: Response, next: NextFunction) => {
     log.info(`-> ${req.baseUrl} isLegalVariation`, 'blue')
 
     rentService
-      .getPriceVarData(req.city || 'paris')
+      .getPriceVarData(req.params.city)
       .then((data) => {
         const vegaMap = {
           ...vegaCommonOpt(),
@@ -482,7 +489,7 @@ router.get(
             values: data,
           },
           transform: [
-            { filter: "datum.city === 'paris'" },
+            { filter: `datum.city === '${req.params.city}'` },
             { timeUnit: 'yearweek', field: 'createdAt', as: 'date' },
             {
               joinaggregate: [
@@ -562,12 +569,12 @@ router.get(
   }
 )
 
-router.get('/welcome', getWelcomeText)
+router.get('/welcome/:city', getWelcomeText)
 function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
 
   rentService
-    .getWelcomeData(req.city || 'paris')
+    .getWelcomeData(req.params.city)
     .then((data) => {
       const rents = data
 
@@ -616,7 +623,6 @@ function getExtremeDistrict(groupedRents) {
     const legalsRatio =
       districtRents.filter((rent) => rent.isLegal).length / districtRents.length
     if (bestLegalsCount < legalsRatio) {
-      console.log
       bestDistrict = district
       bestLegalsCount = legalsRatio
     }
