@@ -31,7 +31,7 @@ export async function getChloroplethMapData(
     {
       latitude: { $exists: true },
       longitude: { $exists: true },
-      city: city,
+      city,
     },
     { isLegal: 1, district: 1 },
     (
@@ -85,7 +85,7 @@ export async function getPriceVarData(
   { maxPrice: number; postalCode: string; priceExcludingCharges: number }[]
 > {
   return await Rent.find(
-    { createdAt: { $exists: true }, city: city },
+    { createdAt: { $exists: true }, city },
     {
       createdAt: 1,
       maxPrice: 1,
