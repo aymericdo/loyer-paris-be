@@ -5,7 +5,7 @@ export const vegaCommonOpt = () => {
     height: 500,
     padding: 26,
     autosize: { type: 'fit', contains: 'padding' },
-    background: '#222222',
+    background: 'transparent',
     config: {
       view: {
         stroke: 'transparent',

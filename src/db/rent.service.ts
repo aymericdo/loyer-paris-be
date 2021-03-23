@@ -1,12 +1,14 @@
 import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
 
-export async function getMapData(): Promise<
-  { isLegal: boolean; latitude: number; longitude: number }[]
+export async function getMapData(
+  city: string
+): Promise<
+  { isLegal: boolean; latitude: number; longitude: number; district: string }[]
 > {
   return await Rent.find(
-    { latitude: { $exists: true }, longitude: { $exists: true } },
-    { isLegal: 1, latitude: 1, longitude: 1, city: 1 },
+    { latitude: { $exists: true }, longitude: { $exists: true }, city },
+    { isLegal: 1, latitude: 1, longitude: 1, city: 1, district: 1 },
     (
       err: Error,
       rents: {
@@ -49,11 +51,13 @@ export async function getChloroplethMapData(
   ).lean()
 }
 
-export async function getPriceDiffData(): Promise<
+export async function getPriceDiffData(
+  city: string
+): Promise<
   { maxPrice: number; postalCode: string; priceExcludingCharges: number }[]
 > {
   return await Rent.find(
-    { postalCode: { $exists: true } },
+    { postalCode: { $exists: true }, city },
     {
       maxPrice: 1,
       postalCode: 1,
@@ -111,11 +115,26 @@ export async function getPriceVarData(
   )
 }
 
-export async function getLegalPerSurfaceData(): Promise<
-  { isLegal: boolean; surface: number }[]
-> {
+export async function getLegalPerRenterData(
+  city: string
+): Promise<{ isLegal: boolean; renter: string }[]> {
   return await Rent.find(
-    { surface: { $lte: 100 } },
+    { surface: { $lte: 100 }, city },
+    { isLegal: 1, renter: 1 },
+    (err: Error, rents: { isLegal: boolean; renter: string }[]) => {
+      if (err) {
+        throw err
+      }
+      return rents
+    }
+  )
+}
+
+export async function getLegalPerSurfaceData(
+  city: string
+): Promise<{ isLegal: boolean; surface: number }[]> {
+  return await Rent.find(
+    { surface: { $lte: 100 }, city },
     { isLegal: 1, surface: 1, city: 1 },
     (
       err: Error,
