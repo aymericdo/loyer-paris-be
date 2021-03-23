@@ -621,6 +621,7 @@ function getLegalPerRenter(
         data: {
           values: data,
         },
+        mark: { type: 'bar', tooltip: true },
         transform: [
           { filter: 'datum.renter != null' },
           {
