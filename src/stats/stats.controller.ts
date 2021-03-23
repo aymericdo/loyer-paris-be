@@ -196,7 +196,7 @@ function getChloroplethMap(
         const value = reduced[district]
         return {
           district,
-          isIllegal: Math.round((1 - value.isLegal / value.count) * 100) / 100,
+          isIllegal: Math.round((1 - value.isLegal / value.count) * 100),
         }
       })
 
@@ -226,7 +226,6 @@ function getChloroplethMap(
           color: {
             field: 'isIllegal',
             type: 'quantitative',
-            format: '.0%',
             scale: { scheme: 'reds' },
             title: '% illégalité',
           },
@@ -234,7 +233,6 @@ function getChloroplethMap(
             {
               field: 'isIllegal',
               type: 'quantitative',
-              format: '.0%',
               title: 'Annonces à surveiller',
             },
             {
