@@ -130,6 +130,21 @@ export async function getLegalPerRenterData(
   )
 }
 
+export async function getLegalPerWebsiteData(
+  city: string
+): Promise<{ isLegal: boolean; website: string }[]> {
+  return await Rent.find(
+    { surface: { $lte: 100 }, city },
+    { isLegal: 1, website: 1 },
+    (err: Error, rents: { isLegal: boolean; website: string }[]) => {
+      if (err) {
+        throw err
+      }
+      return rents
+    }
+  )
+}
+
 export async function getLegalPerSurfaceData(
   city: string
 ): Promise<{ isLegal: boolean; surface: number }[]> {
@@ -189,4 +204,7 @@ export async function getAdById(
       return rent
     }
   )
+}
+export function getLegalPerWebsite(city: string) {
+  throw new Error('Function not implemented.')
 }

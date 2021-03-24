@@ -23,48 +23,48 @@ const lilleGeodata = JSON.parse(
   fs.readFileSync(path.join('json-data/quartier_lille_geodata.json'), 'utf8')
 )
 
-router.get('/need-captcha', getNeedCaptcha)
-function getNeedCaptcha(req: RentRequest, res: Response, next: NextFunction) {
-  log.info(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
-  const ipService = new IpService(req)
-  res.status(200).json(!ipService.isIpCached())
-}
+// router.get('/need-captcha', getNeedCaptcha)
+// function getNeedCaptcha(req: RentRequest, res: Response, next: NextFunction) {
+//   log.info(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
+//   const ipService = new IpService(req)
+//   res.status(200).json(!ipService.isIpCached())
+// }
 
-router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
-  const ipService = new IpService(req)
+// router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
+//   const ipService = new IpService(req)
 
-  if (ipService.isIpCached()) {
-    next()
-  } else {
-    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
-    axios
-      .post(
-        url,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-          },
-        }
-      )
-      .then((response) => {
-        if (!response.data.success) {
-          return res.status(500).json({
-            message: response.data['error-codes'].join('.'),
-          })
-        } else {
-          ipService.saveIp()
-        }
+//   if (ipService.isIpCached()) {
+//     next()
+//   } else {
+//     const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
+//     axios
+//       .post(
+//         url,
+//         {},
+//         {
+//           headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+//           },
+//         }
+//       )
+//       .then((response) => {
+//         if (!response.data.success) {
+//           return res.status(500).json({
+//             message: response.data['error-codes'].join('.'),
+//           })
+//         } else {
+//           ipService.saveIp()
+//         }
 
-        next()
-      })
-      .catch(() => {
-        return res
-          .status(500)
-          .json({ message: 'oops, something went wrong on our side' })
-      })
-  }
-})
+//         next()
+//       })
+//       .catch(() => {
+//         return res
+//           .status(500)
+//           .json({ message: 'oops, something went wrong on our side' })
+//       })
+//   }
+// })
 
 // routes
 router.get('/map/:city', getMap)
@@ -653,6 +653,81 @@ function getLegalPerRenter(
           x: {
             field: 'renter',
             title: 'Loueur',
+            type: 'nominal',
+            sort: '-y',
+          },
+          y: {
+            aggregate: 'mean',
+            field: 'percentOfTotal',
+            title: 'Annonces à vérifier (%)',
+            type: 'quantitative',
+          },
+        },
+      }
+
+      res.json(vegaMap)
+    })
+    .catch((err) => {
+      console.log(err)
+      if (err.status) {
+        res.status(err.status).json(err)
+      } else {
+        log.error('Error 500')
+        res.status(500).json(err)
+      }
+    })
+}
+
+router.get('/is-legal-per-website/:city', getLegalPerWebsite)
+function getLegalPerWebsite(
+  req: RentRequest,
+  res: Response,
+  next: NextFunction
+) {
+  log.info(`-> ${req.baseUrl} isLegalPerRenter`, 'blue')
+
+  rentService
+    .getLegalPerWebsiteData(req.params.city)
+    .then((data) => {
+      const vegaMap = {
+        ...vegaCommonOpt(),
+        data: {
+          values: data,
+        },
+        mark: { type: 'bar', tooltip: true },
+        transform: [
+          { filter: 'datum.website != null' },
+          {
+            joinaggregate: [
+              {
+                op: 'count',
+                field: 'id',
+                as: 'numberAds',
+              },
+            ],
+            groupby: ['website'],
+          },
+          { filter: 'datum.isLegal === false' },
+          { filter: 'datum.numberAds > 5' },
+          {
+            joinaggregate: [
+              {
+                op: 'count',
+                field: 'isLegal',
+                as: 'numberIllegal',
+              },
+            ],
+            groupby: ['website'],
+          },
+          {
+            calculate: 'datum.numberIllegal / datum.numberAds * 100',
+            as: 'percentOfTotal',
+          },
+        ],
+        encoding: {
+          x: {
+            field: 'website',
+            title: 'Site',
             type: 'nominal',
             sort: '-y',
           },
