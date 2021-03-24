@@ -161,16 +161,13 @@ export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
   )
 }
 
-export async function getWelcomeData(
-  city: string
-): Promise<{ isLegal: boolean; surface: number; district: string }[]> {
+export async function getWelcomeData(): Promise<
+  { isLegal: boolean; surface: number }[]
+> {
   return await Rent.find(
-    { city: city },
-    { isLegal: 1, surface: 1, district: 1 },
-    (
-      err: Error,
-      rents: { isLegal: boolean; surface: number; district: string }[]
-    ) => {
+    {},
+    { isLegal: 1, surface: 1 },
+    (err: Error, rents: { isLegal: boolean; surface: number }[]) => {
       if (err) {
         throw err
       }

@@ -23,48 +23,48 @@ const lilleGeodata = JSON.parse(
   fs.readFileSync(path.join('json-data/quartier_lille_geodata.json'), 'utf8')
 )
 
-// router.get('/need-captcha', getNeedCaptcha)
-// function getNeedCaptcha(req: RentRequest, res: Response, next: NextFunction) {
-//   log.info(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
-//   const ipService = new IpService(req)
-//   res.status(200).json(!ipService.isIpCached())
-// }
+router.get('/need-captcha', getNeedCaptcha)
+function getNeedCaptcha(req: RentRequest, res: Response, next: NextFunction) {
+  log.info(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
+  const ipService = new IpService(req)
+  res.status(200).json(!ipService.isIpCached())
+}
 
-// router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
-//   const ipService = new IpService(req)
+router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
+  const ipService = new IpService(req)
 
-//   if (ipService.isIpCached()) {
-//     next()
-//   } else {
-//     const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
-//     axios
-//       .post(
-//         url,
-//         {},
-//         {
-//           headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-//           },
-//         }
-//       )
-//       .then((response) => {
-//         if (!response.data.success) {
-//           return res.status(500).json({
-//             message: response.data['error-codes'].join('.'),
-//           })
-//         } else {
-//           ipService.saveIp()
-//         }
+  if (ipService.isIpCached()) {
+    next()
+  } else {
+    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
+    axios
+      .post(
+        url,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          },
+        }
+      )
+      .then((response) => {
+        if (!response.data.success) {
+          return res.status(500).json({
+            message: response.data['error-codes'].join('.'),
+          })
+        } else {
+          ipService.saveIp()
+        }
 
-//         next()
-//       })
-//       .catch(() => {
-//         return res
-//           .status(500)
-//           .json({ message: 'oops, something went wrong on our side' })
-//       })
-//   }
-// })
+        next()
+      })
+      .catch(() => {
+        return res
+          .status(500)
+          .json({ message: 'oops, something went wrong on our side' })
+      })
+  }
+})
 
 // routes
 router.get('/map/:city', getMap)
@@ -227,7 +227,7 @@ function getChloroplethMap(
             field: 'isIllegal',
             type: 'quantitative',
             scale: { scheme: 'reds' },
-            title: '% illégalité',
+            title: 'illégalité (%)',
           },
           tooltip: [
             {
@@ -529,7 +529,7 @@ router.get(
                 {
                   op: 'count',
                   field: 'id',
-                  as: 'NumberAds',
+                  as: 'numberAds',
                 },
               ],
               groupby: ['date'],
@@ -540,14 +540,14 @@ router.get(
                 {
                   op: 'count',
                   field: 'isLegal',
-                  as: 'NumberIllegal',
+                  as: 'numberIllegal',
                 },
               ],
               groupby: ['date'],
             },
             {
-              calculate: 'datum.NumberIllegal / datum.NumberAds * 100',
-              as: 'PercentOfTotal',
+              calculate: 'datum.numberIllegal / datum.numberAds * 100',
+              as: 'percentOfTotal',
             },
           ],
           layer: [
@@ -559,7 +559,7 @@ router.get(
               },
               encoding: {
                 y: {
-                  field: 'PercentOfTotal',
+                  field: 'percentOfTotal',
                   type: 'quantitative',
                   title: 'Pourcentage',
                 },
@@ -572,10 +572,10 @@ router.get(
             },
             {
               mark: { type: 'line', color: '#fdcd56', tooltip: true },
-              transform: [{ loess: 'PercentOfTotal', on: 'date' }],
+              transform: [{ loess: 'percentOfTotal', on: 'date' }],
               encoding: {
                 y: {
-                  field: 'PercentOfTotal',
+                  field: 'percentOfTotal',
                   type: 'quantitative',
                   title: 'Pourcentage lissé',
                 },
@@ -627,25 +627,26 @@ function getLegalPerRenter(
               {
                 op: 'count',
                 field: 'id',
-                as: 'NumberAds',
+                as: 'numberAds',
               },
             ],
             groupby: ['renter'],
           },
           { filter: 'datum.isLegal === false' },
+          { filter: 'datum.numberAds > 5' },
           {
             joinaggregate: [
               {
                 op: 'count',
                 field: 'isLegal',
-                as: 'NumberIllegal',
+                as: 'numberIllegal',
               },
             ],
             groupby: ['renter'],
           },
           {
-            calculate: 'datum.NumberIllegal / datum.NumberAds * 100',
-            as: 'PercentOfTotal',
+            calculate: 'datum.numberIllegal / datum.numberAds * 100',
+            as: 'percentOfTotal',
           },
         ],
         encoding: {
@@ -657,8 +658,8 @@ function getLegalPerRenter(
           },
           y: {
             aggregate: 'mean',
-            field: 'PercentOfTotal',
-            title: 'Annonces à vérifier',
+            field: 'percentOfTotal',
+            title: 'Annonces à vérifier (%)',
             type: 'quantitative',
           },
         },
@@ -677,35 +678,33 @@ function getLegalPerRenter(
     })
 }
 
-router.get('/welcome/:city', getWelcomeText)
+router.get('/welcome', getWelcomeText)
 function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
 
   rentService
-    .getWelcomeData(req.params.city)
+    .getWelcomeData()
     .then((data) => {
       const rents = data
 
       const isIllegalPercentage = Math.round(
         (100 * rents.filter((rent) => !rent.isLegal).length) / rents.length
       )
-      const lessThan35SquareMeters = rents.filter((rent) => rent.surface < 35)
-      const isSmallSurfaceIllegalPercentage = Math.round(
-        (100 * lessThan35SquareMeters.filter((rent) => !rent.isLegal).length) /
-          lessThan35SquareMeters.length
+
+      const pivotSurface = 30
+      const lessThanNSquareMeters = rents.filter(
+        (rent) => rent.surface < pivotSurface
       )
-      const districtGroupedRents = groupBy(rents, 'district')
-      const extremeDistrict = getExtremeDistrict(districtGroupedRents)
-      const worstDistrict = extremeDistrict[0]
-      const bestDistrict = extremeDistrict[1]
+      const isSmallSurfaceIllegalPercentage = Math.round(
+        (100 * lessThanNSquareMeters.filter((rent) => !rent.isLegal).length) /
+          lessThanNSquareMeters.length
+      )
 
       return res.json({
         numberRents: rents.length,
-        pivotSurface: 35,
+        pivotSurface: pivotSurface,
         isIllegalPercentage,
         isSmallSurfaceIllegalPercentage,
-        worstDistrict,
-        bestDistrict,
       })
     })
     .catch((err) => {
@@ -717,33 +716,6 @@ function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
         res.status(500).json(err)
       }
     })
-}
-
-function getExtremeDistrict(groupedRents) {
-  let worstDistrict = ''
-  let bestDistrict = ''
-  let bestLegalsCount = 0
-  let worstLegalsCount = 0
-
-  Object.keys(groupedRents).forEach((district) => {
-    const districtRents = groupedRents[district]
-
-    const legalsRatio =
-      districtRents.filter((rent) => rent.isLegal).length / districtRents.length
-    if (bestLegalsCount < legalsRatio) {
-      bestDistrict = district
-      bestLegalsCount = legalsRatio
-    }
-
-    const illegalsRatio =
-      districtRents.filter((rent) => !rent.isLegal).length /
-      districtRents.length
-    if (worstLegalsCount < illegalsRatio) {
-      worstDistrict = district
-      worstLegalsCount = illegalsRatio
-    }
-  })
-  return [worstDistrict, bestDistrict]
 }
 
 module.exports = router
