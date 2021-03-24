@@ -15,14 +15,28 @@ interface RentRequest extends Request {
   rents?: DataBaseItem[]
 }
 
-router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
-  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
+const parisGeodata = JSON.parse(
+  fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8')
+)
 
+const lilleGeodata = JSON.parse(
+  fs.readFileSync(path.join('json-data/quartier_lille_geodata.json'), 'utf8')
+)
+
+router.get('/need-captcha', getNeedCaptcha)
+function getNeedCaptcha(req: RentRequest, res: Response, next: NextFunction) {
+  log.info(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
+  const ipService = new IpService(req)
+  res.status(200).json(!ipService.isIpCached())
+}
+
+router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
   const ipService = new IpService(req)
 
   if (ipService.isIpCached()) {
     next()
   } else {
+    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
     axios
       .post(
         url,
@@ -53,16 +67,25 @@ router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
 })
 
 // routes
-router.get('/map', getMap)
+router.get('/map/:city', getMap)
 function getMap(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
-
-  const parisGeodata = JSON.parse(
-    fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8')
-  )
+  const city = req.params.city
+  let geodata: any
+  let districtField: string
+  switch (city) {
+    case 'paris':
+      geodata = parisGeodata
+      districtField = 'properties.l_qu'
+      break
+    case 'lille':
+      geodata = lilleGeodata
+      districtField = 'properties.zonage'
+      break
+  }
 
   rentService
-    .getMapData()
+    .getMapData(city)
     .then((data) => {
       const vegaMap = {
         ...vegaCommonOpt(),
@@ -70,7 +93,7 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
           {
             data: {
               format: { type: 'json', property: 'features' },
-              values: parisGeodata,
+              values: geodata,
             },
             projection: { type: 'mercator' },
             mark: {
@@ -79,7 +102,7 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
               stroke: 'white',
             },
             encoding: {
-              tooltip: { field: 'properties.l_qu', type: 'nominal' },
+              tooltip: { field: districtField, type: 'nominal' },
             },
           },
           {
@@ -87,7 +110,6 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
               values: data,
             },
             transform: [
-              { filter: "datum.city === 'paris'" },
               { calculate: "datum.isLegal ? 'Oui' : 'Non'", as: 'isLegal' },
             ],
             encoding: {
@@ -99,6 +121,7 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
                 field: 'latitude',
                 type: 'quantitative',
               },
+              tooltip: { field: 'district', type: 'nominal' },
               color: {
                 field: 'isLegal',
                 title: 'Est légal ?',
@@ -128,20 +151,29 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
     })
 }
 
-router.get('/chloropleth-map', getChloroplethMap)
+router.get('/chloropleth-map/:city', getChloroplethMap)
 function getChloroplethMap(
   req: RentRequest,
   res: Response,
   next: NextFunction
 ) {
   log.info(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
-
-  const parisGeodata = JSON.parse(
-    fs.readFileSync(path.join('json-data/quartier_paris_geodata.json'), 'utf8')
-  )
+  const city = req.params.city
+  let geodata: any
+  let districtField: string
+  switch (city) {
+    case 'paris':
+      geodata = parisGeodata
+      districtField = 'properties.l_qu'
+      break
+    case 'lille':
+      geodata = lilleGeodata
+      districtField = 'properties.zonage'
+      break
+  }
 
   rentService
-    .getChloroplethMapData()
+    .getChloroplethMapData(city)
     .then((data) => {
       const reduced: {
         [district: string]: { isLegal: number; count: number }
@@ -164,7 +196,7 @@ function getChloroplethMap(
         const value = reduced[district]
         return {
           district,
-          isIllegal: Math.round((1 - value.isLegal / value.count) * 100) / 100,
+          isIllegal: Math.round((1 - value.isLegal / value.count) * 100),
         }
       })
 
@@ -172,11 +204,11 @@ function getChloroplethMap(
         ...vegaCommonOpt(),
         data: {
           format: { type: 'json', property: 'features' },
-          values: parisGeodata,
+          values: geodata,
         },
         transform: [
           {
-            lookup: 'properties.l_qu',
+            lookup: districtField,
             from: {
               data: {
                 values: result,
@@ -194,15 +226,13 @@ function getChloroplethMap(
           color: {
             field: 'isIllegal',
             type: 'quantitative',
-            format: '.0%',
             scale: { scheme: 'reds' },
-            title: '% illégalité',
+            title: 'illégalité (%)',
           },
           tooltip: [
             {
               field: 'isIllegal',
               type: 'quantitative',
-              format: '.0%',
               title: 'Annonces à surveiller',
             },
             {
@@ -226,16 +256,20 @@ function getChloroplethMap(
     })
 }
 
-router.get('/price-difference', getPriceDifference)
+router.get('/price-difference/:city', getPriceDifference)
 function getPriceDifference(
   req: RentRequest,
   res: Response,
   next: NextFunction
 ) {
   log.info(`-> ${req.baseUrl} priceDifference`, 'blue')
+  const postalCodePossibilities =
+    req.params.city === 'paris'
+      ? cityList.paris.postalCodePossibilities
+      : cityList.lille.postalCodePossibilities
 
   rentService
-    .getPriceDiffData()
+    .getPriceDiffData(req.params.city)
     .then((data) => {
       const vegaMap = {
         ...vegaCommonOpt(),
@@ -244,7 +278,6 @@ function getPriceDifference(
         },
         mark: { type: 'bar', tooltip: true },
         transform: [
-          { filter: "datum.city === 'paris'" },
           {
             calculate: 'datum.priceExcludingCharges - datum.maxPrice',
             as: 'priceDifference',
@@ -273,7 +306,7 @@ function getPriceDifference(
             field: 'postalCode',
             type: 'ordinal',
             title: 'Code postal',
-            sort: cityList.paris.postalCodePossibilities,
+            sort: postalCodePossibilities,
           },
           tooltip: [{ field: 'countOfPostalCode', title: "Nombre d'annonces" }],
         },
@@ -292,7 +325,7 @@ function getPriceDifference(
     })
 }
 
-router.get('/is-legal-per-surface', getLegalPerSurface)
+router.get('/is-legal-per-surface/:city', getLegalPerSurface)
 function getLegalPerSurface(
   req: RentRequest,
   res: Response,
@@ -301,7 +334,7 @@ function getLegalPerSurface(
   log.info(`-> ${req.baseUrl} isLegalPerSurface`, 'blue')
 
   rentService
-    .getLegalPerSurfaceData()
+    .getLegalPerSurfaceData(req.params.city)
     .then((data) => {
       const vegaMap = {
         ...vegaCommonOpt(),
@@ -310,7 +343,6 @@ function getLegalPerSurface(
         },
         mark: { type: 'bar', tooltip: true },
         transform: [
-          { filter: "datum.city === 'paris'" },
           { calculate: "datum.isLegal ? 'Oui' : 'Non'", as: 'isLegal' },
         ],
         encoding: {
@@ -402,41 +434,65 @@ function getAdoptionRate(req: RentRequest, res: Response, next: NextFunction) {
 }
 
 router.get(
-  '/price-variation',
+  '/price-variation/:city',
   (req: RentRequest, res: Response, next: NextFunction) => {
     log.info(`-> ${req.baseUrl} priceVariation`, 'blue')
-
     rentService
-      .getPriceVarData()
+      .getPriceVarData(req.params.city)
       .then((data) => {
         const vegaMap = {
           ...vegaCommonOpt(),
           data: {
             values: data,
           },
-          mark: { type: 'area', color: '#f03434', tooltip: true },
           transform: [
-            { filter: "datum.city === 'paris'" },
+            { timeUnit: 'yearweek', field: 'createdAt', as: 'date' },
             { filter: 'datum.isLegal === false' },
             {
               calculate: 'datum.priceExcludingCharges - datum.maxPrice',
               as: 'priceDifference',
             },
           ],
-          encoding: {
-            y: {
-              aggregate: 'median',
-              field: 'priceDifference',
-              type: 'quantitative',
-              title: 'Différence entre prix pratiqué et prix théorique en €',
+          layer: [
+            {
+              mark: {
+                type: 'line',
+                color: '#f03434',
+                tooltip: true,
+              },
+              encoding: {
+                y: {
+                  aggregate: 'median',
+                  field: 'priceDifference',
+                  type: 'quantitative',
+                  title:
+                    'Différence entre prix pratiqué et prix théorique en €',
+                },
+                x: {
+                  field: 'createdAt',
+                  title: 'Date',
+                  type: 'temporal',
+                  timeUnit: 'yearweek',
+                },
+              },
             },
-            x: {
-              field: 'createdAt',
-              title: 'Date',
-              type: 'temporal',
-              timeUnit: 'yearweek',
+            {
+              mark: { type: 'line', color: '#fdcd56', tooltip: true },
+              transform: [{ loess: 'priceDifference', on: 'date' }],
+              encoding: {
+                y: {
+                  field: 'priceDifference',
+                  type: 'quantitative',
+                  title: 'Différence de prix lissée en €',
+                },
+                x: {
+                  field: 'date',
+                  title: 'Date',
+                  type: 'temporal',
+                },
+              },
             },
-          },
+          ],
         }
 
         res.json(vegaMap)
@@ -454,12 +510,12 @@ router.get(
 )
 
 router.get(
-  '/is-legal-variation',
+  '/is-legal-variation/:city',
   (req: RentRequest, res: Response, next: NextFunction) => {
     log.info(`-> ${req.baseUrl} isLegalVariation`, 'blue')
 
     rentService
-      .getPriceVarData()
+      .getPriceVarData(req.params.city)
       .then((data) => {
         const vegaMap = {
           ...vegaCommonOpt(),
@@ -467,14 +523,13 @@ router.get(
             values: data,
           },
           transform: [
-            { filter: "datum.city === 'paris'" },
             { timeUnit: 'yearweek', field: 'createdAt', as: 'date' },
             {
               joinaggregate: [
                 {
                   op: 'count',
                   field: 'id',
-                  as: 'NumberAds',
+                  as: 'numberAds',
                 },
               ],
               groupby: ['date'],
@@ -485,26 +540,26 @@ router.get(
                 {
                   op: 'count',
                   field: 'isLegal',
-                  as: 'NumberIllegal',
+                  as: 'numberIllegal',
                 },
               ],
               groupby: ['date'],
             },
             {
-              calculate: 'datum.NumberIllegal / datum.NumberAds * 100',
-              as: 'PercentOfTotal',
+              calculate: 'datum.numberIllegal / datum.numberAds * 100',
+              as: 'percentOfTotal',
             },
           ],
           layer: [
             {
               mark: {
-                type: 'area',
+                type: 'line',
                 color: '#f03434',
                 tooltip: true,
               },
               encoding: {
                 y: {
-                  field: 'PercentOfTotal',
+                  field: 'percentOfTotal',
                   type: 'quantitative',
                   title: 'Pourcentage',
                 },
@@ -516,12 +571,13 @@ router.get(
               },
             },
             {
-              mark: { type: 'line', color: '#fdcd56' },
-              transform: [{ loess: 'PercentOfTotal', on: 'date' }],
+              mark: { type: 'line', color: '#fdcd56', tooltip: true },
+              transform: [{ loess: 'percentOfTotal', on: 'date' }],
               encoding: {
                 y: {
-                  field: 'PercentOfTotal',
+                  field: 'percentOfTotal',
                   type: 'quantitative',
+                  title: 'Pourcentage lissé',
                 },
                 x: {
                   field: 'date',
@@ -547,36 +603,69 @@ router.get(
   }
 )
 
-router.get('/welcome', getWelcomeText)
-function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
-  log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
+router.get('/is-legal-per-renter/:city', getLegalPerRenter)
+function getLegalPerRenter(
+  req: RentRequest,
+  res: Response,
+  next: NextFunction
+) {
+  log.info(`-> ${req.baseUrl} isLegalPerRenter`, 'blue')
 
   rentService
-    .getWelcomeData()
+    .getLegalPerRenterData(req.params.city)
     .then((data) => {
-      const rents = data
+      const vegaMap = {
+        ...vegaCommonOpt(),
+        data: {
+          values: data,
+        },
+        mark: { type: 'bar', tooltip: true },
+        transform: [
+          { filter: 'datum.renter != null' },
+          {
+            joinaggregate: [
+              {
+                op: 'count',
+                field: 'id',
+                as: 'numberAds',
+              },
+            ],
+            groupby: ['renter'],
+          },
+          { filter: 'datum.isLegal === false' },
+          { filter: 'datum.numberAds > 5' },
+          {
+            joinaggregate: [
+              {
+                op: 'count',
+                field: 'isLegal',
+                as: 'numberIllegal',
+              },
+            ],
+            groupby: ['renter'],
+          },
+          {
+            calculate: 'datum.numberIllegal / datum.numberAds * 100',
+            as: 'percentOfTotal',
+          },
+        ],
+        encoding: {
+          x: {
+            field: 'renter',
+            title: 'Loueur',
+            type: 'nominal',
+            sort: '-y',
+          },
+          y: {
+            aggregate: 'mean',
+            field: 'percentOfTotal',
+            title: 'Annonces à vérifier (%)',
+            type: 'quantitative',
+          },
+        },
+      }
 
-      const isIllegalPercentage = Math.round(
-        (100 * rents.filter((rent) => !rent.isLegal).length) / rents.length
-      )
-      const lessThan35SquareMeters = rents.filter((rent) => rent.surface < 35)
-      const isSmallSurfaceIllegalPercentage = Math.round(
-        (100 * lessThan35SquareMeters.filter((rent) => !rent.isLegal).length) /
-          lessThan35SquareMeters.length
-      )
-      const postalCodeGroupedRents = groupBy(rents, 'postalCode')
-      const extremePostalCode = getExtremePostalCode(postalCodeGroupedRents)
-      const worstPostalCode = extremePostalCode[0]
-      const bestPostalCode = extremePostalCode[1]
-
-      return res.json({
-        numberRents: rents.length,
-        pivotSurface: 35,
-        isIllegalPercentage,
-        isSmallSurfaceIllegalPercentage,
-        worstPostalCode,
-        bestPostalCode,
-      })
+      res.json(vegaMap)
     })
     .catch((err) => {
       console.log(err)
@@ -589,37 +678,44 @@ function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
     })
 }
 
-function getExtremePostalCode(groupedRents) {
-  let worstPc = ''
-  let bestPc = ''
-  let bestLegalsCount = 0
-  let worstLegalsCount = 0
+router.get('/welcome', getWelcomeText)
+function getWelcomeText(req: RentRequest, res: Response, next: NextFunction) {
+  log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
 
-  Object.keys(groupedRents).forEach((pc) => {
-    if (isNaN(+pc)) {
-      return
-    }
-    const pcRents = groupedRents[pc]
+  rentService
+    .getWelcomeData()
+    .then((data) => {
+      const rents = data
 
-    const legalsRatio =
-      pcRents.filter((rent) => rent.isLegal).length / pcRents.length
-    if (bestLegalsCount < legalsRatio) {
-      bestPc = pc
-      bestLegalsCount = legalsRatio
-    }
+      const isIllegalPercentage = Math.round(
+        (100 * rents.filter((rent) => !rent.isLegal).length) / rents.length
+      )
 
-    const illegalsRatio =
-      pcRents.filter((rent) => !rent.isLegal).length / pcRents.length
-    if (worstLegalsCount < illegalsRatio) {
-      worstPc = pc
-      worstLegalsCount = illegalsRatio
-    }
-  })
-  const worstNeighborhood =
-    worstPc.slice(-2)[0] === '0' ? worstPc.slice(-1) : worstPc.slice(-2)
-  const bestNeighborhood =
-    bestPc.slice(-2)[0] === '0' ? bestPc.slice(-1) : bestPc.slice(-2)
-  return [worstNeighborhood, bestNeighborhood]
+      const pivotSurface = 30
+      const lessThanNSquareMeters = rents.filter(
+        (rent) => rent.surface < pivotSurface
+      )
+      const isSmallSurfaceIllegalPercentage = Math.round(
+        (100 * lessThanNSquareMeters.filter((rent) => !rent.isLegal).length) /
+          lessThanNSquareMeters.length
+      )
+
+      return res.json({
+        numberRents: rents.length,
+        pivotSurface: pivotSurface,
+        isIllegalPercentage,
+        isSmallSurfaceIllegalPercentage,
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+      if (err.status) {
+        res.status(err.status).json(err)
+      } else {
+        log.error('Error 500')
+        res.status(500).json(err)
+      }
+    })
 }
 
 module.exports = router
