@@ -57,13 +57,11 @@ export async function getPriceDiffData(
   { maxPrice: number; postalCode: string; priceExcludingCharges: number }[]
 > {
   return await Rent.find(
-    { postalCode: { $exists: true }, city },
+    { postalCode: { $exists: true }, city, isLegal: false },
     {
       maxPrice: 1,
       postalCode: 1,
       priceExcludingCharges: 1,
-      isLegal: 1,
-      city: 1,
     },
     (
       err: Error,
@@ -71,8 +69,57 @@ export async function getPriceDiffData(
         maxPrice: number
         postalCode: string
         priceExcludingCharges: number
-        isLegal: number
-        city: string
+      }[]
+    ) => {
+      if (err) {
+        throw err
+      }
+      return rents
+    }
+  )
+}
+
+export async function getLegalVarData(
+  city: string,
+  districtList: string[],
+  surfaceRange: number[],
+  roomRange: number[],
+  hasFurniture: boolean
+): Promise<
+  {
+    isLegal: Boolean
+    createdAt: string
+  }[]
+> {
+  const request = { createdAt: { $exists: true }, city }
+
+  if (districtList?.length) {
+    request['district'] = districtList
+  }
+
+  if (hasFurniture !== null) {
+    request['hasFurniture'] = hasFurniture
+  }
+
+  if (surfaceRange?.length) {
+    request['surface'] = { $gte: surfaceRange[0], $lte: surfaceRange[1] }
+  }
+
+  if (roomRange?.length) {
+    request['roomCount'] = { $gte: roomRange[0], $lte: roomRange[1] }
+  }
+
+  return await Rent.find(
+    request,
+    {
+      createdAt: 1,
+      isLegal: 1,
+    },
+    (
+      err: Error,
+      rents: {
+        isLegal: Boolean
+        createdAt: string
       }[]
     ) => {
       if (err) {
@@ -86,25 +133,25 @@ export async function getPriceDiffData(
 export async function getPriceVarData(
   city: string
 ): Promise<
-  { maxPrice: number; postalCode: string; priceExcludingCharges: number }[]
+  {
+    maxPrice: number
+    createdAt: string
+    priceExcludingCharges: number
+  }[]
 > {
   return await Rent.find(
-    { createdAt: { $exists: true }, city },
+    { createdAt: { $exists: true }, city, isLegal: false },
     {
       createdAt: 1,
       maxPrice: 1,
       priceExcludingCharges: 1,
-      isLegal: 1,
-      city: 1,
     },
     (
       err: Error,
       rents: {
-        isLegal: boolean
         createdAt: string
         maxPrice: number
         priceExcludingCharges: number
-        city: string
       }[]
     ) => {
       if (err) {
@@ -150,11 +197,8 @@ export async function getLegalPerSurfaceData(
 ): Promise<{ isLegal: boolean; surface: number }[]> {
   return await Rent.find(
     { surface: { $lte: 100 }, city },
-    { isLegal: 1, surface: 1, city: 1 },
-    (
-      err: Error,
-      rents: { isLegal: boolean; surface: number; city: string }[]
-    ) => {
+    { isLegal: 1, surface: 1 },
+    (err: Error, rents: { isLegal: boolean; surface: number }[]) => {
       if (err) {
         throw err
       }
