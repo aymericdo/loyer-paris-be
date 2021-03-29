@@ -710,7 +710,7 @@ function getLegalPerWebsite(
   res: Response,
   next: NextFunction
 ) {
-  log.info(`-> ${req.baseUrl} isLegalPerRenter`, 'blue')
+  log.info(`-> ${req.baseUrl} getLegalPerWebsite`, 'blue')
 
   rentService
     .getLegalPerWebsiteData(req.params.city)
