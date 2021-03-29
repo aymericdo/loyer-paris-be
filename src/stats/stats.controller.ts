@@ -4,7 +4,6 @@ import * as path from 'path'
 import axios from 'axios'
 import * as rentService from '@db/rent.service'
 import { DataBaseItem } from '@interfaces/database-item'
-import { groupBy } from '@helpers/functions'
 import * as log from '@helpers/log'
 import { vegaCommonOpt } from '@helpers/vega'
 import { IpService } from '@services/ip'
@@ -36,6 +35,11 @@ router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
   if (ipService.isIpCached()) {
     next()
   } else {
+    if (!req.query.recaptchaToken) {
+      return res.status(403).json({
+        message: 'token expired',
+      })
+    }
     const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
     axios
       .post(
@@ -292,7 +296,6 @@ function getPriceDifference(
             ],
             groupby: ['postalCode'],
           },
-          { filter: 'datum.isLegal === false' },
         ],
         encoding: {
           x: {
@@ -447,11 +450,11 @@ router.get(
           },
           transform: [
             { timeUnit: 'yearweek', field: 'createdAt', as: 'date' },
-            { filter: 'datum.isLegal === false' },
             {
               calculate: 'datum.priceExcludingCharges - datum.maxPrice',
               as: 'priceDifference',
             },
+            { filter: 'datum.priceDifference < 300' },
           ],
           layer: [
             {
@@ -472,7 +475,6 @@ router.get(
                   field: 'createdAt',
                   title: 'Date',
                   type: 'temporal',
-                  timeUnit: 'yearweek',
                 },
               },
             },
@@ -514,8 +516,32 @@ router.get(
   (req: RentRequest, res: Response, next: NextFunction) => {
     log.info(`-> ${req.baseUrl} isLegalVariation`, 'blue')
 
+    const districtValues: string = req.query.districtValues as string
+    const furnishedValue = req.query.furnishedValue as string
+    const surfaceValue: string = req.query.surfaceValue as string
+    const roomValue: string = req.query.roomValue as string
+
+    const districtList: string[] = districtValues
+      ?.split(',')
+      ?.map((v) => v)
+      .filter(Boolean)
+    const surfaceRange: number[] = surfaceValue?.split(',')?.map((v) => +v)
+    const roomRange: number[] = roomValue?.split(',')?.map((v) => +v)
+    const hasFurniture: boolean =
+      furnishedValue === 'furnished'
+        ? true
+        : furnishedValue === 'nonFurnished'
+        ? false
+        : null
+
     rentService
-      .getPriceVarData(req.params.city)
+      .getLegalVarData(
+        req.params.city,
+        districtList,
+        surfaceRange,
+        roomRange,
+        hasFurniture
+      )
       .then((data) => {
         const vegaMap = {
           ...vegaCommonOpt(),
@@ -676,6 +702,109 @@ function getLegalPerRenter(
         res.status(500).json(err)
       }
     })
+}
+
+router.get('/is-legal-per-website/:city', getLegalPerWebsite)
+function getLegalPerWebsite(
+  req: RentRequest,
+  res: Response,
+  next: NextFunction
+) {
+  log.info(`-> ${req.baseUrl} getLegalPerWebsite`, 'blue')
+
+  rentService
+    .getLegalPerWebsiteData(req.params.city)
+    .then((data) => {
+      const vegaMap = {
+        ...vegaCommonOpt(),
+        data: {
+          values: data,
+        },
+        mark: { type: 'bar', tooltip: true },
+        transform: [
+          { filter: 'datum.website != null' },
+          {
+            joinaggregate: [
+              {
+                op: 'count',
+                field: 'id',
+                as: 'numberAds',
+              },
+            ],
+            groupby: ['website'],
+          },
+          { filter: 'datum.isLegal === false' },
+          { filter: 'datum.numberAds > 5' },
+          {
+            joinaggregate: [
+              {
+                op: 'count',
+                field: 'isLegal',
+                as: 'numberIllegal',
+              },
+            ],
+            groupby: ['website'],
+          },
+          {
+            calculate: 'datum.numberIllegal / datum.numberAds * 100',
+            as: 'percentOfTotal',
+          },
+        ],
+        encoding: {
+          x: {
+            field: 'website',
+            title: 'Site',
+            type: 'nominal',
+            sort: '-y',
+          },
+          y: {
+            aggregate: 'mean',
+            field: 'percentOfTotal',
+            title: 'Annonces à vérifier (%)',
+            type: 'quantitative',
+          },
+        },
+      }
+
+      res.json(vegaMap)
+    })
+    .catch((err) => {
+      console.log(err)
+      if (err.status) {
+        res.status(err.status).json(err)
+      } else {
+        log.error('Error 500')
+        res.status(500).json(err)
+      }
+    })
+}
+
+router.get('/district-list/:city', getDistricts)
+function getDistricts(req: RentRequest, res: Response, next: NextFunction) {
+  log.info(`-> ${req.baseUrl} getDistricts`, 'blue')
+  const city = req.params.city
+  let geodata: any
+  switch (city) {
+    case 'paris':
+      geodata = parisGeodata
+      break
+    case 'lille':
+      geodata = lilleGeodata
+      break
+  }
+
+  res.json(
+    geodata.features
+      .map((data) => {
+        switch (city) {
+          case 'paris':
+            return data['properties']['l_qu']
+          case 'lille':
+            return data['properties']['zonage']
+        }
+      })
+      .sort()
+  )
 }
 
 router.get('/welcome', getWelcomeText)
