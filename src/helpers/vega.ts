@@ -22,6 +22,7 @@ export const vegaCommonOpt = () => {
         labelColor: '#fff',
         tickColor: '#fff',
         titleColor: '#fff',
+        gridOpacity: 0.5,
       },
     },
   }

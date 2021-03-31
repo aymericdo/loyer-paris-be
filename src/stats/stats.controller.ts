@@ -75,6 +75,8 @@ router.get('/map/:city', getMap)
 function getMap(req: RentRequest, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
   const city = req.params.city
+  const dateValue: string = req.query.dateValue as string
+  const dateRange: string[] = dateValue?.split(',')
   let geodata: any
   let districtField: string
   switch (city) {
@@ -89,7 +91,7 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
   }
 
   rentService
-    .getMapData(city)
+    .getMapData(city, dateRange)
     .then((data) => {
       const vegaMap = {
         ...vegaCommonOpt(),
@@ -163,6 +165,8 @@ function getChloroplethMap(
 ) {
   log.info(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
   const city = req.params.city
+  const dateValue: string = req.query.dateValue as string
+  const dateRange: string[] = dateValue?.split(',')
   let geodata: any
   let districtField: string
   switch (city) {
@@ -177,7 +181,7 @@ function getChloroplethMap(
   }
 
   rentService
-    .getChloroplethMapData(city)
+    .getChloroplethMapData(city, dateRange)
     .then((data) => {
       const reduced: {
         [district: string]: { isLegal: number; count: number }
@@ -271,9 +275,11 @@ function getPriceDifference(
     req.params.city === 'paris'
       ? cityList.paris.postalCodePossibilities
       : cityList.lille.postalCodePossibilities
+  const dateValue: string = req.query.dateValue as string
+  const dateRange: string[] = dateValue?.split(',')
 
   rentService
-    .getPriceDiffData(req.params.city)
+    .getPriceDiffData(req.params.city, dateRange)
     .then((data) => {
       const vegaMap = {
         ...vegaCommonOpt(),
@@ -335,9 +341,11 @@ function getLegalPerSurface(
   next: NextFunction
 ) {
   log.info(`-> ${req.baseUrl} isLegalPerSurface`, 'blue')
+  const dateValue: string = req.query.dateValue as string
+  const dateRange: string[] = dateValue?.split(',')
 
   rentService
-    .getLegalPerSurfaceData(req.params.city)
+    .getLegalPerSurfaceData(req.params.city, dateRange)
     .then((data) => {
       const vegaMap = {
         ...vegaCommonOpt(),
@@ -440,8 +448,10 @@ router.get(
   '/price-variation/:city',
   (req: RentRequest, res: Response, next: NextFunction) => {
     log.info(`-> ${req.baseUrl} priceVariation`, 'blue')
+    const dateValue: string = req.query.dateValue as string
+    const dateRange: string[] = dateValue?.split(',')
     rentService
-      .getPriceVarData(req.params.city)
+      .getPriceVarData(req.params.city, dateRange)
       .then((data) => {
         const vegaMap = {
           ...vegaCommonOpt(),
@@ -449,52 +459,39 @@ router.get(
             values: data,
           },
           transform: [
-            { timeUnit: 'yearweek', field: 'createdAt', as: 'date' },
+            {
+              timeUnit: 'yearmonth',
+              field: 'createdAt',
+              as: 'date',
+            },
             {
               calculate: 'datum.priceExcludingCharges - datum.maxPrice',
               as: 'priceDifference',
             },
-            { filter: 'datum.priceDifference < 300' },
-          ],
-          layer: [
             {
-              mark: {
-                type: 'line',
-                color: '#f03434',
-                tooltip: true,
-              },
-              encoding: {
-                y: {
-                  aggregate: 'median',
-                  field: 'priceDifference',
-                  type: 'quantitative',
-                  title:
-                    'Différence entre prix pratiqué et prix théorique en €',
-                },
-                x: {
-                  field: 'createdAt',
-                  title: 'Date',
-                  type: 'temporal',
-                },
-              },
-            },
-            {
-              mark: { type: 'line', color: '#fdcd56', tooltip: true },
-              transform: [{ loess: 'priceDifference', on: 'date' }],
-              encoding: {
-                y: {
-                  field: 'priceDifference',
-                  type: 'quantitative',
-                  title: 'Différence de prix lissée en €',
-                },
-                x: {
-                  field: 'date',
-                  title: 'Date',
-                  type: 'temporal',
-                },
-              },
+              loess: 'priceDifference',
+              on: 'date',
             },
           ],
+
+          mark: {
+            type: 'line',
+            color: '#fdcd56',
+            tooltip: true,
+            size: 4,
+          },
+          encoding: {
+            y: {
+              field: 'priceDifference',
+              type: 'quantitative',
+              title: 'Différence de prix lissée en €',
+            },
+            x: {
+              field: 'date',
+              title: 'Date',
+              type: 'temporal',
+            },
+          },
         }
 
         res.json(vegaMap)
@@ -516,6 +513,8 @@ router.get(
   (req: RentRequest, res: Response, next: NextFunction) => {
     log.info(`-> ${req.baseUrl} isLegalVariation`, 'blue')
 
+    const dateValue: string = req.query.dateValue as string
+    const dateRange: string[] = dateValue?.split(',')
     const districtValues: string = req.query.districtValues as string
     const furnishedValue = req.query.furnishedValue as string
     const surfaceValue: string = req.query.surfaceValue as string
@@ -540,7 +539,8 @@ router.get(
         districtList,
         surfaceRange,
         roomRange,
-        hasFurniture
+        hasFurniture,
+        dateRange
       )
       .then((data) => {
         const vegaMap = {
@@ -582,6 +582,7 @@ router.get(
                 type: 'line',
                 color: '#f03434',
                 tooltip: true,
+                size: 3,
               },
               encoding: {
                 y: {
@@ -597,7 +598,7 @@ router.get(
               },
             },
             {
-              mark: { type: 'line', color: '#fdcd56', tooltip: true },
+              mark: { type: 'line', color: '#fdcd56', tooltip: true, size: 4 },
               transform: [{ loess: 'percentOfTotal', on: 'date' }],
               encoding: {
                 y: {
@@ -636,9 +637,11 @@ function getLegalPerRenter(
   next: NextFunction
 ) {
   log.info(`-> ${req.baseUrl} isLegalPerRenter`, 'blue')
+  const dateValue: string = req.query.dateValue as string
+  const dateRange: string[] = dateValue?.split(',')
 
   rentService
-    .getLegalPerRenterData(req.params.city)
+    .getLegalPerRenterData(req.params.city, dateRange)
     .then((data) => {
       const vegaMap = {
         ...vegaCommonOpt(),
@@ -711,9 +714,11 @@ function getLegalPerWebsite(
   next: NextFunction
 ) {
   log.info(`-> ${req.baseUrl} getLegalPerWebsite`, 'blue')
+  const dateValue: string = req.query.dateValue as string
+  const dateRange: string[] = dateValue?.split(',')
 
   rentService
-    .getLegalPerWebsiteData(req.params.city)
+    .getLegalPerWebsiteData(req.params.city, dateRange)
     .then((data) => {
       const vegaMap = {
         ...vegaCommonOpt(),
