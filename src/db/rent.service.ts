@@ -2,12 +2,25 @@ import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
 
 export async function getMapData(
-  city: string
+  city: string,
+  dateRange: string[]
 ): Promise<
   { isLegal: boolean; latitude: number; longitude: number; district: string }[]
 > {
+  const filter = {
+    latitude: { $exists: true },
+    longitude: { $exists: true },
+    city,
+  }
+  if (dateRange?.length) {
+    filter['createdAt'] = {
+      $gte: dateRange[0],
+      $lt: dateRange[1],
+    }
+  }
+
   return await Rent.find(
-    { latitude: { $exists: true }, longitude: { $exists: true }, city },
+    filter,
     { isLegal: 1, latitude: 1, longitude: 1, city: 1, district: 1 },
     (
       err: Error,
@@ -27,14 +40,22 @@ export async function getMapData(
 }
 
 export async function getChloroplethMapData(
-  city: string
+  city: string,
+  dateRange: string[]
 ): Promise<{ isLegal: boolean; district: string }[]> {
+  const filter = {
+    latitude: { $exists: true },
+    longitude: { $exists: true },
+    city,
+  }
+  if (dateRange?.length) {
+    filter['createdAt'] = {
+      $gte: dateRange[0],
+      $lt: dateRange[1],
+    }
+  }
   return await Rent.find(
-    {
-      latitude: { $exists: true },
-      longitude: { $exists: true },
-      city,
-    },
+    filter,
     { isLegal: 1, district: 1 },
     (
       err: Error,
@@ -52,12 +73,24 @@ export async function getChloroplethMapData(
 }
 
 export async function getPriceDiffData(
-  city: string
+  city: string,
+  dateRange: string[]
 ): Promise<
   { maxPrice: number; postalCode: string; priceExcludingCharges: number }[]
 > {
+  const filter = {
+    postalCode: { $exists: true },
+    city,
+    isLegal: false,
+  }
+  if (dateRange?.length) {
+    filter['createdAt'] = {
+      $gte: dateRange[0],
+      $lt: dateRange[1],
+    }
+  }
   return await Rent.find(
-    { postalCode: { $exists: true }, city, isLegal: false },
+    filter,
     {
       maxPrice: 1,
       postalCode: 1,
@@ -84,14 +117,17 @@ export async function getLegalVarData(
   districtList: string[],
   surfaceRange: number[],
   roomRange: number[],
-  hasFurniture: boolean
+  hasFurniture: boolean,
+  dateRange: string[]
 ): Promise<
   {
     isLegal: Boolean
     createdAt: string
   }[]
 > {
-  const request = { createdAt: { $exists: true }, city }
+  const request = {
+    city,
+  }
 
   if (districtList?.length) {
     request['district'] = districtList
@@ -107,6 +143,10 @@ export async function getLegalVarData(
 
   if (roomRange?.length) {
     request['roomCount'] = { $gte: roomRange[0], $lte: roomRange[1] }
+  }
+
+  if (dateRange?.length) {
+    request['createdAt'] = { $gte: dateRange[0], $lt: dateRange[1] }
   }
 
   return await Rent.find(
@@ -131,7 +171,8 @@ export async function getLegalVarData(
 }
 
 export async function getPriceVarData(
-  city: string
+  city: string,
+  dateRange: string[]
 ): Promise<
   {
     maxPrice: number
@@ -139,8 +180,18 @@ export async function getPriceVarData(
     priceExcludingCharges: number
   }[]
 > {
+  const filter = {
+    city,
+    isLegal: false,
+  }
+  if (dateRange?.length) {
+    filter['createdAt'] = {
+      $gte: dateRange[0],
+      $lt: dateRange[1],
+    }
+  }
   return await Rent.find(
-    { createdAt: { $exists: true }, city, isLegal: false },
+    filter,
     {
       createdAt: 1,
       maxPrice: 1,
@@ -163,10 +214,21 @@ export async function getPriceVarData(
 }
 
 export async function getLegalPerRenterData(
-  city: string
+  city: string,
+  dateRange: string[]
 ): Promise<{ isLegal: boolean; renter: string }[]> {
+  const filter = {
+    surface: { $lte: 100 },
+    city,
+  }
+  if (dateRange?.length) {
+    filter['createdAt'] = {
+      $gte: dateRange[0],
+      $lt: dateRange[1],
+    }
+  }
   return await Rent.find(
-    { surface: { $lte: 100 }, city },
+    filter,
     { isLegal: 1, renter: 1 },
     (err: Error, rents: { isLegal: boolean; renter: string }[]) => {
       if (err) {
@@ -178,10 +240,21 @@ export async function getLegalPerRenterData(
 }
 
 export async function getLegalPerWebsiteData(
-  city: string
+  city: string,
+  dateRange: string[]
 ): Promise<{ isLegal: boolean; website: string }[]> {
+  const filter = {
+    surface: { $lte: 100 },
+    city,
+  }
+  if (dateRange?.length) {
+    filter['createdAt'] = {
+      $gte: dateRange[0],
+      $lt: dateRange[1],
+    }
+  }
   return await Rent.find(
-    { surface: { $lte: 100 }, city },
+    filter,
     { isLegal: 1, website: 1 },
     (err: Error, rents: { isLegal: boolean; website: string }[]) => {
       if (err) {
@@ -193,10 +266,21 @@ export async function getLegalPerWebsiteData(
 }
 
 export async function getLegalPerSurfaceData(
-  city: string
+  city: string,
+  dateRange: string[]
 ): Promise<{ isLegal: boolean; surface: number }[]> {
+  const filter = {
+    surface: { $lte: 100 },
+    city,
+  }
+  if (dateRange?.length) {
+    filter['createdAt'] = {
+      $gte: dateRange[0],
+      $lt: dateRange[1],
+    }
+  }
   return await Rent.find(
-    { surface: { $lte: 100 }, city },
+    filter,
     { isLegal: 1, surface: 1 },
     (err: Error, rents: { isLegal: boolean; surface: number }[]) => {
       if (err) {
