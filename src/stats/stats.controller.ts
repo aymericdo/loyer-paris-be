@@ -85,7 +85,17 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
       districtField = 'properties.l_qu'
       break
     case 'lille':
-      geodata = lilleGeodata
+      geodata = {
+        ...lilleGeodata,
+        features: lilleGeodata.features.map((data) => ({
+          ...data,
+          properties: {
+            ...data.properties,
+            zonage: `Zone ${data['properties']['zonage']}`,
+          },
+        })),
+      }
+
       districtField = 'properties.zonage'
       break
   }
@@ -175,7 +185,16 @@ function getChloroplethMap(
       districtField = 'properties.l_qu'
       break
     case 'lille':
-      geodata = lilleGeodata
+      geodata = {
+        ...lilleGeodata,
+        features: lilleGeodata.features.map((data) => ({
+          ...data,
+          properties: {
+            ...data.properties,
+            zonage: `Zone ${data['properties']['zonage']}`,
+          },
+        })),
+      }
       districtField = 'properties.zonage'
       break
   }
@@ -798,18 +817,20 @@ function getDistricts(req: RentRequest, res: Response, next: NextFunction) {
       break
   }
 
-  res.json(
-    geodata.features
-      .map((data) => {
-        switch (city) {
-          case 'paris':
-            return data['properties']['l_qu']
-          case 'lille':
-            return data['properties']['zonage']
-        }
-      })
-      .sort()
-  )
+  res.json([
+    ...new Set(
+      geodata.features
+        .map((data) => {
+          switch (city) {
+            case 'paris':
+              return data['properties']['l_qu']
+            case 'lille':
+              return `Zone ${data['properties']['zonage']}`
+          }
+        })
+        .sort()
+    ),
+  ])
 }
 
 router.get('/welcome', getWelcomeText)

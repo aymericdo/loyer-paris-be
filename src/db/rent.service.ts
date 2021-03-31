@@ -1,6 +1,15 @@
 import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
 
+function getCity(city: string) {
+  switch (city) {
+    case 'paris':
+      return 'paris'
+    case 'lille':
+      return ['lille', 'hellemmes', 'lomme']
+  }
+}
+
 export async function getMapData(
   city: string,
   dateRange: string[]
@@ -10,7 +19,7 @@ export async function getMapData(
   const filter = {
     latitude: { $exists: true },
     longitude: { $exists: true },
-    city,
+    city: getCity(city),
   }
   if (dateRange?.length) {
     filter['createdAt'] = {
@@ -21,14 +30,14 @@ export async function getMapData(
 
   return await Rent.find(
     filter,
-    { isLegal: 1, latitude: 1, longitude: 1, city: 1, district: 1 },
+    { isLegal: 1, latitude: 1, longitude: 1, district: 1 },
     (
       err: Error,
       rents: {
         isLegal: boolean
         latitude: number
         longitude: number
-        city: string
+        district: string
       }[]
     ) => {
       if (err) {
@@ -46,7 +55,7 @@ export async function getChloroplethMapData(
   const filter = {
     latitude: { $exists: true },
     longitude: { $exists: true },
-    city,
+    city: getCity(city),
   }
   if (dateRange?.length) {
     filter['createdAt'] = {
@@ -80,7 +89,7 @@ export async function getPriceDiffData(
 > {
   const filter = {
     postalCode: { $exists: true },
-    city,
+    city: getCity(city),
     isLegal: false,
   }
   if (dateRange?.length) {
@@ -126,7 +135,7 @@ export async function getLegalVarData(
   }[]
 > {
   const request = {
-    city,
+    city: getCity(city),
   }
 
   if (districtList?.length) {
@@ -181,7 +190,7 @@ export async function getPriceVarData(
   }[]
 > {
   const filter = {
-    city,
+    city: getCity(city),
     isLegal: false,
   }
   if (dateRange?.length) {
@@ -219,7 +228,7 @@ export async function getLegalPerRenterData(
 ): Promise<{ isLegal: boolean; renter: string }[]> {
   const filter = {
     surface: { $lte: 100 },
-    city,
+    city: getCity(city),
   }
   if (dateRange?.length) {
     filter['createdAt'] = {
@@ -245,7 +254,7 @@ export async function getLegalPerWebsiteData(
 ): Promise<{ isLegal: boolean; website: string }[]> {
   const filter = {
     surface: { $lte: 100 },
-    city,
+    city: getCity(city),
   }
   if (dateRange?.length) {
     filter['createdAt'] = {
@@ -271,7 +280,7 @@ export async function getLegalPerSurfaceData(
 ): Promise<{ isLegal: boolean; surface: number }[]> {
   const filter = {
     surface: { $lte: 100 },
-    city,
+    city: getCity(city),
   }
   if (dateRange?.length) {
     filter['createdAt'] = {
