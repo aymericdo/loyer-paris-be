@@ -19,8 +19,12 @@ export async function getMapData(
   const filter = {
     latitude: { $exists: true },
     longitude: { $exists: true },
-    city: getCity(city),
   }
+
+  if (city !== 'all') {
+    filter['city'] = getCity(city)
+  }
+
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
@@ -55,8 +59,12 @@ export async function getChloroplethMapData(
   const filter = {
     latitude: { $exists: true },
     longitude: { $exists: true },
-    city: getCity(city),
   }
+
+  if (city !== 'all') {
+    filter['city'] = getCity(city)
+  }
+
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
@@ -89,9 +97,13 @@ export async function getPriceDiffData(
 > {
   const filter = {
     postalCode: { $exists: true },
-    city: getCity(city),
     isLegal: false,
   }
+
+  if (city !== 'all') {
+    filter['city'] = getCity(city)
+  }
+
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
@@ -134,32 +146,34 @@ export async function getLegalVarData(
     createdAt: string
   }[]
 > {
-  const request = {
-    city: getCity(city),
+  const filter = {}
+
+  if (city !== 'all') {
+    filter['city'] = getCity(city)
   }
 
   if (districtList?.length) {
-    request['district'] = districtList
+    filter['district'] = districtList
   }
 
   if (hasFurniture !== null) {
-    request['hasFurniture'] = hasFurniture
+    filter['hasFurniture'] = hasFurniture
   }
 
   if (surfaceRange?.length) {
-    request['surface'] = { $gte: surfaceRange[0], $lte: surfaceRange[1] }
+    filter['surface'] = { $gte: surfaceRange[0], $lte: surfaceRange[1] }
   }
 
   if (roomRange?.length) {
-    request['roomCount'] = { $gte: roomRange[0], $lte: roomRange[1] }
+    filter['roomCount'] = { $gte: roomRange[0], $lte: roomRange[1] }
   }
 
   if (dateRange?.length) {
-    request['createdAt'] = { $gte: dateRange[0], $lt: dateRange[1] }
+    filter['createdAt'] = { $gte: dateRange[0], $lt: dateRange[1] }
   }
 
   return await Rent.find(
-    request,
+    filter,
     {
       createdAt: 1,
       isLegal: 1,
@@ -190,9 +204,13 @@ export async function getPriceVarData(
   }[]
 > {
   const filter = {
-    city: getCity(city),
     isLegal: false,
   }
+
+  if (city !== 'all') {
+    filter['city'] = getCity(city)
+  }
+
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
@@ -228,8 +246,12 @@ export async function getLegalPerRenterData(
 ): Promise<{ isLegal: boolean; renter: string }[]> {
   const filter = {
     surface: { $lte: 100 },
-    city: getCity(city),
   }
+
+  if (city !== 'all') {
+    filter['city'] = getCity(city)
+  }
+
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
@@ -254,8 +276,12 @@ export async function getLegalPerWebsiteData(
 ): Promise<{ isLegal: boolean; website: string }[]> {
   const filter = {
     surface: { $lte: 100 },
-    city: getCity(city),
   }
+
+  if (city !== 'all') {
+    filter['city'] = getCity(city)
+  }
+
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
@@ -280,8 +306,12 @@ export async function getLegalPerSurfaceData(
 ): Promise<{ isLegal: boolean; surface: number }[]> {
   const filter = {
     surface: { $lte: 100 },
-    city: getCity(city),
   }
+
+  if (city !== 'all') {
+    filter['city'] = getCity(city)
+  }
+
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],

@@ -140,7 +140,7 @@ function getMap(req: RentRequest, res: Response, next: NextFunction) {
               tooltip: { field: 'district', type: 'nominal' },
               color: {
                 field: 'isLegal',
-                title: 'Est légal ?',
+                title: 'Est conforme ?',
                 type: 'nominal',
                 scale: {
                   range: ['red', 'green'],
@@ -254,13 +254,13 @@ function getChloroplethMap(
             field: 'isIllegal',
             type: 'quantitative',
             scale: { scheme: 'reds' },
-            title: 'illégalité (%)',
+            title: 'Conformité (%)',
           },
           tooltip: [
             {
               field: 'isIllegal',
               type: 'quantitative',
-              title: 'Annonces à surveiller',
+              title: 'Annonces non conformes',
             },
             {
               field: 'district',
@@ -328,7 +328,7 @@ function getPriceDifference(
             field: 'priceDifference',
             type: 'quantitative',
             title:
-              'Différence moyenne entre prix pratiqué et prix théorique (annonces illégales)',
+              'Différence moyenne entre prix pratiqué et prix maximum estimé (€)',
           },
           y: {
             field: 'postalCode',
@@ -392,7 +392,7 @@ function getLegalPerSurface(
           },
           color: {
             field: 'isLegal',
-            title: 'Est légal ?',
+            title: 'Est conforme ?',
             type: 'nominal',
             scale: {
               range: ['red', 'green'],
@@ -503,7 +503,8 @@ router.get(
             y: {
               field: 'priceDifference',
               type: 'quantitative',
-              title: 'Différence de prix lissée en €',
+              title:
+                'Différence moyenne (lissée) entre prix pratiqué et prix maximum estimé (€)',
             },
             x: {
               field: 'date',
@@ -601,7 +602,7 @@ router.get(
                 type: 'line',
                 color: '#f03434',
                 tooltip: true,
-                size: 3,
+                size: 2,
               },
               encoding: {
                 y: {
@@ -617,7 +618,7 @@ router.get(
               },
             },
             {
-              mark: { type: 'line', color: '#fdcd56', tooltip: true, size: 4 },
+              mark: { type: 'line', color: '#fdcd56', tooltip: true, size: 5 },
               transform: [{ loess: 'percentOfTotal', on: 'date' }],
               encoding: {
                 y: {
@@ -700,14 +701,14 @@ function getLegalPerRenter(
         encoding: {
           x: {
             field: 'renter',
-            title: 'Loueur',
+            title: 'Agence',
             type: 'nominal',
             sort: '-y',
           },
           y: {
             aggregate: 'mean',
             field: 'percentOfTotal',
-            title: 'Annonces à vérifier (%)',
+            title: 'Annonces non conformes (%)',
             type: 'quantitative',
           },
         },
@@ -784,7 +785,7 @@ function getLegalPerWebsite(
           y: {
             aggregate: 'mean',
             field: 'percentOfTotal',
-            title: 'Annonces à vérifier (%)',
+            title: 'Annonces non conformes (%)',
             type: 'quantitative',
           },
         },
