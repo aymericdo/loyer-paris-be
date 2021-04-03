@@ -22,53 +22,53 @@ const lilleGeodata = JSON.parse(
   fs.readFileSync(path.join('json-data/quartier_lille_geodata.json'), 'utf8')
 )
 
-router.get('/need-captcha', getNeedCaptcha)
-function getNeedCaptcha(req: RentRequest, res: Response, next: NextFunction) {
-  log.info(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
-  const ipService = new IpService(req)
-  res.status(200).json(!ipService.isIpCached())
-}
+// router.get('/need-captcha', getNeedCaptcha)
+// function getNeedCaptcha(req: RentRequest, res: Response, next: NextFunction) {
+//   log.info(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
+//   const ipService = new IpService(req)
+//   res.status(200).json(!ipService.isIpCached())
+// }
 
-router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
-  const ipService = new IpService(req)
+// router.use('/', function (req: RentRequest, res: Response, next: NextFunction) {
+//   const ipService = new IpService(req)
 
-  if (ipService.isIpCached()) {
-    next()
-  } else {
-    if (!req.query.recaptchaToken) {
-      return res.status(403).json({
-        message: 'token expired',
-      })
-    }
-    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
-    axios
-      .post(
-        url,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-          },
-        }
-      )
-      .then((response) => {
-        if (!response.data.success) {
-          return res.status(500).json({
-            message: response.data['error-codes'].join('.'),
-          })
-        } else {
-          ipService.saveIp()
-        }
+//   if (ipService.isIpCached()) {
+//     next()
+//   } else {
+//     if (!req.query.recaptchaToken) {
+//       return res.status(403).json({
+//         message: 'token expired',
+//       })
+//     }
+//     const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
+//     axios
+//       .post(
+//         url,
+//         {},
+//         {
+//           headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+//           },
+//         }
+//       )
+//       .then((response) => {
+//         if (!response.data.success) {
+//           return res.status(500).json({
+//             message: response.data['error-codes'].join('.'),
+//           })
+//         } else {
+//           ipService.saveIp()
+//         }
 
-        next()
-      })
-      .catch(() => {
-        return res
-          .status(500)
-          .json({ message: 'oops, something went wrong on our side' })
-      })
-  }
-})
+//         next()
+//       })
+//       .catch(() => {
+//         return res
+//           .status(500)
+//           .json({ message: 'oops, something went wrong on our side' })
+//       })
+//   }
+// })
 
 // routes
 router.get('/map/:city', getMap)
