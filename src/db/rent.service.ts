@@ -384,6 +384,7 @@ export async function getRelevantAdsData(): Promise<RelevantAdsData[]> {
       price: 1,
       district: 1,
     },
+    { sort: { createdAt: -1 } },
     (err: Error, rents: RelevantAdsData[]) => {
       if (err) {
         throw err
