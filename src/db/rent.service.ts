@@ -358,6 +358,41 @@ export async function getWelcomeData(): Promise<
   )
 }
 
+interface RelevantAdsData {
+  id: string
+  surface: number
+  roomCount: number
+  website: string
+  createdAt: Date
+  hasFurniture: boolean
+  price: number
+  district: string
+}
+export async function getRelevantAdsData(): Promise<RelevantAdsData[]> {
+  const today = new Date()
+  const minDate = new Date(today.setDate(today.getDate() - 7))
+
+  return await Rent.find(
+    { isLegal: true, createdAt: { $gte: minDate } },
+    {
+      id: 1,
+      surface: 1,
+      roomCount: 1,
+      website: 1,
+      createdAt: 1,
+      hasFurniture: 1,
+      price: 1,
+      district: 1,
+    },
+    (err: Error, rents: RelevantAdsData[]) => {
+      if (err) {
+        throw err
+      }
+      return rents
+    }
+  )
+}
+
 export async function getAdById(
   id: string,
   website: string
@@ -371,7 +406,4 @@ export async function getAdById(
       return rent
     }
   )
-}
-export function getLegalPerWebsite(city: string) {
-  throw new Error('Function not implemented.')
 }

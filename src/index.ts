@@ -48,6 +48,8 @@ app.use('/superimmo', require('./websites/superimmo/superimmo.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 
+app.use('/shop', require('./shop/shop.controller'))
+
 app.use('/version', require('./version/version.controller'))
 // app.use('/migration', require('./db/migration.ts'))
 
