@@ -3,7 +3,7 @@ import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
 const router = express.Router()
 
-router.get('/district-list/:city', getRelevantAds)
+router.get('/', getRelevantAds)
 function getRelevantAds(req: Request, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
 
