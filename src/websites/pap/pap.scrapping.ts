@@ -22,12 +22,6 @@ export class PapScrapping {
       '[itemprop=itemListElement] > a[itemprop=item] > span[itemprop=name]'
     )
 
-    // console.log(title)
-    // console.log(description)
-    // console.log(price)
-    // console.log(cityLabel)
-    // console.log(stations)
-
     let surface = null
     let rooms = null
 

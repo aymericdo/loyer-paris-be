@@ -56,5 +56,5 @@ Sentry.init({
   environment: process.env.CURRENT_ENV === 'prod' ? 'production' : 'local',
 })
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 80
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
