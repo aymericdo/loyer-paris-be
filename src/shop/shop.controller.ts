@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/', getRelevantAds)
 function getRelevantAds(req: Request, res: Response, next: NextFunction) {
-  log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
+  log.info(`-> ${req.baseUrl} getRelevantAds`, 'blue')
 
   rentService
     .getRelevantAdsData()
