@@ -368,9 +368,15 @@ interface RelevantAdsData {
   price: number
   district: string
 }
-export async function getRelevantAdsData(): Promise<RelevantAdsData[]> {
+export async function getRelevantAdsData(paginationOpts?: {
+  page: number
+  perPage: number
+}): Promise<RelevantAdsData[]> {
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 7))
+
+  const page = paginationOpts?.page || 1
+  const perPage = paginationOpts?.perPage || 20
 
   return await Rent.find(
     { isLegal: true, createdAt: { $gte: minDate } },
@@ -384,7 +390,11 @@ export async function getRelevantAdsData(): Promise<RelevantAdsData[]> {
       price: 1,
       district: 1,
     },
-    { sort: { createdAt: -1 } },
+    {
+      sort: { createdAt: -1 },
+      skip: page * perPage,
+      limit: perPage,
+    },
     (err: Error, rents: RelevantAdsData[]) => {
       if (err) {
         throw err

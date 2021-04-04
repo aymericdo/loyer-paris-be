@@ -6,9 +6,11 @@ const router = express.Router()
 router.get('/', getRelevantAds)
 function getRelevantAds(req: Request, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getRelevantAds`, 'blue')
+  const page: number = +req.query.page
+  const perPage: number = +req.query.perPage
 
   rentService
-    .getRelevantAdsData()
+    .getRelevantAdsData({ page, perPage })
     .then((data) => {
       res.json(data)
     })
