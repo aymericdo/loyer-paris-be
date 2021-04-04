@@ -385,7 +385,7 @@ export async function getRelevantAdsData(
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 7))
 
-  const page = paginationOpts?.page || 1
+  const page = paginationOpts?.page || 0
   const perPage = paginationOpts?.perPage || 20
 
   const filter = { isLegal: true, createdAt: { $gte: minDate } }
