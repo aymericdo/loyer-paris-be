@@ -9,12 +9,11 @@ function getRelevantAds(req: Request, res: Response, next: NextFunction) {
   const page: number = +req.query.page
   const perPage: number = +req.query.perPage
 
-  const city: string = req.query.cityValue as string
-  const dateValue: string = req.query.dateValue as string
-  const districtValues: string = req.query.districtValues as string
-  const furnishedValue = req.query.furnishedValue as string
-  const surfaceValue: string = req.query.surfaceValue as string
-  const roomValue: string = req.query.roomValue as string
+  const city: string = (req.query.cityValue as string) || null
+  const districtValues: string = (req.query.districtValues as string) || null
+  const furnishedValue = (req.query.furnishedValue as string) || null
+  const surfaceValue: string = (req.query.surfaceValue as string) || null
+  const roomValue: string = (req.query.roomValue as string) || null
 
   const districtList: string[] = districtValues
     ?.split(',')

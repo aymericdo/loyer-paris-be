@@ -34,6 +34,7 @@ describe('pap', () => {
           title: 'location studio 21 m² paris 11e\t\t\t\t819 €',
           stations: [],
           platform: 'chrome',
+          url: 'https://pap.fr/lkdfsklnf?r421900951',
         }
 
         const mockResponse: any = {
@@ -147,6 +148,7 @@ describe('pap', () => {
             'location appartement 3 pieces 53 m² lille (59000)\t\t\t\t755 €',
           stations: [],
           platform: 'chrome',
+          url: 'https://pap.fr/lkdfsklnf?r421900951',
         }
 
         const mockResponse: any = {

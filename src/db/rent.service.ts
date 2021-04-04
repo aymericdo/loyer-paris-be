@@ -366,6 +366,7 @@ interface RelevantAdsData {
   createdAt: Date
   hasFurniture: boolean
   price: number
+  url: string
   district: string
 }
 export async function getRelevantAdsData(
@@ -389,7 +390,7 @@ export async function getRelevantAdsData(
 
   const filter = { isLegal: true, createdAt: { $gte: minDate } }
 
-  if (filterParam.city !== 'all') {
+  if (filterParam?.city) {
     filter['city'] = getCity(filterParam.city)
   }
 
@@ -426,6 +427,7 @@ export async function getRelevantAdsData(
       hasFurniture: 1,
       price: 1,
       district: 1,
+      url: 1,
     },
     {
       sort: { createdAt: -1 },

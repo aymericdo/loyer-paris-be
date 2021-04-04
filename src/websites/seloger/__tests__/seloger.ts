@@ -26,6 +26,7 @@ describe('seloger', () => {
           yearBuilt: null,
           title: null,
           platform: 'chrome',
+          url: 'https://seloger.com/dfdsfs?ad=234523',
         }
 
         const mockResponse: any = {
@@ -86,6 +87,7 @@ describe('seloger', () => {
           yearBuilt: 'Année de construction 1900',
           title: null,
           platform: 'chrome',
+          url: 'https://seloger.com/dfdsfs?ad=234523',
         }
 
         const mockResponse: any = {
