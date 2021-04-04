@@ -14,6 +14,7 @@ export type Mapping = (
   | LuxResidenceMapping
   | BellesDemeuresMapping
   | BienIciMapping
+  | LocserviceMapping
 ) & { noMoreData?: boolean; platform: string; id: string; data?: string }
 
 export interface FacebookMapping {
@@ -224,5 +225,17 @@ export interface SuperimmoMapping {
   rooms: string
   yearBuilt: string
   renter: string
+  surface: string
+}
+
+export interface LocserviceMapping {
+  id: string
+  title: string
+  cityLabel: string
+  description: string
+  hasCharges: boolean
+  furnished: boolean
+  price: string
+  rooms: string
   surface: string
 }

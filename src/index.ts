@@ -45,6 +45,7 @@ app.use(
 app.use('/bienici', require('./websites/bienici/bienici.controller'))
 app.use('/fnaim', require('./websites/fnaim/fnaim.controller'))
 app.use('/superimmo', require('./websites/superimmo/superimmo.controller'))
+app.use('/locservice', require('./websites/locservice/locservice.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 

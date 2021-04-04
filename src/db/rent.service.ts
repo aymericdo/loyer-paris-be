@@ -28,7 +28,7 @@ export async function getMapData(
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
-      $lt: dateRange[1],
+      $lte: dateRange[1],
     }
   }
 
@@ -68,7 +68,7 @@ export async function getChloroplethMapData(
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
-      $lt: dateRange[1],
+      $lte: dateRange[1],
     }
   }
   return await Rent.find(
@@ -107,7 +107,7 @@ export async function getPriceDiffData(
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
-      $lt: dateRange[1],
+      $lte: dateRange[1],
     }
   }
   return await Rent.find(
@@ -169,7 +169,7 @@ export async function getLegalVarData(
   }
 
   if (dateRange?.length) {
-    filter['createdAt'] = { $gte: dateRange[0], $lt: dateRange[1] }
+    filter['createdAt'] = { $gte: dateRange[0], $lte: dateRange[1] }
   }
 
   return await Rent.find(
@@ -214,7 +214,7 @@ export async function getPriceVarData(
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
-      $lt: dateRange[1],
+      $lte: dateRange[1],
     }
   }
   return await Rent.find(
@@ -255,7 +255,7 @@ export async function getLegalPerRenterData(
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
-      $lt: dateRange[1],
+      $lte: dateRange[1],
     }
   }
   return await Rent.find(
@@ -285,7 +285,7 @@ export async function getLegalPerWebsiteData(
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
-      $lt: dateRange[1],
+      $lte: dateRange[1],
     }
   }
   return await Rent.find(
@@ -315,7 +315,7 @@ export async function getLegalPerSurfaceData(
   if (dateRange?.length) {
     filter['createdAt'] = {
       $gte: dateRange[0],
-      $lt: dateRange[1],
+      $lte: dateRange[1],
     }
   }
   return await Rent.find(
@@ -368,18 +368,55 @@ interface RelevantAdsData {
   price: number
   district: string
 }
-export async function getRelevantAdsData(paginationOpts?: {
-  page: number
-  perPage: number
-}): Promise<RelevantAdsData[]> {
+export async function getRelevantAdsData(
+  filterParam: {
+    city: string
+    districtList: string[]
+    surfaceRange: number[]
+    roomRange: number[]
+    hasFurniture: boolean
+  },
+  paginationOpts?: {
+    page: number
+    perPage: number
+  }
+): Promise<RelevantAdsData[]> {
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 7))
 
   const page = paginationOpts?.page || 1
   const perPage = paginationOpts?.perPage || 20
 
+  const filter = { isLegal: true, createdAt: { $gte: minDate } }
+
+  if (filterParam.city !== 'all') {
+    filter['city'] = getCity(filterParam.city)
+  }
+
+  if (filterParam?.districtList?.length) {
+    filter['district'] = filterParam.districtList
+  }
+
+  if (filterParam.hasFurniture !== null) {
+    filter['hasFurniture'] = filterParam.hasFurniture
+  }
+
+  if (filterParam?.surfaceRange?.length) {
+    filter['surface'] = {
+      $gte: filterParam.surfaceRange[0],
+      $lte: filterParam.surfaceRange[1],
+    }
+  }
+
+  if (filterParam?.roomRange?.length) {
+    filter['roomCount'] = {
+      $gte: filterParam.roomRange[0],
+      $lte: filterParam.roomRange[1],
+    }
+  }
+
   return await Rent.find(
-    { isLegal: true, createdAt: { $gte: minDate } },
+    filter,
     {
       id: 1,
       surface: 1,
