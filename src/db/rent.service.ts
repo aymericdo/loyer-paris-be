@@ -443,6 +443,14 @@ export async function getRelevantAdsData(
   )
 }
 
+export async function getRelevantAdsDataTotalCount() {
+  const today = new Date()
+  const minDate = new Date(today.setDate(today.getDate() - 7))
+
+  const filter = { isLegal: true, createdAt: { $gte: minDate } }
+  return await Rent.countDocuments(filter)
+}
+
 export async function getAdById(
   id: string,
   website: string

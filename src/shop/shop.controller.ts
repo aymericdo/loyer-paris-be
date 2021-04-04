@@ -36,9 +36,15 @@ function getRelevantAds(req: Request, res: Response, next: NextFunction) {
     hasFurniture,
   }
 
-  rentService
-    .getRelevantAdsData(filter, { page, perPage })
-    .then((data) => {
+  Promise.all([
+    rentService.getRelevantAdsData(filter, { page, perPage }),
+    rentService.getRelevantAdsDataTotalCount(),
+  ])
+    .then(([data, total]) => {
+      res.set({
+        'X-Total-Count': total.toString(),
+        'Access-Control-Expose-Headers': 'X-Total-Count',
+      })
       res.json(data)
     })
     .catch((err) => {
