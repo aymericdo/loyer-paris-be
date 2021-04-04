@@ -21,6 +21,7 @@ interface SavedInfo {
   stations?: string[]
   surface: number
   website: string
+  url: string
   yearBuilt?: number[]
 }
 
@@ -47,6 +48,7 @@ export class SaveRentService {
 
       const rent = new Rent({
         id: this.adToSave.id,
+        url: this.adToSave.url,
         website: this.adToSave.website,
         isLegal: this.adToSave.isLegal,
         maxPrice: this.adToSave.maxPrice,

@@ -93,6 +93,7 @@ export abstract class Website {
         maxPrice: maxAuthorized,
         priceExcludingCharges,
         website: this.website,
+        url: this.body.url,
       }).save()
 
       return new SerializeRentService(

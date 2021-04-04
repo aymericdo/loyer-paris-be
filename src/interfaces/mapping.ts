@@ -15,7 +15,13 @@ export type Mapping = (
   | BellesDemeuresMapping
   | BienIciMapping
   | LocserviceMapping
-) & { noMoreData?: boolean; platform: string; id: string; data?: string }
+) & {
+  noMoreData?: boolean
+  platform: string
+  id: string
+  url: string
+  data?: string
+}
 
 export interface FacebookMapping {
   id: string
