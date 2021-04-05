@@ -11,14 +11,14 @@ export class Pap extends Website {
 
   async mapping(): Promise<Ad> {
     let ad: PapMapping = null
-    if (this.isV2) {
-      if (!this.body.id) {
-        throw {
-          error: ErrorCode.Minimal,
-          msg: `no more id for ${this.website}/${this.body.platform}`,
-        }
+    if (!this.body.id) {
+      throw {
+        error: ErrorCode.Minimal,
+        msg: `no more id for ${this.website}/${this.body.platform}`,
       }
+    }
 
+    if (this.isV2) {
       const scrap = PapScrapping.scrap(JSON.parse(this.body.data))
 
       if (!scrap) {

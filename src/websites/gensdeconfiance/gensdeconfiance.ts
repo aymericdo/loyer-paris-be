@@ -11,14 +11,14 @@ export class Gensdeconfiance extends Website {
 
   async mapping(): Promise<Ad> {
     let ad: GensdeconfianceMapping = null
-    if (this.isV2) {
-      if (!this.body.id) {
-        throw {
-          error: ErrorCode.Minimal,
-          msg: `no more id for ${this.website}/${this.body.platform}`,
-        }
+    if (!this.body.id) {
+      throw {
+        error: ErrorCode.Minimal,
+        msg: `no more id for ${this.website}/${this.body.platform}`,
       }
+    }
 
+    if (this.isV2) {
       const scrap = GensdeconfianceScrapping.scrap(JSON.parse(this.body.data))
 
       if (!scrap) {

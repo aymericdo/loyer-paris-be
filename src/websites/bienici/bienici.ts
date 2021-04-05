@@ -9,14 +9,14 @@ export class BienIci extends Website {
 
   async mapping(): Promise<Ad> {
     let ad: BienIciMapping = null
-    if (this.isV2) {
-      if (!this.body.id) {
-        throw {
-          error: ErrorCode.Minimal,
-          msg: `no more id for ${this.website}/${this.body.platform}`,
-        }
+    if (!this.body.id) {
+      throw {
+        error: ErrorCode.Minimal,
+        msg: `no more id for ${this.website}/${this.body.platform}`,
       }
+    }
 
+    if (this.isV2) {
       const scrap = BienIciScrapping.scrap(JSON.parse(this.body.data))
 
       if (!scrap) {
