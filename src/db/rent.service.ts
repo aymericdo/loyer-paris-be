@@ -391,7 +391,7 @@ export async function getRelevantAdsData(
 
   const filter = { isLegal: true, createdAt: { $gte: minDate } }
 
-  if (filterParam?.city) {
+  if (filterParam.city !== 'all') {
     filter['city'] = getCity(filterParam.city)
   }
 
