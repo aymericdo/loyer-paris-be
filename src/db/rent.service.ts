@@ -375,6 +375,7 @@ export async function getRelevantAdsData(
     city: string
     districtList: string[]
     surfaceRange: number[]
+    priceRange: number[]
     roomRange: number[]
     hasFurniture: boolean
   },
@@ -407,6 +408,13 @@ export async function getRelevantAdsData(
     filter['surface'] = {
       $gte: filterParam.surfaceRange[0],
       $lte: filterParam.surfaceRange[1],
+    }
+  }
+
+  if (filterParam?.priceRange?.length) {
+    filter['price'] = {
+      $gte: filterParam.priceRange[0],
+      $lte: filterParam.priceRange[1],
     }
   }
 
@@ -449,6 +457,7 @@ export async function getRelevantAdsDataTotalCount(filterParam: {
   city: string
   districtList: string[]
   surfaceRange: number[]
+  priceRange: number[]
   roomRange: number[]
   hasFurniture: boolean
 }) {
@@ -473,6 +482,13 @@ export async function getRelevantAdsDataTotalCount(filterParam: {
     filter['surface'] = {
       $gte: filterParam.surfaceRange[0],
       $lte: filterParam.surfaceRange[1],
+    }
+  }
+
+  if (filterParam?.priceRange?.length) {
+    filter['price'] = {
+      $gte: filterParam.priceRange[0],
+      $lte: filterParam.priceRange[1],
     }
   }
 
