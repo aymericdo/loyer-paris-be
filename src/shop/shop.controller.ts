@@ -38,7 +38,7 @@ function getRelevantAds(req: Request, res: Response, next: NextFunction) {
 
   Promise.all([
     rentService.getRelevantAdsData(filter, { page, perPage }),
-    rentService.getRelevantAdsDataTotalCount(),
+    rentService.getRelevantAdsDataTotalCount(filter),
   ])
     .then(([data, total]) => {
       res.set({

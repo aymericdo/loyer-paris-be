@@ -445,11 +445,44 @@ export async function getRelevantAdsData(
   )
 }
 
-export async function getRelevantAdsDataTotalCount() {
+export async function getRelevantAdsDataTotalCount(filterParam: {
+  city: string
+  districtList: string[]
+  surfaceRange: number[]
+  roomRange: number[]
+  hasFurniture: boolean
+}) {
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 7))
 
   const filter = { isLegal: true, createdAt: { $gte: minDate } }
+
+  if (filterParam.city !== 'all') {
+    filter['city'] = getCity(filterParam.city)
+  }
+
+  if (filterParam?.districtList?.length) {
+    filter['district'] = filterParam.districtList
+  }
+
+  if (filterParam.hasFurniture !== null) {
+    filter['hasFurniture'] = filterParam.hasFurniture
+  }
+
+  if (filterParam?.surfaceRange?.length) {
+    filter['surface'] = {
+      $gte: filterParam.surfaceRange[0],
+      $lte: filterParam.surfaceRange[1],
+    }
+  }
+
+  if (filterParam?.roomRange?.length) {
+    filter['roomCount'] = {
+      $gte: filterParam.roomRange[0],
+      $lte: filterParam.roomRange[1],
+    }
+  }
+
   return await Rent.countDocuments(filter)
 }
 
