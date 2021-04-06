@@ -368,6 +368,7 @@ interface RelevantAdsData {
   price: number
   url: string
   district: string
+  city: string
 }
 export async function getRelevantAdsData(
   filterParam: {
@@ -428,6 +429,7 @@ export async function getRelevantAdsData(
       price: 1,
       district: 1,
       url: 1,
+      city: 1,
     },
     {
       sort: { createdAt: -1 },
