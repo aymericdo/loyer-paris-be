@@ -22,6 +22,8 @@ function getNeedCaptcha(req: Request, res: Response, next: NextFunction) {
   res.status(200).json(!ipService.isIpCached())
 }
 
+router.get('/district-list/:city', getDistricts)
+
 router.use('/', function (req: Request, res: Response, next: NextFunction) {
   const ipService = new IpService(req)
 
@@ -62,8 +64,6 @@ router.use('/', function (req: Request, res: Response, next: NextFunction) {
       })
   }
 })
-
-router.get('/district-list/:city', getDistricts)
 
 // routes
 router.get('/welcome', getWelcomeText)
