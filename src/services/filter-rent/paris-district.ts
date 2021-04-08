@@ -17,6 +17,8 @@ export class ParisDistrictService {
   getDistricts(): ParisDistrictItem[] {
     const districtFromCoordinate =
       this.coordinates &&
+      this.coordinates.lat &&
+      this.coordinates.lng &&
       this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
     return districtFromCoordinate
