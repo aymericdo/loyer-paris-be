@@ -44,7 +44,7 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
   }
 
   interface DistrictElem {
-    label: string
+    value: string
     groupBy: string | null
   }
 
@@ -56,11 +56,11 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
             if (
               !prev.some(
                 (elem: DistrictElem) =>
-                  elem.label === data['properties']['l_qu']
+                  elem.value === data['properties']['l_qu']
               )
             ) {
               prev.push({
-                label: data['properties']['l_qu'],
+                value: data['properties']['l_qu'],
                 groupBy: data['properties']['c_ar'],
               })
             }
@@ -70,11 +70,11 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
             if (
               !prev.some(
                 (elem: DistrictElem) =>
-                  elem.label === `Zone ${data['properties']['zonage']}`
+                  elem.value === `Zone ${data['properties']['zonage']}`
               )
             ) {
               prev.push({
-                label: `Zone ${data['properties']['zonage']}`,
+                value: `Zone ${data['properties']['zonage']}`,
                 groupBy: null,
               })
             }
@@ -88,7 +88,7 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
         if (a.groupBy && b.groupBy) {
           return a.groupBy > b.groupBy ? 1 : -1
         } else {
-          return a.label > b.label ? 1 : -1
+          return a.value > b.value ? 1 : -1
         }
       })
   )
