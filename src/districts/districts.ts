@@ -61,7 +61,7 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
             ) {
               prev.push({
                 value: data['properties']['l_qu'],
-                groupBy: data['properties']['c_ar'],
+                groupBy: data['properties']['c_ar'].toString(),
               })
             }
             break
