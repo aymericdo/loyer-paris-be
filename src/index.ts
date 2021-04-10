@@ -50,6 +50,7 @@ app.use('/locservice', require('./websites/locservice/locservice.controller'))
 app.use('/stats', require('./stats/stats.controller'))
 
 app.use('/shop', require('./shop/shop.controller'))
+app.use('/districts', require('./districts/districts.controller'))
 
 app.use('/version', require('./version/version.controller'))
 // app.use('/migration', require('./db/migration.ts'))
