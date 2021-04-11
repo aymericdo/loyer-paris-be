@@ -61,7 +61,11 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
             ) {
               prev.push({
                 value: data['properties']['l_qu'],
-                groupBy: data['properties']['c_ar'].toString(),
+                groupBy: `${data['properties']['c_ar']}
+                  ${(data['properties']['c_ar'] > 1
+                    ? 'ème'
+                    : 'er'
+                  ).toString()} arrondissement`,
               })
             }
             break
