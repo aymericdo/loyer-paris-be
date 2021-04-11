@@ -46,6 +46,7 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
   interface DistrictElem {
     value: string
     groupBy: string | null
+    displaySequence: number
   }
 
   res.json(
@@ -61,6 +62,7 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
             ) {
               prev.push({
                 value: data['properties']['l_qu'],
+                displaySequence: data['properties']['c_ar'],
                 groupBy: `${data['properties']['c_ar']}${(data['properties'][
                   'c_ar'
                 ] > 1
@@ -80,6 +82,7 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
             ) {
               prev.push({
                 value: `Zone ${data['properties']['zonage']}`,
+                displaySequence: data['properties']['zonage'],
                 groupBy: null,
               })
             }
@@ -90,11 +93,7 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
         return prev
       }, [])
       .sort((a: DistrictElem, b: DistrictElem) => {
-        if (a.groupBy && b.groupBy) {
-          return a.groupBy > b.groupBy ? 1 : -1
-        } else {
-          return a.value > b.value ? 1 : -1
-        }
+        return a.displaySequence > b.displaySequence ? 1 : -1
       })
   )
 }
