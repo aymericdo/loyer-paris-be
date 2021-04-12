@@ -95,11 +95,11 @@ export class SelogerScrapping {
         ''
     }
 
-    const furnished = optionsSection.some((el) => {
+    const furnished = optionsSection?.some((el) => {
       return el.textContent.match(/^Meublé/g)
     })
 
-    const yearBuilt = optionsSection.find((el) => {
+    const yearBuilt = optionsSection?.find((el) => {
       return el.textContent.match(/^Année de construction/g)
     })
 
