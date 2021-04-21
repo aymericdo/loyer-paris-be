@@ -50,6 +50,8 @@ export abstract class Website {
   async digData() {
     const ad: Ad = await this.mapping()
 
+    console.log(ad)
+
     const cleanAd: CleanAd = await new DigService(ad).digInAd()
     let filteredResult: FilteredResult = null
     switch (cleanAd.city) {
