@@ -92,7 +92,7 @@ export function getChloroplethMap(
             field: 'isIllegal',
             type: 'quantitative',
             scale: { scheme: 'reds' },
-            title: 'Conformité (%)',
+            title: 'Non conformité (%)',
           },
           tooltip: [
             {

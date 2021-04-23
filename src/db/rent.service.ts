@@ -139,7 +139,8 @@ export async function getLegalVarData(
   surfaceRange: number[],
   roomRange: number[],
   hasFurniture: boolean,
-  dateRange: string[]
+  dateRange: string[],
+  isParticulier: boolean | null
 ): Promise<
   {
     isLegal: Boolean
@@ -170,6 +171,14 @@ export async function getLegalVarData(
 
   if (dateRange?.length) {
     filter['createdAt'] = { $gte: dateRange[0], $lte: dateRange[1] }
+  }
+
+  if (isParticulier !== null) {
+    if (isParticulier) {
+      filter['renter'] = { $ne: 'Particulier', $exists: true }
+    } else {
+      filter['renter'] = 'Particulier'
+    }
   }
 
   return await Rent.find(
@@ -240,11 +249,44 @@ export async function getPriceVarData(
   )
 }
 
+export async function getLegalPerClassicRenterData(
+  city: string,
+  dateRange: string[],
+  renterNameRegex: RegExp
+): Promise<{ isLegal: boolean; renter: string }[]> {
+  const filter = {
+    renter: { $regex: renterNameRegex },
+    surface: { $lte: 100 },
+  }
+
+  if (city !== 'all') {
+    filter['city'] = getCity(city)
+  }
+
+  if (dateRange?.length) {
+    filter['createdAt'] = {
+      $gte: dateRange[0],
+      $lte: dateRange[1],
+    }
+  }
+  return await Rent.find(
+    filter,
+    { isLegal: 1, renter: 1 },
+    (err: Error, rents: { isLegal: boolean; renter: string }[]) => {
+      if (err) {
+        throw err
+      }
+      return rents
+    }
+  ).lean()
+}
+
 export async function getLegalPerRenterData(
   city: string,
   dateRange: string[]
 ): Promise<{ isLegal: boolean; renter: string }[]> {
   const filter = {
+    renter: { $exists: true },
     surface: { $lte: 100 },
   }
 

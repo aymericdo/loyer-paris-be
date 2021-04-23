@@ -22,7 +22,6 @@ export function getLegalPerRenter(
         },
         mark: { type: 'bar', tooltip: true },
         transform: [
-          { filter: 'datum.renter != null' },
           {
             joinaggregate: [
               {
@@ -34,7 +33,7 @@ export function getLegalPerRenter(
             groupby: ['renter'],
           },
           { filter: 'datum.isLegal === false' },
-          { filter: 'datum.numberAds > 5' },
+          { filter: 'datum.numberAds > 10' },
           {
             joinaggregate: [
               {

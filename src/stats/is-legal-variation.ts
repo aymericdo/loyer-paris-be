@@ -16,6 +16,7 @@ export function getIsLegalVariation(
   const furnishedValue = req.query.furnishedValue as string
   const surfaceValue: string = req.query.surfaceValue as string
   const roomValue: string = req.query.roomValue as string
+  const isParticulierValue: string = req.query.isParticulier as string
 
   const districtList: string[] = districtValues
     ?.split(',')
@@ -30,6 +31,13 @@ export function getIsLegalVariation(
       ? false
       : null
 
+  const isParticulier =
+    isParticulierValue.toLowerCase() === 'true'
+      ? true
+      : isParticulierValue.toLowerCase() === 'false'
+      ? false
+      : null
+
   rentService
     .getLegalVarData(
       req.params.city,
@@ -37,7 +45,8 @@ export function getIsLegalVariation(
       surfaceRange,
       roomRange,
       hasFurniture,
-      dateRange
+      dateRange,
+      isParticulier
     )
     .then((data) => {
       const vegaMap = {
