@@ -175,9 +175,9 @@ export async function getLegalVarData(
 
   if (isParticulier !== null) {
     if (isParticulier) {
-      filter['renter'] = { $ne: 'Particulier', $exists: true }
-    } else {
       filter['renter'] = 'Particulier'
+    } else {
+      filter['renter'] = { $ne: 'Particulier', $exists: true }
     }
   }
 
