@@ -16,7 +16,7 @@ export function getIsLegalVariation(
   const furnishedValue = req.query.furnishedValue as string
   const surfaceValue: string = req.query.surfaceValue as string
   const roomValue: string = req.query.roomValue as string
-  const isParticulierValue: string = req.query.isParticulier as string
+  const isParticulierValue: string = req.query.isParticulierValue as string
 
   const districtList: string[] = districtValues
     ?.split(',')
