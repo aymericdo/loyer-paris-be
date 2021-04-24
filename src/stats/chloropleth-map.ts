@@ -82,6 +82,10 @@ export function getChloroplethMap(
               fields: ['isIllegal', 'district'],
             },
           },
+          {
+            calculate: 'datum.isIllegal / 100',
+            as: 'isIllegal0to1',
+          },
         ],
         projection: {
           type: 'mercator',
@@ -96,9 +100,10 @@ export function getChloroplethMap(
           },
           tooltip: [
             {
-              field: 'isIllegal',
+              field: 'isIllegal0to1',
               type: 'quantitative',
               title: 'Annonces non conformes',
+              format: '.%',
             },
             {
               field: 'district',

@@ -30,18 +30,18 @@ export function getLegalPerSurface(
               step: 5,
             },
             field: 'surface',
-            title: 'Surface',
+            title: 'Surface ',
             type: 'quantitative',
           },
           y: {
             aggregate: 'count',
             field: 'isLegal',
-            title: 'Annonces',
+            title: 'Annonces ',
             type: 'quantitative',
           },
           color: {
             field: 'isLegal',
-            title: 'Est conforme ?',
+            title: 'Est conforme ',
             type: 'nominal',
             scale: {
               range: ['red', 'green'],
