@@ -103,7 +103,7 @@ export function getChloroplethMap(
               field: 'isIllegal0to1',
               type: 'quantitative',
               title: 'Annonces non conformes',
-              format: '.%',
+              format: '.0%',
             },
             {
               field: 'district',
