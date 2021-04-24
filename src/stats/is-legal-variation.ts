@@ -148,7 +148,7 @@ export function getIsLegalVariation(
           },
         ],
         transform: [
-          { timeUnit: 'yearweek', field: 'createdAt', as: 'date' },
+          { timeUnit: 'yearweekday', field: 'createdAt', as: 'date' },
           {
             joinaggregate: [{ op: 'count', field: 'id', as: 'numberAds' }],
             groupby: ['date'],
