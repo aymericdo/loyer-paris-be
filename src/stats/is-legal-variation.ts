@@ -49,75 +49,120 @@ export function getIsLegalVariation(
       isParticulier
     )
     .then((data) => {
+      const vegaOpt = vegaCommonOpt()
       const vegaMap = {
-        ...vegaCommonOpt(),
+        ...vegaOpt,
+        title: {
+          ...vegaOpt.title,
+          text: 'Annonces non conformes au cours du temps',
+        },
         data: {
           values: data,
         },
+        encoding: { x: { field: 'date', type: 'temporal' } },
+        layer: [
+          {
+            mark: { type: 'line', color: '#f03434', tooltip: true, size: 1 },
+            encoding: {
+              x: { field: 'date', type: 'temporal' },
+              y: {
+                field: 'percentOfTotal',
+                type: 'quantitative',
+                title: "Pourcentage d'annonces non conformes (rouge)",
+              },
+            },
+          },
+          {
+            transform: [
+              {
+                loess: 'percentOfTotal',
+                on: 'date',
+                bandwidth: 0.5,
+                as: ['date', 'smoothPercentOfTotal'],
+              },
+            ],
+            layer: [
+              {
+                mark: {
+                  type: 'line',
+                  color: '#fdcd56',
+                  tooltip: true,
+                  size: 4,
+                },
+                encoding: {
+                  x: { field: 'date', type: 'temporal' },
+                  y: {
+                    field: 'smoothPercentOfTotal',
+                    type: 'quantitative',
+                    title: 'Pourcentage lissé (jaune)',
+                  },
+                },
+              },
+              {
+                mark: { type: 'point', fill: '#fff' },
+                transform: [{ filter: { param: 'hover', empty: false } }],
+                encoding: {
+                  x: { field: 'date', type: 'temporal' },
+                  color: { value: '#fff' },
+                  y: { field: 'smoothPercentOfTotal', type: 'quantitative' },
+                },
+              },
+              {
+                mark: 'rule',
+                transform: [
+                  {
+                    calculate: 'datum.smoothPercentOfTotal / 100',
+                    as: 'smoothPercentOfTotal0to1',
+                  },
+                ],
+                encoding: {
+                  x: { field: 'date', type: 'temporal' },
+                  opacity: {
+                    condition: { value: 0.4, param: 'hover', empty: false },
+                    value: 0,
+                  },
+                  color: { value: '#fff' },
+                  tooltip: [
+                    {
+                      field: 'smoothPercentOfTotal0to1',
+                      title: 'Pourcentage lissé',
+                      type: 'quantitative',
+                      format: '.2%',
+                    },
+                  ],
+                },
+                params: [
+                  {
+                    name: 'hover',
+                    select: {
+                      type: 'point',
+                      fields: ['date'],
+                      nearest: true,
+                      on: 'mouseover',
+                      clear: 'mouseout',
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
         transform: [
           { timeUnit: 'yearweek', field: 'createdAt', as: 'date' },
           {
-            joinaggregate: [
-              {
-                op: 'count',
-                field: 'id',
-                as: 'numberAds',
-              },
-            ],
+            joinaggregate: [{ op: 'count', field: 'id', as: 'numberAds' }],
             groupby: ['date'],
           },
           { filter: 'datum.isLegal === false' },
           {
             joinaggregate: [
-              {
-                op: 'count',
-                field: 'isLegal',
-                as: 'numberIllegal',
-              },
+              { op: 'count', field: 'isLegal', as: 'numberIllegal' },
             ],
             groupby: ['date'],
           },
           {
             calculate: 'datum.numberIllegal / datum.numberAds * 100',
             as: 'percentOfTotal',
-          },
-        ],
-        layer: [
-          {
-            mark: {
-              type: 'line',
-              color: '#f03434',
-              tooltip: true,
-              size: 2,
-            },
-            encoding: {
-              y: {
-                field: 'percentOfTotal',
-                type: 'quantitative',
-                title: 'Pourcentage',
-              },
-              x: {
-                field: 'date',
-                title: 'Date',
-                type: 'temporal',
-              },
-            },
-          },
-          {
-            mark: { type: 'line', color: '#fdcd56', tooltip: true, size: 5 },
-            transform: [{ loess: 'percentOfTotal', on: 'date' }],
-            encoding: {
-              y: {
-                field: 'percentOfTotal',
-                type: 'quantitative',
-                title: 'Pourcentage lissé',
-              },
-              x: {
-                field: 'date',
-                title: 'Date',
-                type: 'temporal',
-              },
-            },
           },
         ],
       }
