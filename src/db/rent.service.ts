@@ -98,6 +98,7 @@ export async function getPriceDiffData(
   const filter = {
     postalCode: { $exists: true },
     isLegal: false,
+    priceExcludingCharges: { $lte: 10000 },
   }
 
   if (city !== 'all') {

@@ -56,7 +56,7 @@ export function getPriceDifference(
             sort: postalCodePossibilities,
           },
           y: {
-            aggregate: 'mean',
+            aggregate: 'average',
             field: 'priceDifference',
             type: 'quantitative',
             title: 'Différence moyenne (€)',
@@ -64,6 +64,7 @@ export function getPriceDifference(
           tooltip: [
             { field: 'countOfPostalCode', title: "Nombre d'annonces " },
             {
+              aggregate: 'average',
               field: 'priceDifference',
               title: 'Différence de prix ',
               type: 'quantitative',
