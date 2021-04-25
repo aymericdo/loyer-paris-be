@@ -94,7 +94,7 @@ export function getIsLegalVariation(
                   y: {
                     field: 'smoothPercentOfTotal',
                     type: 'quantitative',
-                    title: 'Pourcentage lissé (jaune)',
+                    title: 'Pourcentage lissé (jaune) (%)',
                   },
                 },
               },
@@ -125,9 +125,14 @@ export function getIsLegalVariation(
                   tooltip: [
                     {
                       field: 'smoothPercentOfTotal0to1',
-                      title: 'Pourcentage lissé',
+                      title: 'Pourcentage lissé ',
                       type: 'quantitative',
                       format: '.2%',
+                    },
+                    {
+                      field: 'date',
+                      title: 'Date ',
+                      type: 'temporal',
                     },
                   ],
                 },

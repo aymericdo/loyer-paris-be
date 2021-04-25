@@ -15,8 +15,13 @@ export function getLegalPerRenter(
   rentService
     .getLegalPerRenterData(req.params.city, dateRange)
     .then((data) => {
+      const vegaOpt = vegaCommonOpt()
       const vegaMap = {
-        ...vegaCommonOpt(),
+        ...vegaOpt,
+        title: {
+          ...vegaOpt.title,
+          text: 'Annonces non conformes par agence (sans filtre)',
+        },
         data: {
           values: data,
         },
@@ -48,6 +53,10 @@ export function getLegalPerRenter(
             calculate: 'datum.numberIllegal / datum.numberAds * 100',
             as: 'percentOfTotal',
           },
+          {
+            calculate: 'datum.percentOfTotal / 100',
+            as: 'percentOfTotal0to1',
+          },
         ],
         encoding: {
           x: {
@@ -62,6 +71,15 @@ export function getLegalPerRenter(
             title: 'Annonces non conformes (%)',
             type: 'quantitative',
           },
+          tooltip: [
+            {
+              field: 'percentOfTotal0to1',
+              type: 'quantitative',
+              title: 'Annonces non conformes ',
+              format: '.2%',
+            },
+            { field: 'renter', title: 'Agence ', type: 'nominal' },
+          ],
         },
       }
 

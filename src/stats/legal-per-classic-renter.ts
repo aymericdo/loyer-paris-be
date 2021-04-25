@@ -56,8 +56,13 @@ export async function getLegalPerClassicRenter(
       ...orpiData.map((d) => ({ ...d, renter: 'Orpi' })),
     ]
 
+    const vegaOpt = vegaCommonOpt()
     const vegaMap = {
-      ...vegaCommonOpt(),
+      ...vegaOpt,
+      title: {
+        ...vegaOpt.title,
+        text: 'Annonces non conformes par agence majeure',
+      },
       data: {
         values: data,
       },
@@ -88,6 +93,10 @@ export async function getLegalPerClassicRenter(
           calculate: 'datum.numberIllegal / datum.numberAds * 100',
           as: 'percentOfTotal',
         },
+        {
+          calculate: 'datum.percentOfTotal / 100',
+          as: 'percentOfTotal0to1',
+        },
       ],
       encoding: {
         x: {
@@ -102,6 +111,15 @@ export async function getLegalPerClassicRenter(
           title: 'Annonces non conformes (%)',
           type: 'quantitative',
         },
+        tooltip: [
+          {
+            field: 'percentOfTotal0to1',
+            type: 'quantitative',
+            title: 'Annonces non conformes ',
+            format: '.2%',
+          },
+          { field: 'renter', title: 'Agence ', type: 'nominal' },
+        ],
       },
     }
 

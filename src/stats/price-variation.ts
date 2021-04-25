@@ -14,14 +14,20 @@ export function getPriceVariation(
   rentService
     .getPriceVarData(req.params.city, dateRange)
     .then((data) => {
+      const vegaOpt = vegaCommonOpt()
       const vegaMap = {
-        ...vegaCommonOpt(),
+        ...vegaOpt,
+        title: {
+          ...vegaOpt.title,
+          text:
+            'Différence moyenne (lissée) entre prix pratiqué et prix maximum estimé',
+        },
         data: {
           values: data,
         },
         transform: [
           {
-            timeUnit: 'yearmonth',
+            timeUnit: 'yearweekday',
             field: 'createdAt',
             as: 'date',
           },
@@ -34,26 +40,73 @@ export function getPriceVariation(
             on: 'date',
           },
         ],
-
-        mark: {
-          type: 'line',
-          color: '#fdcd56',
-          tooltip: true,
-          size: 4,
-        },
-        encoding: {
-          y: {
-            field: 'priceDifference',
-            type: 'quantitative',
-            title:
-              'Différence moyenne (lissée) entre prix pratiqué et prix maximum estimé (€)',
+        layer: [
+          {
+            mark: {
+              type: 'line',
+              color: '#fdcd56',
+              tooltip: true,
+              size: 4,
+            },
+            encoding: {
+              y: {
+                field: 'priceDifference',
+                type: 'quantitative',
+                title: 'Différence moyenne (€)',
+              },
+              x: {
+                field: 'date',
+                title: 'Date',
+                type: 'temporal',
+              },
+            },
           },
-          x: {
-            field: 'date',
-            title: 'Date',
-            type: 'temporal',
+          {
+            mark: { type: 'point', fill: '#fff' },
+            transform: [{ filter: { param: 'hover', empty: false } }],
+            encoding: {
+              x: { field: 'date', type: 'temporal' },
+              color: { value: '#fff' },
+              y: { field: 'priceDifference', type: 'quantitative' },
+            },
           },
-        },
+          {
+            mark: 'rule',
+            encoding: {
+              x: { field: 'date', type: 'temporal' },
+              opacity: {
+                condition: { value: 0.4, param: 'hover', empty: false },
+                value: 0,
+              },
+              color: { value: '#fff' },
+              tooltip: [
+                {
+                  field: 'priceDifference',
+                  title: 'Différence moyenne ',
+                  type: 'quantitative',
+                  format: '$.2f',
+                },
+                {
+                  field: 'date',
+                  title: 'Date ',
+                  type: 'temporal',
+                },
+              ],
+            },
+            params: [
+              {
+                name: 'hover',
+                select: {
+                  type: 'point',
+                  fields: ['date'],
+                  nearest: true,
+                  on: 'mouseover',
+                  clear: 'mouseout',
+                },
+              },
+            ],
+          },
+        ],
       }
 
       res.json(vegaMap)

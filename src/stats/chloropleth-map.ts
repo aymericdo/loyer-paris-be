@@ -62,6 +62,7 @@ export function getChloroplethMap(
         return {
           district,
           isIllegal: Math.round((1 - value.isLegal / value.count) * 100),
+          totalCount: value.count,
         }
       })
 
@@ -79,7 +80,7 @@ export function getChloroplethMap(
                 values: result,
               },
               key: 'district',
-              fields: ['isIllegal', 'district'],
+              fields: ['isIllegal', 'district', 'totalCount'],
             },
           },
           {
@@ -102,13 +103,18 @@ export function getChloroplethMap(
             {
               field: 'isIllegal0to1',
               type: 'quantitative',
-              title: 'Annonces non conformes',
+              title: 'Annonces non conformes ',
               format: '.0%',
             },
             {
               field: 'district',
               type: 'nominal',
-              title: 'Quartier',
+              title: 'Quartier ',
+            },
+            {
+              field: 'totalCount',
+              type: 'quantitative',
+              title: "Nombre d'annonces ",
             },
           ],
         },

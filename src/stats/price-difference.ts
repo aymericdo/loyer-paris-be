@@ -20,8 +20,14 @@ export function getPriceDifference(
   rentService
     .getPriceDiffData(req.params.city, dateRange)
     .then((data) => {
+      const vegaOpt = vegaCommonOpt()
       const vegaMap = {
-        ...vegaCommonOpt(),
+        ...vegaOpt,
+        title: {
+          ...vegaOpt.title,
+          text:
+            'Différence moyenne entre le prix pratiqué et le prix maximum estimé',
+        },
         data: {
           values: data,
         },
@@ -44,19 +50,26 @@ export function getPriceDifference(
         ],
         encoding: {
           x: {
-            aggregate: 'mean',
-            field: 'priceDifference',
-            type: 'quantitative',
-            title:
-              'Différence moyenne entre prix pratiqué et prix maximum estimé (€)',
-          },
-          y: {
             field: 'postalCode',
             type: 'ordinal',
             title: 'Code postal',
             sort: postalCodePossibilities,
           },
-          tooltip: [{ field: 'countOfPostalCode', title: "Nombre d'annonces" }],
+          y: {
+            aggregate: 'mean',
+            field: 'priceDifference',
+            type: 'quantitative',
+            title: 'Différence moyenne (€)',
+          },
+          tooltip: [
+            { field: 'countOfPostalCode', title: "Nombre d'annonces " },
+            {
+              field: 'priceDifference',
+              title: 'Différence de prix ',
+              type: 'quantitative',
+              format: '$.2f',
+            },
+          ],
         },
       }
 
