@@ -56,6 +56,10 @@ export function getIsLegalVariation(
           ...vegaOpt.title,
           text: 'Annonces non conformes au cours du temps',
         },
+        padding: {
+          ...vegaOpt.padding,
+          top: 24,
+        },
         data: {
           values: data,
         },
