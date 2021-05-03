@@ -15,8 +15,13 @@ export function getLegalPerWebsite(
   rentService
     .getLegalPerWebsiteData(req.params.city, dateRange)
     .then((data) => {
+      const vegaOpt = vegaCommonOpt()
       const vegaMap = {
-        ...vegaCommonOpt(),
+        ...vegaOpt,
+        title: {
+          ...vegaOpt.title,
+          text: 'Annonces non conformes par site web',
+        },
         data: {
           values: data,
         },
@@ -49,6 +54,10 @@ export function getLegalPerWebsite(
             calculate: 'datum.numberIllegal / datum.numberAds * 100',
             as: 'percentOfTotal',
           },
+          {
+            calculate: 'datum.percentOfTotal / 100',
+            as: 'percentOfTotal0to1',
+          },
         ],
         encoding: {
           x: {
@@ -63,6 +72,15 @@ export function getLegalPerWebsite(
             title: 'Annonces non conformes (%)',
             type: 'quantitative',
           },
+          tooltip: [
+            {
+              field: 'percentOfTotal0to1',
+              type: 'quantitative',
+              title: 'Annonces non conformes ',
+              format: '.2%',
+            },
+            { field: 'website', title: 'Site ', type: 'nominal' },
+          ],
         },
       }
 

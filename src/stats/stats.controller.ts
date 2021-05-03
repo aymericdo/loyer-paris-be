@@ -13,6 +13,7 @@ import { getLegalPerRenter } from './legal-per-renter'
 import { getLegalPerWebsite } from './legal-per-website'
 import { getDistricts } from './districts'
 import { getWelcomeText } from './welcome-text'
+import { getLegalPerClassicRenter } from './legal-per-classic-renter'
 const router = express.Router()
 
 router.get('/need-captcha', getNeedCaptcha)
@@ -75,6 +76,7 @@ router.get('/adoption', getAdoptionRate)
 router.get('/price-variation/:city', getPriceVariation)
 router.get('/is-legal-variation/:city', getIsLegalVariation)
 router.get('/is-legal-per-renter/:city', getLegalPerRenter)
+router.get('/is-legal-per-classic-renter/:city', getLegalPerClassicRenter)
 router.get('/is-legal-per-website/:city', getLegalPerWebsite)
 
 module.exports = router

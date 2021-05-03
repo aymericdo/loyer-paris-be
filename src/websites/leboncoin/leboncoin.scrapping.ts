@@ -28,20 +28,18 @@ export class LeboncoinScrapping {
       '#aside > section > div[data-qa-id=adview_contact_container] > div > span'
     )
     const hasCharges = document.querySelector(
-      '#grid > article > section > div.css-1eifrgn > div.css-rtde4j > div > div._2KqHw > p'
+      '#grid > article > section > div > div > div > div > p'
     )
-    const cityLabel = document.querySelector(
-      '#grid > article > div._3JOrc._1akwr._1mwQl.aj3_W.FB92D._3qvnf.PYBnx.rvrtO._23jKN._2hbpZ._1_1QY._1qvhT'
-    )
+    const cityLabel = document.querySelector('#grid > article > div > h2')
 
     const surface = document.querySelector(
-      '#grid > article div div[data-qa-id=criteria_item_square] > div > p._3eNLO._137P-.P4PEa._35DXM'
+      '#grid > article div div[data-qa-id=criteria_item_square] > div > span'
     )
     const rooms = document.querySelector(
-      '#grid > article div div[data-qa-id=criteria_item_rooms] > div > p._3eNLO._137P-.P4PEa._35DXM'
+      '#grid > article div div[data-qa-id=criteria_item_rooms] > div > span'
     )
     const furnished = document.querySelector(
-      '#grid > article div div[data-qa-id=criteria_item_furnished] > div > p._3eNLO._137P-.P4PEa._35DXM'
+      '#grid > article div div[data-qa-id=criteria_item_furnished] > div > span'
     )
 
     if (!subject && !body && !body2 && !price && !cityLabel) {

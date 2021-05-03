@@ -15,8 +15,13 @@ export function getLegalPerSurface(
   rentService
     .getLegalPerSurfaceData(req.params.city, dateRange)
     .then((data) => {
+      const vegaOpt = vegaCommonOpt()
       const vegaMap = {
-        ...vegaCommonOpt(),
+        ...vegaOpt,
+        title: {
+          ...vegaOpt.title,
+          text: 'Annonces non conformes par surface',
+        },
         data: {
           values: data,
         },
@@ -30,18 +35,18 @@ export function getLegalPerSurface(
               step: 5,
             },
             field: 'surface',
-            title: 'Surface',
+            title: 'Surface (m²) ',
             type: 'quantitative',
           },
           y: {
             aggregate: 'count',
             field: 'isLegal',
-            title: 'Annonces',
+            title: "Nombre d'annonces ",
             type: 'quantitative',
           },
           color: {
             field: 'isLegal',
-            title: 'Est conforme ?',
+            title: 'Est conforme ',
             type: 'nominal',
             scale: {
               range: ['red', 'green'],

@@ -3,9 +3,20 @@ export const vegaCommonOpt = () => {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
     width: 700,
     height: 500,
-    padding: 26,
     autosize: { type: 'fit', contains: 'padding' },
     background: 'transparent',
+    title: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: 16,
+      baseline: 'middle',
+    },
+    padding: {
+      top: 12,
+      left: 24,
+      right: 24,
+      bottom: 12,
+    },
     config: {
       view: {
         stroke: 'transparent',
@@ -22,7 +33,11 @@ export const vegaCommonOpt = () => {
         labelColor: '#fff',
         tickColor: '#fff',
         titleColor: '#fff',
-        gridOpacity: 0.5,
+        gridOpacity: 0.2,
+        zindex: 0,
+      },
+      axisY: {
+        orient: 'right',
       },
     },
   }
