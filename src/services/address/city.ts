@@ -1,6 +1,7 @@
 import * as cleanup from '@helpers/cleanup'
 import { ErrorCode } from '../api-errors'
 import { Ad } from '@interfaces/ad'
+import * as log from '@helpers/log'
 
 type CityList = {
   [key: string]: {
@@ -69,10 +70,7 @@ export class CityService {
     )
 
     if (!cityInList) {
-      throw {
-        error: ErrorCode.City,
-        msg: `city "${cityName}" not found in the list`,
-      }
+      log.info(`[bad location]: ${cityName} not found in the list`)
     }
 
     return cityInList as AvailableCities

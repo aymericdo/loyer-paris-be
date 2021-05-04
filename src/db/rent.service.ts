@@ -390,7 +390,7 @@ export async function getWelcomeData(): Promise<
   { isLegal: boolean; surface: number }[]
 > {
   return await Rent.find(
-    { createdAt: { $gte: new Date('2021-01-01') } },
+    {},
     { isLegal: 1, surface: 1 },
     (err: Error, rents: { isLegal: boolean; surface: number }[]) => {
       if (err) {
