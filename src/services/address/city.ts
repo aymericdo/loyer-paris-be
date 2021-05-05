@@ -1,7 +1,6 @@
 import * as cleanup from '@helpers/cleanup'
 import { ErrorCode } from '../api-errors'
 import { Ad } from '@interfaces/ad'
-import * as log from '@helpers/log'
 
 type CityList = {
   [key: string]: {
