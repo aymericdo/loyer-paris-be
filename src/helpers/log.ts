@@ -21,6 +21,11 @@ export const error = (message: string, color?: string) => {
   Sentry.captureMessage(message, Severity.Error)
 }
 
+export const warning = (message: string, color?: string) => {
+  info(message, color)
+  Sentry.captureMessage(message, Severity.Warning)
+}
+
 export const priceHasChanged = () => {
   Sentry.captureMessage('price has changed', Severity.Info)
 }

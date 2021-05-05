@@ -70,7 +70,10 @@ export class CityService {
     )
 
     if (!cityInList) {
-      log.info(`[bad location]: ${cityName} not found in the list`)
+      throw {
+        error: ErrorCode.City,
+        msg: `[bad location]: city "${cityName}" not found in the list`,
+      }
     }
 
     return cityInList as AvailableCities
