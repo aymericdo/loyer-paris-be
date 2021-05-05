@@ -36,9 +36,6 @@ export const vegaCommonOpt = () => {
         gridOpacity: 0.2,
         zindex: 0,
       },
-      axisY: {
-        orient: 'right',
-      },
     },
   }
 }

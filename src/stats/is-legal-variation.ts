@@ -65,7 +65,6 @@ export function getIsLegalVariation(
         },
         encoding: { x: { field: 'date', type: 'temporal' } },
         layer: [
-          { timeUnit: 'yearmonth', field: 'createdAt', as: 'date' },
           {
             mark: { type: 'line', color: '#f03434', tooltip: true, size: 1 },
             encoding: {

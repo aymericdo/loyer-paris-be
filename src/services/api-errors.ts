@@ -17,7 +17,7 @@ export class ApiErrorsService {
   static getStatus(err: ApiError): number {
     switch (err.error as ErrorCode) {
       case ErrorCode.City:
-        log.warning(err.msg)
+        log.light(err.msg)
         break
       default:
         log.error(err.msg)
