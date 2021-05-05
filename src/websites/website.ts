@@ -50,6 +50,14 @@ export abstract class Website {
   async digData() {
     const ad: Ad = await this.mapping()
 
+    if (!ad.price) {
+      log.warning(`no price found with scrapping`, 'red')
+    } else if (!ad.surface) {
+      log.warning(`no surface found with scrapping`, 'red')
+    } else if (!ad.rooms) {
+      log.warning(`no rooms found with scrapping`, 'red')
+    }
+
     const cleanAd: CleanAd = await new DigService(ad).digInAd()
     let filteredResult: FilteredResult = null
     switch (cleanAd.city) {

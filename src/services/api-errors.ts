@@ -15,7 +15,15 @@ export class ApiErrorsService {
   constructor() {}
 
   static getStatus(err: ApiError): number {
-    log.error(err.msg)
+    switch (err.error as ErrorCode) {
+      case ErrorCode.City:
+        log.light(err.msg)
+        break
+      default:
+        log.error(err.msg)
+        break
+    }
+
     switch (err.error as ErrorCode) {
       case ErrorCode.Minimal:
       case ErrorCode.Address:

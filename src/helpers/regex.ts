@@ -4,7 +4,7 @@ export const regexString = (value: string): string => {
     roomCount: /([1-5]|un|deux|trois|quatre|cinq|six|sept)(?= ?(piece))/g,
     furnished: /(?<!(non-|non ))\bmeuble/g,
     nonFurnished: /(non-|non )\bmeuble/g,
-    charges: /((?<=(charges locatives |charges |charge )(\D{0,4}))|(?<=\d{3,4}((|\.|,)\d{1,2})?(\D{0,5})?\+ ?))(\d{2,3}((|\.|,)\d{1,2})?)(?=( ?euros\b| ?€| ?e\b| ?eur\b| ?euro\b | ?(charge(s)?)\b))/g,
+    charges: /((?<=(charges locatives |charges |charge )(\D{0,4}))|(?<=\d{3,4}((|\.|,)\d{1,2})?(\D{0,5})?\+ ?))(\d{2,3}((|\.|,)\d{1,2})?)(?=( ?euros\b| ?€| ?e\b| ?eur\b| ?euro\b | ?de\b ?(charge(s)?)\b))/g,
     surface: /(9|\d{2})(?= ?(m2\b|metre|m²))/g,
   }
 

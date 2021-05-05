@@ -71,7 +71,7 @@ export class CityService {
     if (!cityInList) {
       throw {
         error: ErrorCode.City,
-        msg: `city "${cityName}" not found in the list`,
+        msg: `[bad location]: city "${cityName}" not found in the list`,
       }
     }
 
