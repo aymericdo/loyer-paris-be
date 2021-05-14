@@ -18,6 +18,13 @@ export class Facebook extends Website {
     }
 
     if (this.isV2) {
+      if (this.body.noMoreData) {
+        throw {
+          error: ErrorCode.Minimal,
+          msg: `no more data for ${this.website}/${this.body.platform}`,
+        }
+      }
+
       const scrap = FacebookScrapping.scrap(JSON.parse(this.body.data))
 
       if (!scrap) {
