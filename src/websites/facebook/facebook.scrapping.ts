@@ -14,8 +14,6 @@ export class FacebookScrapping {
       'div[data-pagelet=root] > div > div:nth-child(7) > div > div'
     )
 
-    console.log(isFacebookSecondAd)
-
     const sectionTitleElem = isFacebookSecondAd
       ? document.querySelector(
           'div[data-pagelet=root] > div > div:nth-child(7) > div > div > div > div > div > div > div > div > div > div > div > div > div > div > div:nth-child(3) > a > span'
