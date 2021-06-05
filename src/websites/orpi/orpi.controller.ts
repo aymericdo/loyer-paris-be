@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express'
 import * as log from '@helpers/log'
 import { Orpi } from './orpi'
+import { ErrorCode } from '@services/api-errors'
 const router = express.Router()
 
 // routes
@@ -20,6 +21,11 @@ function getByDataV2(req: Request, res: Response, next: NextFunction) {
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
+
+  if (req.body.id?.split('/').filter(Boolean).length > 1) {
+    throw { error: ErrorCode.Other, msg: `not a rent` }
+  }
+
   const orpi = new Orpi(res, { body: req.body }, true)
   orpi.analyse()
 }
