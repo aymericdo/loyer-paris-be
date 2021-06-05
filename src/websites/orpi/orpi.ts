@@ -17,6 +17,10 @@ export class Orpi extends Website {
       }
     }
 
+    if (this.body.id.match(/photos/g).length) {
+      throw { error: ErrorCode.Other, msg: `not a rent` }
+    }
+
     if (this.isV2) {
       if (this.body.noMoreData) {
         throw {

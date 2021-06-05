@@ -22,10 +22,6 @@ function getByDataV2(req: Request, res: Response, next: NextFunction) {
     'blue'
   )
 
-  if (req.body.id?.split('/').filter(Boolean).length > 1) {
-    throw { error: ErrorCode.Other, msg: `not a rent` }
-  }
-
   const orpi = new Orpi(res, { body: req.body }, true)
   orpi.analyse()
 }
