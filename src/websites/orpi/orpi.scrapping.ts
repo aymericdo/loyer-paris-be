@@ -10,6 +10,9 @@ export class OrpiScrapping {
     }).window
 
     const dataDOM = document.querySelector('[data-component=estate-bookmark]')
+
+    if (!dataDOM) return null
+
     const dataElement = JSON.parse(dataDOM.dataset.eulerianAction)
     const description = document.querySelector('div.o-container > p')
     const chargesElement = [
