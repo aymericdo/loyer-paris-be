@@ -20,13 +20,8 @@ export class DigService {
   async digInAd(): Promise<CleanAd> {
     const city: AvailableCities = CityService.findCity(this.ad)
 
-    const [
-      address,
-      postalCode,
-      stations,
-      coordinates,
-      blurryCoordinates,
-    ] = this.digForAddress(city)
+    const [address, postalCode, stations, coordinates, blurryCoordinates] =
+      this.digForAddress(city)
     const roomCount = this.digForRoomCount()
     const hasFurniture = this.digForHasFurniture()
     const surface = this.digForSurface()
@@ -156,7 +151,7 @@ export class DigService {
         cleanup.number(this.ad.description.match(regexString('surface'))[0]))
 
     if (!surface) {
-      throw { error: ErrorCode.Minimal, msg: 'surface not found' }
+      throw { error: ErrorCode.Surface, msg: 'surface not found' }
     }
 
     return surface
@@ -164,7 +159,7 @@ export class DigService {
 
   private digForPrice(): number {
     if (!this.ad.price) {
-      throw { error: ErrorCode.Minimal, msg: 'price not found' }
+      throw { error: ErrorCode.Price, msg: 'price not found' }
     } else if (this.ad.price > 30000) {
       throw {
         error: ErrorCode.Price,

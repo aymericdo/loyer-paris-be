@@ -11,6 +11,8 @@ export const info = (message: string, color?: string) => {
     console.log(clc.blueBright(log))
   } else if (color === 'green') {
     console.log(clc.greenBright(log))
+  } else if (color === 'yellow') {
+    console.log(clc.yellowBright(log))
   } else {
     console.log(log)
   }
