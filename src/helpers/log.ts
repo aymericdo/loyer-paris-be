@@ -32,7 +32,3 @@ export const light = (message: string, color?: string) => {
   info(message, color)
   Sentry.captureMessage(message, Severity.Log)
 }
-
-export const priceHasChanged = () => {
-  Sentry.captureMessage('price has changed', Severity.Info)
-}
