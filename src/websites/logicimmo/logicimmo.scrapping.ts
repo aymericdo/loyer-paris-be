@@ -62,18 +62,6 @@ export class LogicimmoScrapping {
       }
     })
 
-    console.log({
-      id: null,
-      cityLabel: cityLabel && cityLabel.textContent,
-      charges: charges && charges.textContent,
-      description: description && description.textContent,
-      furnished: furnished && !!furnished.textContent,
-      price: price && price.textContent,
-      renter: renter && renter.textContent,
-      rooms: rooms && rooms.textContent,
-      surface: surface && surface.textContent,
-    })
-
     if (!description && !price && !cityLabel) {
       return null
     }
