@@ -51,6 +51,42 @@ export const cityList: CityList = {
     postalCodePossibilities: ['59000', '59260', '59160', '59800', '59777'],
     postalCodeRegex: [/\b59[0-9]{3}\b/g],
   },
+  aubervilliers: {
+    postalCodePossibilities: ['93300'],
+    postalCodeRegex: [/\b93[0-9]{3}\b/g],
+  },
+  'epinay-sur-seine': {
+    postalCodePossibilities: ['93800'],
+    postalCodeRegex: [/\b93[0-9]{3}\b/g],
+  },
+  'ile-saint-denis': {
+    postalCodePossibilities: ['93450'],
+    postalCodeRegex: [/\b93[0-9]{3}\b/g],
+  },
+  courneuve: {
+    postalCodePossibilities: ['93120'],
+    postalCodeRegex: [/\b93[0-9]{3}\b/g],
+  },
+  pierrefitte: {
+    postalCodePossibilities: ['93380'],
+    postalCodeRegex: [/\b93[0-9]{3}\b/g],
+  },
+  'saint-denis': {
+    postalCodePossibilities: ['93200', '93210'],
+    postalCodeRegex: [/\b93[0-9]{3}\b/g],
+  },
+  'saint-ouen': {
+    postalCodePossibilities: ['93400'],
+    postalCodeRegex: [/\b93[0-9]{3}\b/g],
+  },
+  stains: {
+    postalCodePossibilities: ['93240'],
+    postalCodeRegex: [/\b93[0-9]{3}\b/g],
+  },
+  villetaneuse: {
+    postalCodePossibilities: ['93430'],
+    postalCodeRegex: [/\b93[0-9]{3}\b/g],
+  },
 }
 
 export type AvailableCities = keyof typeof cityList

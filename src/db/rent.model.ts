@@ -17,6 +17,7 @@ const schema = new Schema({
   longitude: { type: String, required: false },
   latitude: { type: String, required: false },
   hasFurniture: { type: Boolean, required: false },
+  isHouse: { type: Boolean, required: false },
   roomCount: { type: Number, required: false },
   yearBuilt: { type: [Number], required: false, default: undefined },
   renter: { type: String, required: false },
