@@ -10,21 +10,21 @@ export class LogicimmoScrapping {
     }).window
 
     const description = document.querySelector(
-      'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div:nth-child(6) > div.blocDescrProperty > article > p.descrProperty'
+      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div > div.blocDescrProperty > article > p.descrProperty'
     )
     const price = document.querySelector(
-      'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > ul > li.infoPriceBox > span'
+      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > ul > li.infoPriceBox > span'
     )
     const cityLabel = document.querySelector(
-      'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressBottomBlock > strong > em'
+      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressBottomBlock > strong > em'
     )
     const renter = document.querySelector(
-      'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span'
+      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span'
     )
 
     const chargeNode = [
       ...document.querySelectorAll(
-        'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl'
+        'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl'
       ),
     ]
 
@@ -33,7 +33,7 @@ export class LogicimmoScrapping {
     ]
     const itemTags = [
       ...document.querySelectorAll(
-        'body > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressTopBlock > .propertyTypeInfos > em.feature'
+        'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressTopBlock > .propertyTypeInfos > em.feature'
       ),
     ]
 
@@ -60,6 +60,18 @@ export class LogicimmoScrapping {
       } else if (tag.textContent.match(/p./g)) {
         rooms = tag
       }
+    })
+
+    console.log({
+      id: null,
+      cityLabel: cityLabel && cityLabel.textContent,
+      charges: charges && charges.textContent,
+      description: description && description.textContent,
+      furnished: furnished && !!furnished.textContent,
+      price: price && price.textContent,
+      renter: renter && renter.textContent,
+      rooms: rooms && rooms.textContent,
+      surface: surface && surface.textContent,
     })
 
     if (!description && !price && !cityLabel) {
