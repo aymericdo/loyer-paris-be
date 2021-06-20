@@ -11,7 +11,7 @@ export class LeboncoinScrapping {
 
     const subject = document.querySelector('[data-qa-id=adview_title]')
     const body = document.querySelector(
-      '[data-qa-id=adview_description_container] > div > span'
+      '[data-qa-id=adview_description_container] > div > div > span'
     )
     const body2 = document.querySelector(
       '#grid > article > section > div.css-1eifrgn > div:nth-child(3) > div'
@@ -25,7 +25,7 @@ export class LeboncoinScrapping {
         '#aside > section > div[data-qa-id=adview_contact_container] > div > div > div > a'
       )
     const isPro = document.querySelector(
-      '#aside > section > div[data-qa-id=adview_contact_container] > div > span'
+      '#aside > section > div[data-qa-id=adview_contact_container] > div > div > span'
     )
     const hasCharges = document.querySelector(
       '#grid > article > section > div > div > div > div > p'
@@ -33,13 +33,13 @@ export class LeboncoinScrapping {
     const cityLabel = document.querySelector('#grid > article > div > h2')
 
     const surface = document.querySelector(
-      '#grid > article div div[data-qa-id=criteria_item_square] > div > span'
+      '#grid > article div div[data-qa-id=criteria_item_square] > div > div > span'
     )
     const rooms = document.querySelector(
-      '#grid > article div div[data-qa-id=criteria_item_rooms] > div > span'
+      '#grid > article div div[data-qa-id=criteria_item_rooms] > div > div > span'
     )
     const furnished = document.querySelector(
-      '#grid > article div div[data-qa-id=criteria_item_furnished] > div > span'
+      '#grid > article div div[data-qa-id=criteria_item_furnished] > div > div > span'
     )
 
     if (!subject && !body && !body2 && !price && !cityLabel) {
