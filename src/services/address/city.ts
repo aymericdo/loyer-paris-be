@@ -92,7 +92,9 @@ export const cityList: CityList = {
 export type AvailableCities = keyof typeof cityList
 
 export class CityService {
-  static findCity(ad: Ad): AvailableCities {
+  cityInList: AvailableCities
+
+  constructor(ad: Ad) {
     const cityName = cleanup.string(ad.cityLabel)
 
     if (!cityName || !cityName?.length) {
@@ -111,6 +113,27 @@ export class CityService {
       }
     }
 
-    return cityInList as AvailableCities
+    this.cityInList = cityInList as AvailableCities
+  }
+
+  findCity(): AvailableCities {
+    return this.cityInList
+  }
+
+  canHaveHouse(): boolean {
+    switch (this.cityInList) {
+      case 'aubervilliers':
+      case 'epinay-sur-seine':
+      case 'ile-saint-denis':
+      case 'courneuve':
+      case 'pierrefitte':
+      case 'saint-denis':
+      case 'saint-ouen':
+      case 'stains':
+      case 'villetaneuse':
+        return true
+      default:
+        return false
+    }
   }
 }

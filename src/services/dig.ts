@@ -19,7 +19,8 @@ export class DigService {
   }
 
   async digInAd(): Promise<CleanAd> {
-    const city: AvailableCities = CityService.findCity(this.ad)
+    const cityService = new CityService(this.ad)
+    const city: AvailableCities = cityService.findCity()
 
     const [address, postalCode, stations, coordinates, blurryCoordinates] =
       this.digForAddress(city)
@@ -34,7 +35,7 @@ export class DigService {
     const renter = this.digForRenter()
     const charges = this.digForCharges()
     const hasCharges = this.digForHasCharges()
-    const isHouse = this.digForIsHouse()
+    const isHouse = cityService.canHaveHouse() ? this.digForIsHouse() : null
 
     return {
       id: this.ad.id,
@@ -210,6 +211,7 @@ export class DigService {
     const isHouseFromDescription =
       this.ad.description?.match(regexString('isHouse')) &&
       this.ad.description?.match(regexString('isHouse'))[0]
+
     return isHouseFromTitle?.length > 0 || isHouseFromDescription?.length > 0
   }
 

@@ -29,8 +29,7 @@ describe('orpi', () => {
           title: 'appartement t1 paris 11 75011 b e1y6bt',
           yearBuilt: null,
           platform: 'chrome',
-          url:
-            'https://www.orpi.com/annonce-location-appartement-t1-paris-11-75011-b-e1y6bt/',
+          url: 'https://www.orpi.com/annonce-location-appartement-t1-paris-11-75011-b-e1y6bt/',
         }
 
         const mockResponse: any = {
@@ -49,9 +48,10 @@ describe('orpi', () => {
             roomCount: { order: 2, value: 1 },
             surface: { order: 3, value: 30 },
             yearBuilt: { order: 4, value: '1988' },
-            price: { order: 5, value: 854 },
-            charges: { order: 6, value: 54 },
-            hasCharges: { order: 7, value: null },
+            isHouse: { order: 5, value: null },
+            price: { order: 6, value: 854 },
+            charges: { order: 7, value: 54 },
+            hasCharges: { order: 8, value: null },
           },
           computedInfo: {
             neighborhood: { order: 0, value: 'Roquette' },
@@ -59,9 +59,10 @@ describe('orpi', () => {
             roomCount: { order: 2, value: 1 },
             surface: { order: 3, value: 30 },
             dateRange: { order: 4, value: '1971-1990' },
-            max: { order: 5, value: null },
-            maxAuthorized: { order: 6, value: null },
-            promoPercentage: { order: 7, value: null },
+            isHouse: { order: 5, value: undefined },
+            max: { order: 6, value: null },
+            maxAuthorized: { order: 7, value: null },
+            promoPercentage: { order: 8, value: null },
           },
           isLegal: true,
         })
@@ -93,8 +94,7 @@ describe('orpi', () => {
           title: 'appartement t2 lille 59000 b e1xpqp',
           yearBuilt: null,
           platform: 'chrome',
-          url:
-            'https://www.orpi.com/annonce-location-appartement-t2-lille-59000-b-e1xpqp/',
+          url: 'https://www.orpi.com/annonce-location-appartement-t2-lille-59000-b-e1xpqp/',
         }
 
         const mockResponse: any = {
@@ -113,9 +113,10 @@ describe('orpi', () => {
             roomCount: { order: 2, value: 2 },
             surface: { order: 3, value: 36.81 },
             yearBuilt: { order: 4, value: null },
-            price: { order: 5, value: 680 },
-            charges: { order: 6, value: 50 },
-            hasCharges: { order: 7, value: null },
+            isHouse: { order: 5, value: null },
+            price: { order: 6, value: 680 },
+            charges: { order: 7, value: 50 },
+            hasCharges: { order: 8, value: null },
           },
           computedInfo: {
             neighborhood: { order: 0, value: 'Zone 1' },
@@ -123,9 +124,10 @@ describe('orpi', () => {
             roomCount: { order: 2, value: 2 },
             surface: { order: 3, value: 36.81 },
             dateRange: { order: 4, value: '> 1990' },
-            max: { order: 5, value: 16.9 },
-            maxAuthorized: { order: 6, value: 622.09 },
-            promoPercentage: { order: 7, value: 1.26 },
+            isHouse: { order: 5, value: undefined },
+            max: { order: 6, value: 16.9 },
+            maxAuthorized: { order: 7, value: 622.09 },
+            promoPercentage: { order: 8, value: 1.26 },
           },
           isLegal: false,
         })
