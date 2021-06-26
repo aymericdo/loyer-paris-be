@@ -8,6 +8,7 @@ interface SavedInfo {
   district: string
   city: AvailableCities
   hasFurniture?: boolean
+  isHouse?: boolean
   isLegal: boolean
   latitude?: number
   longitude?: number
@@ -51,6 +52,9 @@ export class SaveRentService {
       }),
       ...(this.adToSave.hasFurniture != null && {
         hasFurniture: this.adToSave.hasFurniture,
+      }),
+      ...(this.adToSave.isHouse != null && {
+        isHouse: this.adToSave.isHouse,
       }),
       ...(this.adToSave.latitude != null && {
         latitude: this.adToSave.latitude,

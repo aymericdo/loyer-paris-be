@@ -6,17 +6,9 @@ import * as fs from 'fs'
 import { AddressItem, Coordinate } from '@interfaces/shared'
 import { DistanceService } from '@services/distance'
 import { LilleAddressItem, LilleStationItem } from '@interfaces/json-item-lille'
-import { LilleStationService } from './lille-station'
 
 export class LilleAddressService extends AddressService {
   getStations(): string[] {
-    // const lilleStationService = new LilleStationService();
-    // const stations: LilleStationItem[] =
-    //   (this.ad.stations && lilleStationService.getStations(this.ad.stations)) ||
-    //   (this.ad.description &&
-    //     lilleStationService.getStations(this.ad.description.split(" ")));
-    // return stations && this.nearestStations(stations);
-    // commented for now
     return []
   }
 
@@ -27,9 +19,7 @@ export class LilleAddressService extends AddressService {
   }
 
   @Memoize()
-  getAddressCompleted(
-    query: string
-  ): {
+  getAddressCompleted(query: string): {
     item: AddressItem
     score: number
     matches: ReadonlyArray<Fuse.FuseResultMatch>

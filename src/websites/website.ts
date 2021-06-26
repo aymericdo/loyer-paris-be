@@ -8,6 +8,7 @@ import { ApiErrorsService, ErrorCode } from '@services/api-errors'
 import { DigService } from '@services/dig'
 import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
 import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
+import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent'
 import { SaveRentService } from '@services/save-rent'
 import { SerializeRentService } from '@services/serialize-rent'
 import { Response } from 'express'
@@ -61,6 +62,17 @@ export abstract class Website {
       case 'lomme':
         filteredResult = new LilleFilterRentService(cleanAd).filter()
         break
+      case 'aubervilliers':
+      case 'epinay-sur-seine':
+      case 'ile-saint-denis':
+      case 'courneuve':
+      case 'pierrefitte':
+      case 'saint-denis':
+      case 'saint-ouen':
+      case 'stains':
+      case 'villetaneuse':
+        filteredResult = new PlaineCommuneFilterRentService(cleanAd).filter()
+        break
     }
 
     if (filteredResult) {
@@ -80,6 +92,7 @@ export abstract class Website {
         city: cleanAd.city,
         district: filteredResult.districtName,
         hasFurniture: cleanAd.hasFurniture,
+        isHouse: cleanAd.isHouse,
         postalCode: cleanAd.postalCode,
         price: cleanAd.price,
         renter: cleanAd.renter,

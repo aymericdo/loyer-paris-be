@@ -9,6 +9,7 @@ import { AvailableCities, CityService } from './address/city'
 import { LilleAddressService } from './address/lille-address'
 import { ParisAddressService } from './address/paris-address'
 import { AddressService } from './address/address'
+import { PlaineCommuneAddressService } from './address/plaine-commune-address'
 
 export class DigService {
   ad: Ad = null
@@ -18,7 +19,8 @@ export class DigService {
   }
 
   async digInAd(): Promise<CleanAd> {
-    const city: AvailableCities = CityService.findCity(this.ad)
+    const cityService = new CityService(this.ad)
+    const city: AvailableCities = cityService.findCity()
 
     const [address, postalCode, stations, coordinates, blurryCoordinates] =
       this.digForAddress(city)
@@ -33,6 +35,7 @@ export class DigService {
     const renter = this.digForRenter()
     const charges = this.digForCharges()
     const hasCharges = this.digForHasCharges()
+    const isHouse = cityService.canHaveHouse() ? this.digForIsHouse() : null
 
     return {
       id: this.ad.id,
@@ -50,6 +53,7 @@ export class DigService {
       stations,
       charges,
       hasCharges,
+      isHouse,
     }
   }
 
@@ -65,6 +69,17 @@ export class DigService {
       case 'hellemmes':
       case 'lomme':
         addressService = new LilleAddressService(city, this.ad)
+        break
+      case 'aubervilliers':
+      case 'epinay-sur-seine':
+      case 'ile-saint-denis':
+      case 'courneuve':
+      case 'pierrefitte':
+      case 'saint-denis':
+      case 'saint-ouen':
+      case 'stains':
+      case 'villetaneuse':
+        addressService = new PlaineCommuneAddressService(city, this.ad)
         break
     }
 
@@ -186,6 +201,18 @@ export class DigService {
       'logicimmo',
     ]
     return possibleBadRenter.includes(this.ad.renter) ? null : this.ad.renter
+  }
+
+  private digForIsHouse(): boolean {
+    const isHouseFromTitle =
+      this.ad.title?.match(regexString('isHouse')) &&
+      this.ad.title?.match(regexString('isHouse'))[0]
+
+    const isHouseFromDescription =
+      this.ad.description?.match(regexString('isHouse')) &&
+      this.ad.description?.match(regexString('isHouse'))[0]
+
+    return isHouseFromTitle?.length > 0 || isHouseFromDescription?.length > 0
   }
 
   private digForCharges(): number {
