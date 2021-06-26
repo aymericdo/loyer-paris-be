@@ -1,8 +1,8 @@
-jest.useFakeTimers()
-
 import { Mapping } from '@interfaces/mapping'
 import { SeLoger } from '../seloger'
 const mongoose = require('mongoose')
+
+jest.useFakeTimers()
 
 describe('seloger', () => {
   afterAll(async () => {

@@ -1,8 +1,8 @@
-jest.useFakeTimers()
-
 import { Mapping } from '@interfaces/mapping'
 import { Orpi } from '../orpi'
 const mongoose = require('mongoose')
+
+jest.useFakeTimers()
 
 describe('orpi', () => {
   afterAll(async () => {

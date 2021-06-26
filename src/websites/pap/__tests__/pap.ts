@@ -1,8 +1,8 @@
-jest.useFakeTimers()
-
 import { Mapping } from '@interfaces/mapping'
 import { Pap } from '../pap'
 const mongoose = require('mongoose')
+
+jest.useFakeTimers()
 
 describe('pap', () => {
   afterAll(async () => {
