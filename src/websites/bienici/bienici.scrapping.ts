@@ -43,7 +43,7 @@ export class BienIciScrapping {
     features.forEach((feature) => {
       if (
         feature.textContent.match(/m²/g) &&
-        !feature.textContent.toLowerCase().include('balcon')
+        !feature.textContent.toLowerCase().includes('balcon')
       ) {
         surface = feature
       } else if (feature.textContent.match(/pièce/g)) {
