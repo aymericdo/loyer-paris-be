@@ -19,6 +19,7 @@ export async function getMapData(
   const filter = {
     latitude: { $exists: true },
     longitude: { $exists: true },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -59,6 +60,7 @@ export async function getChloroplethMapData(
   const filter = {
     latitude: { $exists: true },
     longitude: { $exists: true },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -99,6 +101,7 @@ export async function getPriceDiffData(
     postalCode: { $exists: true },
     isLegal: false,
     priceExcludingCharges: { $lte: 10000 },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -148,7 +151,9 @@ export async function getLegalVarData(
     createdAt: string
   }[]
 > {
-  const filter = {}
+  const filter = {
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+  }
 
   if (city !== 'all') {
     filter['city'] = getCity(city)
@@ -215,6 +220,7 @@ export async function getPriceVarData(
 > {
   const filter = {
     isLegal: false,
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -258,6 +264,7 @@ export async function getLegalPerClassicRenterData(
   const filter = {
     renter: { $regex: renterNameRegex },
     surface: { $lte: 100 },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -289,6 +296,7 @@ export async function getLegalPerRenterData(
   const filter = {
     renter: { $exists: true },
     surface: { $lte: 100 },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -319,6 +327,7 @@ export async function getLegalPerWebsiteData(
 ): Promise<{ isLegal: boolean; website: string }[]> {
   const filter = {
     surface: { $lte: 100 },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -349,6 +358,7 @@ export async function getLegalPerSurfaceData(
 ): Promise<{ isLegal: boolean; surface: number }[]> {
   const filter = {
     surface: { $lte: 100 },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
