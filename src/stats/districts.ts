@@ -26,6 +26,16 @@ export class DistrictList {
       )
     )
   }
+
+  @Memoize()
+  plaineCommuneGeodata() {
+    return JSON.parse(
+      fs.readFileSync(
+        path.join('json-data/quartier_plaine-commune_geodata.json'),
+        'utf8'
+      )
+    )
+  }
 }
 
 export function getDistricts(req: Request, res: Response, next: NextFunction) {
@@ -41,6 +51,9 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
     case 'lille':
       geodata = districtList.lilleGeodata()
       break
+    case 'plaine_commune':
+      geodata = districtList.plaineCommuneGeodata()
+      break
   }
 
   res.json([
@@ -52,6 +65,8 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
               return data['properties']['l_qu']
             case 'lille':
               return `Zone ${data['properties']['zonage']}`
+            case 'plaine_commune':
+              return `Zone ${data['properties']['Zone']}`
           }
         })
         .sort()

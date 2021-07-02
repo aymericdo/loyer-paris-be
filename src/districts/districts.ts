@@ -26,6 +26,16 @@ export class DistrictList {
       )
     )
   }
+
+  @Memoize()
+  plaineCommuneGeodata() {
+    return JSON.parse(
+      fs.readFileSync(
+        path.join('json-data/quartier_plaine-commune_geodata.json'),
+        'utf8'
+      )
+    )
+  }
 }
 
 export function getDistricts(req: Request, res: Response, next: NextFunction) {
@@ -40,6 +50,9 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
       break
     case 'lille':
       geodata = districtList.lilleGeodata()
+      break
+    case 'plaine_commune':
+      geodata = districtList.plaineCommuneGeodata()
       break
   }
 
@@ -83,6 +96,21 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
               prev.push({
                 value: `Zone ${data['properties']['zonage']}`,
                 displaySequence: data['properties']['zonage'],
+                groupBy: null,
+              })
+            }
+            break
+          }
+          case 'plaine_commune': {
+            if (
+              !prev.some(
+                (elem: DistrictElem) =>
+                  elem.value === `Zone ${data['properties']['Zone']}`
+              )
+            ) {
+              prev.push({
+                value: `Zone ${data['properties']['Zone']}`,
+                displaySequence: data['properties']['Zone'],
                 groupBy: null,
               })
             }

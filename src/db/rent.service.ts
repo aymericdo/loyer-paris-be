@@ -4,9 +4,23 @@ import { DataBaseItem } from '@interfaces/database-item'
 function getCity(city: string) {
   switch (city) {
     case 'paris':
-      return 'paris'
+      return { $in: ['paris'] }
     case 'lille':
-      return ['lille', 'hellemmes', 'lomme']
+      return { $in: ['lille', 'hellemmes', 'lomme'] }
+    case 'plaine_commune':
+      return {
+        $in: [
+          'aubervilliers',
+          'epinay-sur-seine',
+          'ile-saint-denis',
+          'courneuve',
+          'pierrefitte',
+          'saint-denis',
+          'saint-ouen',
+          'stains',
+          'villetaneuse',
+        ],
+      }
   }
 }
 
@@ -58,8 +72,6 @@ export async function getChloroplethMapData(
   dateRange: string[]
 ): Promise<{ isLegal: boolean; district: string }[]> {
   const filter = {
-    latitude: { $exists: true },
-    longitude: { $exists: true },
     website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 

@@ -10,10 +10,19 @@ export function getPriceDifference(
   next: NextFunction
 ) {
   log.info(`-> ${req.baseUrl} priceDifference`, 'blue')
-  const postalCodePossibilities =
-    req.params.city === 'paris'
-      ? cityList.paris.postalCodePossibilities
-      : cityList.lille.postalCodePossibilities
+  let postalCodePossibilities = []
+  switch (req.params.city) {
+    case 'paris':
+      postalCodePossibilities = cityList.paris.postalCodePossibilities
+      break
+    case 'lille':
+      postalCodePossibilities = cityList.lille.postalCodePossibilities
+      break
+    case 'plaine_commune':
+      postalCodePossibilities = cityList.plaineCommune.postalCodePossibilities
+      break
+  }
+
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')
 
@@ -25,8 +34,7 @@ export function getPriceDifference(
         ...vegaOpt,
         title: {
           ...vegaOpt.title,
-          text:
-            'Différence moyenne entre le prix pratiqué et le prix maximum estimé',
+          text: 'Différence moyenne entre le prix pratiqué et le prix maximum estimé',
         },
         data: {
           values: data,

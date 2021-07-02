@@ -32,6 +32,20 @@ export function getMap(req: Request, res: Response, next: NextFunction) {
 
       districtField = 'properties.zonage'
       break
+    case 'plaine_commune':
+      geodata = {
+        ...districtList.plaineCommuneGeodata(),
+        features: districtList.plaineCommuneGeodata().features.map((data) => ({
+          ...data,
+          properties: {
+            ...data.properties,
+            zonage: `Zone ${data['properties']['Zone']}`,
+          },
+        })),
+      }
+
+      districtField = 'properties.Zone'
+      break
   }
 
   rentService
