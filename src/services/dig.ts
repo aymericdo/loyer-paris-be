@@ -224,6 +224,10 @@ export class DigService {
   }
 
   private digForHasCharges(): boolean {
-    return this.ad.hasCharges
+    return (
+      this.ad.hasCharges ||
+      (this.ad.description?.match(regexString('hasCharges')) &&
+        !!this.ad.description.match(regexString('hasCharges')).length)
+    )
   }
 }
