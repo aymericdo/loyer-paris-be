@@ -22,9 +22,18 @@ const empriseBatieConnection = mongoose.createConnection(
 
 const rentSchema = require('./rent.model')
 const empriseBatieSchema = require('./emprisebatie.model')
+const parisAddressSchema = require('./paris-address.model')
 
 export const Rent = rentConnection.model('Rent', rentSchema)
 export const EmpriseBatie = empriseBatieConnection.model(
   'Batie',
   empriseBatieSchema
 )
+export const ParisAddress = rentConnection.model(
+  'parisaddress',
+  parisAddressSchema
+)
+
+// ParisAddress.findOne({}).then((data) => {
+//   console.log(data)
+// })
