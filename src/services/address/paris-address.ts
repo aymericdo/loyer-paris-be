@@ -38,9 +38,7 @@ export class ParisAddressService extends AddressService {
   }
 
   @Memoize()
-  getAddressCompleted(
-    query: string
-  ): {
+  getAddressCompleted(query: string): {
     item: AddressItem
     score: number
     matches: ReadonlyArray<Fuse.FuseResultMatch>
@@ -66,18 +64,25 @@ export class ParisAddressService extends AddressService {
       matches: ReadonlyArray<Fuse.FuseResultMatch>
     }[]
     return result
-      ? result.map((r) => ({
-          item: {
-            address: r.item.fields.l_adr,
-            postalCode: this.postalCodeFormat(r.item.fields.c_ar.toString()),
-            coordinate: {
-              lng: r.item.fields.geom.coordinates[0],
-              lat: r.item.fields.geom.coordinates[1],
-            },
-          },
-          score: r.score,
-          matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
-        }))
+      ? result
+          .map(
+            (r) =>
+              r.item.fields.c_ar?.toString() && {
+                item: {
+                  address: r.item.fields.l_adr,
+                  postalCode: this.postalCodeFormat(
+                    r.item.fields.c_ar.toString()
+                  ),
+                  coordinate: {
+                    lng: r.item.fields.geom.coordinates[0],
+                    lat: r.item.fields.geom.coordinates[1],
+                  },
+                },
+                score: r.score,
+                matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
+              }
+          )
+          .filter(Boolean)
       : []
   }
 
