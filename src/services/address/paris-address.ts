@@ -64,25 +64,18 @@ export class ParisAddressService extends AddressService {
       matches: ReadonlyArray<Fuse.FuseResultMatch>
     }[]
     return result
-      ? result
-          .map(
-            (r) =>
-              r.item.fields.c_ar?.toString() && {
-                item: {
-                  address: r.item.fields.l_adr,
-                  postalCode: this.postalCodeFormat(
-                    r.item.fields.c_ar.toString()
-                  ),
-                  coordinate: {
-                    lng: r.item.fields.geom.coordinates[0],
-                    lat: r.item.fields.geom.coordinates[1],
-                  },
-                },
-                score: r.score,
-                matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
-              }
-          )
-          .filter(Boolean)
+      ? result.map((r) => ({
+          item: {
+            address: r.item.fields.l_adr,
+            postalCode: this.postalCodeFormat(r.item.fields.c_ar.toString()),
+            coordinate: {
+              lng: r.item.fields.geom.coordinates[0],
+              lat: r.item.fields.geom.coordinates[1],
+            },
+          },
+          score: r.score,
+          matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
+        }))
       : []
   }
 
