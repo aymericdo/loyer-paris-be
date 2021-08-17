@@ -38,9 +38,7 @@ export class ParisAddressService extends AddressService {
   }
 
   @Memoize()
-  getAddressCompleted(
-    query: string
-  ): {
+  getAddressCompleted(query: string): {
     item: AddressItem
     score: number
     matches: ReadonlyArray<Fuse.FuseResultMatch>

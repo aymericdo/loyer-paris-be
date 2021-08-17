@@ -27,8 +27,7 @@ describe('bienici', () => {
           title:
             'location appartement meuble 2 pieces 33 m²paris 11e 75011 (nation - alexandre dumas)',
           platform: 'chrome',
-          url:
-            'https://www.bienici.com/annonce/location/paris-11e/appartement/2pieces/guy-hoquet-immo-facile-4938963?q=%2Frecherche%2Flocation%2Fparis-11e-75011',
+          url: 'https://www.bienici.com/annonce/location/paris-11e/appartement/2pieces/guy-hoquet-immo-facile-4938963?q=%2Frecherche%2Flocation%2Fparis-11e-75011',
         }
 
         const mockResponse: any = {
@@ -89,8 +88,7 @@ describe('bienici', () => {
           title:
             'location appartement meuble 1 piece 10 m²lille 59000 (bois blanc)',
           platform: 'chrome',
-          url:
-            'https://www.bienici.com/annonce/location/lille/appartement/1piece/gedeon-22869488?q=%2Frecherche%2Flocation%2Flille-59000%3Fprix-max%3D800',
+          url: 'https://www.bienici.com/annonce/location/lille/appartement/1piece/gedeon-22869488?q=%2Frecherche%2Flocation%2Flille-59000%3Fprix-max%3D800',
         }
 
         const mockResponse: any = {

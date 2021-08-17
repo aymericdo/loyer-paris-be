@@ -29,8 +29,7 @@ describe('orpi', () => {
           title: 'appartement t1 paris 11 75011 b e1y6bt',
           yearBuilt: null,
           platform: 'chrome',
-          url:
-            'https://www.orpi.com/annonce-location-appartement-t1-paris-11-75011-b-e1y6bt/',
+          url: 'https://www.orpi.com/annonce-location-appartement-t1-paris-11-75011-b-e1y6bt/',
         }
 
         const mockResponse: any = {
@@ -93,8 +92,7 @@ describe('orpi', () => {
           title: 'appartement t2 lille 59000 b e1xpqp',
           yearBuilt: null,
           platform: 'chrome',
-          url:
-            'https://www.orpi.com/annonce-location-appartement-t2-lille-59000-b-e1xpqp/',
+          url: 'https://www.orpi.com/annonce-location-appartement-t2-lille-59000-b-e1xpqp/',
         }
 
         const mockResponse: any = {

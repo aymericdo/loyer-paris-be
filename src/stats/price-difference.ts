@@ -25,8 +25,7 @@ export function getPriceDifference(
         ...vegaOpt,
         title: {
           ...vegaOpt.title,
-          text:
-            'Différence moyenne entre le prix pratiqué et le prix maximum estimé',
+          text: 'Différence moyenne entre le prix pratiqué et le prix maximum estimé',
         },
         data: {
           values: data,

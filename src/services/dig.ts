@@ -20,13 +20,8 @@ export class DigService {
   async digInAd(): Promise<CleanAd> {
     const city: AvailableCities = CityService.findCity(this.ad)
 
-    const [
-      address,
-      postalCode,
-      stations,
-      coordinates,
-      blurryCoordinates,
-    ] = this.digForAddress(city)
+    const [address, postalCode, stations, coordinates, blurryCoordinates] =
+      this.digForAddress(city)
     const roomCount = this.digForRoomCount()
     const hasFurniture = this.digForHasFurniture()
     const surface = this.digForSurface()
