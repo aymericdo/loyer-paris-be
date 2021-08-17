@@ -20,6 +20,15 @@ const empriseBatieConnection = mongoose.createConnection(
   }
 )
 
+const encadrementAddress1Connection = mongoose.createConnection(
+  process.env.MONGODB_URI_ENCADREMENT_ADDRESS1 || localConnectionString,
+  {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+)
+
 const rentSchema = require('./rent.model')
 const empriseBatieSchema = require('./emprisebatie.model')
 const parisAddressSchema = require('./paris-address.model')
@@ -29,11 +38,7 @@ export const EmpriseBatie = empriseBatieConnection.model(
   'Batie',
   empriseBatieSchema
 )
-export const ParisAddress = rentConnection.model(
+export const ParisAddress = encadrementAddress1Connection.model(
   'parisaddress',
   parisAddressSchema
 )
-
-// ParisAddress.findOne({}).then((data) => {
-//   console.log(data)
-// })
