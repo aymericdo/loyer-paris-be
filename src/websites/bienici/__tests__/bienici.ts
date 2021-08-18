@@ -1,8 +1,8 @@
-jest.useFakeTimers()
-
 import { Mapping } from '@interfaces/mapping'
 import { BienIci } from '../bienici'
 const mongoose = require('mongoose')
+
+jest.useFakeTimers()
 
 describe('bienici', () => {
   afterAll(async () => {
@@ -27,8 +27,7 @@ describe('bienici', () => {
           title:
             'location appartement meuble 2 pieces 33 m²paris 11e 75011 (nation - alexandre dumas)',
           platform: 'chrome',
-          url:
-            'https://www.bienici.com/annonce/location/paris-11e/appartement/2pieces/guy-hoquet-immo-facile-4938963?q=%2Frecherche%2Flocation%2Fparis-11e-75011',
+          url: 'https://www.bienici.com/annonce/location/paris-11e/appartement/2pieces/guy-hoquet-immo-facile-4938963?q=%2Frecherche%2Flocation%2Fparis-11e-75011',
         }
 
         const mockResponse: any = {
@@ -47,9 +46,10 @@ describe('bienici', () => {
             roomCount: { order: 2, value: 2 },
             surface: { order: 3, value: 33 },
             yearBuilt: { order: 4, value: null },
-            price: { order: 5, value: 1250 },
-            charges: { order: 6, value: 110 },
-            hasCharges: { order: 7, value: null },
+            isHouse: { order: 5, value: null },
+            price: { order: 6, value: 1250 },
+            charges: { order: 7, value: 110 },
+            hasCharges: { order: 8, value: null },
           },
           computedInfo: {
             neighborhood: { order: 0, value: 'Roquette' },
@@ -57,9 +57,10 @@ describe('bienici', () => {
             roomCount: { order: 2, value: 2 },
             surface: { order: 3, value: 33 },
             dateRange: { order: 4, value: 'Avant 1946' },
-            max: { order: 5, value: 32.76 },
-            maxAuthorized: { order: 6, value: 1081.08 },
-            promoPercentage: { order: 7, value: 5.17 },
+            isHouse: { order: 5, value: undefined },
+            max: { order: 6, value: 32.76 },
+            maxAuthorized: { order: 7, value: 1081.08 },
+            promoPercentage: { order: 8, value: 5.17 },
           },
           isLegal: false,
         })
@@ -89,8 +90,7 @@ describe('bienici', () => {
           title:
             'location appartement meuble 1 piece 10 m²lille 59000 (bois blanc)',
           platform: 'chrome',
-          url:
-            'https://www.bienici.com/annonce/location/lille/appartement/1piece/gedeon-22869488?q=%2Frecherche%2Flocation%2Flille-59000%3Fprix-max%3D800',
+          url: 'https://www.bienici.com/annonce/location/lille/appartement/1piece/gedeon-22869488?q=%2Frecherche%2Flocation%2Flille-59000%3Fprix-max%3D800',
         }
 
         const mockResponse: any = {
@@ -109,9 +109,10 @@ describe('bienici', () => {
             roomCount: { order: 2, value: 1 },
             surface: { order: 3, value: 10 },
             yearBuilt: { order: 4, value: null },
-            price: { order: 5, value: 563 },
-            charges: { order: 6, value: 83 },
-            hasCharges: { order: 7, value: null },
+            isHouse: { order: 5, value: null },
+            price: { order: 6, value: 563 },
+            charges: { order: 7, value: 83 },
+            hasCharges: { order: 8, value: null },
           },
           computedInfo: {
             neighborhood: { order: 0, value: 'Zone 1' },
@@ -119,9 +120,10 @@ describe('bienici', () => {
             roomCount: { order: 2, value: 1 },
             surface: { order: 3, value: 10 },
             dateRange: { order: 4, value: '< 1946' },
-            max: { order: 5, value: 22.4 },
-            maxAuthorized: { order: 6, value: 224 },
-            promoPercentage: { order: 7, value: 53.33 },
+            isHouse: { order: 5, value: undefined },
+            max: { order: 6, value: 22.4 },
+            maxAuthorized: { order: 7, value: 224 },
+            promoPercentage: { order: 8, value: 53.33 },
           },
           isLegal: false,
         })

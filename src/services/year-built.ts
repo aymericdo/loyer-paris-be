@@ -32,7 +32,14 @@ export class YearBuiltService {
     return rangeTime.filter((time: string) => {
       const rangeYearBuilt: (string | number)[] = time
         .split(/[\s-]+/)
-        .map((year: any) => (isNaN(year) ? year.toLowerCase() : +year))
+        .map((year: any) =>
+          isNaN(year)
+            ? year
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+            : +year
+        )
 
       return yearBuiltRange.some((yb: number) => {
         return typeof rangeYearBuilt[0] === 'number'

@@ -35,6 +35,19 @@ export function getChloroplethMap(
       }
       districtField = 'properties.zonage'
       break
+    case 'plaine_commune':
+      geodata = {
+        ...districtList.plaineCommuneGeodata(),
+        features: districtList.plaineCommuneGeodata().features.map((data) => ({
+          ...data,
+          properties: {
+            ...data.properties,
+            Zone: `Zone ${data['properties']['Zone']}`,
+          },
+        })),
+      }
+      districtField = 'properties.Zone'
+      break
   }
 
   rentService

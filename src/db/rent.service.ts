@@ -4,9 +4,23 @@ import { DataBaseItem } from '@interfaces/database-item'
 function getCity(city: string) {
   switch (city) {
     case 'paris':
-      return 'paris'
+      return { $in: ['paris'] }
     case 'lille':
-      return ['lille', 'hellemmes', 'lomme']
+      return { $in: ['lille', 'hellemmes', 'lomme'] }
+    case 'plaine_commune':
+      return {
+        $in: [
+          'aubervilliers',
+          'epinay-sur-seine',
+          'ile-saint-denis',
+          'courneuve',
+          'pierrefitte',
+          'saint-denis',
+          'saint-ouen',
+          'stains',
+          'villetaneuse',
+        ],
+      }
   }
 }
 
@@ -19,6 +33,7 @@ export async function getMapData(
   const filter = {
     latitude: { $exists: true },
     longitude: { $exists: true },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -57,8 +72,7 @@ export async function getChloroplethMapData(
   dateRange: string[]
 ): Promise<{ isLegal: boolean; district: string }[]> {
   const filter = {
-    latitude: { $exists: true },
-    longitude: { $exists: true },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -99,6 +113,7 @@ export async function getPriceDiffData(
     postalCode: { $exists: true },
     isLegal: false,
     priceExcludingCharges: { $lte: 10000 },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -148,7 +163,9 @@ export async function getLegalVarData(
     createdAt: string
   }[]
 > {
-  const filter = {}
+  const filter = {
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+  }
 
   if (city !== 'all') {
     filter['city'] = getCity(city)
@@ -215,6 +232,7 @@ export async function getPriceVarData(
 > {
   const filter = {
     isLegal: false,
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -258,6 +276,7 @@ export async function getLegalPerClassicRenterData(
   const filter = {
     renter: { $regex: renterNameRegex },
     surface: { $lte: 100 },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -289,6 +308,7 @@ export async function getLegalPerRenterData(
   const filter = {
     renter: { $exists: true },
     surface: { $lte: 100 },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -319,6 +339,7 @@ export async function getLegalPerWebsiteData(
 ): Promise<{ isLegal: boolean; website: string }[]> {
   const filter = {
     surface: { $lte: 100 },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {
@@ -349,6 +370,7 @@ export async function getLegalPerSurfaceData(
 ): Promise<{ isLegal: boolean; surface: number }[]> {
   const filter = {
     surface: { $lte: 100 },
+    website: { $nin: ['bellesdemeures', 'luxresidence'] },
   }
 
   if (city !== 'all') {

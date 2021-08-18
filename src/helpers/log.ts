@@ -11,6 +11,8 @@ export const info = (message: string, color?: string) => {
     console.log(clc.blueBright(log))
   } else if (color === 'green') {
     console.log(clc.greenBright(log))
+  } else if (color === 'yellow') {
+    console.log(clc.yellowBright(log))
   } else {
     console.log(log)
   }
@@ -29,8 +31,4 @@ export const warning = (message: string, color?: string) => {
 export const light = (message: string, color?: string) => {
   info(message, color)
   Sentry.captureMessage(message, Severity.Log)
-}
-
-export const priceHasChanged = () => {
-  Sentry.captureMessage('price has changed', Severity.Info)
 }

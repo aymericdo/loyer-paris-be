@@ -41,22 +41,75 @@ export const cityList: CityList = {
   },
   hellemmes: {
     postalCodePossibilities: ['59260'],
-    postalCodeRegex: [/\b59[0-9]{3}\b/g],
+    postalCodeRegex: [/\b59260\b/g],
   },
   lomme: {
     postalCodePossibilities: ['59160'],
-    postalCodeRegex: [/\b59[0-9]{3}\b/g],
+    postalCodeRegex: [/\b59160\b/g],
   },
   lille: {
     postalCodePossibilities: ['59000', '59260', '59160', '59800', '59777'],
     postalCodeRegex: [/\b59[0-9]{3}\b/g],
+  },
+  plaineCommune: {
+    postalCodePossibilities: [
+      '93300',
+      '93800',
+      '93450',
+      '93120',
+      '93380',
+      '93200',
+      '93210',
+      '93400',
+      '93240',
+      '93430',
+    ],
+    postalCodeRegex: [/\b93[0-9]{3}\b/g],
+  },
+  aubervilliers: {
+    postalCodePossibilities: ['93300'],
+    postalCodeRegex: [/\b93300\b/g],
+  },
+  'epinay-sur-seine': {
+    postalCodePossibilities: ['93800'],
+    postalCodeRegex: [/\b93800\b/g],
+  },
+  'ile-saint-denis': {
+    postalCodePossibilities: ['93450'],
+    postalCodeRegex: [/\b93450\b/g],
+  },
+  courneuve: {
+    postalCodePossibilities: ['93120'],
+    postalCodeRegex: [/\b93120\b/g],
+  },
+  pierrefitte: {
+    postalCodePossibilities: ['93380'],
+    postalCodeRegex: [/\b93380\b/g],
+  },
+  'saint-denis': {
+    postalCodePossibilities: ['93200', '93210'],
+    postalCodeRegex: [/\b(93200|93210)\b/g],
+  },
+  'saint-ouen': {
+    postalCodePossibilities: ['93400'],
+    postalCodeRegex: [/\b93400\b/g],
+  },
+  stains: {
+    postalCodePossibilities: ['93240'],
+    postalCodeRegex: [/\b93240\b/g],
+  },
+  villetaneuse: {
+    postalCodePossibilities: ['93430'],
+    postalCodeRegex: [/\b93430\b/g],
   },
 }
 
 export type AvailableCities = keyof typeof cityList
 
 export class CityService {
-  static findCity(ad: Ad): AvailableCities {
+  cityInList: AvailableCities
+
+  constructor(ad: Ad) {
     const cityName = cleanup.string(ad.cityLabel)
 
     if (!cityName || !cityName?.length) {
@@ -75,6 +128,27 @@ export class CityService {
       }
     }
 
-    return cityInList as AvailableCities
+    this.cityInList = cityInList as AvailableCities
+  }
+
+  findCity(): AvailableCities {
+    return this.cityInList
+  }
+
+  canHaveHouse(): boolean {
+    switch (this.cityInList) {
+      case 'aubervilliers':
+      case 'epinay-sur-seine':
+      case 'ile-saint-denis':
+      case 'courneuve':
+      case 'pierrefitte':
+      case 'saint-denis':
+      case 'saint-ouen':
+      case 'stains':
+      case 'villetaneuse':
+        return true
+      default:
+        return false
+    }
   }
 }

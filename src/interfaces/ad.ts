@@ -37,6 +37,7 @@ export interface CleanAd {
   stations?: string[]
   charges?: number
   hasCharges?: boolean
+  isHouse?: boolean
 }
 
 export interface FilteredResult {
@@ -46,4 +47,5 @@ export interface FilteredResult {
   isFurnished: boolean
   roomCount: number
   yearBuilt: string
+  isHouse?: string
 }

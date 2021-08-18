@@ -10,6 +10,7 @@ interface SerializedInfo {
   hasCharges?: boolean
   city: AvailableCities
   hasFurniture?: boolean
+  isHouse?: boolean
   isLegal: boolean
   maxAuthorized: number
   postalCode: string
@@ -38,6 +39,7 @@ export class SerializeRentService {
       city,
       hasCharges,
       hasFurniture,
+      isHouse,
       isLegal,
       maxAuthorized,
       postalCode,
@@ -66,10 +68,11 @@ export class SerializeRentService {
           order: 4,
           value: YearBuiltService.getDateFormatted(yearBuilt),
         },
-        price: { order: 5, value: roundNumber(price) },
-        charges: { order: 6, value: roundNumber(charges) },
+        isHouse: { order: 5, value: isHouse ? 'Maison' : null },
+        price: { order: 6, value: roundNumber(price) },
+        charges: { order: 7, value: roundNumber(charges) },
         hasCharges: {
-          order: 7,
+          order: 8,
           value: !charges && hasCharges != null ? hasCharges : null,
         },
       },
@@ -79,13 +82,14 @@ export class SerializeRentService {
         roomCount: { order: 2, value: this.filteredResult.roomCount },
         surface: { order: 3, value: surface },
         dateRange: { order: 4, value: this.filteredResult.yearBuilt },
+        isHouse: { order: 5, value: this.filteredResult.isHouse },
         max: {
-          order: 5,
+          order: 6,
           value: !isLegal ? roundNumber(this.filteredResult.maxPrice) : null,
         },
-        maxAuthorized: { order: 6, value: !isLegal ? maxAuthorized : null },
+        maxAuthorized: { order: 7, value: !isLegal ? maxAuthorized : null },
         promoPercentage: {
-          order: 7,
+          order: 8,
           value: !isLegal
             ? roundNumber(100 - (maxAuthorized * 100) / priceExcludingCharges)
             : null,

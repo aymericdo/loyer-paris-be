@@ -60,9 +60,7 @@ export abstract class AddressService {
     return []
   }
 
-  abstract getAddressCompleted(
-    q: string
-  ): {
+  abstract getAddressCompleted(q: string): {
     item: AddressItem
     score: number
     matches: ReadonlyArray<Fuse.FuseResultMatch>

@@ -1,8 +1,8 @@
-jest.useFakeTimers()
-
 import { Mapping } from '@interfaces/mapping'
 import { Pap } from '../pap'
 const mongoose = require('mongoose')
+
+jest.useFakeTimers()
 
 describe('pap', () => {
   afterAll(async () => {
@@ -68,16 +68,17 @@ describe('pap', () => {
               order: 4,
               value: null,
             },
+            isHouse: { order: 5, value: null },
             price: {
-              order: 5,
+              order: 6,
               value: 819,
             },
             charges: {
-              order: 6,
+              order: 7,
               value: null,
             },
             hasCharges: {
-              order: 7,
+              order: 8,
               value: null,
             },
           },
@@ -102,16 +103,17 @@ describe('pap', () => {
               order: 4,
               value: 'Avant 1946',
             },
+            isHouse: { order: 5, value: undefined },
             max: {
-              order: 5,
+              order: 6,
               value: 33.72,
             },
             maxAuthorized: {
-              order: 6,
+              order: 7,
               value: 708.12,
             },
             promoPercentage: {
-              order: 7,
+              order: 8,
               value: 13.54,
             },
           },
@@ -167,9 +169,10 @@ describe('pap', () => {
             roomCount: { order: 2, value: 3 },
             surface: { order: 3, value: 53 },
             yearBuilt: { order: 4, value: null },
-            price: { order: 5, value: 755 },
-            charges: { order: 6, value: 75 },
-            hasCharges: { order: 7, value: null },
+            isHouse: { order: 5, value: null },
+            price: { order: 6, value: 755 },
+            charges: { order: 7, value: 75 },
+            hasCharges: { order: 8, value: null },
           },
           computedInfo: {
             neighborhood: { order: 0, value: 'Zone 1' },
@@ -177,9 +180,10 @@ describe('pap', () => {
             roomCount: { order: 2, value: 3 },
             surface: { order: 3, value: 53 },
             dateRange: { order: 4, value: '> 1990' },
-            max: { order: 5, value: null },
-            maxAuthorized: { order: 6, value: null },
-            promoPercentage: { order: 7, value: null },
+            isHouse: { order: 5, value: undefined },
+            max: { order: 6, value: null },
+            maxAuthorized: { order: 7, value: null },
+            promoPercentage: { order: 8, value: null },
           },
           isLegal: true,
         })

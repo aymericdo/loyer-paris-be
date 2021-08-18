@@ -23,7 +23,7 @@ export class LilleDistrictService {
   }
 
   @Memoize()
-  private lilleDistrictJson(): { features: LilleDistrictItem[] } {
+  private lilleDistrictsJson(): { features: LilleDistrictItem[] } {
     return JSON.parse(
       fs.readFileSync(
         path.join('json-data/quartier_lille_geodata.json'),
@@ -36,7 +36,7 @@ export class LilleDistrictService {
     lat: number,
     lng: number
   ): LilleDistrictItem[] {
-    const district = this.lilleDistrictJson().features.find((district) =>
+    const district = this.lilleDistrictsJson().features.find((district) =>
       inside([+lng, +lat], district.geometry.coordinates[0])
     )
     return district ? [district] : []

@@ -7,6 +7,7 @@ export enum ErrorCode {
   Address = 'address',
   City = 'city',
   Price = 'price',
+  Surface = 'surface',
   Filter = 'filter',
   Partner = 'partner',
 }
@@ -16,11 +17,16 @@ export class ApiErrorsService {
 
   static getStatus(err: ApiError): number {
     switch (err.error as ErrorCode) {
+      case ErrorCode.Minimal:
+      case ErrorCode.Filter:
+      case ErrorCode.Partner:
+        log.error(err.msg, 'red')
+        break
       case ErrorCode.City:
         log.light(err.msg)
         break
       default:
-        log.error(err.msg)
+        log.warning(err.msg, 'yellow')
         break
     }
 
