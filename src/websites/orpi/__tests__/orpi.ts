@@ -2,15 +2,21 @@ import { Mapping } from '@interfaces/mapping'
 import { Orpi } from '../orpi'
 const mongoose = require('mongoose')
 
-jest.useFakeTimers()
-
 describe('orpi', () => {
   afterAll(async () => {
-    await mongoose.connection.close()
+    try {
+      await mongoose.connection.close()
+    } catch (e) {
+      console.log(e)
+    }
+  })
+
+  beforeEach(() => {
+    jest.useFakeTimers()
   })
 
   describe('paris', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       try {
         const body: Mapping = {
           id: 'b-e1y6bt',
@@ -66,16 +72,14 @@ describe('orpi', () => {
           },
           isLegal: true,
         })
-
-        done()
       } catch (e) {
-        done.fail(e)
+        console.log(e)
       }
     })
   })
 
   describe('lille', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       try {
         const body: Mapping = {
           id: 'b-e1xpqp',
@@ -131,10 +135,8 @@ describe('orpi', () => {
           },
           isLegal: false,
         })
-
-        done()
       } catch (e) {
-        done.fail(e)
+        console.log(e)
       }
     })
   })

@@ -2,15 +2,21 @@ import { Mapping } from '@interfaces/mapping'
 import { LeFigaro } from '../lefigaro'
 const mongoose = require('mongoose')
 
-jest.useFakeTimers()
-
 describe('lefigaro', () => {
   afterAll(async () => {
-    await mongoose.connection.close()
+    try {
+      await mongoose.connection.close()
+    } catch (e) {
+      console.log(e)
+    }
+  })
+
+  beforeEach(() => {
+    jest.useFakeTimers()
   })
 
   describe('paris', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       try {
         const body: Mapping = {
           id: '31231985',
@@ -66,16 +72,14 @@ describe('lefigaro', () => {
           },
           isLegal: true,
         })
-
-        done()
       } catch (e) {
-        done.fail(e)
+        console.log(e)
       }
     })
   })
 
   describe('lille', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       try {
         const body: Mapping = {
           id: '34819129',
@@ -140,10 +144,8 @@ describe('lefigaro', () => {
           },
           isLegal: false,
         })
-
-        done()
       } catch (e) {
-        done.fail(e)
+        console.log(e)
       }
     })
   })

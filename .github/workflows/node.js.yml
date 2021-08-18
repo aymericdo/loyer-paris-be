@@ -6,6 +6,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       MONGODB_URI_EMPRISE_BATIE: ${{ secrets.MONGODB_URI_EMPRISE_BATIE }}
+      MONGODB_URI_ENCADREMENT_ADDRESS1: ${{ secrets.MONGODB_URI_ENCADREMENT_ADDRESS1 }}
 
     runs-on: ubuntu-latest
     steps:
