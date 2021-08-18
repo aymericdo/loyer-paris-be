@@ -12,7 +12,7 @@ describe('seloger', () => {
   })
 
   describe('paris', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       try {
         const body: Mapping = {
           id: '234523',
@@ -65,16 +65,14 @@ describe('seloger', () => {
           },
           isLegal: false,
         })
-
-        done()
       } catch (e) {
-        done.fail(e)
+        console.log(e)
       }
     })
   })
 
   describe('lille', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       try {
         const body = {
           id: '234523',
@@ -128,10 +126,8 @@ describe('seloger', () => {
           },
           isLegal: false,
         })
-
-        done()
       } catch (e) {
-        done.fail(e)
+        console.log(e)
       }
     })
   })

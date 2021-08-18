@@ -12,7 +12,7 @@ describe('bienici', () => {
   })
 
   describe('paris', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       try {
         const body: Mapping = {
           id: 'guy-hoquet-immo-facile-4938963',
@@ -66,16 +66,14 @@ describe('bienici', () => {
           },
           isLegal: false,
         })
-
-        done()
       } catch (e) {
-        done.fail(e)
+        console.log(e)
       }
     })
   })
 
   describe('lille', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       try {
         const body: Mapping = {
           id: 'gedeon-22869488',
@@ -129,10 +127,8 @@ describe('bienici', () => {
           },
           isLegal: false,
         })
-
-        done()
       } catch (e) {
-        done.fail(e)
+        console.log(e)
       }
     })
   })

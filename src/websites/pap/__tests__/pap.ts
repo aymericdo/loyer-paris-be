@@ -12,7 +12,7 @@ describe('pap', () => {
   })
 
   describe('paris', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       try {
         const body: Mapping = {
           id: 'r421900951',
@@ -121,16 +121,14 @@ describe('pap', () => {
           },
           isLegal: false,
         })
-
-        done()
       } catch (e) {
-        done.fail(e)
+        console.log(e)
       }
     })
   })
 
   describe('lille', () => {
-    test('returns clean ad', async (done) => {
+    test('returns clean ad', async () => {
       try {
         const body: Mapping = {
           id: 'r435801923',
@@ -189,10 +187,8 @@ describe('pap', () => {
           },
           isLegal: true,
         })
-
-        done()
       } catch (e) {
-        done.fail(e)
+        console.log(e)
       }
     })
   })
