@@ -2,11 +2,13 @@ import { Mapping } from '@interfaces/mapping'
 import { Orpi } from '../orpi'
 const mongoose = require('mongoose')
 
-jest.useFakeTimers()
-
 describe('orpi', () => {
   afterAll(async () => {
     await mongoose.connection.close()
+  })
+
+  beforeEach(() => {
+    jest.useFakeTimers()
   })
 
   describe('paris', () => {

@@ -2,11 +2,13 @@ import { Mapping } from '@interfaces/mapping'
 import { LeFigaro } from '../lefigaro'
 const mongoose = require('mongoose')
 
-jest.useFakeTimers()
-
 describe('lefigaro', () => {
   afterAll(async () => {
     await mongoose.connection.close()
+  })
+
+  beforeEach(() => {
+    jest.useFakeTimers()
   })
 
   describe('paris', () => {

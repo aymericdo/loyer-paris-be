@@ -2,11 +2,13 @@ import { Mapping } from '@interfaces/mapping'
 import { Pap } from '../pap'
 const mongoose = require('mongoose')
 
-jest.useFakeTimers()
-
 describe('pap', () => {
   afterAll(async () => {
     await mongoose.connection.close()
+  })
+
+  beforeEach(() => {
+    jest.useFakeTimers()
   })
 
   describe('paris', () => {

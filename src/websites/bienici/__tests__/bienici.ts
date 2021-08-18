@@ -2,11 +2,13 @@ import { Mapping } from '@interfaces/mapping'
 import { BienIci } from '../bienici'
 const mongoose = require('mongoose')
 
-jest.useFakeTimers()
-
 describe('bienici', () => {
   afterAll(async () => {
     await mongoose.connection.close()
+  })
+
+  beforeEach(() => {
+    jest.useFakeTimers()
   })
 
   describe('paris', () => {
