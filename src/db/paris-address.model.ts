@@ -14,7 +14,7 @@ const schema = new Schema({
 
 schema.plugin(mongooseFuzzySearching, {
   fields: ['fields.l_adr'],
-  minSize: 3,
+  minSize: 1,
   weight: 10,
   prefixOnly: true,
 })
