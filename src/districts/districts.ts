@@ -1,47 +1,11 @@
 import { Response, NextFunction, Request } from 'express'
 import * as log from '@helpers/log'
-import * as fs from 'fs'
-import * as path from 'path'
-import { Memoize } from 'typescript-memoize'
-
-export class DistrictList {
-  constructor() {}
-
-  @Memoize()
-  parisGeodata() {
-    return JSON.parse(
-      fs.readFileSync(
-        path.join('json-data/quartier_paris_geodata.json'),
-        'utf8'
-      )
-    )
-  }
-
-  @Memoize()
-  lilleGeodata() {
-    return JSON.parse(
-      fs.readFileSync(
-        path.join('json-data/quartier_lille_geodata.json'),
-        'utf8'
-      )
-    )
-  }
-
-  @Memoize()
-  plaineCommuneGeodata() {
-    return JSON.parse(
-      fs.readFileSync(
-        path.join('json-data/quartier_plaine-commune_geodata.json'),
-        'utf8'
-      )
-    )
-  }
-}
+import { DistrictsList } from '@services/districts'
 
 export function getDistricts(req: Request, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getDistricts`, 'blue')
   const city = req.params.city
-  const districtList = new DistrictList()
+  const districtList = new DistrictsList()
 
   let geodata: any
   switch (city) {

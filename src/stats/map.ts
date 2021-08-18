@@ -2,14 +2,14 @@ import { vegaCommonOpt } from '@helpers/vega'
 import { Response, NextFunction, Request } from 'express'
 import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
-import { DistrictList } from './districts'
+import { DistrictsList } from '@services/districts'
 
 export function getMap(req: Request, res: Response, next: NextFunction) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
   const city = req.params.city
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')
-  const districtList = new DistrictList()
+  const districtList = new DistrictsList()
 
   let geodata: any
   let districtField: string

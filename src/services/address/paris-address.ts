@@ -67,7 +67,9 @@ export class ParisAddressService extends AddressService {
       ? result.map((r) => ({
           item: {
             address: r.item.fields.l_adr,
-            postalCode: this.postalCodeFormat(r.item.fields.c_ar.toString()),
+            postalCode: ParisAddressService.postalCodeFormat(
+              r.item.fields.c_ar.toString()
+            ),
             coordinate: {
               lng: r.item.fields.geom.coordinates[0],
               lat: r.item.fields.geom.coordinates[1],
@@ -103,6 +105,11 @@ export class ParisAddressService extends AddressService {
     }
 
     return targetPolygon
+  }
+
+  static postalCodeFormat(postalCode: string): string {
+    // 10 -> 75010 9 -> 75009
+    return postalCode.length === 1 ? `7500${postalCode}` : `750${postalCode}`
   }
 
   private nearestStationInTargetPolygon(
@@ -211,11 +218,6 @@ export class ParisAddressService extends AddressService {
         'utf8'
       )
     )
-  }
-
-  private postalCodeFormat(postalCode: string): string {
-    // 10 -> 75010 9 -> 75009
-    return postalCode.length === 1 ? `7500${postalCode}` : `750${postalCode}`
   }
 
   private postalCodeReformat(postalCode: string): string {
