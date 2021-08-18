@@ -13,9 +13,9 @@ export async function getAddresses(
 
   console.log(addressQuery)
 
-  const data = await ParisAddress.find({
-    'fields.l_adr': new RegExp(addressQuery.toString(), 'i'),
-  }).limit(5)
+  const data = await ParisAddress.fuzzySearch(addressQuery.toString())
+    .limit(10)
+    .exec()
 
   switch (city) {
     case 'paris':
