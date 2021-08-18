@@ -2,18 +2,20 @@ import { Request, Response, NextFunction } from 'express'
 import * as log from '@helpers/log'
 import { ParisAddress } from '@db/db'
 
-export function getAddresses(req: Request, res: Response, next: NextFunction) {
+export async function getAddresses(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   log.info(`-> ${req.baseUrl} getAddresses`, 'blue')
   const city = req.params.city
   const addressQuery = req.query.q
 
   console.log(addressQuery)
 
-  ParisAddress.findOne({
-    recordid: 'b4079fbe1a1e44b42747df468a26fbbd3a155998',
-  }).then((data) => {
-    console.log(data)
-  })
+  const data = await ParisAddress.find({
+    'fields.l_adr': new RegExp(addressQuery.toString(), 'i'),
+  }).limit(5)
 
   switch (city) {
     case 'paris':
@@ -27,5 +29,5 @@ export function getAddresses(req: Request, res: Response, next: NextFunction) {
       break
   }
 
-  res.json('tamere')
+  res.json(data)
 }
