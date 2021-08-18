@@ -11,6 +11,10 @@ const rentConnection = mongoose.createConnection(
   }
 )
 
+rentConnection.catch((e) => {
+  console.log(e)
+})
+
 const empriseBatieConnection = mongoose.createConnection(
   process.env.MONGODB_URI_EMPRISE_BATIE || localConnectionString,
   {
@@ -20,6 +24,10 @@ const empriseBatieConnection = mongoose.createConnection(
   }
 )
 
+empriseBatieConnection.catch((e) => {
+  console.log(e)
+})
+
 const encadrementAddress1Connection = mongoose.createConnection(
   process.env.MONGODB_URI_ENCADREMENT_ADDRESS1 || localConnectionString,
   {
@@ -28,6 +36,10 @@ const encadrementAddress1Connection = mongoose.createConnection(
     useUnifiedTopology: true,
   }
 )
+
+encadrementAddress1Connection.catch((e) => {
+  console.log(e)
+})
 
 const rentSchema = require('./rent.model')
 const empriseBatieSchema = require('./emprisebatie.model')

@@ -4,7 +4,11 @@ const mongoose = require('mongoose')
 
 describe('pap', () => {
   afterAll(async () => {
-    await mongoose.connection.close()
+    try {
+      await mongoose.connection.close()
+    } catch (e) {
+      console.log(e)
+    }
   })
 
   beforeEach(() => {
