@@ -13,8 +13,6 @@ export async function getAddresses(
   const city = req.params.city
   const addressQuery = req.query.q
 
-  console.log(addressQuery)
-
   if (addressQuery.length < 2) {
     res.json([])
     return
@@ -36,9 +34,12 @@ export async function getAddresses(
             lat: elem.geometry.coordinates[1],
           }
         )
+
+        const districts = parisDistrictService.getDistricts()
+
         return {
           ...elem,
-          districts: parisDistrictService.getDistricts(),
+          districtName: districts.length ? districts[0].properties.l_qu : null,
         }
       })
       break

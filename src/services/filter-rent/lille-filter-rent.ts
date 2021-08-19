@@ -1,16 +1,16 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import { CleanAd, FilteredResult } from '@interfaces/ad'
+import { InfoToFilter, FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
 import { LilleDistrictService } from './lille-district'
 import { LilleEncadrementItem } from '@interfaces/json-item-lille'
 import { Memoize } from 'typescript-memoize'
 
 export class LilleFilterRentService {
-  cleanAd: CleanAd = null
+  infoToFilter: InfoToFilter = null
 
-  constructor(cleanAd: CleanAd) {
-    this.cleanAd = cleanAd
+  constructor(infoToFilter: InfoToFilter) {
+    this.infoToFilter = infoToFilter
   }
 
   filter(): FilteredResult {
@@ -18,12 +18,12 @@ export class LilleFilterRentService {
     const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Apres 1990']
 
     const districtsMatched = new LilleDistrictService(
-      this.cleanAd.postalCode,
-      this.cleanAd.coordinates || this.cleanAd.blurryCoordinates
+      this.infoToFilter.postalCode,
+      this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates
     ).getDistricts()
 
     const timeDates: string[] = this.dateFormatting(
-      YearBuiltService.getRangeTimeDates(rangeTime, this.cleanAd.yearBuilt)
+      YearBuiltService.getRangeTimeDates(rangeTime, this.infoToFilter.yearBuilt)
     )
 
     const rentList = this.rangeRentsLilleJson().filter((rangeRent) => {
@@ -36,16 +36,18 @@ export class LilleFilterRentService {
         (timeDates?.length
           ? timeDates.includes(rangeRent.fields.epoque_construction)
           : true) &&
-        (this.cleanAd.roomCount
-          ? +this.cleanAd.roomCount < 4
-            ? +rangeRent.fields.nb_pieces === +this.cleanAd.roomCount
+        (this.infoToFilter.roomCount
+          ? +this.infoToFilter.roomCount < 4
+            ? +rangeRent.fields.nb_pieces === +this.infoToFilter.roomCount
             : rangeRent.fields.nb_pieces === '4 et +'
           : true)
       )
     })
 
     const isFurnished =
-      this.cleanAd.hasFurniture === null ? true : this.cleanAd.hasFurniture
+      this.infoToFilter.hasFurniture === null
+        ? true
+        : this.infoToFilter.hasFurniture
 
     // Get the worst case scenario
     const worstCase = isFurnished

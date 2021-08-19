@@ -4,17 +4,28 @@ import path from 'path'
 import inside from 'point-in-polygon'
 import { Coordinate } from '@interfaces/shared'
 import { Memoize } from 'typescript-memoize'
+import { getDistricts } from '../../districts/districts'
 
 export class ParisDistrictService {
   coordinates: Coordinate = null
   postalCode: string = null
+  districtName: string = null
 
-  constructor(postalCode: string, coordinates?: Coordinate) {
+  constructor(
+    postalCode: string,
+    coordinates?: Coordinate,
+    districtName?: string
+  ) {
     this.coordinates = coordinates
     this.postalCode = postalCode
+    this.districtName = districtName
   }
 
   getDistricts(): ParisDistrictItem[] {
+    if (this.districtName) {
+      return this.getDistrictFromName()
+    }
+
     const districtFromCoordinate =
       this.coordinates &&
       this.coordinates.lat &&
@@ -40,6 +51,12 @@ export class ParisDistrictService {
     } else {
       return []
     }
+  }
+
+  private getDistrictFromName(): ParisDistrictItem[] {
+    return this.parisDistrictsJson().features.filter((district) => {
+      return district.properties.l_qu === this.districtName
+    })
   }
 
   private getDistrictFromCoordinate(

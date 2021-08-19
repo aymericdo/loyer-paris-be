@@ -40,6 +40,21 @@ export interface CleanAd {
   isHouse?: boolean
 }
 
+export interface InfoToFilter {
+  roomCount?: number
+  hasFurniture?: boolean
+  districtName?: string
+  postalCode?: string
+  coordinates?: Coordinate
+  blurryCoordinates?: Coordinate
+  yearBuilt?: number[]
+  renter?: string
+  stations?: string[]
+  charges?: number
+  hasCharges?: boolean
+  isHouse?: boolean
+}
+
 export interface FilteredResult {
   maxPrice: number
   minPrice: number

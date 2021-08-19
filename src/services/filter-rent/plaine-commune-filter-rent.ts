@@ -1,16 +1,16 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import { CleanAd, FilteredResult } from '@interfaces/ad'
+import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
 import { PlaineCommuneEncadrementItem } from '@interfaces/json-item-plaine-commune'
 import { Memoize } from 'typescript-memoize'
 import { PlaineCommuneDistrictService } from './plaine-commune-district'
 
 export class PlaineCommuneFilterRentService {
-  cleanAd: CleanAd = null
+  infoToFilter: InfoToFilter = null
 
-  constructor(cleanAd: CleanAd) {
-    this.cleanAd = cleanAd
+  constructor(infoToFilter: InfoToFilter) {
+    this.infoToFilter = infoToFilter
   }
 
   filter(): FilteredResult {
@@ -18,13 +18,13 @@ export class PlaineCommuneFilterRentService {
     const rangeTime = ['avant 1946', '1971-1990', '1946-1970', 'après 1990']
 
     const districtsMatched = new PlaineCommuneDistrictService(
-      this.cleanAd.postalCode,
-      this.cleanAd.coordinates || this.cleanAd.blurryCoordinates
+      this.infoToFilter.postalCode,
+      this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates
     ).getDistricts()
 
     const timeDates: string[] = YearBuiltService.getRangeTimeDates(
       rangeTime,
-      this.cleanAd.yearBuilt
+      this.infoToFilter.yearBuilt
     )
 
     const rentList = this.rangeRentsPlaineCommuneJson().filter((rangeRent) => {
@@ -37,18 +37,18 @@ export class PlaineCommuneFilterRentService {
         (timeDates?.length
           ? timeDates.includes(rangeRent['Epoque de construction'])
           : true) &&
-        (this.cleanAd.roomCount
-          ? +this.cleanAd.roomCount < 4
-            ? +rangeRent['Nombre de pièces'] === +this.cleanAd.roomCount
+        (this.infoToFilter.roomCount
+          ? +this.infoToFilter.roomCount < 4
+            ? +rangeRent['Nombre de pièces'] === +this.infoToFilter.roomCount
             : rangeRent['Nombre de pièces'] === '4 et plus'
           : true) &&
-        (this.cleanAd.hasFurniture != null
-          ? this.cleanAd.hasFurniture
+        (this.infoToFilter.hasFurniture != null
+          ? this.infoToFilter.hasFurniture
             ? rangeRent['Type de location'].match(/^meubl/g)
             : rangeRent['Type de location'].match(/^non meubl/g)
           : true) &&
-        (this.cleanAd.isHouse != null
-          ? this.cleanAd.isHouse
+        (this.infoToFilter.isHouse != null
+          ? this.infoToFilter.isHouse
             ? rangeRent.Type === 'Maison'
             : rangeRent.Type === 'Appartement'
           : true)

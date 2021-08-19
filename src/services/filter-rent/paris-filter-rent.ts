@@ -1,16 +1,17 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { ParisEncadrementItem } from '@interfaces/json-item-paris'
-import { CleanAd, FilteredResult } from '@interfaces/ad'
+import { FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
 import { ParisDistrictService } from '@services/filter-rent/paris-district'
 import { Memoize } from 'typescript-memoize'
+import { InfoToFilter } from '../../interfaces/ad'
 
 export class ParisFilterRentService {
-  cleanAd: CleanAd = null
+  infoToFilter: InfoToFilter = null
 
-  constructor(cleanAd: CleanAd) {
-    this.cleanAd = cleanAd
+  constructor(infoToFilter: InfoToFilter) {
+    this.infoToFilter = infoToFilter
   }
 
   filter(): FilteredResult {
@@ -18,13 +19,14 @@ export class ParisFilterRentService {
     const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Apres 1990']
 
     const districtsMatched = new ParisDistrictService(
-      this.cleanAd.postalCode,
-      this.cleanAd.coordinates || this.cleanAd.blurryCoordinates
+      this.infoToFilter.postalCode,
+      this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
+      this.infoToFilter.districtName
     ).getDistricts()
 
     const timeDates: string[] = YearBuiltService.getRangeTimeDates(
       rangeTime,
-      this.cleanAd.yearBuilt
+      this.infoToFilter.yearBuilt
     )
 
     const rentList = this.rangeRentsParisJson().filter((rangeRent) => {
@@ -37,13 +39,13 @@ export class ParisFilterRentService {
         (timeDates?.length
           ? timeDates.includes(rangeRent.fields.epoque)
           : true) &&
-        (this.cleanAd.roomCount
-          ? +this.cleanAd.roomCount < 5
-            ? rangeRent.fields.piece === +this.cleanAd.roomCount
+        (this.infoToFilter.roomCount
+          ? +this.infoToFilter.roomCount < 5
+            ? rangeRent.fields.piece === +this.infoToFilter.roomCount
             : rangeRent.fields.piece === 4
           : true) &&
-        (this.cleanAd.hasFurniture != null
-          ? this.cleanAd.hasFurniture
+        (this.infoToFilter.hasFurniture != null
+          ? this.infoToFilter.hasFurniture
             ? rangeRent.fields.meuble_txt.match(/^meubl/g)
             : rangeRent.fields.meuble_txt.match(/^non meubl/g)
           : true)
