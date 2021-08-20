@@ -29,8 +29,15 @@ export class ParisFilterRentService {
       this.infoToFilter.yearBuilt
     )
 
+    let currentYear = +(new Date().getFullYear())
+
+    if (new Date().getMonth() < 6) {
+      currentYear -= 1
+    }
+
     const rentList = this.rangeRentsParisJson().filter((rangeRent) => {
       return (
+        currentYear === rangeRent.fields.annee &&
         (districtsMatched?.length
           ? districtsMatched
               .map((district) => district.properties.c_qu)

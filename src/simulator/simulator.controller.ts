@@ -45,8 +45,11 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
       break
   }
 
+  delete filteredResult.minPrice
+
   res.json({
     ...filteredResult,
+    maxTotalPrice: filteredResult.maxPrice * surface,
     isLegal: filteredResult.maxPrice * surface > price,
   })
 }
