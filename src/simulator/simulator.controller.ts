@@ -3,6 +3,8 @@ import * as log from '@helpers/log'
 import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
 import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
 import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent'
+import { FilteredResult } from '@interfaces/ad'
+import { roundNumber } from '@helpers/round-number'
 const router = express.Router()
 
 router.get('/:city', getManualResult)
@@ -27,7 +29,7 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
       ? false
       : null
 
-  let filteredResult = null
+  let filteredResult: FilteredResult[] = []
 
   switch (city) {
     case 'paris':
@@ -35,7 +37,12 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
         districtName: district,
         roomCount: room,
         hasFurniture,
-      }).filter()
+      })
+        .filter()
+        .map((r) => {
+          delete r.minPrice
+          return r
+        })
       break
     case 'lille':
       // filteredResult = new LilleFilterRentService(cleanAd).filter()
@@ -45,13 +52,13 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
       break
   }
 
-  delete filteredResult.minPrice
-
-  res.json({
-    ...filteredResult,
-    maxTotalPrice: filteredResult.maxPrice * surface,
-    isLegal: filteredResult.maxPrice * surface > price,
-  })
+  res.json(
+    filteredResult.map((r) => ({
+      ...r,
+      maxTotalPrice: roundNumber(r.maxPrice * surface),
+      isLegal: r.maxPrice * surface > price,
+    }))
+  )
 }
 
 module.exports = router

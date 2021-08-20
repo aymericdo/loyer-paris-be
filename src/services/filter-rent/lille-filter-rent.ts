@@ -15,7 +15,7 @@ export class LilleFilterRentService {
 
   filter(): FilteredResult {
     // Extract possible range time from rangeRents (json-data/encadrements_lille.json)
-    const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Apres 1990']
+    const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Après 1990']
 
     const districtsMatched = new LilleDistrictService(
       this.infoToFilter.postalCode,

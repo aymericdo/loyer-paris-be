@@ -55,7 +55,7 @@ export abstract class Website {
     let filteredResult: FilteredResult = null
     switch (cleanAd.city) {
       case 'paris':
-        filteredResult = new ParisFilterRentService(cleanAd).filter()
+        filteredResult = new ParisFilterRentService(cleanAd).find()
         break
       case 'lille':
       case 'hellemmes':
