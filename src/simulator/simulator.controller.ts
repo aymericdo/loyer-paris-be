@@ -17,11 +17,13 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
   const furnishedValue = (req.query.furnishedValue as string) || null
   const surfaceValue: string = (req.query.surfaceValue as string) || null
   const roomValue: string = (req.query.roomValue as string) || null
+  const dateBuiltValueStr: string = (req.query.dateBuiltValueStr as string) || null
 
   const district: string = districtValue
   const surface: number = +surfaceValue
   const price: number = +priceValue
   const room: number = +roomValue
+  const dateBuiltStr: number = +dateBuiltValueStr
   const hasFurniture: boolean =
     furnishedValue === 'furnished'
       ? true
@@ -34,6 +36,7 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
   switch (city) {
     case 'paris':
       filteredResult = new ParisFilterRentService({
+        yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
         districtName: district,
         roomCount: room,
         hasFurniture,
