@@ -172,7 +172,7 @@ export async function getLegalVarData(
   }
 
   if (districtList?.length) {
-    filter['district'] = districtList
+    filter['district'] = { $in: districtList }
   }
 
   if (hasFurniture !== null) {
@@ -468,7 +468,7 @@ export async function getRelevantAdsData(
   }
 
   if (filterParam?.districtList?.length) {
-    filter['district'] = filterParam.districtList
+    filter['district'] = { $in: filterParam.districtList }
   }
 
   if (filterParam.hasFurniture !== null) {
@@ -542,7 +542,7 @@ export async function getRelevantAdsDataTotalCount(filterParam: {
   }
 
   if (filterParam?.districtList?.length) {
-    filter['district'] = filterParam.districtList
+    filter['district'] = { $in: filterParam.districtList }
   }
 
   if (filterParam.hasFurniture !== null) {
