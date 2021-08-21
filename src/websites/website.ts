@@ -60,7 +60,7 @@ export abstract class Website {
       case 'lille':
       case 'hellemmes':
       case 'lomme':
-        filteredResult = new LilleFilterRentService(cleanAd).filter()
+        filteredResult = new LilleFilterRentService(cleanAd).find()
         break
       case 'aubervilliers':
       case 'epinay-sur-seine':
@@ -71,7 +71,7 @@ export abstract class Website {
       case 'saint-ouen':
       case 'stains':
       case 'villetaneuse':
-        filteredResult = new PlaineCommuneFilterRentService(cleanAd).filter()
+        filteredResult = new PlaineCommuneFilterRentService(cleanAd).find()
         break
     }
 

@@ -8,18 +8,34 @@ import { Memoize } from 'typescript-memoize'
 export class LilleDistrictService {
   coordinates: Coordinate = null
   postalCode: string = null
+  districtName: string = null
 
-  constructor(postalCode: string, coordinates?: Coordinate) {
+  constructor(
+    postalCode: string,
+    coordinates?: Coordinate,
+    districtName?: string
+  ) {
     this.coordinates = coordinates
     this.postalCode = postalCode
+    this.districtName = districtName
   }
 
   getDistricts(): LilleDistrictItem[] {
+    if (this.districtName) {
+      return this.getDistrictFromName()
+    }
+
     const districtFromCoordinate =
       this.coordinates &&
       this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
     return districtFromCoordinate ? districtFromCoordinate : null
+  }
+
+  private getDistrictFromName(): LilleDistrictItem[] {
+    return this.lilleDistrictsJson().features.filter((district) => {
+      return district.properties.zonage === +this.districtName.match(/\d+/)[0]
+    })
   }
 
   @Memoize()

@@ -29,24 +29,17 @@ export class YearBuiltService {
             )
         : yearBuilt
 
-    return rangeTime.filter((time: string) => {
+    return rangeTime.filter((time: string, index: number) => {
       const rangeYearBuilt: (string | number)[] = time
         .split(/[\s-]+/)
-        .map((year: any) =>
-          isNaN(year)
-            ? year
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-            : +year
-        )
+        .map((year: any) => (isNaN(year) ? (index === 0 ? '<' : '>') : +year))
 
       return yearBuiltRange.some((yb: number) => {
         return typeof rangeYearBuilt[0] === 'number'
           ? rangeYearBuilt[0] < yb && rangeYearBuilt[1] >= yb
-          : rangeYearBuilt[0] === 'avant'
+          : rangeYearBuilt[0] === '<'
           ? yb < rangeYearBuilt[1]
-          : rangeYearBuilt[0] === 'apres'
+          : rangeYearBuilt[0] === '>'
           ? yb > rangeYearBuilt[1]
           : false
       })

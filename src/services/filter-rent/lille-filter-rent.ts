@@ -13,17 +13,19 @@ export class LilleFilterRentService {
     this.infoToFilter = infoToFilter
   }
 
-  filter(): FilteredResult {
+  filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_lille.json)
-    const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Après 1990']
+    const rangeTime = ['< 1946', '1971 - 1990', '1946 - 1970', '> 1990']
 
     const districtsMatched = new LilleDistrictService(
       this.infoToFilter.postalCode,
-      this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates
+      this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
+      this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = this.dateFormatting(
-      YearBuiltService.getRangeTimeDates(rangeTime, this.infoToFilter.yearBuilt)
+    const timeDates: string[] = YearBuiltService.getRangeTimeDates(
+      rangeTime,
+      this.infoToFilter.yearBuilt
     )
 
     const rentList = this.rangeRentsLilleJson().filter((rangeRent) => {
@@ -49,54 +51,35 @@ export class LilleFilterRentService {
         ? true
         : this.infoToFilter.hasFurniture
 
-    // Get the worst case scenario
-    const worstCase = isFurnished
-      ? rentList.reduce((prev, current) =>
-          prev.fields.loyer_de_reference_majore_meublees >
-          current.fields.loyer_de_reference_majore_meublees
-            ? prev
-            : current
-        )
-      : rentList.reduce((prev, current) =>
-          prev.fields.loyer_de_reference_majore_non_meublees >
-          current.fields.loyer_de_reference_majore_non_meublees
-            ? prev
-            : current
-        )
-
-    return {
-      maxPrice: isFurnished
-        ? +worstCase.fields.loyer_de_reference_majore_meublees
-        : +worstCase.fields.loyer_de_reference_majore_non_meublees,
-      minPrice: isFurnished
-        ? +worstCase.fields.loyer_de_reference_minore_meublees
-        : +worstCase.fields.loyer_de_reference_minore_non_meublees,
-      districtName: `Zone ${worstCase.fields.zone}`,
-      isFurnished,
-      roomCount: +worstCase.fields.nb_pieces,
-      yearBuilt: worstCase.fields.epoque_construction,
-    }
+    return rentList
+      .map((r) => ({
+        maxPrice: isFurnished
+          ? +r.fields.loyer_de_reference_majore_meublees
+          : +r.fields.loyer_de_reference_majore_non_meublees,
+        minPrice: isFurnished
+          ? +r.fields.loyer_de_reference_minore_meublees
+          : +r.fields.loyer_de_reference_minore_non_meublees,
+        districtName: `Zone ${r.fields.zone}`,
+        isFurnished,
+        roomCount: +r.fields.nb_pieces,
+        yearBuilt: r.fields.epoque_construction,
+      }))
+      .sort((a, b) => {
+        return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
+      })
   }
 
-  private dateFormatting(timeDates: string[]): string[] {
-    if (timeDates?.length) {
-      return timeDates.map((d) => {
-        switch (d) {
-          case 'Apres 1990':
-            return '> 1990'
-          case '1971-1990':
-            return '1971 - 1990'
-          case '1946-1970':
-            return '1946 - 1970'
-          case 'Avant 1946':
-            return '< 1946'
-          default:
-            return ''
-        }
-      })
-    } else {
-      return null
-    }
+  find(): FilteredResult {
+    const rentList = this.filter()
+
+    // Get the worst case scenario
+    const worstCase = rentList.length
+      ? rentList.reduce((prev, current) =>
+          prev.maxPrice > current.maxPrice ? prev : current
+        )
+      : null
+
+    return worstCase
   }
 
   @Memoize()

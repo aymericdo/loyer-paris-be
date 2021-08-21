@@ -17,7 +17,9 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
   const furnishedValue = (req.query.furnishedValue as string) || null
   const surfaceValue: string = (req.query.surfaceValue as string) || null
   const roomValue: string = (req.query.roomValue as string) || null
-  const dateBuiltValueStr: string = (req.query.dateBuiltValueStr as string) || null
+  const isHouseValue: string = (req.query.isHouseValue as string) || null
+  const dateBuiltValueStr: string =
+    (req.query.dateBuiltValueStr as string) || null
 
   const district: string = districtValue
   const surface: number = +surfaceValue
@@ -31,6 +33,8 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
       ? false
       : null
 
+  const isHouse: boolean = +isHouseValue === 1
+
   let filteredResult: FilteredResult[] = []
 
   switch (city) {
@@ -40,27 +44,37 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
         districtName: district,
         roomCount: room,
         hasFurniture,
-      })
-        .filter()
-        .map((r) => {
-          delete r.minPrice
-          return r
-        })
+      }).filter()
       break
     case 'lille':
-      // filteredResult = new LilleFilterRentService(cleanAd).filter()
+      filteredResult = new LilleFilterRentService({
+        yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
+        districtName: district,
+        roomCount: room,
+        hasFurniture,
+      }).filter()
       break
     case 'plaine_commune':
-      // filteredResult = new PlaineCommuneFilterRentService(cleanAd).filter()
+      filteredResult = new PlaineCommuneFilterRentService({
+        yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
+        districtName: district,
+        isHouse,
+        roomCount: room,
+        hasFurniture,
+      }).filter()
       break
   }
 
   res.json(
-    filteredResult.map((r) => ({
-      ...r,
-      maxTotalPrice: roundNumber(r.maxPrice * surface),
-      isLegal: r.maxPrice * surface > price,
-    }))
+    filteredResult.map((r) => {
+      delete r.minPrice
+
+      return {
+        ...r,
+        maxTotalPrice: roundNumber(r.maxPrice * surface),
+        isLegal: r.maxPrice * surface > price,
+      }
+    })
   )
 }
 
