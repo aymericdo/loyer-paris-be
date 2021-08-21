@@ -271,12 +271,18 @@ export async function getPriceVarData(
 export async function getLegalPerClassicRenterData(
   city: string,
   dateRange: string[],
-  renterNameRegex: RegExp
+  renterNameRegex: RegExp,
+  website?: string
 ): Promise<{ isLegal: boolean; renter: string }[]> {
   const filter = {
-    renter: { $regex: renterNameRegex },
     surface: { $lte: 100 },
-    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+  }
+
+  if (website) {
+    filter['$or'] = [{ renter: { $regex: renterNameRegex } }, { website }]
+  } else {
+    filter['renter'] = { $regex: renterNameRegex }
+    filter['website'] = { $nin: ['bellesdemeures', 'luxresidence'] }
   }
 
   if (city !== 'all') {

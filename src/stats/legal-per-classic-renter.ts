@@ -16,32 +16,33 @@ export async function getLegalPerClassicRenter(
     const plazaImmoData = await rentService.getLegalPerClassicRenterData(
       req.params.city,
       dateRange,
-      /plaza.*immobilier/
+      /plaza.*immobilier/i
     )
     const century21Data = await rentService.getLegalPerClassicRenterData(
       req.params.city,
       dateRange,
-      /century.*21/
+      /century.*21/i
     )
     const fonciaData = await rentService.getLegalPerClassicRenterData(
       req.params.city,
       dateRange,
-      /foncia/
+      /foncia/i
     )
     const laforetData = await rentService.getLegalPerClassicRenterData(
       req.params.city,
       dateRange,
-      /laforet/
+      /laforet/i
     )
     const guyHoquetData = await rentService.getLegalPerClassicRenterData(
       req.params.city,
       dateRange,
-      /guy.*hoquet/
+      /guy.*hoquet/i
     )
     const orpiData = await rentService.getLegalPerClassicRenterData(
       req.params.city,
       dateRange,
-      /orpi/
+      /orpi/i,
+      'orpi'
     )
 
     const data = [
@@ -119,6 +120,7 @@ export async function getLegalPerClassicRenter(
             format: '.2%',
           },
           { field: 'renter', title: 'Agence ', type: 'nominal' },
+          { field: 'numberIllegal', title: "Nombre d'annonces ", type: 'nominal' },
         ],
       },
     }
