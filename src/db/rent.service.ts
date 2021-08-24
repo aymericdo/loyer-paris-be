@@ -440,6 +440,7 @@ interface RelevantAdsData {
   url: string
   district: string
   city: string
+  isHouse: boolean
 }
 export async function getRelevantAdsData(
   filterParam: {
@@ -449,6 +450,7 @@ export async function getRelevantAdsData(
     priceRange: number[]
     roomRange: number[]
     hasFurniture: boolean
+    isHouse: boolean
   },
   paginationOpts?: {
     page: number
@@ -467,7 +469,7 @@ export async function getRelevantAdsData(
     filter['city'] = getCity(filterParam.city)
   }
 
-  if (filterParam?.districtList?.length) {
+  if (filterParam.districtList?.length) {
     filter['district'] = { $in: filterParam.districtList }
   }
 
@@ -475,21 +477,25 @@ export async function getRelevantAdsData(
     filter['hasFurniture'] = filterParam.hasFurniture
   }
 
-  if (filterParam?.surfaceRange?.length) {
+  if (filterParam.isHouse !== null) {
+    filter['isHouse'] = filterParam.isHouse
+  }
+
+  if (filterParam.surfaceRange?.length) {
     filter['surface'] = {
       $gte: filterParam.surfaceRange[0],
       $lte: filterParam.surfaceRange[1],
     }
   }
 
-  if (filterParam?.priceRange?.length) {
+  if (filterParam.priceRange?.length) {
     filter['price'] = {
       $gte: filterParam.priceRange[0],
       $lte: filterParam.priceRange[1],
     }
   }
 
-  if (filterParam?.roomRange?.length) {
+  if (filterParam.roomRange?.length) {
     filter['roomCount'] = {
       $gte: filterParam.roomRange[0],
       $lte: filterParam.roomRange[1],
@@ -509,6 +515,7 @@ export async function getRelevantAdsData(
       district: 1,
       url: 1,
       city: 1,
+      isHouse: 1,
     },
     {
       sort: { createdAt: -1 },
@@ -531,6 +538,7 @@ export async function getRelevantAdsDataTotalCount(filterParam: {
   priceRange: number[]
   roomRange: number[]
   hasFurniture: boolean
+  isHouse: boolean
 }) {
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 7))
@@ -541,7 +549,7 @@ export async function getRelevantAdsDataTotalCount(filterParam: {
     filter['city'] = getCity(filterParam.city)
   }
 
-  if (filterParam?.districtList?.length) {
+  if (filterParam.districtList?.length) {
     filter['district'] = { $in: filterParam.districtList }
   }
 
@@ -549,21 +557,25 @@ export async function getRelevantAdsDataTotalCount(filterParam: {
     filter['hasFurniture'] = filterParam.hasFurniture
   }
 
-  if (filterParam?.surfaceRange?.length) {
+  if (filterParam.isHouse !== null) {
+    filter['isHouse'] = filterParam.isHouse
+  }
+
+  if (filterParam.surfaceRange?.length) {
     filter['surface'] = {
       $gte: filterParam.surfaceRange[0],
       $lte: filterParam.surfaceRange[1],
     }
   }
 
-  if (filterParam?.priceRange?.length) {
+  if (filterParam.priceRange?.length) {
     filter['price'] = {
       $gte: filterParam.priceRange[0],
       $lte: filterParam.priceRange[1],
     }
   }
 
-  if (filterParam?.roomRange?.length) {
+  if (filterParam.roomRange?.length) {
     filter['roomCount'] = {
       $gte: filterParam.roomRange[0],
       $lte: filterParam.roomRange[1],
