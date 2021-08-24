@@ -108,6 +108,9 @@ export async function getAddresses(
 
         return {
           ...elem,
+          fields: {
+            l_adr: `${elem.numero} ${elem.nom_voie}`,
+          },
           districtName: districts.length
             ? `Zone ${districts[0].properties.Zone}`
             : null,
