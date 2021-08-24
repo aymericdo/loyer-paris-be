@@ -26,10 +26,11 @@ export class LilleDistrictService {
     }
 
     const districtFromCoordinate =
-      this.coordinates &&
+      this.coordinates?.lat &&
+      this.coordinates?.lng &&
       this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
-    return districtFromCoordinate ? districtFromCoordinate : null
+    return districtFromCoordinate?.length ? districtFromCoordinate : []
   }
 
   private getDistrictFromName(): LilleDistrictItem[] {

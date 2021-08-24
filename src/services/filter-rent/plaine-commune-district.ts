@@ -26,10 +26,11 @@ export class PlaineCommuneDistrictService {
     }
 
     const districtFromCoordinate =
-      this.coordinates &&
+      this.coordinates?.lat &&
+      this.coordinates?.lng &&
       this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
-    return districtFromCoordinate
+    return districtFromCoordinate?.length
       ? districtFromCoordinate
       : this.getDistrictFromPostalCode()
   }

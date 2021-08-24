@@ -4,7 +4,6 @@ import path from 'path'
 import inside from 'point-in-polygon'
 import { Coordinate } from '@interfaces/shared'
 import { Memoize } from 'typescript-memoize'
-import { getDistricts } from '../../districts/districts'
 
 export class ParisDistrictService {
   coordinates: Coordinate = null
@@ -27,12 +26,11 @@ export class ParisDistrictService {
     }
 
     const districtFromCoordinate =
-      this.coordinates &&
-      this.coordinates.lat &&
-      this.coordinates.lng &&
+      this.coordinates?.lat &&
+      this.coordinates?.lng &&
       this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
-    return districtFromCoordinate
+    return districtFromCoordinate?.length
       ? districtFromCoordinate
       : this.getDistrictFromPostalCode()
   }
