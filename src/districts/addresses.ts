@@ -66,8 +66,8 @@ export async function getAddresses(
         const lilleDistrictService = new LilleDistrictService(
           elem.code_postal,
           {
-            lng: elem.lon,
-            lat: elem.lat,
+            lng: elem.geometry.coordinates[0],
+            lat: elem.geometry.coordinates[1],
           }
         )
 
@@ -76,7 +76,9 @@ export async function getAddresses(
         return {
           ...elem,
           fields: {
-            l_adr: `${elem.numero} ${elem.nom_voie}`,
+            l_adr: `${elem.numero}${elem.rep || ''} ${elem.nom_voie} (${
+              elem.code_postal
+            })`,
           },
           districtName: districts.length
             ? `Zone ${districts[0].properties.zonage}`
@@ -97,10 +99,10 @@ export async function getAddresses(
 
       data = data.map((elem) => {
         const plaineCommuneDistrictService = new PlaineCommuneDistrictService(
-          elem.code_postal,
+          elem.code_postal === '93210' ? '93200' : elem.code_postal, // 93210 is to recent I suppose
           {
-            lng: elem.lon,
-            lat: elem.lat,
+            lng: elem.geometry.coordinates[0],
+            lat: elem.geometry.coordinates[1],
           }
         )
 
@@ -109,7 +111,9 @@ export async function getAddresses(
         return {
           ...elem,
           fields: {
-            l_adr: `${elem.numero} ${elem.nom_voie}`,
+            l_adr: `${elem.numero}${elem.rep || ''} ${elem.nom_voie} (${
+              elem.code_postal
+            })`,
           },
           districtName: districts.length
             ? `Zone ${districts[0].properties.Zone}`
