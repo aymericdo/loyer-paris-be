@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from 'express'
 import * as log from '@helpers/log'
-import { ParisAddress } from '@db/db'
-import { ParisDistrictService } from '@services/filter-rent/paris-district'
+import { LilleAddress, ParisAddress, PlaineCommuneAddress } from '@db/db'
 import { ParisAddressService } from '@services/address/paris-address'
+import { ParisDistrictService } from '@services/filter-rent/paris-district'
+import { LilleDistrictService } from '@services/filter-rent/lille-district'
+import { PlaineCommuneDistrictService } from '@services/filter-rent/plaine-commune-district'
 
 export async function getAddresses(
   req: Request,
@@ -22,7 +24,13 @@ export async function getAddresses(
 
   switch (city) {
     case 'paris':
-      data = await ParisAddress.fuzzySearch(addressQuery.toString())
+      data = await ParisAddress.find(
+        {
+          $text: { $search: addressQuery.toString() },
+        },
+        { score: { $meta: 'textScore' } }
+      )
+        .sort({ score: { $meta: 'textScore' } })
         .limit(10)
         .lean()
 
@@ -44,10 +52,67 @@ export async function getAddresses(
       })
       break
     case 'lille':
-      console.log('lille')
+      data = await LilleAddress.find(
+        {
+          $text: { $search: addressQuery.toString() },
+        },
+        { score: { $meta: 'textScore' } }
+      )
+        .sort({ score: { $meta: 'textScore' } })
+        .limit(10)
+        .lean()
+
+      data = data.map((elem) => {
+        const lilleDistrictService = new LilleDistrictService(
+          elem.code_postal,
+          {
+            lng: elem.lon,
+            lat: elem.lat,
+          }
+        )
+
+        const districts = lilleDistrictService.getDistricts()
+
+        return {
+          ...elem,
+          fields: {
+            l_adr: `${elem.numero} ${elem.nom_voie}`,
+          },
+          districtName: districts.length
+            ? `Zone ${districts[0].properties.zonage}`
+            : null,
+        }
+      })
       break
     case 'plaine_commune':
-      console.log('plaine_commune')
+      data = await PlaineCommuneAddress.find(
+        {
+          $text: { $search: addressQuery.toString() },
+        },
+        { score: { $meta: 'textScore' } }
+      )
+        .sort({ score: { $meta: 'textScore' } })
+        .limit(10)
+        .lean()
+
+      data = data.map((elem) => {
+        const plaineCommuneDistrictService = new PlaineCommuneDistrictService(
+          elem.code_postal,
+          {
+            lng: elem.lon,
+            lat: elem.lat,
+          }
+        )
+
+        const districts = plaineCommuneDistrictService.getDistricts()
+
+        return {
+          ...elem,
+          districtName: districts.length
+            ? `Zone ${districts[0].properties.Zone}`
+            : null,
+        }
+      })
       break
   }
 

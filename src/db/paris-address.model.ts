@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
-import mongooseFuzzySearching from 'mongoose-fuzzy-searching'
+
+/*
+Data are from https://opendata.paris.fr/explore/dataset/adresse_paris/information/
+*/
 
 const Schema = mongoose.Schema
 
@@ -12,14 +15,18 @@ const schema = new Schema({
   record_timestamp: { type: Date, required: true },
 })
 
-schema.plugin(mongooseFuzzySearching, {
-  fields: ['fields.l_adr'],
-  minSize: 1,
-  weight: 10,
-  prefixOnly: true,
-})
+schema.index({ 'fields.l_adr': 'text' }, { default_language: 'french' })
+schema.index(
+  { 'fields.l_adr': 1 },
+  {
+    collation: {
+      locale: 'fr',
+      strength: 1,
+      caseLevel: false,
+      numericOrdering: true,
+    },
+  }
+)
 schema.index({ geometry: '2dsphere' })
-
-schema.set('toJSON', { virtuals: true })
 
 module.exports = schema

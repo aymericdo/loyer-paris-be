@@ -44,13 +44,26 @@ encadrementAddress1Connection.catch((e) => {
 const rentSchema = require('./rent.model')
 const empriseBatieSchema = require('./emprisebatie.model')
 const parisAddressSchema = require('./paris-address.model')
+const lilleAddressSchema = require('./lille-address.model')
+const plaineCommuneAddressSchema = require('./plaine_commune-address.model')
 
 export const Rent = rentConnection.model('Rent', rentSchema)
 export const EmpriseBatie = empriseBatieConnection.model(
   'Batie',
   empriseBatieSchema
 )
+
 export const ParisAddress = encadrementAddress1Connection.model(
   'parisaddress',
   parisAddressSchema
+)
+
+export const LilleAddress = encadrementAddress1Connection.model(
+  'lilleaddress',
+  lilleAddressSchema
+)
+
+export const PlaineCommuneAddress = encadrementAddress1Connection.model(
+  'plainecommuneaddress',
+  plaineCommuneAddressSchema
 )
