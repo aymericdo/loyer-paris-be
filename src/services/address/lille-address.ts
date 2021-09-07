@@ -1,11 +1,12 @@
 import { AddressService } from './address'
-import Fuse from 'fuse.js'
+import * as cleanup from '@helpers/cleanup'
 import { Memoize } from 'typescript-memoize'
 import path from 'path'
 import * as fs from 'fs'
 import { AddressItem, Coordinate } from '@interfaces/shared'
 import { DistanceService } from '@services/distance'
 import { LilleAddressItem, LilleStationItem } from '@interfaces/json-item-lille'
+import { LilleAddress } from '@db/db'
 
 export class LilleAddressService extends AddressService {
   getStations(): string[] {
@@ -19,46 +20,39 @@ export class LilleAddressService extends AddressService {
   }
 
   @Memoize()
-  getAddressCompleted(query: string): {
-    item: AddressItem
-    score: number
-    matches: ReadonlyArray<Fuse.FuseResultMatch>
-  }[] {
+  async getAddressCompleted(query: string): Promise<
+    {
+      item: AddressItem
+      score: number
+      streetNumber: string
+    }[]
+  > {
     if (!query) {
       return null
     }
 
-    const options = {
-      keys: ['tags.address'],
-      includeScore: true,
-      includeMatches: true,
-      useExtendedSearch: true,
-      threshold: 0.5,
-      minMatchCharLength: 3,
-      ignoreLocation: true,
-    }
+    const result = await LilleAddress.find(
+      {
+        $text: { $search: query },
+      },
+      { score: { $meta: 'textScore' } }
+    )
+      .sort({ score: { $meta: 'textScore' } })
+      .limit(10)
+      .lean()
 
-    const index = Fuse.createIndex(options.keys, this.lilleAddressesJson())
-
-    const lilleFuse = new Fuse(this.lilleAddressesJson(), options, index)
-
-    const result = lilleFuse.search(query, { limit: 10 }) as {
-      item: LilleAddressItem
-      score: number
-      matches: ReadonlyArray<Fuse.FuseResultMatch>
-    }[]
     return result
       ? result.map((r) => ({
           item: {
-            address: r.item.tags.address,
-            postalCode: r.item.tags.postcode,
+            address: r.properties.numero + r.properties.nom_voie,
+            postalCode: r.properties.code_posta.toString(),
             coordinate: {
-              lng: +r.item.lon,
-              lat: +r.item.lat,
+              lng: +r.geometry.coordinates[0],
+              lat: +r.geometry.coordinates[1],
             },
           },
           score: r.score,
-          matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
+          streetNumber: cleanup.string(query)?.match(/^\d+(b|t)?/g) || null,
         }))
       : []
   }

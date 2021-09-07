@@ -5,7 +5,7 @@ import {
   ParisAddressItem,
 } from '@interfaces/json-item-paris'
 import { ParisStationService } from '@services/address/paris-station'
-import Fuse from 'fuse.js'
+import * as cleanup from '@helpers/cleanup'
 import inside from 'point-in-polygon'
 import { Memoize } from 'typescript-memoize'
 import { AddressService } from './address'
@@ -14,6 +14,7 @@ import { DistanceService } from '@services/distance'
 import * as fs from 'fs'
 import path from 'path'
 import { cityList } from './city'
+import { ParisAddress } from '@db/db'
 // import { getStream } from "@helpers/json-stream";
 // const es = require("event-stream");
 
@@ -38,45 +39,41 @@ export class ParisAddressService extends AddressService {
   }
 
   @Memoize()
-  getAddressCompleted(query: string): {
-    item: AddressItem
-    score: number
-    matches: ReadonlyArray<Fuse.FuseResultMatch>
-  }[] {
+  async getAddressCompleted(query: string): Promise<
+    {
+      item: AddressItem
+      score: number
+      streetNumber: string
+    }[]
+  > {
     if (!query) {
       return null
     }
 
-    const options = {
-      keys: ['fields.l_adr'],
-      includeScore: true,
-      includeMatches: true,
-      useExtendedSearch: true,
-      threshold: 0.5,
-      minMatchCharLength: 3,
-    }
+    const result = await ParisAddress.find(
+      {
+        $text: { $search: query.toString() },
+      },
+      { score: { $meta: 'textScore' } }
+    )
+      .sort({ score: { $meta: 'textScore' } })
+      .limit(10)
+      .lean()
 
-    const parisFuse = new Fuse(this.parisAddressesJson(), options)
-
-    const result = parisFuse.search(query, { limit: 10 }) as {
-      item: ParisAddressItem
-      score: number
-      matches: ReadonlyArray<Fuse.FuseResultMatch>
-    }[]
     return result
       ? result.map((r) => ({
           item: {
-            address: r.item.fields.l_adr,
+            address: r.fields.l_adr,
             postalCode: ParisAddressService.postalCodeFormat(
-              r.item.fields.c_ar.toString()
+              r.fields.c_ar.toString()
             ),
             coordinate: {
-              lng: r.item.fields.geom.coordinates[0],
-              lat: r.item.fields.geom.coordinates[1],
+              lng: r.fields.geom.coordinates[0],
+              lat: r.fields.geom.coordinates[1],
             },
           },
           score: r.score,
-          matches: r.matches as ReadonlyArray<Fuse.FuseResultMatch>,
+          streetNumber: cleanup.string(query)?.match(/^\d+(b|t)?/g) || null,
         }))
       : []
   }
