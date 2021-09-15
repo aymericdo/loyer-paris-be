@@ -47,7 +47,7 @@ export class Orpi extends Website {
     ad = ad || (this.body as OrpiMapping)
     return {
       id: ad.id.toString(),
-      charges: cleanup.price(ad.charges),
+      charges: cleanup.number(ad.charges),
       cityLabel: cleanup.string(ad.cityLabel),
       coord: {
         lat: +ad.coord.lat,
