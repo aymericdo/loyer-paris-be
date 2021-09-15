@@ -80,7 +80,11 @@ export function getLegalPerWebsite(
               format: '.2%',
             },
             { field: 'website', title: 'Site ', type: 'nominal' },
-            { field: 'numberIllegal', title: "Nombre d'annonces ", type: 'nominal' },
+            {
+              field: 'numberIllegal',
+              title: "Nombre d'annonces ",
+              type: 'nominal',
+            },
           ],
         },
       }

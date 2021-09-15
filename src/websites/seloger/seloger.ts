@@ -43,7 +43,7 @@ export class SeLoger extends Website {
     ad = ad || (this.body as SelogerMapping)
     return {
       id: ad.id.toString(),
-      charges: cleanup.price(ad.charges),
+      charges: cleanup.number(ad.charges),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
       furnished: ad.furnished,
