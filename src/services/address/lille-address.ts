@@ -44,8 +44,8 @@ export class LilleAddressService extends AddressService {
     return result
       ? result.map((r) => ({
           item: {
-            address: r.properties.numero + r.properties.nom_voie,
-            postalCode: r.properties.code_posta.toString(),
+            address: r.numero + r.nom_voie,
+            postalCode: r.code_postal.toString(),
             coordinate: {
               lng: +r.geometry.coordinates[0],
               lat: +r.geometry.coordinates[1],
