@@ -152,3 +152,8 @@ export class CityService {
     }
   }
 }
+
+export function formatParisPostalCode(postalCode: string): string {
+  // 10 -> 75010 9 -> 75009
+  return postalCode.length === 1 ? `7500${postalCode}` : `750${postalCode}`
+}

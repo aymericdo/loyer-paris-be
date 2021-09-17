@@ -21,11 +21,8 @@ export abstract class AddressService {
   }
 
   async getAddress(): Promise<string> {
-    return (
-      (this.ad.address && (await this.digForAddressInText(this.ad.address))) ||
-      (this.ad.title && (await this.digForAddressInText(this.ad.title))) ||
-      (this.ad.description &&
-        (await this.digForAddressInText(this.ad.description)))
+    return await this.digForAddressInText(
+      `${this.ad.address} ${this.ad.title} ${this.ad.description}`
     )
   }
 
