@@ -44,7 +44,7 @@ export class Gensdeconfiance extends Website {
 
     return {
       id: ad.id.toString(),
-      charges: cleanup.number(ad.charges),
+      charges: cleanup.price(ad.charges),
       cityLabel: cleanup.string(ad.cityLabel),
       address: cleanup.string(ad.address),
       description: cleanup.string(ad.description),

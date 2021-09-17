@@ -44,7 +44,7 @@ export class LeFigaro extends Website {
 
     return {
       id: ad.id.toString(),
-      charges: cleanup.number(ad.charges),
+      charges: cleanup.price(ad.charges),
       cityLabel: ad.cityLabel,
       description: cleanup.string(ad.description),
       furnished: ad.furnished,
