@@ -120,11 +120,7 @@ export async function getLegalPerClassicRenter(
             format: '.2%',
           },
           { field: 'renter', title: 'Agence ', type: 'nominal' },
-          {
-            field: 'numberIllegal',
-            title: "Nombre d'annonces ",
-            type: 'nominal',
-          },
+          { field: 'numberIllegal', title: "Nombre d'annonces ", type: 'nominal' },
         ],
       },
     }

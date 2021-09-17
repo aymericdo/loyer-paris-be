@@ -7,6 +7,7 @@ import { Memoize } from 'typescript-memoize'
 import { min } from '@helpers/functions'
 import { DistanceService } from '../distance'
 import { AvailableCities, cityList } from './city'
+import Fuse from 'fuse.js'
 
 export abstract class AddressService {
   ad: Ad = null
@@ -20,12 +21,11 @@ export abstract class AddressService {
     this.city = city
   }
 
-  async getAddress(): Promise<string> {
+  getAddress(): string {
     return (
-      (this.ad.address && (await this.digForAddressInText(this.ad.address))) ||
-      (this.ad.title && (await this.digForAddressInText(this.ad.title))) ||
-      (this.ad.description &&
-        (await this.digForAddressInText(this.ad.description)))
+      (this.ad.address && this.digForAddressInText(this.ad.address)) ||
+      (this.ad.title && this.digForAddressInText(this.ad.title)) ||
+      (this.ad.description && this.digForAddressInText(this.ad.description))
     )
   }
 
@@ -60,13 +60,11 @@ export abstract class AddressService {
     return []
   }
 
-  abstract getAddressCompleted(q: string): Promise<
-    {
-      item: AddressItem
-      score: number
-      streetNumber: string
-    }[]
-  >
+  abstract getAddressCompleted(q: string): {
+    item: AddressItem
+    score: number
+    matches: ReadonlyArray<Fuse.FuseResultMatch>
+  }[]
   abstract getTargetPolygon(): number[][]
   abstract addressFromCoordinate(coord: Coordinate): string
 
@@ -106,7 +104,7 @@ export abstract class AddressService {
     return null
   }
 
-  protected setCoordinates(coord: Coordinate, streetNumber: string): void {
+  protected setCoordinates(coord: Coordinate, streetNumber: number): void {
     if (streetNumber) {
       this.coordinates = { ...coord }
     } else {
@@ -118,20 +116,28 @@ export abstract class AddressService {
     this.postalCode = postalCode
   }
 
-  private async digForAddressInText(text: string): Promise<string> {
+  private digForAddressInText(text: string): string {
     const addressRe = new RegExp(regexString('address'))
     const addressesFromRegex = text.match(addressRe) as string[]
 
     if (addressesFromRegex?.length) {
       const addressesQuery = this.querifyAddresses(addressesFromRegex)
-      const result: {
+      const addresses: {
         item: AddressItem
         score: number
-        streetNumber: string
-      }[] = await this.getAddressCompleted(addressesQuery)
+        matches: ReadonlyArray<Fuse.FuseResultMatch>
+      }[] = this.getAddressCompleted(addressesQuery)
+      const rawAddresses = this.unquerifyAddresses(addressesQuery)
 
-      if (result?.length) {
+      if (addresses?.length) {
+        const result = addresses.map((res) => ({
+          ...res,
+          streetNumber: this.findStreetNumber(rawAddresses, res.matches[0]),
+        }))
+
         this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
+        // Not sure about that anymore...
+        // this.setPostalCode(result[0].item.postalCode)
 
         if (this.city === 'paris') {
           // More precision with polygon that we are targeting for sure
@@ -140,24 +146,18 @@ export abstract class AddressService {
             ? resultInPostalCode.streetNumber
               ? cleanup
                   .string(resultInPostalCode.address)
-                  .replace(
-                    /^\d+(b|t)?/g,
-                    resultInPostalCode.streetNumber.toString()
-                  )
+                  .replace(/^\d+/g, resultInPostalCode.streetNumber.toString())
               : cleanup
                   .string(resultInPostalCode.address)
-                  .replace(/^\d+(b|t)?/g, '')
+                  .replace(/^\d+/g, '')
                   .trim()
             : null
         } else {
           return result[0].streetNumber
             ? cleanup
                 .string(result[0].item.address)
-                .replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
-            : cleanup
-                .string(result[0].item.address)
-                .replace(/^\d+(b|t)?/g, '')
-                .trim()
+                .replace(/^\d+/g, result[0].streetNumber.toString())
+            : cleanup.string(result[0].item.address).replace(/^\d+/g, '').trim()
         }
       } else {
         return null
@@ -182,13 +182,32 @@ export abstract class AddressService {
     return query.split(' | ').map((q) => q.substring(1, q.length - 1))
   }
 
+  private findStreetNumber(
+    rawAddresses: string[],
+    match: Fuse.FuseResultMatch
+  ): number {
+    const toHighlight: string[] = match.indices.map((indice) =>
+      match.value.slice(indice[0], indice[1] + 1).trim()
+    )
+    const matchRawAddress: string = rawAddresses.reduce(
+      (prev: [number, string], addr: string) => {
+        const currentCpt = toHighlight.filter((high) =>
+          addr.includes(high.toLowerCase())
+        ).length
+        return currentCpt > prev[0] ? [currentCpt, addr] : prev
+      },
+      [0, null]
+    )[1] as string
+    return +cleanup.string(matchRawAddress)?.match(/^\d+/g) || null
+  }
+
   private nearestAddressInTargetPolygon(
     addressesCompleted: {
       item: AddressItem
-      streetNumber: string
+      streetNumber: number
       score: number
     }[]
-  ): { address: string; streetNumber: string } {
+  ): { address: string; streetNumber: number } {
     const targetPolygon = this.getTargetPolygon()
 
     if (!targetPolygon) return null
@@ -197,7 +216,7 @@ export abstract class AddressService {
       point: number[]
       dist: number
       item: AddressItem
-      streetNumber: string
+      streetNumber: number
     }[] = addressesCompleted.map((address) => {
       const point = [address.item.coordinate.lng, address.item.coordinate.lat]
 
