@@ -23,7 +23,7 @@ export class DigService {
     const city: AvailableCities = cityService.findCity()
 
     const [address, postalCode, stations, coordinates, blurryCoordinates] =
-      await this.digForAddress(city)
+      this.digForAddress(city)
     const roomCount = this.digForRoomCount()
     const hasFurniture = this.digForHasFurniture()
     const surface = this.digForSurface()
@@ -57,9 +57,9 @@ export class DigService {
     }
   }
 
-  private async digForAddress(
+  private digForAddress(
     city: AvailableCities
-  ): Promise<[string, string, string[], Coordinate, Coordinate]> {
+  ): [string, string, string[], Coordinate, Coordinate] {
     let addressService: AddressService
     switch (city) {
       case 'paris':
@@ -84,7 +84,7 @@ export class DigService {
     }
 
     // Order is important here
-    const address = await addressService.getAddress()
+    const address = addressService.getAddress()
     const postalCode = addressService.getPostalCode()
     const stations = addressService.getStations()
     const coordinates = addressService.getCoordinate()
