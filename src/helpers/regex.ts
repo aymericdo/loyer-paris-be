@@ -1,7 +1,7 @@
 export const regexString = (value: string): string => {
   const regex = {
     address:
-      /([0-9]+,?)? ?((bis|b|ter),?)? ?(rue|avenue|passage|boulevard|faubourg|allee|quai|place|jardin|impasse|square|bd|cite) (?!(calme|tranquille)\b)( ?[a-zA-Z'’-]+){0,4}/g,
+      /([0-9]+,?)? ?((bis|b|ter),?)?(rue|avenue|passage|boulevard|faubourg|allee|quai|place|jardin|impasse|square|bd|cite) ?( ?[a-zA-Z'’-]+){0,4}/g,
     roomCount: /([1-5]|un|deux|trois|quatre|cinq|six|sept)(?= ?(piece))/g,
     furnished: /(?<!(non-|non ))\bmeuble/g,
     nonFurnished: /(non-|non )\bmeuble/g,

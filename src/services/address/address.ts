@@ -136,6 +136,11 @@ export abstract class AddressService {
         )
       )
         .flat()
+        .filter((r) =>
+          this.getPostalCode()
+            ? r.item.postalCode === this.getPostalCode()
+            : true
+        )
         .sort((a, b) => b.score - a.score)
 
       if (result?.length) {

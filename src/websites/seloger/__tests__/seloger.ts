@@ -15,7 +15,7 @@ describe('seloger', () => {
     jest.useFakeTimers()
   })
 
-  fdescribe('paris', () => {
+  describe('paris', () => {
     test('returns clean ad', async () => {
       const body: Mapping = {
         id: '234523',
@@ -41,9 +41,7 @@ describe('seloger', () => {
 
       const seloger = new SeLoger(mockResponse, { body })
 
-      console.log('queue1')
       const data = await seloger.digData()
-      console.log('queue2')
 
       expect(data).toEqual({
         detectedInfo: {
@@ -115,15 +113,15 @@ describe('seloger', () => {
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Zone 2' },
+          neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: 1 },
           surface: { order: 3, value: 20 },
           dateRange: { order: 4, value: '< 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 21.2 },
-          maxAuthorized: { order: 7, value: 424 },
-          promoPercentage: { order: 8, value: 20 },
+          max: { order: 6, value: 22.4 },
+          maxAuthorized: { order: 7, value: 448 },
+          promoPercentage: { order: 8, value: 15.47 },
         },
         isLegal: false,
       })
