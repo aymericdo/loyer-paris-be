@@ -136,7 +136,7 @@ export abstract class AddressService {
         )
       )
         .flat()
-        .sort((a, b) => a.score - b.score)
+        .sort((a, b) => b.score - a.score)
 
       if (result?.length) {
         this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
