@@ -21,7 +21,7 @@ describe('pap', () => {
         id: 'r421900951',
         cityLabel: 'paris 11e (75011)',
         description:
-          "rue amelot, limite marais, entre cirque d'hiver et bastille.\n" +
+          "16 rue amelot, limite marais, entre cirque d'hiver et bastille.\n" +
           '\n' +
           'studio non meuble de  21 m2 entierement refait a neuf, clair  : petite entree independante, grand placard/penderie, salle de bains + wc et lavabo, cuisine equipee (branchement machine a laver), sejour avec fenetre.\n' +
           'sur jardin arbore, sans vis-a-vis, 2 ascenseurs. gardien, entree avec bip, interphone. chauffage et eau chaude collectifs.\n' +
@@ -55,7 +55,7 @@ describe('pap', () => {
         detectedInfo: {
           address: {
             order: 0,
-            value: 'rue amelot 75011, Paris',
+            value: '16 rue amelot 75011, Paris',
           },
           hasFurniture: {
             order: 1,
@@ -71,7 +71,7 @@ describe('pap', () => {
           },
           yearBuilt: {
             order: 4,
-            value: null,
+            value: '1971',
           },
           isHouse: { order: 5, value: null },
           price: {
@@ -90,7 +90,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: {
             order: 0,
-            value: 'Folie-Méricourt',
+            value: 'Roquette',
           },
           hasFurniture: {
             order: 1,
@@ -133,7 +133,7 @@ describe('pap', () => {
         id: 'r435801923',
         cityLabel: 'lille (59000)',
         description:
-          't3 etat neuf, 2eme etage, 53m², dans une petite residence privee, limite lille  mons-en-barœul, a 200m du metro station mons sart, 1 km euralille.\n' +
+          'cite jardins t3 etat neuf, 2eme etage, 53m², dans une petite residence privee, limite lille  mons-en-barœul, a 200m du metro station mons sart, 1 km euralille.\n' +
           'stationnement facile et gratuit.\n' +
           '\n' +
           'sol parquet. sejour plein sud tres lumineux,\n' +
