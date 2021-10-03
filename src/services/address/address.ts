@@ -123,12 +123,20 @@ export abstract class AddressService {
     const addressesFromRegex = text.match(addressRe) as string[]
 
     if (addressesFromRegex?.length) {
-      const addressesQuery = this.querifyAddresses(addressesFromRegex)
+      const addressesQueries = this.querifyAddresses(addressesFromRegex)
       const result: {
         item: AddressItem
         score: number
         streetNumber: string
-      }[] = await this.getAddressCompleted(addressesQuery)
+      }[] = (
+        await Promise.all(
+          addressesQueries.map(async (query) => {
+            return await this.getAddressCompleted(query)
+          })
+        )
+      )
+        .flat()
+        .sort((a, b) => a.score - b.score)
 
       if (result?.length) {
         this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
@@ -167,19 +175,14 @@ export abstract class AddressService {
     }
   }
 
-  private querifyAddresses(addressesFromRegex: string[]): string {
+  private querifyAddresses(addressesFromRegex: string[]): string[] {
     return addressesFromRegex
       .map((a) =>
         cleanup.address(a, this.city)
-          ? `"${cleanup.address(a, this.city)}"`
+          ? `${cleanup.address(a, this.city)}`
           : null
       )
       .filter(Boolean)
-      .join(' | ')
-  }
-
-  private unquerifyAddresses(query: string): string[] {
-    return query.split(' | ').map((q) => q.substring(1, q.length - 1))
   }
 
   private nearestAddressInTargetPolygon(
