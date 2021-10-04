@@ -10,32 +10,34 @@ export class LefigaroScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const title = document.querySelector('#contenu > .container-h1 > h1')
+    const title = document.querySelector(
+      '#app > div > main > div.main-classified > div > section > h1'
+    )
 
     const description = document.querySelector(
-      'div.container-paragraph > p.description'
+      '#app > div > main > div.main-classified > div > section > div.classified-description > p'
     )
-    const price = document.querySelector('div.container-price span.price')
-    const charges = document.querySelector('div.container-price span.charges')
+    const price = document.querySelector(
+      '#app > div > main > div.main-classified > div > section > div.classified-price'
+    )
+    const charges = document.querySelector(
+      '#app > div > main > div.main-classified > div > div.classified-about-price > ul > li:nth-child(1) > span.about-price-fees-label'
+    )
     const hasCharges = document.querySelector(
-      'div.container-price [title="Charges comprises"]'
+      '#app > div > main > div.main-classified > div > section > div.classified-price > span'
     )
-    const cityLabel = document.querySelector('#contenu > div > h1 > span')
+    const cityLabel = document.querySelector(
+      '#app > div > main > div.main-classified > div > section > h1 > span'
+    )
     const renter = document.querySelector(
-      'div.container-agency-infos > span.agency-name'
+      '#middle-inquiry > div.classifieds-about-agency > div > div.agency__desc > strong'
     )
 
     const features = [
       ...document.querySelectorAll(
-        'div.container-features > ul.list-features > li'
+        '#app > div > main > div.main-classified > div > div.classified-features > ul.features-list > li .feature'
       ),
     ]
-
-    const hasMonthlyPriceElement = document.querySelector(
-      'div.container-price > span.label'
-    )
-    const hasMonthlyPrice =
-      hasMonthlyPriceElement?.textContent === 'Prix mensuel'
 
     let furnished = null
     let surface = null
@@ -51,7 +53,7 @@ export class LefigaroScrapping {
       }
     })
 
-    if (!title || !hasMonthlyPrice) {
+    if (!title) {
       return null
     }
 
