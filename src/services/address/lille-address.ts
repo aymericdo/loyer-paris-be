@@ -44,7 +44,7 @@ export class LilleAddressService extends AddressService {
     return result
       ? result.map((r) => ({
           item: {
-            address: r.numero + r.nom_voie,
+            address: `${r.numero} ${r.nom_voie}`,
             postalCode: r.code_postal.toString(),
             coordinate: {
               lng: +r.geometry.coordinates[0],
@@ -52,7 +52,7 @@ export class LilleAddressService extends AddressService {
             },
           },
           score: r.score,
-          streetNumber: cleanup.string(query)?.match(/^\d+(b|t)?/g) || null,
+          streetNumber: cleanup.streetNumber(query),
         }))
       : []
   }
