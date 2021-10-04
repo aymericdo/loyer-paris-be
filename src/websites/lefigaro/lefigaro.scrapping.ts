@@ -35,8 +35,7 @@ export class LefigaroScrapping {
       'div.container-price > span.label'
     )
     const hasMonthlyPrice =
-      hasMonthlyPriceElement &&
-      hasMonthlyPriceElement.textContent === 'Prix mensuel'
+      hasMonthlyPriceElement?.textContent === 'Prix mensuel'
 
     let furnished = null
     let surface = null
@@ -52,12 +51,12 @@ export class LefigaroScrapping {
       }
     })
 
-    if (!title.textContent.includes('Location')) {
-      throw { error: ErrorCode.Other, msg: `not a rent` }
-    }
-
     if (!title || !hasMonthlyPrice) {
       return null
+    }
+
+    if (!title.textContent.includes('Location')) {
+      throw { error: ErrorCode.Other, msg: `not a rent` }
     }
 
     return {
