@@ -1,10 +1,57 @@
 import { LilleAddress, ParisAddress, PlaineCommuneAddress } from '@db/db'
 import * as cleanup from '@helpers/cleanup'
 import { AddressSearchResult } from '@interfaces/shared'
-import { formatParisPostalCode } from './city'
+import { AvailableCities, formatParisPostalCode } from './city'
 
 export interface AddressSearchStrategy {
   getAddressCompleted(query: string): Promise<AddressSearchResult>
+}
+
+export class AddressSearcher implements AddressSearchStrategy {
+  city: AvailableCities
+  constructor(city: AvailableCities) {
+    this.city = city
+  }
+
+  getAddressCompleted(query: string): Promise<AddressSearchResult> {
+    const addressDiggerStrategyFactory = new AddressSearcherStrategyFactory()
+    return addressDiggerStrategyFactory
+      .getSearcherStrategy(this.city.toString())
+      .getAddressCompleted(query)
+  }
+}
+
+export class AddressSearcherStrategyFactory {
+  getSearcherStrategy(city: string): AddressSearchStrategy {
+    const parisSearcher = new ParisAddressSearchStrategy()
+    const lilleSearcher = new LilleAddressSearchStrategy()
+    const plaineCommuneSearcher = new PlaineCommuneAddressSearchStrategy()
+    const noSearcher = new NoAddressSearcher(city as string)
+    switch (city) {
+      case 'paris': {
+        return parisSearcher
+      }
+      case 'lille':
+      case 'hellemmes':
+      case 'lomme': {
+        return lilleSearcher
+      }
+      case 'aubervilliers':
+      case 'epinay-sur-seine':
+      case 'ile-saint-denis':
+      case 'courneuve':
+      case 'pierrefitte':
+      case 'saint-denis':
+      case 'saint-ouen':
+      case 'stains':
+      case 'villetaneuse': {
+        return plaineCommuneSearcher
+      }
+      default: {
+        return noSearcher
+      }
+    }
+  }
 }
 
 export class ParisAddressSearchStrategy implements AddressSearchStrategy {
@@ -99,5 +146,15 @@ export class PlaineCommuneAddressSearchStrategy
           streetNumber: cleanup.string(query)?.match(/^\d+(b|t)?/g) || null,
         }))
       : []
+  }
+}
+
+export class NoAddressSearcher implements AddressSearchStrategy {
+  city: string
+  constructor(city: string) {
+    this.city = city
+  }
+  getAddressCompleted(_: string): Promise<AddressSearchResult> {
+    return
   }
 }

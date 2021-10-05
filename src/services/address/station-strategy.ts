@@ -5,9 +5,57 @@ import * as fs from 'fs'
 import Fuse from 'fuse.js'
 import * as path from 'path'
 import { Memoize } from 'typescript-memoize'
+import { AvailableCities } from './city'
 
 export interface StationSearchStrategy {
   getStations(words: string[]): StationItem[]
+}
+
+export class AddressSearcher implements StationSearchStrategy {
+  city: AvailableCities
+  constructor(city: AvailableCities) {
+    this.city = city
+  }
+
+  getStations(words: string[]): StationItem[] {
+    const stationSearcherStrategyFactory = new AddressSearcherStrategyFactory()
+    return stationSearcherStrategyFactory
+      .getSearcherStrategy(this.city.toString())
+      .getStations(words)
+  }
+}
+
+export class AddressSearcherStrategyFactory {
+  getSearcherStrategy(city: string): StationSearchStrategy {
+    const parisSearcher = new ParisStationSearchStrategy()
+    const lilleSearcher = new LilleStationSearchStrategy()
+    const plaineCommuneSearcher = new PlaineCommuneStationSearchStrategy()
+    const noSearcher = new NoStationSearcher(city as string)
+    switch (city) {
+      case 'paris': {
+        return parisSearcher
+      }
+      case 'lille':
+      case 'hellemmes':
+      case 'lomme': {
+        return lilleSearcher
+      }
+      case 'aubervilliers':
+      case 'epinay-sur-seine':
+      case 'ile-saint-denis':
+      case 'courneuve':
+      case 'pierrefitte':
+      case 'saint-denis':
+      case 'saint-ouen':
+      case 'stains':
+      case 'villetaneuse': {
+        return plaineCommuneSearcher
+      }
+      default: {
+        return noSearcher
+      }
+    }
+  }
 }
 
 export class ParisStationSearchStrategy implements StationSearchStrategy {
@@ -87,6 +135,16 @@ export class PlaineCommuneStationSearchStrategy
   implements StationSearchStrategy
 {
   public getStations(_: string[]) {
+    return []
+  }
+}
+
+export class NoStationSearcher implements StationSearchStrategy {
+  city: string
+  constructor(city: string) {
+    this.city = city
+  }
+  getStations(_: string[]): StationItem[] {
     return []
   }
 }
