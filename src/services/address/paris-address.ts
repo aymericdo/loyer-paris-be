@@ -15,8 +15,6 @@ import * as fs from 'fs'
 import path from 'path'
 import { cityList } from './city'
 import { ParisAddress } from '@db/db'
-// import { getStream } from "@helpers/json-stream";
-// const es = require("event-stream");
 
 export class ParisAddressService extends AddressService {
   getStations(): string[] {
@@ -73,7 +71,7 @@ export class ParisAddressService extends AddressService {
             },
           },
           score: r.score,
-          streetNumber: cleanup.string(query)?.match(/^\d+(b|t)?/g) || null,
+          streetNumber: cleanup.streetNumber(query),
         }))
       : []
   }
@@ -196,12 +194,6 @@ export class ParisAddressService extends AddressService {
 
   @Memoize()
   private parisAddressesJson(): ParisAddressItem[] {
-    // const ouech = getStream("json-data/adresse_paris.json").pipe(
-    //   es.mapSync((data) => {
-    //     return data;
-    //   })
-    // );
-
     return JSON.parse(
       fs.readFileSync(path.join('json-data/adresse_paris.json'), 'utf8')
     )

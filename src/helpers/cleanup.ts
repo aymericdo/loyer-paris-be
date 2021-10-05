@@ -18,8 +18,13 @@ export function number(number: string): number {
   return match != null ? +match[0] : null
 }
 
+export function streetNumber(address: string): number {
+  const match = string(address)?.match(/^\d+(b|t)?/g)
+  return match != null ? +match[0] : null
+}
+
 export function address(string: string, city: AvailableCities): string {
-  const blackList = ['commercante', 'navette']
+  const blackList = ['commercante', 'navette', 'calme', 'tranquille', 'parking']
   if (blackList.some((w) => string.includes(w))) return null
   return string
     .replace('bd ', 'boulevard ')

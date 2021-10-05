@@ -21,9 +21,16 @@ export abstract class AddressService {
   }
 
   async getAddress(): Promise<string> {
-    return await this.digForAddressInText(
-      `${this.ad.address} ${this.ad.title} ${this.ad.description}`
+    const tab = [this.ad.address, this.ad.title, this.ad.description].filter(
+      Boolean
     )
+
+    for (const text of tab) {
+      const result = await this.digForAddressInText(text)
+      if (result) {
+        return result
+      }
+    }
   }
 
   getPostalCode(): string {
@@ -120,12 +127,25 @@ export abstract class AddressService {
     const addressesFromRegex = text.match(addressRe) as string[]
 
     if (addressesFromRegex?.length) {
-      const addressesQuery = this.querifyAddresses(addressesFromRegex)
+      const addressesQueries = this.querifyAddresses(addressesFromRegex)
       const result: {
         item: AddressItem
         score: number
         streetNumber: string
-      }[] = await this.getAddressCompleted(addressesQuery)
+      }[] = (
+        await Promise.all(
+          addressesQueries.map(async (query) => {
+            return await this.getAddressCompleted(query)
+          })
+        )
+      )
+        .flat()
+        .filter((r) =>
+          this.getPostalCode()
+            ? r.item.postalCode === this.getPostalCode()
+            : true
+        )
+        .sort((a, b) => b.score - a.score)
 
       if (result?.length) {
         this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
@@ -164,19 +184,14 @@ export abstract class AddressService {
     }
   }
 
-  private querifyAddresses(addressesFromRegex: string[]): string {
+  private querifyAddresses(addressesFromRegex: string[]): string[] {
     return addressesFromRegex
       .map((a) =>
         cleanup.address(a, this.city)
-          ? `"${cleanup.address(a, this.city)}"`
+          ? `${cleanup.address(a, this.city)}`
           : null
       )
       .filter(Boolean)
-      .join(' | ')
-  }
-
-  private unquerifyAddresses(query: string): string[] {
-    return query.split(' | ').map((q) => q.substring(1, q.length - 1))
   }
 
   private nearestAddressInTargetPolygon(
