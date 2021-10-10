@@ -14,8 +14,9 @@ export class LeboncoinScrapping {
       '[data-qa-id=adview_description_container] > div > div > span'
     )
     const body2 = document.querySelector(
-      '#grid > article > section > div.css-1eifrgn > div:nth-child(3) > div'
+      '#grid > article > div > div > div > div > p'
     )
+
     const price = document.querySelector('[data-qa-id=adview_price] > span')
     const renter =
       document.querySelector(
@@ -25,12 +26,12 @@ export class LeboncoinScrapping {
         '#aside > section > div[data-qa-id=adview_contact_container] > div > div > div > a'
       )
     const isPro = document.querySelector(
-      '#aside > section > div[data-qa-id=adview_contact_container] > div > div > span'
+      '#aside > section > div[data-qa-id=adview_contact_container] > div'
     )
     const hasCharges = document.querySelector(
-      '#grid > article > section > div > div > div > div > p'
+      '#grid > article > section > div > div > div > div.styles_Price__1tlGj > div > p'
     )
-    const cityLabel = document.querySelector('#grid > article > div > h2')
+    const cityLabel = document.querySelector('#map > div > h2')
 
     const surface = document.querySelector(
       '#grid > article div div[data-qa-id=criteria_item_square] > div > div > span'
