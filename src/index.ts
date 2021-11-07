@@ -23,6 +23,10 @@ app.use(
   })
 )
 
+// Blacklist the following IPs
+const ips = ['109.11.33.58']
+app.use(IpFilter(ips, { mode: 'deny' }))
+
 app.use('/seloger', require('./websites/seloger/seloger.controller'))
 app.use('/leboncoin', require('./websites/leboncoin/leboncoin.controller'))
 app.use('/jinka', require('./websites/loueragile/loueragile.controller'))
@@ -61,10 +65,6 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN,
   environment: process.env.CURRENT_ENV === 'prod' ? 'production' : 'local',
 })
-
-// Blacklist the following IPs
-const ips = ['109.11.33.58']
-app.use(IpFilter(ips, { mode: 'deny' }))
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
