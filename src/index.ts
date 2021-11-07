@@ -1,5 +1,6 @@
 import 'module-alias/register'
 import express from 'express'
+import { IpFilter } from 'express-ipfilter'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import * as Sentry from '@sentry/node'
@@ -60,6 +61,10 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN,
   environment: process.env.CURRENT_ENV === 'prod' ? 'production' : 'local',
 })
+
+// Blacklist the following IPs
+const ips = ['109.11.33.58']
+app.use(IpFilter(ips, { mode: 'deny' }))
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
