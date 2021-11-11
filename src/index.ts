@@ -1,5 +1,6 @@
 import 'module-alias/register'
 import express from 'express'
+import { IpFilter } from 'express-ipfilter'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import * as Sentry from '@sentry/node'
@@ -21,6 +22,10 @@ app.use(
     parameterLimit: 50000,
   })
 )
+
+// Blacklist the following IPs
+const ips = ['109.11.33.58']
+app.use(IpFilter(ips, { mode: 'deny' }))
 
 app.use('/seloger', require('./websites/seloger/seloger.controller'))
 app.use('/leboncoin', require('./websites/leboncoin/leboncoin.controller'))

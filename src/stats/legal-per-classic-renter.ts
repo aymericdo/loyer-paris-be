@@ -121,8 +121,8 @@ export async function getLegalPerClassicRenter(
           },
           { field: 'renter', title: 'Agence ', type: 'nominal' },
           {
-            field: 'numberIllegal',
-            title: "Nombre d'annonces ",
+            field: 'numberAds',
+            title: "Nombre total d'annonces ",
             type: 'nominal',
           },
         ],
