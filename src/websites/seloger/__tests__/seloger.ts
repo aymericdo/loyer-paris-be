@@ -21,7 +21,7 @@ describe('seloger', () => {
         id: '234523',
         cityLabel: 'Paris 75011',
         charges: '45E',
-        description: 'Joli 2 pièce bd valtair, 3 rue jean macée',
+        description: 'Joli 2 pièce 3 rue jean macea',
         furnished: true,
         hasCharges: false,
         price: '1400',
