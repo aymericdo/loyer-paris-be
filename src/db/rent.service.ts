@@ -47,24 +47,23 @@ export async function getMapData(
     }
   }
 
-  return await Rent.find(
-    filter,
-    { isLegal: 1, latitude: 1, longitude: 1, district: 1 },
-    (
-      err: Error,
-      rents: {
-        isLegal: boolean
-        latitude: number
-        longitude: number
-        district: string
-      }[]
-    ) => {
-      if (err) {
-        throw err
-      }
-      return rents
+  try {
+    return (await Rent.find(filter, {
+      isLegal: 1,
+      latitude: 1,
+      longitude: 1,
+      district: 1,
+    })) as unknown as {
+      isLegal: boolean
+      latitude: number
+      longitude: number
+      district: string
+    }[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }
 
 export async function getChloroplethMapData(
@@ -85,22 +84,14 @@ export async function getChloroplethMapData(
       $lte: dateRange[1],
     }
   }
-  return await Rent.find(
-    filter,
-    { isLegal: 1, district: 1 },
-    (
-      err: Error,
-      rents: {
-        isLegal: boolean
-        district: string
-      }[]
-    ) => {
-      if (err) {
-        throw err
-      }
-      return rents
+
+  try {
+    return await Rent.find(filter, { isLegal: 1, district: 1 }).lean()
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  ).lean()
+  }
 }
 
 export async function getPriceDiffData(
@@ -126,27 +117,22 @@ export async function getPriceDiffData(
       $lte: dateRange[1],
     }
   }
-  return await Rent.find(
-    filter,
-    {
+
+  try {
+    return (await Rent.find(filter, {
       maxPrice: 1,
       postalCode: 1,
       priceExcludingCharges: 1,
-    },
-    (
-      err: Error,
-      rents: {
-        maxPrice: number
-        postalCode: string
-        priceExcludingCharges: number
-      }[]
-    ) => {
-      if (err) {
-        throw err
-      }
-      return rents
+    })) as unknown as {
+      maxPrice: number
+      postalCode: string
+      priceExcludingCharges: number
+    }[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }
 
 export async function getLegalVarData(
@@ -199,25 +185,19 @@ export async function getLegalVarData(
     }
   }
 
-  return await Rent.find(
-    filter,
-    {
+  try {
+    return (await Rent.find(filter, {
       createdAt: 1,
       isLegal: 1,
-    },
-    (
-      err: Error,
-      rents: {
-        isLegal: Boolean
-        createdAt: string
-      }[]
-    ) => {
-      if (err) {
-        throw err
-      }
-      return rents
+    })) as unknown as {
+      isLegal: Boolean
+      createdAt: string
+    }[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }
 
 export async function getPriceVarData(
@@ -245,27 +225,22 @@ export async function getPriceVarData(
       $lte: dateRange[1],
     }
   }
-  return await Rent.find(
-    filter,
-    {
+
+  try {
+    return (await Rent.find(filter, {
       createdAt: 1,
       maxPrice: 1,
       priceExcludingCharges: 1,
-    },
-    (
-      err: Error,
-      rents: {
-        createdAt: string
-        maxPrice: number
-        priceExcludingCharges: number
-      }[]
-    ) => {
-      if (err) {
-        throw err
-      }
-      return rents
+    })) as unknown as {
+      createdAt: string
+      maxPrice: number
+      priceExcludingCharges: number
+    }[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }
 
 export async function getLegalPerClassicRenterData(
@@ -295,16 +270,16 @@ export async function getLegalPerClassicRenterData(
       $lte: dateRange[1],
     }
   }
-  return await Rent.find(
-    filter,
-    { isLegal: 1, renter: 1 },
-    (err: Error, rents: { isLegal: boolean; renter: string }[]) => {
-      if (err) {
-        throw err
-      }
-      return rents
+  try {
+    return (await Rent.find(filter, {
+      isLegal: 1,
+      renter: 1,
+    }).lean()) as unknown as { isLegal: boolean; renter: string }[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  ).lean()
+  }
 }
 
 export async function getLegalPerRenterData(
@@ -327,16 +302,16 @@ export async function getLegalPerRenterData(
       $lte: dateRange[1],
     }
   }
-  return await Rent.find(
-    filter,
-    { isLegal: 1, renter: 1 },
-    (err: Error, rents: { isLegal: boolean; renter: string }[]) => {
-      if (err) {
-        throw err
-      }
-      return rents
+  try {
+    return (await Rent.find(filter, { isLegal: 1, renter: 1 })) as unknown as {
+      isLegal: boolean
+      renter: string
+    }[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }
 
 export async function getLegalPerWebsiteData(
@@ -358,16 +333,16 @@ export async function getLegalPerWebsiteData(
       $lte: dateRange[1],
     }
   }
-  return await Rent.find(
-    filter,
-    { isLegal: 1, website: 1 },
-    (err: Error, rents: { isLegal: boolean; website: string }[]) => {
-      if (err) {
-        throw err
-      }
-      return rents
+  try {
+    return (await Rent.find(filter, { isLegal: 1, website: 1 })) as unknown as {
+      isLegal: boolean
+      website: string
+    }[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }
 
 export async function getLegalPerSurfaceData(
@@ -389,44 +364,43 @@ export async function getLegalPerSurfaceData(
       $lte: dateRange[1],
     }
   }
-  return await Rent.find(
-    filter,
-    { isLegal: 1, surface: 1 },
-    (err: Error, rents: { isLegal: boolean; surface: number }[]) => {
-      if (err) {
-        throw err
-      }
-      return rents
+  try {
+    return (await Rent.find(filter, { isLegal: 1, surface: 1 })) as unknown as {
+      isLegal: boolean
+      surface: number
+    }[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }
 
 export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
-  return await Rent.find(
-    {},
-    { createdAt: 1 },
-    (err: Error, rents: { createdAt: string }[]) => {
-      if (err) {
-        throw err
-      }
-      return rents
+  try {
+    return (await Rent.find({}, { createdAt: 1 })) as unknown as {
+      createdAt: string
+    }[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }
 
 export async function getWelcomeData(): Promise<
   { isLegal: boolean; surface: number }[]
 > {
-  return await Rent.find(
-    {},
-    { isLegal: 1, surface: 1 },
-    (err: Error, rents: { isLegal: boolean; surface: number }[]) => {
-      if (err) {
-        throw err
-      }
-      return rents
+  try {
+    return (await Rent.find({}, { isLegal: 1, surface: 1 })) as unknown as {
+      isLegal: boolean
+      surface: number
+    }[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }
 
 interface RelevantAdsData {
@@ -502,33 +476,33 @@ export async function getRelevantAdsData(
     }
   }
 
-  return await Rent.find(
-    filter,
-    {
-      id: 1,
-      surface: 1,
-      roomCount: 1,
-      website: 1,
-      createdAt: 1,
-      hasFurniture: 1,
-      price: 1,
-      district: 1,
-      url: 1,
-      city: 1,
-      isHouse: 1,
-    },
-    {
-      sort: { createdAt: -1 },
-      skip: page * perPage,
-      limit: perPage,
-    },
-    (err: Error, rents: RelevantAdsData[]) => {
-      if (err) {
-        throw err
+  try {
+    return (await Rent.find(
+      filter,
+      {
+        id: 1,
+        surface: 1,
+        roomCount: 1,
+        website: 1,
+        createdAt: 1,
+        hasFurniture: 1,
+        price: 1,
+        district: 1,
+        url: 1,
+        city: 1,
+        isHouse: 1,
+      },
+      {
+        sort: { createdAt: -1 },
+        skip: page * perPage,
+        limit: perPage,
       }
-      return rents
+    )) as unknown as RelevantAdsData[]
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }
 
 export async function getRelevantAdsDataTotalCount(filterParam: {
@@ -589,13 +563,14 @@ export async function getAdById(
   id: string,
   website: string
 ): Promise<DataBaseItem> {
-  return await Rent.findOne(
-    { id, website },
-    (err: Error, rent: DataBaseItem) => {
-      if (err) {
-        throw err
-      }
-      return rent
+  try {
+    return (await Rent.findOne({
+      id,
+      website,
+    })) as unknown as Promise<DataBaseItem>
+  } catch (err) {
+    if (err) {
+      throw err
     }
-  )
+  }
 }

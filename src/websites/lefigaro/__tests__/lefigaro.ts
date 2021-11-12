@@ -1,19 +1,11 @@
 import { Mapping } from '@interfaces/mapping'
 import { LeFigaro } from '../lefigaro'
-const mongoose = require('mongoose')
+import { disconnect } from 'mongoose'
+import { closeAllConnections } from '@db/db'
 
 describe('lefigaro', () => {
-  afterAll(async () => {
-    try {
-      await mongoose.connection.close()
-    } catch (e) {
-      console.log(e)
-    }
-  })
-
-  beforeEach(() => {
-    jest.useFakeTimers()
-  })
+  afterAll(() => closeAllConnections())
+  afterAll(() => disconnect())
 
   describe('paris', () => {
     test('returns clean ad', async () => {

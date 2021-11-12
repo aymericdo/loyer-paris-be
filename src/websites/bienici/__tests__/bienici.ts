@@ -1,19 +1,11 @@
 import { Mapping } from '@interfaces/mapping'
 import { BienIci } from '../bienici'
-const mongoose = require('mongoose')
+import { closeAllConnections } from '@db/db'
+import { disconnect } from 'mongoose'
 
 describe('bienici', () => {
-  afterAll(async () => {
-    try {
-      await mongoose.connection.close()
-    } catch (e) {
-      console.log(e)
-    }
-  })
-
-  beforeEach(() => {
-    jest.useFakeTimers()
-  })
+  afterAll(() => closeAllConnections())
+  afterAll(() => disconnect())
 
   describe('paris', () => {
     test('returns clean ad', async () => {
