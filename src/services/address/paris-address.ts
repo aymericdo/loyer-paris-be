@@ -48,7 +48,7 @@ export class ParisAddressService extends AddressService {
       return null
     }
 
-    const result = await ParisAddress.find(
+    const result = (await ParisAddress.find(
       {
         $text: { $search: query.toString() },
       },
@@ -56,7 +56,7 @@ export class ParisAddressService extends AddressService {
     )
       .sort({ score: { $meta: 'textScore' } })
       .limit(10)
-      .lean()
+      .lean()) as any
 
     return result
       ? result.map((r) => ({

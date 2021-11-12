@@ -29,7 +29,7 @@ export class PlaineCommuneAddressService extends AddressService {
       return null
     }
 
-    const result = await PlaineCommuneAddress.find(
+    const result = (await PlaineCommuneAddress.find(
       {
         $text: { $search: query },
       },
@@ -37,7 +37,7 @@ export class PlaineCommuneAddressService extends AddressService {
     )
       .sort({ score: { $meta: 'textScore' } })
       .limit(10)
-      .lean()
+      .lean()) as any
 
     return result
       ? result.map((r) => ({

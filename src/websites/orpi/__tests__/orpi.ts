@@ -1,19 +1,11 @@
 import { Mapping } from '@interfaces/mapping'
 import { Orpi } from '../orpi'
-const mongoose = require('mongoose')
+import { disconnect } from 'mongoose'
+import { closeAllConnections } from '@db/db'
 
 describe('orpi', () => {
-  afterAll(async () => {
-    try {
-      await mongoose.connection.close()
-    } catch (e) {
-      console.log(e)
-    }
-  })
-
-  beforeEach(() => {
-    jest.useFakeTimers()
-  })
+  afterAll(() => closeAllConnections())
+  afterAll(() => disconnect())
 
   describe('paris', () => {
     test('returns clean ad', async () => {

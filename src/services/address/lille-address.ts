@@ -31,7 +31,7 @@ export class LilleAddressService extends AddressService {
       return null
     }
 
-    const result = await LilleAddress.find(
+    const result = (await LilleAddress.find(
       {
         $text: { $search: query },
       },
@@ -39,7 +39,7 @@ export class LilleAddressService extends AddressService {
     )
       .sort({ score: { $meta: 'textScore' } })
       .limit(10)
-      .lean()
+      .lean()) as any
 
     return result
       ? result.map((r) => ({

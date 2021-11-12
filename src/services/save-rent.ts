@@ -76,17 +76,16 @@ export class SaveRentService {
         }),
     })
     log.info('saving ad')
-    rent
-      .save()
-      .then(() => {
-        log.info('ad saved', 'green')
-      })
-      .catch((err) => {
-        if (err.code === 11000) {
-          log.info('⚠️  ad already saved', 'red')
-        } else {
-          console.log(err)
-        }
-      })
+
+    try {
+      await rent.save()
+      log.info('ad saved', 'green')
+    } catch (err) {
+      if (err.code === 11000) {
+        log.info('⚠️  ad already saved', 'red')
+      } else {
+        console.log(err)
+      }
+    }
   }
 }

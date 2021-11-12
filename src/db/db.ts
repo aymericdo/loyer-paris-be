@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+import { createConnection } from 'mongoose'
 
 const localConnectionString = 'mongodb://localhost/loyer-paris-be'
 
-const rentConnection = mongoose.createConnection(
+const rentConnection = createConnection(
   process.env.MONGODB_URI || localConnectionString,
   {
     useCreateIndex: true,
@@ -15,7 +15,7 @@ rentConnection.catch((e) => {
   console.log(e)
 })
 
-const empriseBatieConnection = mongoose.createConnection(
+const empriseBatieConnection = createConnection(
   process.env.MONGODB_URI_EMPRISE_BATIE || localConnectionString,
   {
     useCreateIndex: true,
@@ -28,7 +28,7 @@ empriseBatieConnection.catch((e) => {
   console.log(e)
 })
 
-const encadrementAddress1Connection = mongoose.createConnection(
+const encadrementAddress1Connection = createConnection(
   process.env.MONGODB_URI_ENCADREMENT_ADDRESS1 || localConnectionString,
   {
     useCreateIndex: true,
@@ -67,3 +67,9 @@ export const PlaineCommuneAddress = encadrementAddress1Connection.model(
   'plainecommuneaddress',
   plaineCommuneAddressSchema
 )
+
+export const closeAllConnections = () => {
+  rentConnection.close()
+  empriseBatieConnection.close()
+  encadrementAddress1Connection.close()
+}
