@@ -5,6 +5,7 @@ import { YearBuiltService } from '@services/year-built'
 import { LilleDistrictService } from './lille-district'
 import { LilleEncadrementItem } from '@interfaces/json-item-lille'
 import { Memoize } from 'typescript-memoize'
+import { number } from '@helpers/cleanup'
 
 export class LilleFilterRentService {
   infoToFilter: InfoToFilter = null
@@ -61,7 +62,7 @@ export class LilleFilterRentService {
           : +r.fields.loyer_de_reference_minore_non_meublees,
         districtName: `Zone ${r.fields.zone}`,
         isFurnished,
-        roomCount: +r.fields.nb_pieces,
+        roomCount: number(r.fields.nb_pieces),
         yearBuilt: r.fields.epoque_construction,
       }))
       .sort((a, b) => {

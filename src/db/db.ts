@@ -46,6 +46,7 @@ const empriseBatieSchema = require('./emprisebatie.model')
 const parisAddressSchema = require('./paris-address.model')
 const lilleAddressSchema = require('./lille-address.model')
 const plaineCommuneAddressSchema = require('./plaine_commune-address.model')
+const lyonAddressSchema = require('./lyon-address.model')
 
 export const Rent = rentConnection.model('Rent', rentSchema)
 export const EmpriseBatie = empriseBatieConnection.model(
@@ -66,6 +67,11 @@ export const LilleAddress = encadrementAddress1Connection.model(
 export const PlaineCommuneAddress = encadrementAddress1Connection.model(
   'plainecommuneaddress',
   plaineCommuneAddressSchema
+)
+
+export const LyonAddress = encadrementAddress1Connection.model(
+  'lyonaddress',
+  lyonAddressSchema
 )
 
 export const closeAllConnections = () => {

@@ -37,7 +37,7 @@ export class PlaineCommuneDistrictService {
 
   getDistrictFromPostalCode(): PlaineCommuneDistrictItem[] {
     if (this.postalCode) {
-      return this.plaineCommuneDistrictsJson().features.filter((district) => {
+      return this.getDistrictsJson().features.filter((district) => {
         return district.properties.CODE_POST === this.postalCode
       })
     } else {
@@ -46,13 +46,13 @@ export class PlaineCommuneDistrictService {
   }
 
   private getDistrictFromName(): PlaineCommuneDistrictItem[] {
-    return this.plaineCommuneDistrictsJson().features.filter((district) => {
+    return this.getDistrictsJson().features.filter((district) => {
       return +district.properties.Zone === +this.districtName.match(/\d+/)[0]
     })
   }
 
   @Memoize()
-  private plaineCommuneDistrictsJson(): {
+  private getDistrictsJson(): {
     features: PlaineCommuneDistrictItem[]
   } {
     return JSON.parse(
@@ -67,8 +67,8 @@ export class PlaineCommuneDistrictService {
     lat: number,
     lng: number
   ): PlaineCommuneDistrictItem[] {
-    const district = this.plaineCommuneDistrictsJson().features.find(
-      (district) => inside([+lng, +lat], district.geometry.coordinates[0])
+    const district = this.getDistrictsJson().features.find((district) =>
+      inside([+lng, +lat], district.geometry.coordinates[0])
     )
     return district ? [district] : []
   }
