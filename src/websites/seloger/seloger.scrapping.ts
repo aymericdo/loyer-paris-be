@@ -12,7 +12,8 @@ export class SelogerScrapping {
 
     const title =
       document.querySelector('.detail-title.title1') ||
-      document.querySelector('.Title__ShowcaseTitleContainer-sc-4479bn-0')
+      document.querySelector('.Title__ShowcaseTitleContainer-sc-4479bn-0') ||
+      document.querySelector('.Summarystyled__Title-sc-1u9xobv-3')
     const description =
       document.querySelector('div.description-bien > section.categorie > p') ||
       document.querySelector(
@@ -20,6 +21,9 @@ export class SelogerScrapping {
       ) ||
       document.querySelector(
         '.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.koqVoo'
+      ) ||
+      document.querySelector(
+        '.Descriptionstyled__StyledShowMoreText-sc-1uunii4-2'
       )
     const price = document.querySelector(
       '[class^=Summarystyled__PriceContainer]'
@@ -28,13 +32,20 @@ export class SelogerScrapping {
       document.querySelector('#neighborhood-map > p > strong') ||
       document.querySelector(
         '#root > div > main > div > div > div > p > span[class^=Localisationstyled]'
-      )
+      ) ||
+      document.querySelector('p > span.Localisationstyled__City-sc-1uveg0i-1')
     const renter =
       document.querySelector('.agence-title') ||
       document.querySelector('.LightSummary__Title-f6k8ax-2.kqLAJb') ||
       document.querySelector('.LightSummary__Title-f6k8ax-1.lnUnld') ||
       document.querySelector(
         '#agence-info > div.Agency__PrimaryBlock-sc-1rsw64j-5.dNsjKe > h3'
+      ) ||
+      document.querySelector(
+        'div.Wrapper__ContactWrapper-sc-wbkua2-0.fZhnkl > div > div > div.LightSummarystyled__SummaryContainer-sc-k5t1l5-8.gapjyf > h3.LightSummarystyled__Title-sc-k5t1l5-1'
+      ) ||
+      document.querySelector(
+        'div.Wrapper__ContactWrapper-sc-wbkua2-0.fZhnkl > div > div > div.LightSummarystyled__TextContainer-sc-k5t1l5-9.ehuHOZ > div.LightSummarystyled__SubNameDiv-sc-k5t1l5-7.gxaKvx'
       )
     const itemTags =
       (document.querySelector('[class^=Summarystyled__TagsWrapper] > div') && [
@@ -60,6 +71,9 @@ export class SelogerScrapping {
       ) ||
       document.querySelector(
         '#a-propos-de-ce-prix .TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.dMkXAI > div'
+      ) ||
+      document.querySelector(
+        'section.Pricestyled__Container-sc-r5ze64-1.chwYTh > div.Pricestyled__LeftColumn-sc-r5ze64-2.exUqVO > div.Pricestyled__Panel-sc-r5ze64-4.gCpVOb'
       )
 
     let surface = null
