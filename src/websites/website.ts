@@ -7,6 +7,7 @@ import { ApiError } from '@interfaces/shared'
 import { ApiErrorsService, ErrorCode } from '@services/api-errors'
 import { DigService } from '@services/dig'
 import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
+import { LyonFilterRentService } from '@services/filter-rent/lyon-filter-rent'
 import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
 import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent'
 import { SaveRentService } from '@services/save-rent'
@@ -72,6 +73,10 @@ export abstract class Website {
       case 'stains':
       case 'villetaneuse':
         filteredResult = new PlaineCommuneFilterRentService(cleanAd).find()
+        break
+      case 'lyon':
+      case 'villeurbanne':
+        filteredResult = new LyonFilterRentService(cleanAd).find()
         break
     }
 

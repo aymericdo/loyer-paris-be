@@ -102,6 +102,27 @@ export const cityList: CityList = {
     postalCodePossibilities: ['93430'],
     postalCodeRegex: [/\b93430\b/g],
   },
+  lyon: {
+    postalCodePossibilities: [
+      '69001',
+      '69002',
+      '69003',
+      '69004',
+      '69005',
+      '69006',
+      '69007',
+      '69008',
+      '69009',
+    ],
+    postalCodeRegex: [
+      /\b69[0-1][0-9]{2}\b/g,
+      /((?<=lyon )[0-9]{1})|([0-9]{1} ?(?=er|ème|e|eme))/g,
+    ],
+  },
+  villeurbanne: {
+    postalCodePossibilities: ['69100'],
+    postalCodeRegex: [/\b69100\b/g],
+  },
 }
 
 export type AvailableCities = keyof typeof cityList
