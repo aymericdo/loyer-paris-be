@@ -21,6 +21,9 @@ export function getPriceDifference(
     case 'plaine_commune':
       postalCodePossibilities = cityList.plaineCommune.postalCodePossibilities
       break
+    case 'lyon':
+      postalCodePossibilities = cityList.lyon.postalCodePossibilities
+      break
   }
 
   const dateValue: string = req.query.dateValue as string

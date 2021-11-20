@@ -5,6 +5,7 @@ import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
 import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent'
 import { FilteredResult } from '@interfaces/ad'
 import { roundNumber } from '@helpers/round-number'
+import { LyonFilterRentService } from '@services/filter-rent/lyon-filter-rent'
 const router = express.Router()
 
 router.get('/:city', getManualResult)
@@ -59,6 +60,14 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
         yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
         districtName: district,
         isHouse,
+        roomCount: room,
+        hasFurniture,
+      }).filter()
+      break
+    case 'lyon':
+      filteredResult = new LyonFilterRentService({
+        yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
+        districtName: district,
         roomCount: room,
         hasFurniture,
       }).filter()

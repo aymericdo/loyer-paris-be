@@ -5,6 +5,7 @@ import { YearBuiltService } from '@services/year-built'
 import { PlaineCommuneEncadrementItem } from '@interfaces/json-item-plaine-commune'
 import { Memoize } from 'typescript-memoize'
 import { PlaineCommuneDistrictService } from './plaine-commune-district'
+import { number } from '@helpers/cleanup'
 
 export class PlaineCommuneFilterRentService {
   infoToFilter: InfoToFilter = null
@@ -23,10 +24,10 @@ export class PlaineCommuneFilterRentService {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = YearBuiltService.getRangeTimeDates(
+    const timeDates: string[] = new YearBuiltService(
       rangeTime,
       this.infoToFilter.yearBuilt
-    )
+    ).getRangeTimeDates()
 
     const rentList = this.rangeRentsPlaineCommuneJson().filter((rangeRent) => {
       return (
@@ -62,7 +63,7 @@ export class PlaineCommuneFilterRentService {
         minPrice: +r['Loyer de référence minoré'].replace(',', '.'),
         districtName: `Zone ${r['Secteur géographique']}`,
         isFurnished: !!r['Type de location'].match(/^meubl/g),
-        roomCount: +r['Nombre de pièces'],
+        roomCount: number(r['Nombre de pièces']),
         yearBuilt: r['Epoque de construction'],
         isHouse: r.Type === 'Maison' ? 'Maison' : null,
       }))

@@ -8,6 +8,7 @@ import { ErrorCode } from './api-errors'
 import { AvailableCities, CityService } from './address/city'
 import { LilleAddressService } from './address/lille-address'
 import { ParisAddressService } from './address/paris-address'
+import { LyonAddressService } from './address/lyon-address'
 import { AddressService } from './address/address'
 import { PlaineCommuneAddressService } from './address/plaine-commune-address'
 
@@ -80,6 +81,10 @@ export class DigService {
       case 'stains':
       case 'villetaneuse':
         addressService = new PlaineCommuneAddressService(city, this.ad)
+        break
+      case 'lyon':
+      case 'villeurbanne':
+        addressService = new LyonAddressService(city, this.ad)
         break
     }
 

@@ -24,10 +24,10 @@ export class ParisFilterRentService {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = YearBuiltService.getRangeTimeDates(
+    const timeDates: string[] = new YearBuiltService(
       rangeTime,
       this.infoToFilter.yearBuilt
-    )
+    ).getRangeTimeDates()
 
     let currentYear = +new Date().getFullYear()
 
@@ -65,7 +65,7 @@ export class ParisFilterRentService {
         minPrice: +r.fields.min,
         districtName: r.fields.nom_quartier,
         isFurnished: !!r.fields.meuble_txt.match(/^meubl/g),
-        roomCount: +r.fields.piece,
+        roomCount: r.fields.piece,
         yearBuilt: r.fields.epoque,
       }))
       .sort((a, b) => {

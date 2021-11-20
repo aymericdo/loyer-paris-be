@@ -34,13 +34,13 @@ export class LilleDistrictService {
   }
 
   private getDistrictFromName(): LilleDistrictItem[] {
-    return this.lilleDistrictsJson().features.filter((district) => {
+    return this.getDistrictsJson().features.filter((district) => {
       return district.properties.zonage === +this.districtName.match(/\d+/)[0]
     })
   }
 
   @Memoize()
-  private lilleDistrictsJson(): { features: LilleDistrictItem[] } {
+  private getDistrictsJson(): { features: LilleDistrictItem[] } {
     return JSON.parse(
       fs.readFileSync(
         path.join('json-data/quartier_lille_geodata.json'),
@@ -53,7 +53,7 @@ export class LilleDistrictService {
     lat: number,
     lng: number
   ): LilleDistrictItem[] {
-    const district = this.lilleDistrictsJson().features.find((district) =>
+    const district = this.getDistrictsJson().features.find((district) =>
       inside([+lng, +lat], district.geometry.coordinates[0])
     )
     return district ? [district] : []

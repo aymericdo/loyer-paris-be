@@ -18,6 +18,9 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
     case 'plaine_commune':
       geodata = districtList.plaineCommuneGeodata()
       break
+    case 'lyon':
+      geodata = districtList.lyonGeodata()
+      break
   }
 
   res.json([
@@ -31,6 +34,8 @@ export function getDistricts(req: Request, res: Response, next: NextFunction) {
               return `Zone ${data['properties']['zonage']}`
             case 'plaine_commune':
               return `Zone ${data['properties']['Zone']}`
+            case 'lyon':
+              return `Zone ${data['properties']['zonage']}`
           }
         })
         .sort()

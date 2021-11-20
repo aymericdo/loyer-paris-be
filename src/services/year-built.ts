@@ -1,38 +1,50 @@
 import { EmpriseBatie } from '@db/db'
 
 export class YearBuiltService {
-  constructor() {}
+  rangeTime: string[]
+  yearBuilt: number[]
 
-  static getRangeTimeDates(rangeTime: string[], yearBuilt: number[]): string[] {
-    if (!yearBuilt) {
+  constructor(rangeTime: string[], yearBuilt: number[]) {
+    this.rangeTime = rangeTime
+    this.yearBuilt = yearBuilt
+  }
+
+  getRangeTimeDates(): string[] {
+    if (!this.yearBuilt) {
       return null
     }
 
-    const oldestYear: number = 1700
+    const oldestYear: number = 1000
     const currentYear: number = new Date().getFullYear()
 
     const yearBuiltRange: number[] =
-      yearBuilt.length === 2
-        ? yearBuilt[0] === null
+      this.yearBuilt.length === 2
+        ? this.yearBuilt[0] === null
           ? Array.from(
-              { length: yearBuilt[1] - oldestYear + 1 },
+              { length: this.yearBuilt[1] - oldestYear + 1 },
               (v, k) => oldestYear + k
             )
-          : yearBuilt[1] === null
+          : this.yearBuilt[1] === null
           ? Array.from(
-              { length: currentYear - yearBuilt[0] + 1 },
-              (v, k) => yearBuilt[0] + k
+              { length: currentYear - this.yearBuilt[0] + 1 },
+              (v, k) => this.yearBuilt[0] + k
             )
           : Array.from(
-              { length: yearBuilt[1] - yearBuilt[0] + 1 },
-              (v, k) => yearBuilt[0] + k
+              { length: this.yearBuilt[1] - this.yearBuilt[0] + 1 },
+              (v, k) => this.yearBuilt[0] + k
             )
-        : yearBuilt
+        : this.yearBuilt
 
-    return rangeTime.filter((time: string, index: number) => {
+    return this.rangeTime.filter((time: string, index: number) => {
       const rangeYearBuilt: (string | number)[] = time
         .split(/[\s-]+/)
-        .map((year: any) => (isNaN(year) ? (index === 0 ? '<' : '>') : +year))
+        .map((year: any) =>
+          isNaN(year)
+            ? index === 0
+              ? '<'
+              : '>'
+            : this.formatYearDate(year.toString())
+        )
 
       return yearBuiltRange.some((yb: number) => {
         return typeof rangeYearBuilt[0] === 'number'
@@ -100,5 +112,13 @@ export class YearBuiltService {
             +building.properties.c_perconst.slice(-4),
           ])
     return yearBuilt || periodBuilt
+  }
+
+  private formatYearDate(year: string): number {
+    if (year.length === 2) {
+      return +`19${year}`
+    } else {
+      return +year
+    }
   }
 }

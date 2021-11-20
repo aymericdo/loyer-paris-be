@@ -28,6 +28,7 @@ export class SelogerScrapping {
     const price = document.querySelector(
       '[class^=Summarystyled__PriceContainer]'
     )
+
     const cityLabel =
       document.querySelector('#neighborhood-map > p > strong') ||
       document.querySelector(
