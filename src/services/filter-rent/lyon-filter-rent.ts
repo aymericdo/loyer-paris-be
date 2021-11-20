@@ -48,7 +48,7 @@ export class LyonFilterRentService {
       .map((r) => ({
         maxPrice: r.loyer_reference_majore,
         minPrice: r.loyer_reference_minore,
-        districtName: `${r.city} (Zone ${r.zone})`,
+        districtName: `Zone ${r.zone}`,
         isFurnished: !!r.isFurnished.match(/^meubl/g),
         roomCount: number(r.roomCount),
         yearBuilt: r.yearBuilt,
@@ -74,7 +74,6 @@ export class LyonFilterRentService {
   private bigFlatten(list: LyonAddressItem[]): UnitItemComplete[] {
     return list.reduce((prev, val) => {
       const zone = val.properties.zonage
-      const city = val.properties.commune
       Object.keys(val.properties.valeurs).forEach((roomCountItemKey) => {
         const roomCount = roomCountItemKey
         Object.keys(val.properties.valeurs[roomCountItemKey]).forEach(
@@ -84,16 +83,26 @@ export class LyonFilterRentService {
               val.properties.valeurs[roomCountItemKey][yearBuilt]
             ).forEach((isFurnishedItemKey) => {
               const isFurnished = isFurnishedItemKey
-              prev.push({
-                ...val.properties.valeurs[roomCountItemKey][yearBuilt][
-                  isFurnishedItemKey
-                ],
-                zone,
-                roomCount,
-                yearBuilt,
-                isFurnished,
-                city,
-              })
+              if (
+                !prev.some((elem) => {
+                  return (
+                    elem.isFurnished === isFurnished &&
+                    elem.zone === zone &&
+                    elem.roomCount === roomCount &&
+                    elem.yearBuilt === yearBuilt
+                  )
+                })
+              ) {
+                prev.push({
+                  ...val.properties.valeurs[roomCountItemKey][yearBuilt][
+                    isFurnishedItemKey
+                  ],
+                  zone,
+                  roomCount,
+                  yearBuilt,
+                  isFurnished,
+                })
+              }
             })
           }
         )

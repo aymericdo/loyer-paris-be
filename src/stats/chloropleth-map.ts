@@ -55,7 +55,7 @@ export function getChloroplethMap(
           ...data,
           properties: {
             ...data.properties,
-            Zone: `Zone ${data['properties']['zonage']}`,
+            zonage: `Zone ${data['properties']['zonage']}`,
           },
         })),
       }

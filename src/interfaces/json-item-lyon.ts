@@ -55,6 +55,5 @@ export interface UnitItemComplete extends UnitItem {
   zone: string
   roomCount: string
   yearBuilt: string
-  city: string
   isFurnished: string
 }

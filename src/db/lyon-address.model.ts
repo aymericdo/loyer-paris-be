@@ -3,7 +3,8 @@ import mongoose from 'mongoose'
 /*
 Data are from https://adresse.data.gouv.fr/donnees-nationales
 Request to keep only right city data
-=> db.lyonaddresses.deleteMany({ nom_commune: { $ne: 'Lyon' } })
+=> db.lyonaddresses.updateMany({ nom_commune: { $regex: /Lyon (1er|[2-9]e) Arrondissement/ } }, { $set: { nom_commune: 'Lyon' } })
+=> db.lyonaddresses.deleteMany({ nom_commune: { $nin: [ 'Lyon', 'Villeurbanne'] } })
 => db.lyonaddresses.updateMany({}, [{ $set: { geometry: { type: 'Point', coordinates: [{ $toDouble: "$lon" }, { $toDouble: "$lat" }] } } }])
 */
 
