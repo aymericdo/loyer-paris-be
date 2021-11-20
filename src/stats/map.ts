@@ -46,6 +46,20 @@ export function getMap(req: Request, res: Response, next: NextFunction) {
 
       districtField = 'properties.Zone'
       break
+    case 'lyon':
+      geodata = {
+        ...districtList.lyonGeodata(),
+        features: districtList.lyonGeodata().features.map((data) => ({
+          ...data,
+          properties: {
+            ...data.properties,
+            zonage: `Zone ${data['properties']['zonage']}`,
+          },
+        })),
+      }
+
+      districtField = 'properties.zonage'
+      break
   }
 
   rentService

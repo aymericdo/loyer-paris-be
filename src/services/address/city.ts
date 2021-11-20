@@ -113,9 +113,10 @@ export const cityList: CityList = {
       '69007',
       '69008',
       '69009',
+      '69100',
     ],
     postalCodeRegex: [
-      /\b69[0-1][0-9]{2}\b/g,
+      /\b690[0-9]{2}\b/g,
       /((?<=lyon )[0-9]{1})|([0-9]{1} ?(?=er|ème|e|eme))/g,
     ],
   },

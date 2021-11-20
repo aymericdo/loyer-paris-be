@@ -21,6 +21,8 @@ function getCity(city: string) {
           'villetaneuse',
         ],
       }
+    case 'lyon':
+      return { $in: ['lyon', 'villeurbanne'] }
   }
 }
 

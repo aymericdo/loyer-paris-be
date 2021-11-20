@@ -24,10 +24,10 @@ export class PlaineCommuneFilterRentService {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = YearBuiltService.getRangeTimeDates(
+    const timeDates: string[] = new YearBuiltService(
       rangeTime,
       this.infoToFilter.yearBuilt
-    )
+    ).getRangeTimeDates()
 
     const rentList = this.rangeRentsPlaineCommuneJson().filter((rangeRent) => {
       return (

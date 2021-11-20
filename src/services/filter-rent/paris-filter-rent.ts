@@ -24,10 +24,10 @@ export class ParisFilterRentService {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = YearBuiltService.getRangeTimeDates(
+    const timeDates: string[] = new YearBuiltService(
       rangeTime,
       this.infoToFilter.yearBuilt
-    )
+    ).getRangeTimeDates()
 
     let currentYear = +new Date().getFullYear()
 

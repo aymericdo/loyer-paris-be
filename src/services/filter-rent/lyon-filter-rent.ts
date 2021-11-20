@@ -12,8 +12,8 @@ export class LyonFilterRentService {
   }
 
   filter(): FilteredResult[] {
-    // Extract possible range time from rangeRents (json-data/encadrements_plaine-commune.json)
-    const rangeTime = ['avant 1946', '1971-1990', '1946-1970', 'après 1990']
+    // Extract possible range time from rangeRents (json-data/encadrements_lyon.json)
+    const rangeTime = ['avant 1946', '1971-90', '1946-70', 'après 1990']
 
     const districtsMatched = new LyonDistrictService(
       this.infoToFilter.postalCode,
@@ -21,12 +21,10 @@ export class LyonFilterRentService {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = YearBuiltService.getRangeTimeDates(
+    const timeDates: string[] = new YearBuiltService(
       rangeTime,
       this.infoToFilter.yearBuilt
-    )
-
-    console.log(timeDates)
+    ).getRangeTimeDates()
 
     const rentList: UnitItemComplete[] = this.bigFlatten(
       districtsMatched
@@ -40,13 +38,11 @@ export class LyonFilterRentService {
           : true) &&
         (this.infoToFilter.hasFurniture != null
           ? this.infoToFilter.hasFurniture
-            ? rangeRent.roomCount.match(/^meubl/g)
-            : rangeRent.roomCount.match(/^non meubl/g)
+            ? rangeRent.isFurnished.match(/^meubl/g)
+            : rangeRent.isFurnished.match(/^non meubl/g)
           : true)
       )
     })
-
-    console.log(rentList)
 
     return rentList
       .map((r) => ({

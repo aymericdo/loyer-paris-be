@@ -3,6 +3,7 @@ import * as cleanup from '@helpers/cleanup'
 import { AddressItem, Coordinate } from '@interfaces/shared'
 import { Memoize } from 'typescript-memoize'
 import { AddressService } from './address'
+import { cityList } from './city'
 
 export class LyonAddressService extends AddressService {
   getStations(): string[] {
@@ -11,6 +12,17 @@ export class LyonAddressService extends AddressService {
 
   nearestStations(): string[] {
     return []
+  }
+
+  digForPostalCode2(text: string): string {
+    const postalCode2Re =
+      this.city === 'lyon' && new RegExp(cityList[this.city].postalCodeRegex[1])
+    const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
+    return match
+      ? match.trim().length === 1
+        ? `6900${match.trim()}`
+        : `690${match.trim()}`
+      : null
   }
 
   @Memoize()

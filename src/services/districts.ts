@@ -34,4 +34,11 @@ export class DistrictsList {
       )
     )
   }
+
+  @Memoize()
+  lyonGeodata() {
+    return JSON.parse(
+      fs.readFileSync(path.join('json-data/encadrements_lyon.json'), 'utf8')
+    )
+  }
 }
