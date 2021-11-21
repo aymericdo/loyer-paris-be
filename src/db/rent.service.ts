@@ -427,6 +427,7 @@ export async function getRelevantAdsData(
     roomRange: number[]
     hasFurniture: boolean
     isHouse: boolean
+    isLegal: boolean
   },
   paginationOpts?: {
     page: number
@@ -439,7 +440,10 @@ export async function getRelevantAdsData(
   const page = paginationOpts?.page || 0
   const perPage = paginationOpts?.perPage || 20
 
-  const filter = { isLegal: true, createdAt: { $gte: minDate } }
+  const filter = {
+    isLegal: filterParam.isLegal || true,
+    createdAt: { $gte: minDate },
+  }
 
   if (filterParam.city !== 'all') {
     filter['city'] = getCity(filterParam.city)

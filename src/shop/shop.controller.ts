@@ -16,6 +16,7 @@ function getRelevantAds(req: Request, res: Response, next: NextFunction) {
   const surfaceValue: string = (req.query.surfaceValue as string) || null
   const roomValue: string = (req.query.roomValue as string) || null
   const isHouseValue: string = (req.query.isHouseValue as string) || null
+  const isLegalValue: string = (req.query.isLegal as string) || null
 
   const districtList: string[] = districtValues
     ?.split(',')
@@ -30,7 +31,7 @@ function getRelevantAds(req: Request, res: Response, next: NextFunction) {
       : furnishedValue === 'nonFurnished'
       ? false
       : null
-
+  const isLegal: boolean = isLegalValue != 'null' ? +isLegalValue === 1 : null
   const isHouse: boolean = isHouseValue != 'null' ? +isHouseValue === 1 : null
 
   const filter = {
@@ -41,6 +42,7 @@ function getRelevantAds(req: Request, res: Response, next: NextFunction) {
     roomRange,
     hasFurniture,
     isHouse,
+    isLegal,
   }
 
   Promise.all([
