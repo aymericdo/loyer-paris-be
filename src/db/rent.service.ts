@@ -441,7 +441,7 @@ export async function getRelevantAdsData(
   const perPage = paginationOpts?.perPage || 20
 
   const filter = {
-    isLegal: filterParam.isLegal || true,
+    isLegal: filterParam.isLegal,
     createdAt: { $gte: minDate },
   }
 
