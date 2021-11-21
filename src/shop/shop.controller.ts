@@ -32,7 +32,7 @@ function getRelevantAds(req: Request, res: Response, next: NextFunction) {
       ? false
       : null
   const isLegal: boolean =
-    isLegalValue != 'null' ? isLegalValue === 'true' : null
+    isLegalValue != 'null' ? isLegalValue === 'true' : false
   const isHouse: boolean = isHouseValue != 'null' ? +isHouseValue === 1 : null
 
   const filter = {
