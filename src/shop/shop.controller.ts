@@ -31,8 +31,7 @@ function getRelevantAds(req: Request, res: Response, next: NextFunction) {
       : furnishedValue === 'nonFurnished'
       ? false
       : null
-  const isLegal: boolean =
-    isLegalValue != 'null' ? isLegalValue === 'true' : false
+  const isLegal: boolean = isLegalValue != null ? isLegalValue === 'true' : true
   const isHouse: boolean = isHouseValue != 'null' ? +isHouseValue === 1 : null
 
   const filter = {
