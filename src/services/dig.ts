@@ -20,6 +20,7 @@ export class DigService {
   }
 
   async digInAd(): Promise<CleanAd> {
+    console.log(this.ad)
     const cityService = new CityService(this.ad)
     const city: AvailableCities = cityService.findCity()
 

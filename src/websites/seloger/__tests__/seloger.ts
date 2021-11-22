@@ -119,4 +119,61 @@ describe('seloger', () => {
       })
     })
   })
+
+  describe('lyon', () => {
+    test('returns clean ad', async () => {
+      const body: Mapping = {
+        id: '179200117',
+        charges: '145',
+        cityLabel: 'lyon (69009)',
+        description:
+          "224 rue de st cyr a proximite des monts d'or et des commerces. au sein d'une residence calme et securisee. t3 de 82m² au 1er etage avec ascenseur. compose d'un beau sejour de 22m² avec coin salle a manger de 8m² et cuisine separee de 8m². 2 chambres de 13.20 et 9.50m². salle de bains equipee d'un meuble sous evier et seche serviettes chauffant. un garage ferme en sous-sol ainsi qu'une place de parking privative sont compris dans le loyer. chauffage collectif de base puis appoint individuel electrique par radiateurs. logement renove.l'appartement donne sur un beau parc arbore. logement calme et lumineux.proche commoditesdemander plus d'informations a l'agenceafficher plus",
+        furnished: undefined,
+        hasCharges: true,
+        price: '930',
+        renter: 'cdc habitat',
+        rooms: '4',
+        surface: '82',
+        title: 'location appartement',
+        yearBuilt: null,
+        platform: 'chrome',
+        url: 'https://seloger.com/dfdsfs?ad=179200117',
+      }
+
+      const mockResponse: any = {
+        json: jest.fn(),
+        status: jest.fn(),
+      }
+
+      const seloger = new SeLoger(mockResponse, { body })
+
+      const data = await seloger.digData()
+
+      expect(data).toEqual({
+        detectedInfo: {
+          address: { order: 0, value: '224 rue de saint-cyr 69009, Lyon' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 4 },
+          surface: { order: 3, value: 82 },
+          yearBuilt: { order: 4, value: null },
+          isHouse: { order: 5, value: null },
+          price: { order: 6, value: 930 },
+          charges: { order: 7, value: 145 },
+          hasCharges: { order: 8, value: null },
+        },
+        computedInfo: {
+          neighborhood: { order: 0, value: 'Zone 3' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 4 },
+          surface: { order: 3, value: 82 },
+          dateRange: { order: 4, value: 'après 1990' },
+          isHouse: { order: 5 },
+          max: { order: 6, value: null },
+          maxAuthorized: { order: 7, value: null },
+          promoPercentage: { order: 8, value: null },
+        },
+        isLegal: true,
+      })
+    })
+  })
 })

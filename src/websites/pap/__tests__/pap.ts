@@ -179,4 +179,60 @@ describe('pap', () => {
       })
     })
   })
+
+  describe('lyon', () => {
+    test('returns clean ad', async () => {
+      const body: Mapping = {
+        id: 'r440000807',
+        cityLabel: 'lyon 7e (69007)',
+        description:
+          'appartement t3 lumineux de 65 m2 avec 2 chambres, cuisine equipee, balcon et garage. disponible a partir du 05 decembre.\n' +
+          'loyer 770 e/mois + charges de 60 e.',
+        price: '830',
+        rooms: '3',
+        renter: 'Particulier',
+        surface: '65',
+        title:
+          'location appartement 3 pieces 65 m² lyon 7e (69007)\t\t\t\t830 €',
+        stations: [],
+        platform: 'chrome',
+        url: 'https://pap.fr/lkdfsklnf?r421900951',
+      }
+
+      const mockResponse: any = {
+        json: jest.fn(),
+        status: jest.fn(),
+      }
+
+      const pap = new Pap(mockResponse, { body })
+
+      const data = await pap.digData()
+
+      expect(data).toEqual({
+        detectedInfo: {
+          address: { order: 0, value: '69007, Lyon' },
+          hasFurniture: { order: 1, value: null },
+          roomCount: { order: 2, value: 3 },
+          surface: { order: 3, value: 65 },
+          yearBuilt: { order: 4, value: null },
+          isHouse: { order: 5, value: null },
+          price: { order: 6, value: 830 },
+          charges: { order: 7, value: 60 },
+          hasCharges: { order: 8, value: null },
+        },
+        computedInfo: {
+          neighborhood: { order: 0, value: 'Zone 1' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 3 },
+          surface: { order: 3, value: 65 },
+          dateRange: { order: 4, value: 'après 1990' },
+          isHouse: { order: 5 },
+          max: { order: 6, value: null },
+          maxAuthorized: { order: 7, value: null },
+          promoPercentage: { order: 8, value: null },
+        },
+        isLegal: true,
+      })
+    })
+  })
 })
