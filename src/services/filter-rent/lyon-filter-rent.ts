@@ -13,7 +13,7 @@ export class LyonFilterRentService {
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_lyon.json)
-    const rangeTime = ['avant 1946', '1971-90', '1946-70', 'après 1990']
+    const rangeTime = ['avant 1946', '1946-70', '1971-90', 'après 1990']
 
     const districtsMatched = new LyonDistrictService(
       this.infoToFilter.postalCode,
