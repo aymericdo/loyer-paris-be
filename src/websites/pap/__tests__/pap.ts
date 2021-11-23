@@ -179,4 +179,133 @@ describe('pap', () => {
       })
     })
   })
+
+  describe('lyon', () => {
+    test('returns clean ad - villeurbanne', async () => {
+      const body: Mapping = {
+        id: 'r419900511',
+        cityLabel: 'villeurbanne (69100)',
+        description:
+          'joli appartement tres clair rue des charmettes (metro charpennes).\n' +
+          '44 m² traversant 2e etage immeuble ancien sans vis-a-vis.\n' +
+          'peut etre loue meuble pour 2 etudiants ou couple (2 mois de depot de garantie) ou  loue vide (1 mois de depot de garantie).\n' +
+          'entree, cuisine avec alcove, sejour avec alcove, salle de douche, wc independant.\n' +
+          'nombreux placards. interphone et digicode.\n' +
+          '\n' +
+          'loyer 629 €/mois +41 € charges.',
+        price: '670',
+        rooms: '2',
+        renter: 'Particulier',
+        surface: '44',
+        title:
+          'location meublee appartement 2 pieces 44 m² villeurbanne (69100)\t\t\t\t670 €',
+        stations: [],
+        platform: 'chrome',
+        url: 'https://pap.fr/lkdfsklnf?r421900951',
+      }
+
+      const mockResponse: any = {
+        json: jest.fn(),
+        status: jest.fn(),
+      }
+
+      const pap = new Pap(mockResponse, { body })
+
+      const data = await pap.digData()
+
+      expect(data).toEqual({
+        detectedInfo: {
+          address: {
+            order: 0,
+            value: 'rue des charmettes 69100, Villeurbanne',
+          },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 44 },
+          yearBuilt: { order: 4, value: null },
+          isHouse: { order: 5, value: null },
+          price: { order: 6, value: 670 },
+          charges: { order: 7, value: null },
+          hasCharges: { order: 8, value: null },
+        },
+        computedInfo: {
+          neighborhood: { order: 0, value: 'Zone 3' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 44 },
+          dateRange: { order: 4, value: 'après 1990' },
+          isHouse: { order: 5 },
+          max: { order: 6, value: null },
+          maxAuthorized: { order: 7, value: null },
+          promoPercentage: { order: 8, value: null },
+        },
+        isLegal: true,
+      })
+    })
+
+    test('returns clean ad - lyon', async () => {
+      const body: Mapping = {
+        id: 'r195110948',
+        cityLabel: 'lyon 3e (69003)',
+        description:
+          'a 5mn de la gare part-dieu, rue danton.\n' +
+          '\n' +
+          'dans immeuble standing au calme, au 2eme avec ascenseur, beau t3 de 76 m2 traversant bien agence + loggias 13 m2 avec 2 garages + 1 cave.\n' +
+          '\n' +
+          '- sejour ouvrant sur un balcon cote jardin,\n' +
+          '- 2 chambres avec placard,\n' +
+          '- salle de bains et wc separes.\n' +
+          '\n' +
+          'belles prestations, double vitrage, volets electriques, chauffage individuel.\n' +
+          'proximite metro, commerces et ecoles.\n' +
+          '\n' +
+          'libre debut decembre 2021\n' +
+          '\n' +
+          'loyer : 1.110 e/mois + 90 e provision charges.',
+        price: '1200',
+        rooms: '3',
+        renter: 'Particulier',
+        surface: '76',
+        title: 'location appartement 3 pieces 76 m² lyon 3e\t\t\t\t1.200 €',
+        stations: [],
+        platform: 'chrome',
+        url: 'https://pap.fr/lkdfsklnf?r421900951',
+      }
+
+      const mockResponse: any = {
+        json: jest.fn(),
+        status: jest.fn(),
+      }
+
+      const pap = new Pap(mockResponse, { body })
+
+      const data = await pap.digData()
+
+      expect(data).toEqual({
+        detectedInfo: {
+          address: { order: 0, value: 'rue danton 69003, Lyon' },
+          hasFurniture: { order: 1, value: null },
+          roomCount: { order: 2, value: 3 },
+          surface: { order: 3, value: 76 },
+          yearBuilt: { order: 4, value: null },
+          isHouse: { order: 5, value: null },
+          price: { order: 6, value: 1200 },
+          charges: { order: 7, value: null },
+          hasCharges: { order: 8, value: null },
+        },
+        computedInfo: {
+          neighborhood: { order: 0, value: 'Zone 2' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 3 },
+          surface: { order: 3, value: 76 },
+          dateRange: { order: 4, value: 'après 1990' },
+          isHouse: { order: 5 },
+          max: { order: 6, value: 15.5 },
+          maxAuthorized: { order: 7, value: 1178 },
+          promoPercentage: { order: 8, value: 1.83 },
+        },
+        isLegal: false,
+      })
+    })
+  })
 })

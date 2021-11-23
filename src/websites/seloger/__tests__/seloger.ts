@@ -119,4 +119,116 @@ describe('seloger', () => {
       })
     })
   })
+
+  describe('lyon', () => {
+    test('returns clean ad - lyon', async () => {
+      const body: Mapping = {
+        id: '179200117',
+        charges: '145',
+        cityLabel: 'lyon (69009)',
+        description:
+          "224 rue de st cyr a proximite des monts d'or et des commerces. au sein d'une residence calme et securisee. t3 de 82m² au 1er etage avec ascenseur. compose d'un beau sejour de 22m² avec coin salle a manger de 8m² et cuisine separee de 8m². 2 chambres de 13.20 et 9.50m². salle de bains equipee d'un meuble sous evier et seche serviettes chauffant. un garage ferme en sous-sol ainsi qu'une place de parking privative sont compris dans le loyer. chauffage collectif de base puis appoint individuel electrique par radiateurs. logement renove.l'appartement donne sur un beau parc arbore. logement calme et lumineux.proche commoditesdemander plus d'informations a l'agenceafficher plus",
+        furnished: undefined,
+        hasCharges: true,
+        price: '930',
+        renter: 'cdc habitat',
+        rooms: '4',
+        surface: '82',
+        title: 'location appartement',
+        yearBuilt: null,
+        platform: 'chrome',
+        url: 'https://seloger.com/dfdsfs?ad=179200117',
+      }
+
+      const mockResponse: any = {
+        json: jest.fn(),
+        status: jest.fn(),
+      }
+
+      const seloger = new SeLoger(mockResponse, { body })
+
+      const data = await seloger.digData()
+
+      expect(data).toEqual({
+        detectedInfo: {
+          address: { order: 0, value: '224 rue de saint-cyr 69009, Lyon' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 4 },
+          surface: { order: 3, value: 82 },
+          yearBuilt: { order: 4, value: null },
+          isHouse: { order: 5, value: null },
+          price: { order: 6, value: 930 },
+          charges: { order: 7, value: 145 },
+          hasCharges: { order: 8, value: null },
+        },
+        computedInfo: {
+          neighborhood: { order: 0, value: 'Zone 3' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 4 },
+          surface: { order: 3, value: 82 },
+          dateRange: { order: 4, value: 'après 1990' },
+          isHouse: { order: 5 },
+          max: { order: 6, value: null },
+          maxAuthorized: { order: 7, value: null },
+          promoPercentage: { order: 8, value: null },
+        },
+        isLegal: true,
+      })
+    })
+
+    test('returns clean ad - villeurbanne', async () => {
+      const body: Mapping = {
+        id: '179076503',
+        charges: '45',
+        cityLabel: 'villeurbanne (69100)',
+        description:
+          "a louer chez m poquet immobilier. t3 de 64 m2 au coeur du quartier des gratte-ciel a villeurbanne. dans ce bien en etage eleve (6eme etage), vous pourrez profiter d'une belle loggia donnant sur des espaces verts. cet appartement oriente sud offre un grand sejour lumineux. le bien beneficie de nombreux rangements. l'appartement est idealement situe a proximite immediate de toutes commodites : transports (metro a : station gratte-ciel a 3 minutes a pied, bus), commerces.. loyer de 920 eur par mois charges comprises, dont 45 eur par mois de provision pour charges. garage ferme en sous-sol. local a velos. depot de garantie : 875 eur. les honoraires a la charge des locataires sont de 692 eur, dont 192 eur pour l'etat des lieux.demander plus d'informations a l'agenceafficher plus",
+        furnished: undefined,
+        hasCharges: true,
+        price: '920',
+        renter: 'm poquet immobilier',
+        rooms: '3',
+        surface: '64',
+        title: 'location appartement',
+        yearBuilt: null,
+        platform: 'chrome',
+        url: 'https://seloger.com/dfdsfs?ad=179200117',
+      }
+
+      const mockResponse: any = {
+        json: jest.fn(),
+        status: jest.fn(),
+      }
+
+      const seloger = new SeLoger(mockResponse, { body })
+
+      const data = await seloger.digData()
+
+      expect(data).toEqual({
+        detectedInfo: {
+          address: { order: 0, value: '69100, Villeurbanne' },
+          hasFurniture: { order: 1, value: null },
+          roomCount: { order: 2, value: 3 },
+          surface: { order: 3, value: 64 },
+          yearBuilt: { order: 4, value: null },
+          isHouse: { order: 5, value: null },
+          price: { order: 6, value: 920 },
+          charges: { order: 7, value: 45 },
+          hasCharges: { order: 8, value: null },
+        },
+        computedInfo: {
+          neighborhood: { order: 0, value: 'Zone 3' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 3 },
+          surface: { order: 3, value: 64 },
+          dateRange: { order: 4, value: 'après 1990' },
+          isHouse: { order: 5 },
+          max: { order: 6, value: null },
+          maxAuthorized: { order: 7, value: null },
+          promoPercentage: { order: 8, value: null },
+        },
+        isLegal: true,
+      })
+    })
+  })
 })
