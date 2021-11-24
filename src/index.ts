@@ -1,14 +1,14 @@
 import 'module-alias/register'
+import dotenv from 'dotenv'
+dotenv.config()
+
 import express from 'express'
 import { IpFilter } from 'express-ipfilter'
 import cors from 'cors'
-import dotenv from 'dotenv'
 import * as Sentry from '@sentry/node'
 import { CronJobsService } from '@cronjobs/cronjobs'
-new CronJobsService.watch()
 
 const app = express()
-dotenv.config()
 
 app.use(cors())
 app.use(
@@ -63,6 +63,9 @@ app.use('/districts', require('./districts/districts.controller'))
 
 app.use('/version', require('./version/version.controller'))
 // app.use('/migration', require('./db/migration.ts'))
+
+// Watch the cronjobs
+new CronJobsService.watch()
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,

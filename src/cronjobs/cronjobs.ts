@@ -6,7 +6,7 @@ export class CronJobsService {
     // https://crontab.guru/#30_9_*_*_1,3,5
     schedule(
       // '30 9 * * 1,3,5',
-      '*/1 * * * * *',
+      '*/10 * * * * *',
       async () => {
         await new NameAndShameService().send()
       },
