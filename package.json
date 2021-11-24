@@ -14,7 +14,9 @@
     "test:watch": "jest --watch --forceExit",
     "dev": "ts-node-dev --transpile-only ./src/index.ts",
     "prod": "tsc && node ./build/src/index.js",
-    "debug": "tsc && node --inspect ./build/src/index.js"
+    "debug": "tsc && node --inspect ./build/src/index.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "author": "Aymeric & Thomas",
   "license": "ISC",
@@ -59,6 +61,9 @@
     "@types/express-serve-static-core": "^4.17.25",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.7",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0",
     "jest": "^27.3.1",
     "nodemon": "^2.0.15",
     "rimraf": "^3.0.2",

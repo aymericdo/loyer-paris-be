@@ -1,10 +1,10 @@
-import express, { Response, NextFunction, Request } from 'express'
+import express, { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
 const router = express.Router()
 
 router.get('/', getRelevantAds)
-function getRelevantAds(req: Request, res: Response, next: NextFunction) {
+function getRelevantAds(req: Request, res: Response) {
   log.info(`-> ${req.baseUrl} getRelevantAds`, 'blue')
   const page: number = +req.query.page
   const perPage: number = +req.query.perPage
@@ -29,8 +29,8 @@ function getRelevantAds(req: Request, res: Response, next: NextFunction) {
     furnishedValue === 'furnished'
       ? true
       : furnishedValue === 'nonFurnished'
-      ? false
-      : null
+        ? false
+        : null
   const isLegal: boolean = isLegalValue != null ? isLegalValue === 'true' : true
   const isHouse: boolean = isHouseValue != 'null' ? +isHouseValue === 1 : null
 

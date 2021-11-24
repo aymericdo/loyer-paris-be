@@ -5,8 +5,6 @@ import { Memoize } from 'typescript-memoize'
 import { LilleStationItem } from '@interfaces/json-item-lille'
 
 export class LilleStationService {
-  constructor() {}
-
   getStations(words: string[]): LilleStationItem[] {
     const options = {
       keys: ['fields.stop_name'],

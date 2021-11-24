@@ -1,12 +1,12 @@
 import { vegaCommonOpt } from '@helpers/vega'
-import { Response, NextFunction, Request } from 'express'
+import { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
 
 export function getIsLegalVariation(
   req: Request,
   res: Response,
-  next: NextFunction
+  
 ) {
   log.info(`-> ${req.baseUrl} isLegalVariation`, 'blue')
 
@@ -28,15 +28,15 @@ export function getIsLegalVariation(
     furnishedValue === 'furnished'
       ? true
       : furnishedValue === 'nonFurnished'
-      ? false
-      : null
+        ? false
+        : null
 
   const isParticulier =
     isParticulierValue.toLowerCase() === 'true'
       ? true
       : isParticulierValue.toLowerCase() === 'false'
-      ? false
-      : null
+        ? false
+        : null
 
   rentService
     .getLegalVarData(
@@ -72,7 +72,7 @@ export function getIsLegalVariation(
               y: {
                 field: 'percentOfTotal',
                 type: 'quantitative',
-                title: "Pourcentage d'annonces non conformes (rouge)",
+                title: 'Pourcentage d\'annonces non conformes (rouge)',
               },
             },
           },

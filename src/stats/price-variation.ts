@@ -1,12 +1,11 @@
 import { vegaCommonOpt } from '@helpers/vega'
-import { Response, NextFunction, Request } from 'express'
+import { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
 
 export function getPriceVariation(
   req: Request,
   res: Response,
-  next: NextFunction
 ) {
   log.info(`-> ${req.baseUrl} priceVariation`, 'blue')
   const dateValue: string = req.query.dateValue as string

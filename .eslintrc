@@ -1,0 +1,17 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "comma-dangle": ["error", "only-multiline"],
+    "indent": ["error", 2, { "SwitchCase": 1, "ObjectExpression": 1 }],
+    "semi": ["error", "never"],
+    "quotes": ["error", "single"],
+    "@typescript-eslint/no-var-requires": 0
+  }
+}

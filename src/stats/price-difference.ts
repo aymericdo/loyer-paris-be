@@ -1,5 +1,5 @@
 import { vegaCommonOpt } from '@helpers/vega'
-import { Response, NextFunction, Request } from 'express'
+import { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
 import { cityList } from '@services/address/city'
@@ -7,7 +7,7 @@ import { cityList } from '@services/address/city'
 export function getPriceDifference(
   req: Request,
   res: Response,
-  next: NextFunction
+  
 ) {
   log.info(`-> ${req.baseUrl} priceDifference`, 'blue')
   let postalCodePossibilities = []
@@ -73,7 +73,7 @@ export function getPriceDifference(
             title: 'Différence moyenne (€)',
           },
           tooltip: [
-            { field: 'countOfPostalCode', title: "Nombre d'annonces " },
+            { field: 'countOfPostalCode', title: 'Nombre d\'annonces ' },
             {
               aggregate: 'average',
               field: 'priceDifference',

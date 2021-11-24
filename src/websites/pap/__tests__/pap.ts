@@ -13,7 +13,7 @@ describe('pap', () => {
         id: 'r421900951',
         cityLabel: 'paris 11e (75011)',
         description:
-          "16 rue amelot, limite marais, entre cirque d'hiver et bastille.\n" +
+          '16 rue amelot, limite marais, entre cirque d\'hiver et bastille.\n' +
           '\n' +
           'studio non meuble de  21 m2 entierement refait a neuf, clair  : petite entree independante, grand placard/penderie, salle de bains + wc et lavabo, cuisine equipee (branchement machine a laver), sejour avec fenetre.\n' +
           'sur jardin arbore, sans vis-a-vis, 2 ascenseurs. gardien, entree avec bip, interphone. chauffage et eau chaude collectifs.\n' +

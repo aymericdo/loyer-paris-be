@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import * as log from '@helpers/log'
 import {
   LilleAddress,
@@ -12,11 +12,7 @@ import { LilleDistrictService } from '@services/filter-rent/lille-district'
 import { PlaineCommuneDistrictService } from '@services/filter-rent/plaine-commune-district'
 import { LyonDistrictService } from '@services/filter-rent/lyon-district'
 
-export async function getAddresses(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export async function getAddresses(req: Request, res: Response) {
   log.info(`-> ${req.baseUrl} getAddresses`, 'blue')
   const city = req.params.city
   const addressQuery = req.query.q

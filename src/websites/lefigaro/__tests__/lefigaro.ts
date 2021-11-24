@@ -14,7 +14,7 @@ describe('lefigaro', () => {
         charges: '130',
         cityLabel: '\n            à Paris 17ème\n            \n        ',
         description:
-          "rue guttin a louer 1 250euros /mois cc paris 17e, metro wagram ou villiers et gare sncf pont cardinet souplex traversant de 50 m² recemment renove l'appartement: ? sejour 23 m²: canape-lit, grand table avec 4 chaises, tv hd, bureau ? cuisine: 4 plaques de cuisson vitroceramique, refrigerateur, congelateur, mini four, micro-ondes, ? salle de bain: lave-linge, baignoire, lave main, wc ? chauffage et eau chaude collectifs au sous-sol: avec puits de lumiere: ? 12 m² accessible par escalier interieur en chene, placard, parquet au sol l'immeuble: art-deco en pierre de taille, gardien, digicode depot de garantie: 2 240euros part d'honoraires du locataire: 780euros mandat n° 42 passy @immo-global",
+          'rue guttin a louer 1 250euros /mois cc paris 17e, metro wagram ou villiers et gare sncf pont cardinet souplex traversant de 50 m² recemment renove l\'appartement: ? sejour 23 m²: canape-lit, grand table avec 4 chaises, tv hd, bureau ? cuisine: 4 plaques de cuisson vitroceramique, refrigerateur, congelateur, mini four, micro-ondes, ? salle de bain: lave-linge, baignoire, lave main, wc ? chauffage et eau chaude collectifs au sous-sol: avec puits de lumiere: ? 12 m² accessible par escalier interieur en chene, placard, parquet au sol l\'immeuble: art-deco en pierre de taille, gardien, digicode depot de garantie: 2 240euros part d\'honoraires du locataire: 780euros mandat n° 42 passy @immo-global',
         furnished: true,
         hasCharges: true,
         price: '1250',
@@ -84,7 +84,7 @@ describe('lefigaro', () => {
           'loyer : 952€\n' +
           '+ charges 88 € (eau, entretien des communs, electricite des communs, entretien extincteurs et alarmes, et petites reparations)\n' +
           '. happy-immo est un reseau de 80 agents independants presents dans le nord et le pas de calais. pour acheter, vendre, louer ou gerer votre maison, immeuble, appartement, terrain\n' +
-          "camille  delbroeck - 0650920203, rsac n° 802761333, agent commercial chez happy-immo - 1er reseau regional d'agents independants dans le nord et le pas de calais.pour acheter, vendre, louer, gerer vos immeubles, maisons, appartements, terrains et locaux commerciaux, faites appel a un des 80 agents happy-immo.",
+          'camille  delbroeck - 0650920203, rsac n° 802761333, agent commercial chez happy-immo - 1er reseau regional d\'agents independants dans le nord et le pas de calais.pour acheter, vendre, louer, gerer vos immeubles, maisons, appartements, terrains et locaux commerciaux, faites appel a un des 80 agents happy-immo.',
         furnished: null,
         hasCharges: true,
         price: '1040',

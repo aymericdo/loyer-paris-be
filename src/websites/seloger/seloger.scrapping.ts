@@ -81,7 +81,7 @@ export class SelogerScrapping {
     let rooms = null
 
     let chargesArray = chargesElement && chargesElement.innerHTML.split('span')
-    let chargesIndex =
+    const chargesIndex =
       chargesArray &&
       chargesArray.indexOf(
         chargesArray.find((elem) => elem.search('charges') !== -1)
@@ -147,10 +147,10 @@ export class SelogerScrapping {
       renter: isParticulier
         ? particulierToken
         : renter
-        ? renter.textContent.includes('particulier')
-          ? particulierToken
-          : renter.textContent
-        : null,
+          ? renter.textContent.includes('particulier')
+            ? particulierToken
+            : renter.textContent
+          : null,
       rooms: rooms && rooms.textContent,
       surface: surface && surface.textContent,
       yearBuilt: yearBuilt && yearBuilt.textContent,

@@ -3,8 +3,6 @@ import { Memoize } from 'typescript-memoize'
 import * as fs from 'fs'
 
 export class DistrictsList {
-  constructor() {}
-
   @Memoize()
   parisGeodata() {
     return JSON.parse(

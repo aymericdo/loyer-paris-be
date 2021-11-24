@@ -41,17 +41,17 @@ export class PlaineCommuneAddressService extends AddressService {
 
     return result
       ? result.map((r) => ({
-          item: {
-            address: `${r.numero} ${r.nom_voie}`,
-            postalCode: r.code_postal.toString(),
-            coordinate: {
-              lng: +r.geometry.coordinates[0],
-              lat: +r.geometry.coordinates[1],
-            },
+        item: {
+          address: `${r.numero} ${r.nom_voie}`,
+          postalCode: r.code_postal.toString(),
+          coordinate: {
+            lng: +r.geometry.coordinates[0],
+            lat: +r.geometry.coordinates[1],
           },
-          score: r.score,
-          streetNumber: cleanup.streetNumber(query),
-        }))
+        },
+        score: r.score,
+        streetNumber: cleanup.streetNumber(query),
+      }))
       : []
   }
 

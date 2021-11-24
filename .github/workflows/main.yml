@@ -57,8 +57,6 @@ jobs:
         env:
           CI: true
 
-      - name: Prettify code
-        uses: creyD/prettier_action@v4.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          prettier_options: --write **/*.{js,ts}
+      - name: Lint
+        run: |
+          npm run lint

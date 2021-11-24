@@ -147,7 +147,7 @@ export async function getLegalVarData(
   isParticulier: boolean | null
 ): Promise<
   {
-    isLegal: Boolean
+    isLegal: boolean
     createdAt: string
   }[]
 > {
@@ -192,7 +192,7 @@ export async function getLegalVarData(
       createdAt: 1,
       isLegal: 1,
     })) as unknown as {
-      isLegal: Boolean
+      isLegal: boolean
       createdAt: string
     }[]
   } catch (err) {
@@ -392,7 +392,7 @@ export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
 
 export async function getWelcomeData(): Promise<
   { isLegal: boolean; surface: number }[]
-> {
+  > {
   try {
     return (await Rent.find({}, { isLegal: 1, surface: 1 })) as unknown as {
       isLegal: boolean

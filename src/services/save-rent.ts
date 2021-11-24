@@ -68,12 +68,12 @@ export class SaveRentService {
       }),
       ...(this.adToSave.stations != null &&
         this.adToSave.stations.length && {
-          stations: this.adToSave.stations,
-        }),
+        stations: this.adToSave.stations,
+      }),
       ...(this.adToSave.yearBuilt != null &&
         this.adToSave.yearBuilt.length && {
-          yearBuilt: this.adToSave.yearBuilt,
-        }),
+        yearBuilt: this.adToSave.yearBuilt,
+      }),
     })
     log.info('saving ad')
 
