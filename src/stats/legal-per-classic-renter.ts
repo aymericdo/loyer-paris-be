@@ -1,12 +1,12 @@
 import { vegaCommonOpt } from '@helpers/vega'
-import { Response, NextFunction, Request } from 'express'
+import { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
 
 export async function getLegalPerClassicRenter(
   req: Request,
   res: Response,
-  next: NextFunction
+  
 ) {
   log.info(`-> ${req.baseUrl} isLegalPerClassicRenter`, 'blue')
   const dateValue: string = req.query.dateValue as string
@@ -122,7 +122,7 @@ export async function getLegalPerClassicRenter(
           { field: 'renter', title: 'Agence ', type: 'nominal' },
           {
             field: 'numberAds',
-            title: "Nombre total d'annonces ",
+            title: 'Nombre total d\'annonces ',
             type: 'nominal',
           },
         ],

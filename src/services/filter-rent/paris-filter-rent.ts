@@ -40,8 +40,8 @@ export class ParisFilterRentService {
         currentYear === rangeRent.fields.annee &&
         (districtsMatched?.length
           ? districtsMatched
-              .map((district) => district.properties.c_qu)
-              .includes(rangeRent.fields.id_quartier)
+            .map((district) => district.properties.c_qu)
+            .includes(rangeRent.fields.id_quartier)
           : true) &&
         (timeDates?.length
           ? timeDates.includes(rangeRent.fields.epoque)
@@ -79,8 +79,8 @@ export class ParisFilterRentService {
     // Get the worst case scenario
     const worstCase = rentList.length
       ? rentList.reduce((prev, current) =>
-          prev.maxPrice > current.maxPrice ? prev : current
-        )
+        prev.maxPrice > current.maxPrice ? prev : current
+      )
       : null
 
     return worstCase

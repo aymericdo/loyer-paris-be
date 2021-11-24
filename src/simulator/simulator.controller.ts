@@ -1,4 +1,4 @@
-import express, { Response, NextFunction, Request } from 'express'
+import express, { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
 import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
@@ -9,7 +9,7 @@ import { LyonFilterRentService } from '@services/filter-rent/lyon-filter-rent'
 const router = express.Router()
 
 router.get('/:city', getManualResult)
-function getManualResult(req: Request, res: Response, next: NextFunction) {
+function getManualResult(req: Request, res: Response) {
   log.info(`-> ${req.baseUrl} getManualResult`, 'blue')
 
   const city = req.params.city
@@ -31,8 +31,8 @@ function getManualResult(req: Request, res: Response, next: NextFunction) {
     furnishedValue === 'furnished'
       ? true
       : furnishedValue === 'nonFurnished'
-      ? false
-      : null
+        ? false
+        : null
 
   const isHouse: boolean = +isHouseValue === 1
 

@@ -17,7 +17,7 @@ import { getLegalPerClassicRenter } from './legal-per-classic-renter'
 const router = express.Router()
 
 router.get('/need-captcha', getNeedCaptcha)
-function getNeedCaptcha(req: Request, res: Response, next: NextFunction) {
+function getNeedCaptcha(req: Request, res: Response) {
   log.info(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
   const ipService = new IpService(req)
   res.status(200).json(!ipService.isIpCached())

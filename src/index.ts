@@ -59,7 +59,6 @@ app.use('/simulator', require('./simulator/simulator.controller'))
 app.use('/districts', require('./districts/districts.controller'))
 
 app.use('/version', require('./version/version.controller'))
-// app.use('/migration', require('./db/migration.ts'))
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,

@@ -5,7 +5,7 @@ git stash save -q --keep-index $STASH_NAME
 npm run test
 
 # Format code
-prettier --write "**/*.ts"
+npm run lint:fix
 
 STASHES=$(git stash list)
 if [[ $STASHES == "$STASH_NAME" ]]; then

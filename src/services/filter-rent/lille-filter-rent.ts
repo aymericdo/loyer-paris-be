@@ -33,8 +33,8 @@ export class LilleFilterRentService {
       return (
         (districtsMatched?.length
           ? districtsMatched
-              .map((district) => district.properties.zonage)
-              .includes(rangeRent.fields.zone)
+            .map((district) => district.properties.zonage)
+            .includes(rangeRent.fields.zone)
           : true) &&
         (timeDates?.length
           ? timeDates.includes(rangeRent.fields.epoque_construction)
@@ -76,8 +76,8 @@ export class LilleFilterRentService {
     // Get the worst case scenario
     const worstCase = rentList.length
       ? rentList.reduce((prev, current) =>
-          prev.maxPrice > current.maxPrice ? prev : current
-        )
+        prev.maxPrice > current.maxPrice ? prev : current
+      )
       : null
 
     return worstCase

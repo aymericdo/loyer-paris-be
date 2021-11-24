@@ -1,8 +1,8 @@
-import { Response, NextFunction, Request } from 'express'
+import { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import { DistrictsList } from '@services/districts'
 
-export function getDistricts(req: Request, res: Response, next: NextFunction) {
+export function getDistricts(req: Request, res: Response) {
   log.info(`-> ${req.baseUrl} getDistricts`, 'blue')
   const city = req.params.city
   const districtList = new DistrictsList()

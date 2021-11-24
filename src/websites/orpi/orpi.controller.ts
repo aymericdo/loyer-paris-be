@@ -1,12 +1,11 @@
-import express, { Request, Response, NextFunction } from 'express'
+import express, { Request, Response } from 'express'
 import * as log from '@helpers/log'
 import { Orpi } from './orpi'
-import { ErrorCode } from '@services/api-errors'
 const router = express.Router()
 
 // routes
 router.post('/data', getByData)
-function getByData(req: Request, res: Response, next: NextFunction) {
+function getByData(req: Request, res: Response) {
   log.info(
     `-> ${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
@@ -16,7 +15,7 @@ function getByData(req: Request, res: Response, next: NextFunction) {
 }
 
 router.post('/data/v2', getByDataV2)
-function getByDataV2(req: Request, res: Response, next: NextFunction) {
+function getByDataV2(req: Request, res: Response) {
   log.info(
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'

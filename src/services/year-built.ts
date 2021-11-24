@@ -14,22 +14,22 @@ export class YearBuiltService {
       return null
     }
 
-    const oldestYear: number = 1000
+    const oldestYear = 1000
     const currentYear: number = new Date().getFullYear()
 
     const yearBuiltRange: number[] =
       this.yearBuilt.length === 2
         ? this.yearBuilt[0] === null
           ? Array.from(
-              { length: this.yearBuilt[1] - oldestYear + 1 },
-              (v, k) => oldestYear + k
-            )
+            { length: this.yearBuilt[1] - oldestYear + 1 },
+            (v, k) => oldestYear + k
+          )
           : this.yearBuilt[1] === null
-          ? Array.from(
+            ? Array.from(
               { length: currentYear - this.yearBuilt[0] + 1 },
               (v, k) => this.yearBuilt[0] + k
             )
-          : Array.from(
+            : Array.from(
               { length: this.yearBuilt[1] - this.yearBuilt[0] + 1 },
               (v, k) => this.yearBuilt[0] + k
             )
@@ -50,10 +50,10 @@ export class YearBuiltService {
         return typeof rangeYearBuilt[0] === 'number'
           ? rangeYearBuilt[0] < yb && rangeYearBuilt[1] >= yb
           : rangeYearBuilt[0] === '<'
-          ? yb < rangeYearBuilt[1]
-          : rangeYearBuilt[0] === '>'
-          ? yb > rangeYearBuilt[1]
-          : false
+            ? yb < rangeYearBuilt[1]
+            : rangeYearBuilt[0] === '>'
+              ? yb > rangeYearBuilt[1]
+              : false
       })
     })
   }
@@ -106,8 +106,8 @@ export class YearBuiltService {
       (building.properties.c_perconst.toLowerCase().includes('avant')
         ? [null, +building.properties.c_perconst.slice(-4)]
         : building.properties.c_perconst.toLowerCase().includes('après')
-        ? [+building.properties.c_perconst.slice(-4), null]
-        : [
+          ? [+building.properties.c_perconst.slice(-4), null]
+          : [
             +building.properties.c_perconst.slice(0, 4),
             +building.properties.c_perconst.slice(-4),
           ])
