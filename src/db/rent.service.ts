@@ -552,3 +552,36 @@ export async function getAdById(
     }
   }
 }
+
+export async function getShamefulAdsData(
+  city: string
+): Promise<RelevantAdsData[]> {
+  const today = new Date()
+  const minDate = new Date(today.setDate(today.getDate() - 2))
+
+  const filter = {
+    isLegal: false,
+    createdAt: { $gte: minDate },
+    city: getCity(city),
+  }
+
+  try {
+    return (await Rent.find(
+      filter,
+      {
+        id: 1,
+        website: 1,
+        price: 1,
+        url: 1,
+        city: 1,
+      },
+      {
+        sort: { createdAt: -1 },
+      }
+    )) as unknown as RelevantAdsData[]
+  } catch (err) {
+    if (err) {
+      throw err
+    }
+  }
+}
