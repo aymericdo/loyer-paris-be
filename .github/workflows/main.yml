@@ -57,7 +57,7 @@ jobs:
           CI: true
 
       - name: Prettify code
-        uses: creyD/prettier_action@v3.1
+        uses: creyD/prettier_action@v4.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prettier_options: --write **/*.{js,ts}
