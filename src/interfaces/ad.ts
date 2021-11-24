@@ -60,7 +60,7 @@ export interface FilteredResult {
   minPrice: number
   districtName: string
   isFurnished: boolean
-  roomCount: number
+  roomCount: string
   yearBuilt: string
   isHouse?: string
 }

@@ -51,7 +51,7 @@ describe('bienici', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Roquette' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 2 },
+          roomCount: { order: 2, value: '2' },
           surface: { order: 3, value: 33 },
           dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
@@ -108,7 +108,7 @@ describe('bienici', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 1 },
+          roomCount: { order: 2, value: '1' },
           surface: { order: 3, value: 10 },
           dateRange: { order: 4, value: '< 1946' },
           isHouse: { order: 5, value: undefined },

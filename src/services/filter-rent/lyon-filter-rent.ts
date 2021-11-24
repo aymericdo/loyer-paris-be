@@ -50,7 +50,7 @@ export class LyonFilterRentService {
         minPrice: r.loyer_reference_minore,
         districtName: `Zone ${r.zone}`,
         isFurnished: !!r.isFurnished.match(/^meubl/g),
-        roomCount: number(r.roomCount),
+        roomCount: r.roomCount,
         yearBuilt: r.yearBuilt,
       }))
       .sort((a, b) => {

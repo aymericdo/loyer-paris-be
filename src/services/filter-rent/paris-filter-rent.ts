@@ -48,8 +48,8 @@ export class ParisFilterRentService {
           : true) &&
         (this.infoToFilter.roomCount
           ? +this.infoToFilter.roomCount < 5
-            ? rangeRent.fields.piece === +this.infoToFilter.roomCount
-            : rangeRent.fields.piece === 4
+            ? +rangeRent.fields.piece === +this.infoToFilter.roomCount
+            : +rangeRent.fields.piece === 4
           : true) &&
         (this.infoToFilter.hasFurniture != null
           ? this.infoToFilter.hasFurniture
@@ -65,7 +65,7 @@ export class ParisFilterRentService {
         minPrice: +r.fields.min,
         districtName: r.fields.nom_quartier,
         isFurnished: !!r.fields.meuble_txt.match(/^meubl/g),
-        roomCount: r.fields.piece,
+        roomCount: r.fields.piece.toString(),
         yearBuilt: r.fields.epoque,
       }))
       .sort((a, b) => {

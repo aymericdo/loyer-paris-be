@@ -53,7 +53,7 @@ describe('lefigaro', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Plaine de Monceaux' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 2 },
+          roomCount: { order: 2, value: '2' },
           surface: { order: 3, value: 52 },
           dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
@@ -121,7 +121,7 @@ describe('lefigaro', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 3' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 3 },
+          roomCount: { order: 2, value: '3' },
           surface: { order: 3, value: 70 },
           dateRange: { order: 4, value: '> 1990' },
           isHouse: { order: 5, value: undefined },

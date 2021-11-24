@@ -62,7 +62,7 @@ export class LilleFilterRentService {
           : +r.fields.loyer_de_reference_minore_non_meublees,
         districtName: `Zone ${r.fields.zone}`,
         isFurnished,
-        roomCount: number(r.fields.nb_pieces),
+        roomCount: r.fields.nb_pieces,
         yearBuilt: r.fields.epoque_construction,
       }))
       .sort((a, b) => {
