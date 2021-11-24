@@ -62,4 +62,3 @@ jobs:
         with:
           dry: True
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          prettier_options: --check **/*.{js,ts}
