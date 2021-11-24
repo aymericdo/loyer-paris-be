@@ -437,7 +437,7 @@ export async function getRelevantAdsData(
   const page = paginationOpts?.page || 0
   const perPage = paginationOpts?.perPage || 20
 
-  const filter = this.buildFilter(filterParam)
+  const filter = buildFilter(filterParam)
 
   try {
     return (await Rent.find(
