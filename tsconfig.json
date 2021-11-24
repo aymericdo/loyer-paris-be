@@ -4,14 +4,16 @@
     "downlevelIteration": true,
     "module": "commonjs",
     "experimentalDecorators": true,
-    "lib": ["es2019"],
+    "lib": ["es2019", "dom"],
     "baseUrl": "./src",
     "paths": {
       "@services/*": ["services/*"],
       "@helpers/*": ["helpers/*"],
       "@interfaces/*": ["interfaces/*"],
       "@db/*": ["db/*"],
-      "@websites/*": ["websites/*"]
+      "@websites/*": ["websites/*"],
+      "@delation/*": ["delation/*"],
+      "@cronjobs/*": ["cronjobs/*"]
     },
     "allowJs": true,
     "outDir": "./build",

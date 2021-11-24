@@ -4,6 +4,9 @@ import { IpFilter } from 'express-ipfilter'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import * as Sentry from '@sentry/node'
+import { CronJobsService } from '@cronjobs/cronjobs'
+new CronJobsService.watch()
+
 const app = express()
 dotenv.config()
 
