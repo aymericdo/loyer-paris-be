@@ -53,7 +53,7 @@ describe('orpi', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Roquette' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 1 },
+          roomCount: { order: 2, value: '1' },
           surface: { order: 3, value: 30 },
           dateRange: { order: 4, value: '1971-1990' },
           isHouse: { order: 5, value: undefined },
@@ -112,7 +112,7 @@ describe('orpi', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: false },
-          roomCount: { order: 2, value: 2 },
+          roomCount: { order: 2, value: '2' },
           surface: { order: 3, value: 36.81 },
           dateRange: { order: 4, value: '> 1990' },
           isHouse: { order: 5, value: undefined },

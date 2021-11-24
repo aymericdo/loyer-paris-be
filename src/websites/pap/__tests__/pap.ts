@@ -90,7 +90,7 @@ describe('pap', () => {
           },
           roomCount: {
             order: 2,
-            value: 1,
+            value: '1',
           },
           surface: {
             order: 3,
@@ -167,7 +167,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 3 },
+          roomCount: { order: 2, value: '3' },
           surface: { order: 3, value: 53 },
           dateRange: { order: 4, value: '> 1990' },
           isHouse: { order: 5, value: undefined },
@@ -231,7 +231,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 3' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 2 },
+          roomCount: { order: 2, value: '2' },
           surface: { order: 3, value: 44 },
           dateRange: { order: 4, value: 'après 1990' },
           isHouse: { order: 5 },
@@ -296,7 +296,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 2' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 3 },
+          roomCount: { order: 2, value: '3' },
           surface: { order: 3, value: 76 },
           dateRange: { order: 4, value: 'après 1990' },
           isHouse: { order: 5 },

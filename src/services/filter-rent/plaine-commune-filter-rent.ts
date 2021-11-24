@@ -63,7 +63,7 @@ export class PlaineCommuneFilterRentService {
         minPrice: +r['Loyer de référence minoré'].replace(',', '.'),
         districtName: `Zone ${r['Secteur géographique']}`,
         isFurnished: !!r['Type de location'].match(/^meubl/g),
-        roomCount: number(r['Nombre de pièces']),
+        roomCount: r['Nombre de pièces'],
         yearBuilt: r['Epoque de construction'],
         isHouse: r.Type === 'Maison' ? 'Maison' : null,
       }))
