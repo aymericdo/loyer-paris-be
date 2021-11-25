@@ -76,12 +76,12 @@ export abstract class Digger {
         // this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
         return result[0].streetNumber
           ? cleanup
-              .string(result[0].item.address)
-              .replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
+            .string(result[0].item.address)
+            .replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
           : cleanup
-              .string(result[0].item.address)
-              .replace(/^\d+(b|t)?/g, '')
-              .trim()
+            .string(result[0].item.address)
+            .replace(/^\d+(b|t)?/g, '')
+            .trim()
       } else {
         return null
       }
@@ -136,17 +136,17 @@ export class LilleDigger extends Digger {
 
     return result
       ? result.map((r) => ({
-          item: {
-            address: `${r.numero} ${r.nom_voie}`,
-            postalCode: r.code_postal.toString(),
-            coordinate: {
-              lng: +r.geometry.coordinates[0],
-              lat: +r.geometry.coordinates[1],
-            },
+        item: {
+          address: `${r.numero} ${r.nom_voie}`,
+          postalCode: r.code_postal.toString(),
+          coordinate: {
+            lng: +r.geometry.coordinates[0],
+            lat: +r.geometry.coordinates[1],
           },
-          score: r.score,
-          streetNumber: cleanup.streetNumber(query),
-        }))
+        },
+        score: r.score,
+        streetNumber: cleanup.streetNumber(query),
+      }))
       : []
   }
 }
