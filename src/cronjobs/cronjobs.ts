@@ -3,12 +3,15 @@ import { NameAndShameService } from '@delation/name-and-shame'
 
 export class CronJobsService {
   static watch() {
-    // https://crontab.guru/#30_9_*_*_1,3,5
+    // https://crontab.guru/#0_8_*_*_1
     schedule(
-      // '30 9 * * 1,3,5',
-      '*/10 * * * * *',
+      '0 8 * * 1',
       async () => {
-        await new NameAndShameService().send()
+        try {
+          await new NameAndShameService().send()
+        } catch (e) {
+          console.error(e)
+        }
       },
       {
         timezone: 'Europe/Paris',
