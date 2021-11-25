@@ -14,7 +14,7 @@ export class LouerAgile extends Website {
   constructor(
     res: Response,
     props: { body: Mapping; id: string },
-    v2: boolean = false
+    v2 = false
   ) {
     super(res, props, v2)
     this.id = props.id

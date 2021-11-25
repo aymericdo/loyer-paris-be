@@ -152,12 +152,12 @@ export class DigService {
       ? !!this.ad.furnished
       : (furnitureFromDescription && furnitureFromDescription.length > 0) ||
         (furnitureFromTitle && furnitureFromTitle.length > 0)
-      ? true
-      : (nonFurnitureFromDescription &&
+        ? true
+        : (nonFurnitureFromDescription &&
           nonFurnitureFromDescription.length > 0) ||
         (nonFurnitureFromTitle && nonFurnitureFromTitle.length > 0)
-      ? false
-      : null
+          ? false
+          : null
   }
 
   private digForSurface(): number {

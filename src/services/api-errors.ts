@@ -13,7 +13,6 @@ export enum ErrorCode {
 }
 
 export class ApiErrorsService {
-  constructor() {}
 
   static getStatus(err: ApiError): number {
     switch (err.error as ErrorCode) {

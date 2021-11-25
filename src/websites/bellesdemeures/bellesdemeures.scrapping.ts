@@ -38,8 +38,8 @@ export class BellesDemeuresScrapping {
 
     const cityLabel = cityLabelNode?.textContent?.split('•').length
       ? cityLabelNode.textContent.split('•')[
-          cityLabelNode.textContent.split('•').length - 1
-        ]
+        cityLabelNode.textContent.split('•').length - 1
+      ]
       : cityLabelNode?.textContent
 
     let furnished = false

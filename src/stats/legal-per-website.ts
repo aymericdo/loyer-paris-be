@@ -1,12 +1,12 @@
 import { vegaCommonOpt } from '@helpers/vega'
-import { Response, NextFunction, Request } from 'express'
+import { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
 
 export function getLegalPerWebsite(
   req: Request,
   res: Response,
-  next: NextFunction
+  
 ) {
   log.info(`-> ${req.baseUrl} getLegalPerWebsite`, 'blue')
   const dateValue: string = req.query.dateValue as string
@@ -82,7 +82,7 @@ export function getLegalPerWebsite(
             { field: 'website', title: 'Site ', type: 'nominal' },
             {
               field: 'numberAds',
-              title: "Nombre total d'annonces ",
+              title: 'Nombre total d\'annonces ',
               type: 'nominal',
             },
           ],

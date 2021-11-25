@@ -40,7 +40,7 @@ export interface LilleAddressItem {
     address: string
   }
 }
-;` Generated with this request on https://overpass-turbo.eu/
+` Generated with this request on https://overpass-turbo.eu/
 [out:json];
 (
   node["addr:street"]({{geocodeBbox:Lille}});

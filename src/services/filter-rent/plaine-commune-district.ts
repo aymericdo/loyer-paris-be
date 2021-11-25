@@ -54,7 +54,7 @@ export class PlaineCommuneDistrictService {
   @Memoize()
   private getDistrictsJson(): {
     features: PlaineCommuneDistrictItem[]
-  } {
+    } {
     return JSON.parse(
       fs.readFileSync(
         path.join('json-data/quartier_plaine-commune_geodata.json'),

@@ -3,9 +3,9 @@ export function getPriceExcludingCharges(
   charges: number,
   hasCharges: boolean
 ): number {
-  return !!charges
+  return charges
     ? price - charges
     : hasCharges
-    ? price - (10 * price) / 100
-    : price
+      ? price - (10 * price) / 100
+      : price
 }

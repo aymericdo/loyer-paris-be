@@ -5,8 +5,6 @@ import Fuse from 'fuse.js'
 import { Memoize } from 'typescript-memoize'
 
 export class ParisStationService {
-  constructor() {}
-
   getStations(words: string[]): ParisStationItem[] {
     const options = {
       keys: ['tags.name'],

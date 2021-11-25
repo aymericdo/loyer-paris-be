@@ -64,8 +64,8 @@ export class LyonFilterRentService {
     // Get the worst case scenario
     const worstCase = rentList.length
       ? rentList.reduce((prev, current) =>
-          prev.maxPrice > current.maxPrice ? prev : current
-        )
+        prev.maxPrice > current.maxPrice ? prev : current
+      )
       : null
 
     return worstCase

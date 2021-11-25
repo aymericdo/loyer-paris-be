@@ -1,12 +1,12 @@
 import { vegaCommonOpt } from '@helpers/vega'
-import { Response, NextFunction, Request } from 'express'
+import { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
 
 export function getAdoptionRate(
   req: Request,
   res: Response,
-  next: NextFunction
+  
 ) {
   log.info(`-> ${req.baseUrl} adoption`, 'blue')
 
@@ -35,7 +35,7 @@ export function getAdoptionRate(
           },
           y: {
             field: 'cumulative_count',
-            title: "Nombre d'annonces",
+            title: 'Nombre d\'annonces',
             type: 'quantitative',
           },
         },

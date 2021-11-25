@@ -1,10 +1,10 @@
 import { vegaCommonOpt } from '@helpers/vega'
-import { Response, NextFunction, Request } from 'express'
+import { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
 import { DistrictsList } from '@services/districts'
 
-export function getMap(req: Request, res: Response, next: NextFunction) {
+export function getMap(req: Request, res: Response) {
   log.info(`-> ${req.baseUrl} getMap`, 'blue')
   const city = req.params.city
   const dateValue: string = req.query.dateValue as string
@@ -88,7 +88,7 @@ export function getMap(req: Request, res: Response, next: NextFunction) {
               values: data,
             },
             transform: [
-              { calculate: "datum.isLegal ? 'Oui' : 'Non'", as: 'isLegal' },
+              { calculate: 'datum.isLegal ? \'Oui\' : \'Non\'', as: 'isLegal' },
             ],
             encoding: {
               longitude: {

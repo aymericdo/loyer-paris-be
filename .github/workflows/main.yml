@@ -56,7 +56,6 @@ jobs:
         env:
           CI: true
 
-      - name: Prettify code
-        uses: creyD/prettier_action@v3.1
-        with:
-          prettier_options: --write **/*.{js,ts}
+      - name: Lint
+        run: |
+          npm run lint

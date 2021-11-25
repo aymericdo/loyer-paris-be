@@ -23,7 +23,7 @@ export abstract class Website {
   constructor(
     res: Response,
     props: { body: Mapping; id?: string },
-    v2: boolean = false
+    v2 = false
   ) {
     this.res = res
     this.body = props.body

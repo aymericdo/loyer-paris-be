@@ -5,4 +5,3 @@ node_modules/**
 build/**
 .DS_Store
 globalConfig.json
-src/db/migration.ts
