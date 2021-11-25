@@ -55,7 +55,7 @@ export class FnaimScrapping {
     })
 
     if (!isRent) {
-      throw { error: ErrorCode.Other, msg: `not a rent` }
+      throw { error: ErrorCode.Other, msg: 'not a rent' }
     }
 
     features.forEach((feature) => {

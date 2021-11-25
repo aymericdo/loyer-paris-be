@@ -13,7 +13,7 @@ describe('bienici', () => {
         id: 'guy-hoquet-immo-facile-4938963',
         cityLabel: 'paris 11e 75011 (nation - alexandre dumas)',
         description:
-          "descriptif de cet appartement a louer de 2 pieces et 33 m²appartement paris 11 - 2 pieces 33 m2. superbe appartement de 33 m2 meuble, au 3eme etage sans ascenseur d'un immeuble rue voltaire paris 11. il se compose d'une entree, un sejour, une cuisine amenagee equipee, une chambre et une salle d'eau avec wc + cave. l'appartement vient d'etre renove.disponible de suite.lire plus",
+          'descriptif de cet appartement a louer de 2 pieces et 33 m²appartement paris 11 - 2 pieces 33 m2. superbe appartement de 33 m2 meuble, au 3eme etage sans ascenseur d\'un immeuble rue voltaire paris 11. il se compose d\'une entree, un sejour, une cuisine amenagee equipee, une chambre et une salle d\'eau avec wc + cave. l\'appartement vient d\'etre renove.disponible de suite.lire plus',
         furnished: true,
         price: '1250',
         renter: null,
@@ -51,7 +51,7 @@ describe('bienici', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Roquette' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 2 },
+          roomCount: { order: 2, value: '2' },
           surface: { order: 3, value: 33 },
           dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
@@ -70,7 +70,7 @@ describe('bienici', () => {
         id: 'gedeon-22869488',
         cityLabel: 'lille 59000 (bois blanc)',
         description:
-          "descriptif de cet appartement a louer de 1 piece et 10 m²location appartement 10 m² a lille 563 € cc /mois. colocation dans un appartement meuble et entierement renove disponible a partir du 8 juin 2021. situe au dernier etage avec ascenseur. l'appartement est equipe d'une nouvelle cuisine avec plaque induction, four a micro-ondes, four a chaleur tournante et un refrigerateur avec congelateur. egalement equipe d'un lave vaisselle encastrable, d'une machine a laver, d'une nespresso et autres ustensiles propice a une cuisine. le logement est idealement situe a 2 minutes a pied du metro 'bois blanc' ainsi qu'un carrefour express, d'une boulangerie et d'un magasin bio ou pied de l'immeuble : ) les charges comprennent l'eau, le chauffage, edf, internet illimite, netflix, rmc sport… a. p.l accordees. pas de frais d'agence.lire plus",
+          'descriptif de cet appartement a louer de 1 piece et 10 m²location appartement 10 m² a lille 563 € cc /mois. colocation dans un appartement meuble et entierement renove disponible a partir du 8 juin 2021. situe au dernier etage avec ascenseur. l\'appartement est equipe d\'une nouvelle cuisine avec plaque induction, four a micro-ondes, four a chaleur tournante et un refrigerateur avec congelateur. egalement equipe d\'un lave vaisselle encastrable, d\'une machine a laver, d\'une nespresso et autres ustensiles propice a une cuisine. le logement est idealement situe a 2 minutes a pied du metro \'bois blanc\' ainsi qu\'un carrefour express, d\'une boulangerie et d\'un magasin bio ou pied de l\'immeuble : ) les charges comprennent l\'eau, le chauffage, edf, internet illimite, netflix, rmc sport… a. p.l accordees. pas de frais d\'agence.lire plus',
         furnished: true,
         price: '563',
         renter: null,
@@ -108,7 +108,7 @@ describe('bienici', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 1 },
+          roomCount: { order: 2, value: '1' },
           surface: { order: 3, value: 10 },
           dateRange: { order: 4, value: '< 1946' },
           isHouse: { order: 5, value: undefined },

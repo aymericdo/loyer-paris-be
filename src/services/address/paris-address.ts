@@ -60,19 +60,19 @@ export class ParisAddressService extends AddressService {
 
     return result
       ? result.map((r) => ({
-          item: {
-            address: r.fields.l_adr,
-            postalCode: ParisAddressService.postalCodeFormat(
-              r.fields.c_ar.toString()
-            ),
-            coordinate: {
-              lng: r.fields.geom.coordinates[0],
-              lat: r.fields.geom.coordinates[1],
-            },
+        item: {
+          address: r.fields.l_adr,
+          postalCode: ParisAddressService.postalCodeFormat(
+            r.fields.c_ar.toString()
+          ),
+          coordinate: {
+            lng: r.fields.geom.coordinates[0],
+            lat: r.fields.geom.coordinates[1],
           },
-          score: r.score,
-          streetNumber: cleanup.streetNumber(query),
-        }))
+        },
+        score: r.score,
+        streetNumber: cleanup.streetNumber(query),
+      }))
       : []
   }
 

@@ -1,5 +1,5 @@
 import { vegaCommonOpt } from '@helpers/vega'
-import { Response, NextFunction, Request } from 'express'
+import { Response, Request } from 'express'
 import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
 import { DistrictsList } from '@services/districts'
@@ -7,7 +7,7 @@ import { DistrictsList } from '@services/districts'
 export function getChloroplethMap(
   req: Request,
   res: Response,
-  next: NextFunction
+  
 ) {
   log.info(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
   const city = req.params.city
@@ -140,7 +140,7 @@ export function getChloroplethMap(
             {
               field: 'totalCount',
               type: 'quantitative',
-              title: "Nombre d'annonces ",
+              title: 'Nombre d\'annonces ',
             },
           ],
         },

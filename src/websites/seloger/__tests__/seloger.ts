@@ -50,7 +50,7 @@ describe('seloger', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Sainte-Marguerite' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 2 },
+          roomCount: { order: 2, value: '2' },
           surface: { order: 3, value: 40 },
           dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
@@ -70,7 +70,7 @@ describe('seloger', () => {
         cityLabel: 'à Lille (59260)',
         charges: '65',
         description:
-          "Flatlooker vous permet de visiter et louer votre logement 100% en ligne. A côté de l'arrêt Mairie d'Helemmes, Flatlooker vous propose un T2 en location 73 Rue Ferdinand Mathias au deuxième étage, meublé dans une résidence calme et agréable. Appartement entièrement rénové.Votre pièce principale dispose d'un canapé, d'une table basse, d'un grand miroir et d'un placard de rangement. Côté cuisine vous trouverez un évier, des plaques de cuisson, une hotte aspirante, un réfrigérateur, un micro-ondes, de nombreux placards et tiroirs de rangement avec de la vaisselle. Dans votre chambre vous trouverez un lit double avec étagèresDans votre salle d'eau, vous disposerez d'une belle cabine de douche, des toilettes, une vasque avec miroir et des tiroirs de rangements.Belles prestations pour ce T2 en location spacieux, lumineux et calme.Les charges comprennent l'eau courante, l'eau chaude, le chauffage, l'électricité internet et l'entretien des parties communes. Commodités: MÉTRO (LIGNE 1) Arrêts Mairie d'Hellemmes et Square Flandres => 5min à pied Lille Centre et Gares => 5min de métroBus et V Lille à 5 min à pied FACSUniversité Lille 3 => 15min à pied Université Lille 1 => 10min en métro COMPLEXE SPORTIF avec piscine, terrain de tennis etc à 10min à piedCOMMERCESSupermarché à 150m Pharmacies; boulangeries; restaurants; bars au bout de la rueMarché les mercredi et samedi à 5min à piedPARC=> 5min à pied",
+          'Flatlooker vous permet de visiter et louer votre logement 100% en ligne. A côté de l\'arrêt Mairie d\'Helemmes, Flatlooker vous propose un T2 en location 73 Rue Ferdinand Mathias au deuxième étage, meublé dans une résidence calme et agréable. Appartement entièrement rénové.Votre pièce principale dispose d\'un canapé, d\'une table basse, d\'un grand miroir et d\'un placard de rangement. Côté cuisine vous trouverez un évier, des plaques de cuisson, une hotte aspirante, un réfrigérateur, un micro-ondes, de nombreux placards et tiroirs de rangement avec de la vaisselle. Dans votre chambre vous trouverez un lit double avec étagèresDans votre salle d\'eau, vous disposerez d\'une belle cabine de douche, des toilettes, une vasque avec miroir et des tiroirs de rangements.Belles prestations pour ce T2 en location spacieux, lumineux et calme.Les charges comprennent l\'eau courante, l\'eau chaude, le chauffage, l\'électricité internet et l\'entretien des parties communes. Commodités: MÉTRO (LIGNE 1) Arrêts Mairie d\'Hellemmes et Square Flandres => 5min à pied Lille Centre et Gares => 5min de métroBus et V Lille à 5 min à pied FACSUniversité Lille 3 => 15min à pied Université Lille 1 => 10min en métro COMPLEXE SPORTIF avec piscine, terrain de tennis etc à 10min à piedCOMMERCESSupermarché à 150m Pharmacies; boulangeries; restaurants; bars au bout de la rueMarché les mercredi et samedi à 5min à piedPARC=> 5min à pied',
         furnished: true,
         hasCharges: true,
         price: '595 €cc',
@@ -107,7 +107,7 @@ describe('seloger', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 1 },
+          roomCount: { order: 2, value: '1' },
           surface: { order: 3, value: 20 },
           dateRange: { order: 4, value: '< 1946' },
           isHouse: { order: 5, value: undefined },
@@ -127,7 +127,7 @@ describe('seloger', () => {
         charges: '145',
         cityLabel: 'lyon (69009)',
         description:
-          "224 rue de st cyr a proximite des monts d'or et des commerces. au sein d'une residence calme et securisee. t3 de 82m² au 1er etage avec ascenseur. compose d'un beau sejour de 22m² avec coin salle a manger de 8m² et cuisine separee de 8m². 2 chambres de 13.20 et 9.50m². salle de bains equipee d'un meuble sous evier et seche serviettes chauffant. un garage ferme en sous-sol ainsi qu'une place de parking privative sont compris dans le loyer. chauffage collectif de base puis appoint individuel electrique par radiateurs. logement renove.l'appartement donne sur un beau parc arbore. logement calme et lumineux.proche commoditesdemander plus d'informations a l'agenceafficher plus",
+          '224 rue de st cyr a proximite des monts d\'or et des commerces. au sein d\'une residence calme et securisee. t3 de 82m² au 1er etage avec ascenseur. compose d\'un beau sejour de 22m² avec coin salle a manger de 8m² et cuisine separee de 8m². 2 chambres de 13.20 et 9.50m². salle de bains equipee d\'un meuble sous evier et seche serviettes chauffant. un garage ferme en sous-sol ainsi qu\'une place de parking privative sont compris dans le loyer. chauffage collectif de base puis appoint individuel electrique par radiateurs. logement renove.l\'appartement donne sur un beau parc arbore. logement calme et lumineux.proche commoditesdemander plus d\'informations a l\'agenceafficher plus',
         furnished: undefined,
         hasCharges: true,
         price: '930',
@@ -164,7 +164,7 @@ describe('seloger', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 3' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 4 },
+          roomCount: { order: 2, value: '4 et plus' },
           surface: { order: 3, value: 82 },
           dateRange: { order: 4, value: 'après 1990' },
           isHouse: { order: 5 },
@@ -182,7 +182,7 @@ describe('seloger', () => {
         charges: '45',
         cityLabel: 'villeurbanne (69100)',
         description:
-          "a louer chez m poquet immobilier. t3 de 64 m2 au coeur du quartier des gratte-ciel a villeurbanne. dans ce bien en etage eleve (6eme etage), vous pourrez profiter d'une belle loggia donnant sur des espaces verts. cet appartement oriente sud offre un grand sejour lumineux. le bien beneficie de nombreux rangements. l'appartement est idealement situe a proximite immediate de toutes commodites : transports (metro a : station gratte-ciel a 3 minutes a pied, bus), commerces.. loyer de 920 eur par mois charges comprises, dont 45 eur par mois de provision pour charges. garage ferme en sous-sol. local a velos. depot de garantie : 875 eur. les honoraires a la charge des locataires sont de 692 eur, dont 192 eur pour l'etat des lieux.demander plus d'informations a l'agenceafficher plus",
+          'a louer chez m poquet immobilier. t3 de 64 m2 au coeur du quartier des gratte-ciel a villeurbanne. dans ce bien en etage eleve (6eme etage), vous pourrez profiter d\'une belle loggia donnant sur des espaces verts. cet appartement oriente sud offre un grand sejour lumineux. le bien beneficie de nombreux rangements. l\'appartement est idealement situe a proximite immediate de toutes commodites : transports (metro a : station gratte-ciel a 3 minutes a pied, bus), commerces.. loyer de 920 eur par mois charges comprises, dont 45 eur par mois de provision pour charges. garage ferme en sous-sol. local a velos. depot de garantie : 875 eur. les honoraires a la charge des locataires sont de 692 eur, dont 192 eur pour l\'etat des lieux.demander plus d\'informations a l\'agenceafficher plus',
         furnished: undefined,
         hasCharges: true,
         price: '920',
@@ -219,7 +219,7 @@ describe('seloger', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 3' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 3 },
+          roomCount: { order: 2, value: '3' },
           surface: { order: 3, value: 64 },
           dateRange: { order: 4, value: 'après 1990' },
           isHouse: { order: 5 },

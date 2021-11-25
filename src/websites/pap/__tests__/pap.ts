@@ -13,7 +13,7 @@ describe('pap', () => {
         id: 'r421900951',
         cityLabel: 'paris 11e (75011)',
         description:
-          "16 rue amelot, limite marais, entre cirque d'hiver et bastille.\n" +
+          '16 rue amelot, limite marais, entre cirque d\'hiver et bastille.\n' +
           '\n' +
           'studio non meuble de  21 m2 entierement refait a neuf, clair  : petite entree independante, grand placard/penderie, salle de bains + wc et lavabo, cuisine equipee (branchement machine a laver), sejour avec fenetre.\n' +
           'sur jardin arbore, sans vis-a-vis, 2 ascenseurs. gardien, entree avec bip, interphone. chauffage et eau chaude collectifs.\n' +
@@ -90,7 +90,7 @@ describe('pap', () => {
           },
           roomCount: {
             order: 2,
-            value: 1,
+            value: '1',
           },
           surface: {
             order: 3,
@@ -167,7 +167,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 3 },
+          roomCount: { order: 2, value: '3' },
           surface: { order: 3, value: 53 },
           dateRange: { order: 4, value: '> 1990' },
           isHouse: { order: 5, value: undefined },
@@ -231,7 +231,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 3' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 2 },
+          roomCount: { order: 2, value: '2' },
           surface: { order: 3, value: 44 },
           dateRange: { order: 4, value: 'après 1990' },
           isHouse: { order: 5 },
@@ -296,7 +296,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 2' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 3 },
+          roomCount: { order: 2, value: '3' },
           surface: { order: 3, value: 76 },
           dateRange: { order: 4, value: 'après 1990' },
           isHouse: { order: 5 },

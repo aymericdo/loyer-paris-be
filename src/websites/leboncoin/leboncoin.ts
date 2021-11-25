@@ -49,8 +49,8 @@ export class LeBonCoin extends Website {
         ? ad.furnished === 'Meublé'
           ? true
           : ad.furnished === 'Non meublé'
-          ? false
-          : null
+            ? false
+            : null
         : null,
       hasCharges: ad.hasCharges,
       price: cleanup.price(ad.price),

@@ -15,7 +15,7 @@ describe('orpi', () => {
         cityLabel: 'paris 11',
         coord: { lat: 48.85676, lng: 2.387586 },
         description:
-          "paris xi - metro philippe auguste- rue  carriere mainguet. a louer dans le cadre d'un bail  meuble- un studio  de 30 m2 situe au 3eme etage d'un immeuble bien entretenu. il est compose d'un grand sejour avec balcon, d'une cuisine independante amenagee et equipee et d'une salle de bains avec wc .   loyer 800 euros + 54 euros de charges = 854 euros charges comprises. depot de garantie 1600 euros. frais d'agence 450 euros.  dossiers complets souhaites avec  caution solidaire indispensable. contactez gilda par sms  au 06 14 15 13 47 . loyer mensuel 800 euros  - charges locatives 54 euros - location meublee.",
+          'paris xi - metro philippe auguste- rue  carriere mainguet. a louer dans le cadre d\'un bail  meuble- un studio  de 30 m2 situe au 3eme etage d\'un immeuble bien entretenu. il est compose d\'un grand sejour avec balcon, d\'une cuisine independante amenagee et equipee et d\'une salle de bains avec wc .   loyer 800 euros + 54 euros de charges = 854 euros charges comprises. depot de garantie 1600 euros. frais d\'agence 450 euros.  dossiers complets souhaites avec  caution solidaire indispensable. contactez gilda par sms  au 06 14 15 13 47 . loyer mensuel 800 euros  - charges locatives 54 euros - location meublee.',
         hasCharges: true,
         furnished: true,
         price: 854,
@@ -53,7 +53,7 @@ describe('orpi', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Roquette' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 1 },
+          roomCount: { order: 2, value: '1' },
           surface: { order: 3, value: 30 },
           dateRange: { order: 4, value: '1971-1990' },
           isHouse: { order: 5, value: undefined },
@@ -74,7 +74,7 @@ describe('orpi', () => {
         cityLabel: 'lille',
         coord: { lat: 50.636370149041, lng: 3.034930229187 },
         description:
-          "(g) -  t2  meuble dans residence recente a proximite du bois de boulogne  a decouvrir : beau 2 pieces meuble offrant un sejour avec un petit  balcon et une belle cuisine equipee ouverte, une chambre avec un placard, une salle de bains, wc separes et une place de parking.  les plus : localisation, petit exterieur et une place de parking.   loyer mensuel : 574euros  loyer parking : 56euros (indissociable de l'appartement) provision de charges mensuelles : 50euros depot de garantie : deux mois de loyer hors charges  loyer mensuel 630 euros  - charges locatives 50 euros - honoraire ttc a la charge du locataire 478 euros dont 110 euros d'honoraires d'etat des lieux.",
+          '(g) -  t2  meuble dans residence recente a proximite du bois de boulogne  a decouvrir : beau 2 pieces meuble offrant un sejour avec un petit  balcon et une belle cuisine equipee ouverte, une chambre avec un placard, une salle de bains, wc separes et une place de parking.  les plus : localisation, petit exterieur et une place de parking.   loyer mensuel : 574euros  loyer parking : 56euros (indissociable de l\'appartement) provision de charges mensuelles : 50euros depot de garantie : deux mois de loyer hors charges  loyer mensuel 630 euros  - charges locatives 50 euros - honoraire ttc a la charge du locataire 478 euros dont 110 euros d\'honoraires d\'etat des lieux.',
         hasCharges: true,
         furnished: false,
         price: 680,
@@ -112,7 +112,7 @@ describe('orpi', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: false },
-          roomCount: { order: 2, value: 2 },
+          roomCount: { order: 2, value: '2' },
           surface: { order: 3, value: 36.81 },
           dateRange: { order: 4, value: '> 1990' },
           isHouse: { order: 5, value: undefined },

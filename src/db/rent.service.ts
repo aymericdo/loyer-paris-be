@@ -147,7 +147,7 @@ export async function getLegalVarData(
   isParticulier: boolean | null
 ): Promise<
   {
-    isLegal: Boolean
+    isLegal: boolean
     createdAt: string
   }[]
 > {
@@ -192,7 +192,7 @@ export async function getLegalVarData(
       createdAt: 1,
       isLegal: 1,
     })) as unknown as {
-      isLegal: Boolean
+      isLegal: boolean
       createdAt: string
     }[]
   } catch (err) {
@@ -392,7 +392,7 @@ export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
 
 export async function getWelcomeData(): Promise<
   { isLegal: boolean; surface: number }[]
-> {
+  > {
   try {
     return (await Rent.find({}, { isLegal: 1, surface: 1 })) as unknown as {
       isLegal: boolean
@@ -434,53 +434,10 @@ export async function getRelevantAdsData(
     perPage: number
   }
 ): Promise<RelevantAdsData[]> {
-  const today = new Date()
-  const minDate = new Date(today.setDate(today.getDate() - 7))
-
   const page = paginationOpts?.page || 0
   const perPage = paginationOpts?.perPage || 20
 
-  const filter = {
-    isLegal: filterParam.isLegal,
-    createdAt: { $gte: minDate },
-  }
-
-  if (filterParam.city !== 'all') {
-    filter['city'] = getCity(filterParam.city)
-  }
-
-  if (filterParam.districtList?.length) {
-    filter['district'] = { $in: filterParam.districtList }
-  }
-
-  if (filterParam.hasFurniture !== null) {
-    filter['hasFurniture'] = filterParam.hasFurniture
-  }
-
-  if (filterParam.isHouse !== null) {
-    filter['isHouse'] = filterParam.isHouse
-  }
-
-  if (filterParam.surfaceRange?.length) {
-    filter['surface'] = {
-      $gte: filterParam.surfaceRange[0],
-      $lte: filterParam.surfaceRange[1],
-    }
-  }
-
-  if (filterParam.priceRange?.length) {
-    filter['price'] = {
-      $gte: filterParam.priceRange[0],
-      $lte: filterParam.priceRange[1],
-    }
-  }
-
-  if (filterParam.roomRange?.length) {
-    filter['roomCount'] = {
-      $gte: filterParam.roomRange[0],
-      $lte: filterParam.roomRange[1],
-    }
-  }
+  const filter = buildFilter(filterParam)
 
   try {
     return (await Rent.find(
@@ -519,11 +476,26 @@ export async function getRelevantAdsDataTotalCount(filterParam: {
   roomRange: number[]
   hasFurniture: boolean
   isHouse: boolean
+  isLegal: boolean
+}) {
+  const filter = buildFilter(filterParam)
+  return await Rent.countDocuments(filter)
+}
+
+function buildFilter(filterParam: {
+  city: string
+  districtList: string[]
+  surfaceRange: number[]
+  priceRange: number[]
+  roomRange: number[]
+  hasFurniture: boolean
+  isHouse: boolean
+  isLegal: boolean
 }) {
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 7))
 
-  const filter = { isLegal: true, createdAt: { $gte: minDate } }
+  const filter = { isLegal: filterParam.isLegal, createdAt: { $gte: minDate } }
 
   if (filterParam.city !== 'all') {
     filter['city'] = getCity(filterParam.city)
@@ -562,7 +534,7 @@ export async function getRelevantAdsDataTotalCount(filterParam: {
     }
   }
 
-  return await Rent.countDocuments(filter)
+  return filter
 }
 
 export async function getAdById(

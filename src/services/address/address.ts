@@ -41,9 +41,9 @@ export abstract class AddressService {
     const coordinatesFromAd =
       this.ad.coord?.lng && this.ad.coord?.lat
         ? {
-            lng: this.ad.coord.lng,
-            lat: this.ad.coord.lat,
-          }
+          lng: this.ad.coord.lng,
+          lat: this.ad.coord.lat,
+        }
         : null
 
     if (
@@ -156,25 +156,25 @@ export abstract class AddressService {
           return resultInPostalCode
             ? resultInPostalCode.streetNumber
               ? cleanup
-                  .string(resultInPostalCode.address)
-                  .replace(
-                    /^\d+(b|t)?/g,
-                    resultInPostalCode.streetNumber.toString()
-                  )
+                .string(resultInPostalCode.address)
+                .replace(
+                  /^\d+(b|t)?/g,
+                  resultInPostalCode.streetNumber.toString()
+                )
               : cleanup
-                  .string(resultInPostalCode.address)
-                  .replace(/^\d+(b|t)?/g, '')
-                  .trim()
+                .string(resultInPostalCode.address)
+                .replace(/^\d+(b|t)?/g, '')
+                .trim()
             : null
         } else {
           return result[0].streetNumber
             ? cleanup
-                .string(result[0].item.address)
-                .replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
+              .string(result[0].item.address)
+              .replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
             : cleanup
-                .string(result[0].item.address)
-                .replace(/^\d+(b|t)?/g, '')
-                .trim()
+              .string(result[0].item.address)
+              .replace(/^\d+(b|t)?/g, '')
+              .trim()
         }
       } else {
         return null
