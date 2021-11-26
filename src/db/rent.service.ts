@@ -336,7 +336,7 @@ export async function getLegalPerWebsiteData(
     }
   }
   try {
-    return (await Rent.find(filter, { isLegal: 1, website: 1 })) as unknown as {
+    return (await Rent.find(filter, { isLegal: 1, website: 1 }).lean()) as unknown as {
       isLegal: boolean
       website: string
     }[]
