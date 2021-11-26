@@ -23,7 +23,7 @@ export function getLegalPerWebsite(
           text: 'Annonces non conformes par site web',
         },
         data: {
-          values: data,
+          values: data.map((res) => (res.website === 'loueragile' ? { ...res, website: 'jinka' } : res)),
         },
         mark: { type: 'bar', tooltip: true },
         transform: [
