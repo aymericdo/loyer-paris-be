@@ -5,8 +5,7 @@ export class CronJobsService {
   static watch() {
     // https://crontab.guru/#0_8_*_*_1
     schedule(
-      // '0 8 * * 1',
-      '*/10 * * * * *',
+      '0 8 * * 1',
       async () => {
         try {
           await new NameAndShameService().send()
