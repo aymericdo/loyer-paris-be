@@ -556,7 +556,12 @@ export async function getAdById(
 export async function getShamefulAdsData(
   city: string,
   maxDelta = 200,
-): Promise<RelevantAdsData[]> {
+): Promise<{
+  url: string
+  website: string
+  priceExcludingCharges: number
+  maxPrice: number
+}[]> {
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 7))
 
@@ -572,14 +577,19 @@ export async function getShamefulAdsData(
       filter,
       {
         website: 1,
-        price: 1,
+        priceExcludingCharges: 1,
+        maxPrice: 1,
         url: 1,
-        city: 1,
       },
       {
         sort: { createdAt: -1 },
       }
-    )) as unknown as RelevantAdsData[]
+    )) as unknown as {
+      url: string
+      website: string
+      priceExcludingCharges: number
+      maxPrice: number
+    }[]
   } catch (err) {
     if (err) {
       throw err
