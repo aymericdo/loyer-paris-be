@@ -5,7 +5,7 @@ import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
 import { YearBuiltService } from '@services/year-built'
 import { ErrorCode } from './api-errors'
-import { AvailableCities, CityService } from './address/city'
+import { AvailableCities, cityList, CityService } from './address/city'
 import { LilleAddressService } from './address/lille-address'
 import { ParisAddressService } from './address/paris-address'
 import { LyonAddressService } from './address/lyon-address'
@@ -62,28 +62,17 @@ export class DigService {
     city: AvailableCities
   ): Promise<[string, string, string[], Coordinate, Coordinate]> {
     let addressService: AddressService
-    switch (city) {
+    switch (cityList[city].mainCity) {
       case 'paris':
         addressService = new ParisAddressService('paris', this.ad)
         break
       case 'lille':
-      case 'hellemmes':
-      case 'lomme':
         addressService = new LilleAddressService(city, this.ad)
         break
-      case 'aubervilliers':
-      case 'epinay-sur-seine':
-      case 'ile-saint-denis':
-      case 'courneuve':
-      case 'pierrefitte':
-      case 'saint-denis':
-      case 'saint-ouen':
-      case 'stains':
-      case 'villetaneuse':
+      case 'plaineCommune':
         addressService = new PlaineCommuneAddressService(city, this.ad)
         break
       case 'lyon':
-      case 'villeurbanne':
         addressService = new LyonAddressService(city, this.ad)
         break
     }

@@ -13,6 +13,7 @@ import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-com
 import { SaveRentService } from '@services/save-rent'
 import { SerializeRentService } from '@services/serialize-rent'
 import { Response } from 'express'
+import { cityList } from '@services/address/city'
 
 export abstract class Website {
   website: string = null
@@ -54,28 +55,17 @@ export abstract class Website {
 
     const cleanAd: CleanAd = await new DigService(ad).digInAd()
     let filteredResult: FilteredResult = null
-    switch (cleanAd.city) {
+    switch (cityList[cleanAd.city].mainCity) {
       case 'paris':
         filteredResult = new ParisFilterRentService(cleanAd).find()
         break
       case 'lille':
-      case 'hellemmes':
-      case 'lomme':
         filteredResult = new LilleFilterRentService(cleanAd).find()
         break
-      case 'aubervilliers':
-      case 'epinay-sur-seine':
-      case 'ile-saint-denis':
-      case 'courneuve':
-      case 'pierrefitte':
-      case 'saint-denis':
-      case 'saint-ouen':
-      case 'stains':
-      case 'villetaneuse':
+      case 'plaineCommune':
         filteredResult = new PlaineCommuneFilterRentService(cleanAd).find()
         break
       case 'lyon':
-      case 'villeurbanne':
         filteredResult = new LyonFilterRentService(cleanAd).find()
         break
     }
