@@ -59,6 +59,7 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: 0.81 },
         },
         isLegal: false,
+        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712'
       })
     })
   })
@@ -116,6 +117,7 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: 15.47 },
         },
         isLegal: false,
+        moreInfo: 'https://encadrement-loyers.lille.fr/'
       })
     })
   })
@@ -167,12 +169,13 @@ describe('seloger', () => {
           roomCount: { order: 2, value: '4 et plus' },
           surface: { order: 3, value: 82 },
           dateRange: { order: 4, value: 'après 1990' },
-          isHouse: { order: 5 },
+          isHouse: { order: 5, value: undefined },
           max: { order: 6, value: null },
           maxAuthorized: { order: 7, value: null },
           promoPercentage: { order: 8, value: null },
         },
         isLegal: true,
+        moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html'
       })
     })
 
@@ -222,12 +225,13 @@ describe('seloger', () => {
           roomCount: { order: 2, value: '3' },
           surface: { order: 3, value: 64 },
           dateRange: { order: 4, value: 'après 1990' },
-          isHouse: { order: 5 },
+          isHouse: { order: 5, value: undefined },
           max: { order: 6, value: null },
           maxAuthorized: { order: 7, value: null },
           promoPercentage: { order: 8, value: null },
         },
         isLegal: true,
+        moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html'
       })
     })
   })

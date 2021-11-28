@@ -4,6 +4,7 @@ import { Ad } from '@interfaces/ad'
 
 type CityList = {
   [key: string]: {
+    mainCity: 'paris' | 'lille' | 'plaineCommune' | 'lyon'
     postalCodePossibilities: string[]
     postalCodeRegex: RegExp[]
   }
@@ -11,6 +12,7 @@ type CityList = {
 
 export const cityList: CityList = {
   paris: {
+    mainCity: 'paris',
     postalCodePossibilities: [
       '75001',
       '75002',
@@ -40,18 +42,22 @@ export const cityList: CityList = {
     ],
   },
   hellemmes: {
+    mainCity: 'lille',
     postalCodePossibilities: ['59260'],
     postalCodeRegex: [/\b59260\b/g],
   },
   lomme: {
+    mainCity: 'lille',
     postalCodePossibilities: ['59160'],
     postalCodeRegex: [/\b59160\b/g],
   },
   lille: {
+    mainCity: 'lille',
     postalCodePossibilities: ['59000', '59260', '59160', '59800', '59777'],
     postalCodeRegex: [/\b59[0-9]{3}\b/g],
   },
   plaineCommune: {
+    mainCity: 'plaineCommune',
     postalCodePossibilities: [
       '93300',
       '93800',
@@ -67,42 +73,52 @@ export const cityList: CityList = {
     postalCodeRegex: [/\b93[0-9]{3}\b/g],
   },
   aubervilliers: {
+    mainCity: 'plaineCommune',
     postalCodePossibilities: ['93300'],
     postalCodeRegex: [/\b93300\b/g],
   },
   'epinay-sur-seine': {
+    mainCity: 'plaineCommune',
     postalCodePossibilities: ['93800'],
     postalCodeRegex: [/\b93800\b/g],
   },
   'ile-saint-denis': {
+    mainCity: 'plaineCommune',
     postalCodePossibilities: ['93450'],
     postalCodeRegex: [/\b93450\b/g],
   },
   courneuve: {
+    mainCity: 'plaineCommune',
     postalCodePossibilities: ['93120'],
     postalCodeRegex: [/\b93120\b/g],
   },
   pierrefitte: {
+    mainCity: 'plaineCommune',
     postalCodePossibilities: ['93380'],
     postalCodeRegex: [/\b93380\b/g],
   },
   'saint-denis': {
+    mainCity: 'plaineCommune',
     postalCodePossibilities: ['93200', '93210'],
     postalCodeRegex: [/\b(93200|93210)\b/g],
   },
   'saint-ouen': {
+    mainCity: 'plaineCommune',
     postalCodePossibilities: ['93400'],
     postalCodeRegex: [/\b93400\b/g],
   },
   stains: {
+    mainCity: 'plaineCommune',
     postalCodePossibilities: ['93240'],
     postalCodeRegex: [/\b93240\b/g],
   },
   villetaneuse: {
+    mainCity: 'plaineCommune',
     postalCodePossibilities: ['93430'],
     postalCodeRegex: [/\b93430\b/g],
   },
   lyon: {
+    mainCity: 'lyon',
     postalCodePossibilities: [
       '69001',
       '69002',
@@ -121,6 +137,7 @@ export const cityList: CityList = {
     ],
   },
   villeurbanne: {
+    mainCity: 'lyon',
     postalCodePossibilities: ['69100'],
     postalCodeRegex: [/\b69100\b/g],
   },
@@ -158,16 +175,8 @@ export class CityService {
   }
 
   canHaveHouse(): boolean {
-    switch (this.cityInList) {
-      case 'aubervilliers':
-      case 'epinay-sur-seine':
-      case 'ile-saint-denis':
-      case 'courneuve':
-      case 'pierrefitte':
-      case 'saint-denis':
-      case 'saint-ouen':
-      case 'stains':
-      case 'villetaneuse':
+    switch (cityList[this.cityInList].mainCity) {
+      case 'plaineCommune':
         return true
       default:
         return false

@@ -60,6 +60,7 @@ describe('bienici', () => {
           promoPercentage: { order: 8, value: 4.13 },
         },
         isLegal: false,
+        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712'
       })
     })
   })
@@ -117,6 +118,7 @@ describe('bienici', () => {
           promoPercentage: { order: 8, value: 53.33 },
         },
         isLegal: false,
+        moreInfo: 'https://encadrement-loyers.lille.fr/'
       })
     })
   })
