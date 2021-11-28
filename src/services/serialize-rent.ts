@@ -2,7 +2,7 @@ import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
 import { FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
-import { AvailableCities } from '@services/address/city'
+import { AvailableCities, cityList } from '@services/address/city'
 
 interface SerializedInfo {
   address: string
@@ -22,6 +22,12 @@ interface SerializedInfo {
 }
 
 export class SerializeRentService {
+  MORE_INFO = {
+    paris: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
+    lyon: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
+    lille: 'https://encadrement-loyers.lille.fr/',
+    plaineCommune: 'https://plainecommune.fr/encadrementdesloyers/'
+  }
   serializedInfo: SerializedInfo = null
   filteredResult: FilteredResult = null
 
@@ -32,7 +38,7 @@ export class SerializeRentService {
 
   serialize() {
     log.info('serializing answer', 'green')
-
+    
     const {
       address,
       charges,
@@ -96,6 +102,7 @@ export class SerializeRentService {
         },
       },
       isLegal,
+      moreInfo: this.MORE_INFO[cityList[city].mainCity],
     }
   }
 }

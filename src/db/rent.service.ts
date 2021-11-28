@@ -336,7 +336,7 @@ export async function getLegalPerWebsiteData(
     }
   }
   try {
-    return (await Rent.find(filter, { isLegal: 1, website: 1 })) as unknown as {
+    return (await Rent.find(filter, { isLegal: 1, website: 1 }).lean()) as unknown as {
       isLegal: boolean
       website: string
     }[]
@@ -546,6 +546,50 @@ export async function getAdById(
       id,
       website,
     })) as unknown as Promise<DataBaseItem>
+  } catch (err) {
+    if (err) {
+      throw err
+    }
+  }
+}
+
+export async function getShamefulAdsData(
+  city: string,
+  maxDelta = 200,
+): Promise<{
+  url: string
+  website: string
+  priceExcludingCharges: number
+  maxPrice: number
+}[]> {
+  const today = new Date()
+  const minDate = new Date(today.setDate(today.getDate() - 7))
+
+  const filter = {
+    isLegal: false,
+    createdAt: { $gte: minDate },
+    city: getCity(city),
+    $expr: { $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta] }
+  }
+
+  try {
+    return (await Rent.find(
+      filter,
+      {
+        website: 1,
+        priceExcludingCharges: 1,
+        maxPrice: 1,
+        url: 1,
+      },
+      {
+        sort: { createdAt: -1 },
+      }
+    )) as unknown as {
+      url: string
+      website: string
+      priceExcludingCharges: number
+      maxPrice: number
+    }[]
   } catch (err) {
     if (err) {
       throw err
