@@ -16,11 +16,11 @@ export class NameAndShameService {
   v2Client = this.client.v2
 
   async send() {
-    [['paris', '@prefpolice'], ['lille', '@prefet59'], ['lyon', '@prefetrhone']].forEach(async ([city, prefecture]) => {
+    [['paris', 'Paris', '@prefpolice'], ['plaine_commune', 'Plaine Commune', '@prefpolice'], ['lille', 'Lille', '@prefet59'], ['lyon', 'Lyon', '@prefetrhone']].forEach(async ([city, cityValue, prefecture]) => {
       const ads = await rentService.getShamefulAdsData(city, this.MAX_DELTA)
 
       if (ads.length) {
-        let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${ads.length > 1 ? 's' : ''} concernant ${city.charAt(0).toUpperCase() + city.slice(1)} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${this.MAX_DELTA}€ : `
+        let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${ads.length > 1 ? 's' : ''} à ${cityValue} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${this.MAX_DELTA}€ : `
         tweetText += ads.slice(0, 5).map((ad) => ad.url).join('\n')
         tweetText += `\ncc ${prefecture}`
         const { data: createdTweet } = await this.v2Client.tweet(tweetText)
