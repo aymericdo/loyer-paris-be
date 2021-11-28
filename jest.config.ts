@@ -25,6 +25,8 @@ export default async (): Promise<Config.InitialOptions> => {
       '@interfaces/(.*)': '<rootDir>/src/interfaces/$1',
       '@db/(.*)': '<rootDir>/src/db/$1',
       '@websites/(.*)': '<rootDir>/src/websites/$1',
+      '@delation/(.*)': '<rootDir>/src/delation/$1',
+      '@cronjobs/(.*)': '<rootDir>/src/cronjobs/$1',
     },
     transform: tsjPreset.transform,
   }
