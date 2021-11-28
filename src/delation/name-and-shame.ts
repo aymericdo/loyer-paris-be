@@ -20,7 +20,7 @@ export class NameAndShameService {
       const ads = await rentService.getShamefulAdsData(city, this.MAX_DELTA)
 
       if (ads.length) {
-        let tweetText = `Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${ads.length > 1 ? 's' : ''} concernant la ville de ${city.charAt(0).toUpperCase() + city.slice(1)} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${this.MAX_DELTA}€ : `
+        let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${ads.length > 1 ? 's' : ''} concernant ${city.charAt(0).toUpperCase() + city.slice(1)} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${this.MAX_DELTA}€ : `
         tweetText += ads.slice(0, 5).map((ad) => ad.url).join('\n')
         tweetText += `\ncc ${prefecture}`
         const { data: createdTweet } = await this.v2Client.tweet(tweetText)
