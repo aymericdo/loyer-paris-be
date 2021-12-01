@@ -2,12 +2,12 @@ import { particulierToken } from '@helpers/particulier'
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { LeboncoinMapping } from '@interfaces/mapping'
-import { Website } from '../website'
+import { Website, WebsiteType } from '../website'
 import { LeboncoinScrapping } from './leboncoin.scrapping'
 import { ErrorCode } from '@services/api-errors'
 
 export class LeBonCoin extends Website {
-  website = 'leboncoin'
+  website: WebsiteType = 'leboncoin'
 
   async mapping(): Promise<Ad> {
     let ad: LeboncoinMapping = null

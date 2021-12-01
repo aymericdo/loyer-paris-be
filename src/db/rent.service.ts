@@ -1,5 +1,6 @@
 import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
+import { FUNNIEST_WEBSITES } from '@websites/website'
 
 function getCity(city: string) {
   switch (city) {
@@ -35,7 +36,7 @@ export async function getMapData(
   const filter = {
     latitude: { $exists: true },
     longitude: { $exists: true },
-    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+    website: { $nin: FUNNIEST_WEBSITES },
   }
 
   if (city !== 'all') {
@@ -73,7 +74,7 @@ export async function getChloroplethMapData(
   dateRange: string[]
 ): Promise<{ isLegal: boolean; district: string }[]> {
   const filter = {
-    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+    website: { $nin: FUNNIEST_WEBSITES },
   }
 
   if (city !== 'all') {
@@ -106,7 +107,7 @@ export async function getPriceDiffData(
     postalCode: { $exists: true },
     isLegal: false,
     priceExcludingCharges: { $lte: 10000 },
-    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+    website: { $nin: FUNNIEST_WEBSITES },
   }
 
   if (city !== 'all') {
@@ -152,7 +153,7 @@ export async function getLegalVarData(
   }[]
 > {
   const filter = {
-    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+    website: { $nin: FUNNIEST_WEBSITES },
   }
 
   if (city !== 'all') {
@@ -214,7 +215,7 @@ export async function getPriceVarData(
 > {
   const filter = {
     isLegal: false,
-    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+    website: { $nin: FUNNIEST_WEBSITES },
   }
 
   if (city !== 'all') {
@@ -259,7 +260,7 @@ export async function getLegalPerClassicRenterData(
     filter['$or'] = [{ renter: { $regex: renterNameRegex } }, { website }]
   } else {
     filter['renter'] = { $regex: renterNameRegex }
-    filter['website'] = { $nin: ['bellesdemeures', 'luxresidence'] }
+    filter['website'] = { $nin: FUNNIEST_WEBSITES }
   }
 
   if (city !== 'all') {
@@ -291,7 +292,7 @@ export async function getLegalPerRenterData(
   const filter = {
     renter: { $exists: true },
     surface: { $lte: 100 },
-    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+    website: { $nin: FUNNIEST_WEBSITES },
   }
 
   if (city !== 'all') {
@@ -322,7 +323,7 @@ export async function getLegalPerWebsiteData(
 ): Promise<{ isLegal: boolean; website: string }[]> {
   const filter = {
     surface: { $lte: 100 },
-    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+    website: { $nin: FUNNIEST_WEBSITES },
   }
 
   if (city !== 'all') {
@@ -353,7 +354,7 @@ export async function getLegalPerSurfaceData(
 ): Promise<{ isLegal: boolean; surface: number }[]> {
   const filter = {
     surface: { $lte: 100 },
-    website: { $nin: ['bellesdemeures', 'luxresidence'] },
+    website: { $nin: FUNNIEST_WEBSITES },
   }
 
   if (city !== 'all') {
@@ -590,6 +591,38 @@ export async function getShamefulAdsData(
       priceExcludingCharges: number
       maxPrice: number
     }[]
+  } catch (err) {
+    if (err) {
+      throw err
+    }
+  }
+}
+
+export async function getCountByWebsite(): Promise<{
+  [website: string]: number
+}> {
+  const today = new Date()
+  const minDate = new Date(today.setDate(today.getDate() - 1))
+
+  try {
+    return ((await Rent.aggregate([
+      {
+        '$match': { createdAt: { $gte: minDate } }
+      },
+      {
+        '$group': {
+          _id: { website: '$website' },
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ])) as unknown as {
+      _id: { website: string }, count: number
+    }[]).reduce((prev, obj) => {
+      prev[obj._id.website] = obj.count
+      return prev
+    }, {})
   } catch (err) {
     if (err) {
       throw err

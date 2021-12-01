@@ -3,11 +3,11 @@ import { particulierToken } from '@helpers/particulier'
 import { Ad } from '@interfaces/ad'
 import { LocserviceMapping } from '@interfaces/mapping'
 import { ErrorCode } from '@services/api-errors'
-import { Website } from '../website'
+import { Website, WebsiteType } from '../website'
 import { LocserviceScrapping } from './locservice.scrapping'
 
 export class Locservice extends Website {
-  website = 'locservice'
+  website: WebsiteType = 'locservice'
 
   async mapping(): Promise<Ad> {
     let ad: LocserviceMapping = null

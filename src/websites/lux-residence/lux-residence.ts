@@ -1,11 +1,11 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { LuxResidenceMapping } from '@interfaces/mapping'
-import { Website } from '../website'
+import { Website, WebsiteType } from '../website'
 import { LuxResidenceScrapping } from './lux-residence.scrapping'
 import { ErrorCode } from '@services/api-errors'
 export class LuxResidence extends Website {
-  website = 'luxresidence'
+  website: WebsiteType = 'luxresidence'
 
   async mapping(): Promise<Ad> {
     let ad: LuxResidenceMapping = null

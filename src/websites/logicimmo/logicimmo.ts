@@ -3,11 +3,11 @@ import { particulierToken } from '@helpers/particulier'
 import { Ad } from '@interfaces/ad'
 import { LogicimmoMapping } from '@interfaces/mapping'
 import { ErrorCode } from '@services/api-errors'
-import { Website } from '../website'
+import { Website, WebsiteType } from '../website'
 import { LogicimmoScrapping } from './logicimmo.scrapping'
 
 export class LogicImmo extends Website {
-  website = 'logicimmo'
+  website: WebsiteType = 'logicimmo'
 
   async mapping(): Promise<Ad> {
     let ad: LogicimmoMapping = null

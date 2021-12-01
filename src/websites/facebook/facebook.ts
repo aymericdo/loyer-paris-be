@@ -2,11 +2,11 @@ import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { particulierToken } from '@helpers/particulier'
 import { FacebookMapping } from '@interfaces/mapping'
-import { Website } from '../website'
+import { Website, WebsiteType } from '../website'
 import { FacebookScrapping } from './facebook.scrapping'
 import { ErrorCode } from '@services/api-errors'
 export class Facebook extends Website {
-  website = 'facebook'
+  website: WebsiteType = 'facebook'
 
   async mapping(): Promise<Ad> {
     let ad: FacebookMapping = null

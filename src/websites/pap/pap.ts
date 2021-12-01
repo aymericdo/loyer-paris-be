@@ -3,11 +3,11 @@ import { particulierToken } from '@helpers/particulier'
 import { Ad } from '@interfaces/ad'
 import { PapMapping } from '@interfaces/mapping'
 import { ErrorCode } from '@services/api-errors'
-import { Website } from '../website'
+import { Website, WebsiteType } from '../website'
 import { PapScrapping } from './pap.scrapping'
 
 export class Pap extends Website {
-  website = 'pap'
+  website: WebsiteType = 'pap'
 
   async mapping(): Promise<Ad> {
     let ad: PapMapping = null

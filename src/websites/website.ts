@@ -15,8 +15,29 @@ import { SerializeRentService } from '@services/serialize-rent'
 import { Response } from 'express'
 import { cityList } from '@services/address/city'
 
+export const WEBSITE_LIST = [
+  'bellesdemeures', 
+  'bienici', 
+  'facebook', 
+  'fnaim', 
+  'gensdeconfiance', 
+  'leboncoin', 
+  'lefigaro', 
+  'locservice', 
+  'logicimmo', 
+  'loueragile', 
+  'luxresidence', 
+  'orpi', 
+  'pap', 
+  'seloger', 
+  'superimmo'
+] as const
+
+export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']
+export type WebsiteType = typeof WEBSITE_LIST[number];
+
 export abstract class Website {
-  website: string = null
+  website: WebsiteType = null
   body: Mapping = null
   isV2: boolean = null
   res: Response = null

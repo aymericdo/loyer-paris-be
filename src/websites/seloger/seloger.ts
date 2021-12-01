@@ -1,12 +1,12 @@
 import * as cleanup from '@helpers/cleanup'
 import { SelogerMapping } from '@interfaces/mapping'
 import { Ad } from '@interfaces/ad'
-import { Website } from '../website'
+import { Website, WebsiteType } from '../website'
 import { SelogerScrapping } from './seloger.scrapping'
 import { ErrorCode } from '@services/api-errors'
 
 export class SeLoger extends Website {
-  website = 'seloger'
+  website: WebsiteType = 'seloger'
 
   async mapping(): Promise<Ad> {
     let ad: SelogerMapping = null

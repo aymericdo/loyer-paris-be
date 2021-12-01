@@ -1,11 +1,11 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { SuperimmoMapping } from '@interfaces/mapping'
-import { Website } from '../website'
+import { Website, WebsiteType } from '../website'
 import { SuperimmoScrapping } from './superimmo.scrapping'
 import { ErrorCode } from '@services/api-errors'
 export class Superimmo extends Website {
-  website = 'superimmo'
+  website: WebsiteType = 'superimmo'
 
   async mapping(): Promise<Ad> {
     let ad: SuperimmoMapping = null

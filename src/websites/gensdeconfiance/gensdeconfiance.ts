@@ -1,13 +1,13 @@
 import * as cleanup from '@helpers/cleanup'
 import { GensdeconfianceMapping } from '@interfaces/mapping'
 import { Ad } from '@interfaces/ad'
-import { Website } from '../website'
+import { Website, WebsiteType } from '../website'
 import { particulierToken } from '../../helpers/particulier'
 import { GensdeconfianceScrapping } from './gensdeconfiance.scrapping'
 import { ErrorCode } from '@services/api-errors'
 
 export class Gensdeconfiance extends Website {
-  website = 'gensdeconfiance'
+  website: WebsiteType = 'gensdeconfiance'
 
   async mapping(): Promise<Ad> {
     let ad: GensdeconfianceMapping = null

@@ -12,8 +12,8 @@
       "@interfaces/*": ["interfaces/*"],
       "@db/*": ["db/*"],
       "@websites/*": ["websites/*"],
-      "@delation/*": ["delation/*"],
-      "@cronjobs/*": ["cronjobs/*"]
+      "@cronjobs/*": ["cronjobs/*"],
+      "@slack-service/*": ["slack-service/*"]
     },
     "allowJs": true,
     "outDir": "./build",

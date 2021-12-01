@@ -210,11 +210,10 @@ export class DigService {
   }
 
   private digForCharges(): number {
-    return (
-      this.ad.charges ||
-      (this.ad.description?.match(regexString('charges')) &&
-        cleanup.price(this.ad.description.match(regexString('charges'))[0]))
-    )
+    const charges = this.ad.charges ||
+    (this.ad.description?.match(regexString('charges')) &&
+      cleanup.price(this.ad.description.match(regexString('charges'))[0]))
+    return +charges < 300 ? charges : null // to be defensive
   }
 
   private digForHasCharges(): boolean {

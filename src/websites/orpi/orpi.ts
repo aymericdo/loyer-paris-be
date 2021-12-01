@@ -2,11 +2,11 @@ import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { OrpiMapping } from '@interfaces/mapping'
 import { ErrorCode } from '@services/api-errors'
-import { Website } from '../website'
+import { Website, WebsiteType } from '../website'
 import { OrpiScrapping } from './orpi.scrapping'
 
 export class Orpi extends Website {
-  website = 'orpi'
+  website: WebsiteType = 'orpi'
 
   async mapping(): Promise<Ad> {
     let ad: OrpiMapping = null
