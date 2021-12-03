@@ -81,6 +81,8 @@ export abstract class Website {
       )
       const isLegal = priceExcludingCharges <= maxAuthorized
 
+      const url = new URL(this.body.url)
+
       await new SaveRentService({
         id: cleanAd.id,
         address: cleanAd.address,
@@ -101,7 +103,7 @@ export abstract class Website {
         maxPrice: maxAuthorized,
         priceExcludingCharges,
         website: this.website,
-        url: this.body.url,
+        url: `${url.origin}${url.pathname}`,
       }).save()
 
       return new SerializeRentService(
