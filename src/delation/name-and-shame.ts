@@ -21,7 +21,7 @@ export class NameAndShameService {
 
       if (ads.length) {
         let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${ads.length > 1 ? 's' : ''} à ${cityValue} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${this.MAX_DELTA}€ : `
-        tweetText += ads.slice(0, 5).map((ad) => {
+        tweetText += ads.filter((ad) => !!ad.url).slice(0, 5).map((ad) => {
           const url = new URL(ad.url)
           return `${url.origin}${url.pathname}`
         }).join('\n')
