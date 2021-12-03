@@ -34,7 +34,7 @@ export class SelogerScrapping {
       document.querySelector(
         '#root > div > main > div > div > div > p > span[class^=Localisationstyled]'
       ) ||
-      document.querySelector('p > span.Localisationstyled__City-sc-1uveg0i-1')
+      document.querySelector('p > span[class^=Localizationstyled__City]')
     const renter =
       document.querySelector('.agence-title') ||
       document.querySelector('.LightSummary__Title-f6k8ax-2.kqLAJb') ||
