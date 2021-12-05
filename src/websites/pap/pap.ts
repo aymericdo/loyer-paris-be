@@ -2,7 +2,7 @@ import * as cleanup from '@helpers/cleanup'
 import { particulierToken } from '@helpers/particulier'
 import { Ad } from '@interfaces/ad'
 import { PapMapping } from '@interfaces/mapping'
-import { ErrorCode } from '@services/api-errors'
+import { ERROR_CODE } from '@services/api-errors'
 import { Website, WebsiteType } from '../website'
 import { PapScrapping } from './pap.scrapping'
 
@@ -13,7 +13,7 @@ export class Pap extends Website {
     let ad: PapMapping = null
     if (!this.body.id) {
       throw {
-        error: ErrorCode.Minimal,
+        error: ERROR_CODE.Minimal,
         msg: `no more id for ${this.website}/${this.body.platform}`,
       }
     }
@@ -21,7 +21,7 @@ export class Pap extends Website {
     if (this.isV2) {
       if (this.body.noMoreData) {
         throw {
-          error: ErrorCode.Minimal,
+          error: ERROR_CODE.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
         }
       }
@@ -30,7 +30,7 @@ export class Pap extends Website {
 
       if (!scrap) {
         throw {
-          error: ErrorCode.Minimal,
+          error: ERROR_CODE.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
         }
       }
@@ -44,7 +44,7 @@ export class Pap extends Website {
     ad = ad || (this.body as PapMapping)
 
     if (!ad.id) {
-      throw { error: ErrorCode.Other, msg: 'not a rent' }
+      throw { error: ERROR_CODE.Other, msg: 'not a rent' }
     }
 
     return {

@@ -1,7 +1,7 @@
 import * as log from '@helpers/log'
 import { ApiError } from '@interfaces/shared'
 
-export enum ErrorCode {
+export enum ERROR_CODE {
   Other = 'other',
   Minimal = 'minimal',
   Address = 'address',
@@ -15,13 +15,13 @@ export enum ErrorCode {
 export class ApiErrorsService {
 
   static getStatus(err: ApiError): number {
-    switch (err.error as ErrorCode) {
-      case ErrorCode.Minimal:
-      case ErrorCode.Filter:
-      case ErrorCode.Partner:
+    switch (err.error as ERROR_CODE) {
+      case ERROR_CODE.Minimal:
+      case ERROR_CODE.Filter:
+      case ERROR_CODE.Partner:
         log.error(err.msg, 'red')
         break
-      case ErrorCode.City:
+      case ERROR_CODE.City:
         log.light(err.msg)
         break
       default:
@@ -29,16 +29,16 @@ export class ApiErrorsService {
         break
     }
 
-    switch (err.error as ErrorCode) {
-      case ErrorCode.Minimal:
-      case ErrorCode.Address:
-      case ErrorCode.City:
-      case ErrorCode.Price:
-      case ErrorCode.Other:
+    switch (err.error as ERROR_CODE) {
+      case ERROR_CODE.Minimal:
+      case ERROR_CODE.Address:
+      case ERROR_CODE.City:
+      case ERROR_CODE.Price:
+      case ERROR_CODE.Other:
         return 400
-      case ErrorCode.Filter:
+      case ERROR_CODE.Filter:
         return 501
-      case ErrorCode.Partner:
+      case ERROR_CODE.Partner:
         return 503
       default:
         return 500

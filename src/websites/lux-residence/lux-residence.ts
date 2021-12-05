@@ -3,7 +3,7 @@ import { Ad } from '@interfaces/ad'
 import { LuxResidenceMapping } from '@interfaces/mapping'
 import { Website, WebsiteType } from '../website'
 import { LuxResidenceScrapping } from './lux-residence.scrapping'
-import { ErrorCode } from '@services/api-errors'
+import { ERROR_CODE } from '@services/api-errors'
 export class LuxResidence extends Website {
   website: WebsiteType = 'luxresidence'
 
@@ -11,7 +11,7 @@ export class LuxResidence extends Website {
     let ad: LuxResidenceMapping = null
     if (!this.body.id) {
       throw {
-        error: ErrorCode.Minimal,
+        error: ERROR_CODE.Minimal,
         msg: `no more id for ${this.website}/${this.body.platform}`,
       }
     }
@@ -19,7 +19,7 @@ export class LuxResidence extends Website {
     if (this.isV2) {
       if (this.body.noMoreData) {
         throw {
-          error: ErrorCode.Minimal,
+          error: ERROR_CODE.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
         }
       }
@@ -28,7 +28,7 @@ export class LuxResidence extends Website {
 
       if (!scrap) {
         throw {
-          error: ErrorCode.Minimal,
+          error: ERROR_CODE.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
         }
       }

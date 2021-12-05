@@ -4,7 +4,7 @@ import axios from 'axios'
 import { LoueragileMapping, Mapping } from '@interfaces/mapping'
 import { Website, WebsiteType } from '../website'
 import * as log from '@helpers/log'
-import { ErrorCode } from '@services/api-errors'
+import { ERROR_CODE } from '@services/api-errors'
 import { Response } from 'express'
 
 export class LouerAgile extends Website {
@@ -50,7 +50,7 @@ export class LouerAgile extends Website {
 
   private async fetching(): Promise<void> {
     if (!cleanup.number(this.id)) {
-      throw { error: ErrorCode.Minimal, msg: 'jinka id not found' }
+      throw { error: ERROR_CODE.Minimal, msg: 'jinka id not found' }
     }
 
     try {
@@ -62,10 +62,10 @@ export class LouerAgile extends Website {
       this.body = data
 
       if (!this.body) {
-        throw { error: ErrorCode.Minimal, msg: 'no more data' }
+        throw { error: ERROR_CODE.Minimal, msg: 'no more data' }
       }
     } catch (error) {
-      throw { error: ErrorCode.Partner, msg: 'jinka not responding' }
+      throw { error: ERROR_CODE.Partner, msg: 'jinka not responding' }
     }
   }
 }

@@ -4,7 +4,7 @@ import { roundNumber } from '@helpers/round-number'
 import { Ad, CleanAd, FilteredResult } from '@interfaces/ad'
 import { Mapping } from '@interfaces/mapping'
 import { ApiError } from '@interfaces/shared'
-import { ApiErrorsService, ErrorCode } from '@services/api-errors'
+import { ApiErrorsService, ERROR_CODE } from '@services/api-errors'
 import { DigService } from '@services/dig'
 import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
 import { LyonFilterRentService } from '@services/filter-rent/lyon-filter-rent'
@@ -137,7 +137,7 @@ export abstract class Website {
         filteredResult
       ).serialize()
     } else {
-      throw { error: ErrorCode.Filter, msg: 'no match found' }
+      throw { error: ERROR_CODE.Filter, msg: 'no match found' }
     }
   }
 }

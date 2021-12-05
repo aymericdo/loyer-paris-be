@@ -1,5 +1,5 @@
 import * as cleanup from '@helpers/cleanup'
-import { ErrorCode } from '../api-errors'
+import { ERROR_CODE } from '../api-errors'
 import { Ad } from '@interfaces/ad'
 
 type CityList = {
@@ -152,7 +152,7 @@ export class CityService {
     const cityName = cleanup.string(ad.cityLabel)
 
     if (!cityName || !cityName?.length) {
-      throw { error: ErrorCode.Address, msg: 'city not found' }
+      throw { error: ERROR_CODE.Address, msg: 'city not found' }
     }
 
     // TODO : Fuzzy search ?
@@ -162,7 +162,7 @@ export class CityService {
 
     if (!cityInList) {
       throw {
-        error: ErrorCode.City,
+        error: ERROR_CODE.City,
         msg: `[bad location]: city "${cityName}" not found in the list`,
       }
     }

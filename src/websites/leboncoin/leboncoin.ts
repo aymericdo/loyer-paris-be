@@ -4,7 +4,7 @@ import { Ad } from '@interfaces/ad'
 import { LeboncoinMapping } from '@interfaces/mapping'
 import { Website, WebsiteType } from '../website'
 import { LeboncoinScrapping } from './leboncoin.scrapping'
-import { ErrorCode } from '@services/api-errors'
+import { ERROR_CODE } from '@services/api-errors'
 
 export class LeBonCoin extends Website {
   website: WebsiteType = 'leboncoin'
@@ -13,7 +13,7 @@ export class LeBonCoin extends Website {
     let ad: LeboncoinMapping = null
     if (!this.body.id) {
       throw {
-        error: ErrorCode.Minimal,
+        error: ERROR_CODE.Minimal,
         msg: `no more id for ${this.website}/${this.body.platform}`,
       }
     }
@@ -21,7 +21,7 @@ export class LeBonCoin extends Website {
     if (this.isV2) {
       if (this.body.noMoreData) {
         throw {
-          error: ErrorCode.Minimal,
+          error: ERROR_CODE.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
         }
       }
@@ -30,7 +30,7 @@ export class LeBonCoin extends Website {
 
       if (!scrap) {
         throw {
-          error: ErrorCode.Minimal,
+          error: ERROR_CODE.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
         }
       }

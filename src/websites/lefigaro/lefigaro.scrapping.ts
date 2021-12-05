@@ -1,6 +1,6 @@
 import { virtualConsole } from '@helpers/jsdome'
 import { LefigaroMapping } from '@interfaces/mapping'
-import { ErrorCode } from '@services/api-errors'
+import { ERROR_CODE } from '@services/api-errors'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -58,7 +58,7 @@ export class LefigaroScrapping {
     }
 
     if (!title.textContent.includes('Location')) {
-      throw { error: ErrorCode.Other, msg: 'not a rent' }
+      throw { error: ERROR_CODE.Other, msg: 'not a rent' }
     }
 
     return {

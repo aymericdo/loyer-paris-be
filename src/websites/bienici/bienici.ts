@@ -3,7 +3,7 @@ import { Ad } from '@interfaces/ad'
 import { BienIciMapping } from '@interfaces/mapping'
 import { Website, WebsiteType } from '../website'
 import { BienIciScrapping } from './bienici.scrapping'
-import { ErrorCode } from '@services/api-errors'
+import { ERROR_CODE } from '@services/api-errors'
 export class BienIci extends Website {
   website: WebsiteType = 'bienici'
 
@@ -11,7 +11,7 @@ export class BienIci extends Website {
     let ad: BienIciMapping = null
     if (!this.body.id) {
       throw {
-        error: ErrorCode.Minimal,
+        error: ERROR_CODE.Minimal,
         msg: `no more id for ${this.website}/${this.body.platform}`,
       }
     }
@@ -19,7 +19,7 @@ export class BienIci extends Website {
     if (this.isV2) {
       if (this.body.noMoreData) {
         throw {
-          error: ErrorCode.Minimal,
+          error: ERROR_CODE.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
         }
       }
@@ -28,7 +28,7 @@ export class BienIci extends Website {
 
       if (!scrap) {
         throw {
-          error: ErrorCode.Minimal,
+          error: ERROR_CODE.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
         }
       }
