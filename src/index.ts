@@ -63,8 +63,10 @@ app.use('/districts', require('./districts/districts.controller'))
 
 app.use('/version', require('./version/version.controller'))
 
-// Watch the cronjobs
-new CronJobsService.watch()
+if (process.env.CURRENT_ENV === 'prod') {
+  // Watch the cronjobs
+  new CronJobsService.watch()
+}
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
