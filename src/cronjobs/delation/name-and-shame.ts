@@ -20,7 +20,10 @@ export class NameAndShameService {
 
       if (ads.length) {
         let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${ads.length > 1 ? 's' : ''} à ${cityValue} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${MAX_DELTA}€ : `
-        tweetText += ads.slice(0, 4).map((ad) => ad.url).join('\n')
+        tweetText += ads.filter((ad) => !!ad.url).slice(0, 5).map((ad) => {
+          const url = new URL(ad.url)
+          return `${url.origin}${url.pathname}`
+        }).join('\n')
         tweetText += `\ncc ${prefecture}`
         const { data: createdTweet } = await this.v2Client.tweet(tweetText)
         console.log('Tweet', createdTweet.id, ':', createdTweet.text, 'has been sent !')
