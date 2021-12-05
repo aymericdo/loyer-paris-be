@@ -1,6 +1,6 @@
 import { virtualConsole } from '@helpers/jsdome'
 import { FacebookMapping } from '@interfaces/mapping'
-import { ErrorCode } from '@services/api-errors'
+import { ERROR_CODE } from '@services/api-errors'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -23,7 +23,7 @@ export class FacebookScrapping {
       )
 
     if (!sectionTitleElem || sectionTitleElem.textContent !== 'Locations') {
-      throw { error: ErrorCode.Other, msg: 'not a rent' }
+      throw { error: ERROR_CODE.Other, msg: 'not a rent' }
     }
 
     const title = isFacebookSecondAd

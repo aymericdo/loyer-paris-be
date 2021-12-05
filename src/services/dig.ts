@@ -4,7 +4,7 @@ import { stringToNumber } from '@helpers/string-to-number'
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
 import { YearBuiltService } from '@services/year-built'
-import { ErrorCode } from './api-errors'
+import { ERROR_CODE } from './api-errors'
 import { AvailableCities, cityList, CityService } from './address/city'
 import { LilleAddressService } from './address/lille-address'
 import { ParisAddressService } from './address/paris-address'
@@ -85,7 +85,7 @@ export class DigService {
     const blurryCoordinates = addressService.getCoordinate(true)
 
     if (!address && !postalCode && !coordinates) {
-      throw { error: ErrorCode.Address, msg: 'address not found' }
+      throw { error: ERROR_CODE.Address, msg: 'address not found' }
     }
 
     return [address, postalCode, stations, coordinates, blurryCoordinates]
@@ -160,7 +160,7 @@ export class DigService {
         cleanup.number(this.ad.description.match(regexString('surface'))[0]))
 
     if (!surface) {
-      throw { error: ErrorCode.Surface, msg: 'surface not found' }
+      throw { error: ERROR_CODE.Surface, msg: 'surface not found' }
     }
 
     return surface
@@ -168,15 +168,15 @@ export class DigService {
 
   private digForPrice(): number {
     if (!this.ad.price) {
-      throw { error: ErrorCode.Price, msg: 'price not found' }
+      throw { error: ERROR_CODE.Price, msg: 'price not found' }
     } else if (this.ad.price > 30000) {
       throw {
-        error: ErrorCode.Price,
+        error: ERROR_CODE.Price,
         msg: `price "${this.ad.price}" too expensive to be a rent`,
       }
     } else if (this.ad.price < 100) {
       throw {
-        error: ErrorCode.Price,
+        error: ERROR_CODE.Price,
         msg: `price "${this.ad.price}" too cheap to be a rent`,
       }
     }
@@ -210,11 +210,10 @@ export class DigService {
   }
 
   private digForCharges(): number {
-    return (
-      this.ad.charges ||
-      (this.ad.description?.match(regexString('charges')) &&
-        cleanup.price(this.ad.description.match(regexString('charges'))[0]))
-    )
+    const charges = this.ad.charges ||
+    (this.ad.description?.match(regexString('charges')) &&
+      cleanup.price(this.ad.description.match(regexString('charges'))[0]))
+    return +charges < 300 ? charges : null // to be defensive
   }
 
   private digForHasCharges(): boolean {

@@ -1,30 +1,30 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { OrpiMapping } from '@interfaces/mapping'
-import { ErrorCode } from '@services/api-errors'
-import { Website } from '../website'
+import { ERROR_CODE } from '@services/api-errors'
+import { Website, WebsiteType } from '../website'
 import { OrpiScrapping } from './orpi.scrapping'
 
 export class Orpi extends Website {
-  website = 'orpi'
+  website: WebsiteType = 'orpi'
 
   async mapping(): Promise<Ad> {
     let ad: OrpiMapping = null
     if (!this.body.id) {
       throw {
-        error: ErrorCode.Minimal,
+        error: ERROR_CODE.Minimal,
         msg: `no more id for ${this.website}/${this.body.platform}`,
       }
     }
 
     if (this.body.id.match(/photos/g)?.length) {
-      throw { error: ErrorCode.Other, msg: 'not a rent' }
+      throw { error: ERROR_CODE.Other, msg: 'not a rent' }
     }
 
     if (this.isV2) {
       if (this.body.noMoreData) {
         throw {
-          error: ErrorCode.Minimal,
+          error: ERROR_CODE.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
         }
       }
@@ -33,7 +33,7 @@ export class Orpi extends Website {
 
       if (!scrap) {
         throw {
-          error: ErrorCode.Minimal,
+          error: ERROR_CODE.Minimal,
           msg: `no more data for ${this.website}/${this.body.platform}`,
         }
       }
