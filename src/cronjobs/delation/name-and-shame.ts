@@ -14,7 +14,7 @@ export class NameAndShameService {
   v1Client = this.client.v1
   v2Client = this.client.v2
 
-  async send() {
+  async call() {
     [['paris', 'Paris', '@prefpolice'], ['plaine_commune', 'Plaine Commune', '@prefpolice'], ['lille', 'Lille', '@prefet59'], ['lyon', 'Lyon', '@prefetrhone']].forEach(async ([city, cityValue, prefecture]) => {
       const ads = await rentService.getShamefulAdsData(city, MAX_DELTA)
 

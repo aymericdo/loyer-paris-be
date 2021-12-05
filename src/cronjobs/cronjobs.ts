@@ -11,7 +11,7 @@ export class CronJobsService {
       '0 8 * * 5',
       async () => {
         try {
-          await new NameAndShameService().send()
+          await new NameAndShameService().call()
         } catch (e) {
           console.error(e)
         }
@@ -25,7 +25,7 @@ export class CronJobsService {
       '0 20 * * *',
       async () => {
         try {
-          await new HealthCheck().check()
+          await new HealthCheck().call()
         } catch (e) {
           console.error(e)
         }

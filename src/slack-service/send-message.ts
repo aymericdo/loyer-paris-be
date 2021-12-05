@@ -1,20 +1,23 @@
-import { WebClient } from '@slack/web-api'
+import { LogLevel, WebClient } from '@slack/web-api'
 
 export class Slack {
-  web = new WebClient(process.env.SLACK_TOKEN)
+  client = new WebClient(process.env.BOT_USER_OAUTH_TOKEN, {
+    // LogLevel can be imported and used to make debugging simpler
+    logLevel: LogLevel.ERROR
+  })
 
   async sendMessage(channel: string, message: string) {
-    (async () => {
-      try {
-        await this.web.chat.postMessage({
-          channel,
-          text: message,
-        })
-        console.log('Message posted!')
-      } catch (error) {
-        console.log(error)
-      }
+    try {
+      // Call the chat.postMessage method using the WebClient
+      const result = await this.client.chat.postMessage({
+        channel,
+        text: message,
+      })
     
-    })()
+      console.log(result)
+    }
+    catch (error) {
+      console.error(error)
+    }
   }
 }
