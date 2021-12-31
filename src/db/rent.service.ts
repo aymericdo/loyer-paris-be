@@ -568,6 +568,7 @@ export async function getShamefulAdsData(
 
   const filter = {
     isLegal: false,
+    website: { $nin: FUNNIEST_WEBSITES },
     createdAt: { $gte: minDate },
     city: getCity(city),
     $expr: { $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta] }
