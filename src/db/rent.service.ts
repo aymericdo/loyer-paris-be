@@ -391,11 +391,17 @@ export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
   }
 }
 
-export async function getWelcomeData(): Promise<
+export async function getWelcomeData(city: string = null): Promise<
   { isLegal: boolean; surface: number }[]
   > {
+  const filter = {}
+
+  if (city && city !== 'all') {
+    filter['city'] = getCity(city)
+  }
+
   try {
-    return (await Rent.find({}, { isLegal: 1, surface: 1 })) as unknown as {
+    return (await Rent.find(filter, { isLegal: 1, surface: 1 })) as unknown as {
       isLegal: boolean
       surface: number
     }[]

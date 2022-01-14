@@ -67,7 +67,7 @@ router.use('/', function (req: Request, res: Response, next: NextFunction) {
 })
 
 // routes
-router.get('/welcome', getWelcomeText)
+router.get('/welcome/:city', getWelcomeText)
 router.get('/map/:city', getMap)
 router.get('/chloropleth-map/:city', getChloroplethMap)
 router.get('/price-difference/:city', getPriceDifference)
