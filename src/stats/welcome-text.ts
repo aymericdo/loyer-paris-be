@@ -8,9 +8,10 @@ export function getWelcomeText(
   
 ) {
   log.info(`-> ${req.baseUrl} getWelcomeText`, 'blue')
+  const city = req.params.city
 
   rentService
-    .getWelcomeData()
+    .getWelcomeData(city)
     .then((data) => {
       const rents = data
 
