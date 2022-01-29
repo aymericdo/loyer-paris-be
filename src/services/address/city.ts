@@ -1,7 +1,7 @@
 import * as cleanup from '@helpers/cleanup'
 import { ERROR_CODE } from '../api-errors'
 import { Ad } from '@interfaces/ad'
-import { PrettyLog } from '../pretty-log';
+import { PrettyLog } from '../pretty-log'
 
 type CityList = {
   [key: string]: {
