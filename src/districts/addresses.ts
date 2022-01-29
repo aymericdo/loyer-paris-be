@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import {
   LilleAddress,
   LyonAddress,
@@ -13,7 +13,7 @@ import { PlaineCommuneDistrictService } from '@services/filter-rent/plaine-commu
 import { LyonDistrictService } from '@services/filter-rent/lyon-district'
 
 export async function getAddresses(req: Request, res: Response) {
-  log.info(`-> ${req.baseUrl} getAddresses`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
   const city = req.params.city
   const addressQuery = req.query.q
 

@@ -1,7 +1,7 @@
 import { virtualConsole } from '@helpers/jsdome'
 import { GensdeconfianceMapping } from '@interfaces/mapping'
+import { PARTICULIER_TERM } from '@websites/website'
 import jsdom from 'jsdom'
-import { particulierToken } from '../../helpers/particulier'
 const { JSDOM } = jsdom
 
 export class GensdeconfianceScrapping {
@@ -48,7 +48,8 @@ export class GensdeconfianceScrapping {
         +charges.textContent.match(/\d+/)[0] > 0,
       description: description && description.textContent,
       // We don't save the real name of the pro, because we are very kind
-      renter: renter && renter.textContent ? null : particulierToken,
+      // 2022, still agree with me ^
+      renter: renter && renter.textContent ? null : PARTICULIER_TERM,
       price: price && price.textContent,
       surface: surface && surface.textContent,
       title: title && title.textContent,

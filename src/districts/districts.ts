@@ -1,9 +1,9 @@
 import { Response, Request } from 'express'
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import { DistrictsList } from '@services/districts'
 
 export function getDistricts(req: Request, res: Response) {
-  log.info(`-> ${req.baseUrl} getDistricts`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} getDistricts`, 'blue')
   const city = req.params.city
   const districtList = new DistrictsList()
 

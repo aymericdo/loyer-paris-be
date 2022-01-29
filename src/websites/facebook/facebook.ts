@@ -1,8 +1,7 @@
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
-import { particulierToken } from '@helpers/particulier'
 import { FacebookMapping } from '@interfaces/mapping'
-import { Website, WebsiteType } from '../website'
+import { PARTICULIER_TERM, Website, WebsiteType } from '@websites/website'
 import { FacebookScrapping } from './facebook.scrapping'
 import { ERROR_CODE } from '@services/api-errors'
 export class Facebook extends Website {
@@ -48,7 +47,7 @@ export class Facebook extends Website {
       description: cleanup.string(ad.description),
       furnished: ad.furnished,
       price: cleanup.price(ad.price),
-      renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
+      renter: ad.renter ? cleanup.string(ad.renter) : PARTICULIER_TERM,
       rooms: cleanup.number(ad.rooms),
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),

@@ -54,8 +54,7 @@
     "@interfaces": "build/src/interfaces",
     "@db": "build/src/db",
     "@websites": "build/src/websites",
-    "@cronjobs": "build/src/cronjobs",
-    "@slack-service": "build/src/slack-service"
+    "@cronjobs": "build/src/cronjobs"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.3",

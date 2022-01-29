@@ -1,3 +1,5 @@
+import { IncompleteAd } from '@interfaces/ad'
+
 export interface Coordinate {
   lat: number
   lng: number
@@ -6,6 +8,7 @@ export interface Coordinate {
 export interface ApiError {
   error: string
   msg: string
+  incompleteAd?: IncompleteAd
 }
 
 export interface AddressItem {

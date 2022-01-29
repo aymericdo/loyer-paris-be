@@ -64,3 +64,10 @@ export interface FilteredResult {
   yearBuilt: string
   isHouse?: string
 }
+
+export interface IncompleteAd {
+  id: string
+  website: string
+  url: string
+  city?: string
+}

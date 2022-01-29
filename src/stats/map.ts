@@ -1,11 +1,12 @@
-import { vegaCommonOpt } from '@helpers/vega'
+import { Vega } from '@services/vega'
 import { Response, Request } from 'express'
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import * as rentService from '@db/rent.service'
 import { DistrictsList } from '@services/districts'
+import { ERROR500_MSG } from '@services/api-errors'
 
 export function getMap(req: Request, res: Response) {
-  log.info(`-> ${req.baseUrl} getMap`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} getMap`, 'blue')
   const city = req.params.city
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')
@@ -66,7 +67,7 @@ export function getMap(req: Request, res: Response) {
     .getMapData(city, dateRange)
     .then((data) => {
       const vegaMap = {
-        ...vegaCommonOpt(),
+        ...Vega.commonOpt(),
         layer: [
           {
             data: {
@@ -123,7 +124,7 @@ export function getMap(req: Request, res: Response) {
       if (err.status) {
         res.status(err.status).json(err)
       } else {
-        log.error('Error 500')
+        PrettyLog.call(ERROR500_MSG, 'red')
         res.status(500).json(err)
       }
     })

@@ -1,5 +1,5 @@
 import { Rent } from '@db/db'
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import { AvailableCities } from '@services/address/city'
 
 interface SavedInfo {
@@ -75,14 +75,14 @@ export class SaveRentService {
         yearBuilt: this.adToSave.yearBuilt,
       }),
     })
-    log.info('saving ad')
+    PrettyLog.call('saving ad')
 
     try {
       await rent.save()
-      log.info('ad saved', 'green')
+      PrettyLog.call('ad saved', 'green')
     } catch (err) {
       if (err.code === 11000) {
-        log.info('⚠️  ad already saved', 'red')
+        PrettyLog.call('⚠️  ad already saved', 'red')
       } else {
         console.log(err)
       }

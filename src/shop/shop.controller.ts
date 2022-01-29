@@ -1,11 +1,12 @@
 import express, { Response, Request } from 'express'
-import * as log from '@helpers/log'
 import * as rentService from '@db/rent.service'
+import { PrettyLog } from '@services/pretty-log'
+import { ERROR500_MSG } from '@services/api-errors'
 const router = express.Router()
 
 router.get('/', getRelevantAds)
 function getRelevantAds(req: Request, res: Response) {
-  log.info(`-> ${req.baseUrl} getRelevantAds`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} getRelevantAds`, 'blue')
   const page: number = +req.query.page
   const perPage: number = +req.query.perPage
 
@@ -61,7 +62,7 @@ function getRelevantAds(req: Request, res: Response) {
       if (err.status) {
         res.status(err.status).json(err)
       } else {
-        log.error('Error 500')
+        PrettyLog.call(ERROR500_MSG, 'red')
         res.status(500).json(err)
       }
     })

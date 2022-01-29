@@ -3,7 +3,7 @@ import { Ad } from '@interfaces/ad'
 import axios from 'axios'
 import { LoueragileMapping, Mapping } from '@interfaces/mapping'
 import { Website, WebsiteType } from '../website'
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import { ERROR_CODE } from '@services/api-errors'
 import { Response } from 'express'
 
@@ -57,7 +57,7 @@ export class LouerAgile extends Website {
       const response = await axios.get(
         `https://api.jinka.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${this.id}`
       )
-      log.info('jinka fetched')
+      PrettyLog.call('jinka fetched')
       const data = response.data
       this.body = data
 

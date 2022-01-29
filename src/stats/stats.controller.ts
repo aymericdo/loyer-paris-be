@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express'
 import axios from 'axios'
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import { IpService } from '@services/ip'
 import { getMap } from './map'
 import { getChloroplethMap } from './chloropleth-map'
@@ -18,7 +18,7 @@ const router = express.Router()
 
 router.get('/need-captcha', getNeedCaptcha)
 function getNeedCaptcha(req: Request, res: Response) {
-  log.info(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
   const ipService = new IpService(req)
   res.status(200).json(!ipService.isIpCached())
 }
