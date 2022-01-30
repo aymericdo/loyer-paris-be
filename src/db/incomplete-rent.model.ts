@@ -5,6 +5,8 @@ const schema = new Schema({
   id: { type: String, required: true },
   website: { type: String, required: true },
   url: { type: String, required: true },
+  errorType: { type: String, required: true },
+  errorMessage: { type: String, required: true },
   city: { type: String, required: false },
   createdAt: { type: Date, default: Date.now },
 })

@@ -37,16 +37,11 @@ export class ApiErrorsService {
           break
         case ERROR_CODE.Minimal:
         case ERROR_CODE.Other:
-          new SentryService().warning(this.error.msg)
-          PrettyLog.call(this.error.msg, 'yellow')
-          break
         case ERROR_CODE.Address:
         case ERROR_CODE.Price:
         case ERROR_CODE.Surface:
-          // incomplete ad
           new SentryService().warning(this.error.msg)
           PrettyLog.call(this.error.msg, 'yellow')
-          this.saveIncompleteRent()
           break
         default: {
           const errorMsg = this.error.msg || ERROR500_MSG
@@ -55,7 +50,12 @@ export class ApiErrorsService {
           break
         }
       }
+      
+      if (this.error?.isIncompleteAd) {
+        this.saveIncompleteRent()
+      }
     }
+
 
     switch (this.error?.error as ERROR_CODE) {
       case ERROR_CODE.Minimal:
@@ -82,6 +82,8 @@ export class ApiErrorsService {
       id: ad.id,
       url: ad.url,
       website: ad.website,
+      errorType: this.error.error,
+      errorMessage: this.error.msg,
       ...(ad.city != null && { city: ad.city }),
     })
 

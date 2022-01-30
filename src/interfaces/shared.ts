@@ -8,6 +8,7 @@ export interface Coordinate {
 export interface ApiError {
   error: string
   msg: string
+  isIncompleteAd?: boolean
   incompleteAd?: IncompleteAd
 }
 

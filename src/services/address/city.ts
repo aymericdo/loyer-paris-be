@@ -153,7 +153,7 @@ export class CityService {
     const cityName = cleanup.string(ad.cityLabel)
 
     if (!cityName || !cityName?.length) {
-      throw { error: ERROR_CODE.Address, msg: 'city not found' }
+      throw { error: ERROR_CODE.Address, msg: 'city not found', isIncompleteAd: true }
     }
 
     const cityInList: AvailableCities = Object.keys(cityList).find((city) =>

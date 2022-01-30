@@ -57,7 +57,6 @@ app.use('/locservice', require('./websites/locservice/locservice.controller'))
 
 app.use('/stats', require('./stats/stats.controller'))
 
-app.use('/incomplete-rent', require('./incomplete-rent/incomplete-rent.controller'))
 app.use('/shop', require('./shop/shop.controller'))
 app.use('/simulator', require('./simulator/simulator.controller'))
 app.use('/districts', require('./districts/districts.controller'))
