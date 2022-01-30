@@ -47,7 +47,7 @@ export class BellesDemeuresScrapping {
     let rooms = null
 
     features.forEach((feature) => {
-      if (feature.textContent.match(/M²/g)) {
+      if (feature.textContent.match(/M²/g) || feature.textContent.match(/m²/g)) {
         surface = feature
       } else if (feature.textContent.match(/Pièce/g)) {
         rooms = feature
