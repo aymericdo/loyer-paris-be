@@ -1,6 +1,7 @@
 import * as cleanup from '@helpers/cleanup'
 import { ERROR_CODE } from '../api-errors'
 import { Ad } from '@interfaces/ad'
+import { PrettyLog } from '../pretty-log'
 
 type CityList = {
   [key: string]: {
@@ -143,7 +144,7 @@ export const cityList: CityList = {
   },
 }
 
-export type AvailableCities = keyof typeof cityList
+export type AvailableCities = keyof typeof cityList & string
 
 export class CityService {
   cityInList: AvailableCities
@@ -152,18 +153,18 @@ export class CityService {
     const cityName = cleanup.string(ad.cityLabel)
 
     if (!cityName || !cityName?.length) {
-      throw { error: ERROR_CODE.Address, msg: 'city not found' }
+      throw { error: ERROR_CODE.Address, msg: 'city not found', isIncompleteAd: true }
     }
 
-    // TODO : Fuzzy search ?
     const cityInList: AvailableCities = Object.keys(cityList).find((city) =>
       cityName.includes(city)
     )
 
     if (!cityInList) {
+      PrettyLog.call(`city "${cityName}" not found in the list`, 'yellow')
       throw {
         error: ERROR_CODE.City,
-        msg: `[bad location]: city "${cityName}" not found in the list`,
+        msg: 'city not found in the list',
       }
     }
 
@@ -174,8 +175,8 @@ export class CityService {
     return this.cityInList
   }
 
-  canHaveHouse(): boolean {
-    switch (cityList[this.cityInList].mainCity) {
+  static canHaveHouse(city: AvailableCities): boolean {
+    switch (cityList[city].mainCity) {
       case 'plaineCommune':
         return true
       default:

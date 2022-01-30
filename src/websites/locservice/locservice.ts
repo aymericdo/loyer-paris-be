@@ -1,9 +1,8 @@
 import * as cleanup from '@helpers/cleanup'
-import { particulierToken } from '@helpers/particulier'
+import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website'
 import { Ad } from '@interfaces/ad'
 import { LocserviceMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api-errors'
-import { Website, WebsiteType } from '../website'
 import { LocserviceScrapping } from './locservice.scrapping'
 
 export class Locservice extends Website {
@@ -39,7 +38,7 @@ export class Locservice extends Website {
       hasCharges: ad.hasCharges,
       furnished: ad.furnished,
       price: cleanup.price(ad.price),
-      renter: particulierToken,
+      renter: PARTICULIER_TERM,
       rooms: cleanup.number(ad.rooms),
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),

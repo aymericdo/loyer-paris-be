@@ -1,7 +1,6 @@
 import { getPriceExcludingCharges } from '@helpers/charges'
-import * as log from '@helpers/log'
 import { roundNumber } from '@helpers/round-number'
-import { Ad, CleanAd, FilteredResult } from '@interfaces/ad'
+import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
 import { Mapping } from '@interfaces/mapping'
 import { ApiError } from '@interfaces/shared'
 import { ApiErrorsService, ERROR_CODE } from '@services/api-errors'
@@ -13,7 +12,9 @@ import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-com
 import { SaveRentService } from '@services/save-rent'
 import { SerializeRentService } from '@services/serialize-rent'
 import { Response } from 'express'
-import { cityList } from '@services/address/city'
+import { AvailableCities, cityList, CityService } from '@services/address/city'
+
+export const PARTICULIER_TERM = 'Particulier'
 
 export const WEBSITE_LIST = [
   'bellesdemeures', 
@@ -58,14 +59,8 @@ export abstract class Website {
         this.res.json(data)
       })
       .catch((err: ApiError) => {
-        if (err.error) {
-          const status = ApiErrorsService.getStatus(err)
-          this.res.status(status).json(err)
-        } else {
-          console.log(err)
-          log.error('ERROR 500')
-          this.res.status(500).json(err)
-        }
+        const status = new ApiErrorsService(err).getStatus()
+        this.res.status(status).json(err)
       })
   }
 
@@ -73,71 +68,85 @@ export abstract class Website {
 
   async digData() {
     const ad: Ad = await this.mapping()
+    const url = this.body.url && new URL(this.body.url)
 
-    const cleanAd: CleanAd = await new DigService(ad).digInAd()
-    let filteredResult: FilteredResult = null
-    switch (cityList[cleanAd.city].mainCity) {
-      case 'paris':
-        filteredResult = new ParisFilterRentService(cleanAd).find()
-        break
-      case 'lille':
-        filteredResult = new LilleFilterRentService(cleanAd).find()
-        break
-      case 'plaineCommune':
-        filteredResult = new PlaineCommuneFilterRentService(cleanAd).find()
-        break
-      case 'lyon':
-        filteredResult = new LyonFilterRentService(cleanAd).find()
-        break
-    }
+    const cityService = new CityService(ad)
+    const city: AvailableCities = cityService.findCity()
 
-    if (filteredResult) {
-      const maxAuthorized = roundNumber(
-        filteredResult.maxPrice * cleanAd.surface
-      )
-      const priceExcludingCharges = getPriceExcludingCharges(
-        cleanAd.price,
-        cleanAd.charges,
-        cleanAd.hasCharges
-      )
-      const isLegal = priceExcludingCharges <= maxAuthorized
+    try {
+      const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
 
-      const url = this.body.url && new URL(this.body.url)
+      let filteredResult: FilteredResult = null
+      switch (cityList[cleanAd.city].mainCity) {
+        case 'paris':
+          filteredResult = new ParisFilterRentService(cleanAd).find()
+          break
+        case 'lille':
+          filteredResult = new LilleFilterRentService(cleanAd).find()
+          break
+        case 'plaineCommune':
+          filteredResult = new PlaineCommuneFilterRentService(cleanAd).find()
+          break
+        case 'lyon':
+          filteredResult = new LyonFilterRentService(cleanAd).find()
+          break
+      }
 
-      await new SaveRentService({
-        id: cleanAd.id,
-        address: cleanAd.address,
-        city: cleanAd.city,
-        district: filteredResult.districtName,
-        hasFurniture: cleanAd.hasFurniture,
-        isHouse: cleanAd.isHouse,
-        postalCode: cleanAd.postalCode,
-        price: cleanAd.price,
-        renter: cleanAd.renter,
-        roomCount: cleanAd.roomCount,
-        stations: cleanAd.stations,
-        surface: cleanAd.surface,
-        yearBuilt: cleanAd.yearBuilt,
-        isLegal,
-        latitude: cleanAd.coordinates?.lat,
-        longitude: cleanAd.coordinates?.lng,
-        maxPrice: maxAuthorized,
-        priceExcludingCharges,
+      if (filteredResult) {
+        const maxAuthorized = roundNumber(
+          filteredResult.maxPrice * cleanAd.surface
+        )
+        const priceExcludingCharges = getPriceExcludingCharges(
+          cleanAd.price,
+          cleanAd.charges,
+          cleanAd.hasCharges
+        )
+        const isLegal = priceExcludingCharges <= maxAuthorized
+
+        await new SaveRentService({
+          id: cleanAd.id,
+          address: cleanAd.address,
+          city: cleanAd.city,
+          district: filteredResult.districtName,
+          hasFurniture: cleanAd.hasFurniture,
+          isHouse: cleanAd.isHouse,
+          postalCode: cleanAd.postalCode,
+          price: cleanAd.price,
+          renter: cleanAd.renter,
+          roomCount: cleanAd.roomCount,
+          stations: cleanAd.stations,
+          surface: cleanAd.surface,
+          yearBuilt: cleanAd.yearBuilt,
+          isLegal,
+          latitude: cleanAd.coordinates?.lat,
+          longitude: cleanAd.coordinates?.lng,
+          maxPrice: maxAuthorized,
+          priceExcludingCharges,
+          website: this.website,
+          url: url && `${url.origin}${url.pathname}`,
+        }).save()
+
+        return new SerializeRentService(
+          {
+            ...cleanAd,
+            isLegal,
+            maxAuthorized,
+            priceExcludingCharges,
+          },
+          filteredResult
+        ).serialize()
+      } else {
+        throw { error: ERROR_CODE.Filter, msg: 'no match found' }
+      }
+    } catch (err) {
+      const incompleteAd: IncompleteAd = {
+        id: ad.id,
         website: this.website,
         url: url && `${url.origin}${url.pathname}`,
-      }).save()
+        city,
+      }
 
-      return new SerializeRentService(
-        {
-          ...cleanAd,
-          isLegal,
-          maxAuthorized,
-          priceExcludingCharges,
-        },
-        filteredResult
-      ).serialize()
-    } else {
-      throw { error: ERROR_CODE.Filter, msg: 'no match found' }
+      throw { ...err, incompleteAd }
     }
   }
 }

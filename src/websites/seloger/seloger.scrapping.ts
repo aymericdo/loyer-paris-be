@@ -1,7 +1,7 @@
 import { virtualConsole } from '@helpers/jsdome'
 import { SelogerMapping } from '@interfaces/mapping'
+import { PARTICULIER_TERM } from '@websites/website'
 import jsdom from 'jsdom'
-import { particulierToken } from '../../helpers/particulier'
 const { JSDOM } = jsdom
 
 export class SelogerScrapping {
@@ -145,10 +145,10 @@ export class SelogerScrapping {
       hasCharges: price && price.textContent.includes('CC'),
       price: price && price.textContent,
       renter: isParticulier
-        ? particulierToken
+        ? PARTICULIER_TERM
         : renter
           ? renter.textContent.includes('particulier')
-            ? particulierToken
+            ? PARTICULIER_TERM
             : renter.textContent
           : null,
       rooms: rooms && rooms.textContent,

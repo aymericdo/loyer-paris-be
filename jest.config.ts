@@ -26,7 +26,6 @@ export default async (): Promise<Config.InitialOptions> => {
       '@db/(.*)': '<rootDir>/src/db/$1',
       '@websites/(.*)': '<rootDir>/src/websites/$1',
       '@cronjobs/(.*)': '<rootDir>/src/cronjobs/$1',
-      '@slack-service/(.*)': '<rootDir>/src/slack-service/$1',
     },
     transform: tsjPreset.transform,
   }

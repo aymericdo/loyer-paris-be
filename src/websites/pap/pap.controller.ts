@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import { Pap } from './pap'
 const router = express.Router()
 
@@ -7,7 +7,7 @@ const router = express.Router()
 router.post('/data', getByData)
 
 function getByData(req: Request, res: Response) {
-  log.info(
+  PrettyLog.call(
     `-> ${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
@@ -17,7 +17,7 @@ function getByData(req: Request, res: Response) {
 
 router.post('/data/v2', getByDataV2)
 function getByDataV2(req: Request, res: Response) {
-  log.info(
+  PrettyLog.call(
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )

@@ -1,21 +1,22 @@
-import { vegaCommonOpt } from '@helpers/vega'
+import { Vega } from '@services/vega'
 import { Response, Request } from 'express'
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import * as rentService from '@db/rent.service'
+import { ERROR500_MSG } from '@services/api-errors'
 
 export function getLegalPerSurface(
   req: Request,
   res: Response,
   
 ) {
-  log.info(`-> ${req.baseUrl} isLegalPerSurface`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} isLegalPerSurface`, 'blue')
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')
 
   rentService
     .getLegalPerSurfaceData(req.params.city, dateRange)
     .then((data) => {
-      const vegaOpt = vegaCommonOpt()
+      const vegaOpt = Vega.commonOpt()
       const vegaMap = {
         ...vegaOpt,
         title: {
@@ -62,7 +63,7 @@ export function getLegalPerSurface(
       if (err.status) {
         res.status(err.status).json(err)
       } else {
-        log.error('Error 500')
+        PrettyLog.call(ERROR500_MSG, 'red')
         res.status(500).json(err)
       }
     })

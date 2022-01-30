@@ -1,8 +1,7 @@
-import { particulierToken } from '@helpers/particulier'
+import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website'
 import * as cleanup from '@helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { LeboncoinMapping } from '@interfaces/mapping'
-import { Website, WebsiteType } from '../website'
 import { LeboncoinScrapping } from './leboncoin.scrapping'
 import { ERROR_CODE } from '@services/api-errors'
 
@@ -54,7 +53,7 @@ export class LeBonCoin extends Website {
         : null,
       hasCharges: ad.hasCharges,
       price: cleanup.price(ad.price),
-      renter: ad.renter ? cleanup.string(ad.renter) : particulierToken,
+      renter: ad.renter ? cleanup.string(ad.renter) : PARTICULIER_TERM,
       rooms: cleanup.number(ad.rooms),
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.subject),

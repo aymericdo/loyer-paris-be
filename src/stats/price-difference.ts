@@ -1,15 +1,16 @@
-import { vegaCommonOpt } from '@helpers/vega'
+import { Vega } from '@services/vega'
 import { Response, Request } from 'express'
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import * as rentService from '@db/rent.service'
 import { cityList } from '@services/address/city'
+import { ERROR500_MSG } from '@services/api-errors'
 
 export function getPriceDifference(
   req: Request,
   res: Response,
   
 ) {
-  log.info(`-> ${req.baseUrl} priceDifference`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} priceDifference`, 'blue')
   let postalCodePossibilities = []
   switch (req.params.city) {
     case 'paris':
@@ -32,7 +33,7 @@ export function getPriceDifference(
   rentService
     .getPriceDiffData(req.params.city, dateRange)
     .then((data) => {
-      const vegaOpt = vegaCommonOpt()
+      const vegaOpt = Vega.commonOpt()
       const vegaMap = {
         ...vegaOpt,
         title: {
@@ -92,7 +93,7 @@ export function getPriceDifference(
       if (err.status) {
         res.status(err.status).json(err)
       } else {
-        log.error('Error 500')
+        PrettyLog.call(ERROR500_MSG, 'red')
         res.status(500).json(err)
       }
     })

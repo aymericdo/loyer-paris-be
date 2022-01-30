@@ -1,5 +1,5 @@
 import express, { Response, Request } from 'express'
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
 import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
 import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent'
@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.get('/:city', getManualResult)
 function getManualResult(req: Request, res: Response) {
-  log.info(`-> ${req.baseUrl} getManualResult`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} getManualResult`, 'blue')
 
   const city = req.params.city
   const districtValue: string = (req.query.districtValue as string) || null

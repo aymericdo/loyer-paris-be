@@ -1,4 +1,4 @@
-import * as log from '@helpers/log'
+import { PrettyLog } from '@services/pretty-log'
 import { roundNumber } from '@helpers/round-number'
 import { FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/year-built'
@@ -37,7 +37,7 @@ export class SerializeRentService {
   }
 
   serialize() {
-    log.info('serializing answer', 'green')
+    PrettyLog.call('serializing answer', 'green')
     
     const {
       address,
