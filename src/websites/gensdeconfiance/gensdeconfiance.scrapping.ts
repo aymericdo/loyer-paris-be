@@ -1,6 +1,5 @@
 import { virtualConsole } from '@helpers/jsdome'
 import { GensdeconfianceMapping } from '@interfaces/mapping'
-import { PARTICULIER_TERM } from '@websites/website'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -13,17 +12,21 @@ export class GensdeconfianceScrapping {
     const title = document.querySelector('#post-title')
     const description = document.querySelector('#ad-description')
     const price = document.querySelector(
-      '#col-ad > div.price-table > div:nth-child(1) > div.price-table__value'
+      '#col-ad div.price-table > div:nth-child(1) > div.price-table__value'
     )
     const charges = document.querySelector(
-      '#col-ad > div.price-table > div:nth-child(2) > div.price-table__value'
+      '#col-ad div.price-table > div:nth-child(2) > div.price-table__value'
     )
     const address = document.querySelector('#ad-address > p')
     const cityLabel = document.querySelector('#post-title-breadcrumb > small')
-    const surface = document.querySelector('#ad-extra-fields-nb_square_meters')
-    const renter = document.querySelector(
-      '#post-title-badges > span.label.label-default.label-inverse.m-r.m-b-2sm'
-    )
+    const itemTags = [...document.querySelectorAll('div > ul > li > div')]
+    let surface = null
+
+    itemTags.forEach((tag) => {
+      if (tag.textContent.match(/m²|m2/g)) {
+        surface = tag
+      }
+    })
 
     if (!title) {
       return null
@@ -47,9 +50,6 @@ export class GensdeconfianceScrapping {
         charges.textContent.match(/\d+/)[0] &&
         +charges.textContent.match(/\d+/)[0] > 0,
       description: description && description.textContent,
-      // We don't save the real name of the pro, because we are very kind
-      // 2022, still agree with me ^
-      renter: renter && renter.textContent ? null : PARTICULIER_TERM,
       price: price && price.textContent,
       surface: surface && surface.textContent,
       title: title && title.textContent,

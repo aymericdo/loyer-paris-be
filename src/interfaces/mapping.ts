@@ -163,7 +163,6 @@ export interface GensdeconfianceMapping {
   hasCharges: boolean
   price: string
   address: string
-  renter: string
   surface: string
   title: string
 }
