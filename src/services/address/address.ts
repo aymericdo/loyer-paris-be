@@ -3,7 +3,6 @@ import inside from "point-in-polygon";
 import { AddressItem, Coordinate } from "@interfaces/shared";
 import { Ad } from "@interfaces/ad";
 import { regexString } from "@helpers/regex";
-import { Memoize } from "typescript-memoize";
 import { min } from "@helpers/functions";
 import { DistanceService } from "../distance";
 import { AvailableCities, cityList } from "./city";

@@ -1,11 +1,31 @@
 import { Ad } from "@interfaces/ad";
 import { cityList } from "./city";
 
-export interface PostalCodeDigger {
+export interface PostalCodeStrategy {
   getPostalCode(city: string, ad: Ad): string;
 }
 
-export class DefaultPostalCodeDigger implements PostalCodeDigger {
+export class PostalCodeStrategyFactory {
+  getDiggerStrategy(city: string): PostalCodeStrategy {
+    const parisStrategy = new ParisPostalCodeStrategy();
+    const lyonStrategy = new LyonPostalCodeStrategy();
+    const defaultStrategy = new DefaultPostalCodeStrategy();
+    switch (city) {
+      case "paris": {
+        return parisStrategy;
+      }
+      case "lyon":
+      case "villeurbanne": {
+        return lyonStrategy;
+      }
+      default: {
+        return defaultStrategy;
+      }
+    }
+  }
+}
+
+export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
   public getPostalCode(city: string, ad: Ad): string {
     return ad.postalCode || this.digForPostalCode(city, ad);
   }
@@ -44,7 +64,7 @@ export class DefaultPostalCodeDigger implements PostalCodeDigger {
   }
 }
 
-export class ParisPostalCodeDigger extends DefaultPostalCodeDigger {
+export class ParisPostalCodeStrategy extends DefaultPostalCodeStrategy {
   protected digForPostalCode2(city: string, text: string): string {
     console.log("p2");
     const postalCode2Re = new RegExp(cityList[city].postalCodeRegex[1]);
@@ -57,7 +77,7 @@ export class ParisPostalCodeDigger extends DefaultPostalCodeDigger {
   }
 }
 
-export class LyonPostalCodeDigger extends DefaultPostalCodeDigger {
+export class LyonPostalCodeStrategy extends DefaultPostalCodeStrategy {
   protected digForPostalCode2(city: string, text: string): string {
     const postalCode2Re =
       city === "lyon" && new RegExp(cityList[city].postalCodeRegex[1]);
@@ -69,7 +89,3 @@ export class LyonPostalCodeDigger extends DefaultPostalCodeDigger {
       : null;
   }
 }
-
-export class LillePostalCodeDigger extends DefaultPostalCodeDigger {}
-
-export class PlaineCommunePostalCodeDigger extends DefaultPostalCodeDigger {}

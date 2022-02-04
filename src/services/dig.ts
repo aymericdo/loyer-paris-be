@@ -12,7 +12,7 @@ import { LyonAddressService } from "./address/lyon-address";
 import { AddressService } from "./address/address";
 import { PlaineCommuneAddressService } from "./address/plaine-commune-address";
 import { PrettyLog } from "./pretty-log";
-import { ParisPostalCodeDigger, PostalCodeDigger } from "./address/postalcode";
+import { PostalCodeStrategyFactory } from "./address/postalcode";
 
 export class DigService {
   ad: Ad = null;
@@ -63,11 +63,9 @@ export class DigService {
     city: AvailableCities
   ): Promise<[string, string, string[], Coordinate, Coordinate]> {
     let addressService: AddressService;
-    let postalCodeDigger: PostalCodeDigger;
     switch (cityList[city].mainCity) {
       case "paris":
         addressService = new ParisAddressService("paris", this.ad);
-        postalCodeDigger = new ParisPostalCodeDigger();
         break;
       case "lille":
         addressService = new LilleAddressService(city, this.ad);
@@ -79,6 +77,9 @@ export class DigService {
         addressService = new LyonAddressService(city, this.ad);
         break;
     }
+    const postalCodeDigger = new PostalCodeStrategyFactory().getDiggerStrategy(
+      city
+    );
 
     // Order is important here
     const postalCode = postalCodeDigger.getPostalCode(city, this.ad);
