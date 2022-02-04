@@ -9,10 +9,11 @@ import { AvailableCities, cityList, CityService } from "./address/city";
 import { LilleAddressService } from "./address/lille-address";
 import { ParisAddressService } from "./address/paris-address";
 import { LyonAddressService } from "./address/lyon-address";
-import { AddressService } from "./address/address";
+import { AddressService } from "./address/address-service";
 import { PlaineCommuneAddressService } from "./address/plaine-commune-address";
 import { PrettyLog } from "./pretty-log";
 import { PostalCodeStrategyFactory } from "./address/postalcode";
+import { AddressStrategyFactory } from "./address/address";
 
 export class DigService {
   ad: Ad = null;
@@ -77,13 +78,15 @@ export class DigService {
         addressService = new LyonAddressService(city, this.ad);
         break;
     }
-    const postalCodeDigger = new PostalCodeStrategyFactory().getDiggerStrategy(
+    const postalCodeStrategy =
+      new PostalCodeStrategyFactory().getDiggerStrategy(city);
+    const addressStrategy = new AddressStrategyFactory().getDiggerStrategy(
       city
     );
 
     // Order is important here
-    const postalCode = postalCodeDigger.getPostalCode(city, this.ad);
-    const address = await addressService.getAddress(postalCode);
+    const postalCode = postalCodeStrategy.getPostalCode(city, this.ad);
+    const address = await addressStrategy.getAddress(city, postalCode, this.ad);
     const stations = addressService.getStations();
     const coordinates = addressService.getCoordinate();
     const blurryCoordinates = addressService.getCoordinate(true);

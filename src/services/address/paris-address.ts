@@ -8,7 +8,7 @@ import { ParisStationService } from "@services/address/paris-station";
 import * as cleanup from "@helpers/cleanup";
 import inside from "point-in-polygon";
 import { Memoize } from "typescript-memoize";
-import { AddressService } from "./address";
+import { AddressService } from "./address-service";
 import { AddressItem, Coordinate } from "@interfaces/shared";
 import { DistanceService } from "@services/distance";
 import * as fs from "fs";
