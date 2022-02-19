@@ -18,13 +18,13 @@ const dbMapping = {
 };
 
 export interface AddressStrategy {
-  getAddress(city: string, postalCode: string, ad: Ad): Promise<string>;
+  getAddress(): Promise<string>;
 }
 
 export class AddressStrategyFactory {
-  getDiggerStrategy(city: string): AddressStrategy {
-    const parisStrategy = new ParisAddressStrategy();
-    const defaultStrategy = new DefaultAddressStrategy();
+  getDiggerStrategy(city: string, postalCode: string, ad: Ad): AddressStrategy {
+    const parisStrategy = new ParisAddressStrategy(city, postalCode, ad);
+    const defaultStrategy = new DefaultAddressStrategy(city, postalCode, ad);
     switch (city) {
       case "paris": {
         return parisStrategy;
@@ -37,15 +37,27 @@ export class AddressStrategyFactory {
 }
 
 export class DefaultAddressStrategy implements AddressStrategy {
-  public async getAddress(
-    city: string,
-    postalCode: string,
-    ad: Ad
-  ): Promise<string> {
-    const tab = [ad.address, ad.title, ad.description].filter(Boolean);
+  private city: string;
+  private postalCode: string;
+  private ad: Ad;
+
+  constructor(city: string, postalCode: string, ad: Ad) {
+    this.city = city;
+    this.postalCode = postalCode;
+    this.ad = ad;
+  }
+
+  public async getAddress(): Promise<string> {
+    const tab = [this.ad.address, this.ad.title, this.ad.description].filter(
+      Boolean
+    );
 
     for (const text of tab) {
-      const result = await this.digForAddressInText(city, postalCode, text);
+      const result = await this.digForAddressInText(
+        this.city,
+        this.postalCode,
+        text
+      );
       if (result) {
         return result;
       }
@@ -138,14 +150,6 @@ export class DefaultAddressStrategy implements AddressStrategy {
           streetNumber: cleanup.streetNumber(query),
         }))
       : [];
-  }
-
-  protected getStations(): string[] {
-    return [];
-  }
-
-  protected nearestStations(): string[] {
-    return [];
   }
 }
 

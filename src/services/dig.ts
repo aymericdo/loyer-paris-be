@@ -14,6 +14,7 @@ import { PlaineCommuneAddressService } from "./address/plaine-commune-address";
 import { PrettyLog } from "./pretty-log";
 import { PostalCodeStrategyFactory } from "./address/postalcode";
 import { AddressStrategyFactory } from "./address/address";
+import { StationService } from "./address/station";
 
 export class DigService {
   ad: Ad = null;
@@ -79,15 +80,19 @@ export class DigService {
         break;
     }
     const postalCodeStrategy =
-      new PostalCodeStrategyFactory().getDiggerStrategy(city);
-    const addressStrategy = new AddressStrategyFactory().getDiggerStrategy(
-      city
-    );
+      new PostalCodeStrategyFactory().getDiggerStrategy(city, this.ad);
+
+    const stationService = new StationService();
 
     // Order is important here
-    const postalCode = postalCodeStrategy.getPostalCode(city, this.ad);
-    const address = await addressStrategy.getAddress(city, postalCode, this.ad);
-    const stations = addressService.getStations();
+    const postalCode = postalCodeStrategy.getPostalCode();
+    const addressStrategy = new AddressStrategyFactory().getDiggerStrategy(
+      city,
+      postalCode,
+      this.ad
+    );
+    const address = await addressStrategy.getAddress();
+    const stations = stationService.getStations(city, this.ad.stations);
     const coordinates = addressService.getCoordinate();
     const blurryCoordinates = addressService.getCoordinate(true);
 

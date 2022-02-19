@@ -2,14 +2,14 @@ import { Ad } from "@interfaces/ad";
 import { cityList } from "./city";
 
 export interface PostalCodeStrategy {
-  getPostalCode(city: string, ad: Ad): string;
+  getPostalCode(): string;
 }
 
 export class PostalCodeStrategyFactory {
-  getDiggerStrategy(city: string): PostalCodeStrategy {
-    const parisStrategy = new ParisPostalCodeStrategy();
-    const lyonStrategy = new LyonPostalCodeStrategy();
-    const defaultStrategy = new DefaultPostalCodeStrategy();
+  getDiggerStrategy(city: string, ad: Ad): PostalCodeStrategy {
+    const parisStrategy = new ParisPostalCodeStrategy(city, ad);
+    const lyonStrategy = new LyonPostalCodeStrategy(city, ad);
+    const defaultStrategy = new DefaultPostalCodeStrategy(city, ad);
     switch (city) {
       case "paris": {
         return parisStrategy;
@@ -26,8 +26,16 @@ export class PostalCodeStrategyFactory {
 }
 
 export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
-  public getPostalCode(city: string, ad: Ad): string {
-    return ad.postalCode || this.digForPostalCode(city, ad);
+  private city: string;
+  private ad: Ad;
+
+  constructor(city: string, ad: Ad) {
+    this.city = city;
+    this.ad = ad;
+  }
+
+  public getPostalCode(): string {
+    return this.ad.postalCode || this.digForPostalCode(this.city, this.ad);
   }
 
   protected digForPostalCode(city: string, ad: Ad): string {
