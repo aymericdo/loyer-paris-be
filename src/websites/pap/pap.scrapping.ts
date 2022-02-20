@@ -45,7 +45,7 @@ export class PapScrapping {
       id: null,
       cityLabel: cityLabel && cityLabel.textContent,
       description: description && description.textContent,
-      price: price && price.textContent,
+      price: price && price.textContent.replace('.', ''),
       rooms: rooms && rooms.textContent,
       stations: stations && stations.map((station) => station.textContent),
       surface: surface && surface.textContent,
