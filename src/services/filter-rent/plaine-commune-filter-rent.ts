@@ -1,11 +1,11 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { YearBuiltService } from '@services/year-built'
-import { PlaineCommuneEncadrementItem } from '@interfaces/json-item-plaine-commune'
-import { Memoize } from 'typescript-memoize'
-import { PlaineCommuneDistrictService } from './plaine-commune-district'
-import { number } from '@helpers/cleanup'
+import * as fs from 'fs';
+import * as path from 'path';
+import { FilteredResult, InfoToFilter } from '@interfaces/ad';
+import { YearBuiltService } from '@services/year-built';
+import { PlaineCommuneEncadrementItem } from '@interfaces/json-item-plaine-commune';
+import { Memoize } from 'typescript-memoize';
+import { PlaineCommuneDistrictService } from './plaine-commune-district';
+import { number } from '@helpers/cleanup';
 
 export class PlaineCommuneFilterRentService {
   infoToFilter: InfoToFilter = null
@@ -16,7 +16,7 @@ export class PlaineCommuneFilterRentService {
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_plaine-commune.json)
-    const rangeTime = ['avant 1946', '1971-1990', '1946-1970', 'après 1990']
+    const rangeTime = ['avant 1946', '1971-1990', '1946-1970', 'après 1990'];
 
     const districtsMatched = new PlaineCommuneDistrictService(
       this.infoToFilter.postalCode,
@@ -55,7 +55,7 @@ export class PlaineCommuneFilterRentService {
             : rangeRent.Type === 'Appartement'
           : true)
       )
-    })
+    });
 
     return rentList
       .map((r) => ({
@@ -69,7 +69,7 @@ export class PlaineCommuneFilterRentService {
       }))
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
-      })
+      });
   }
 
   find(): FilteredResult {

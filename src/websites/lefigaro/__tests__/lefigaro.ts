@@ -1,7 +1,7 @@
-import { Mapping } from '@interfaces/mapping'
-import { LeFigaro } from '../lefigaro'
-import { disconnect } from 'mongoose'
-import { closeAllConnections } from '@db/db'
+import { Mapping } from '@interfaces/mapping';
+import { LeFigaro } from '../lefigaro';
+import { disconnect } from 'mongoose';
+import { closeAllConnections } from '@db/db';
 
 describe('lefigaro', () => {
   afterAll(() => closeAllConnections())
@@ -65,7 +65,7 @@ describe('lefigaro', () => {
         moreInfo:
           'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
-    })
+    });
   })
 
   describe('lille', () => {
@@ -134,6 +134,6 @@ describe('lefigaro', () => {
         isLegal: false,
         moreInfo: 'https://encadrement-loyers.lille.fr/',
       })
-    })
+    });
   })
-})
+});

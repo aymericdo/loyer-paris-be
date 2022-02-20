@@ -1,7 +1,7 @@
-import { virtualConsole } from '@helpers/jsdome'
-import { FnaimMapping } from '@interfaces/mapping'
-import { ERROR_CODE } from '@services/api-errors'
-import jsdom from 'jsdom'
+import { virtualConsole } from '@helpers/jsdome';
+import { FnaimMapping } from '@interfaces/mapping';
+import { ERROR_CODE } from '@services/api-errors';
+import jsdom from 'jsdom';
 const { JSDOM } = jsdom
 
 export class FnaimScrapping {
@@ -41,7 +41,9 @@ export class FnaimScrapping {
         '#annonceFiche > div.annonce_fiche.fiche > ul > li'
       ),
     ]
-    const features2 = [...document.querySelectorAll('#logementBlock > ul > li')]
+    const features2 = [
+      ...document.querySelectorAll('#logementBlock > ul > li'),
+    ]
 
     let surface = null
     let rooms = null

@@ -1,11 +1,11 @@
-import * as cleanup from '@helpers/cleanup'
-import { Ad } from '@interfaces/ad'
-import { BienIciMapping } from '@interfaces/mapping'
-import { Website, WebsiteType } from '../website'
-import { BienIciScrapping } from './bienici.scrapping'
-import { ERROR_CODE } from '@services/api-errors'
+import * as cleanup from '@helpers/cleanup';
+import { Ad } from '@interfaces/ad';
+import { BienIciMapping } from '@interfaces/mapping';
+import { Website, WebsiteType } from '../website';
+import { BienIciScrapping } from './bienici.scrapping';
+import { ERROR_CODE } from '@services/api-errors';
 export class BienIci extends Website {
-  website: WebsiteType = 'bienici'
+  website: WebsiteType = 'bienici';
 
   async mapping(): Promise<Ad> {
     let ad: BienIciMapping = null

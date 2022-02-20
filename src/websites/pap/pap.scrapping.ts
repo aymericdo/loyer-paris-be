@@ -1,6 +1,6 @@
-import { virtualConsole } from '@helpers/jsdome'
-import { PapMapping } from '@interfaces/mapping'
-import jsdom from 'jsdom'
+import { virtualConsole } from '@helpers/jsdome';
+import { PapMapping } from '@interfaces/mapping';
+import jsdom from 'jsdom';
 const { JSDOM } = jsdom
 
 export class PapScrapping {
@@ -9,10 +9,10 @@ export class PapScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const title = document.querySelector('h1.item-title')
-    const description = document.querySelector('.item-description > div > p')
-    const price = document.querySelector('h1.item-title > span.item-price')
-    const cityLabel = document.querySelector('div.item-description > h2')
+    const title = document.querySelector('h1.item-title');
+    const description = document.querySelector('.item-description > div > p');
+    const price = document.querySelector('h1.item-title > span.item-price');
+    const cityLabel = document.querySelector('div.item-description > h2');
     const itemTags = [...document.querySelectorAll('.item-tags > li > strong')]
     const stations = [
       ...document.querySelectorAll('ul.item-transports > li > span.label'),

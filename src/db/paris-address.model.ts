@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 /*
 Data are from https://opendata.paris.fr/explore/dataset/adresse_paris/information/

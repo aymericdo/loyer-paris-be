@@ -1,4 +1,4 @@
-import jsdom from 'jsdom'
+import jsdom from 'jsdom';
 
 export const virtualConsole = () => {
   const virtualConsole = new jsdom.VirtualConsole()
@@ -10,4 +10,4 @@ export const virtualConsole = () => {
   })
 
   return virtualConsole
-}
+};

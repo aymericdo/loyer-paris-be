@@ -1,8 +1,8 @@
-import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { YearBuiltService } from '@services/year-built'
-import { LyonDistrictService } from './lyon-district'
-import { LyonAddressItem, UnitItemComplete } from '@interfaces/json-item-lyon'
-import { number } from '@helpers/cleanup'
+import { FilteredResult, InfoToFilter } from '@interfaces/ad';
+import { YearBuiltService } from '@services/year-built';
+import { LyonDistrictService } from './lyon-district';
+import { LyonAddressItem, UnitItemComplete } from '@interfaces/json-item-lyon';
+import { number } from '@helpers/cleanup';
 
 export class LyonFilterRentService {
   infoToFilter: InfoToFilter = null
@@ -13,7 +13,7 @@ export class LyonFilterRentService {
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_lyon.json)
-    const rangeTime = ['avant 1946', '1946-70', '1971-90', 'après 1990']
+    const rangeTime = ['avant 1946', '1946-70', '1971-90', 'après 1990'];
 
     const districtsMatched = new LyonDistrictService(
       this.infoToFilter.postalCode,
@@ -42,7 +42,7 @@ export class LyonFilterRentService {
             : rangeRent.isFurnished.match(/^non meubl/g)
           : true)
       )
-    })
+    });
 
     return rentList
       .map((r) => ({
@@ -55,7 +55,7 @@ export class LyonFilterRentService {
       }))
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
-      })
+      });
   }
 
   find(): FilteredResult {
@@ -106,7 +106,7 @@ export class LyonFilterRentService {
             })
           }
         )
-      })
+      });
       return prev
     }, [])
   }

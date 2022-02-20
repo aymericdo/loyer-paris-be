@@ -1,6 +1,6 @@
-import { virtualConsole } from '@helpers/jsdome'
-import { BellesDemeuresMapping } from '@interfaces/mapping'
-import jsdom from 'jsdom'
+import { virtualConsole } from '@helpers/jsdome';
+import { BellesDemeuresMapping } from '@interfaces/mapping';
+import jsdom from 'jsdom';
 const { JSDOM } = jsdom
 
 export class BellesDemeuresScrapping {
@@ -47,7 +47,10 @@ export class BellesDemeuresScrapping {
     let rooms = null
 
     features.forEach((feature) => {
-      if (feature.textContent.match(/M²/g) || feature.textContent.match(/m²/g)) {
+      if (
+        feature.textContent.match(/M²/g) ||
+        feature.textContent.match(/m²/g)
+      ) {
         surface = feature
       } else if (feature.textContent.match(/Pièce/g)) {
         rooms = feature

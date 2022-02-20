@@ -1,6 +1,6 @@
-import { virtualConsole } from '@helpers/jsdome'
-import { SuperimmoMapping } from '@interfaces/mapping'
-import jsdom from 'jsdom'
+import { virtualConsole } from '@helpers/jsdome';
+import { SuperimmoMapping } from '@interfaces/mapping';
+import jsdom from 'jsdom';
 const { JSDOM } = jsdom
 
 export class SuperimmoScrapping {

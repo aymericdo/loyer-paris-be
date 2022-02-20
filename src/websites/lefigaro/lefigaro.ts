@@ -1,12 +1,12 @@
-import * as cleanup from '@helpers/cleanup'
-import { Ad } from '@interfaces/ad'
-import { LefigaroMapping } from '@interfaces/mapping'
-import { ERROR_CODE } from '@services/api-errors'
-import { Website, WebsiteType } from '../website'
-import { LefigaroScrapping } from './lefigaro.scrapping'
+import * as cleanup from '@helpers/cleanup';
+import { Ad } from '@interfaces/ad';
+import { LefigaroMapping } from '@interfaces/mapping';
+import { ERROR_CODE } from '@services/api-errors';
+import { Website, WebsiteType } from '../website';
+import { LefigaroScrapping } from './lefigaro.scrapping';
 
 export class LeFigaro extends Website {
-  website: WebsiteType = 'lefigaro'
+  website: WebsiteType = 'lefigaro';
 
   async mapping(): Promise<Ad> {
     let ad: LefigaroMapping = null

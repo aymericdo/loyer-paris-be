@@ -1,4 +1,4 @@
-import { AvailableCities } from '@services/address/city'
+import { AvailableCities } from '@services/address/city';
 
 export function string(string: string): string {
   return string
@@ -24,7 +24,13 @@ export function streetNumber(address: string): number {
 }
 
 export function address(string: string, city: AvailableCities): string {
-  const blackList = ['commercante', 'navette', 'calme', 'tranquille', 'parking']
+  const blackList = [
+    'commercante',
+    'navette',
+    'calme',
+    'tranquille',
+    'parking',
+  ]
   if (blackList.some((w) => string.includes(w))) return null
   return string
     .replace('bd ', 'boulevard ')

@@ -1,11 +1,11 @@
-import * as cleanup from '@helpers/cleanup'
-import { Ad } from '@interfaces/ad'
-import { SuperimmoMapping } from '@interfaces/mapping'
-import { Website, WebsiteType } from '../website'
-import { SuperimmoScrapping } from './superimmo.scrapping'
-import { ERROR_CODE } from '@services/api-errors'
+import * as cleanup from '@helpers/cleanup';
+import { Ad } from '@interfaces/ad';
+import { SuperimmoMapping } from '@interfaces/mapping';
+import { Website, WebsiteType } from '../website';
+import { SuperimmoScrapping } from './superimmo.scrapping';
+import { ERROR_CODE } from '@services/api-errors';
 export class Superimmo extends Website {
-  website: WebsiteType = 'superimmo'
+  website: WebsiteType = 'superimmo';
 
   async mapping(): Promise<Ad> {
     let ad: SuperimmoMapping = null

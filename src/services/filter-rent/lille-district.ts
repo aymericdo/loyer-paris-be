@@ -1,9 +1,9 @@
-import * as fs from 'fs'
-import path from 'path'
-import inside from 'point-in-polygon'
-import { Coordinate } from '@interfaces/shared'
-import { LilleDistrictItem } from '@interfaces/json-item-lille'
-import { Memoize } from 'typescript-memoize'
+import * as fs from 'fs';
+import path from 'path';
+import inside from 'point-in-polygon';
+import { Coordinate } from '@interfaces/shared';
+import { LilleDistrictItem } from '@interfaces/json-item-lille';
+import { Memoize } from 'typescript-memoize';
 
 export class LilleDistrictService {
   coordinates: Coordinate = null
@@ -28,7 +28,10 @@ export class LilleDistrictService {
     const districtFromCoordinate =
       this.coordinates?.lat &&
       this.coordinates?.lng &&
-      this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
+      this.getDistrictFromCoordinate(
+        this.coordinates.lat,
+        this.coordinates.lng
+      )
 
     return districtFromCoordinate?.length ? districtFromCoordinate : []
   }
@@ -36,7 +39,7 @@ export class LilleDistrictService {
   private getDistrictFromName(): LilleDistrictItem[] {
     return this.getDistrictsJson().features.filter((district) => {
       return district.properties.zonage === +this.districtName.match(/\d+/)[0]
-    })
+    });
   }
 
   @Memoize()

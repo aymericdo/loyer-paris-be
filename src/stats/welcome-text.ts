@@ -1,14 +1,10 @@
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/pretty-log'
-import * as rentService from '@db/rent.service'
-import { ERROR500_MSG } from '@services/api-errors'
+import { Response, Request } from 'express';
+import { PrettyLog } from '@services/pretty-log';
+import * as rentService from '@db/rent.service';
+import { ERROR500_MSG } from '@services/api-errors';
 
-export function getWelcomeText(
-  req: Request,
-  res: Response,
-
-) {
-  PrettyLog.call(`-> ${req.baseUrl} getWelcomeText`, 'blue')
+export function getWelcomeText(req: Request, res: Response) {
+  PrettyLog.call(`-> ${req.baseUrl} getWelcomeText`, 'blue');
   const city = req.params.city
 
   rentService
@@ -41,7 +37,7 @@ export function getWelcomeText(
       if (err.status) {
         res.status(err.status).json(err)
       } else {
-        PrettyLog.call(ERROR500_MSG, 'red')
+        PrettyLog.call(ERROR500_MSG, 'red');
         res.status(500).json(err)
       }
     })

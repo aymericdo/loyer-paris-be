@@ -1,8 +1,8 @@
-import * as fs from 'fs'
-import { min } from '@helpers/functions'
-import { ArrondissementItem } from '@interfaces/json-item-paris'
-import path from 'path'
-import { Memoize } from 'typescript-memoize'
+import * as fs from 'fs';
+import { min } from '@helpers/functions';
+import { ArrondissementItem } from '@interfaces/json-item-paris';
+import path from 'path';
+import { Memoize } from 'typescript-memoize';
 
 export class DistanceService {
   static getDistanceFromLatLonInKm(
@@ -69,7 +69,7 @@ export class DistanceService {
       }
     )
 
-    return min(result, 'dist')
+    return min(result, 'dist');
   }
 
   private static deg2rad(deg) {

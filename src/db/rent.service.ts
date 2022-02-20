@@ -1,6 +1,6 @@
-import { Rent } from '@db/db'
-import { DataBaseItem } from '@interfaces/database-item'
-import { FUNNIEST_WEBSITES } from '@websites/website'
+import { Rent } from '@db/db';
+import { DataBaseItem } from '@interfaces/database-item';
+import { FUNNIEST_WEBSITES } from '@websites/website';
 
 function getCity(city: string) {
   switch (city) {
@@ -57,10 +57,10 @@ export async function getMapData(
       longitude: 1,
       district: 1,
     })) as unknown as {
-      isLegal: boolean
-      latitude: number
-      longitude: number
-      district: string
+      isLegal: boolean;
+      latitude: number;
+      longitude: number;
+      district: string;
     }[]
   } catch (err) {
     if (err) {
@@ -127,9 +127,9 @@ export async function getPriceDiffData(
       postalCode: 1,
       priceExcludingCharges: 1,
     })) as unknown as {
-      maxPrice: number
-      postalCode: string
-      priceExcludingCharges: number
+      maxPrice: number;
+      postalCode: string;
+      priceExcludingCharges: number;
     }[]
   } catch (err) {
     if (err) {
@@ -148,8 +148,8 @@ export async function getLegalVarData(
   isParticulier: boolean | null
 ): Promise<
   {
-    isLegal: boolean
-    createdAt: string
+    isLegal: boolean;
+    createdAt: string;
   }[]
 > {
   const filter = {
@@ -182,7 +182,7 @@ export async function getLegalVarData(
 
   if (isParticulier !== null) {
     if (isParticulier) {
-      filter['renter'] = 'Particulier'
+      filter['renter'] = 'Particulier';
     } else {
       filter['renter'] = { $ne: 'Particulier', $exists: true }
     }
@@ -193,8 +193,8 @@ export async function getLegalVarData(
       createdAt: 1,
       isLegal: 1,
     })) as unknown as {
-      isLegal: boolean
-      createdAt: string
+      isLegal: boolean;
+      createdAt: string;
     }[]
   } catch (err) {
     if (err) {
@@ -208,9 +208,9 @@ export async function getPriceVarData(
   dateRange: string[]
 ): Promise<
   {
-    maxPrice: number
-    createdAt: string
-    priceExcludingCharges: number
+    maxPrice: number;
+    createdAt: string;
+    priceExcludingCharges: number;
   }[]
 > {
   const filter = {
@@ -235,9 +235,9 @@ export async function getPriceVarData(
       maxPrice: 1,
       priceExcludingCharges: 1,
     })) as unknown as {
-      createdAt: string
-      maxPrice: number
-      priceExcludingCharges: number
+      createdAt: string;
+      maxPrice: number;
+      priceExcludingCharges: number;
     }[]
   } catch (err) {
     if (err) {
@@ -307,8 +307,8 @@ export async function getLegalPerRenterData(
   }
   try {
     return (await Rent.find(filter, { isLegal: 1, renter: 1 })) as unknown as {
-      isLegal: boolean
-      renter: string
+      isLegal: boolean;
+      renter: string;
     }[]
   } catch (err) {
     if (err) {
@@ -337,9 +337,12 @@ export async function getLegalPerWebsiteData(
     }
   }
   try {
-    return (await Rent.find(filter, { isLegal: 1, website: 1 }).lean()) as unknown as {
-      isLegal: boolean
-      website: string
+    return (await Rent.find(filter, {
+      isLegal: 1,
+      website: 1,
+    }).lean()) as unknown as {
+      isLegal: boolean;
+      website: string;
     }[]
   } catch (err) {
     if (err) {
@@ -369,8 +372,8 @@ export async function getLegalPerSurfaceData(
   }
   try {
     return (await Rent.find(filter, { isLegal: 1, surface: 1 })) as unknown as {
-      isLegal: boolean
-      surface: number
+      isLegal: boolean;
+      surface: number;
     }[]
   } catch (err) {
     if (err) {
@@ -382,7 +385,7 @@ export async function getLegalPerSurfaceData(
 export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
   try {
     return (await Rent.find({}, { createdAt: 1 })) as unknown as {
-      createdAt: string
+      createdAt: string;
     }[]
   } catch (err) {
     if (err) {
@@ -391,9 +394,9 @@ export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
   }
 }
 
-export async function getWelcomeData(city: string = null): Promise<
-  { isLegal: boolean; surface: number }[]
-  > {
+export async function getWelcomeData(
+  city: string = null
+): Promise<{ isLegal: boolean; surface: number }[]> {
   const filter = {}
 
   if (city && city !== 'all') {
@@ -402,8 +405,8 @@ export async function getWelcomeData(city: string = null): Promise<
 
   try {
     return (await Rent.find(filter, { isLegal: 1, surface: 1 })) as unknown as {
-      isLegal: boolean
-      surface: number
+      isLegal: boolean;
+      surface: number;
     }[]
   } catch (err) {
     if (err) {
@@ -413,32 +416,32 @@ export async function getWelcomeData(city: string = null): Promise<
 }
 
 interface RelevantAdsData {
-  id: string
-  surface: number
-  roomCount: number
-  website: string
-  createdAt: Date
-  hasFurniture: boolean
-  price: number
-  url: string
-  district: string
-  city: string
-  isHouse: boolean
+  id: string;
+  surface: number;
+  roomCount: number;
+  website: string;
+  createdAt: Date;
+  hasFurniture: boolean;
+  price: number;
+  url: string;
+  district: string;
+  city: string;
+  isHouse: boolean;
 }
 export async function getRelevantAdsData(
   filterParam: {
-    city: string
-    districtList: string[]
-    surfaceRange: number[]
-    priceRange: number[]
-    roomRange: number[]
-    hasFurniture: boolean
-    isHouse: boolean
-    isLegal: boolean
+    city: string;
+    districtList: string[];
+    surfaceRange: number[];
+    priceRange: number[];
+    roomRange: number[];
+    hasFurniture: boolean;
+    isHouse: boolean;
+    isLegal: boolean;
   },
   paginationOpts?: {
-    page: number
-    perPage: number
+    page: number;
+    perPage: number;
   }
 ): Promise<RelevantAdsData[]> {
   const page = paginationOpts?.page || 0
@@ -476,28 +479,28 @@ export async function getRelevantAdsData(
 }
 
 export async function getRelevantAdsDataTotalCount(filterParam: {
-  city: string
-  districtList: string[]
-  surfaceRange: number[]
-  priceRange: number[]
-  roomRange: number[]
-  hasFurniture: boolean
-  isHouse: boolean
-  isLegal: boolean
+  city: string;
+  districtList: string[];
+  surfaceRange: number[];
+  priceRange: number[];
+  roomRange: number[];
+  hasFurniture: boolean;
+  isHouse: boolean;
+  isLegal: boolean;
 }) {
   const filter = buildFilter(filterParam)
   return await Rent.countDocuments(filter)
 }
 
 function buildFilter(filterParam: {
-  city: string
-  districtList: string[]
-  surfaceRange: number[]
-  priceRange: number[]
-  roomRange: number[]
-  hasFurniture: boolean
-  isHouse: boolean
-  isLegal: boolean
+  city: string;
+  districtList: string[];
+  surfaceRange: number[];
+  priceRange: number[];
+  roomRange: number[];
+  hasFurniture: boolean;
+  isHouse: boolean;
+  isLegal: boolean;
 }) {
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 7))
@@ -562,13 +565,15 @@ export async function getAdById(
 
 export async function getShamefulAdsData(
   city: string,
-  maxDelta = 200,
-): Promise<{
-  url: string
-  website: string
-  priceExcludingCharges: number
-  maxPrice: number
-}[]> {
+  maxDelta = 200
+): Promise<
+  {
+    url: string;
+    website: string;
+    priceExcludingCharges: number;
+    maxPrice: number;
+  }[]
+> {
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 7))
 
@@ -576,7 +581,9 @@ export async function getShamefulAdsData(
     isLegal: false,
     createdAt: { $gte: minDate },
     city: getCity(city),
-    $expr: { $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta] }
+    $expr: {
+      $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta],
+    },
   }
 
   try {
@@ -592,10 +599,10 @@ export async function getShamefulAdsData(
         sort: { createdAt: -1 },
       }
     )) as unknown as {
-      url: string
-      website: string
-      priceExcludingCharges: number
-      maxPrice: number
+      url: string;
+      website: string;
+      priceExcludingCharges: number;
+      maxPrice: number;
     }[]
   } catch (err) {
     if (err) {
@@ -605,27 +612,30 @@ export async function getShamefulAdsData(
 }
 
 export async function getCountByWebsite(): Promise<{
-  [website: string]: number
+  [website: string]: number;
 }> {
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 1))
 
   try {
-    return ((await Rent.aggregate([
-      {
-        '$match': { createdAt: { $gte: minDate } }
-      },
-      {
-        '$group': {
-          _id: { website: '$website' },
-          count: {
-            $sum: 1
-          }
-        }
-      }
-    ])) as unknown as {
-      _id: { website: string }, count: number
-    }[]).reduce((prev, obj) => {
+    return (
+      (await Rent.aggregate([
+        {
+          $match: { createdAt: { $gte: minDate } },
+        },
+        {
+          $group: {
+            _id: { website: '$website' },
+            count: {
+              $sum: 1,
+            },
+          },
+        },
+      ])) as unknown as {
+        _id: { website: string };
+        count: number;
+      }[]
+    ).reduce((prev, obj) => {
       prev[obj._id.website] = obj.count
       return prev
     }, {})

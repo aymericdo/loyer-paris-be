@@ -1,7 +1,7 @@
-import { IncompleteRent } from '@db/db'
-import { ApiError } from '@interfaces/shared'
-import { PrettyLog } from './pretty-log'
-import { SentryService } from './sentry'
+import { IncompleteRent } from '@db/db';
+import { ApiError } from '@interfaces/shared';
+import { PrettyLog } from './pretty-log';
+import { SentryService } from './sentry';
 
 export enum ERROR_CODE {
   Other = 'other',
@@ -14,7 +14,7 @@ export enum ERROR_CODE {
   Partner = 'partner',
 }
 
-export const ERROR500_MSG = 'ERROR 500'
+export const ERROR500_MSG = 'ERROR 500';
 
 export class ApiErrorsService {
   error: ApiError = null
@@ -27,27 +27,27 @@ export class ApiErrorsService {
     if (needLog) {
       switch (this.error?.error as ERROR_CODE) {
         case ERROR_CODE.Filter:
-          PrettyLog.call(this.error.msg, 'red')
+          PrettyLog.call(this.error.msg, 'red');
           new SentryService().error(this.error.msg)
-          break
+          break;
         case ERROR_CODE.Partner:
         case ERROR_CODE.City:
           PrettyLog.call(this.error.msg)
           new SentryService().light(this.error.msg)
-          break
+          break;
         case ERROR_CODE.Minimal:
         case ERROR_CODE.Other:
         case ERROR_CODE.Address:
         case ERROR_CODE.Price:
         case ERROR_CODE.Surface:
           new SentryService().warning(this.error.msg)
-          PrettyLog.call(this.error.msg, 'yellow')
+          PrettyLog.call(this.error.msg, 'yellow');
           break
         default: {
           const errorMsg = this.error.msg || ERROR500_MSG
-          PrettyLog.call(errorMsg, 'red')
+          PrettyLog.call(errorMsg, 'red');
           new SentryService().error(errorMsg)
-          break
+          break;
         }
       }
 
@@ -88,10 +88,10 @@ export class ApiErrorsService {
 
     try {
       await incompleteRent.save()
-      PrettyLog.call('incomplete ad saved', 'green')
+      PrettyLog.call('incomplete ad saved', 'green');
     } catch (err) {
       if (err.code === 11000) {
-        PrettyLog.call('⚠️  incomplete ad already saved', 'red')
+        PrettyLog.call('⚠️  incomplete ad already saved', 'red');
       } else {
         console.error(err)
       }

@@ -1,7 +1,7 @@
-import { PrettyLog } from '@services/pretty-log'
-import express, { Request, Response } from 'express'
+import { PrettyLog } from '@services/pretty-log';
+import express, { Request, Response } from 'express';
 const router = express.Router()
-import { Fnaim } from './fnaim'
+import { Fnaim } from './fnaim';
 
 router.post('/data/v2', getByDataV2)
 function getByDataV2(req: Request, res: Response) {

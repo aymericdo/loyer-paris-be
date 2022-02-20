@@ -1,28 +1,28 @@
-import { Rent } from '@db/db'
-import { PrettyLog } from '@services/pretty-log'
-import { AvailableCities } from '@services/address/city'
+import { Rent } from '@db/db';
+import { PrettyLog } from '@services/pretty-log';
+import { AvailableCities } from '@services/address/city';
 
 interface SavedInfo {
-  id: string
-  address: string
-  district: string
-  city: AvailableCities
-  hasFurniture?: boolean
-  isHouse?: boolean
-  isLegal: boolean
-  latitude?: number
-  longitude?: number
-  maxPrice: number
-  postalCode: string
-  price: number
-  priceExcludingCharges: number
-  renter?: string
-  roomCount?: number
-  stations?: string[]
-  surface: number
-  website: string
-  url: string
-  yearBuilt?: number[]
+  id: string;
+  address: string;
+  district: string;
+  city: AvailableCities;
+  hasFurniture?: boolean;
+  isHouse?: boolean;
+  isLegal: boolean;
+  latitude?: number;
+  longitude?: number;
+  maxPrice: number;
+  postalCode: string;
+  price: number;
+  priceExcludingCharges: number;
+  renter?: string;
+  roomCount?: number;
+  stations?: string[];
+  surface: number;
+  website: string;
+  url: string;
+  yearBuilt?: number[];
 }
 
 export class SaveRentService {
@@ -75,14 +75,14 @@ export class SaveRentService {
         yearBuilt: this.adToSave.yearBuilt,
       }),
     })
-    PrettyLog.call('saving ad')
+    PrettyLog.call('saving ad');
 
     try {
       await rent.save()
-      PrettyLog.call('ad saved', 'green')
+      PrettyLog.call('ad saved', 'green');
     } catch (err) {
       if (err.code === 11000) {
-        PrettyLog.call('⚠️  ad already saved', 'red')
+        PrettyLog.call('⚠️  ad already saved', 'red');
       } else {
         console.error(err)
       }

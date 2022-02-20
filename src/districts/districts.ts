@@ -1,9 +1,9 @@
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/pretty-log'
-import { DistrictsList } from '@services/districts'
+import { Response, Request } from 'express';
+import { PrettyLog } from '@services/pretty-log';
+import { DistrictsList } from '@services/districts';
 
 export function getDistricts(req: Request, res: Response) {
-  PrettyLog.call(`-> ${req.baseUrl} getDistricts`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} getDistricts`, 'blue');
   const city = req.params.city
   const districtList = new DistrictsList()
 
@@ -11,22 +11,22 @@ export function getDistricts(req: Request, res: Response) {
   switch (city) {
     case 'paris':
       geodata = districtList.parisGeodata()
-      break
+      break;
     case 'lille':
       geodata = districtList.lilleGeodata()
-      break
+      break;
     case 'plaine_commune':
       geodata = districtList.plaineCommuneGeodata()
-      break
+      break;
     case 'lyon':
       geodata = districtList.lyonGeodata()
-      break
+      break;
   }
 
   interface DistrictElem {
-    value: string
-    groupBy: string | null
-    displaySequence: number
+    value: string;
+    groupBy: string | null;
+    displaySequence: number;
   }
 
   res.json(

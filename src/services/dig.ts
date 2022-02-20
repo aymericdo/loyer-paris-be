@@ -1,14 +1,14 @@
-import * as cleanup from '@helpers/cleanup'
-import { regexString } from '@helpers/regex'
-import { stringToNumber } from '@helpers/string-to-number'
-import { Ad, CleanAd } from '@interfaces/ad'
-import { Coordinate } from '@interfaces/shared'
-import { YearBuiltService } from '@services/year-built'
-import { AddressStrategyFactory } from './address/address'
-import { AvailableCities, CityService } from './address/city'
-import { PostalCodeStrategyFactory } from './address/postalcode'
-import { ERROR_CODE } from './api-errors'
-import { PrettyLog } from './pretty-log'
+import * as cleanup from '@helpers/cleanup';
+import { regexString } from '@helpers/regex';
+import { stringToNumber } from '@helpers/string-to-number';
+import { Ad, CleanAd } from '@interfaces/ad';
+import { Coordinate } from '@interfaces/shared';
+import { YearBuiltService } from '@services/year-built';
+import { AddressStrategyFactory } from './address/address';
+import { AvailableCities, CityService } from './address/city';
+import { PostalCodeStrategyFactory } from './address/postalcode';
+import { ERROR_CODE } from './api-errors';
+import { PrettyLog } from './pretty-log';
 
 export class DigService {
   ad: Ad = null

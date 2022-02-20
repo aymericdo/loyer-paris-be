@@ -1,34 +1,30 @@
-import { Vega } from '@services/vega'
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/pretty-log'
-import * as rentService from '@db/rent.service'
-import { cityList } from '@services/address/city'
-import { ERROR500_MSG } from '@services/api-errors'
+import { Vega } from '@services/vega';
+import { Response, Request } from 'express';
+import { PrettyLog } from '@services/pretty-log';
+import * as rentService from '@db/rent.service';
+import { cityList } from '@services/address/city';
+import { ERROR500_MSG } from '@services/api-errors';
 
-export function getPriceDifference(
-  req: Request,
-  res: Response,
-
-) {
-  PrettyLog.call(`-> ${req.baseUrl} priceDifference`, 'blue')
+export function getPriceDifference(req: Request, res: Response) {
+  PrettyLog.call(`-> ${req.baseUrl} priceDifference`, 'blue');
   let postalCodePossibilities = []
   switch (req.params.city) {
     case 'paris':
       postalCodePossibilities = cityList.paris.postalCodePossibilities
-      break
+      break;
     case 'lille':
       postalCodePossibilities = cityList.lille.postalCodePossibilities
-      break
+      break;
     case 'plaine_commune':
       postalCodePossibilities = cityList.plaineCommune.postalCodePossibilities
-      break
+      break;
     case 'lyon':
       postalCodePossibilities = cityList.lyon.postalCodePossibilities
-      break
+      break;
   }
 
   const dateValue: string = req.query.dateValue as string
-  const dateRange: string[] = dateValue?.split(',')
+  const dateRange: string[] = dateValue?.split(',');
 
   rentService
     .getPriceDiffData(req.params.city, dateRange)
@@ -93,7 +89,7 @@ export function getPriceDifference(
       if (err.status) {
         res.status(err.status).json(err)
       } else {
-        PrettyLog.call(ERROR500_MSG, 'red')
+        PrettyLog.call(ERROR500_MSG, 'red');
         res.status(500).json(err)
       }
     })

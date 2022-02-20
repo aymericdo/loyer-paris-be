@@ -1,7 +1,7 @@
-import { virtualConsole } from '@helpers/jsdome'
-import { SelogerMapping } from '@interfaces/mapping'
-import { PARTICULIER_TERM } from '@websites/website'
-import jsdom from 'jsdom'
+import { virtualConsole } from '@helpers/jsdome';
+import { SelogerMapping } from '@interfaces/mapping';
+import { PARTICULIER_TERM } from '@websites/website';
+import jsdom from 'jsdom';
 const { JSDOM } = jsdom
 
 export class SelogerScrapping {
@@ -13,7 +13,7 @@ export class SelogerScrapping {
     const title =
       document.querySelector('.detail-title.title1') ||
       document.querySelector('.Title__ShowcaseTitleContainer-sc-4479bn-0') ||
-      document.querySelector('.Summarystyled__Title-sc-1u9xobv-3')
+      document.querySelector('.Summarystyled__Title-sc-1u9xobv-3');
     const description =
       document.querySelector('div.description-bien > section.categorie > p') ||
       document.querySelector(
@@ -34,7 +34,7 @@ export class SelogerScrapping {
       document.querySelector(
         '#root > div > main > div > div > div > p > span[class^=Localisationstyled]'
       ) ||
-      document.querySelector('p > span[class^=Localizationstyled__City]')
+      document.querySelector('p > span[class^=Localizationstyled__City]');
     const renter =
       document.querySelector('.agence-title') ||
       document.querySelector('.LightSummary__Title-f6k8ax-2.kqLAJb') ||
@@ -80,7 +80,7 @@ export class SelogerScrapping {
     let surface = null
     let rooms = null
 
-    let chargesArray = chargesElement && chargesElement.innerHTML.split('span')
+    let chargesArray = chargesElement && chargesElement.innerHTML.split('span');
     const chargesIndex =
       chargesArray &&
       chargesArray.indexOf(
@@ -90,13 +90,13 @@ export class SelogerScrapping {
       chargesArray && chargesArray.length && chargesArray[chargesIndex + 1]
 
     if (!charges) {
-      chargesArray = chargesElement && chargesElement.innerHTML.split('<br>')
+      chargesArray = chargesElement && chargesElement.innerHTML.split('<br>');
       charges =
         (chargesArray &&
           chargesArray.length > 1 &&
           chargesArray[1].match(/\d+/) &&
           chargesArray[1].match(/\d+/)[0]) ||
-        ''
+        '';
     }
 
     if (!charges) {
@@ -107,16 +107,16 @@ export class SelogerScrapping {
         (chargesElem &&
           chargesElem.textContent.match(/\d+/) &&
           chargesElem.textContent.match(/\d+/)[0]) ||
-        ''
+        '';
     }
 
     const furnished = optionsSection?.some((el) => {
       return el.textContent.match(/^Meublé/g)
-    })
+    });
 
     const yearBuilt = optionsSection?.find((el) => {
       return el.textContent.match(/^Année de construction/g)
-    })
+    });
 
     let isParticulier = false
 

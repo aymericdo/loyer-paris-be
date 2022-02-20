@@ -1,6 +1,6 @@
-import express, { Request, Response } from 'express'
-import { PrettyLog } from '@services/pretty-log'
-import { Orpi } from './orpi'
+import express, { Request, Response } from 'express';
+import { PrettyLog } from '@services/pretty-log';
+import { Orpi } from './orpi';
 const router = express.Router()
 
 // routes

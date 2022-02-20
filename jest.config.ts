@@ -1,6 +1,6 @@
-import type { Config } from '@jest/types'
+import type { Config } from '@jest/types';
 
-const { defaults: tsjPreset } = require('ts-jest/presets')
+const { defaults: tsjPreset } = require('ts-jest/presets');
 
 export default async (): Promise<Config.InitialOptions> => {
   return {
@@ -29,4 +29,4 @@ export default async (): Promise<Config.InitialOptions> => {
     },
     transform: tsjPreset.transform,
   }
-}
+};

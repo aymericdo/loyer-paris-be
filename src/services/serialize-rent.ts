@@ -1,32 +1,33 @@
-import { PrettyLog } from '@services/pretty-log'
-import { roundNumber } from '@helpers/round-number'
-import { FilteredResult } from '@interfaces/ad'
-import { YearBuiltService } from '@services/year-built'
-import { AvailableCities, cityList } from '@services/address/city'
+import { PrettyLog } from '@services/pretty-log';
+import { roundNumber } from '@helpers/round-number';
+import { FilteredResult } from '@interfaces/ad';
+import { YearBuiltService } from '@services/year-built';
+import { AvailableCities, cityList } from '@services/address/city';
 
 interface SerializedInfo {
-  address: string
-  charges?: number
-  hasCharges?: boolean
-  city: AvailableCities
-  hasFurniture?: boolean
-  isHouse?: boolean
-  isLegal: boolean
-  maxAuthorized: number
-  postalCode: string
-  price: number
-  priceExcludingCharges: number
-  roomCount?: number
-  surface: number
-  yearBuilt?: number[]
+  address: string;
+  charges?: number;
+  hasCharges?: boolean;
+  city: AvailableCities;
+  hasFurniture?: boolean;
+  isHouse?: boolean;
+  isLegal: boolean;
+  maxAuthorized: number;
+  postalCode: string;
+  price: number;
+  priceExcludingCharges: number;
+  roomCount?: number;
+  surface: number;
+  yearBuilt?: number[];
 }
 
 export class SerializeRentService {
   MORE_INFO = {
-    paris: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
+    paris:
+      'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
     lyon: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
     lille: 'https://encadrement-loyers.lille.fr/',
-    plaineCommune: 'https://plainecommune.fr/encadrementdesloyers/'
+    plaineCommune: 'https://plainecommune.fr/encadrementdesloyers/',
   }
   serializedInfo: SerializedInfo = null
   filteredResult: FilteredResult = null
@@ -37,7 +38,7 @@ export class SerializeRentService {
   }
 
   serialize() {
-    PrettyLog.call('serializing answer', 'green')
+    PrettyLog.call('serializing answer', 'green');
 
     const {
       address,

@@ -1,11 +1,11 @@
-import * as cleanup from '@helpers/cleanup'
-import { Ad } from '@interfaces/ad'
-import { FacebookMapping } from '@interfaces/mapping'
-import { PARTICULIER_TERM, Website, WebsiteType } from '@websites/website'
-import { FacebookScrapping } from './facebook.scrapping'
-import { ERROR_CODE } from '@services/api-errors'
+import * as cleanup from '@helpers/cleanup';
+import { Ad } from '@interfaces/ad';
+import { FacebookMapping } from '@interfaces/mapping';
+import { PARTICULIER_TERM, Website, WebsiteType } from '@websites/website';
+import { FacebookScrapping } from './facebook.scrapping';
+import { ERROR_CODE } from '@services/api-errors';
 export class Facebook extends Website {
-  website: WebsiteType = 'facebook'
+  website: WebsiteType = 'facebook';
 
   async mapping(): Promise<Ad> {
     let ad: FacebookMapping = null

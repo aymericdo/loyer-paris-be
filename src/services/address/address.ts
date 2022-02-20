@@ -1,14 +1,14 @@
-import { regexString } from '@helpers/regex'
-import { Ad } from '@interfaces/ad'
-import { AddressItem, Coordinate } from '@interfaces/shared'
-import { cityList } from './city'
-import * as cleanup from '@helpers/cleanup'
+import { regexString } from '@helpers/regex';
+import { Ad } from '@interfaces/ad';
+import { AddressItem, Coordinate } from '@interfaces/shared';
+import { cityList } from './city';
+import * as cleanup from '@helpers/cleanup';
 import {
   LilleAddress,
   LyonAddress,
   ParisAddress,
   PlaineCommuneAddress,
-} from '@db/db'
+} from '@db/db';
 
 const dbMapping = {
   paris: ParisAddress,

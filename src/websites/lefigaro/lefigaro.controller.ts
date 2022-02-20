@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express'
+import express, { Request, Response } from 'express';
 const router = express.Router()
-import { PrettyLog } from '@services/pretty-log'
-import { LeFigaro } from './lefigaro'
+import { PrettyLog } from '@services/pretty-log';
+import { LeFigaro } from './lefigaro';
 
 // routes
 router.post('/data', getByData)

@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express'
+import express, { Request, Response } from 'express';
 const router = express.Router()
-import { PrettyLog } from '@services/pretty-log'
-import { LogicImmo } from './logicimmo'
+import { PrettyLog } from '@services/pretty-log';
+import { LogicImmo } from './logicimmo';
 
 // routes
 router.post('/data', getByData)

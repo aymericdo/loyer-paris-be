@@ -1,12 +1,12 @@
-import * as cleanup from '@helpers/cleanup'
-import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website'
-import { Ad } from '@interfaces/ad'
-import { LocserviceMapping } from '@interfaces/mapping'
-import { ERROR_CODE } from '@services/api-errors'
-import { LocserviceScrapping } from './locservice.scrapping'
+import * as cleanup from '@helpers/cleanup';
+import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website';
+import { Ad } from '@interfaces/ad';
+import { LocserviceMapping } from '@interfaces/mapping';
+import { ERROR_CODE } from '@services/api-errors';
+import { LocserviceScrapping } from './locservice.scrapping';
 
 export class Locservice extends Website {
-  website: WebsiteType = 'locservice'
+  website: WebsiteType = 'locservice';
 
   async mapping(): Promise<Ad> {
     let ad: LocserviceMapping = null

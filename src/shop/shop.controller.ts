@@ -1,12 +1,12 @@
-import express, { Response, Request } from 'express'
-import * as rentService from '@db/rent.service'
-import { PrettyLog } from '@services/pretty-log'
-import { ERROR500_MSG } from '@services/api-errors'
+import express, { Response, Request } from 'express';
+import * as rentService from '@db/rent.service';
+import { PrettyLog } from '@services/pretty-log';
+import { ERROR500_MSG } from '@services/api-errors';
 const router = express.Router()
 
 router.get('/', getRelevantAds)
 function getRelevantAds(req: Request, res: Response) {
-  PrettyLog.call(`-> ${req.baseUrl} getRelevantAds`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} getRelevantAds`, 'blue');
   const page: number = +req.query.page
   const perPage: number = +req.query.perPage
 
@@ -32,7 +32,8 @@ function getRelevantAds(req: Request, res: Response) {
       : furnishedValue === 'nonFurnished'
         ? false
         : null
-  const isLegal: boolean = isLegalValue != null ? isLegalValue === 'true' : true
+  const isLegal: boolean =
+    isLegalValue != null ? isLegalValue === 'true' : true
   const isHouse: boolean = isHouseValue != 'null' ? +isHouseValue === 1 : null
 
   const filter = {
@@ -62,7 +63,7 @@ function getRelevantAds(req: Request, res: Response) {
       if (err.status) {
         res.status(err.status).json(err)
       } else {
-        PrettyLog.call(ERROR500_MSG, 'red')
+        PrettyLog.call(ERROR500_MSG, 'red');
         res.status(500).json(err)
       }
     })

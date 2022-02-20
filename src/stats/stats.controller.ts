@@ -1,24 +1,24 @@
-import express, { NextFunction, Request, Response } from 'express'
-import axios from 'axios'
-import { PrettyLog } from '@services/pretty-log'
-import { IpService } from '@services/ip'
-import { getMap } from './map'
-import { getChloroplethMap } from './chloropleth-map'
-import { getPriceDifference } from './price-difference'
-import { getLegalPerSurface } from './legal-per-surface'
-import { getAdoptionRate } from './adoption'
-import { getPriceVariation } from './price-variation'
-import { getIsLegalVariation } from './is-legal-variation'
-import { getLegalPerRenter } from './legal-per-renter'
-import { getLegalPerWebsite } from './legal-per-website'
-import { getDistricts } from './districts'
-import { getWelcomeText } from './welcome-text'
-import { getLegalPerClassicRenter } from './legal-per-classic-renter'
+import express, { NextFunction, Request, Response } from 'express';
+import axios from 'axios';
+import { PrettyLog } from '@services/pretty-log';
+import { IpService } from '@services/ip';
+import { getMap } from './map';
+import { getChloroplethMap } from './chloropleth-map';
+import { getPriceDifference } from './price-difference';
+import { getLegalPerSurface } from './legal-per-surface';
+import { getAdoptionRate } from './adoption';
+import { getPriceVariation } from './price-variation';
+import { getIsLegalVariation } from './is-legal-variation';
+import { getLegalPerRenter } from './legal-per-renter';
+import { getLegalPerWebsite } from './legal-per-website';
+import { getDistricts } from './districts';
+import { getWelcomeText } from './welcome-text';
+import { getLegalPerClassicRenter } from './legal-per-classic-renter';
 const router = express.Router()
 
 router.get('/need-captcha', getNeedCaptcha)
 function getNeedCaptcha(req: Request, res: Response) {
-  PrettyLog.call(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
+  PrettyLog.call(`-> ${req.baseUrl} getNeedCaptcha`, 'blue');
   const ipService = new IpService(req)
   res.status(200).json(!ipService.isIpCached())
 }
@@ -62,7 +62,7 @@ router.use('/', function (req: Request, res: Response, next: NextFunction) {
         return res
           .status(500)
           .json({ message: 'oops, something went wrong on our side' })
-      })
+      });
   }
 })
 

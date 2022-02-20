@@ -1,7 +1,7 @@
-import { closeAllConnections } from '@db/db'
-import { Mapping } from '@interfaces/mapping'
-import { disconnect } from 'mongoose'
-import { SeLoger } from '../seloger'
+import { closeAllConnections } from '@db/db';
+import { Mapping } from '@interfaces/mapping';
+import { disconnect } from 'mongoose';
+import { SeLoger } from '../seloger';
 
 describe('seloger', () => {
   afterAll(() => closeAllConnections())
@@ -59,9 +59,10 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: 0.81 },
         },
         isLegal: false,
-        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712'
+        moreInfo:
+          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
-    })
+    });
   })
 
   describe('lille', () => {
@@ -117,9 +118,9 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: 15.47 },
         },
         isLegal: false,
-        moreInfo: 'https://encadrement-loyers.lille.fr/'
+        moreInfo: 'https://encadrement-loyers.lille.fr/',
       })
-    })
+    });
   })
 
   describe('lyon', () => {
@@ -175,9 +176,10 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: null },
         },
         isLegal: true,
-        moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html'
+        moreInfo:
+          'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
-    })
+    });
 
     test('returns clean ad - villeurbanne', async () => {
       const body: Mapping = {
@@ -231,8 +233,9 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: null },
         },
         isLegal: true,
-        moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html'
+        moreInfo:
+          'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
-    })
+    });
   })
-})
+});

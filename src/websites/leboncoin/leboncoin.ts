@@ -1,12 +1,12 @@
-import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website'
-import * as cleanup from '@helpers/cleanup'
-import { Ad } from '@interfaces/ad'
-import { LeboncoinMapping } from '@interfaces/mapping'
-import { LeboncoinScrapping } from './leboncoin.scrapping'
-import { ERROR_CODE } from '@services/api-errors'
+import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website';
+import * as cleanup from '@helpers/cleanup';
+import { Ad } from '@interfaces/ad';
+import { LeboncoinMapping } from '@interfaces/mapping';
+import { LeboncoinScrapping } from './leboncoin.scrapping';
+import { ERROR_CODE } from '@services/api-errors';
 
 export class LeBonCoin extends Website {
-  website: WebsiteType = 'leboncoin'
+  website: WebsiteType = 'leboncoin';
 
   async mapping(): Promise<Ad> {
     let ad: LeboncoinMapping = null

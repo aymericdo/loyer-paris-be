@@ -1,5 +1,5 @@
-import { Request } from 'express'
-import NodeCache from 'node-cache'
+import { Request } from 'express';
+import NodeCache from 'node-cache';
 
 const ipCache: NodeCache = new NodeCache({
   stdTTL: 600,

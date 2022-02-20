@@ -1,9 +1,9 @@
-import * as fs from 'fs'
-import path from 'path'
-import inside from 'point-in-polygon'
-import { Coordinate } from '@interfaces/shared'
-import { PlaineCommuneDistrictItem } from '@interfaces/json-item-plaine-commune'
-import { Memoize } from 'typescript-memoize'
+import * as fs from 'fs';
+import path from 'path';
+import inside from 'point-in-polygon';
+import { Coordinate } from '@interfaces/shared';
+import { PlaineCommuneDistrictItem } from '@interfaces/json-item-plaine-commune';
+import { Memoize } from 'typescript-memoize';
 
 export class PlaineCommuneDistrictService {
   coordinates: Coordinate = null
@@ -28,7 +28,10 @@ export class PlaineCommuneDistrictService {
     const districtFromCoordinate =
       this.coordinates?.lat &&
       this.coordinates?.lng &&
-      this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
+      this.getDistrictFromCoordinate(
+        this.coordinates.lat,
+        this.coordinates.lng
+      )
 
     return districtFromCoordinate?.length
       ? districtFromCoordinate
@@ -39,7 +42,7 @@ export class PlaineCommuneDistrictService {
     if (this.postalCode) {
       return this.getDistrictsJson().features.filter((district) => {
         return district.properties.CODE_POST === this.postalCode
-      })
+      });
     } else {
       return []
     }
@@ -48,12 +51,12 @@ export class PlaineCommuneDistrictService {
   private getDistrictFromName(): PlaineCommuneDistrictItem[] {
     return this.getDistrictsJson().features.filter((district) => {
       return +district.properties.Zone === +this.districtName.match(/\d+/)[0]
-    })
+    });
   }
 
   @Memoize()
   private getDistrictsJson(): {
-    features: PlaineCommuneDistrictItem[]
+    features: PlaineCommuneDistrictItem[];
     } {
     return JSON.parse(
       fs.readFileSync(

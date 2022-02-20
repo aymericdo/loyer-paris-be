@@ -1,5 +1,5 @@
-import * as Sentry from '@sentry/node'
-import { Severity } from '@sentry/node'
+import * as Sentry from '@sentry/node';
+import { Severity } from '@sentry/node';
 
 export class SentryService {
   error(message: string) {

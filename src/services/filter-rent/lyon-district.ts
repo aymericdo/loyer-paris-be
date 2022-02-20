@@ -1,9 +1,9 @@
-import * as fs from 'fs'
-import path from 'path'
-import inside from 'point-in-polygon'
-import { Coordinate } from '@interfaces/shared'
-import { LyonAddressItem } from '@interfaces/json-item-lyon'
-import { Memoize } from 'typescript-memoize'
+import * as fs from 'fs';
+import path from 'path';
+import inside from 'point-in-polygon';
+import { Coordinate } from '@interfaces/shared';
+import { LyonAddressItem } from '@interfaces/json-item-lyon';
+import { Memoize } from 'typescript-memoize';
 
 export class LyonDistrictService {
   coordinates: Coordinate = null
@@ -28,7 +28,10 @@ export class LyonDistrictService {
     const districtFromCoordinate =
       this.coordinates?.lat &&
       this.coordinates?.lng &&
-      this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
+      this.getDistrictFromCoordinate(
+        this.coordinates.lat,
+        this.coordinates.lng
+      )
 
     return districtFromCoordinate?.length
       ? districtFromCoordinate
@@ -41,7 +44,7 @@ export class LyonDistrictService {
         return (
           this.getPostalCode(district.properties.commune) === this.postalCode
         )
-      })
+      });
     } else {
       return []
     }
@@ -50,12 +53,12 @@ export class LyonDistrictService {
   private getDistrictFromName(): LyonAddressItem[] {
     return this.getDistrictsJson().features.filter((district) => {
       return +district.properties.zonage === +this.districtName.match(/\d+/)[0]
-    })
+    });
   }
 
   @Memoize()
   private getDistrictsJson(): {
-    features: LyonAddressItem[]
+    features: LyonAddressItem[];
     } {
     return JSON.parse(
       fs.readFileSync(path.join('json-data/encadrements_lyon.json'), 'utf8')
@@ -65,25 +68,25 @@ export class LyonDistrictService {
   private getPostalCode(cityName: string): string {
     switch (cityName) {
       case 'Villeurbanne':
-        return '69100'
+        return '69100';
       case 'Lyon 1er Arrondissement':
-        return '69001'
+        return '69001';
       case 'Lyon 2e Arrondissement':
-        return '69002'
+        return '69002';
       case 'Lyon 3e Arrondissement':
-        return '69003'
+        return '69003';
       case 'Lyon 4e Arrondissement':
-        return '69004'
+        return '69004';
       case 'Lyon 5e Arrondissement':
-        return '69005'
+        return '69005';
       case 'Lyon 6e Arrondissement':
-        return '69006'
+        return '69006';
       case 'Lyon 7e Arrondissement':
-        return '69007'
+        return '69007';
       case 'Lyon 8e Arrondissement':
-        return '69008'
+        return '69008';
       case 'Lyon 9e Arrondissement':
-        return '69009'
+        return '69009';
     }
   }
 
