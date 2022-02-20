@@ -26,6 +26,7 @@ export class NameAndShameService {
         }).join('\n')
         tweetText += `\ncc ${prefecture}`
         const { data: createdTweet } = await this.v2Client.tweet(tweetText)
+        // eslint-disable-next-line no-console
         console.log('Tweet', createdTweet.id, ':', createdTweet.text, 'has been sent !')
       }
     })

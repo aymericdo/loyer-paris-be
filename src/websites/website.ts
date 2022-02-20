@@ -17,20 +17,20 @@ import { AvailableCities, cityList, CityService } from '@services/address/city'
 export const PARTICULIER_TERM = 'Particulier'
 
 export const WEBSITE_LIST = [
-  'bellesdemeures', 
-  'bienici', 
-  'facebook', 
-  'fnaim', 
-  'gensdeconfiance', 
-  'leboncoin', 
-  'lefigaro', 
-  'locservice', 
-  'logicimmo', 
-  'loueragile', 
-  'luxresidence', 
-  'orpi', 
-  'pap', 
-  'seloger', 
+  'bellesdemeures',
+  'bienici',
+  'facebook',
+  'fnaim',
+  'gensdeconfiance',
+  'leboncoin',
+  'lefigaro',
+  'locservice',
+  'logicimmo',
+  'loueragile',
+  'luxresidence',
+  'orpi',
+  'pap',
+  'seloger',
   'superimmo'
 ] as const
 

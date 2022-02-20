@@ -13,7 +13,8 @@ export class Slack {
         channel,
         text: message,
       })
-    
+
+      // eslint-disable-next-line no-console
       console.log(result)
     }
     catch (error) {

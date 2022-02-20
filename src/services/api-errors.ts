@@ -22,7 +22,7 @@ export class ApiErrorsService {
   constructor(error: ApiError) {
     this.error = error
   }
-  
+
   getStatus(needLog = true): number {
     if (needLog) {
       switch (this.error?.error as ERROR_CODE) {
@@ -50,12 +50,11 @@ export class ApiErrorsService {
           break
         }
       }
-      
+
       if (this.error?.isIncompleteAd) {
         this.saveIncompleteRent()
       }
     }
-
 
     switch (this.error?.error as ERROR_CODE) {
       case ERROR_CODE.Minimal:
@@ -94,7 +93,7 @@ export class ApiErrorsService {
       if (err.code === 11000) {
         PrettyLog.call('⚠️  incomplete ad already saved', 'red')
       } else {
-        console.log(err)
+        console.error(err)
       }
     }
   }

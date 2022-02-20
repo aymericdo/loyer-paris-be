@@ -58,7 +58,7 @@ function getRelevantAds(req: Request, res: Response) {
       res.json(data)
     })
     .catch((err) => {
-      console.log(err)
+      console.error(err)
       if (err.status) {
         res.status(err.status).json(err)
       } else {

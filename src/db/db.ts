@@ -12,7 +12,7 @@ const rentConnection = createConnection(
 )
 
 rentConnection.catch((e) => {
-  console.log(e)
+  console.error(e)
 })
 
 const empriseBatieConnection = createConnection(
@@ -25,7 +25,7 @@ const empriseBatieConnection = createConnection(
 )
 
 empriseBatieConnection.catch((e) => {
-  console.log(e)
+  console.error(e)
 })
 
 const encadrementAddress1Connection = createConnection(
@@ -38,7 +38,7 @@ const encadrementAddress1Connection = createConnection(
 )
 
 encadrementAddress1Connection.catch((e) => {
-  console.log(e)
+  console.error(e)
 })
 
 const rentSchema = require('./rent.model')
