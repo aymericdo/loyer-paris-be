@@ -49,18 +49,19 @@ describe('bienici', () => {
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Roquette' },
+          neighborhood: { order: 0, value: 'Sainte-Marguerite' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: '2' },
           surface: { order: 3, value: 33 },
-          dateRange: { order: 4, value: 'Avant 1946' },
+          dateRange: { order: 4, value: 'Après 1990' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 33.12 },
-          maxAuthorized: { order: 7, value: 1092.96 },
-          promoPercentage: { order: 8, value: 4.13 },
+          max: { order: 6, value: 34.08 },
+          maxAuthorized: { order: 7, value: 1124.64 },
+          promoPercentage: { order: 8, value: 1.35 },
         },
         isLegal: false,
-        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712'
+        moreInfo:
+          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
   })
@@ -118,7 +119,7 @@ describe('bienici', () => {
           promoPercentage: { order: 8, value: 53.33 },
         },
         isLegal: false,
-        moreInfo: 'https://encadrement-loyers.lille.fr/'
+        moreInfo: 'https://encadrement-loyers.lille.fr/',
       })
     })
   })

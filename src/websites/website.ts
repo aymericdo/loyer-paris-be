@@ -17,21 +17,21 @@ import { AvailableCities, cityList, CityService } from '@services/address/city'
 export const PARTICULIER_TERM = 'Particulier'
 
 export const WEBSITE_LIST = [
-  'bellesdemeures', 
-  'bienici', 
-  'facebook', 
-  'fnaim', 
-  'gensdeconfiance', 
-  'leboncoin', 
-  'lefigaro', 
-  'locservice', 
-  'logicimmo', 
-  'loueragile', 
-  'luxresidence', 
-  'orpi', 
-  'pap', 
-  'seloger', 
-  'superimmo'
+  'bellesdemeures',
+  'bienici',
+  'facebook',
+  'fnaim',
+  'gensdeconfiance',
+  'leboncoin',
+  'lefigaro',
+  'locservice',
+  'logicimmo',
+  'loueragile',
+  'luxresidence',
+  'orpi',
+  'pap',
+  'seloger',
+  'superimmo',
 ] as const
 
 export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']
@@ -59,12 +59,13 @@ export abstract class Website {
         this.res.json(data)
       })
       .catch((err: ApiError) => {
+        console.log(err)
         const status = new ApiErrorsService(err).getStatus()
         this.res.status(status).json(err)
       })
   }
 
-  abstract mapping(): Promise<Ad>
+  abstract mapping(): Promise<Ad>;
 
   async digData() {
     const ad: Ad = await this.mapping()
@@ -139,6 +140,7 @@ export abstract class Website {
         throw { error: ERROR_CODE.Filter, msg: 'no match found' }
       }
     } catch (err) {
+      console.log(err)
       const incompleteAd: IncompleteAd = {
         id: ad.id,
         website: this.website,

@@ -1,5 +1,5 @@
-import { Ad } from "@interfaces/ad";
-import { cityList } from "./city";
+import { Ad } from '@interfaces/ad'
+import { cityList } from './city'
 
 export interface PostalCodeStrategy {
   getPostalCode(): string;
@@ -7,41 +7,41 @@ export interface PostalCodeStrategy {
 
 export class PostalCodeStrategyFactory {
   getDiggerStrategy(city: string, ad: Ad): PostalCodeStrategy {
-    const parisStrategy = new ParisPostalCodeStrategy(city, ad);
-    const lyonStrategy = new LyonPostalCodeStrategy(city, ad);
-    const defaultStrategy = new DefaultPostalCodeStrategy(city, ad);
+    const parisStrategy = new ParisPostalCodeStrategy(city, ad)
+    const lyonStrategy = new LyonPostalCodeStrategy(city, ad)
+    const defaultStrategy = new DefaultPostalCodeStrategy(city, ad)
     switch (city) {
-      case "paris": {
-        return parisStrategy;
+      case 'paris': {
+        return parisStrategy
       }
-      case "lyon":
-      case "villeurbanne": {
-        return lyonStrategy;
+      case 'lyon':
+      case 'villeurbanne': {
+        return lyonStrategy
       }
       default: {
-        return defaultStrategy;
+        return defaultStrategy
       }
     }
   }
 }
 
 export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
-  private city: string;
-  private ad: Ad;
+  private city: string
+  private ad: Ad
 
   constructor(city: string, ad: Ad) {
-    this.city = city;
-    this.ad = ad;
+    this.city = city
+    this.ad = ad
   }
 
   public getPostalCode(): string {
-    return this.ad.postalCode || this.digForPostalCode(this.city, this.ad);
+    return this.ad.postalCode || this.digForPostalCode(this.city, this.ad)
   }
 
   protected digForPostalCode(city: string, ad: Ad): string {
     // for hellemmes and lomme
     if (cityList[city].postalCodePossibilities.length === 1) {
-      return cityList[city].postalCodePossibilities[0];
+      return cityList[city].postalCodePossibilities[0]
     }
 
     const postalCode =
@@ -54,46 +54,46 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
           this.digForPostalCode2(city, ad.title))) ||
       (ad.description &&
         (this.digForPostalCode1(city, ad.description) ||
-          this.digForPostalCode2(city, ad.description)));
+          this.digForPostalCode2(city, ad.description)))
 
     return postalCode &&
       cityList[city].postalCodePossibilities.includes(postalCode.toString())
       ? postalCode
-      : null;
+      : null
   }
 
   protected digForPostalCode1(city: string, text: string): string {
-    const postalCodeRe = new RegExp(cityList[city].postalCodeRegex[0]);
-    return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim();
+    const postalCodeRe = new RegExp(cityList[city].postalCodeRegex[0])
+    return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
   }
 
   protected digForPostalCode2(city: string, text: string): string {
-    return null;
+    return null
   }
 }
 
 export class ParisPostalCodeStrategy extends DefaultPostalCodeStrategy {
   protected digForPostalCode2(city: string, text: string): string {
-    console.log("p2");
-    const postalCode2Re = new RegExp(cityList[city].postalCodeRegex[1]);
-    const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0];
+    console.log('p2')
+    const postalCode2Re = new RegExp(cityList[city].postalCodeRegex[1])
+    const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
     return match
       ? match.trim().length === 1
         ? `7500${match.trim()}`
         : `750${match.trim()}`
-      : null;
+      : null
   }
 }
 
 export class LyonPostalCodeStrategy extends DefaultPostalCodeStrategy {
   protected digForPostalCode2(city: string, text: string): string {
     const postalCode2Re =
-      city === "lyon" && new RegExp(cityList[city].postalCodeRegex[1]);
-    const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0];
+      city === 'lyon' && new RegExp(cityList[city].postalCodeRegex[1])
+    const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
     return match
       ? match.trim().length === 1
         ? `6900${match.trim()}`
         : `690${match.trim()}`
-      : null;
+      : null
   }
 }

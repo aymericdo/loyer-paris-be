@@ -6,7 +6,6 @@ import {
   ParisAddress,
   PlaineCommuneAddress,
 } from '@db/db'
-import { ParisAddressService } from '@services/address/paris-address'
 import { ParisDistrictService } from '@services/filter-rent/paris-district'
 import { LilleDistrictService } from '@services/filter-rent/lille-district'
 import { PlaineCommuneDistrictService } from '@services/filter-rent/plaine-commune-district'
@@ -38,7 +37,7 @@ export async function getAddresses(req: Request, res: Response) {
 
       data = data.map((elem) => {
         const parisDistrictService = new ParisDistrictService(
-          ParisAddressService.postalCodeFormat(elem.fields.c_ar.toString()),
+          this.postalCodeFormat(elem.fields.c_ar.toString()),
           {
             lng: elem.geometry.coordinates[0],
             lat: elem.geometry.coordinates[1],

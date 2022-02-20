@@ -5,11 +5,11 @@ import { PrettyLog } from '../pretty-log'
 
 type CityList = {
   [key: string]: {
-    mainCity: 'paris' | 'lille' | 'plaineCommune' | 'lyon'
-    postalCodePossibilities: string[]
-    postalCodeRegex: RegExp[]
-  }
-}
+    mainCity: 'paris' | 'lille' | 'plaineCommune' | 'lyon';
+    postalCodePossibilities: string[];
+    postalCodeRegex: RegExp[];
+  };
+};
 
 export const cityList: CityList = {
   paris: {
@@ -144,7 +144,7 @@ export const cityList: CityList = {
   },
 }
 
-export type AvailableCities = keyof typeof cityList & string
+export type AvailableCities = keyof typeof cityList & string;
 
 export class CityService {
   cityInList: AvailableCities
@@ -153,7 +153,11 @@ export class CityService {
     const cityName = cleanup.string(ad.cityLabel)
 
     if (!cityName || !cityName?.length) {
-      throw { error: ERROR_CODE.Address, msg: 'city not found', isIncompleteAd: true }
+      throw {
+        error: ERROR_CODE.Address,
+        msg: 'city not found',
+        isIncompleteAd: true,
+      }
     }
 
     const cityInList: AvailableCities = Object.keys(cityList).find((city) =>

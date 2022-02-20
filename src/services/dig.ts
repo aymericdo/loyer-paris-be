@@ -4,17 +4,11 @@ import { stringToNumber } from "@helpers/string-to-number";
 import { Ad, CleanAd } from "@interfaces/ad";
 import { Coordinate } from "@interfaces/shared";
 import { YearBuiltService } from "@services/year-built";
-import { ERROR_CODE } from "./api-errors";
-import { AvailableCities, cityList, CityService } from "./address/city";
-import { LilleAddressService } from "./address/lille-address";
-import { ParisAddressService } from "./address/paris-address";
-import { LyonAddressService } from "./address/lyon-address";
-import { AddressService } from "./address/address-service";
-import { PlaineCommuneAddressService } from "./address/plaine-commune-address";
-import { PrettyLog } from "./pretty-log";
-import { PostalCodeStrategyFactory } from "./address/postalcode";
 import { AddressStrategyFactory } from "./address/address";
-import { StationService } from "./address/station";
+import { AvailableCities, CityService } from "./address/city";
+import { PostalCodeStrategyFactory } from "./address/postalcode";
+import { ERROR_CODE } from "./api-errors";
+import { PrettyLog } from "./pretty-log";
 
 export class DigService {
   ad: Ad = null;
@@ -64,25 +58,8 @@ export class DigService {
   private async digForAddress(
     city: AvailableCities
   ): Promise<[string, string, string[], Coordinate, Coordinate]> {
-    let addressService: AddressService;
-    switch (cityList[city].mainCity) {
-      case "paris":
-        addressService = new ParisAddressService("paris", this.ad);
-        break;
-      case "lille":
-        addressService = new LilleAddressService(city, this.ad);
-        break;
-      case "plaineCommune":
-        addressService = new PlaineCommuneAddressService(city, this.ad);
-        break;
-      case "lyon":
-        addressService = new LyonAddressService(city, this.ad);
-        break;
-    }
     const postalCodeStrategy =
       new PostalCodeStrategyFactory().getDiggerStrategy(city, this.ad);
-
-    const stationService = new StationService();
 
     // Order is important here
     const postalCode = postalCodeStrategy.getPostalCode();
@@ -93,7 +70,8 @@ export class DigService {
     );
     const [address, coordinates, blurryCoordinates] =
       await addressStrategy.getAddress();
-    const stations = stationService.getStations(city, this.ad);
+
+    const stations = this.ad.stations;
 
     if (!address && !postalCode && !coordinates) {
       throw {
@@ -157,12 +135,12 @@ export class DigService {
       ? !!this.ad.furnished
       : (furnitureFromDescription && furnitureFromDescription.length > 0) ||
         (furnitureFromTitle && furnitureFromTitle.length > 0)
-      ? true
-      : (nonFurnitureFromDescription &&
+        ? true
+        : (nonFurnitureFromDescription &&
           nonFurnitureFromDescription.length > 0) ||
-        (nonFurnitureFromTitle && nonFurnitureFromTitle.length > 0)
-      ? false
-      : null;
+          (nonFurnitureFromTitle && nonFurnitureFromTitle.length > 0)
+          ? false
+          : null;
   }
 
   private digForSurface(): number {
