@@ -1,7 +1,7 @@
-import { closeAllConnections } from '@db/db';
-import { Mapping } from '@interfaces/mapping';
-import { disconnect } from 'mongoose';
-import { Pap } from '../pap';
+import { closeAllConnections } from '@db/db'
+import { Mapping } from '@interfaces/mapping'
+import { disconnect } from 'mongoose'
+import { Pap } from '../pap'
 
 describe('pap', () => {
   afterAll(() => closeAllConnections())
@@ -118,7 +118,7 @@ describe('pap', () => {
         moreInfo:
           'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
-    });
+    })
   })
 
   describe('lille', () => {
@@ -180,7 +180,7 @@ describe('pap', () => {
         isLegal: true,
         moreInfo: 'https://encadrement-loyers.lille.fr/',
       })
-    });
+    })
   })
 
   describe('lyon', () => {
@@ -246,7 +246,7 @@ describe('pap', () => {
         moreInfo:
           'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
-    });
+    })
 
     test('returns clean ad - lyon', async () => {
       const body: Mapping = {
@@ -313,6 +313,6 @@ describe('pap', () => {
         moreInfo:
           'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
-    });
+    })
   })
-});
+})

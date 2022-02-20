@@ -1,8 +1,8 @@
-import { PrettyLog } from '@services/pretty-log';
-import { roundNumber } from '@helpers/round-number';
-import { FilteredResult } from '@interfaces/ad';
-import { YearBuiltService } from '@services/year-built';
-import { AvailableCities, cityList } from '@services/address/city';
+import { PrettyLog } from '@services/pretty-log'
+import { roundNumber } from '@helpers/round-number'
+import { FilteredResult } from '@interfaces/ad'
+import { YearBuiltService } from '@services/year-built'
+import { AvailableCities, cityList } from '@services/address/city'
 
 interface SerializedInfo {
   address: string;
@@ -38,7 +38,7 @@ export class SerializeRentService {
   }
 
   serialize() {
-    PrettyLog.call('serializing answer', 'green');
+    PrettyLog.call('serializing answer', 'green')
 
     const {
       address,

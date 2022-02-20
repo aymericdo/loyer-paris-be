@@ -1,12 +1,12 @@
-import * as cleanup from '@helpers/cleanup';
-import { GensdeconfianceMapping } from '@interfaces/mapping';
-import { Ad } from '@interfaces/ad';
-import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website';
-import { GensdeconfianceScrapping } from './gensdeconfiance.scrapping';
-import { ERROR_CODE } from '@services/api-errors';
+import * as cleanup from '@helpers/cleanup'
+import { GensdeconfianceMapping } from '@interfaces/mapping'
+import { Ad } from '@interfaces/ad'
+import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website'
+import { GensdeconfianceScrapping } from './gensdeconfiance.scrapping'
+import { ERROR_CODE } from '@services/api-errors'
 
 export class Gensdeconfiance extends Website {
-  website: WebsiteType = 'gensdeconfiance';
+  website: WebsiteType = 'gensdeconfiance'
 
   async mapping(): Promise<Ad> {
     let ad: GensdeconfianceMapping = null

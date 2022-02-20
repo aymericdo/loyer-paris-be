@@ -1,20 +1,20 @@
-import { getPriceExcludingCharges } from '@helpers/charges';
-import { roundNumber } from '@helpers/round-number';
-import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad';
-import { Mapping } from '@interfaces/mapping';
-import { ApiError } from '@interfaces/shared';
-import { ApiErrorsService, ERROR_CODE } from '@services/api-errors';
-import { DigService } from '@services/dig';
-import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent';
-import { LyonFilterRentService } from '@services/filter-rent/lyon-filter-rent';
-import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent';
-import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent';
-import { SaveRentService } from '@services/save-rent';
-import { SerializeRentService } from '@services/serialize-rent';
-import { Response } from 'express';
-import { AvailableCities, cityList, CityService } from '@services/address/city';
+import { getPriceExcludingCharges } from '@helpers/charges'
+import { roundNumber } from '@helpers/round-number'
+import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
+import { Mapping } from '@interfaces/mapping'
+import { ApiError } from '@interfaces/shared'
+import { ApiErrorsService, ERROR_CODE } from '@services/api-errors'
+import { DigService } from '@services/dig'
+import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
+import { LyonFilterRentService } from '@services/filter-rent/lyon-filter-rent'
+import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
+import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent'
+import { SaveRentService } from '@services/save-rent'
+import { SerializeRentService } from '@services/serialize-rent'
+import { Response } from 'express'
+import { AvailableCities, cityList, CityService } from '@services/address/city'
 
-export const PARTICULIER_TERM = 'Particulier';
+export const PARTICULIER_TERM = 'Particulier'
 
 export const WEBSITE_LIST = [
   'bellesdemeures',
@@ -34,7 +34,7 @@ export const WEBSITE_LIST = [
   'superimmo',
 ] as const
 
-export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence'];
+export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']
 export type WebsiteType = typeof WEBSITE_LIST[number];
 
 export abstract class Website {
@@ -61,7 +61,7 @@ export abstract class Website {
       .catch((err: ApiError) => {
         const status = new ApiErrorsService(err).getStatus()
         this.res.status(status).json(err)
-      });
+      })
   }
 
   abstract mapping(): Promise<Ad>;
@@ -80,16 +80,16 @@ export abstract class Website {
       switch (cityList[cleanAd.city].mainCity) {
         case 'paris':
           filteredResult = new ParisFilterRentService(cleanAd).find()
-          break;
+          break
         case 'lille':
           filteredResult = new LilleFilterRentService(cleanAd).find()
-          break;
+          break
         case 'plaineCommune':
           filteredResult = new PlaineCommuneFilterRentService(cleanAd).find()
-          break;
+          break
         case 'lyon':
           filteredResult = new LyonFilterRentService(cleanAd).find()
-          break;
+          break
       }
 
       if (filteredResult) {

@@ -1,8 +1,4 @@
-import * as fs from 'fs';
-import { min } from '@helpers/functions';
-import { ArrondissementItem } from '@interfaces/json-item-paris';
-import path from 'path';
-import { Memoize } from 'typescript-memoize';
+import { min } from '@helpers/functions'
 
 export class DistanceService {
   static getDistanceFromLatLonInKm(
@@ -17,9 +13,9 @@ export class DistanceService {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(this.deg2rad(lat1)) *
-        Math.cos(this.deg2rad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2)
+      Math.cos(this.deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2)
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     const d = R * c // Distance in km
     return d
@@ -69,7 +65,7 @@ export class DistanceService {
       }
     )
 
-    return min(result, 'dist');
+    return min(result, 'dist')
   }
 
   private static deg2rad(deg) {

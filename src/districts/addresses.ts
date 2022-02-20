@@ -1,24 +1,24 @@
-import { Request, Response } from 'express';
-import { PrettyLog } from '@services/pretty-log';
+import { Request, Response } from 'express'
+import { PrettyLog } from '@services/pretty-log'
 import {
   LilleAddress,
   LyonAddress,
   ParisAddress,
   PlaineCommuneAddress,
-} from '@db/db';
-import { ParisDistrictService } from '@services/filter-rent/paris-district';
-import { LilleDistrictService } from '@services/filter-rent/lille-district';
-import { PlaineCommuneDistrictService } from '@services/filter-rent/plaine-commune-district';
-import { LyonDistrictService } from '@services/filter-rent/lyon-district';
+} from '@db/db'
+import { ParisDistrictService } from '@services/filter-rent/paris-district'
+import { LilleDistrictService } from '@services/filter-rent/lille-district'
+import { PlaineCommuneDistrictService } from '@services/filter-rent/plaine-commune-district'
+import { LyonDistrictService } from '@services/filter-rent/lyon-district'
 
 export async function getAddresses(req: Request, res: Response) {
-  PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue');
+  PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
   const city = req.params.city
   const addressQuery = req.query.q
 
   if (addressQuery.length < 2) {
     res.json([])
-    return;
+    return
   }
 
   let data = []
@@ -50,7 +50,7 @@ export async function getAddresses(req: Request, res: Response) {
           ...elem,
           districtName: districts.length ? districts[0].properties.l_qu : null,
         }
-      });
+      })
       break
     case 'lille':
       data = await LilleAddress.find(
@@ -85,7 +85,7 @@ export async function getAddresses(req: Request, res: Response) {
             ? `Zone ${districts[0].properties.zonage}`
             : null,
         }
-      });
+      })
       break
     case 'plaine_commune':
       data = await PlaineCommuneAddress.find(
@@ -120,7 +120,7 @@ export async function getAddresses(req: Request, res: Response) {
             ? `Zone ${districts[0].properties.Zone}`
             : null,
         }
-      });
+      })
       break
     case 'lyon':
       data = await LyonAddress.find(
@@ -152,7 +152,7 @@ export async function getAddresses(req: Request, res: Response) {
             ? `Zone ${districts[0].properties.zonage}`
             : null,
         }
-      });
+      })
       break
   }
 

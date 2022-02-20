@@ -1,5 +1,5 @@
-import TwitterApi from 'twitter-api-v2';
-import * as rentService from '@db/rent.service';
+import TwitterApi from 'twitter-api-v2'
+import * as rentService from '@db/rent.service'
 
 const MAX_DELTA = 200
 export class NameAndShameService {
@@ -36,7 +36,7 @@ export class NameAndShameService {
             const url = new URL(ad.url)
             return `${url.origin}${url.pathname}`
           })
-          .join('\n');
+          .join('\n')
         tweetText += `\ncc ${prefecture}`
         const { data: createdTweet } = await this.v2Client.tweet(tweetText)
         // eslint-disable-next-line no-console

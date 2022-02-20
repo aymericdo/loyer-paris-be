@@ -1,11 +1,10 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import { InfoToFilter, FilteredResult } from '@interfaces/ad';
-import { YearBuiltService } from '@services/year-built';
-import { LilleDistrictService } from './lille-district';
-import { LilleEncadrementItem } from '@interfaces/json-item-lille';
-import { Memoize } from 'typescript-memoize';
-import { number } from '@helpers/cleanup';
+import { FilteredResult, InfoToFilter } from '@interfaces/ad'
+import { LilleEncadrementItem } from '@interfaces/json-item-lille'
+import { YearBuiltService } from '@services/year-built'
+import * as fs from 'fs'
+import * as path from 'path'
+import { Memoize } from 'typescript-memoize'
+import { LilleDistrictService } from './lille-district'
 
 export class LilleFilterRentService {
   infoToFilter: InfoToFilter = null
@@ -16,7 +15,7 @@ export class LilleFilterRentService {
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_lille.json)
-    const rangeTime = ['< 1946', '1971 - 1990', '1946 - 1970', '> 1990'];
+    const rangeTime = ['< 1946', '1971 - 1990', '1946 - 1970', '> 1990']
 
     const districtsMatched = new LilleDistrictService(
       this.infoToFilter.postalCode,
@@ -45,7 +44,7 @@ export class LilleFilterRentService {
             : rangeRent.fields.nb_pieces === '4 et +'
           : true)
       )
-    });
+    })
 
     const isFurnished =
       this.infoToFilter.hasFurniture === null
@@ -67,7 +66,7 @@ export class LilleFilterRentService {
       }))
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
-      });
+      })
   }
 
   find(): FilteredResult {

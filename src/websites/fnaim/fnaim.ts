@@ -1,11 +1,11 @@
-import * as cleanup from '@helpers/cleanup';
-import { Ad } from '@interfaces/ad';
-import { FnaimMapping } from '@interfaces/mapping';
-import { Website, WebsiteType } from '../website';
-import { FnaimScrapping } from './fnaim.scrapping';
-import { ERROR_CODE } from '@services/api-errors';
+import * as cleanup from '@helpers/cleanup'
+import { Ad } from '@interfaces/ad'
+import { FnaimMapping } from '@interfaces/mapping'
+import { Website, WebsiteType } from '../website'
+import { FnaimScrapping } from './fnaim.scrapping'
+import { ERROR_CODE } from '@services/api-errors'
 export class Fnaim extends Website {
-  website: WebsiteType = 'fnaim';
+  website: WebsiteType = 'fnaim'
 
   async mapping(): Promise<Ad> {
     let ad: FnaimMapping = null

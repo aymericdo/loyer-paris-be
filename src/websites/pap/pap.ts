@@ -1,12 +1,12 @@
-import * as cleanup from '@helpers/cleanup';
-import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website';
-import { Ad } from '@interfaces/ad';
-import { PapMapping } from '@interfaces/mapping';
-import { ERROR_CODE } from '@services/api-errors';
-import { PapScrapping } from './pap.scrapping';
+import * as cleanup from '@helpers/cleanup'
+import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website'
+import { Ad } from '@interfaces/ad'
+import { PapMapping } from '@interfaces/mapping'
+import { ERROR_CODE } from '@services/api-errors'
+import { PapScrapping } from './pap.scrapping'
 
 export class Pap extends Website {
-  website: WebsiteType = 'pap';
+  website: WebsiteType = 'pap'
 
   async mapping(): Promise<Ad> {
     let ad: PapMapping = null

@@ -1,6 +1,6 @@
-import { Rent } from '@db/db';
-import { DataBaseItem } from '@interfaces/database-item';
-import { FUNNIEST_WEBSITES } from '@websites/website';
+import { Rent } from '@db/db'
+import { DataBaseItem } from '@interfaces/database-item'
+import { FUNNIEST_WEBSITES } from '@websites/website'
 
 function getCity(city: string) {
   switch (city) {
@@ -182,7 +182,7 @@ export async function getLegalVarData(
 
   if (isParticulier !== null) {
     if (isParticulier) {
-      filter['renter'] = 'Particulier';
+      filter['renter'] = 'Particulier'
     } else {
       filter['renter'] = { $ne: 'Particulier', $exists: true }
     }

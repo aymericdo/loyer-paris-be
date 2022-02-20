@@ -1,11 +1,11 @@
-import * as cleanup from '@helpers/cleanup';
-import { Ad } from '@interfaces/ad';
-import { BellesDemeuresMapping } from '@interfaces/mapping';
-import { Website, WebsiteType } from '../website';
-import { BellesDemeuresScrapping } from './bellesdemeures.scrapping';
-import { ERROR_CODE } from '@services/api-errors';
+import * as cleanup from '@helpers/cleanup'
+import { Ad } from '@interfaces/ad'
+import { BellesDemeuresMapping } from '@interfaces/mapping'
+import { Website, WebsiteType } from '../website'
+import { BellesDemeuresScrapping } from './bellesdemeures.scrapping'
+import { ERROR_CODE } from '@services/api-errors'
 export class BellesDemeures extends Website {
-  website: WebsiteType = 'bellesdemeures';
+  website: WebsiteType = 'bellesdemeures'
 
   async mapping(): Promise<Ad> {
     let ad: BellesDemeuresMapping = null

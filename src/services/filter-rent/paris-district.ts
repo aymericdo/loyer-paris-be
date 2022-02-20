@@ -1,9 +1,9 @@
-import * as fs from 'fs';
-import { ParisDistrictItem } from '@interfaces/json-item-paris';
-import path from 'path';
-import inside from 'point-in-polygon';
-import { Coordinate } from '@interfaces/shared';
-import { Memoize } from 'typescript-memoize';
+import * as fs from 'fs'
+import { ParisDistrictItem } from '@interfaces/json-item-paris'
+import path from 'path'
+import inside from 'point-in-polygon'
+import { Coordinate } from '@interfaces/shared'
+import { Memoize } from 'typescript-memoize'
 
 export class ParisDistrictService {
   coordinates: Coordinate = null
@@ -48,7 +48,7 @@ export class ParisDistrictService {
 
       return this.getDistrictsJson().features.filter((district) => {
         return district.properties.c_ar === +code
-      });
+      })
     } else {
       return []
     }
@@ -57,7 +57,7 @@ export class ParisDistrictService {
   private getDistrictFromName(): ParisDistrictItem[] {
     return this.getDistrictsJson().features.filter((district) => {
       return district.properties.l_qu === this.districtName
-    });
+    })
   }
 
   private getDistrictFromCoordinate(

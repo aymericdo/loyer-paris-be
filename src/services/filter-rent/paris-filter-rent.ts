@@ -1,11 +1,11 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import { ParisEncadrementItem } from '@interfaces/json-item-paris';
-import { FilteredResult } from '@interfaces/ad';
-import { YearBuiltService } from '@services/year-built';
-import { ParisDistrictService } from '@services/filter-rent/paris-district';
-import { Memoize } from 'typescript-memoize';
-import { InfoToFilter } from '../../interfaces/ad';
+import * as fs from 'fs'
+import * as path from 'path'
+import { ParisEncadrementItem } from '@interfaces/json-item-paris'
+import { FilteredResult } from '@interfaces/ad'
+import { YearBuiltService } from '@services/year-built'
+import { ParisDistrictService } from '@services/filter-rent/paris-district'
+import { Memoize } from 'typescript-memoize'
+import { InfoToFilter } from '../../interfaces/ad'
 
 export class ParisFilterRentService {
   infoToFilter: InfoToFilter = null
@@ -16,7 +16,7 @@ export class ParisFilterRentService {
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
-    const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Après 1990'];
+    const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Après 1990']
 
     const districtsMatched = new ParisDistrictService(
       this.infoToFilter.postalCode,
@@ -57,7 +57,7 @@ export class ParisFilterRentService {
             : rangeRent.fields.meuble_txt.match(/^non meubl/g)
           : true)
       )
-    });
+    })
 
     return rentList
       .map((r) => ({
@@ -70,7 +70,7 @@ export class ParisFilterRentService {
       }))
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
-      });
+      })
   }
 
   find(): FilteredResult {

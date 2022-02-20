@@ -1,16 +1,16 @@
-import express, { Response, Request } from 'express';
-import { PrettyLog } from '@services/pretty-log';
-import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent';
-import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent';
-import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent';
-import { FilteredResult } from '@interfaces/ad';
-import { roundNumber } from '@helpers/round-number';
-import { LyonFilterRentService } from '@services/filter-rent/lyon-filter-rent';
+import express, { Response, Request } from 'express'
+import { PrettyLog } from '@services/pretty-log'
+import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
+import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
+import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent'
+import { FilteredResult } from '@interfaces/ad'
+import { roundNumber } from '@helpers/round-number'
+import { LyonFilterRentService } from '@services/filter-rent/lyon-filter-rent'
 const router = express.Router()
 
 router.get('/:city', getManualResult)
 function getManualResult(req: Request, res: Response) {
-  PrettyLog.call(`-> ${req.baseUrl} getManualResult`, 'blue');
+  PrettyLog.call(`-> ${req.baseUrl} getManualResult`, 'blue')
 
   const city = req.params.city
   const districtValue: string = (req.query.districtValue as string) || null
@@ -46,7 +46,7 @@ function getManualResult(req: Request, res: Response) {
         roomCount: room,
         hasFurniture,
       }).filter()
-      break;
+      break
     case 'lille':
       filteredResult = new LilleFilterRentService({
         yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
@@ -54,7 +54,7 @@ function getManualResult(req: Request, res: Response) {
         roomCount: room,
         hasFurniture,
       }).filter()
-      break;
+      break
     case 'plaine_commune':
       filteredResult = new PlaineCommuneFilterRentService({
         yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
@@ -63,7 +63,7 @@ function getManualResult(req: Request, res: Response) {
         roomCount: room,
         hasFurniture,
       }).filter()
-      break;
+      break
     case 'lyon':
       filteredResult = new LyonFilterRentService({
         yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
@@ -71,7 +71,7 @@ function getManualResult(req: Request, res: Response) {
         roomCount: room,
         hasFurniture,
       }).filter()
-      break;
+      break
   }
 
   res.json(

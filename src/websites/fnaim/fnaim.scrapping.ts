@@ -1,7 +1,7 @@
-import { virtualConsole } from '@helpers/jsdome';
-import { FnaimMapping } from '@interfaces/mapping';
-import { ERROR_CODE } from '@services/api-errors';
-import jsdom from 'jsdom';
+import { virtualConsole } from '@helpers/jsdome'
+import { FnaimMapping } from '@interfaces/mapping'
+import { ERROR_CODE } from '@services/api-errors'
+import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class FnaimScrapping {

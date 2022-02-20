@@ -1,6 +1,6 @@
-import { LogicimmoMapping } from '@interfaces/mapping';
-import { virtualConsole } from '@helpers/jsdome';
-import jsdom from 'jsdom';
+import { LogicimmoMapping } from '@interfaces/mapping'
+import { virtualConsole } from '@helpers/jsdome'
+import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class LogicimmoScrapping {

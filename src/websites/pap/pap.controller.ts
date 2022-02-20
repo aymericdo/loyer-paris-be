@@ -1,6 +1,6 @@
-import express, { Request, Response } from 'express';
-import { PrettyLog } from '@services/pretty-log';
-import { Pap } from './pap';
+import express, { Request, Response } from 'express'
+import { PrettyLog } from '@services/pretty-log'
+import { Pap } from './pap'
 const router = express.Router()
 
 // routes

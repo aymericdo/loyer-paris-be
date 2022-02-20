@@ -1,11 +1,11 @@
-import * as cleanup from '@helpers/cleanup';
-import { Ad } from '@interfaces/ad';
-import { LuxResidenceMapping } from '@interfaces/mapping';
-import { Website, WebsiteType } from '../website';
-import { LuxResidenceScrapping } from './lux-residence.scrapping';
-import { ERROR_CODE } from '@services/api-errors';
+import * as cleanup from '@helpers/cleanup'
+import { Ad } from '@interfaces/ad'
+import { LuxResidenceMapping } from '@interfaces/mapping'
+import { Website, WebsiteType } from '../website'
+import { LuxResidenceScrapping } from './lux-residence.scrapping'
+import { ERROR_CODE } from '@services/api-errors'
 export class LuxResidence extends Website {
-  website: WebsiteType = 'luxresidence';
+  website: WebsiteType = 'luxresidence'
 
   async mapping(): Promise<Ad> {
     let ad: LuxResidenceMapping = null

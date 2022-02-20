@@ -1,5 +1,5 @@
-import { Ad } from '@interfaces/ad';
-import { cityList } from './city';
+import { Ad } from '@interfaces/ad'
+import { cityList } from './city'
 
 export interface PostalCodeStrategy {
   getPostalCode(): string;
@@ -67,14 +67,13 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
     return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
   }
 
-  protected digForPostalCode2(city: string, text: string): string {
+  protected digForPostalCode2(_city: string, _text: string): string {
     return null
   }
 }
 
 export class ParisPostalCodeStrategy extends DefaultPostalCodeStrategy {
   protected digForPostalCode2(city: string, text: string): string {
-    console.log('p2');
     const postalCode2Re = new RegExp(cityList[city].postalCodeRegex[1])
     const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
     return match

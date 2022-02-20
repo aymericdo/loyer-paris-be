@@ -1,6 +1,6 @@
-import { virtualConsole } from '@helpers/jsdome';
-import { LocserviceMapping } from '@interfaces/mapping';
-import jsdom from 'jsdom';
+import { virtualConsole } from '@helpers/jsdome'
+import { LocserviceMapping } from '@interfaces/mapping'
+import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class LocserviceScrapping {
@@ -9,16 +9,16 @@ export class LocserviceScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const title = document.querySelector('#resume_titre > h2');
+    const title = document.querySelector('#resume_titre > h2')
 
     const description = document.querySelector(
       '#descriptif_detail_left > div.innerDetail'
     )
 
-    const price = document.querySelector('#resume_detail > ul > li.loyer');
-    const furnished = document.querySelector('#resume_detail > ul > li.meuble');
-    const surface = document.querySelector('#resume_detail > ul > li.surface');
-    const cityLabel = document.querySelector('#YouAreThere > a:nth-child(1)');
+    const price = document.querySelector('#resume_detail > ul > li.loyer')
+    const furnished = document.querySelector('#resume_detail > ul > li.meuble')
+    const surface = document.querySelector('#resume_detail > ul > li.surface')
+    const cityLabel = document.querySelector('#YouAreThere > a:nth-child(1)')
 
     return {
       id: null,

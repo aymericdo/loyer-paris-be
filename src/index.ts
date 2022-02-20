@@ -1,12 +1,12 @@
-import 'module-alias/register';
-import dotenv from 'dotenv';
+import 'module-alias/register'
+import dotenv from 'dotenv'
 dotenv.config()
 
-import express from 'express';
-import { IpFilter } from 'express-ipfilter';
-import cors from 'cors';
-import * as Sentry from '@sentry/node';
-import { CronJobsService } from '@cronjobs/cronjobs';
+import express from 'express'
+import { IpFilter } from 'express-ipfilter'
+import cors from 'cors'
+import * as Sentry from '@sentry/node'
+import { CronJobsService } from '@cronjobs/cronjobs'
 
 const app = express()
 
@@ -27,7 +27,7 @@ app.use(
 )
 
 // Blacklist the following IPs
-const ips = ['109.11.33.58'];
+const ips = ['109.11.33.58']
 app.use(IpFilter(ips, { mode: 'deny' }))
 
 app.use('/seloger', require('./websites/seloger/seloger.controller'))

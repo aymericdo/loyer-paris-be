@@ -1,4 +1,4 @@
-import { AvailableCities } from '@services/address/city';
+import { AvailableCities } from '@services/address/city'
 
 export function string(string: string): string {
   return string

@@ -1,12 +1,12 @@
-import * as cleanup from '@helpers/cleanup';
-import { Ad } from '@interfaces/ad';
-import { OrpiMapping } from '@interfaces/mapping';
-import { ERROR_CODE } from '@services/api-errors';
-import { Website, WebsiteType } from '../website';
-import { OrpiScrapping } from './orpi.scrapping';
+import * as cleanup from '@helpers/cleanup'
+import { Ad } from '@interfaces/ad'
+import { OrpiMapping } from '@interfaces/mapping'
+import { ERROR_CODE } from '@services/api-errors'
+import { Website, WebsiteType } from '../website'
+import { OrpiScrapping } from './orpi.scrapping'
 
 export class Orpi extends Website {
-  website: WebsiteType = 'orpi';
+  website: WebsiteType = 'orpi'
 
   async mapping(): Promise<Ad> {
     let ad: OrpiMapping = null

@@ -1,4 +1,4 @@
-import { Coordinate } from '@interfaces/shared';
+import { Coordinate } from '@interfaces/shared'
 
 export type Mapping = (
   | FacebookMapping

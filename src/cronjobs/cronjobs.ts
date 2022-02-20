@@ -1,8 +1,8 @@
-import { schedule } from 'node-cron';
-import { NameAndShameService } from '@cronjobs/delation/name-and-shame';
-import { HealthCheck } from '@cronjobs/system-health/health-check';
+import { schedule } from 'node-cron'
+import { NameAndShameService } from '@cronjobs/delation/name-and-shame'
+import { HealthCheck } from '@cronjobs/system-health/health-check'
 
-const TIMEZONE = 'Europe/Paris';
+const TIMEZONE = 'Europe/Paris'
 export class CronJobsService {
   static watch() {
     // https://crontab.guru/#0_8_*_*_1

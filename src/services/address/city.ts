@@ -1,7 +1,7 @@
-import * as cleanup from '@helpers/cleanup';
-import { ERROR_CODE } from '../api-errors';
-import { Ad } from '@interfaces/ad';
-import { PrettyLog } from '../pretty-log';
+import * as cleanup from '@helpers/cleanup'
+import { ERROR_CODE } from '../api-errors'
+import { Ad } from '@interfaces/ad'
+import { PrettyLog } from '../pretty-log'
 
 type CityList = {
   [key: string]: {
@@ -165,7 +165,7 @@ export class CityService {
     )
 
     if (!cityInList) {
-      PrettyLog.call(`city "${cityName}" not found in the list`, 'yellow');
+      PrettyLog.call(`city "${cityName}" not found in the list`, 'yellow')
       throw {
         error: ERROR_CODE.City,
         msg: 'city not found in the list',

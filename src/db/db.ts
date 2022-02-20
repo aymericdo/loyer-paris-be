@@ -1,6 +1,6 @@
-import { createConnection } from 'mongoose';
+import { createConnection } from 'mongoose'
 
-const localConnectionString = 'mongodb://localhost/loyer-paris-be';
+const localConnectionString = 'mongodb://localhost/loyer-paris-be'
 
 const rentConnection = createConnection(
   process.env.MONGODB_URI || localConnectionString,
@@ -13,7 +13,7 @@ const rentConnection = createConnection(
 
 rentConnection.catch((e) => {
   console.error(e)
-});
+})
 
 const empriseBatieConnection = createConnection(
   process.env.MONGODB_URI_EMPRISE_BATIE || localConnectionString,
@@ -26,7 +26,7 @@ const empriseBatieConnection = createConnection(
 
 empriseBatieConnection.catch((e) => {
   console.error(e)
-});
+})
 
 const encadrementAddress1Connection = createConnection(
   process.env.MONGODB_URI_ENCADREMENT_ADDRESS1 || localConnectionString,
@@ -39,15 +39,15 @@ const encadrementAddress1Connection = createConnection(
 
 encadrementAddress1Connection.catch((e) => {
   console.error(e)
-});
+})
 
-const rentSchema = require('./rent.model');
-const incompleteRentSchema = require('./incomplete-rent.model');
-const empriseBatieSchema = require('./emprisebatie.model');
-const parisAddressSchema = require('./paris-address.model');
-const lilleAddressSchema = require('./lille-address.model');
-const plaineCommuneAddressSchema = require('./plaine_commune-address.model');
-const lyonAddressSchema = require('./lyon-address.model');
+const rentSchema = require('./rent.model')
+const incompleteRentSchema = require('./incomplete-rent.model')
+const empriseBatieSchema = require('./emprisebatie.model')
+const parisAddressSchema = require('./paris-address.model')
+const lilleAddressSchema = require('./lille-address.model')
+const plaineCommuneAddressSchema = require('./plaine_commune-address.model')
+const lyonAddressSchema = require('./lyon-address.model')
 
 export const Rent = rentConnection.model('Rent', rentSchema)
 export const IncompleteRent = rentConnection.model(
@@ -83,4 +83,4 @@ export const closeAllConnections = () => {
   rentConnection.close()
   empriseBatieConnection.close()
   encadrementAddress1Connection.close()
-};
+}

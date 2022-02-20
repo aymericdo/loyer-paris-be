@@ -1,14 +1,14 @@
-import * as cleanup from '@helpers/cleanup';
-import { Ad } from '@interfaces/ad';
-import axios from 'axios';
-import { LoueragileMapping, Mapping } from '@interfaces/mapping';
-import { Website, WebsiteType } from '../website';
-import { PrettyLog } from '@services/pretty-log';
-import { ERROR_CODE } from '@services/api-errors';
-import { Response } from 'express';
+import * as cleanup from '@helpers/cleanup'
+import { Ad } from '@interfaces/ad'
+import axios from 'axios'
+import { LoueragileMapping, Mapping } from '@interfaces/mapping'
+import { Website, WebsiteType } from '../website'
+import { PrettyLog } from '@services/pretty-log'
+import { ERROR_CODE } from '@services/api-errors'
+import { Response } from 'express'
 
 export class LouerAgile extends Website {
-  website: WebsiteType = 'loueragile';
+  website: WebsiteType = 'loueragile'
   id: string = null
 
   constructor(res: Response, props: { body: Mapping; id: string }, v2 = false) {
@@ -53,7 +53,7 @@ export class LouerAgile extends Website {
       const response = await axios.get(
         `https://api.jinka.fr/apiv2/alert/${process.env.LOUER_AGILE_API_KEY}/ad/${this.id}`
       )
-      PrettyLog.call('jinka fetched');
+      PrettyLog.call('jinka fetched')
       const data = response.data
       this.body = data
 

@@ -1,6 +1,6 @@
-import { virtualConsole } from '@helpers/jsdome';
-import { LuxResidenceMapping } from '@interfaces/mapping';
-import jsdom from 'jsdom';
+import { virtualConsole } from '@helpers/jsdome'
+import { LuxResidenceMapping } from '@interfaces/mapping'
+import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class LuxResidenceScrapping {
@@ -9,7 +9,7 @@ export class LuxResidenceScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const description = document.querySelector('#descriptionSection > div');
+    const description = document.querySelector('#descriptionSection > div')
     const price = document.querySelector(
       '#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.price'
     )

@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response } from 'express'
 const router = express.Router()
-import { PrettyLog } from '@services/pretty-log';
-import { Superimmo } from './superimmo';
+import { PrettyLog } from '@services/pretty-log'
+import { Superimmo } from './superimmo'
 
 router.post('/data/v2', getByDataV2)
 function getByDataV2(req: Request, res: Response) {

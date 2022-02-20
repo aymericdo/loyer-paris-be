@@ -1,6 +1,6 @@
-import { IncompleteAd } from '@interfaces/ad';
-import { LilleStationItem } from './json-item-lille';
-import { ParisStationItem } from './json-item-paris';
+import { IncompleteAd } from '@interfaces/ad'
+import { LilleStationItem } from './json-item-lille'
+import { ParisStationItem } from './json-item-paris'
 
 export interface Coordinate {
   lat: number;

@@ -1,7 +1,7 @@
-import { Mapping } from '@interfaces/mapping';
-import { BienIci } from '../bienici';
-import { closeAllConnections } from '@db/db';
-import { disconnect } from 'mongoose';
+import { Mapping } from '@interfaces/mapping'
+import { BienIci } from '../bienici'
+import { closeAllConnections } from '@db/db'
+import { disconnect } from 'mongoose'
 
 describe('bienici', () => {
   afterAll(() => closeAllConnections())
@@ -63,7 +63,7 @@ describe('bienici', () => {
         moreInfo:
           'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
-    });
+    })
   })
 
   describe('lille', () => {
@@ -121,6 +121,6 @@ describe('bienici', () => {
         isLegal: false,
         moreInfo: 'https://encadrement-loyers.lille.fr/',
       })
-    });
+    })
   })
-});
+})

@@ -1,6 +1,6 @@
-import { virtualConsole } from '@helpers/jsdome';
-import { GensdeconfianceMapping } from '@interfaces/mapping';
-import jsdom from 'jsdom';
+import { virtualConsole } from '@helpers/jsdome'
+import { GensdeconfianceMapping } from '@interfaces/mapping'
+import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class GensdeconfianceScrapping {
@@ -9,16 +9,16 @@ export class GensdeconfianceScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const title = document.querySelector('#post-title');
-    const description = document.querySelector('#ad-description');
+    const title = document.querySelector('#post-title')
+    const description = document.querySelector('#ad-description')
     const price = document.querySelector(
       '#col-ad div.price-table > div:nth-child(1) > div.price-table__value'
     )
     const charges = document.querySelector(
       '#col-ad div.price-table > div:nth-child(2) > div.price-table__value'
     )
-    const address = document.querySelector('#ad-address > p');
-    const cityLabel = document.querySelector('#post-title-breadcrumb > small');
+    const address = document.querySelector('#ad-address > p')
+    const cityLabel = document.querySelector('#post-title-breadcrumb > small')
     const itemTags = [...document.querySelectorAll('div > ul > li > div')]
     let surface = null
 

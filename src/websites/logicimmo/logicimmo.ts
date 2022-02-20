@@ -1,12 +1,12 @@
-import * as cleanup from '@helpers/cleanup';
-import { Ad } from '@interfaces/ad';
-import { LogicimmoMapping } from '@interfaces/mapping';
-import { ERROR_CODE } from '@services/api-errors';
-import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website';
-import { LogicimmoScrapping } from './logicimmo.scrapping';
+import * as cleanup from '@helpers/cleanup'
+import { Ad } from '@interfaces/ad'
+import { LogicimmoMapping } from '@interfaces/mapping'
+import { ERROR_CODE } from '@services/api-errors'
+import { Website, WebsiteType, PARTICULIER_TERM } from '@websites/website'
+import { LogicimmoScrapping } from './logicimmo.scrapping'
 
 export class LogicImmo extends Website {
-  website: WebsiteType = 'logicimmo';
+  website: WebsiteType = 'logicimmo'
 
   async mapping(): Promise<Ad> {
     let ad: LogicimmoMapping = null

@@ -1,6 +1,6 @@
-import { virtualConsole } from '@helpers/jsdome';
-import { LeboncoinMapping } from '@interfaces/mapping';
-import jsdom from 'jsdom';
+import { virtualConsole } from '@helpers/jsdome'
+import { LeboncoinMapping } from '@interfaces/mapping'
+import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
 export class LeboncoinScrapping {
@@ -9,7 +9,7 @@ export class LeboncoinScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const subject = document.querySelector('[data-qa-id=adview_title]');
+    const subject = document.querySelector('[data-qa-id=adview_title]')
     const body = document.querySelector(
       '[data-qa-id=adview_description_container] > div > div > span'
     )
@@ -17,7 +17,7 @@ export class LeboncoinScrapping {
       '#grid > article > div > div > div > div > p'
     )
 
-    const price = document.querySelector('[data-qa-id=adview_price] > span');
+    const price = document.querySelector('[data-qa-id=adview_price] > span')
     const renter =
       document.querySelector(
         '#aside > section > div[data-qa-id=adview_contact_container] > div h2'
@@ -31,7 +31,7 @@ export class LeboncoinScrapping {
     const hasCharges = document.querySelector(
       '#grid > article > section > div > div > div > div.styles_Price__1tlGj > div > p'
     )
-    const cityLabel = document.querySelector('#map > div > h2');
+    const cityLabel = document.querySelector('#map > div > h2')
 
     const surface = document.querySelector(
       '#grid > article div div[data-qa-id=criteria_item_square] > div > div > span'

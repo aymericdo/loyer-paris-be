@@ -1,6 +1,6 @@
-import path from 'path';
-import { Memoize } from 'typescript-memoize';
-import * as fs from 'fs';
+import path from 'path'
+import { Memoize } from 'typescript-memoize'
+import * as fs from 'fs'
 
 export class DistrictsList {
   @Memoize()

@@ -1,11 +1,11 @@
-import { Response, Request } from 'express';
-import { PrettyLog } from '@services/pretty-log';
-import * as rentService from '@db/rent.service';
-import { ERROR500_MSG } from '@services/api-errors';
-import { Vega } from '@services/vega';
+import { Response, Request } from 'express'
+import { PrettyLog } from '@services/pretty-log'
+import * as rentService from '@db/rent.service'
+import { ERROR500_MSG } from '@services/api-errors'
+import { Vega } from '@services/vega'
 
 export function getAdoptionRate(req: Request, res: Response) {
-  PrettyLog.call(`-> ${req.baseUrl} adoption`, 'blue');
+  PrettyLog.call(`-> ${req.baseUrl} adoption`, 'blue')
 
   rentService
     .getAdoptionData()
@@ -46,7 +46,7 @@ export function getAdoptionRate(req: Request, res: Response) {
       if (err.status) {
         res.status(err.status).json(err)
       } else {
-        PrettyLog.call(ERROR500_MSG, 'red');
+        PrettyLog.call(ERROR500_MSG, 'red')
         res.status(500).json(err)
       }
     })

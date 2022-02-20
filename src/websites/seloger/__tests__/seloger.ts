@@ -1,7 +1,7 @@
-import { closeAllConnections } from '@db/db';
-import { Mapping } from '@interfaces/mapping';
-import { disconnect } from 'mongoose';
-import { SeLoger } from '../seloger';
+import { closeAllConnections } from '@db/db'
+import { Mapping } from '@interfaces/mapping'
+import { disconnect } from 'mongoose'
+import { SeLoger } from '../seloger'
 
 describe('seloger', () => {
   afterAll(() => closeAllConnections())
@@ -62,7 +62,7 @@ describe('seloger', () => {
         moreInfo:
           'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
-    });
+    })
   })
 
   describe('lille', () => {
@@ -120,7 +120,7 @@ describe('seloger', () => {
         isLegal: false,
         moreInfo: 'https://encadrement-loyers.lille.fr/',
       })
-    });
+    })
   })
 
   describe('lyon', () => {
@@ -179,7 +179,7 @@ describe('seloger', () => {
         moreInfo:
           'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
-    });
+    })
 
     test('returns clean ad - villeurbanne', async () => {
       const body: Mapping = {
@@ -236,6 +236,6 @@ describe('seloger', () => {
         moreInfo:
           'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
-    });
+    })
   })
-});
+})

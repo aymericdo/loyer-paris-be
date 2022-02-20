@@ -1,4 +1,4 @@
-import { EmpriseBatie } from '@db/db';
+import { EmpriseBatie } from '@db/db'
 
 export class YearBuiltService {
   rangeTime: string[]
@@ -54,7 +54,7 @@ export class YearBuiltService {
             : rangeYearBuilt[0] === '>'
               ? yb > rangeYearBuilt[1]
               : false
-      });
+      })
     })
   }
 
