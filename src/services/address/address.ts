@@ -1,6 +1,6 @@
 import { regexString } from "@helpers/regex";
 import { Ad } from "@interfaces/ad";
-import { AddressItem } from "@interfaces/shared";
+import { AddressItem, Coordinate } from "@interfaces/shared";
 import { cityList } from "./city";
 import * as cleanup from "@helpers/cleanup";
 import {
@@ -40,6 +40,8 @@ export class DefaultAddressStrategy implements AddressStrategy {
   private city: string;
   private postalCode: string;
   private ad: Ad;
+  private coordinates: Coordinate;
+  private blurryCoordinates: Coordinate;
 
   constructor(city: string, postalCode: string, ad: Ad) {
     this.city = city;
@@ -90,8 +92,15 @@ export class DefaultAddressStrategy implements AddressStrategy {
         .sort((a, b) => b.score - a.score);
 
       if (result?.length) {
-        // this.setCoordinates(result[0].item.coordinate, result[0].streetNumber);
-        return "";
+        this.setCoordinates(result[0].item.coordinate, result[0].streetNumber);
+        return result[0].streetNumber
+          ? cleanup
+              .string(result[0].item.address)
+              .replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
+          : cleanup
+              .string(result[0].item.address)
+              .replace(/^\d+(b|t)?/g, "")
+              .trim();
       } else {
         return null;
       }
@@ -150,6 +159,14 @@ export class DefaultAddressStrategy implements AddressStrategy {
           streetNumber: cleanup.streetNumber(query),
         }))
       : [];
+  }
+
+  protected setCoordinates(coord: Coordinate, streetNumber: string): void {
+    if (streetNumber) {
+      this.coordinates = { ...coord };
+    } else {
+      this.blurryCoordinates = { ...coord };
+    }
   }
 }
 
