@@ -18,7 +18,7 @@ const dbMapping = {
 };
 
 export interface AddressStrategy {
-  getAddress(): Promise<string>;
+  getAddress(): Promise<[string, Coordinate, Coordinate]>;
 }
 
 export class AddressStrategyFactory {
@@ -40,8 +40,8 @@ export class DefaultAddressStrategy implements AddressStrategy {
   private city: string;
   private postalCode: string;
   private ad: Ad;
-  private coordinates: Coordinate;
-  private blurryCoordinates: Coordinate;
+  coordinates: Coordinate;
+  blurryCoordinates: Coordinate;
 
   constructor(city: string, postalCode: string, ad: Ad) {
     this.city = city;
@@ -49,7 +49,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
     this.ad = ad;
   }
 
-  public async getAddress(): Promise<string> {
+  public async getAddress(): Promise<[string, Coordinate, Coordinate]> {
     const tab = [this.ad.address, this.ad.title, this.ad.description].filter(
       Boolean
     );
@@ -61,7 +61,9 @@ export class DefaultAddressStrategy implements AddressStrategy {
         text
       );
       if (result) {
-        return result;
+        const coord = this.getCoordinate();
+        const blurryCoord = this.getCoordinate(true);
+        return [result, coord, blurryCoord];
       }
     }
   }
@@ -73,7 +75,6 @@ export class DefaultAddressStrategy implements AddressStrategy {
   ): Promise<string> {
     const addressRe = new RegExp(regexString("address"));
     const addressesFromRegex = text.match(addressRe) as string[];
-
     if (addressesFromRegex?.length) {
       const addressesQueries = this.querifyAddresses(city, addressesFromRegex);
       const result: {
@@ -144,7 +145,6 @@ export class DefaultAddressStrategy implements AddressStrategy {
       .sort({ score: { $meta: "textScore" } })
       .limit(10)
       .lean()) as any;
-
     return result
       ? result.map((r) => ({
           item: {
@@ -168,6 +168,74 @@ export class DefaultAddressStrategy implements AddressStrategy {
       this.blurryCoordinates = { ...coord };
     }
   }
+
+  private getCoordinate(blurry = false): Coordinate {
+    const coordinatesFromAd =
+      this.ad.coord?.lng && this.ad.coord?.lat
+        ? {
+            lng: this.ad.coord.lng,
+            lat: this.ad.coord.lat,
+          }
+        : null;
+
+    if (
+      coordinatesFromAd?.lng.toString().length > 9 &&
+      coordinatesFromAd?.lat.toString().length > 9
+    ) {
+      return coordinatesFromAd;
+    } else {
+      if (blurry) {
+        return this.blurryCoordinates || coordinatesFromAd;
+      } else {
+        return this.coordinates || coordinatesFromAd;
+      }
+    }
+  }
 }
 
-export class ParisAddressStrategy extends DefaultAddressStrategy {}
+export class ParisAddressStrategy extends DefaultAddressStrategy {
+  protected async getAddressCompleted(
+    city: string,
+    query: string
+  ): Promise<
+    {
+      item: AddressItem;
+      score: number;
+      streetNumber: string;
+    }[]
+  > {
+    if (!query) {
+      return null;
+    }
+    const addressDb = dbMapping[cityList[city].mainCity];
+    const result = (await addressDb
+      .find(
+        {
+          $text: { $search: query },
+        },
+        { score: { $meta: "textScore" } }
+      )
+      .sort({ score: { $meta: "textScore" } })
+      .limit(10)
+      .lean()) as any;
+    return result
+      ? result.map((r) => ({
+          item: {
+            address: r.fields.l_adr,
+            postalCode: this.postalCodeFormat(r.fields.c_ar.toString()),
+            coordinate: {
+              lng: r.fields.geom.coordinates[0],
+              lat: r.fields.geom.coordinates[1],
+            },
+          },
+          score: r.score,
+          streetNumber: cleanup.streetNumber(query),
+        }))
+      : [];
+  }
+
+  private postalCodeFormat(postalCode: string): string {
+    // 10 -> 75010 9 -> 75009
+    return postalCode.length === 1 ? `7500${postalCode}` : `750${postalCode}`;
+  }
+}

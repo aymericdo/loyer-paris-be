@@ -91,10 +91,9 @@ export class DigService {
       postalCode,
       this.ad
     );
-    const address = await addressStrategy.getAddress();
-    const stations = stationService.getStations(city, this.ad.stations);
-    const coordinates = addressService.getCoordinate();
-    const blurryCoordinates = addressService.getCoordinate(true);
+    const [address, coordinates, blurryCoordinates] =
+      await addressStrategy.getAddress();
+    const stations = stationService.getStations(city, this.ad);
 
     if (!address && !postalCode && !coordinates) {
       throw {

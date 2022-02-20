@@ -18,7 +18,7 @@ const jsonMapping = {
 const nameMapping = { paris: ["tags.name"], lille: ["fields.stop_name"] };
 
 export class StationService {
-  private getStations(city: string, ad: Ad): string[] {
+  getStations(city: string, ad: Ad): string[] {
     const stations: StationItem[] =
       (ad.stations && this.filterStations(city, ad.stations)) ||
       (ad.description && this.filterStations(city, ad.description.split(" ")));
