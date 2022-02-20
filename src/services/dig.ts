@@ -4,13 +4,10 @@ import { stringToNumber } from '@helpers/string-to-number'
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
 import { YearBuiltService } from '@services/year-built'
+import { AddressStrategyFactory } from './address/address'
+import { AvailableCities, CityService } from './address/city'
+import { PostalCodeStrategyFactory } from './address/postalcode'
 import { ERROR_CODE } from './api-errors'
-import { AvailableCities, cityList, CityService } from './address/city'
-import { LilleAddressService } from './address/lille-address'
-import { ParisAddressService } from './address/paris-address'
-import { LyonAddressService } from './address/lyon-address'
-import { AddressService } from './address/address'
-import { PlaineCommuneAddressService } from './address/plaine-commune-address'
 import { PrettyLog } from './pretty-log'
 
 export class DigService {
@@ -34,7 +31,9 @@ export class DigService {
     const renter = this.digForRenter()
     const charges = this.digForCharges()
     const hasCharges = this.digForHasCharges()
-    const isHouse = CityService.canHaveHouse(city) ? this.digForIsHouse() : null
+    const isHouse = CityService.canHaveHouse(city)
+      ? this.digForIsHouse()
+      : null
 
     return {
       id: this.ad.id,
@@ -59,31 +58,27 @@ export class DigService {
   private async digForAddress(
     city: AvailableCities
   ): Promise<[string, string, string[], Coordinate, Coordinate]> {
-    let addressService: AddressService
-    switch (cityList[city].mainCity) {
-      case 'paris':
-        addressService = new ParisAddressService('paris', this.ad)
-        break
-      case 'lille':
-        addressService = new LilleAddressService(city, this.ad)
-        break
-      case 'plaineCommune':
-        addressService = new PlaineCommuneAddressService(city, this.ad)
-        break
-      case 'lyon':
-        addressService = new LyonAddressService(city, this.ad)
-        break
-    }
+    const postalCodeStrategy =
+      new PostalCodeStrategyFactory().getDiggerStrategy(city, this.ad)
 
     // Order is important here
-    const address = await addressService.getAddress()
-    const postalCode = addressService.getPostalCode()
-    const stations = addressService.getStations()
-    const coordinates = addressService.getCoordinate()
-    const blurryCoordinates = addressService.getCoordinate(true)
+    const postalCode = postalCodeStrategy.getPostalCode()
+    const addressStrategy = new AddressStrategyFactory().getDiggerStrategy(
+      city,
+      postalCode,
+      this.ad
+    )
+    const [address, coordinates, blurryCoordinates] =
+      await addressStrategy.getAddress()
+
+    const stations = this.ad.stations
 
     if (!address && !postalCode && !coordinates) {
-      throw { error: ERROR_CODE.Address, msg: 'address not found', isIncompleteAd: true }
+      throw {
+        error: ERROR_CODE.Address,
+        msg: 'address not found',
+        isIncompleteAd: true,
+      }
     }
 
     return [address, postalCode, stations, coordinates, blurryCoordinates]
@@ -131,7 +126,8 @@ export class DigService {
     const nonFurnitureFromTitle =
       this.ad.title && this.ad.title.match(regexString('nonFurnished'))
     const furnitureFromDescription =
-      this.ad.description && this.ad.description.match(regexString('furnished'))
+      this.ad.description &&
+      this.ad.description.match(regexString('furnished'))
     const nonFurnitureFromDescription =
       this.ad.description &&
       this.ad.description.match(regexString('nonFurnished'))
@@ -158,7 +154,11 @@ export class DigService {
         cleanup.number(this.ad.description.match(regexString('surface'))[0]))
 
     if (!surface) {
-      throw { error: ERROR_CODE.Surface, msg: 'surface not found', isIncompleteAd: true }
+      throw {
+        error: ERROR_CODE.Surface,
+        msg: 'surface not found',
+        isIncompleteAd: true,
+      }
     }
 
     return surface
@@ -166,15 +166,25 @@ export class DigService {
 
   private digForPrice(): number {
     if (!this.ad.price) {
-      throw { error: ERROR_CODE.Price, msg: 'price not found', isIncompleteAd: true }
+      throw {
+        error: ERROR_CODE.Price,
+        msg: 'price not found',
+        isIncompleteAd: true,
+      }
     } else if (this.ad.price > 30000) {
-      PrettyLog.call( `price "${this.ad.price}" too expensive to be a rent`, 'yellow')
+      PrettyLog.call(
+        `price "${this.ad.price}" too expensive to be a rent`,
+        'yellow'
+      )
       throw {
         error: ERROR_CODE.Price,
         msg: 'price too expensive to be a rent',
       }
     } else if (this.ad.price < 100) {
-      PrettyLog.call(`price "${this.ad.price}" too cheap to be a rent`, 'yellow')
+      PrettyLog.call(
+        `price "${this.ad.price}" too cheap to be a rent`,
+        'yellow'
+      )
       throw {
         error: ERROR_CODE.Price,
         msg: 'price too cheap to be a rent',
@@ -210,9 +220,10 @@ export class DigService {
   }
 
   private digForCharges(): number {
-    const charges = this.ad.charges ||
-    (this.ad.description?.match(regexString('charges')) &&
-      cleanup.price(this.ad.description.match(regexString('charges'))[0]))
+    const charges =
+      this.ad.charges ||
+      (this.ad.description?.match(regexString('charges')) &&
+        cleanup.price(this.ad.description.match(regexString('charges'))[0]))
     return +charges < 300 ? charges : null // to be defensive
   }
 

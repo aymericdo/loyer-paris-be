@@ -11,11 +11,7 @@ export class LouerAgile extends Website {
   website: WebsiteType = 'loueragile'
   id: string = null
 
-  constructor(
-    res: Response,
-    props: { body: Mapping; id: string },
-    v2 = false
-  ) {
+  constructor(res: Response, props: { body: Mapping; id: string }, v2 = false) {
     super(res, props, v2)
     this.id = props.id
   }

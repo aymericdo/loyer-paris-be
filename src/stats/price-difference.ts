@@ -5,11 +5,7 @@ import * as rentService from '@db/rent.service'
 import { cityList } from '@services/address/city'
 import { ERROR500_MSG } from '@services/api-errors'
 
-export function getPriceDifference(
-  req: Request,
-  res: Response,
-
-) {
+export function getPriceDifference(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} priceDifference`, 'blue')
   let postalCodePossibilities = []
   switch (req.params.city) {

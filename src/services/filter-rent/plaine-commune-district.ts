@@ -28,7 +28,10 @@ export class PlaineCommuneDistrictService {
     const districtFromCoordinate =
       this.coordinates?.lat &&
       this.coordinates?.lng &&
-      this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
+      this.getDistrictFromCoordinate(
+        this.coordinates.lat,
+        this.coordinates.lng
+      )
 
     return districtFromCoordinate?.length
       ? districtFromCoordinate
@@ -53,7 +56,7 @@ export class PlaineCommuneDistrictService {
 
   @Memoize()
   private getDistrictsJson(): {
-    features: PlaineCommuneDistrictItem[]
+    features: PlaineCommuneDistrictItem[];
     } {
     return JSON.parse(
       fs.readFileSync(

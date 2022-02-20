@@ -4,10 +4,7 @@ import { PrettyLog } from '@services/pretty-log'
 import * as rentService from '@db/rent.service'
 import { ERROR500_MSG } from '@services/api-errors'
 
-export function getPriceVariation(
-  req: Request,
-  res: Response,
-) {
+export function getPriceVariation(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} priceVariation`, 'blue')
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')

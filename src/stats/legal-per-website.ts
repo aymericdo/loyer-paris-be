@@ -4,11 +4,7 @@ import { PrettyLog } from '@services/pretty-log'
 import * as rentService from '@db/rent.service'
 import { ERROR500_MSG } from '@services/api-errors'
 
-export function getLegalPerWebsite(
-  req: Request,
-  res: Response,
-
-) {
+export function getLegalPerWebsite(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getLegalPerWebsite`, 'blue')
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')
@@ -24,7 +20,9 @@ export function getLegalPerWebsite(
           text: 'Annonces non conformes par site web',
         },
         data: {
-          values: data.map((res) => (res.website === 'loueragile' ? { ...res, website: 'jinka' } : res)),
+          values: data.map((res) =>
+            res.website === 'loueragile' ? { ...res, website: 'jinka' } : res
+          ),
         },
         mark: { type: 'bar', tooltip: true },
         transform: [

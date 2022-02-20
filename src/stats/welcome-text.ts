@@ -3,11 +3,7 @@ import { PrettyLog } from '@services/pretty-log'
 import * as rentService from '@db/rent.service'
 import { ERROR500_MSG } from '@services/api-errors'
 
-export function getWelcomeText(
-  req: Request,
-  res: Response,
-
-) {
+export function getWelcomeText(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getWelcomeText`, 'blue')
   const city = req.params.city
 

@@ -5,10 +5,7 @@ import * as rentService from '@db/rent.service'
 import { DistrictsList } from '@services/districts'
 import { ERROR500_MSG } from '@services/api-errors'
 
-export function getChloroplethMap(
-  req: Request,
-  res: Response,
-) {
+export function getChloroplethMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
   const city = req.params.city
   const dateValue: string = req.query.dateValue as string
@@ -67,7 +64,7 @@ export function getChloroplethMap(
     .getChloroplethMapData(city, dateRange)
     .then((data) => {
       const reduced: {
-        [district: string]: { isLegal: number; count: number }
+        [district: string]: { isLegal: number; count: number };
       } = data.reduce((m, d: { isLegal: boolean; district: string }) => {
         if (!m[d.district]) {
           m[d.district] = {

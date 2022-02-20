@@ -41,7 +41,9 @@ export class FnaimScrapping {
         '#annonceFiche > div.annonce_fiche.fiche > ul > li'
       ),
     ]
-    const features2 = [...document.querySelectorAll('#logementBlock > ul > li')]
+    const features2 = [
+      ...document.querySelectorAll('#logementBlock > ul > li'),
+    ]
 
     let surface = null
     let rooms = null

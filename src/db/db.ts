@@ -50,7 +50,10 @@ const plaineCommuneAddressSchema = require('./plaine_commune-address.model')
 const lyonAddressSchema = require('./lyon-address.model')
 
 export const Rent = rentConnection.model('Rent', rentSchema)
-export const IncompleteRent = rentConnection.model('IncompleteRent', incompleteRentSchema)
+export const IncompleteRent = rentConnection.model(
+  'IncompleteRent',
+  incompleteRentSchema
+)
 export const EmpriseBatie = empriseBatieConnection.model(
   'Batie',
   empriseBatieSchema

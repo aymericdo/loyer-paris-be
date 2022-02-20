@@ -1,43 +1,176 @@
-import * as cleanup from '@helpers/cleanup'
-import inside from 'point-in-polygon'
-import { AddressItem, Coordinate } from '@interfaces/shared'
-import { Ad } from '@interfaces/ad'
 import { regexString } from '@helpers/regex'
-import { Memoize } from 'typescript-memoize'
-import { min } from '@helpers/functions'
-import { DistanceService } from '../distance'
-import { AvailableCities, cityList } from './city'
+import { Ad } from '@interfaces/ad'
+import { AddressItem, Coordinate } from '@interfaces/shared'
+import { cityList } from './city'
+import * as cleanup from '@helpers/cleanup'
+import {
+  LilleAddress,
+  LyonAddress,
+  ParisAddress,
+  PlaineCommuneAddress,
+} from '@db/db'
 
-export abstract class AddressService {
-  ad: Ad = null
-  city: AvailableCities = null
-  postalCode: string
+const dbMapping = {
+  paris: ParisAddress,
+  lyon: LyonAddress,
+  lille: LilleAddress,
+  plaineCommune: PlaineCommuneAddress,
+}
+
+export interface AddressStrategy {
+  getAddress(): Promise<[string, Coordinate, Coordinate]>;
+}
+
+export class AddressStrategyFactory {
+  getDiggerStrategy(city: string, postalCode: string, ad: Ad): AddressStrategy {
+    const parisStrategy = new ParisAddressStrategy(city, postalCode, ad)
+    const defaultStrategy = new DefaultAddressStrategy(city, postalCode, ad)
+    switch (city) {
+      case 'paris': {
+        return parisStrategy
+      }
+      default: {
+        return defaultStrategy
+      }
+    }
+  }
+}
+
+export class DefaultAddressStrategy implements AddressStrategy {
+  private city: string
+  private postalCode: string
+  private ad: Ad
   coordinates: Coordinate
   blurryCoordinates: Coordinate
 
-  constructor(city: AvailableCities, ad: Ad) {
-    this.ad = ad
+  constructor(city: string, postalCode: string, ad: Ad) {
     this.city = city
+    this.postalCode = postalCode
+    this.ad = ad
   }
 
-  async getAddress(): Promise<string> {
+  public async getAddress(): Promise<[string, Coordinate, Coordinate]> {
     const tab = [this.ad.address, this.ad.title, this.ad.description].filter(
       Boolean
     )
 
     for (const text of tab) {
-      const result = await this.digForAddressInText(text)
+      const result = await this.digForAddressInText(
+        this.city,
+        this.postalCode,
+        text
+      )
       if (result) {
-        return result
+        const coord = this.getCoordinate()
+        const blurryCoord = this.getCoordinate(true)
+        return [result, coord, blurryCoord]
       }
+    }
+    return [null, null, null]
+  }
+
+  protected async digForAddressInText(
+    city: string,
+    postalCode: string,
+    text: string
+  ): Promise<string> {
+    const addressRe = new RegExp(regexString('address'))
+    const addressesFromRegex = text.match(addressRe) as string[]
+    if (addressesFromRegex?.length) {
+      const addressesQueries = this.querifyAddresses(city, addressesFromRegex)
+      const result: {
+        item: AddressItem;
+        score: number;
+        streetNumber: string;
+      }[] = (
+        await Promise.all(
+          addressesQueries.map(async (query) => {
+            return await this.getAddressCompleted(city, query)
+          })
+        )
+      )
+        .flat()
+        .filter((r) => (postalCode ? r.item.postalCode === postalCode : true))
+        .sort((a, b) => b.score - a.score)
+
+      if (result?.length) {
+        this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
+        return result[0].streetNumber
+          ? cleanup
+            .string(result[0].item.address)
+            .replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
+          : cleanup
+            .string(result[0].item.address)
+            .replace(/^\d+(b|t)?/g, '')
+            .trim()
+      } else {
+        return null
+      }
+    } else {
+      return null
     }
   }
 
-  getPostalCode(): string {
-    return this.postalCode || this.digForPostalCode()
+  protected querifyAddresses(
+    city: string,
+    addressesFromRegex: string[]
+  ): string[] {
+    return addressesFromRegex
+      .map((a) =>
+        cleanup.address(a, city) ? `${cleanup.address(a, city)}` : null
+      )
+      .filter(Boolean)
   }
 
-  getCoordinate(blurry = false): Coordinate {
+  protected async getAddressCompleted(
+    city: string,
+    query: string
+  ): Promise<
+    {
+      item: AddressItem;
+      score: number;
+      streetNumber: string;
+    }[]
+  > {
+    if (!query) {
+      return null
+    }
+    const addressDb = dbMapping[cityList[city].mainCity]
+    const result = (await addressDb
+      .find(
+        {
+          $text: { $search: query },
+        },
+        { score: { $meta: 'textScore' } }
+      )
+      .sort({ score: { $meta: 'textScore' } })
+      .limit(10)
+      .lean()) as any
+    return result
+      ? result.map((r) => ({
+        item: {
+          address: `${r.numero} ${r.nom_voie}`,
+          postalCode: r.code_postal.toString(),
+          coordinate: {
+            lng: +r.geometry.coordinates[0],
+            lat: +r.geometry.coordinates[1],
+          },
+        },
+        score: r.score,
+        streetNumber: cleanup.streetNumber(query),
+      }))
+      : []
+  }
+
+  protected setCoordinates(coord: Coordinate, streetNumber: string): void {
+    if (streetNumber) {
+      this.coordinates = { ...coord }
+    } else {
+      this.blurryCoordinates = { ...coord }
+    }
+  }
+
+  private getCoordinate(blurry = false): Coordinate {
     const coordinatesFromAd =
       this.ad.coord?.lng && this.ad.coord?.lat
         ? {
@@ -59,200 +192,51 @@ export abstract class AddressService {
       }
     }
   }
+}
 
-  getStations(): string[] {
-    return []
-  }
-
-  abstract getAddressCompleted(q: string): Promise<
+export class ParisAddressStrategy extends DefaultAddressStrategy {
+  protected async getAddressCompleted(
+    city: string,
+    query: string
+  ): Promise<
     {
-      item: AddressItem
-      score: number
-      streetNumber: string
+      item: AddressItem;
+      score: number;
+      streetNumber: string;
     }[]
-  >
-  abstract getTargetPolygon(): number[][]
-  abstract addressFromCoordinate(coord: Coordinate): string
-
-  @Memoize()
-  digForPostalCode(): string {
-    // for hellemmes and lomme
-    if (cityList[this.city].postalCodePossibilities.length === 1) {
-      return cityList[this.city].postalCodePossibilities[0]
-    }
-
-    const postalCode =
-      (this.ad.postalCode && this.digForPostalCode1(this.ad.postalCode)) ||
-      (this.ad.cityLabel &&
-        (this.digForPostalCode1(this.ad.cityLabel) ||
-          this.digForPostalCode2(this.ad.cityLabel))) ||
-      (this.ad.title &&
-        (this.digForPostalCode1(this.ad.title) ||
-          this.digForPostalCode2(this.ad.title))) ||
-      (this.ad.description &&
-        (this.digForPostalCode1(this.ad.description) ||
-          this.digForPostalCode2(this.ad.description)))
-
-    return postalCode &&
-      cityList[this.city].postalCodePossibilities.includes(
-        postalCode.toString()
-      )
-      ? postalCode
-      : null
-  }
-
-  protected digForPostalCode1(text: string): string {
-    const postalCodeRe = new RegExp(cityList[this.city].postalCodeRegex[0])
-    return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
-  }
-
-  protected digForPostalCode2(_text: string): string {
-    return null
-  }
-
-  protected setCoordinates(coord: Coordinate, streetNumber: string): void {
-    if (streetNumber) {
-      this.coordinates = { ...coord }
-    } else {
-      this.blurryCoordinates = { ...coord }
-    }
-  }
-
-  protected setPostalCode(postalCode: string): void {
-    this.postalCode = postalCode
-  }
-
-  private async digForAddressInText(text: string): Promise<string> {
-    const addressRe = new RegExp(regexString('address'))
-    const addressesFromRegex = text.match(addressRe) as string[]
-
-    if (addressesFromRegex?.length) {
-      const addressesQueries = this.querifyAddresses(addressesFromRegex)
-      const result: {
-        item: AddressItem
-        score: number
-        streetNumber: string
-      }[] = (
-        await Promise.all(
-          addressesQueries.map(async (query) => {
-            return await this.getAddressCompleted(query)
-          })
-        )
-      )
-        .flat()
-        .filter((r) =>
-          this.getPostalCode()
-            ? r.item.postalCode === this.getPostalCode()
-            : true
-        )
-        .sort((a, b) => b.score - a.score)
-
-      if (result?.length) {
-        this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
-
-        if (this.city === 'paris') {
-          // More precision with polygon that we are targeting for sure
-          const resultInPostalCode = this.nearestAddressInTargetPolygon(result)
-          return resultInPostalCode
-            ? resultInPostalCode.streetNumber
-              ? cleanup
-                .string(resultInPostalCode.address)
-                .replace(
-                  /^\d+(b|t)?/g,
-                  resultInPostalCode.streetNumber.toString()
-                )
-              : cleanup
-                .string(resultInPostalCode.address)
-                .replace(/^\d+(b|t)?/g, '')
-                .trim()
-            : null
-        } else {
-          return result[0].streetNumber
-            ? cleanup
-              .string(result[0].item.address)
-              .replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
-            : cleanup
-              .string(result[0].item.address)
-              .replace(/^\d+(b|t)?/g, '')
-              .trim()
-        }
-      } else {
-        return null
-      }
-    } else {
+  > {
+    if (!query) {
       return null
     }
-  }
-
-  private querifyAddresses(addressesFromRegex: string[]): string[] {
-    return addressesFromRegex
-      .map((a) =>
-        cleanup.address(a, this.city)
-          ? `${cleanup.address(a, this.city)}`
-          : null
+    const addressDb = dbMapping[cityList[city].mainCity]
+    const result = (await addressDb
+      .find(
+        {
+          $text: { $search: query },
+        },
+        { score: { $meta: 'textScore' } }
       )
-      .filter(Boolean)
+      .sort({ score: { $meta: 'textScore' } })
+      .limit(10)
+      .lean()) as any
+    return result
+      ? result.map((r) => ({
+        item: {
+          address: r.fields.l_adr,
+          postalCode: this.postalCodeFormat(r.fields.c_ar.toString()),
+          coordinate: {
+            lng: r.fields.geom.coordinates[0],
+            lat: r.fields.geom.coordinates[1],
+          },
+        },
+        score: r.score,
+        streetNumber: cleanup.streetNumber(query),
+      }))
+      : []
   }
 
-  private nearestAddressInTargetPolygon(
-    addressesCompleted: {
-      item: AddressItem
-      streetNumber: string
-      score: number
-    }[]
-  ): { address: string; streetNumber: string } {
-    const targetPolygon = this.getTargetPolygon()
-
-    if (!targetPolygon) return null
-
-    const pointByDist: {
-      point: number[]
-      dist: number
-      item: AddressItem
-      streetNumber: string
-    }[] = addressesCompleted.map((address) => {
-      const point = [address.item.coordinate.lng, address.item.coordinate.lat]
-
-      if (inside(point, targetPolygon)) {
-        return {
-          point,
-          dist: 0,
-          item: address.item,
-          streetNumber: address.streetNumber,
-        }
-      } else {
-        // Get the closest coord but in the right target
-        const { point: resPoint, dist } = DistanceService.distanceToPoly(
-          point as [number, number],
-          targetPolygon as [number, number][]
-        )
-        return {
-          point: resPoint,
-          dist,
-          item: address.item,
-          streetNumber: address.streetNumber,
-        }
-      }
-    })
-
-    if (!pointByDist.length) return null
-
-    const bah = min(pointByDist.reverse(), 'dist')
-
-    // marge d'erreur : 250m (je crois)
-    const confidenceThreshold = 0.0025
-    if (bah.dist > confidenceThreshold) {
-      return null
-    }
-
-    const coord = { lng: bah.point[0], lat: bah.point[1] }
-    if (bah.dist === 0) {
-      this.setCoordinates(coord, bah.streetNumber)
-      return { address: bah.item.address, streetNumber: bah.streetNumber }
-    } else {
-      this.setCoordinates(coord, null)
-      // Convert the best coord approximation in address string
-      return { address: this.addressFromCoordinate(coord), streetNumber: null }
-    }
+  private postalCodeFormat(postalCode: string): string {
+    // 10 -> 75010 9 -> 75009
+    return postalCode.length === 1 ? `7500${postalCode}` : `750${postalCode}`
   }
 }

@@ -4,11 +4,7 @@ import * as rentService from '@db/rent.service'
 import { ERROR500_MSG } from '@services/api-errors'
 import { Vega } from '@services/vega'
 
-export function getAdoptionRate(
-  req: Request,
-  res: Response,
-
-) {
+export function getAdoptionRate(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} adoption`, 'blue')
 
   rentService

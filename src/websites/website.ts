@@ -31,7 +31,7 @@ export const WEBSITE_LIST = [
   'orpi',
   'pap',
   'seloger',
-  'superimmo'
+  'superimmo',
 ] as const
 
 export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']
@@ -64,7 +64,7 @@ export abstract class Website {
       })
   }
 
-  abstract mapping(): Promise<Ad>
+  abstract mapping(): Promise<Ad>;
 
   async digData() {
     const ad: Ad = await this.mapping()
@@ -139,6 +139,7 @@ export abstract class Website {
         throw { error: ERROR_CODE.Filter, msg: 'no match found' }
       }
     } catch (err) {
+      console.error(err)
       const incompleteAd: IncompleteAd = {
         id: ad.id,
         website: this.website,

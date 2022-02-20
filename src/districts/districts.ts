@@ -24,9 +24,9 @@ export function getDistricts(req: Request, res: Response) {
   }
 
   interface DistrictElem {
-    value: string
-    groupBy: string | null
-    displaySequence: number
+    value: string;
+    groupBy: string | null;
+    displaySequence: number;
   }
 
   res.json(

@@ -3,7 +3,7 @@ import { LogLevel, WebClient } from '@slack/web-api'
 export class Slack {
   client = new WebClient(process.env.BOT_USER_OAUTH_TOKEN, {
     // LogLevel can be imported and used to make debugging simpler
-    logLevel: LogLevel.ERROR
+    logLevel: LogLevel.ERROR,
   })
 
   async sendMessage(channel: string, message: string) {
@@ -16,8 +16,7 @@ export class Slack {
 
       // eslint-disable-next-line no-console
       console.log(result)
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }

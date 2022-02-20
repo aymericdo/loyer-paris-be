@@ -1,11 +1,10 @@
+import { FilteredResult, InfoToFilter } from '@interfaces/ad'
+import { LilleEncadrementItem } from '@interfaces/json-item-lille'
+import { YearBuiltService } from '@services/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
-import { InfoToFilter, FilteredResult } from '@interfaces/ad'
-import { YearBuiltService } from '@services/year-built'
-import { LilleDistrictService } from './lille-district'
-import { LilleEncadrementItem } from '@interfaces/json-item-lille'
 import { Memoize } from 'typescript-memoize'
-import { number } from '@helpers/cleanup'
+import { LilleDistrictService } from './lille-district'
 
 export class LilleFilterRentService {
   infoToFilter: InfoToFilter = null

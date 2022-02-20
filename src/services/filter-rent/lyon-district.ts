@@ -28,7 +28,10 @@ export class LyonDistrictService {
     const districtFromCoordinate =
       this.coordinates?.lat &&
       this.coordinates?.lng &&
-      this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
+      this.getDistrictFromCoordinate(
+        this.coordinates.lat,
+        this.coordinates.lng
+      )
 
     return districtFromCoordinate?.length
       ? districtFromCoordinate
@@ -55,7 +58,7 @@ export class LyonDistrictService {
 
   @Memoize()
   private getDistrictsJson(): {
-    features: LyonAddressItem[]
+    features: LyonAddressItem[];
     } {
     return JSON.parse(
       fs.readFileSync(path.join('json-data/encadrements_lyon.json'), 'utf8')

@@ -51,7 +51,7 @@ describe('lefigaro', () => {
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Plaine de Monceaux' },
+          neighborhood: { order: 0, value: 'Epinettes' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: '2' },
           surface: { order: 3, value: 52 },
@@ -62,7 +62,8 @@ describe('lefigaro', () => {
           promoPercentage: { order: 8, value: null },
         },
         isLegal: true,
-        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712'
+        moreInfo:
+          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
   })
@@ -131,7 +132,7 @@ describe('lefigaro', () => {
           promoPercentage: { order: 8, value: 2.21 },
         },
         isLegal: false,
-        moreInfo: 'https://encadrement-loyers.lille.fr/'
+        moreInfo: 'https://encadrement-loyers.lille.fr/',
       })
     })
   })

@@ -3,26 +3,26 @@ import { PrettyLog } from '@services/pretty-log'
 import { AvailableCities } from '@services/address/city'
 
 interface SavedInfo {
-  id: string
-  address: string
-  district: string
-  city: AvailableCities
-  hasFurniture?: boolean
-  isHouse?: boolean
-  isLegal: boolean
-  latitude?: number
-  longitude?: number
-  maxPrice: number
-  postalCode: string
-  price: number
-  priceExcludingCharges: number
-  renter?: string
-  roomCount?: number
-  stations?: string[]
-  surface: number
-  website: string
-  url: string
-  yearBuilt?: number[]
+  id: string;
+  address: string;
+  district: string;
+  city: AvailableCities;
+  hasFurniture?: boolean;
+  isHouse?: boolean;
+  isLegal: boolean;
+  latitude?: number;
+  longitude?: number;
+  maxPrice: number;
+  postalCode: string;
+  price: number;
+  priceExcludingCharges: number;
+  renter?: string;
+  roomCount?: number;
+  stations?: string[];
+  surface: number;
+  website: string;
+  url: string;
+  yearBuilt?: number[];
 }
 
 export class SaveRentService {

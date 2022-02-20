@@ -1,11 +1,10 @@
+import { FilteredResult, InfoToFilter } from '@interfaces/ad'
+import { PlaineCommuneEncadrementItem } from '@interfaces/json-item-plaine-commune'
+import { YearBuiltService } from '@services/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
-import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { YearBuiltService } from '@services/year-built'
-import { PlaineCommuneEncadrementItem } from '@interfaces/json-item-plaine-commune'
 import { Memoize } from 'typescript-memoize'
 import { PlaineCommuneDistrictService } from './plaine-commune-district'
-import { number } from '@helpers/cleanup'
 
 export class PlaineCommuneFilterRentService {
   infoToFilter: InfoToFilter = null

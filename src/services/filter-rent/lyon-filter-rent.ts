@@ -1,8 +1,7 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
+import { LyonAddressItem, UnitItemComplete } from '@interfaces/json-item-lyon'
 import { YearBuiltService } from '@services/year-built'
 import { LyonDistrictService } from './lyon-district'
-import { LyonAddressItem, UnitItemComplete } from '@interfaces/json-item-lyon'
-import { number } from '@helpers/cleanup'
 
 export class LyonFilterRentService {
   infoToFilter: InfoToFilter = null

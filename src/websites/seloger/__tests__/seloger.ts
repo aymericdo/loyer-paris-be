@@ -59,7 +59,8 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: 0.81 },
         },
         isLegal: false,
-        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712'
+        moreInfo:
+          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
   })
@@ -117,7 +118,7 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: 15.47 },
         },
         isLegal: false,
-        moreInfo: 'https://encadrement-loyers.lille.fr/'
+        moreInfo: 'https://encadrement-loyers.lille.fr/',
       })
     })
   })
@@ -175,7 +176,8 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: null },
         },
         isLegal: true,
-        moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html'
+        moreInfo:
+          'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
     })
 
@@ -231,7 +233,8 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: null },
         },
         isLegal: true,
-        moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html'
+        moreInfo:
+          'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
     })
   })
