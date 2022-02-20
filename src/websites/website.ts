@@ -59,7 +59,6 @@ export abstract class Website {
         this.res.json(data)
       })
       .catch((err: ApiError) => {
-        console.log(err)
         const status = new ApiErrorsService(err).getStatus()
         this.res.status(status).json(err)
       })
@@ -140,7 +139,7 @@ export abstract class Website {
         throw { error: ERROR_CODE.Filter, msg: 'no match found' }
       }
     } catch (err) {
-      console.log(err)
+      console.error(err)
       const incompleteAd: IncompleteAd = {
         id: ad.id,
         website: this.website,
