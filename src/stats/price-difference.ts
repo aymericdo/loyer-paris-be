@@ -8,7 +8,7 @@ import { ERROR500_MSG } from '@services/api-errors'
 export function getPriceDifference(
   req: Request,
   res: Response,
-  
+
 ) {
   PrettyLog.call(`-> ${req.baseUrl} priceDifference`, 'blue')
   let postalCodePossibilities = []
@@ -89,7 +89,7 @@ export function getPriceDifference(
       res.json(vegaMap)
     })
     .catch((err) => {
-      console.log(err)
+      console.error(err)
       if (err.status) {
         res.status(err.status).json(err)
       } else {

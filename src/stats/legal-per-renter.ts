@@ -7,7 +7,7 @@ import { ERROR500_MSG } from '@services/api-errors'
 export function getLegalPerRenter(
   req: Request,
   res: Response,
-  
+
 ) {
   PrettyLog.call(`-> ${req.baseUrl} isLegalPerRenter`, 'blue')
   const dateValue: string = req.query.dateValue as string
@@ -92,7 +92,7 @@ export function getLegalPerRenter(
       res.json(vegaMap)
     })
     .catch((err) => {
-      console.log(err)
+      console.error(err)
       if (err.status) {
         res.status(err.status).json(err)
       } else {

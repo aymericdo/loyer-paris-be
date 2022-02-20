@@ -84,7 +84,7 @@ export class SaveRentService {
       if (err.code === 11000) {
         PrettyLog.call('⚠️  ad already saved', 'red')
       } else {
-        console.log(err)
+        console.error(err)
       }
     }
   }

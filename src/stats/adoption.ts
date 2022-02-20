@@ -7,7 +7,7 @@ import { Vega } from '@services/vega'
 export function getAdoptionRate(
   req: Request,
   res: Response,
-  
+
 ) {
   PrettyLog.call(`-> ${req.baseUrl} adoption`, 'blue')
 
@@ -46,7 +46,7 @@ export function getAdoptionRate(
       res.json(vegaMap)
     })
     .catch((err) => {
-      console.log(err)
+      console.error(err)
       if (err.status) {
         res.status(err.status).json(err)
       } else {

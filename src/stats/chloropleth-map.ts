@@ -148,7 +148,7 @@ export function getChloroplethMap(
       res.json(vegaMap)
     })
     .catch((err) => {
-      console.log(err)
+      console.error(err)
       if (err.status) {
         res.status(err.status).json(err)
       } else {

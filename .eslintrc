@@ -13,6 +13,9 @@
     "indent": ["error", 2, { "SwitchCase": 1, "ObjectExpression": 1 }],
     "semi": ["error", "never"],
     "quotes": ["error", "single"],
-    "@typescript-eslint/no-var-requires": 0
+    "@typescript-eslint/no-var-requires": 0,
+    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "no-trailing-spaces": "error",
+    "no-console": ["error", { "allow": ["warn", "error"] }]
   }
 }

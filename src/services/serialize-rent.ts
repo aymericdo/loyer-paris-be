@@ -38,7 +38,7 @@ export class SerializeRentService {
 
   serialize() {
     PrettyLog.call('serializing answer', 'green')
-    
+
     const {
       address,
       charges,

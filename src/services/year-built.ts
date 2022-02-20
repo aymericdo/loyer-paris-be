@@ -89,7 +89,7 @@ export class YearBuiltService {
       },
       (err, batie) => {
         if (err) {
-          console.log(err)
+          console.error(err)
         }
 
         return batie

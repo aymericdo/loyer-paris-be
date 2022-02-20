@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 import clc from 'cli-color'
 
 export class PrettyLog {
