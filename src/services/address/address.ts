@@ -223,7 +223,7 @@ export class ParisAddressStrategy extends DefaultAddressStrategy {
       ? result.map((r) => ({
         item: {
           address: r.fields.l_adr,
-          postalCode: this.postalCodeFormat(r.fields.c_ar.toString()),
+          postalCode: ParisAddressStrategy.postalCodeFormat(r.fields.c_ar.toString()),
           coordinate: {
             lng: r.fields.geom.coordinates[0],
             lat: r.fields.geom.coordinates[1],
@@ -235,7 +235,7 @@ export class ParisAddressStrategy extends DefaultAddressStrategy {
       : []
   }
 
-  private postalCodeFormat(postalCode: string): string {
+  static postalCodeFormat(postalCode: string): string {
     // 10 -> 75010 9 -> 75009
     return postalCode.length === 1 ? `7500${postalCode}` : `750${postalCode}`
   }

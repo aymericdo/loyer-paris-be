@@ -10,6 +10,7 @@ import { ParisDistrictService } from '@services/filter-rent/paris-district'
 import { LilleDistrictService } from '@services/filter-rent/lille-district'
 import { PlaineCommuneDistrictService } from '@services/filter-rent/plaine-commune-district'
 import { LyonDistrictService } from '@services/filter-rent/lyon-district'
+import { ParisAddressStrategy } from '@services/address/address'
 
 export async function getAddresses(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
@@ -37,7 +38,7 @@ export async function getAddresses(req: Request, res: Response) {
 
       data = data.map((elem) => {
         const parisDistrictService = new ParisDistrictService(
-          this.postalCodeFormat(elem.fields.c_ar.toString()),
+          ParisAddressStrategy.postalCodeFormat(elem.fields.c_ar.toString()),
           {
             lng: elem.geometry.coordinates[0],
             lat: elem.geometry.coordinates[1],
