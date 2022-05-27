@@ -35,6 +35,11 @@ export class ParisFilterRentService {
       currentYear -= 1
     }
 
+    // TODO: Use 2022 when it will be available
+    if (currentYear === 2022) {
+      currentYear = 2021
+    }
+
     const rentList = this.rangeRentsParisJson().filter((rangeRent) => {
       return (
         currentYear === rangeRent.fields.annee &&
