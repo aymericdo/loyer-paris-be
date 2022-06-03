@@ -33,38 +33,38 @@ export class PlaineCommuneFilterRentService {
         (districtsMatched?.length
           ? districtsMatched
             .map((district) => district.properties.Zone)
-            .includes(rangeRent['Secteur géographique'].toString())
+            .includes(rangeRent['zone'].toString())
           : true) &&
         (timeDates?.length
-          ? timeDates.includes(rangeRent['Epoque de construction'])
+          ? timeDates.includes(rangeRent['annee_de_construction'])
           : true) &&
         (this.infoToFilter.roomCount
           ? +this.infoToFilter.roomCount < 4
-            ? +rangeRent['Nombre de pièces'] === +this.infoToFilter.roomCount
-            : rangeRent['Nombre de pièces'] === '4 et plus'
+            ? +rangeRent['nombre_de_piece'] === +this.infoToFilter.roomCount
+            : rangeRent['nombre_de_piece'] === '4 et plus'
           : true) &&
         (this.infoToFilter.hasFurniture != null
           ? this.infoToFilter.hasFurniture
-            ? rangeRent['Type de location'].match(/^meubl/g)
-            : rangeRent['Type de location'].match(/^non meubl/g)
+            ? rangeRent['meuble']
+            : !rangeRent['meuble']
           : true) &&
         (this.infoToFilter.isHouse != null
           ? this.infoToFilter.isHouse
-            ? rangeRent.Type === 'Maison'
-            : rangeRent.Type === 'Appartement'
+            ? rangeRent['maison']
+            : !rangeRent['maison']
           : true)
       )
     })
 
     return rentList
       .map((r) => ({
-        maxPrice: +r['Loyer de référence majoré'].replace(',', '.'),
-        minPrice: +r['Loyer de référence minoré'].replace(',', '.'),
-        districtName: `Zone ${r['Secteur géographique']}`,
-        isFurnished: !!r['Type de location'].match(/^meubl/g),
-        roomCount: r['Nombre de pièces'],
-        yearBuilt: r['Epoque de construction'],
-        isHouse: r.Type === 'Maison' ? 'Maison' : null,
+        maxPrice: +r['prix_max'].toString().replace(',', '.'),
+        minPrice: +r['prix_min'].toString().replace(',', '.'),
+        districtName: `Zone ${r['zone']}`,
+        isFurnished: r['meuble'],
+        roomCount: r['nombre_de_piece'],
+        yearBuilt: r['annee_de_construction'],
+        isHouse: r['maison'] ? 'Maison' : null,
       }))
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)

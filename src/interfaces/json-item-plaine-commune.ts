@@ -12,14 +12,14 @@ export interface PlaineCommuneDistrictItem {
 }
 
 export interface PlaineCommuneEncadrementItem {
-  'Secteur géographique': number;
-  Type: 'Appartement' | 'Maison';
-  'Nombre de pièces': string;
-  'Epoque de construction': string;
-  'Type de location': 'non meublé' | 'meublé';
-  'Loyer de référence minoré': string;
-  'Loyer de référence': string;
-  'Loyer de référence majoré': string;
+  zone: number;
+  maison: boolean;
+  meuble: boolean;
+  nombre_de_piece: string;
+  annee_de_construction: string;
+  prix_min: string;
+  prix_med: string;
+  prix_max: string;
 }
 
 export interface PlaineCommuneAddress {
