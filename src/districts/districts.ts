@@ -18,6 +18,9 @@ export function getDistricts(req: Request, res: Response) {
     case 'plaine_commune':
       geodata = districtList.plaineCommuneGeodata()
       break
+    case 'est_ensemble':
+      geodata = districtList.estEnsembleGeodata()
+      break
     case 'lyon':
       geodata = districtList.lyonGeodata()
       break
@@ -93,6 +96,21 @@ export function getDistricts(req: Request, res: Response) {
               prev.push({
                 value: `Zone ${data['properties']['zonage']}`,
                 displaySequence: data['properties']['zonage'],
+                groupBy: null,
+              })
+            }
+            break
+          }
+          case 'est_ensemble': {
+            if (
+              !prev.some(
+                (elem: DistrictElem) =>
+                  elem.value === `Zone ${data['properties']['Zone']}`
+              )
+            ) {
+              prev.push({
+                value: `Zone ${data['properties']['Zone']}`,
+                displaySequence: data['properties']['Zone'],
                 groupBy: null,
               })
             }

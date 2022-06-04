@@ -3,6 +3,7 @@ import { PrettyLog } from '@services/pretty-log'
 import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
 import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
 import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent'
+import { EstEnsembleFilterRentService } from '@services/filter-rent/est-ensemble-filter-rent'
 import { FilteredResult } from '@interfaces/ad'
 import { roundNumber } from '@helpers/round-number'
 import { LyonFilterRentService } from '@services/filter-rent/lyon-filter-rent'
@@ -68,6 +69,15 @@ function getManualResult(req: Request, res: Response) {
       filteredResult = new LyonFilterRentService({
         yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
         districtName: district,
+        roomCount: room,
+        hasFurniture,
+      }).filter()
+      break
+    case 'est_ensemble':
+      filteredResult = new EstEnsembleFilterRentService({
+        yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
+        districtName: district,
+        isHouse,
         roomCount: room,
         hasFurniture,
       }).filter()

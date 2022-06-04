@@ -8,6 +8,7 @@ import {
   LyonAddress,
   ParisAddress,
   PlaineCommuneAddress,
+  EstEnsembleAddress,
 } from '@db/db'
 
 const dbMapping = {
@@ -15,6 +16,7 @@ const dbMapping = {
   lyon: LyonAddress,
   lille: LilleAddress,
   plaineCommune: PlaineCommuneAddress,
+  estEnsemble: EstEnsembleAddress,
 }
 
 export interface AddressStrategy {

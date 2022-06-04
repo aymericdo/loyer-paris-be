@@ -5,7 +5,7 @@ import { PrettyLog } from '../pretty-log'
 
 type CityList = {
   [key: string]: {
-    mainCity: 'paris' | 'lille' | 'plaineCommune' | 'lyon';
+    mainCity: 'paris' | 'lille' | 'plaineCommune' | 'lyon' | 'estEnsemble';
     postalCodePossibilities: string[];
     postalCodeRegex: RegExp[];
   };
@@ -56,22 +56,6 @@ export const cityList: CityList = {
     mainCity: 'lille',
     postalCodePossibilities: ['59000', '59260', '59160', '59800', '59777'],
     postalCodeRegex: [/\b59[0-9]{3}\b/g],
-  },
-  plaineCommune: {
-    mainCity: 'plaineCommune',
-    postalCodePossibilities: [
-      '93300',
-      '93800',
-      '93450',
-      '93120',
-      '93380',
-      '93200',
-      '93210',
-      '93400',
-      '93240',
-      '93430',
-    ],
-    postalCodeRegex: [/\b93[0-9]{3}\b/g],
   },
   aubervilliers: {
     mainCity: 'plaineCommune',
@@ -142,6 +126,51 @@ export const cityList: CityList = {
     postalCodePossibilities: ['69100'],
     postalCodeRegex: [/\b69100\b/g],
   },
+  bagnolet: {
+    mainCity: 'estEnsemble',
+    postalCodePossibilities: ['93170'],
+    postalCodeRegex: [/\b93170\b/g],
+  },
+  bobigny: {
+    mainCity: 'estEnsemble',
+    postalCodePossibilities: ['93000'],
+    postalCodeRegex: [/\b93000\b/g],
+  },
+  bondy: {
+    mainCity: 'estEnsemble',
+    postalCodePossibilities: ['93140'],
+    postalCodeRegex: [/\b93140\b/g],
+  },
+  'le pré-saint-gervais': {
+    mainCity: 'estEnsemble',
+    postalCodePossibilities: ['93310'],
+    postalCodeRegex: [/\b93310\b/g],
+  },
+  'les lilas': {
+    mainCity: 'estEnsemble',
+    postalCodePossibilities: ['93260'],
+    postalCodeRegex: [/\b93260\b/g],
+  },
+  montreuil: {
+    mainCity: 'estEnsemble',
+    postalCodePossibilities: ['93100'],
+    postalCodeRegex: [/\b93100\b/g],
+  },
+  'noisy-le-sec': {
+    mainCity: 'estEnsemble',
+    postalCodePossibilities: ['93130'],
+    postalCodeRegex: [/\b93130\b/g],
+  },
+  pantin: {
+    mainCity: 'estEnsemble',
+    postalCodePossibilities: ['93500'],
+    postalCodeRegex: [/\b93500\b/g],
+  },
+  romainville: {
+    mainCity: 'estEnsemble',
+    postalCodePossibilities: ['93230'],
+    postalCodeRegex: [/\b93230\b/g],
+  },
 }
 
 export type AvailableCities = keyof typeof cityList & string;
@@ -182,6 +211,7 @@ export class CityService {
   static canHaveHouse(city: AvailableCities): boolean {
     switch (cityList[city].mainCity) {
       case 'plaineCommune':
+      case 'estEnsemble':
         return true
       default:
         return false

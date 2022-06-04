@@ -28,6 +28,7 @@ export class SerializeRentService {
     lyon: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
     lille: 'https://encadrement-loyers.lille.fr/',
     plaineCommune: 'https://plainecommune.fr/encadrementdesloyers/',
+    estEnsemble: 'https://www.est-ensemble.fr/lencadrement-des-loyers-sera-applique-en-decembre-est-ensemble',
   }
   serializedInfo: SerializedInfo = null
   filteredResult: FilteredResult = null

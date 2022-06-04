@@ -7,21 +7,7 @@ import { ERROR500_MSG } from '@services/api-errors'
 
 export function getPriceDifference(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} priceDifference`, 'blue')
-  let postalCodePossibilities = []
-  switch (req.params.city) {
-    case 'paris':
-      postalCodePossibilities = cityList.paris.postalCodePossibilities
-      break
-    case 'lille':
-      postalCodePossibilities = cityList.lille.postalCodePossibilities
-      break
-    case 'plaine_commune':
-      postalCodePossibilities = cityList.plaineCommune.postalCodePossibilities
-      break
-    case 'lyon':
-      postalCodePossibilities = cityList.lyon.postalCodePossibilities
-      break
-  }
+  const postalCodePossibilities = Object.values(cityList).filter((city) => city.mainCity === req.params.city).flatMap((city) => city.postalCodePossibilities)
 
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')

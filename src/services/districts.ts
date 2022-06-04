@@ -34,6 +34,16 @@ export class DistrictsList {
   }
 
   @Memoize()
+  estEnsembleGeodata() {
+    return JSON.parse(
+      fs.readFileSync(
+        path.join('json-data/quartier_est-ensemble_geodata.json'),
+        'utf8'
+      )
+    )
+  }
+
+  @Memoize()
   lyonGeodata() {
     return JSON.parse(
       fs.readFileSync(path.join('json-data/encadrements_lyon.json'), 'utf8')

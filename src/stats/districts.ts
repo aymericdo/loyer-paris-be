@@ -21,6 +21,9 @@ export function getDistricts(req: Request, res: Response) {
     case 'lyon':
       geodata = districtList.lyonGeodata()
       break
+    case 'est_ensemble':
+      geodata = districtList.estEnsembleGeodata()
+      break
   }
 
   res.json([

@@ -9,6 +9,7 @@ import { LilleFilterRentService } from '@services/filter-rent/lille-filter-rent'
 import { LyonFilterRentService } from '@services/filter-rent/lyon-filter-rent'
 import { ParisFilterRentService } from '@services/filter-rent/paris-filter-rent'
 import { PlaineCommuneFilterRentService } from '@services/filter-rent/plaine-commune-filter-rent'
+import { EstEnsembleFilterRentService } from '@services/filter-rent/est-ensemble-filter-rent'
 import { SaveRentService } from '@services/save-rent'
 import { SerializeRentService } from '@services/serialize-rent'
 import { Response } from 'express'
@@ -86,6 +87,9 @@ export abstract class Website {
           break
         case 'plaineCommune':
           filteredResult = new PlaineCommuneFilterRentService(cleanAd).find()
+          break
+        case 'estEnsemble':
+          filteredResult = new EstEnsembleFilterRentService(cleanAd).find()
           break
         case 'lyon':
           filteredResult = new LyonFilterRentService(cleanAd).find()

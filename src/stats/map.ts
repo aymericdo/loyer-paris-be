@@ -61,6 +61,20 @@ export function getMap(req: Request, res: Response) {
 
       districtField = 'properties.zonage'
       break
+    case 'est_ensemble':
+      geodata = {
+        ...districtList.estEnsembleGeodata(),
+        features: districtList.estEnsembleGeodata().features.map((data) => ({
+          ...data,
+          properties: {
+            ...data.properties,
+            zonage: `Zone ${data['properties']['Zone']}`,
+          },
+        })),
+      }
+
+      districtField = 'properties.Zone'
+      break
   }
 
   rentService

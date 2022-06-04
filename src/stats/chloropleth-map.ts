@@ -58,6 +58,19 @@ export function getChloroplethMap(req: Request, res: Response) {
       }
       districtField = 'properties.zonage'
       break
+    case 'est_ensemble':
+      geodata = {
+        ...districtList.estEnsembleGeodata(),
+        features: districtList.estEnsembleGeodata().features.map((data) => ({
+          ...data,
+          properties: {
+            ...data.properties,
+            Zone: `Zone ${data['properties']['Zone']}`,
+          },
+        })),
+      }
+      districtField = 'properties.Zone'
+      break
   }
 
   rentService
