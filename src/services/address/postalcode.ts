@@ -39,7 +39,6 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
   }
 
   protected digForPostalCode(city: string, ad: Ad): string {
-    // for hellemmes and lomme
     if (cityList[city].postalCodePossibilities.length === 1) {
       return cityList[city].postalCodePossibilities[0]
     }

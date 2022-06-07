@@ -24,6 +24,19 @@ function getCity(city: string) {
       }
     case 'lyon':
       return { $in: ['lyon', 'villeurbanne'] }
+    case 'est_ensemble':
+      return {
+        $in: [
+          'bagnolet',
+          'bobigny',
+          'le pré-saint-gervais',
+          'les lilas',
+          'montreuil',
+          'noisy-le-sec',
+          'pantin',
+          'romainville',
+        ],
+      }
   }
 }
 

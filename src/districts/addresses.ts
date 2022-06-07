@@ -4,12 +4,14 @@ import {
   LilleAddress,
   LyonAddress,
   ParisAddress,
+  EstEnsembleAddress,
   PlaineCommuneAddress,
 } from '@db/db'
 import { ParisDistrictService } from '@services/filter-rent/paris-district'
 import { LilleDistrictService } from '@services/filter-rent/lille-district'
 import { PlaineCommuneDistrictService } from '@services/filter-rent/plaine-commune-district'
 import { LyonDistrictService } from '@services/filter-rent/lyon-district'
+import { EstEnsembleDistrictService } from '@services/filter-rent/est-ensemble-district'
 import { ParisAddressStrategy } from '@services/address/address'
 
 export async function getAddresses(req: Request, res: Response) {
@@ -151,6 +153,41 @@ export async function getAddresses(req: Request, res: Response) {
           },
           districtName: districts.length
             ? `Zone ${districts[0].properties.zonage}`
+            : null,
+        }
+      })
+      break
+    case 'est_ensemble':
+      data = await EstEnsembleAddress.find(
+        {
+          $text: { $search: addressQuery.toString() },
+        },
+        { score: { $meta: 'textScore' } }
+      )
+        .sort({ score: { $meta: 'textScore' } })
+        .limit(10)
+        .lean()
+
+      data = data.map((elem) => {
+        const estEnsembleDistrictService = new EstEnsembleDistrictService(
+          elem.code_postal,
+          {
+            lng: elem.geometry.coordinates[0],
+            lat: elem.geometry.coordinates[1],
+          }
+        )
+
+        const districts = estEnsembleDistrictService.getDistricts()
+
+        return {
+          ...elem,
+          fields: {
+            l_adr: `${elem.numero}${elem.rep || ''} ${elem.nom_voie} (${
+              elem.code_postal
+            })`,
+          },
+          districtName: districts.length
+            ? `Zone ${districts[0].properties.Zone}`
             : null,
         }
       })
