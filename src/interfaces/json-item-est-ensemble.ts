@@ -6,7 +6,7 @@ export interface EstEnsembleDistrictItem {
     CODE_POST: string;
     NOM_COM: string;
     SIREN_EPCI: string;
-    Zone: string;
+    Zone: number;
   };
   geometry: { type: 'MultiPolygon'; coordinates: number[][][] };
 }

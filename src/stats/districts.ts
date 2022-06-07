@@ -39,6 +39,8 @@ export function getDistricts(req: Request, res: Response) {
               return `Zone ${data['properties']['Zone']}`
             case 'lyon':
               return `Zone ${data['properties']['zonage']}`
+            case 'est_ensemble':
+              return `Zone ${data['properties']['Zone']}`
           }
         })
         .sort()

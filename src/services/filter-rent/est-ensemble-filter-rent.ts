@@ -32,8 +32,8 @@ export class EstEnsembleFilterRentService {
       return (
         (districtsMatched?.length
           ? districtsMatched
-            .map((district) => district.properties.Zone)
-            .includes(rangeRent['zone'].toString())
+            .map((district) => +district.properties.Zone)
+            .includes(+rangeRent['zone'])
           : true) &&
         (timeDates?.length
           ? timeDates.includes(rangeRent['annee_de_construction'])
