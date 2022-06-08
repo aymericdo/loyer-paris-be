@@ -71,6 +71,19 @@ export function getChloroplethMap(req: Request, res: Response) {
       }
       districtField = 'properties.Zone'
       break
+    case 'montpellier':
+      geodata = {
+        ...districtList.montpellierGeodata(),
+        features: districtList.montpellierGeodata().features.map((data) => ({
+          ...data,
+          properties: {
+            ...data.properties,
+            Zone: `Zone ${data['properties']['Zone']}`,
+          },
+        })),
+      }
+      districtField = 'properties.Zone'
+      break
   }
 
   rentService

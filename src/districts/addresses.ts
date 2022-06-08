@@ -6,10 +6,12 @@ import {
   ParisAddress,
   EstEnsembleAddress,
   PlaineCommuneAddress,
+  MontpellierAddress,
 } from '@db/db'
 import { ParisDistrictService } from '@services/filter-rent/paris-district'
 import { LilleDistrictService } from '@services/filter-rent/lille-district'
 import { PlaineCommuneDistrictService } from '@services/filter-rent/plaine-commune-district'
+// import { MontpellierDistrictService } from '@services/filter-rent/montpellier-district'
 import { LyonDistrictService } from '@services/filter-rent/lyon-district'
 import { EstEnsembleDistrictService } from '@services/filter-rent/est-ensemble-district'
 import { ParisAddressStrategy } from '@services/address/address'
@@ -192,6 +194,41 @@ export async function getAddresses(req: Request, res: Response) {
         }
       })
       break
+    // case 'montpellier':
+    //   data = await MontpellierAddress.find(
+    //     {
+    //       $text: { $search: addressQuery.toString() },
+    //     },
+    //     { score: { $meta: 'textScore' } }
+    //   )
+    //     .sort({ score: { $meta: 'textScore' } })
+    //     .limit(10)
+    //     .lean()
+
+    //   data = data.map((elem) => {
+    //     const estEnsembleDistrictService = new MontpellierDistrictService(
+    //       elem.code_postal,
+    //       {
+    //         lng: elem.geometry.coordinates[0],
+    //         lat: elem.geometry.coordinates[1],
+    //       }
+    //     )
+
+    //     const districts = estEnsembleDistrictService.getDistricts()
+
+    //     return {
+    //       ...elem,
+    //       fields: {
+    //         l_adr: `${elem.numero}${elem.rep || ''} ${elem.nom_voie} (${
+    //           elem.code_postal
+    //         })`,
+    //       },
+    //       districtName: districts.length
+    //         ? `Zone ${districts[0].properties.Zone}`
+    //         : null,
+    //     }
+    //   })
+    //   break
   }
 
   res.json(data)
