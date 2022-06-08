@@ -34,7 +34,7 @@ export class FnaimScrapping {
       '#annonceFiche > div.annonce_fiche.fiche > div.caracteristique.agence > div > div.coordonnees > div > a'
     )
     const cityLabel = document.querySelector(
-      '#annonceFiche > div.annonce_fiche.fiche > ul > li.picto.lieu > div > div[itemprop=address]'
+      '#annonceFiche > div.ariane'
     )
     const features = [
       ...document.querySelectorAll(
