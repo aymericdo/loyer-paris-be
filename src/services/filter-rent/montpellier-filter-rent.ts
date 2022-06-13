@@ -47,11 +47,6 @@ export class MontpellierFilterRentService {
           ? this.infoToFilter.hasFurniture
             ? rangeRent['meuble']
             : !rangeRent['meuble']
-          : true) &&
-        (this.infoToFilter.isHouse != null
-          ? this.infoToFilter.isHouse
-            ? rangeRent['maison']
-            : !rangeRent['maison']
           : true)
       )
     })
@@ -64,7 +59,6 @@ export class MontpellierFilterRentService {
         isFurnished: r['meuble'],
         roomCount: r['nombre_de_piece'],
         yearBuilt: r['annee_de_construction'],
-        isHouse: r['maison'] ? 'Maison' : null,
       }))
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)

@@ -13,7 +13,6 @@ export interface MontpellierDistrictItem {
 
 export interface MontpellierEncadrementItem {
   zone: number;
-  maison: boolean;
   meuble: boolean;
   nombre_de_piece: string;
   annee_de_construction: string;
