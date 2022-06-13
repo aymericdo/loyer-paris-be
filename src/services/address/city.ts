@@ -5,7 +5,7 @@ import { PrettyLog } from '../pretty-log'
 
 type CityList = {
   [key: string]: {
-    mainCity: 'paris' | 'lille' | 'plaineCommune' | 'lyon' | 'estEnsemble';
+    mainCity: 'paris' | 'lille' | 'plaineCommune' | 'lyon' | 'estEnsemble' | 'montpellier';
     postalCodePossibilities: string[];
     postalCodeRegex: RegExp[];
   };
@@ -170,6 +170,11 @@ export const cityList: CityList = {
     mainCity: 'estEnsemble',
     postalCodePossibilities: ['93230'],
     postalCodeRegex: [/\b93230\b/g],
+  },
+  montpellier: {
+    mainCity: 'montpellier',
+    postalCodePossibilities: ['34000', '34070', '34080', '34090'],
+    postalCodeRegex: [/\b34[0-9]{3}\b/g],
   },
 }
 
