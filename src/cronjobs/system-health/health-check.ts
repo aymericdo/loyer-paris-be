@@ -7,7 +7,7 @@ export class HealthCheck {
     const countByWebsite = await rentService.getCountByWebsite()
 
     WEBSITE_LIST.forEach((website) => {
-      if (FUNNIEST_WEBSITES.includes(website)) return
+      if (FUNNIEST_WEBSITES.concat(OLD_WEBSITES).includes(website)) return
 
       if (!Object.prototype.hasOwnProperty.call(countByWebsite, website))
         countByWebsite[website] = 0

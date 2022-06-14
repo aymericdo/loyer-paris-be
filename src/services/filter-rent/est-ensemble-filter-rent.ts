@@ -15,7 +15,7 @@ export class EstEnsembleFilterRentService {
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_est-ensemble.json)
-    const rangeTime = ['avant 1946', '1971-1990', '1946-1970', 'après 1990']
+    const rangeTime = ['avant 1946', '1971-1990', '1946-1970', 'apres 1990']
 
     const districtsMatched = new EstEnsembleDistrictService(
       this.infoToFilter.postalCode,

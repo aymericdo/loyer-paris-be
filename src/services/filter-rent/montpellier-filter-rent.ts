@@ -14,8 +14,8 @@ export class MontpellierFilterRentService {
   }
 
   filter(): FilteredResult[] {
-    // Extract possible range time from rangeRents (json-data/encadrements_est-ensemble.json)
-    const rangeTime = ['avant 1946', '1971-1990', '1946-1970', '1991-2005', 'après 2005']
+    // Extract possible range time from rangeRents (json-data/encadrements_montpellier.json)
+    const rangeTime = ['avant 1946', '1971-1990', '1946-1970', '1991-2005', 'apres 2005']
 
     const districtsMatched = new MontpellierDistrictService(
       this.infoToFilter.postalCode,

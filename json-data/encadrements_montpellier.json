@@ -2,7 +2,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "18,70",
     "prix_max": "22,40",
     "prix_min": "13,10",
@@ -38,7 +38,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "17,70",
     "prix_max": "21,20",
     "prix_min": "12,40",
@@ -47,7 +47,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "14,80",
     "prix_max": "17,80",
     "prix_min": "10,40",
@@ -83,7 +83,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "14,00",
     "prix_max": "16,80",
     "prix_min": "9,80",
@@ -92,7 +92,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "11,80",
     "prix_max": "14,20",
     "prix_min": "8,30",
@@ -128,7 +128,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "12,10",
     "prix_max": "14,50",
     "prix_min": "8,50",
@@ -137,7 +137,7 @@
   {
     "zone": 1,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "10,50",
     "prix_max": "12,60",
     "prix_min": "7,40",
@@ -173,7 +173,7 @@
   {
     "zone": 1,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "10,70",
     "prix_max": "12,80",
     "prix_min": "7,50",
@@ -182,7 +182,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "18,20",
     "prix_max": "21,80",
     "prix_min": "12,70",
@@ -218,7 +218,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "17,20",
     "prix_max": "20,60",
     "prix_min": "12,00",
@@ -227,7 +227,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "14,40",
     "prix_max": "17,30",
     "prix_min": "10,10",
@@ -263,7 +263,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "13,60",
     "prix_max": "16,30",
     "prix_min": "9,50",
@@ -272,7 +272,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "11,50",
     "prix_max": "13,80",
     "prix_min": "8,10",
@@ -308,7 +308,7 @@
   {
     "zone": 1,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "11,70",
     "prix_max": "14,00",
     "prix_min": "8,20",
@@ -317,7 +317,7 @@
   {
     "zone": 1,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "10,20",
     "prix_max": "12,20",
     "prix_min": "7,10",
@@ -353,7 +353,7 @@
   {
     "zone": 1,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "10,40",
     "prix_max": "12,50",
     "prix_min": "7,30",
@@ -362,7 +362,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "17,50",
     "prix_max": "21,00",
     "prix_min": "12,30",
@@ -398,7 +398,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "17,70",
     "prix_max": "21,20",
     "prix_min": "12,40",
@@ -407,7 +407,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "14,50",
     "prix_max": "17,40",
     "prix_min": "10,20",
@@ -443,7 +443,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "14,70",
     "prix_max": "17,60",
     "prix_min": "10,30",
@@ -452,7 +452,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "12,20",
     "prix_max": "14,60",
     "prix_min": "8,50",
@@ -488,7 +488,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "12,60",
     "prix_max": "15,10",
     "prix_min": "8,80",
@@ -497,7 +497,7 @@
   {
     "zone": 2,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "10,70",
     "prix_max": "12,80",
     "prix_min": "7,50",
@@ -533,7 +533,7 @@
   {
     "zone": 2,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "10,80",
     "prix_max": "13,00",
     "prix_min": "7,60",
@@ -542,7 +542,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "17,00",
     "prix_max": "20,40",
     "prix_min": "11,90",
@@ -578,7 +578,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "17,20",
     "prix_max": "20,60",
     "prix_min": "12,00",
@@ -587,7 +587,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "14,10",
     "prix_max": "16,90",
     "prix_min": "9,90",
@@ -623,7 +623,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "14,30",
     "prix_max": "17,20",
     "prix_min": "10,00",
@@ -632,7 +632,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "11,80",
     "prix_max": "14,20",
     "prix_min": "8,30",
@@ -668,7 +668,7 @@
   {
     "zone": 2,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "12,20",
     "prix_max": "14,60",
     "prix_min": "8,50",
@@ -677,7 +677,7 @@
   {
     "zone": 2,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "10,40",
     "prix_max": "12,50",
     "prix_min": "7,30",
@@ -713,7 +713,7 @@
   {
     "zone": 2,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "10,50",
     "prix_max": "12,60",
     "prix_min": "7,40",
@@ -722,7 +722,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "16,50",
     "prix_max": "19,80",
     "prix_min": "11,60",
@@ -758,7 +758,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "16,80",
     "prix_max": "20,20",
     "prix_min": "11,80",
@@ -767,7 +767,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "13,90",
     "prix_max": "16,70",
     "prix_min": "9,70",
@@ -803,7 +803,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "14,00",
     "prix_max": "16,80",
     "prix_min": "9,80",
@@ -812,7 +812,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "11,70",
     "prix_max": "14,00",
     "prix_min": "8,20",
@@ -848,7 +848,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "12,10",
     "prix_max": "14,50",
     "prix_min": "8,50",
@@ -857,7 +857,7 @@
   {
     "zone": 3,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "10,10",
     "prix_max": "12,10",
     "prix_min": "7,10",
@@ -893,7 +893,7 @@
   {
     "zone": 3,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "10,60",
     "prix_max": "12,70",
     "prix_min": "7,40",
@@ -902,7 +902,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "16,00",
     "prix_max": "19,20",
     "prix_min": "11,20",
@@ -938,7 +938,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "16,30",
     "prix_max": "19,60",
     "prix_min": "11,40",
@@ -947,7 +947,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "13,50",
     "prix_max": "16,20",
     "prix_min": "9,50",
@@ -983,7 +983,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "13,60",
     "prix_max": "16,30",
     "prix_min": "9,50",
@@ -992,7 +992,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "11,40",
     "prix_max": "13,70",
     "prix_min": "8,00",
@@ -1028,7 +1028,7 @@
   {
     "zone": 3,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "11,70",
     "prix_max": "14,00",
     "prix_min": "8,20",
@@ -1037,7 +1037,7 @@
   {
     "zone": 3,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "9,80",
     "prix_max": "11,80",
     "prix_min": "6,90",
@@ -1073,7 +1073,7 @@
   {
     "zone": 3,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "10,30",
     "prix_max": "12,40",
     "prix_min": "7,20",
@@ -1082,7 +1082,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "17,30",
     "prix_max": "20,80",
     "prix_min": "12,10",
@@ -1118,7 +1118,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "17,80",
     "prix_max": "21,40",
     "prix_min": "12,50",
@@ -1127,7 +1127,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "14,80",
     "prix_max": "17,80",
     "prix_min": "10,40",
@@ -1163,7 +1163,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "14,60",
     "prix_max": "17,50",
     "prix_min": "10,20",
@@ -1172,7 +1172,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "12,50",
     "prix_max": "15,00",
     "prix_min": "8,80",
@@ -1208,7 +1208,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "12,60",
     "prix_max": "15,10",
     "prix_min": "8,80",
@@ -1217,7 +1217,7 @@
   {
     "zone": 4,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "10,40",
     "prix_max": "12,50",
     "prix_min": "7,30",
@@ -1253,7 +1253,7 @@
   {
     "zone": 4,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "11,30",
     "prix_max": "13,60",
     "prix_min": "7,90",
@@ -1262,7 +1262,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "15,00",
     "prix_max": "19,10",
     "prix_min": "11,10",
@@ -1298,7 +1298,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "16,30",
     "prix_max": "19,60",
     "prix_min": "11,40",
@@ -1307,7 +1307,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "13,60",
     "prix_max": "16,30",
     "prix_min": "9,50",
@@ -1343,7 +1343,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "13,40",
     "prix_max": "16,10",
     "prix_min": "9,40",
@@ -1352,7 +1352,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "11,50",
     "prix_max": "13,80",
     "prix_min": "8,10",
@@ -1388,7 +1388,7 @@
   {
     "zone": 4,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "11,60",
     "prix_max": "13,90",
     "prix_min": "8,10",
@@ -1397,7 +1397,7 @@
   {
     "zone": 4,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "9,50",
     "prix_max": "11,40",
     "prix_min": "6,70",
@@ -1433,7 +1433,7 @@
   {
     "zone": 4,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "10,40",
     "prix_max": "12,50",
     "prix_min": "7,30",
@@ -1442,7 +1442,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "17,30",
     "prix_max": "20,80",
     "prix_min": "12,10",
@@ -1478,7 +1478,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "17,10",
     "prix_max": "20,50",
     "prix_min": "12,00",
@@ -1487,7 +1487,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "13,80",
     "prix_max": "16,60",
     "prix_min": "9,70",
@@ -1523,7 +1523,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "14,00",
     "prix_max": "16,80",
     "prix_min": "9,80",
@@ -1532,7 +1532,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "11,40",
     "prix_max": "13,70",
     "prix_min": "8,00",
@@ -1568,7 +1568,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "12,20",
     "prix_max": "14,60",
     "prix_min": "8,50",
@@ -1577,7 +1577,7 @@
   {
     "zone": 5,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "10,80",
     "prix_max": "13,00",
     "prix_min": "7,60",
@@ -1613,7 +1613,7 @@
   {
     "zone": 5,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "11,30",
     "prix_max": "13,60",
     "prix_min": "7,90",
@@ -1622,7 +1622,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "15,90",
     "prix_max": "19,10",
     "prix_min": "11,10",
@@ -1658,7 +1658,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 1,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "15,70",
     "prix_max": "18,80",
     "prix_min": "11,00",
@@ -1667,7 +1667,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "12,70",
     "prix_max": "15,20",
     "prix_min": "8,90",
@@ -1703,7 +1703,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 2,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "12,80",
     "prix_max": "15,40",
     "prix_min": "9,00",
@@ -1712,7 +1712,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "10,50",
     "prix_max": "12,60",
     "prix_min": "7,40",
@@ -1748,7 +1748,7 @@
   {
     "zone": 5,
     "nombre_de_piece": 3,
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "11,20",
     "prix_max": "13,40",
     "prix_min": "7,80",
@@ -1757,7 +1757,7 @@
   {
     "zone": 5,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Avant 1946",
+    "annee_de_construction": "avant 1946",
     "prix_med": "9,90",
     "prix_max": "11,90",
     "prix_min": "6,90",
@@ -1793,7 +1793,7 @@
   {
     "zone": 5,
     "nombre_de_piece": "4 et plus",
-    "annee_de_construction": "Apres 2005",
+    "annee_de_construction": "apres 2005",
     "prix_med": "10,40",
     "prix_max": "12,50",
     "prix_min": "7,30",
