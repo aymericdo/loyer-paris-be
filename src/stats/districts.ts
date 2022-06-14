@@ -24,6 +24,9 @@ export function getDistricts(req: Request, res: Response) {
     case 'est_ensemble':
       geodata = districtList.estEnsembleGeodata()
       break
+    case 'montpellier':
+      geodata = districtList.montpellierGeodata()
+      break
   }
 
   res.json([
@@ -36,10 +39,8 @@ export function getDistricts(req: Request, res: Response) {
             case 'lille':
               return `Zone ${data['properties']['zonage']}`
             case 'plaine_commune':
-              return `Zone ${data['properties']['Zone']}`
-            case 'lyon':
-              return `Zone ${data['properties']['zonage']}`
             case 'est_ensemble':
+            case 'montpellier':
               return `Zone ${data['properties']['Zone']}`
           }
         })

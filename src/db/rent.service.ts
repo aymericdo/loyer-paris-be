@@ -37,6 +37,8 @@ function getCity(city: string) {
           'romainville',
         ],
       }
+    case 'montpellier':
+      return { $in: ['montpellier'] }
   }
 }
 

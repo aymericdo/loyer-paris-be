@@ -14,6 +14,7 @@ import { SaveRentService } from '@services/save-rent'
 import { SerializeRentService } from '@services/serialize-rent'
 import { Response } from 'express'
 import { AvailableCities, cityList, CityService } from '@services/address/city'
+import { MontpellierFilterRentService } from '@services/filter-rent/montpellier-filter-rent'
 
 export const PARTICULIER_TERM = 'Particulier'
 
@@ -36,6 +37,7 @@ export const WEBSITE_LIST = [
 ] as const
 
 export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']
+export const OLD_WEBSITES = ['loueragile']
 export type WebsiteType = typeof WEBSITE_LIST[number];
 
 export abstract class Website {
@@ -93,6 +95,9 @@ export abstract class Website {
           break
         case 'lyon':
           filteredResult = new LyonFilterRentService(cleanAd).find()
+          break
+        case 'montpellier':
+          filteredResult = new MontpellierFilterRentService(cleanAd).find()
           break
       }
 

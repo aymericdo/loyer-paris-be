@@ -24,6 +24,9 @@ export function getDistricts(req: Request, res: Response) {
     case 'lyon':
       geodata = districtList.lyonGeodata()
       break
+    case 'montpellier':
+      geodata = districtList.montpellierGeodata()
+      break
   }
 
   interface DistrictElem {
@@ -102,6 +105,21 @@ export function getDistricts(req: Request, res: Response) {
             break
           }
           case 'est_ensemble': {
+            if (
+              !prev.some(
+                (elem: DistrictElem) =>
+                  elem.value === `Zone ${data['properties']['Zone']}`
+              )
+            ) {
+              prev.push({
+                value: `Zone ${data['properties']['Zone']}`,
+                displaySequence: data['properties']['Zone'],
+                groupBy: null,
+              })
+            }
+            break
+          }
+          case 'montpellier': {
             if (
               !prev.some(
                 (elem: DistrictElem) =>

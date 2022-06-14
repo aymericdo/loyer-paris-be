@@ -29,6 +29,7 @@ export class SerializeRentService {
     lille: 'https://encadrement-loyers.lille.fr/',
     plaineCommune: 'https://plainecommune.fr/encadrementdesloyers/',
     estEnsemble: 'https://www.est-ensemble.fr/lencadrement-des-loyers-sera-applique-en-decembre-est-ensemble',
+    montpellier: 'https://www.montpellier3m.fr/lencadrement-des-loyers-entre-en-application-montpellier-compter-du-1er-juillet-2022',
   }
   serializedInfo: SerializedInfo = null
   filteredResult: FilteredResult = null
