@@ -11,8 +11,8 @@
       "@cronjobs/*": ["cronjobs/*"],
       "@db/*": ["db/*"],
       "@interfaces/*": ["interfaces/*"],
-      "@services/*": ["services/*"],
-      "@slack/*": ["slack/*"]
+      "@messenger/*": ["messenger/*"],
+      "@services/*": ["services/*"]
     },
     "allowJs": true,
     "outDir": "./build",

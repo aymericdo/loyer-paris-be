@@ -1,6 +1,6 @@
 import * as rentService from '@db/rent.service'
 import { FUNNIEST_WEBSITES, OLD_WEBSITES, WEBSITE_LIST } from '@services/websites/website'
-import { Slack } from 'slack/send-message'
+import { Slack } from '@messenger/slack'
 
 export class HealthCheck {
   async call() {
