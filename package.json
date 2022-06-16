@@ -50,12 +50,12 @@
     "typescript-memoize": "^1.0.0-alpha.4"
   },
   "_moduleAliases": {
-    "@helpers": "build/src/helpers",
-    "@services": "build/src/services",
-    "@interfaces": "build/src/interfaces",
+    "@api": "build/src/api",
+    "@cronjobs": "build/src/cronjobs",
     "@db": "build/src/db",
-    "@websites": "build/src/websites",
-    "@cronjobs": "build/src/cronjobs"
+    "@interfaces": "build/src/interfaces",
+    "@services": "build/src/services",
+    "@slack": "build/src/slack"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.3",

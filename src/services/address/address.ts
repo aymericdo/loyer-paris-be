@@ -1,8 +1,8 @@
-import { regexString } from '@helpers/regex'
+import { regexString } from '@services/helpers/regex'
 import { Ad } from '@interfaces/ad'
 import { AddressItem, Coordinate } from '@interfaces/shared'
 import { cityList } from './city'
-import * as cleanup from '@helpers/cleanup'
+import * as cleanup from '@services/helpers/cleanup'
 import {
   LilleAddress,
   LyonAddress,

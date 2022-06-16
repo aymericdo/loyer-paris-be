@@ -7,12 +7,12 @@
     "lib": ["es2019", "dom"],
     "baseUrl": "./src",
     "paths": {
-      "@services/*": ["services/*"],
-      "@helpers/*": ["helpers/*"],
-      "@interfaces/*": ["interfaces/*"],
+      "@api/*": ["api/*"],
+      "@cronjobs/*": ["cronjobs/*"],
       "@db/*": ["db/*"],
-      "@websites/*": ["websites/*"],
-      "@cronjobs/*": ["cronjobs/*"]
+      "@interfaces/*": ["interfaces/*"],
+      "@services/*": ["services/*"],
+      "@slack/*": ["slack/*"]
     },
     "allowJs": true,
     "outDir": "./build",

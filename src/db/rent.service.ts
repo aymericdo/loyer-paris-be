@@ -1,6 +1,6 @@
 import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
-import { FUNNIEST_WEBSITES } from '@websites/website'
+import { FUNNIEST_WEBSITES } from '@services/websites/website'
 
 function getCity(city: string) {
   switch (city) {
