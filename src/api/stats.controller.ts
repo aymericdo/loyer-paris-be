@@ -4,7 +4,6 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { IpService } from '@services/helpers/ip'
 import { getAdoptionRate } from '@services/stats/adoption'
 import { getChloroplethMap } from '@services/stats/chloropleth-map'
-import { getDistricts } from '@services/stats/districts'
 import { getIsLegalVariation } from '@services/stats/is-legal-variation'
 import { getLegalPerClassicRenter } from '@services/stats/legal-per-classic-renter'
 import { getLegalPerRenter } from '@services/stats/legal-per-renter'
@@ -22,8 +21,6 @@ function getNeedCaptcha(req: Request, res: Response) {
   const ipService = new IpService(req)
   res.status(200).json(!ipService.isIpCached())
 }
-
-router.get('/district-list/:city', getDistricts)
 
 router.use('/', function (req: Request, res: Response, next: NextFunction) {
   const ipService = new IpService(req)

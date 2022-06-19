@@ -9,7 +9,7 @@ import { SerializerService } from '@services/api/serializer'
 import { Response } from 'express'
 import { AvailableCities, cityList, CityService } from '@services/address/city'
 import { SaveRentService } from '@services/db/save-rent'
-import { FilterRentFactory } from '@services/filters/filter-rent-factory'
+import { FilterRentFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
 
 export const PARTICULIER_TERM = 'Particulier'
 

@@ -489,7 +489,7 @@ function buildFilter(filterParam: {
   const filter = { isLegal: filterParam.isLegal, createdAt: { $gte: minDate } }
 
   if (filterParam.city !== 'all') {
-    filter['city'] = getCity(filterParam.city)
+    filter['city'] = getCity(filterParam.city as AvailableMainCities)
   }
 
   if (filterParam.districtList?.length) {
