@@ -1,5 +1,5 @@
 import { Response, Request } from 'express'
-import { FilteredResult } from '@interfaces/ad'
+import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
 import { AvailableMainCities, CityService } from '@services/address/city'
@@ -33,7 +33,10 @@ export function getManualResult(req: Request, res: Response) {
   const isHouse: boolean = +isHouseValue === 1
 
   const CurrentFilterRentService = new FilterRentFactory(city).currentFilterRent()
-  const params = {
+  const params: InfoToFilter = {
+    postalCode: null,
+    coordinates: null,
+    blurryCoordinates: null,
     yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
     districtName: district,
     roomCount: room,
