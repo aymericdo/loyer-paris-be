@@ -1,4 +1,4 @@
-import { getAddresses } from '@services/address/addresses'
+import { getAddresses } from '@services/districts/addresses'
 import { getDistricts } from '@services/districts/districts'
 import express from 'express'
 const router = express.Router()

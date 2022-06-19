@@ -2,7 +2,7 @@ import { FilteredResult } from '@interfaces/ad'
 import { MontpellierEncadrementItem } from '@interfaces/json-item-montpellier'
 import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { MontpellierDistrictService } from '@services/filters/district-filter/montpellier-district'
+import { MontpellierDistrictFilter } from '@services/filters/district-filter/montpellier-district'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterMontpellier extends EncadrementFilterParent {
@@ -12,7 +12,7 @@ export class FilterMontpellier extends EncadrementFilterParent {
     // Extract possible range time from rangeRents (json-data/encadrements_montpellier.json)
     const rangeTime = ['avant 1946', '1971-1990', '1946-1970', '1991-2005', 'apres 2005']
 
-    const districtsMatched = new MontpellierDistrictService(
+    const districtsMatched = new MontpellierDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName

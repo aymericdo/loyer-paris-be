@@ -1,10 +1,4 @@
-export interface LyonDistrictItems {
-  type: 'FeatureCollection';
-  name: 'car_care.carencadrmtloyer_latest';
-  features: LyonAddressItem[];
-}
-
-export interface LyonAddressItem {
+export interface LyonEncadrementItem {
   type: 'Feature';
   properties: {
     codeiris: string;

@@ -1,7 +1,7 @@
 import { regexString } from '@services/helpers/regex'
 import { Ad } from '@interfaces/ad'
 import { AddressItem, Coordinate } from '@interfaces/shared'
-import { cityList } from './city'
+import { AvailableCities, cityList } from '@services/address/city'
 import * as cleanup from '@services/helpers/cleanup'
 import {
   LilleAddress,
@@ -39,7 +39,7 @@ export class AddressStrategyFactory {
 }
 
 export class DefaultAddressStrategy implements AddressStrategy {
-  private city: string
+  private city: AvailableCities
   private postalCode: string
   private ad: Ad
   coordinates: Coordinate

@@ -1,23 +1,23 @@
 import { AvailableMainCities } from '@services/address/city'
-import { LyonAddressItem } from '@interfaces/json-item-lyon'
+import { LyonEncadrementItem } from '@interfaces/json-item-lyon'
 import { DistrictFilterParent } from './district-filter-parent'
 
-export class LyonDistrictService extends DistrictFilterParent {
+export class LyonDistrictFilter extends DistrictFilterParent {
   city: AvailableMainCities = 'lyon'
 
-  getDistricts(): LyonAddressItem[] {
-    return super.getDistricts() as LyonAddressItem[]
+  getDistricts(): LyonEncadrementItem[] {
+    return super.getDistricts() as LyonEncadrementItem[]
   }
 
-  protected getDistrictFromName(): LyonAddressItem[] {
-    return (this.getDistrictsJson() as LyonAddressItem[]).filter((district) => {
+  protected getDistrictFromName(): LyonEncadrementItem[] {
+    return (this.getDistrictsJson() as LyonEncadrementItem[]).filter((district) => {
       return +district.properties.zonage === +this.districtName.match(/\d+/)[0]
     })
   }
 
-  protected getDistrictFromPostalCode(): LyonAddressItem[] {
+  protected getDistrictFromPostalCode(): LyonEncadrementItem[] {
     if (this.postalCode) {
-      return (this.getDistrictsJson() as LyonAddressItem[]).filter((district) => {
+      return (this.getDistrictsJson() as LyonEncadrementItem[]).filter((district) => {
         return (
           this.getPostalCode(district.properties.commune) === this.postalCode
         )

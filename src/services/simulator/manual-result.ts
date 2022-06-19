@@ -37,7 +37,7 @@ export function getManualResult(req: Request, res: Response) {
 
   const isHouse: boolean = +isHouseValue === 1
 
-  const CurrentEncadrementFilter = new EncadrementFilterFactory(city).currentFilterRent()
+  const CurrentEncadrementFilter = new EncadrementFilterFactory(city).currentFilter()
   const params: InfoToFilter = {
     postalCode: null,
     coordinates: null,

@@ -1,15 +1,3 @@
-export interface LilleDistrictItem {
-  type: 'Feature';
-  geometry: {
-    type: 'Polygon';
-    coordinates: number[][][];
-  };
-  properties: {
-    zonage: number;
-    geo_point_2d: [number, number];
-  };
-}
-
 export interface LilleEncadrementItem {
   datasetid: string;
   recordid: string;
@@ -26,4 +14,16 @@ export interface LilleEncadrementItem {
     nb_pieces: string;
   };
   record_timestamp: string;
+}
+
+export interface LilleDistrictItem {
+  type: 'Feature';
+  geometry: {
+    type: 'Polygon';
+    coordinates: number[][][];
+  };
+  properties: {
+    zonage: number;
+    geo_point_2d: [number, number];
+  };
 }

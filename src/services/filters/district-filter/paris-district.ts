@@ -2,7 +2,7 @@ import { DistrictFilterParent } from './district-filter-parent'
 import { AvailableMainCities } from '@services/address/city'
 import { ParisDistrictItem } from '@interfaces/json-item-paris'
 
-export class ParisDistrictService extends DistrictFilterParent {
+export class ParisDistrictFilter extends DistrictFilterParent {
   city: AvailableMainCities = 'paris'
 
   getDistricts(): ParisDistrictItem[] {

@@ -2,7 +2,7 @@ import { FilteredResult } from '@interfaces/ad'
 import { PlaineCommuneEncadrementItem } from '@interfaces/json-item-plaine-commune'
 import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { PlaineCommuneDistrictService } from '@services/filters/district-filter/plaine-commune-district'
+import { PlaineCommuneDistrictFilter } from '@services/filters/district-filter/plaine-commune-district'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterPlaineCommune extends EncadrementFilterParent {
@@ -12,7 +12,7 @@ export class FilterPlaineCommune extends EncadrementFilterParent {
     // Extract possible range time from rangeRents (json-data/encadrements_plaine-commune.json)
     const rangeTime = ['avant 1946', '1971-1990', '1946-1970', 'apres 1990']
 
-    const districtsMatched = new PlaineCommuneDistrictService(
+    const districtsMatched = new PlaineCommuneDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName

@@ -2,7 +2,7 @@ import { FilteredResult } from '@interfaces/ad'
 import { EstEnsembleEncadrementItem } from '@interfaces/json-item-est-ensemble'
 import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { EstEnsembleDistrictService } from '@services/filters/district-filter/est-ensemble-district'
+import { EstEnsembleDistrictFilter } from '@services/filters/district-filter/est-ensemble-district'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterEstEnsemble extends EncadrementFilterParent {
@@ -12,7 +12,7 @@ export class FilterEstEnsemble extends EncadrementFilterParent {
     // Extract possible range time from rangeRents (json-data/encadrements_est-ensemble.json)
     const rangeTime = ['avant 1946', '1971-1990', '1946-1970', 'apres 1990']
 
-    const districtsMatched = new EstEnsembleDistrictService(
+    const districtsMatched = new EstEnsembleDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName

@@ -1,9 +1,9 @@
 import { IncompleteAd } from '@interfaces/ad'
 import { EstEnsembleEncadrementItem } from './json-item-est-ensemble'
-import { LilleDistrictItem, LilleEncadrementItem } from './json-item-lille'
-import { LyonAddressItem } from './json-item-lyon'
+import { LilleAddressItem, LilleDistrictItem, LilleEncadrementItem } from './json-item-lille'
+import { LyonAddressItem, LyonEncadrementItem } from './json-item-lyon'
 import { MontpellierEncadrementItem } from './json-item-montpellier'
-import { ParisDistrictItem, ParisEncadrementItem } from './json-item-paris'
+import { ParisAddressItem, ParisDistrictItem, ParisEncadrementItem } from './json-item-paris'
 import { PlaineCommuneEncadrementItem } from './json-item-plaine-commune'
 
 export interface Coordinate {
@@ -24,40 +24,27 @@ export interface AddressItem {
   coordinate: Coordinate;
 }
 
-export interface DefaultAddress {
-  type: 'FeatureCollection';
-  name: 'Base_Adresse_Nationale';
-  crs: { type: 'name'; properties: { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } };
-  features: DefaultAddressItem[];
-}
-
 export interface DefaultAddressItem {
-  type: 'Feature';
-  properties: {
-    id: string;
-    id_fantoir: any;
-    numero: number;
-    rep: any;
-    nom_voie: string;
-    code_posta: number;
-    code_insee: number;
-    nom_commun: string;
-    code_ins_1: string;
-    nom_ancien: string;
-    x: number;
-    y: number;
-    lon: number;
-    lat: number;
-    alias: string;
-    nom_ld: string;
-    libelle_ac: string;
-    nom_afnor: string;
-    source_pos: string;
-    source_nom: string;
-  };
+  id: string;
+  numero: string;
+  rep: string;
+  nom_voie: string;
+  code_postal: string;
+  code_insee: string;
+  nom_commune: string;
+  code_insee_ancienne_commune: string;
+  nom_ancienne_commune: string;
+  x: string;
+  y: string;
+  lon: string;
+  lat: string;
+  libelle_acheminement: string;
+  nom_afnor: string;
+  source_position: string;
+  source_nom_voie: string;
   geometry: {
     type: 'Point';
-    coordinates: ReadonlyArray<ReadonlyArray<number>>;
+    coordinates: [number, number];
   };
 }
 
@@ -74,14 +61,14 @@ export interface DefaultDistrictItem {
   geometry: { type: 'MultiPolygon'; coordinates: number[][][] };
 }
 
-export type Address = DefaultAddress | { features: ParisDistrictItem[] } | { features: LilleDistrictItem[] } | { features: LyonAddressItem[] }
+export type AddressItemDB = DefaultAddressItem | ParisAddressItem
 
-export type DistrictItem = DefaultDistrictItem | LilleDistrictItem | LyonAddressItem | ParisDistrictItem
+export type DistrictItem = DefaultDistrictItem | LilleDistrictItem | LyonEncadrementItem | ParisDistrictItem
 
 export type EncadrementItem =
   ParisEncadrementItem |
   EstEnsembleEncadrementItem |
   PlaineCommuneEncadrementItem |
-  LyonAddressItem |
+  LyonEncadrementItem |
   LilleEncadrementItem |
   MontpellierEncadrementItem

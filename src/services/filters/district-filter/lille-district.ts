@@ -2,7 +2,7 @@ import { LilleDistrictItem } from '@interfaces/json-item-lille'
 import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterParent } from './district-filter-parent'
 
-export class LilleDistrictService extends DistrictFilterParent {
+export class LilleDistrictFilter extends DistrictFilterParent {
   city: AvailableMainCities = 'lille'
 
   getDistricts(): LilleDistrictItem[] {

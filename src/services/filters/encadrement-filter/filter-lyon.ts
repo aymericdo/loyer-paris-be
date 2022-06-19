@@ -1,8 +1,8 @@
 import { FilteredResult } from '@interfaces/ad'
-import { LyonAddressItem, UnitItemComplete } from '@interfaces/json-item-lyon'
+import { LyonEncadrementItem, UnitItemComplete } from '@interfaces/json-item-lyon'
 import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { LyonDistrictService } from '@services/filters/district-filter/lyon-district'
+import { LyonDistrictFilter } from '@services/filters/district-filter/lyon-district'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterLyon extends EncadrementFilterParent {
@@ -12,7 +12,7 @@ export class FilterLyon extends EncadrementFilterParent {
     // Extract possible range time from rangeRents (json-data/encadrements_lyon.json)
     const rangeTime = ['avant 1946', '1946-70', '1971-90', 'après 1990']
 
-    const districtsMatched = new LyonDistrictService(
+    const districtsMatched = new LyonDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName
@@ -55,7 +55,7 @@ export class FilterLyon extends EncadrementFilterParent {
       })
   }
 
-  private bigFlatten(list: LyonAddressItem[]): UnitItemComplete[] {
+  private bigFlatten(list: LyonEncadrementItem[]): UnitItemComplete[] {
     return list.reduce((prev, val) => {
       const zone = val.properties.zonage
       Object.keys(val.properties.valeurs).forEach((roomCountItemKey) => {

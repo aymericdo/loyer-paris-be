@@ -2,7 +2,7 @@ import { FilteredResult } from '@interfaces/ad'
 import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
-import { LilleDistrictService } from '@services/filters/district-filter/lille-district'
+import { LilleDistrictFilter } from '@services/filters/district-filter/lille-district'
 import { LilleEncadrementItem } from '@interfaces/json-item-lille'
 
 export class FilterLille extends EncadrementFilterParent {
@@ -12,7 +12,7 @@ export class FilterLille extends EncadrementFilterParent {
     // Extract possible range time from rangeRents (json-data/encadrements_lille.json)
     const rangeTime = ['< 1946', '1971 - 1990', '1946 - 1970', '> 1990']
 
-    const districtsMatched = new LilleDistrictService(
+    const districtsMatched = new LilleDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName
