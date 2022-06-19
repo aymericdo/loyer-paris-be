@@ -1,12 +1,12 @@
 import { AvailableMainCities } from '@services/address/city'
-import { EstEnsembleFilterRentService } from '../est-ensemble-filter-rent'
-import { LilleFilterRentService } from '../lille-filter-rent'
-import { LyonFilterRentService } from '../lyon-filter-rent'
-import { MontpellierFilterRentService } from '../montpellier-filter-rent'
-import { ParisFilterRentService } from '../paris-filter-rent'
-import { PlaineCommuneFilterRentService } from '../plaine-commune-filter-rent'
+import { FilterEstEnsemble } from './filter-est-ensemble'
+import { FilterLille } from './filter-lille'
+import { FilterLyon } from './filter-lyon'
+import { FilterMontpellier } from './filter-montpellier'
+import { FilterParis } from './filter-paris'
+import { FilterPlaineCommune } from './filter-plaine-commune'
 
-export class FilterRentFactory {
+export class EncadrementFilterFactory {
   city: AvailableMainCities
 
   constructor(city: AvailableMainCities) {
@@ -16,18 +16,17 @@ export class FilterRentFactory {
   currentFilterRent() {
     switch (this.city) {
       case 'paris':
-        return ParisFilterRentService
+        return FilterParis
       case 'lille':
-        return LilleFilterRentService
+        return FilterLille
       case 'plaineCommune':
-        return PlaineCommuneFilterRentService
+        return FilterPlaineCommune
       case 'estEnsemble':
-        return EstEnsembleFilterRentService
+        return FilterEstEnsemble
       case 'lyon':
-        return LyonFilterRentService
+        return FilterLyon
       case 'montpellier':
-        return MontpellierFilterRentService
+        return FilterMontpellier
     }
   }
-
 }

@@ -3,7 +3,7 @@ import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
 import { AvailableMainCities, CityService } from '@services/address/city'
-import { FilterRentFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
+import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
 
 export function getManualResult(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getManualResult`, 'blue')
@@ -17,6 +17,11 @@ export function getManualResult(req: Request, res: Response) {
   const isHouseValue: string = (req.query.isHouseValue as string) || null
   const dateBuiltValueStr: string =
     (req.query.dateBuiltValueStr as string) || null
+
+  if (!city || !districtValue || !priceValue || !furnishedValue || !surfaceValue || !roomValue) {
+    res.status(403)
+    return
+  }
 
   const district: string = districtValue
   const surface: number = +surfaceValue
@@ -32,7 +37,7 @@ export function getManualResult(req: Request, res: Response) {
 
   const isHouse: boolean = +isHouseValue === 1
 
-  const CurrentFilterRentService = new FilterRentFactory(city).currentFilterRent()
+  const CurrentEncadrementFilter = new EncadrementFilterFactory(city).currentFilterRent()
   const params: InfoToFilter = {
     postalCode: null,
     coordinates: null,
@@ -47,7 +52,7 @@ export function getManualResult(req: Request, res: Response) {
     params['isHouse'] = isHouse
   }
 
-  const filteredResult: FilteredResult[] = new CurrentFilterRentService(params).filter()
+  const filteredResult: FilteredResult[] = new CurrentEncadrementFilter(params).filter()
 
   res.json(
     filteredResult.map((r) => {

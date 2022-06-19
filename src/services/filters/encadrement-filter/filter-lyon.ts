@@ -1,14 +1,12 @@
-import { FilteredResult, InfoToFilter } from '@interfaces/ad'
+import { FilteredResult } from '@interfaces/ad'
 import { LyonAddressItem, UnitItemComplete } from '@interfaces/json-item-lyon'
+import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { LyonDistrictService } from './lyon-district'
+import { LyonDistrictService } from '../lyon-district'
+import { EncadrementFilterParent } from './encadrement-filter-parent'
 
-export class LyonFilterRentService {
-  infoToFilter: InfoToFilter = null
-
-  constructor(infoToFilter: InfoToFilter) {
-    this.infoToFilter = infoToFilter
-  }
+export class FilterLyon extends EncadrementFilterParent {
+  city: AvailableMainCities = 'lyon'
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_lyon.json)
@@ -55,19 +53,6 @@ export class LyonFilterRentService {
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
       })
-  }
-
-  find(): FilteredResult {
-    const rentList = this.filter()
-
-    // Get the worst case scenario
-    const worstCase = rentList.length
-      ? rentList.reduce((prev, current) =>
-        prev.maxPrice > current.maxPrice ? prev : current
-      )
-      : null
-
-    return worstCase
   }
 
   private bigFlatten(list: LyonAddressItem[]): UnitItemComplete[] {

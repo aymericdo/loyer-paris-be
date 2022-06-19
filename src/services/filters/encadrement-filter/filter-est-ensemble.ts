@@ -1,17 +1,12 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import { EstEnsembleEncadrementItem } from '@interfaces/json-item-est-ensemble'
+import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import * as fs from 'fs'
-import * as path from 'path'
-import { Memoize } from 'typescript-memoize'
-import { EstEnsembleDistrictService } from './est-ensemble-district'
+import { EstEnsembleDistrictService } from '../est-ensemble-district'
+import { EncadrementFilterParent } from './encadrement-filter-parent'
 
-export class EstEnsembleFilterRentService {
-  infoToFilter: InfoToFilter = null
-
-  constructor(infoToFilter: InfoToFilter) {
-    this.infoToFilter = infoToFilter
-  }
+export class FilterEstEnsemble extends EncadrementFilterParent {
+  city: AvailableMainCities = 'estEnsemble'
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_est-ensemble.json)
@@ -28,7 +23,7 @@ export class EstEnsembleFilterRentService {
       this.infoToFilter.yearBuilt
     ).getRangeTimeDates()
 
-    const rentList = this.rangeRentsEstEnsembleJson().filter((rangeRent) => {
+    const rentList = (this.rangeRentsJson() as EstEnsembleEncadrementItem[]).filter((rangeRent) => {
       return (
         (districtsMatched?.length
           ? districtsMatched
@@ -69,28 +64,5 @@ export class EstEnsembleFilterRentService {
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
       })
-  }
-
-  find(): FilteredResult {
-    const rentList = this.filter()
-
-    // Get the worst case scenario
-    const worstCase = rentList.length
-      ? rentList.reduce((prev, current) =>
-        prev.maxPrice > current.maxPrice ? prev : current
-      )
-      : null
-
-    return worstCase
-  }
-
-  @Memoize()
-  private rangeRentsEstEnsembleJson(): EstEnsembleEncadrementItem[] {
-    return JSON.parse(
-      fs.readFileSync(
-        path.join('json-data/encadrements_est-ensemble.json'),
-        'utf8'
-      )
-    )
   }
 }

@@ -12,16 +12,16 @@ interface DistrictElem {
 const DISPLAY_ZONE_FIELD = 'displayZone'
 export const DISTRICT_FIELD = `properties.${DISPLAY_ZONE_FIELD}`
 
-export class DistrictsList {
-  CITY_FILE_PATHS = {
-    paris: 'json-data/quartier_paris_geodata.json',
-    lille: 'json-data/quartier_lille_geodata.json',
-    plaineCommune: 'json-data/quartier_plaine-commune_geodata.json',
-    estEnsemble: 'json-data/quartier_est-ensemble_geodata.json',
-    lyon: 'json-data/encadrements_lyon.json',
-    montpellier: 'json-data/quartier_montpellier_geodata.json',
-  }
+const CITY_FILE_PATHS = {
+  paris: 'json-data/quartier_paris_geodata.json',
+  lille: 'json-data/quartier_lille_geodata.json',
+  plaineCommune: 'json-data/quartier_plaine-commune_geodata.json',
+  estEnsemble: 'json-data/quartier_est-ensemble_geodata.json',
+  lyon: 'json-data/encadrements_lyon.json',
+  montpellier: 'json-data/quartier_montpellier_geodata.json',
+}
 
+export class DistrictsList {
   city: AvailableMainCities
 
   constructor(city: AvailableMainCities) {
@@ -108,7 +108,7 @@ export class DistrictsList {
   private geodataFile() {
     return JSON.parse(
       fs.readFileSync(
-        path.join(this.CITY_FILE_PATHS[this.city]),
+        path.join(CITY_FILE_PATHS[this.city]),
         'utf8'
       )
     )

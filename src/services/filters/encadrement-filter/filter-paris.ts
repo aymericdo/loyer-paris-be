@@ -1,17 +1,15 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { ParisEncadrementItem, ParisQuartierItem } from '@interfaces/json-item-paris'
-import { FilteredResult, InfoToFilter } from '@interfaces/ad'
+import { FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { ParisDistrictService } from '@services/filters/paris-district'
 import { Memoize } from 'typescript-memoize'
+import { AvailableMainCities } from '@services/address/city'
+import { EncadrementFilterParent } from './encadrement-filter-parent'
 
-export class ParisFilterRentService {
-  infoToFilter: InfoToFilter = null
-
-  constructor(infoToFilter: InfoToFilter) {
-    this.infoToFilter = infoToFilter
-  }
+export class FilterParis extends EncadrementFilterParent {
+  city: AvailableMainCities = 'paris'
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
@@ -42,7 +40,7 @@ export class ParisFilterRentService {
         : [])
     })
 
-    const rentList = this.rangeRentsParisJson().filter((rangeRent) => {
+    const rentList = (this.rangeRentsJson() as ParisEncadrementItem[]).filter((rangeRent) => {
       return (
         currentYear === rangeRent.annee &&
         (zones?.length
@@ -78,26 +76,6 @@ export class ParisFilterRentService {
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
       })
-  }
-
-  find(): FilteredResult {
-    const rentList = this.filter()
-
-    // Get the worst case scenario
-    const worstCase = rentList.length
-      ? rentList.reduce((prev, current) =>
-        prev.maxPrice > current.maxPrice ? prev : current
-      )
-      : null
-
-    return worstCase
-  }
-
-  @Memoize()
-  private rangeRentsParisJson(): ParisEncadrementItem[] {
-    return JSON.parse(
-      fs.readFileSync(path.join('json-data/encadrements_paris.json'), 'utf8')
-    )
   }
 
   @Memoize()

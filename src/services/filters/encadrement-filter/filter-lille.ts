@@ -1,17 +1,12 @@
-import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { LilleEncadrementItem } from '@interfaces/json-item-lille'
+import { FilteredResult } from '@interfaces/ad'
+import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import * as fs from 'fs'
-import * as path from 'path'
-import { Memoize } from 'typescript-memoize'
-import { LilleDistrictService } from './lille-district'
+import { EncadrementFilterParent } from './encadrement-filter-parent'
+import { LilleDistrictService } from '../lille-district'
+import { LilleEncadrementItem } from '@interfaces/json-item-lille'
 
-export class LilleFilterRentService {
-  infoToFilter: InfoToFilter = null
-
-  constructor(infoToFilter: InfoToFilter) {
-    this.infoToFilter = infoToFilter
-  }
+export class FilterLille extends EncadrementFilterParent {
+  city: AvailableMainCities = 'lille'
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_lille.json)
@@ -28,7 +23,7 @@ export class LilleFilterRentService {
       this.infoToFilter.yearBuilt
     ).getRangeTimeDates()
 
-    const rentList = this.rangeRentsLilleJson().filter((rangeRent) => {
+    const rentList = (this.rangeRentsJson() as LilleEncadrementItem[]).filter((rangeRent) => {
       return (
         (districtsMatched?.length
           ? districtsMatched
@@ -67,25 +62,5 @@ export class LilleFilterRentService {
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
       })
-  }
-
-  find(): FilteredResult {
-    const rentList = this.filter()
-
-    // Get the worst case scenario
-    const worstCase = rentList.length
-      ? rentList.reduce((prev, current) =>
-        prev.maxPrice > current.maxPrice ? prev : current
-      )
-      : null
-
-    return worstCase
-  }
-
-  @Memoize()
-  private rangeRentsLilleJson(): LilleEncadrementItem[] {
-    return JSON.parse(
-      fs.readFileSync(path.join('json-data/encadrements_lille.json'), 'utf8')
-    )
   }
 }

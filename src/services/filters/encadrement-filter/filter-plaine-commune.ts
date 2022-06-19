@@ -1,17 +1,12 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import { PlaineCommuneEncadrementItem } from '@interfaces/json-item-plaine-commune'
+import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import * as fs from 'fs'
-import * as path from 'path'
-import { Memoize } from 'typescript-memoize'
-import { PlaineCommuneDistrictService } from './plaine-commune-district'
+import { PlaineCommuneDistrictService } from '../plaine-commune-district'
+import { EncadrementFilterParent } from './encadrement-filter-parent'
 
-export class PlaineCommuneFilterRentService {
-  infoToFilter: InfoToFilter = null
-
-  constructor(infoToFilter: InfoToFilter) {
-    this.infoToFilter = infoToFilter
-  }
+export class FilterPlaineCommune extends EncadrementFilterParent {
+  city: AvailableMainCities = 'plaineCommune'
 
   filter(): FilteredResult[] {
     // Extract possible range time from rangeRents (json-data/encadrements_plaine-commune.json)
@@ -28,7 +23,7 @@ export class PlaineCommuneFilterRentService {
       this.infoToFilter.yearBuilt
     ).getRangeTimeDates()
 
-    const rentList = this.rangeRentsPlaineCommuneJson().filter((rangeRent) => {
+    const rentList = (this.rangeRentsJson() as PlaineCommuneEncadrementItem[]).filter((rangeRent) => {
       return (
         (districtsMatched?.length
           ? districtsMatched
@@ -69,28 +64,5 @@ export class PlaineCommuneFilterRentService {
       .sort((a, b) => {
         return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
       })
-  }
-
-  find(): FilteredResult {
-    const rentList = this.filter()
-
-    // Get the worst case scenario
-    const worstCase = rentList.length
-      ? rentList.reduce((prev, current) =>
-        prev.maxPrice > current.maxPrice ? prev : current
-      )
-      : null
-
-    return worstCase
-  }
-
-  @Memoize()
-  private rangeRentsPlaineCommuneJson(): PlaineCommuneEncadrementItem[] {
-    return JSON.parse(
-      fs.readFileSync(
-        path.join('json-data/encadrements_plaine-commune.json'),
-        'utf8'
-      )
-    )
   }
 }

@@ -9,7 +9,7 @@ import { SerializerService } from '@services/api/serializer'
 import { Response } from 'express'
 import { AvailableCities, cityList, CityService } from '@services/address/city'
 import { SaveRentService } from '@services/db/save-rent'
-import { FilterRentFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
+import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
 
 export const PARTICULIER_TERM = 'Particulier'
 
@@ -69,8 +69,8 @@ export abstract class Website {
     try {
       const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
 
-      const CurrentFilterRentService = new FilterRentFactory(cityList[city].mainCity).currentFilterRent()
-      const filteredResult: FilteredResult = new CurrentFilterRentService(cleanAd).find()
+      const CurrentEncadrementFilter = new EncadrementFilterFactory(cityList[city].mainCity).currentFilterRent()
+      const filteredResult: FilteredResult = new CurrentEncadrementFilter(cleanAd).find()
 
       if (filteredResult) {
         const maxAuthorized = roundNumber(
