@@ -12,7 +12,7 @@ interface DistrictElem {
 const DISPLAY_ZONE_FIELD = 'displayZone'
 export const DISTRICT_FIELD = `properties.${DISPLAY_ZONE_FIELD}`
 
-const CITY_FILE_PATHS = {
+export const CITY_FILE_PATHS = {
   paris: 'json-data/quartier_paris_geodata.json',
   lille: 'json-data/quartier_lille_geodata.json',
   plaineCommune: 'json-data/quartier_plaine-commune_geodata.json',

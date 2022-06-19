@@ -1,8 +1,8 @@
 import { FilteredResult } from '@interfaces/ad'
 import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { EncadrementFilterParent } from './encadrement-filter-parent'
-import { LilleDistrictService } from '../lille-district'
+import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
+import { LilleDistrictService } from '@services/filters/district-filter/lille-district'
 import { LilleEncadrementItem } from '@interfaces/json-item-lille'
 
 export class FilterLille extends EncadrementFilterParent {

@@ -2,8 +2,8 @@ import { FilteredResult } from '@interfaces/ad'
 import { MontpellierEncadrementItem } from '@interfaces/json-item-montpellier'
 import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { MontpellierDistrictService } from '../montpellier-district'
-import { EncadrementFilterParent } from './encadrement-filter-parent'
+import { MontpellierDistrictService } from '@services/filters/district-filter/montpellier-district'
+import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterMontpellier extends EncadrementFilterParent {
   city: AvailableMainCities = 'montpellier'

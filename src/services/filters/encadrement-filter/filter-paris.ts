@@ -3,10 +3,10 @@ import * as path from 'path'
 import { ParisEncadrementItem, ParisQuartierItem } from '@interfaces/json-item-paris'
 import { FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { ParisDistrictService } from '@services/filters/paris-district'
+import { ParisDistrictService } from '@services/filters/district-filter/paris-district'
 import { Memoize } from 'typescript-memoize'
 import { AvailableMainCities } from '@services/address/city'
-import { EncadrementFilterParent } from './encadrement-filter-parent'
+import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterParis extends EncadrementFilterParent {
   city: AvailableMainCities = 'paris'

@@ -2,8 +2,8 @@ import { FilteredResult } from '@interfaces/ad'
 import { LyonAddressItem, UnitItemComplete } from '@interfaces/json-item-lyon'
 import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { LyonDistrictService } from '../lyon-district'
-import { EncadrementFilterParent } from './encadrement-filter-parent'
+import { LyonDistrictService } from '@services/filters/district-filter/lyon-district'
+import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterLyon extends EncadrementFilterParent {
   city: AvailableMainCities = 'lyon'

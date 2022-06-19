@@ -1,9 +1,9 @@
-import { FilteredResult, InfoToFilter } from '@interfaces/ad'
+import { FilteredResult } from '@interfaces/ad'
 import { EstEnsembleEncadrementItem } from '@interfaces/json-item-est-ensemble'
 import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { EstEnsembleDistrictService } from '../est-ensemble-district'
-import { EncadrementFilterParent } from './encadrement-filter-parent'
+import { EstEnsembleDistrictService } from '@services/filters/district-filter/est-ensemble-district'
+import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterEstEnsemble extends EncadrementFilterParent {
   city: AvailableMainCities = 'estEnsemble'

@@ -1,9 +1,9 @@
-import { FilteredResult, InfoToFilter } from '@interfaces/ad'
+import { FilteredResult } from '@interfaces/ad'
 import { PlaineCommuneEncadrementItem } from '@interfaces/json-item-plaine-commune'
 import { AvailableMainCities } from '@services/address/city'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { PlaineCommuneDistrictService } from '../plaine-commune-district'
-import { EncadrementFilterParent } from './encadrement-filter-parent'
+import { PlaineCommuneDistrictService } from '@services/filters/district-filter/plaine-commune-district'
+import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterPlaineCommune extends EncadrementFilterParent {
   city: AvailableMainCities = 'plaineCommune'

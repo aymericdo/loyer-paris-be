@@ -1,3 +1,21 @@
+export interface ParisEncadrementItem {
+  ville: string;
+  epoque: string;
+  id_zone: number;
+  meuble_txt: string;
+  max: number;
+  min: number;
+  piece: number;
+  ref: number;
+  annee: number;
+}
+
+export interface ParisQuartierItem {
+  id_zone: number;
+  nom_quartier: string;
+  id_quartier: number;
+}
+
 export interface ParisDistrictItem {
   type: 'Feature';
   geometry: {
@@ -17,20 +35,3 @@ export interface ParisDistrictItem {
   };
 }
 
-export interface ParisEncadrementItem {
-  ville: string;
-  epoque: string;
-  id_zone: number;
-  meuble_txt: string;
-  max: number;
-  min: number;
-  piece: number;
-  ref: number;
-  annee: number;
-}
-
-export interface ParisQuartierItem {
-  id_zone: number;
-  nom_quartier: string;
-  id_quartier: number;
-}

@@ -13,8 +13,9 @@ import { LilleDistrictService } from '@services/filters/lille-district'
 import { PlaineCommuneDistrictService } from '@services/filters/plaine-commune-district'
 import { MontpellierDistrictService } from '@services/filters/montpellier-district'
 import { LyonDistrictService } from '@services/filters/lyon-district'
-import { EstEnsembleDistrictService } from '@services/filters/est-ensemble-district'
+import { EstEnsembleDistrictService } from '@services/filters/district-filter/est-ensemble-district'
 import { ParisAddressStrategy } from '@services/address/address'
+import { DefaultDistrictItem } from '@interfaces/shared'
 
 export async function getAddresses(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
@@ -208,7 +209,7 @@ export async function getAddresses(req: Request, res: Response) {
         .lean()
 
       data = data.map((elem) => {
-        const estEnsembleDistrictService = new MontpellierDistrictService(
+        const montpellierDistrictService = new MontpellierDistrictService(
           elem.code_postal,
           {
             lng: elem.geometry.coordinates[0],
@@ -216,7 +217,7 @@ export async function getAddresses(req: Request, res: Response) {
           }
         )
 
-        const districts = estEnsembleDistrictService.getDistricts()
+        const districts = montpellierDistrictService.getDistricts()
 
         return {
           ...elem,
