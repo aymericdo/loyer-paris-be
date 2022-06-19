@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express'
 const router = express.Router()
 import { PrettyLog } from '@services/helpers/pretty-log'
-import { LouerAgile } from '@services/websites/loueragile/loueragile'
 
 // routes
 router.post('/data', getByData)
@@ -11,11 +10,7 @@ function getByData(req: Request, res: Response) {
     'blue'
   )
 
-  const loueragile = new LouerAgile(res, {
-    body: req.body,
-    id: req.body.id as string,
-  })
-  loueragile.analyse()
+  res.status(410)
 }
 
 router.post('/data/v2', getByDataV2)
@@ -24,12 +19,7 @@ function getByDataV2(req: Request, res: Response) {
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const loueragile = new LouerAgile(
-    res,
-    { body: req.body, id: req.body.id as string },
-    true
-  )
-  loueragile.analyse()
+  res.status(410)
 }
 
 module.exports = router

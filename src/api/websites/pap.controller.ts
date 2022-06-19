@@ -11,8 +11,7 @@ function getByData(req: Request, res: Response) {
     `-> ${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const pap = new Pap(res, { body: req.body })
-  pap.analyse()
+  res.status(410)
 }
 
 router.post('/data/v2', getByDataV2)
@@ -21,7 +20,7 @@ function getByDataV2(req: Request, res: Response) {
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const pap = new Pap(res, { body: req.body }, true)
+  const pap = new Pap(res, { body: req.body })
   pap.analyse()
 }
 

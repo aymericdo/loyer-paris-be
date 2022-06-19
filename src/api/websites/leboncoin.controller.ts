@@ -10,8 +10,7 @@ function getByData(req: Request, res: Response) {
     `-> ${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const leboncoin = new LeBonCoin(res, { body: req.body })
-  leboncoin.analyse()
+  res.status(410)
 }
 
 router.post('/data/v2', getByDataV2)
@@ -20,7 +19,7 @@ function getByDataV2(req: Request, res: Response) {
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const leboncoin = new LeBonCoin(res, { body: req.body }, true)
+  const leboncoin = new LeBonCoin(res, { body: req.body })
   leboncoin.analyse()
 }
 

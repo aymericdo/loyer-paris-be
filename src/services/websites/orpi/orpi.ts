@@ -21,30 +21,27 @@ export class Orpi extends Website {
       throw { error: ERROR_CODE.Other, msg: 'not a rent' }
     }
 
-    if (this.isV2) {
-      if (this.body.noMoreData) {
-        throw {
-          error: ERROR_CODE.Minimal,
-          msg: `no more data for ${this.website}/${this.body.platform}`,
-        }
-      }
-
-      const scrap = OrpiScrapping.scrap(JSON.parse(this.body.data))
-
-      if (!scrap) {
-        throw {
-          error: ERROR_CODE.Minimal,
-          msg: `no more data for ${this.website}/${this.body.platform}`,
-        }
-      }
-
-      ad = {
-        ...scrap,
-        id: this.body.id,
+    if (this.body.noMoreData) {
+      throw {
+        error: ERROR_CODE.Minimal,
+        msg: `no more data for ${this.website}/${this.body.platform}`,
       }
     }
 
-    ad = ad || (this.body as OrpiMapping)
+    const scrap = OrpiScrapping.scrap(JSON.parse(this.body.data))
+
+    if (!scrap) {
+      throw {
+        error: ERROR_CODE.Minimal,
+        msg: `no more data for ${this.website}/${this.body.platform}`,
+      }
+    }
+
+    ad = {
+      ...scrap,
+      id: this.body.id,
+    }
+
     return {
       id: ad.id.toString(),
       charges: cleanup.number(ad.charges),

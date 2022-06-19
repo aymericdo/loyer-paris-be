@@ -2,89 +2,16 @@ import { Vega } from '@services/helpers/vega'
 import { Response, Request } from 'express'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import * as rentService from '@db/rent.service'
-import { DistrictsList } from '@services/address/districts-list'
+import { DistrictsList } from '@services/districts/districts-list'
 import { ERROR500_MSG } from '@services/api/errors'
+import { AvailableMainCities } from '@services/address/city'
 
 export function getChloroplethMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
-  const city = req.params.city
+  const city: AvailableMainCities = req.params.city as AvailableMainCities
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')
-  const districtList = new DistrictsList()
-
-  let geodata: any
-  let districtField: string
-  switch (city) {
-    case 'paris':
-      geodata = districtList.parisGeodata()
-      districtField = 'properties.l_qu'
-      break
-    case 'lille':
-      geodata = {
-        ...districtList.lilleGeodata(),
-        features: districtList.lilleGeodata().features.map((data) => ({
-          ...data,
-          properties: {
-            ...data.properties,
-            zonage: `Zone ${data['properties']['zonage']}`,
-          },
-        })),
-      }
-      districtField = 'properties.zonage'
-      break
-    case 'plaine_commune':
-      geodata = {
-        ...districtList.plaineCommuneGeodata(),
-        features: districtList.plaineCommuneGeodata().features.map((data) => ({
-          ...data,
-          properties: {
-            ...data.properties,
-            Zone: `Zone ${data['properties']['Zone']}`,
-          },
-        })),
-      }
-      districtField = 'properties.Zone'
-      break
-    case 'lyon':
-      geodata = {
-        ...districtList.lyonGeodata(),
-        features: districtList.lyonGeodata().features.map((data) => ({
-          ...data,
-          properties: {
-            ...data.properties,
-            zonage: `Zone ${data['properties']['zonage']}`,
-          },
-        })),
-      }
-      districtField = 'properties.zonage'
-      break
-    case 'est_ensemble':
-      geodata = {
-        ...districtList.estEnsembleGeodata(),
-        features: districtList.estEnsembleGeodata().features.map((data) => ({
-          ...data,
-          properties: {
-            ...data.properties,
-            Zone: `Zone ${data['properties']['Zone']}`,
-          },
-        })),
-      }
-      districtField = 'properties.Zone'
-      break
-    case 'montpellier':
-      geodata = {
-        ...districtList.montpellierGeodata(),
-        features: districtList.montpellierGeodata().features.map((data) => ({
-          ...data,
-          properties: {
-            ...data.properties,
-            Zone: `Zone ${data['properties']['Zone']}`,
-          },
-        })),
-      }
-      districtField = 'properties.Zone'
-      break
-  }
+  const [geodata, districtField] = new DistrictsList(city as AvailableMainCities).currentGeodataWithZonage()
 
   rentService
     .getChloroplethMapData(city, dateRange)

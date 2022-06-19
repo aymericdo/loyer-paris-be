@@ -5,7 +5,7 @@ import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { AddressStrategyFactory } from '@services/address/address'
-import { AvailableCities, CityService } from '@services/address/city'
+import { AvailableCities, cityList, CityService } from '@services/address/city'
 import { PostalCodeStrategyFactory } from '@services/address/postalcode'
 import { ERROR_CODE } from '@services/api/errors'
 import { PrettyLog } from '@services/helpers/pretty-log'
@@ -31,7 +31,7 @@ export class DigService {
     const renter = this.digForRenter()
     const charges = this.digForCharges()
     const hasCharges = this.digForHasCharges()
-    const isHouse = CityService.canHaveHouse(city)
+    const isHouse = CityService.canHaveHouse(cityList[city].mainCity)
       ? this.digForIsHouse()
       : null
 
@@ -197,7 +197,6 @@ export class DigService {
   private digForRenter(): string {
     const possibleBadRenter = [
       'seloger',
-      'loueragile',
       'leboncoin',
       'lefigaro',
       'pap',

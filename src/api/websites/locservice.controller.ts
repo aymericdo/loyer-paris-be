@@ -9,8 +9,7 @@ function getByDataV2(req: Request, res: Response) {
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const locservice = new Locservice(res, { body: req.body }, true)
-  locservice.analyse()
+  res.status(410)
 }
 
 module.exports = router

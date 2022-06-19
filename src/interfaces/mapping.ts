@@ -6,7 +6,6 @@ export type Mapping = (
   | LeboncoinAPIMapping
   | LefigaroMapping
   | LogicimmoMapping
-  | LoueragileMapping
   | OrpiMapping
   | PapMapping
   | GensdeconfianceMapping
@@ -88,28 +87,6 @@ export interface LogicimmoMapping {
   renter: string;
   rooms: string;
   surface: string;
-}
-
-export interface LoueragileMapping {
-  yearBuilt: number;
-  ad: {
-    id: string;
-    city: string;
-    lng: number;
-    lat: number;
-    description: string;
-    furnished: boolean;
-    postal_code: string;
-    rent: number;
-    owner_type: string;
-    source: string;
-    room: number;
-    area: number;
-    title: string;
-    stops: {
-      name: string;
-    }[];
-  };
 }
 
 export interface OrpiMapping {

@@ -12,7 +12,7 @@ import {
   MontpellierAddress,
 } from '@db/db'
 
-const dbMapping = {
+export const dbMapping = {
   paris: ParisAddress,
   lyon: LyonAddress,
   lille: LilleAddress,
@@ -27,14 +27,12 @@ export interface AddressStrategy {
 
 export class AddressStrategyFactory {
   getDiggerStrategy(city: string, postalCode: string, ad: Ad): AddressStrategy {
-    const parisStrategy = new ParisAddressStrategy(city, postalCode, ad)
-    const defaultStrategy = new DefaultAddressStrategy(city, postalCode, ad)
     switch (city) {
       case 'paris': {
-        return parisStrategy
+        return new ParisAddressStrategy(city, postalCode, ad)
       }
       default: {
-        return defaultStrategy
+        return new DefaultAddressStrategy(city, postalCode, ad)
       }
     }
   }

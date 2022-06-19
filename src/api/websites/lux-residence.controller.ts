@@ -9,7 +9,7 @@ function getByDataV2(req: Request, res: Response) {
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const luxresidence = new LuxResidence(res, { body: req.body }, true)
+  const luxresidence = new LuxResidence(res, { body: req.body })
   luxresidence.analyse()
 }
 

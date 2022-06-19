@@ -9,7 +9,7 @@ function getByDataV2(req: Request, res: Response) {
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const superimmo = new Superimmo(res, { body: req.body }, true)
+  const superimmo = new Superimmo(res, { body: req.body })
   superimmo.analyse()
 }
 

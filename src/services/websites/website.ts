@@ -5,16 +5,11 @@ import { Mapping } from '@interfaces/mapping'
 import { ApiError } from '@interfaces/shared'
 import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'
 import { DigService } from '@services/diggers/dig'
-import { LilleFilterRentService } from '@services/filters/lille-filter-rent'
-import { LyonFilterRentService } from '@services/filters/lyon-filter-rent'
-import { ParisFilterRentService } from '@services/filters/paris-filter-rent'
-import { PlaineCommuneFilterRentService } from '@services/filters/plaine-commune-filter-rent'
-import { EstEnsembleFilterRentService } from '@services/filters/est-ensemble-filter-rent'
 import { SerializerService } from '@services/api/serializer'
 import { Response } from 'express'
 import { AvailableCities, cityList, CityService } from '@services/address/city'
-import { MontpellierFilterRentService } from '@services/filters/montpellier-filter-rent'
 import { SaveRentService } from '@services/db/save-rent'
+import { FilterRentFactory } from '@services/filters/filter-rent-factory'
 
 export const PARTICULIER_TERM = 'Particulier'
 
@@ -28,7 +23,6 @@ export const WEBSITE_LIST = [
   'lefigaro',
   'locservice',
   'logicimmo',
-  'loueragile',
   'luxresidence',
   'orpi',
   'pap',
@@ -37,23 +31,19 @@ export const WEBSITE_LIST = [
 ] as const
 
 export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']
-export const OLD_WEBSITES = ['loueragile']
-export type WebsiteType = typeof WEBSITE_LIST[number];
+export type WebsiteType = typeof WEBSITE_LIST[number]
 
 export abstract class Website {
   website: WebsiteType = null
   body: Mapping = null
-  isV2: boolean = null
   res: Response = null
 
   constructor(
     res: Response,
     props: { body: Mapping; id?: string },
-    v2 = false
   ) {
     this.res = res
     this.body = props.body
-    this.isV2 = v2
   }
 
   analyse(): void {
@@ -79,27 +69,8 @@ export abstract class Website {
     try {
       const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
 
-      let filteredResult: FilteredResult = null
-      switch (cityList[cleanAd.city].mainCity) {
-        case 'paris':
-          filteredResult = new ParisFilterRentService(cleanAd).find()
-          break
-        case 'lille':
-          filteredResult = new LilleFilterRentService(cleanAd).find()
-          break
-        case 'plaineCommune':
-          filteredResult = new PlaineCommuneFilterRentService(cleanAd).find()
-          break
-        case 'estEnsemble':
-          filteredResult = new EstEnsembleFilterRentService(cleanAd).find()
-          break
-        case 'lyon':
-          filteredResult = new LyonFilterRentService(cleanAd).find()
-          break
-        case 'montpellier':
-          filteredResult = new MontpellierFilterRentService(cleanAd).find()
-          break
-      }
+      const CurrentFilterRentService = new FilterRentFactory(cityList[city].mainCity).currentFilterRent()
+      const filteredResult: FilteredResult = new CurrentFilterRentService(cleanAd).find()
 
       if (filteredResult) {
         const maxAuthorized = roundNumber(

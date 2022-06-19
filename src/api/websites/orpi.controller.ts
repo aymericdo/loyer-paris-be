@@ -10,8 +10,7 @@ function getByData(req: Request, res: Response) {
     `-> ${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const orpi = new Orpi(res, { body: req.body })
-  orpi.analyse()
+  res.status(410)
 }
 
 router.post('/data/v2', getByDataV2)
@@ -21,7 +20,7 @@ function getByDataV2(req: Request, res: Response) {
     'blue'
   )
 
-  const orpi = new Orpi(res, { body: req.body }, true)
+  const orpi = new Orpi(res, { body: req.body })
   orpi.analyse()
 }
 

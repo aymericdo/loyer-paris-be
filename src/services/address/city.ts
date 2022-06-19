@@ -5,7 +5,7 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 
 type CityList = {
   [key: string]: {
-    mainCity: 'paris' | 'lille' | 'plaineCommune' | 'lyon' | 'estEnsemble' | 'montpellier';
+    mainCity: AvailableMainCities;
     postalCodePossibilities: string[];
     postalCodeRegex: RegExp[];
   };
@@ -178,6 +178,7 @@ export const cityList: CityList = {
   },
 }
 
+export type AvailableMainCities = 'paris' | 'lille' | 'plaineCommune' | 'lyon' | 'estEnsemble' | 'montpellier';
 export type AvailableCities = keyof typeof cityList & string;
 
 export class CityService {
@@ -213,8 +214,8 @@ export class CityService {
     return this.cityInList
   }
 
-  static canHaveHouse(city: AvailableCities): boolean {
-    switch (cityList[city].mainCity) {
+  static canHaveHouse(city: AvailableMainCities): boolean {
+    switch (city) {
       case 'plaineCommune':
       case 'estEnsemble':
         return true

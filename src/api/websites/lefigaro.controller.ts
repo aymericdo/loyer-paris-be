@@ -10,8 +10,7 @@ function getByData(req: Request, res: Response) {
     `-> ${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const leFigaro = new LeFigaro(res, { body: req.body })
-  leFigaro.analyse()
+  res.status(410)
 }
 
 router.post('/data/v2', getByDataV2)
@@ -20,7 +19,7 @@ function getByDataV2(req: Request, res: Response) {
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  const leFigaro = new LeFigaro(res, { body: req.body }, true)
+  const leFigaro = new LeFigaro(res, { body: req.body })
   leFigaro.analyse()
 }
 
