@@ -2,7 +2,7 @@ import { Vega } from '@services/helpers/vega'
 import { Response, Request } from 'express'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import * as rentService from '@db/rent.service'
-import { DistrictsList } from '@services/districts/districts-list'
+import { DistrictsList, DISTRICT_FIELD } from '@services/districts/districts-list'
 import { ERROR500_MSG } from '@services/api/errors'
 import { AvailableMainCities } from '@services/address/city'
 
@@ -11,7 +11,7 @@ export function getMap(req: Request, res: Response) {
   const city: AvailableMainCities = req.params.city as AvailableMainCities
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')
-  const [geodata, districtField] = new DistrictsList(city as AvailableMainCities).currentGeodataWithZonage()
+  const geodata = new DistrictsList(city as AvailableMainCities).currentGeodata()
 
   rentService
     .getMapData(city, dateRange)
@@ -31,7 +31,7 @@ export function getMap(req: Request, res: Response) {
               stroke: 'white',
             },
             encoding: {
-              tooltip: { field: districtField, type: 'nominal' },
+              tooltip: { field: DISTRICT_FIELD, type: 'nominal' },
             },
           },
           {

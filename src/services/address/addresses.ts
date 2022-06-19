@@ -92,6 +92,7 @@ export async function getAddresses(req: Request, res: Response) {
         }
       })
       break
+    case 'plaineCommune':
     case 'plaine_commune':
       data = await PlaineCommuneAddress.find(
         {
@@ -159,6 +160,7 @@ export async function getAddresses(req: Request, res: Response) {
         }
       })
       break
+    case 'estEnsemble':
     case 'est_ensemble':
       data = await EstEnsembleAddress.find(
         {
