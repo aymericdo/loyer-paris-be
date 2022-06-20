@@ -33,7 +33,7 @@ describe('pap', () => {
         detectedInfo: {
           address: {
             order: 0,
-            value: 'rue de rivoli 75001, Paris',
+            value: '3 rue de rivoli 75001, Paris',
           },
           hasFurniture: {
             order: 1,
@@ -49,7 +49,7 @@ describe('pap', () => {
           },
           yearBuilt: {
             order: 4,
-            value: null,
+            value: '1801-1850',
           },
           isHouse: { order: 5, value: null },
           price: {
@@ -68,7 +68,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: {
             order: 0,
-            value: 'Halles',
+            value: 'Place-Vendôme',
           },
           hasFurniture: {
             order: 1,
@@ -89,15 +89,15 @@ describe('pap', () => {
           isHouse: { order: 5, value: undefined },
           max: {
             order: 6,
-            value: 39.96,
+            value: 44.64,
           },
           maxAuthorized: {
             order: 7,
-            value: 479.52,
+            value: 535.68,
           },
           promoPercentage: {
             order: 8,
-            value: 36.06,
+            value: 28.58,
           },
         },
         isLegal: false,

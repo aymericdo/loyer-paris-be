@@ -20,6 +20,7 @@ function getByDataV2(req: Request, res: Response) {
     'blue'
   )
   const leFigaro = new LeFigaro(res, { body: req.body })
+
   leFigaro.analyse()
 }
 

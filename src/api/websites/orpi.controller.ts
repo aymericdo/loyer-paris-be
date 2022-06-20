@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Orpi } from '@services/websites/orpi/orpi'
 const router = express.Router()
-import * as fs from 'fs'
 
 // routes
 router.post('/data', getByData)
@@ -22,11 +21,7 @@ function getByDataV2(req: Request, res: Response) {
   )
 
   const orpi = new Orpi(res, { body: req.body })
-  fs.writeFile('json-data/bite.json', req.body.data, err => {
-    if (err) {
-      console.error(err)
-    }
-  })
+
   orpi.analyse()
 }
 

@@ -2,29 +2,20 @@ import { Body } from '@interfaces/mapping'
 import { Orpi } from '../orpi'
 import { disconnect } from 'mongoose'
 import { closeAllConnections } from '@db/db'
+import fs from 'fs'
+import path from 'path'
 
-xdescribe('orpi', () => {
+describe('orpi', () => {
   afterAll(() => closeAllConnections())
   afterAll(() => disconnect())
 
   describe('paris', () => {
     test('returns clean ad', async () => {
-      const body: any = {
-        id: 'b-e1y6bt',
-        charges: '54',
-        cityLabel: 'paris 11',
-        coord: { lat: 48.85676, lng: 2.387586 },
-        description:
-          'paris xi - metro philippe auguste- rue  carriere mainguet. a louer dans le cadre d\'un bail  meuble- un studio  de 30 m2 situe au 3eme etage d\'un immeuble bien entretenu. il est compose d\'un grand sejour avec balcon, d\'une cuisine independante amenagee et equipee et d\'une salle de bains avec wc .   loyer 800 euros + 54 euros de charges = 854 euros charges comprises. depot de garantie 1600 euros. frais d\'agence 450 euros.  dossiers complets souhaites avec  caution solidaire indispensable. contactez gilda par sms  au 06 14 15 13 47 . loyer mensuel 800 euros  - charges locatives 54 euros - location meublee.',
-        hasCharges: true,
-        furnished: true,
-        price: 854,
-        postalCode: '75011',
-        renter: 'optimum',
-        rooms: 1,
-        surface: 30,
-        title: 'appartement t1 paris 11 75011 b e1y6bt',
-        yearBuilt: null,
+      const dataParis = fs.readFileSync(path.resolve(__dirname, './orpi-paris-payload.json'), 'utf8')
+
+      const body: Body = {
+        id: '234523',
+        data: dataParis,
         platform: 'chrome',
         url: 'https://www.orpi.com/annonce-location-appartement-t1-paris-11-75011-b-e1y6bt/',
       }
@@ -40,28 +31,28 @@ xdescribe('orpi', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: 'rue carriere-mainguet 75011, Paris' },
-          hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 1 },
-          surface: { order: 3, value: 30 },
-          yearBuilt: { order: 4, value: '1988' },
+          address: { order: 0, value: '75013, Paris' },
+          hasFurniture: { order: 1, value: false },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 33.3 },
+          yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
-          price: { order: 6, value: 854 },
-          charges: { order: 7, value: 54 },
+          price: { order: 6, value: 1218 },
+          charges: { order: 7, value: 112 },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Roquette' },
-          hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: '1' },
-          surface: { order: 3, value: 30 },
-          dateRange: { order: 4, value: '1971-1990' },
+          neighborhood: { order: 0, value: 'Croulebarbe' },
+          hasFurniture: { order: 1, value: false },
+          roomCount: { order: 2, value: '2' },
+          surface: { order: 3, value: 33.3 },
+          dateRange: { order: 4, value: 'Après 1990' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: null },
-          maxAuthorized: { order: 7, value: null },
-          promoPercentage: { order: 8, value: null },
+          max: { order: 6, value: 30.72 },
+          maxAuthorized: { order: 7, value: 1022.98 },
+          promoPercentage: { order: 8, value: 7.51 },
         },
-        isLegal: true,
+        isLegal: false,
         moreInfo:
           'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
@@ -70,24 +61,13 @@ xdescribe('orpi', () => {
 
   describe('lille', () => {
     test('returns clean ad', async () => {
-      const body: any = {
-        id: 'b-e1xpqp',
-        charges: '50',
-        cityLabel: 'lille',
-        coord: { lat: 50.636370149041, lng: 3.034930229187 },
-        description:
-          '(g) -  t2  meuble dans residence recente a proximite du bois de boulogne  a decouvrir : beau 2 pieces meuble offrant un sejour avec un petit  balcon et une belle cuisine equipee ouverte, une chambre avec un placard, une salle de bains, wc separes et une place de parking.  les plus : localisation, petit exterieur et une place de parking.   loyer mensuel : 574euros  loyer parking : 56euros (indissociable de l\'appartement) provision de charges mensuelles : 50euros depot de garantie : deux mois de loyer hors charges  loyer mensuel 630 euros  - charges locatives 50 euros - honoraire ttc a la charge du locataire 478 euros dont 110 euros d\'honoraires d\'etat des lieux.',
-        hasCharges: true,
-        furnished: false,
-        price: 680,
-        postalCode: '59000',
-        renter: 'orpi bcs immobilier',
-        rooms: 2,
-        surface: 36.81,
-        title: 'appartement t2 lille 59000 b e1xpqp',
-        yearBuilt: null,
+      const dataLille = fs.readFileSync(path.resolve(__dirname, './orpi-lille-payload.json'), 'utf8')
+
+      const body: Body = {
+        id: '234523',
+        data: dataLille,
         platform: 'chrome',
-        url: 'https://www.orpi.com/annonce-location-appartement-t2-lille-59000-b-e1xpqp/',
+        url: 'https://www.orpi.com/annonce-location-appartement-t1-paris-11-75011-b-e1y6bt/',
       }
 
       const mockResponse: any = {
@@ -103,26 +83,26 @@ xdescribe('orpi', () => {
         detectedInfo: {
           address: { order: 0, value: '59000, Lille' },
           hasFurniture: { order: 1, value: false },
-          roomCount: { order: 2, value: 2 },
-          surface: { order: 3, value: 36.81 },
-          yearBuilt: { order: 4, value: null },
+          roomCount: { order: 2, value: 3 },
+          surface: { order: 3, value: 67.65 },
+          yearBuilt: { order: 4, value: '1914' },
           isHouse: { order: 5, value: null },
-          price: { order: 6, value: 680 },
-          charges: { order: 7, value: 50 },
+          price: { order: 6, value: 900 },
+          charges: { order: 7, value: null },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: false },
-          roomCount: { order: 2, value: '2' },
-          surface: { order: 3, value: 36.81 },
-          dateRange: { order: 4, value: '> 1990' },
+          roomCount: { order: 2, value: '3' },
+          surface: { order: 3, value: 67.65 },
+          dateRange: { order: 4, value: '< 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 16.9 },
-          maxAuthorized: { order: 7, value: 622.09 },
-          promoPercentage: { order: 8, value: 1.26 },
+          max: { order: 6, value: null },
+          maxAuthorized: { order: 7, value: null },
+          promoPercentage: { order: 8, value: null },
         },
-        isLegal: false,
+        isLegal: true,
         moreInfo: 'https://encadrement-loyers.lille.fr/',
       })
     })

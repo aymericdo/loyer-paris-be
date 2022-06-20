@@ -2,27 +2,20 @@ import { Body } from '@interfaces/mapping'
 import { closeAllConnections } from '@db/db'
 import { disconnect } from 'mongoose'
 import { BienIci } from '../bienici'
+import fs from 'fs'
+import path from 'path'
 
-xdescribe('bienici', () => {
+describe('bienici', () => {
   afterAll(() => closeAllConnections())
   afterAll(() => disconnect())
 
   describe('paris', () => {
     test('returns clean ad', async () => {
-      const body: any = {
-        id: 'guy-hoquet-immo-facile-4938963',
-        cityLabel: 'paris 11e 75011 (nation - alexandre dumas)',
-        description:
-          'descriptif de cet appartement a louer de 2 pieces et 33 m²appartement paris 11 - 2 pieces 33 m2. superbe appartement de 33 m2 meuble, au 3eme etage sans ascenseur d\'un immeuble rue voltaire paris 11. il se compose d\'une entree, un sejour, une cuisine amenagee equipee, une chambre et une salle d\'eau avec wc + cave. l\'appartement vient d\'etre renove.disponible de suite.lire plus',
-        furnished: true,
-        price: '1250',
-        renter: null,
-        rooms: '2',
-        hasCharges: true,
-        charges: '110',
-        surface: '33',
-        title:
-          'location appartement meuble 2 pieces 33 m²paris 11e 75011 (nation - alexandre dumas)',
+      const dataParis = fs.readFileSync(path.resolve(__dirname, './bienici-paris-payload.json'), 'utf8')
+
+      const body: Body = {
+        id: '234523',
+        data: dataParis,
         platform: 'chrome',
         url: 'https://www.bienici.com/annonce/location/paris-11e/appartement/2pieces/guy-hoquet-immo-facile-4938963?q=%2Frecherche%2Flocation%2Fparis-11e-75011',
       }
@@ -38,26 +31,26 @@ xdescribe('bienici', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: 'rue voltaire 75011, Paris' },
+          address: { order: 0, value: '75012, Paris' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 2 },
-          surface: { order: 3, value: 33 },
+          roomCount: { order: 2, value: 1 },
+          surface: { order: 3, value: 16.2 },
           yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
-          price: { order: 6, value: 1250 },
-          charges: { order: 7, value: 110 },
+          price: { order: 6, value: 800 },
+          charges: { order: 7, value: 30 },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Sainte-Marguerite' },
+          neighborhood: { order: 0, value: 'Quinze-Vingts' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: '2' },
-          surface: { order: 3, value: 33 },
-          dateRange: { order: 4, value: 'Après 1990' },
+          roomCount: { order: 2, value: '1' },
+          surface: { order: 3, value: 16.2 },
+          dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 34.08 },
-          maxAuthorized: { order: 7, value: 1124.64 },
-          promoPercentage: { order: 8, value: 1.35 },
+          max: { order: 6, value: 38.64 },
+          maxAuthorized: { order: 7, value: 625.97 },
+          promoPercentage: { order: 8, value: 18.71 },
         },
         isLegal: false,
         moreInfo:
@@ -68,22 +61,13 @@ xdescribe('bienici', () => {
 
   describe('lille', () => {
     test('returns clean ad', async () => {
-      const body: any = {
-        id: 'gedeon-22869488',
-        cityLabel: 'lille 59000 (bois blanc)',
-        description:
-          'descriptif de cet appartement a louer de 1 piece et 10 m²location appartement 10 m² a lille 563 € cc /mois. colocation dans un appartement meuble et entierement renove disponible a partir du 8 juin 2021. situe au dernier etage avec ascenseur. l\'appartement est equipe d\'une nouvelle cuisine avec plaque induction, four a micro-ondes, four a chaleur tournante et un refrigerateur avec congelateur. egalement equipe d\'un lave vaisselle encastrable, d\'une machine a laver, d\'une nespresso et autres ustensiles propice a une cuisine. le logement est idealement situe a 2 minutes a pied du metro \'bois blanc\' ainsi qu\'un carrefour express, d\'une boulangerie et d\'un magasin bio ou pied de l\'immeuble : ) les charges comprennent l\'eau, le chauffage, edf, internet illimite, netflix, rmc sport… a. p.l accordees. pas de frais d\'agence.lire plus',
-        furnished: true,
-        price: '563',
-        renter: null,
-        rooms: '1',
-        hasCharges: true,
-        charges: '83',
-        surface: '10',
-        title:
-          'location appartement meuble 1 piece 10 m²lille 59000 (bois blanc)',
+      const dataLille = fs.readFileSync(path.resolve(__dirname, './bienici-lille-payload.json'), 'utf8')
+
+      const body: Body = {
+        id: '234523',
+        data: dataLille,
         platform: 'chrome',
-        url: 'https://www.bienici.com/annonce/location/lille/appartement/1piece/gedeon-22869488?q=%2Frecherche%2Flocation%2Flille-59000%3Fprix-max%3D800',
+        url: 'https://www.bienici.com/annonce/location/paris-11e/appartement/2pieces/guy-hoquet-immo-facile-4938963?q=%2Frecherche%2Flocation%2Fparis-11e-75011',
       }
 
       const mockResponse: any = {
@@ -97,28 +81,28 @@ xdescribe('bienici', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: '59000, Lille' },
-          hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 1 },
-          surface: { order: 3, value: 10 },
+          address: { order: 0, value: 'allee chanteloup 59000, Lille' },
+          hasFurniture: { order: 1, value: false },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 41.01 },
           yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
-          price: { order: 6, value: 563 },
-          charges: { order: 7, value: 83 },
+          price: { order: 6, value: 700 },
+          charges: { order: 7, value: 90 },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
-          hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: '1' },
-          surface: { order: 3, value: 10 },
-          dateRange: { order: 4, value: '< 1946' },
+          hasFurniture: { order: 1, value: false },
+          roomCount: { order: 2, value: '2' },
+          surface: { order: 3, value: 41.01 },
+          dateRange: { order: 4, value: '> 1990' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 22.4 },
-          maxAuthorized: { order: 7, value: 224 },
-          promoPercentage: { order: 8, value: 53.33 },
+          max: { order: 6, value: null },
+          maxAuthorized: { order: 7, value: null },
+          promoPercentage: { order: 8, value: null },
         },
-        isLegal: false,
+        isLegal: true,
         moreInfo: 'https://encadrement-loyers.lille.fr/',
       })
     })
