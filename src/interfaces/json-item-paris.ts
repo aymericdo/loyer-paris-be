@@ -1,3 +1,5 @@
+import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
+
 export interface ParisEncadrementItem {
   ville: string;
   epoque: string;
@@ -32,6 +34,7 @@ export interface ParisDistrictItem {
     n_sq_ar: number;
     c_quinsee: number;
     c_ar: number;
+    [DISPLAY_ZONE_FIELD]: string;
   };
 }
 

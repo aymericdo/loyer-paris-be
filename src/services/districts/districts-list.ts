@@ -9,7 +9,7 @@ interface DistrictElem {
   displaySequence: number;
 }
 
-const DISPLAY_ZONE_FIELD = 'displayZone'
+export const DISPLAY_ZONE_FIELD = 'displayZone'
 export const DISTRICT_FIELD = `properties.${DISPLAY_ZONE_FIELD}`
 
 export const CITY_FILE_PATHS = {

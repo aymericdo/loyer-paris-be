@@ -19,6 +19,10 @@ export class DistrictFilterParent {
     this.districtName = districtName
   }
 
+  getFirstDistrict(): DistrictItem {
+    return this.getDistricts()[0] as DistrictItem
+  }
+
   getDistricts(): DistrictItem[] {
     if (this.districtName) {
       return this.getDistrictFromName()

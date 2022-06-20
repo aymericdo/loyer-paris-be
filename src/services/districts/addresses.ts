@@ -5,8 +5,7 @@ import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
 import { AddressItemDB, DefaultAddressItem, DefaultDistrictItem } from '@interfaces/shared'
 import { ParisAddressItem, ParisDistrictItem } from '@interfaces/json-item-paris'
-import { LilleDistrictItem } from '@interfaces/json-item-lille'
-import { LyonEncadrementItem } from '@interfaces/json-item-lyon'
+import { DISPLAY_ZONE_FIELD } from './districts-list'
 
 export async function getAddresses(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
@@ -41,37 +40,11 @@ export async function getAddresses(req: Request, res: Response) {
           }
         )
 
-        const districts = parisDistrictFilter.getDistricts() as ParisDistrictItem[]
+        const district = parisDistrictFilter.getFirstDistrict() as ParisDistrictItem
 
         return {
           ...elem,
-          districtName: districts.length ? districts[0].properties.l_qu : null,
-        }
-      })
-      break
-    case 'lille':
-    case 'lyon':
-      data = (data as DefaultAddressItem[]).map((elem) => {
-        const currentDistrictFilter = new CurrentDistrictFilter(
-          elem.code_postal,
-          {
-            lng: elem.geometry.coordinates[0],
-            lat: elem.geometry.coordinates[1],
-          }
-        )
-
-        const districts = currentDistrictFilter.getDistricts() as LyonEncadrementItem[] | LilleDistrictItem[]
-
-        return {
-          ...elem,
-          fields: {
-            l_adr: `${elem.numero}${elem.rep || ''} ${elem.nom_voie} (${
-              elem.code_postal
-            })`,
-          },
-          districtName: districts.length
-            ? `Zone ${(districts[0] as LyonEncadrementItem | LilleDistrictItem).properties.zonage}`
-            : null,
+          districtName: district ? district.properties[DISPLAY_ZONE_FIELD] : null,
         }
       })
       break
@@ -85,7 +58,7 @@ export async function getAddresses(req: Request, res: Response) {
           }
         )
 
-        const districts = currentDistrictFilter.getDistricts() as DefaultDistrictItem[]
+        const district = currentDistrictFilter.getFirstDistrict() as DefaultDistrictItem
 
         return {
           ...elem,
@@ -94,8 +67,8 @@ export async function getAddresses(req: Request, res: Response) {
               elem.code_postal
             })`,
           },
-          districtName: districts.length
-            ? `Zone ${districts[0].properties.Zone}`
+          districtName: district
+            ? district.properties[DISPLAY_ZONE_FIELD]
             : null,
         }
       })

@@ -1,3 +1,5 @@
+import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
+
 export interface LilleEncadrementItem {
   datasetid: string;
   recordid: string;
@@ -25,5 +27,6 @@ export interface LilleDistrictItem {
   properties: {
     zonage: number;
     geo_point_2d: [number, number];
+    [DISPLAY_ZONE_FIELD]: string;
   };
 }

@@ -1,3 +1,5 @@
+import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
+
 export interface LyonEncadrementItem {
   type: 'Feature';
   properties: {
@@ -12,6 +14,7 @@ export interface LyonEncadrementItem {
     };
     commune: string;
     gid: string;
+    [DISPLAY_ZONE_FIELD]: string;
   };
   geometry: {
     type: 'Polygon';
