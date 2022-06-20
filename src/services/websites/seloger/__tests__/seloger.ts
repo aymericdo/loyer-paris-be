@@ -59,7 +59,7 @@ describe('seloger', () => {
     })
   })
 
-  describe('lille', () => {
+  fdescribe('lille', () => {
     test('returns clean ad', async () => {
       const dataLille = fs.readFileSync(path.resolve(__dirname, './seloger-lille-payload.json'), 'utf8')
 
@@ -92,15 +92,15 @@ describe('seloger', () => {
           hasCharges: { order: 8, value: true },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Zone 1' },
+          neighborhood: { order: 0, value: 'Zone 2' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: '1' },
           surface: { order: 3, value: 17 },
           dateRange: { order: 4, value: '< 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 22.4 },
-          maxAuthorized: { order: 7, value: 380.8 },
-          promoPercentage: { order: 8, value: 8.02 },
+          max: { order: 6, value: 21.2 },
+          maxAuthorized: { order: 7, value: 360.4 },
+          promoPercentage: { order: 8, value: 12.95 },
         },
         isLegal: false,
         moreInfo: 'https://encadrement-loyers.lille.fr/',

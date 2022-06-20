@@ -31,7 +31,7 @@ export class LeboncoinScrapping {
     const hasCharges = document.querySelector(
       '#grid > article > section > div > div > div > div.styles_Price__1tlGj > div > p'
     )
-    const cityLabel = document.querySelector('#map > div > h2')
+    const cityLabel = document.querySelector('#map > div > h2') || document.querySelector('#grid > article section a[href=\'#map\']')
 
     const surface = document.querySelector(
       '#grid > article div div[data-qa-id=criteria_item_square] > div > div > span'
@@ -43,7 +43,7 @@ export class LeboncoinScrapping {
       '#grid > article div div[data-qa-id=criteria_item_furnished] > div > div > span'
     )
 
-    if (!subject && !body && !body2 && !price && !cityLabel) {
+    if ((!subject && !body && !body2) || !price || !cityLabel) {
       return null
     }
 
