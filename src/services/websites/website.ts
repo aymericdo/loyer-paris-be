@@ -1,7 +1,7 @@
 import { getPriceExcludingCharges } from '@services/helpers/charges'
 import { roundNumber } from '@services/helpers/round-number'
 import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
-import { Mapping } from '@interfaces/mapping'
+import { Body } from '@interfaces/mapping'
 import { ApiError } from '@interfaces/shared'
 import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'
 import { DigService } from '@services/diggers/dig'
@@ -35,12 +35,12 @@ export type WebsiteType = typeof WEBSITE_LIST[number]
 
 export abstract class Website {
   website: WebsiteType = null
-  body: Mapping = null
+  body: Body = null
   res: Response = null
 
   constructor(
     res: Response,
-    props: { body: Mapping; id?: string },
+    props: { body: Body; id?: string },
   ) {
     this.res = res
     this.body = props.body

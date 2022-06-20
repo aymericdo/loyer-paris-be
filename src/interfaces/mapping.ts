@@ -1,26 +1,12 @@
 import { Coordinate } from '@interfaces/shared'
 
-export type Mapping = (
-  | FacebookMapping
-  | LeboncoinMapping
-  | LeboncoinAPIMapping
-  | LefigaroMapping
-  | LogicimmoMapping
-  | OrpiMapping
-  | PapMapping
-  | GensdeconfianceMapping
-  | SelogerMapping
-  | LuxResidenceMapping
-  | BellesDemeuresMapping
-  | BienIciMapping
-  | LocserviceMapping
-) & {
+export interface Body {
   noMoreData?: boolean;
   platform: string;
   id: string;
   url: string;
-  data?: string;
-};
+  data: string;
+}
 
 export interface FacebookMapping {
   id: string;
