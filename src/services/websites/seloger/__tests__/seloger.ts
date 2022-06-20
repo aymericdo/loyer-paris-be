@@ -11,7 +11,7 @@ describe('seloger', () => {
 
   describe('paris', () => {
     test('returns clean ad', async () => {
-      const dataParis = fs.readFileSync(path.join('src/services/websites/seloger/__tests__/seloger-paris-payload.json'), 'utf8')
+      const dataParis = fs.readFileSync(path.resolve(__dirname, './seloger-paris-payload.json'), 'utf8')
 
       const body: Body = {
         id: '234523',
@@ -61,7 +61,7 @@ describe('seloger', () => {
 
   describe('lille', () => {
     test('returns clean ad', async () => {
-      const dataLille = fs.readFileSync(path.join('src/services/websites/seloger/__tests__/seloger-lille-payload.json'), 'utf8')
+      const dataLille = fs.readFileSync(path.resolve(__dirname, './seloger-lille-payload.json'), 'utf8')
 
       const body: Body = {
         id: '234523',
@@ -110,7 +110,7 @@ describe('seloger', () => {
 
   describe('lyon', () => {
     test('returns clean ad - lyon', async () => {
-      const dataLyon = fs.readFileSync(path.join('src/services/websites/seloger/__tests__/seloger-lyon-payload.json'), 'utf8')
+      const dataLyon = fs.readFileSync(path.resolve(__dirname, './seloger-lyon-payload.json'), 'utf8')
 
       const body: Body = {
         id: '234523',

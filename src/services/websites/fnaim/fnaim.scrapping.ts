@@ -10,11 +10,9 @@ export class FnaimScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const tabs = [
-      ...document.querySelectorAll(
-        '#annonceFiche > div.ariane > span > a > span'
-      ),
-    ]
+    const tabs = Array.from(document.querySelectorAll(
+      '#annonceFiche > div.ariane > span > a > span'
+    ))
     const title = document.querySelector(
       '#annonceFiche > div.annonce_fiche.fiche > header > div.titreButtons > h1'
     )
@@ -36,14 +34,10 @@ export class FnaimScrapping {
     const cityLabel = document.querySelector(
       '#annonceFiche > div.ariane'
     )
-    const features = [
-      ...document.querySelectorAll(
-        '#annonceFiche > div.annonce_fiche.fiche > ul > li'
-      ),
-    ]
-    const features2 = [
-      ...document.querySelectorAll('#logementBlock > ul > li'),
-    ]
+    const features = Array.from(document.querySelectorAll(
+      '#annonceFiche > div.annonce_fiche.fiche > ul > li'
+    ))
+    const features2 = Array.from(document.querySelectorAll('#logementBlock > ul > li'))
 
     let surface = null
     let rooms = null

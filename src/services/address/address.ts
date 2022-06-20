@@ -137,6 +137,8 @@ export class DefaultAddressStrategy implements AddressStrategy {
     if (!query) {
       return null
     }
+
+    console.log(query)
     const addressDb = dbMapping[cityList[city].mainCity]
     const result = (await addressDb
       .find(

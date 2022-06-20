@@ -49,23 +49,20 @@ export class SelogerScrapping {
         'div.Wrapper__ContactWrapper-sc-wbkua2-0.fZhnkl > div > div > div.LightSummarystyled__TextContainer-sc-k5t1l5-9.ehuHOZ > div.LightSummarystyled__SubNameDiv-sc-k5t1l5-7.gxaKvx'
       )
     const itemTags =
-      (document.querySelector('[class^=Summarystyled__TagsWrapper] > div') && [
-        ...document.querySelectorAll(
+      (document.querySelector('[class^=Summarystyled__TagsWrapper] > div') &&
+        Array.from(document.querySelectorAll(
           '[class^=Summarystyled__TagsWrapper] > div'
-        ),
-      ]) ||
+        ))) ||
       []
     const optionsSection =
-      (document.querySelector('section.categorie .criteria-wrapper > div') && [
-        ...document.querySelectorAll(
+      (document.querySelector('section.categorie .criteria-wrapper > div') &&
+        Array.from(document.querySelectorAll(
           'section.categorie .criteria-wrapper > div'
-        ),
-      ]) ||
-      (document.querySelector('.GeneralList__List-sc-9gtpjm-0.BAyYz > li') && [
-        ...document.querySelectorAll(
+        ))) ||
+      (document.querySelector('.GeneralList__List-sc-9gtpjm-0.BAyYz > li') &&
+        Array.from(document.querySelectorAll(
           '.GeneralList__List-sc-9gtpjm-0.BAyYz > li'
-        ),
-      ])
+        )))
     const chargesElement =
       document.querySelector(
         'section.categorie.with-padding-bottom .sh-text-light'

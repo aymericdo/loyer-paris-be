@@ -30,11 +30,9 @@ export class BienIciScrapping {
     const cityLabel = document.querySelector(
       '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1 > span'
     )
-    const features = [
-      ...document.querySelectorAll(
-        '[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.detailsSection.detailsSection_aboutThisProperty > div.allDetails > .labelInfo'
-      ),
-    ]
+    const features = Array.from(document.querySelectorAll(
+      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.detailsSection.detailsSection_aboutThisProperty > div.allDetails > .labelInfo'
+    ))
 
     let furnished = false
     let surface = null

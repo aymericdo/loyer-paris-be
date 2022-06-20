@@ -25,16 +25,12 @@ export class BellesDemeuresScrapping {
       'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemVille'
     )
 
-    const features = [
-      ...document.querySelectorAll(
-        'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecs > ul > li'
-      ),
-    ]
-    const features2 = [
-      ...document.querySelectorAll(
-        '#wrapper > div.detail > div > div.detailWrapInfos > div:nth-child(5) > div:nth-child(2) > ul > li > ul > li'
-      ),
-    ]
+    const features = Array.from(document.querySelectorAll(
+      'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecs > ul > li'
+    ))
+    const features2 = Array.from(document.querySelectorAll(
+      '#wrapper > div.detail > div > div.detailWrapInfos > div:nth-child(5) > div:nth-child(2) > ul > li > ul > li'
+    ))
 
     const cityLabel = cityLabelNode?.textContent?.split('•').length
       ? cityLabelNode.textContent.split('•')[

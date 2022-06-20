@@ -13,13 +13,11 @@ export class OrpiScrapping {
 
     if (!dataDOM) return null
 
-    const dataElement = JSON.parse(dataDOM.dataset.eulerianAction)
+    const dataElement = JSON.parse((dataDOM as any).dataset.eulerianAction)
     const description = document.querySelector('div.o-container > p')
-    const chargesElement = [
-      ...document.querySelectorAll(
-        '.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li'
-      ),
-    ]
+    const chargesElement = Array.from(document.querySelectorAll(
+      '.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li'
+    ))
     const charges = chargesElement.find(
       (element) => element.textContent.search('Provisions pour charges') !== -1
     )

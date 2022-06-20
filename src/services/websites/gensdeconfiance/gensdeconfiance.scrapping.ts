@@ -19,7 +19,7 @@ export class GensdeconfianceScrapping {
     )
     const address = document.querySelector('#ad-address > p')
     const cityLabel = document.querySelector('#post-title-breadcrumb > small')
-    const itemTags = [...document.querySelectorAll('div > ul > li > div')]
+    const itemTags = Array.from(document.querySelectorAll('div > ul > li > div'))
     let surface = null
 
     itemTags.forEach((tag) => {

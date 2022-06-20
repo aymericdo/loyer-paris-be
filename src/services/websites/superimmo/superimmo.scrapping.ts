@@ -30,16 +30,12 @@ export class SuperimmoScrapping {
     const cityLabel = document.querySelector(
       'body > main > div > div.content.fiche > header:nth-child(1) > h1 > span'
     )
-    const features = [
-      ...document.querySelectorAll(
-        'body > main > div > div.content.fiche > div.pictos > div.picto'
-      ),
-    ]
-    const features2 = [
-      ...document.querySelectorAll(
-        'body > main > div > div.content.fiche > section > table > tbody > tr > td'
-      ),
-    ]
+    const features = Array.from(document.querySelectorAll(
+      'body > main > div > div.content.fiche > div.pictos > div.picto'
+    ))
+    const features2 = Array.from(document.querySelectorAll(
+      'body > main > div > div.content.fiche > section > table > tbody > tr > td'
+    ))
 
     let surface = null
     let rooms = null

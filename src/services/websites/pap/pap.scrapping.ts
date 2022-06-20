@@ -13,10 +13,8 @@ export class PapScrapping {
     const description = document.querySelector('.item-description > div > p')
     const price = document.querySelector('h1.item-title > span.item-price')
     const cityLabel = document.querySelector('div.item-description > h2')
-    const itemTags = [...document.querySelectorAll('.item-tags > li > strong')]
-    const stations = [
-      ...document.querySelectorAll('ul.item-transports > li > span.label'),
-    ]
+    const itemTags = Array.from(document.querySelectorAll('.item-tags > li > strong'))
+    const stations = Array.from(document.querySelectorAll('ul.item-transports > li > span.label'))
 
     const sectionName = document.querySelector(
       '[itemprop=itemListElement] > a[itemprop=item] > span[itemprop=name]'

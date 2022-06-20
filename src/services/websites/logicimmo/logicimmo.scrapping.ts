@@ -22,20 +22,14 @@ export class LogicimmoScrapping {
       'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span'
     )
 
-    const chargeNode = [
-      ...document.querySelectorAll(
-        'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl'
-      ),
-    ]
+    const chargeNode = Array.from(document.querySelectorAll(
+      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl'
+    ))
 
-    const offerCriteria = [
-      ...document.querySelectorAll('#dtlTechniqueBox > li.dtlTechiqueItm'),
-    ]
-    const itemTags = [
-      ...document.querySelectorAll(
-        'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressTopBlock > .propertyTypeInfos > em.feature'
-      ),
-    ]
+    const offerCriteria = Array.from(document.querySelectorAll('#dtlTechniqueBox > li.dtlTechiqueItm'))
+    const itemTags = Array.from(document.querySelectorAll(
+      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressTopBlock > .propertyTypeInfos > em.feature'
+    ))
 
     let charges = null
     chargeNode.forEach((elem) => {

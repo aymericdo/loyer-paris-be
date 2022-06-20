@@ -40,6 +40,7 @@
     "express": "^4.17.1",
     "express-ipfilter": "^1.2.0",
     "fuse.js": "^6.4.6",
+    "jest-environment-jsdom": "^28.1.1",
     "jsdom": "^16.4.0",
     "module-alias": "^2.2.2",
     "mongoose": "^5.7.5",

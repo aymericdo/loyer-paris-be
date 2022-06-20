@@ -33,11 +33,9 @@ export class LefigaroScrapping {
       '#middle-inquiry > div.classifieds-about-agency > div > div.agency__desc > strong'
     )
 
-    const features = [
-      ...document.querySelectorAll(
-        '#app > div > main > div.main-classified > div > div.classified-features > ul.features-list > li .feature'
-      ),
-    ]
+    const features = Array.from(document.querySelectorAll(
+      '#app > div > main > div.main-classified > div > div.classified-features > ul.features-list > li .feature'
+    ))
 
     let furnished = null
     let surface = null

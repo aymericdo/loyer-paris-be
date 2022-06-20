@@ -23,11 +23,9 @@ export class LuxResidenceScrapping {
       '#detailsTab > div > div.detailsBlock.plus > ul > li.singleCriteria.furnished'
     )
 
-    const features = [
-      ...document.querySelectorAll(
-        '#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.criteria > span'
-      ),
-    ]
+    const features = Array.from(document.querySelectorAll(
+      '#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.criteria > span'
+    ))
 
     let surface = null
     let rooms = null

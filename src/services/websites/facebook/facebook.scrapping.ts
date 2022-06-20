@@ -64,16 +64,14 @@ export class FacebookScrapping {
       )
 
     const features = isFacebookSecondAd
-      ? [
-        ...document.querySelectorAll(
-          '[id^=mount_] > div > div:nth-child(1) > div > div:nth-child(7) > div > div > div > div > div > div > div > div > div > div > div > div > div.j83agx80.cbu4d94t.buofh1pr.l9j0dhe7 > div.sj5x9vvc > div'
-        ),
-      ]
-      : [
-        ...document.querySelectorAll(
-          '[id^=mount_] > div > div:nth-child(1) > div > div.rq0escxv.l9j0dhe7.du4w35lb > div > div > div.j83agx80.cbu4d94t.d6urw2fd.dp1hu0rb.l9j0dhe7.du4w35lb > div.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.jifvfom9.gs1a9yip.owycx6da.btwxx1t3.buofh1pr.dp1hu0rb > div.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.d2edcug0.hpfvmrgz.rj1gh0hx.buofh1pr.dp1hu0rb > div > div > div > div > div > div.cwj9ozl2.j83agx80.cbu4d94t.m6nq13hx.owwhemhu.ni8dbmo4.stjgntxs.spskuzq3 > div > div.am9z0op8.j83agx80.o387gat7.datstx6m.l9j0dhe7.k4urcfbm.jr1d8bo4.dwxd3oue > div > div.q5bimw55.rpm2j7zs.k7i0oixp.gvuykj2m.j83agx80.cbu4d94t.ni8dbmo4.eg9m0zos.l9j0dhe7.du4w35lb.ofs802cu.pohlnb88.dkue75c7.mb9wzai9.d8ncny3e.buofh1pr.g5gj957u.tgvbjcpo.l56l04vs.r57mb794.kh7kg01d.c3g1iek1.k4xni2cv.do00u71z.ofv0k9yr.k4urcfbm.spskuzq3 > div.j83agx80.cbu4d94t.buofh1pr.l9j0dhe7 > div.sj5x9vvc > div'
-        ),
-      ]
+      ?
+      Array.from(document.querySelectorAll(
+        '[id^=mount_] > div > div:nth-child(1) > div > div:nth-child(7) > div > div > div > div > div > div > div > div > div > div > div > div > div.j83agx80.cbu4d94t.buofh1pr.l9j0dhe7 > div.sj5x9vvc > div'
+      ))
+      :
+      Array.from(document.querySelectorAll(
+        '[id^=mount_] > div > div:nth-child(1) > div > div.rq0escxv.l9j0dhe7.du4w35lb > div > div > div.j83agx80.cbu4d94t.d6urw2fd.dp1hu0rb.l9j0dhe7.du4w35lb > div.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.jifvfom9.gs1a9yip.owycx6da.btwxx1t3.buofh1pr.dp1hu0rb > div.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.d2edcug0.hpfvmrgz.rj1gh0hx.buofh1pr.dp1hu0rb > div > div > div > div > div > div.cwj9ozl2.j83agx80.cbu4d94t.m6nq13hx.owwhemhu.ni8dbmo4.stjgntxs.spskuzq3 > div > div.am9z0op8.j83agx80.o387gat7.datstx6m.l9j0dhe7.k4urcfbm.jr1d8bo4.dwxd3oue > div > div.q5bimw55.rpm2j7zs.k7i0oixp.gvuykj2m.j83agx80.cbu4d94t.ni8dbmo4.eg9m0zos.l9j0dhe7.du4w35lb.ofs802cu.pohlnb88.dkue75c7.mb9wzai9.d8ncny3e.buofh1pr.g5gj957u.tgvbjcpo.l56l04vs.r57mb794.kh7kg01d.c3g1iek1.k4xni2cv.do00u71z.ofv0k9yr.k4urcfbm.spskuzq3 > div.j83agx80.cbu4d94t.buofh1pr.l9j0dhe7 > div.sj5x9vvc > div'
+      ))
 
     let furnished = null
     let surface = null
