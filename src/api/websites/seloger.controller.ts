@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express'
 const router = express.Router()
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { SeLoger } from '@services/websites/seloger/seloger'
-import * as fs from 'fs'
 
 router.post('/data', getByData)
 function getByData(req: Request, res: Response) {
@@ -20,11 +19,6 @@ function getByDataV2(req: Request, res: Response) {
     'blue'
   )
   const seloger = new SeLoger(res, { body: req.body })
-  fs.writeFile('json-data/bite.json', req.body.data, err => {
-    if (err) {
-      console.error(err)
-    }
-  })
   seloger.analyse()
 }
 
