@@ -17,9 +17,10 @@ export class NameAndShameService {
   async call() {
     [
       ['paris', 'Paris', '@prefpolice'],
-      ['plaine_commune', 'Plaine Commune', '@prefpolice'],
+      ['plaineCommune', 'Plaine Commune', '@prefpolice'],
       ['lille', 'Lille', '@prefet59'],
       ['lyon', 'Lyon', '@prefetrhone'],
+      ['estEnsemble', 'Est Ensemble', '@prefpolice'],
     ].forEach(async ([city, cityValue, prefecture]) => {
       const ads = await rentService.getShamefulAdsData(city, MAX_DELTA)
 

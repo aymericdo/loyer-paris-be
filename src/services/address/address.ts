@@ -1,8 +1,8 @@
-import { regexString } from '@helpers/regex'
+import { regexString } from '@services/helpers/regex'
 import { Ad } from '@interfaces/ad'
 import { AddressItem, Coordinate } from '@interfaces/shared'
-import { cityList } from './city'
-import * as cleanup from '@helpers/cleanup'
+import { AvailableCities, cityList } from '@services/address/city'
+import * as cleanup from '@services/helpers/cleanup'
 import {
   LilleAddress,
   LyonAddress,
@@ -12,7 +12,7 @@ import {
   MontpellierAddress,
 } from '@db/db'
 
-const dbMapping = {
+export const dbMapping = {
   paris: ParisAddress,
   lyon: LyonAddress,
   lille: LilleAddress,
@@ -27,21 +27,19 @@ export interface AddressStrategy {
 
 export class AddressStrategyFactory {
   getDiggerStrategy(city: string, postalCode: string, ad: Ad): AddressStrategy {
-    const parisStrategy = new ParisAddressStrategy(city, postalCode, ad)
-    const defaultStrategy = new DefaultAddressStrategy(city, postalCode, ad)
     switch (city) {
       case 'paris': {
-        return parisStrategy
+        return new ParisAddressStrategy(city, postalCode, ad)
       }
       default: {
-        return defaultStrategy
+        return new DefaultAddressStrategy(city, postalCode, ad)
       }
     }
   }
 }
 
 export class DefaultAddressStrategy implements AddressStrategy {
-  private city: string
+  private city: AvailableCities
   private postalCode: string
   private ad: Ad
   coordinates: Coordinate
@@ -139,6 +137,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
     if (!query) {
       return null
     }
+
     const addressDb = dbMapping[cityList[city].mainCity]
     const result = (await addressDb
       .find(

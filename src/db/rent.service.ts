@@ -1,45 +1,11 @@
 import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
-import { FUNNIEST_WEBSITES } from '@websites/website'
+import { AvailableMainCities, cityList } from '@services/address/city'
+import { FUNNIEST_WEBSITES } from '@services/websites/website'
 
-function getCity(city: string) {
-  switch (city) {
-    case 'paris':
-      return { $in: ['paris'] }
-    case 'lille':
-      return { $in: ['lille', 'hellemmes', 'lomme'] }
-    case 'plaine_commune':
-      return {
-        $in: [
-          'aubervilliers',
-          'epinay-sur-seine',
-          'ile-saint-denis',
-          'courneuve',
-          'pierrefitte',
-          'saint-denis',
-          'saint-ouen',
-          'stains',
-          'villetaneuse',
-        ],
-      }
-    case 'lyon':
-      return { $in: ['lyon', 'villeurbanne'] }
-    case 'est_ensemble':
-      return {
-        $in: [
-          'bagnolet',
-          'bobigny',
-          'le pré-saint-gervais',
-          'les lilas',
-          'montreuil',
-          'noisy-le-sec',
-          'pantin',
-          'romainville',
-        ],
-      }
-    case 'montpellier':
-      return { $in: ['montpellier'] }
-  }
+function getCity(city: AvailableMainCities) {
+  const cities = Object.keys(cityList).filter((c) => cityList[c].mainCity === city)
+  return { $in: cities }
 }
 
 export async function getMapData(
@@ -55,7 +21,7 @@ export async function getMapData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city)
+    filter['city'] = getCity(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -93,7 +59,7 @@ export async function getChloroplethMapData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city)
+    filter['city'] = getCity(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -126,7 +92,7 @@ export async function getPriceDiffData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city)
+    filter['city'] = getCity(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -172,7 +138,7 @@ export async function getLegalVarData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city)
+    filter['city'] = getCity(city as AvailableMainCities)
   }
 
   if (districtList?.length) {
@@ -234,7 +200,7 @@ export async function getPriceVarData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city)
+    filter['city'] = getCity(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -279,7 +245,7 @@ export async function getLegalPerClassicRenterData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city)
+    filter['city'] = getCity(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -311,7 +277,7 @@ export async function getLegalPerRenterData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city)
+    filter['city'] = getCity(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -342,7 +308,7 @@ export async function getLegalPerWebsiteData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city)
+    filter['city'] = getCity(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -376,7 +342,7 @@ export async function getLegalPerSurfaceData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city)
+    filter['city'] = getCity(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -415,7 +381,7 @@ export async function getWelcomeData(
   const filter = {}
 
   if (city && city !== 'all') {
-    filter['city'] = getCity(city)
+    filter['city'] = getCity(city as AvailableMainCities)
   }
 
   try {
@@ -523,7 +489,7 @@ function buildFilter(filterParam: {
   const filter = { isLegal: filterParam.isLegal, createdAt: { $gte: minDate } }
 
   if (filterParam.city !== 'all') {
-    filter['city'] = getCity(filterParam.city)
+    filter['city'] = getCity(filterParam.city as AvailableMainCities)
   }
 
   if (filterParam.districtList?.length) {
@@ -595,7 +561,7 @@ export async function getShamefulAdsData(
   const filter = {
     isLegal: false,
     createdAt: { $gte: minDate },
-    city: getCity(city),
+    city: getCity(city as AvailableMainCities),
     $expr: {
       $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta],
     },

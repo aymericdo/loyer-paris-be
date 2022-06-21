@@ -1,27 +1,12 @@
 import { Coordinate } from '@interfaces/shared'
 
-export type Mapping = (
-  | FacebookMapping
-  | LeboncoinMapping
-  | LeboncoinAPIMapping
-  | LefigaroMapping
-  | LogicimmoMapping
-  | LoueragileMapping
-  | OrpiMapping
-  | PapMapping
-  | GensdeconfianceMapping
-  | SelogerMapping
-  | LuxResidenceMapping
-  | BellesDemeuresMapping
-  | BienIciMapping
-  | LocserviceMapping
-) & {
+export interface Body {
   noMoreData?: boolean;
   platform: string;
   id: string;
   url: string;
-  data?: string;
-};
+  data: string;
+}
 
 export interface FacebookMapping {
   id: string;
@@ -88,28 +73,6 @@ export interface LogicimmoMapping {
   renter: string;
   rooms: string;
   surface: string;
-}
-
-export interface LoueragileMapping {
-  yearBuilt: number;
-  ad: {
-    id: string;
-    city: string;
-    lng: number;
-    lat: number;
-    description: string;
-    furnished: boolean;
-    postal_code: string;
-    rent: number;
-    owner_type: string;
-    source: string;
-    room: number;
-    area: number;
-    title: string;
-    stops: {
-      name: string;
-    }[];
-  };
 }
 
 export interface OrpiMapping {

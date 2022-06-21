@@ -1,13 +1,13 @@
 import * as rentService from '@db/rent.service'
-import { Slack } from '@services/slack/send-message'
-import { FUNNIEST_WEBSITES, OLD_WEBSITES, WEBSITE_LIST } from '@websites/website'
+import { FUNNIEST_WEBSITES, WEBSITE_LIST } from '@services/websites/website'
+import { Slack } from '@messenger/slack'
 
 export class HealthCheck {
   async call() {
     const countByWebsite = await rentService.getCountByWebsite()
 
     WEBSITE_LIST.forEach((website) => {
-      if (FUNNIEST_WEBSITES.concat(OLD_WEBSITES).includes(website)) return
+      if (FUNNIEST_WEBSITES.includes(website)) return
 
       if (!Object.prototype.hasOwnProperty.call(countByWebsite, website))
         countByWebsite[website] = 0

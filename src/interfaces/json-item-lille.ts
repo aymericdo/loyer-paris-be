@@ -1,14 +1,4 @@
-export interface LilleDistrictItem {
-  type: 'Feature';
-  geometry: {
-    type: 'Polygon';
-    coordinates: number[][][];
-  };
-  properties: {
-    zonage: number;
-    geo_point_2d: [number, number];
-  };
-}
+import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
 
 export interface LilleEncadrementItem {
   datasetid: string;
@@ -26,4 +16,17 @@ export interface LilleEncadrementItem {
     nb_pieces: string;
   };
   record_timestamp: string;
+}
+
+export interface LilleDistrictItem {
+  type: 'Feature';
+  geometry: {
+    type: 'Polygon';
+    coordinates: number[][][];
+  };
+  properties: {
+    zonage: number;
+    geo_point_2d: [number, number];
+    [DISPLAY_ZONE_FIELD]: string;
+  };
 }

@@ -40,6 +40,7 @@
     "express": "^4.17.1",
     "express-ipfilter": "^1.2.0",
     "fuse.js": "^6.4.6",
+    "jest-environment-jsdom": "^28.1.1",
     "jsdom": "^16.4.0",
     "module-alias": "^2.2.2",
     "mongoose": "^5.7.5",
@@ -50,12 +51,12 @@
     "typescript-memoize": "^1.0.0-alpha.4"
   },
   "_moduleAliases": {
-    "@helpers": "build/src/helpers",
-    "@services": "build/src/services",
-    "@interfaces": "build/src/interfaces",
+    "@api": "build/src/api",
+    "@cronjobs": "build/src/cronjobs",
     "@db": "build/src/db",
-    "@websites": "build/src/websites",
-    "@cronjobs": "build/src/cronjobs"
+    "@interfaces": "build/src/interfaces",
+    "@messenger": "build/src/messenger",
+    "@services": "build/src/services"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.3",

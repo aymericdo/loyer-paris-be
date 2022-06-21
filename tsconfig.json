@@ -4,15 +4,15 @@
     "downlevelIteration": true,
     "module": "commonjs",
     "experimentalDecorators": true,
-    "lib": ["es2019", "dom"],
+    "lib": ["es2019", "dom", "dom.iterable"],
     "baseUrl": "./src",
     "paths": {
-      "@services/*": ["services/*"],
-      "@helpers/*": ["helpers/*"],
-      "@interfaces/*": ["interfaces/*"],
+      "@api/*": ["api/*"],
+      "@cronjobs/*": ["cronjobs/*"],
       "@db/*": ["db/*"],
-      "@websites/*": ["websites/*"],
-      "@cronjobs/*": ["cronjobs/*"]
+      "@interfaces/*": ["interfaces/*"],
+      "@messenger/*": ["messenger/*"],
+      "@services/*": ["services/*"]
     },
     "allowJs": true,
     "outDir": "./build",

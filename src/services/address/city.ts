@@ -1,11 +1,11 @@
-import * as cleanup from '@helpers/cleanup'
-import { ERROR_CODE } from '../api-errors'
+import * as cleanup from '@services/helpers/cleanup'
 import { Ad } from '@interfaces/ad'
-import { PrettyLog } from '../pretty-log'
+import { ERROR_CODE } from '@services/api/errors'
+import { PrettyLog } from '@services/helpers/pretty-log'
 
 type CityList = {
   [key: string]: {
-    mainCity: 'paris' | 'lille' | 'plaineCommune' | 'lyon' | 'estEnsemble' | 'montpellier';
+    mainCity: AvailableMainCities;
     postalCodePossibilities: string[];
     postalCodeRegex: RegExp[];
   };
@@ -178,6 +178,7 @@ export const cityList: CityList = {
   },
 }
 
+export type AvailableMainCities = 'paris' | 'lille' | 'plaineCommune' | 'lyon' | 'estEnsemble' | 'montpellier';
 export type AvailableCities = keyof typeof cityList & string;
 
 export class CityService {
@@ -213,8 +214,8 @@ export class CityService {
     return this.cityInList
   }
 
-  static canHaveHouse(city: AvailableCities): boolean {
-    switch (cityList[city].mainCity) {
+  static canHaveHouse(city: AvailableMainCities): boolean {
+    switch (city) {
       case 'plaineCommune':
       case 'estEnsemble':
         return true

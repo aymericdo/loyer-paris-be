@@ -20,12 +20,12 @@ export default async (): Promise<Config.InitialOptions> => {
       '**/?(*.)+(spec|test).+(ts|tsx|js)',
     ],
     moduleNameMapper: {
-      '@helpers/(.*)': '<rootDir>/src/helpers/$1',
-      '@services/(.*)': '<rootDir>/src/services/$1',
-      '@interfaces/(.*)': '<rootDir>/src/interfaces/$1',
-      '@db/(.*)': '<rootDir>/src/db/$1',
-      '@websites/(.*)': '<rootDir>/src/websites/$1',
+      '@api/(.*)': '<rootDir>/src/api/$1',
       '@cronjobs/(.*)': '<rootDir>/src/cronjobs/$1',
+      '@db/(.*)': '<rootDir>/src/db/$1',
+      '@interfaces/(.*)': '<rootDir>/src/interfaces/$1',
+      '@messenger/(.*)': '<rootDir>/src/messenger/$1',
+      '@services/(.*)': '<rootDir>/src/services/$1',
     },
     transform: tsjPreset.transform,
   }
