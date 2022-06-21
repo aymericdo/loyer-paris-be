@@ -59,7 +59,7 @@ describe('seloger', () => {
     })
   })
 
-  fdescribe('lille', () => {
+  describe('lille', () => {
     test('returns clean ad', async () => {
       const dataLille = fs.readFileSync(path.resolve(__dirname, './seloger-lille-payload.json'), 'utf8')
 
