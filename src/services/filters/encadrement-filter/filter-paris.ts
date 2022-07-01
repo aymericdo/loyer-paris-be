@@ -15,6 +15,8 @@ export class FilterParis extends EncadrementFilterParent {
     // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
     const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Après 1990']
 
+    console.log(this.infoToFilter)
+
     const districtsMatched = new ParisDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
@@ -52,9 +54,9 @@ export class FilterParis extends EncadrementFilterParent {
           ? timeDates.includes(rangeRent.epoque)
           : true) &&
         (this.infoToFilter.roomCount
-          ? +this.infoToFilter.roomCount < 5
+          ? +this.infoToFilter.roomCount < 4
             ? +rangeRent.piece === +this.infoToFilter.roomCount
-            : +rangeRent.piece === 4
+            : rangeRent.piece.toString() === '4 et plus'
           : true) &&
         (this.infoToFilter.hasFurniture != null
           ? this.infoToFilter.hasFurniture
