@@ -68,7 +68,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: {
             order: 0,
-            value: 'Place-Vendôme',
+            value: 'St-Germain-l\'Auxerrois',
           },
           hasFurniture: {
             order: 1,
