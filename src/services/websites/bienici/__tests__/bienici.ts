@@ -48,9 +48,9 @@ describe('bienici', () => {
           surface: { order: 3, value: 16.2 },
           dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 38.64 },
-          maxAuthorized: { order: 7, value: 625.97 },
-          promoPercentage: { order: 8, value: 18.71 },
+          max: { order: 6, value: 38.9 },
+          maxAuthorized: { order: 7, value: 630.18 },
+          promoPercentage: { order: 8, value: 18.16 },
         },
         isLegal: false,
         moreInfo:

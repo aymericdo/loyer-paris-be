@@ -48,9 +48,9 @@ describe('lefigaro', () => {
           surface: { order: 3, value: 55 },
           dateRange: { order: 4, value: 'Après 1990' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 40.32 },
-          maxAuthorized: { order: 7, value: 2217.6 },
-          promoPercentage: { order: 8, value: 11.3 },
+          max: { order: 6, value: 41.3 },
+          maxAuthorized: { order: 7, value: 2271.5 },
+          promoPercentage: { order: 8, value: 9.14 },
         },
         isLegal: false,
         moreInfo:
