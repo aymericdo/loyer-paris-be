@@ -1,4 +1,5 @@
 import { AvailableMainCities } from '@services/address/city'
+import { FilterBordeaux } from './filter-bordeaux'
 import { FilterEstEnsemble } from './filter-est-ensemble'
 import { FilterLille } from './filter-lille'
 import { FilterLyon } from './filter-lyon'
@@ -27,6 +28,8 @@ export class EncadrementFilterFactory {
         return FilterLyon
       case 'montpellier':
         return FilterMontpellier
+      case 'bordeaux':
+        return FilterBordeaux
     }
   }
 }

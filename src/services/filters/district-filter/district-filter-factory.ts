@@ -1,4 +1,5 @@
 import { AvailableMainCities } from '@services/address/city'
+import { BordeauxDistrictFilter } from './bordeaux-district'
 import { EstEnsembleDistrictFilter } from './est-ensemble-district'
 import { LilleDistrictFilter } from './lille-district'
 import { LyonDistrictFilter } from './lyon-district'
@@ -27,6 +28,8 @@ export class DistrictFilterFactory {
         return LyonDistrictFilter
       case 'montpellier':
         return MontpellierDistrictFilter
+      case 'bordeaux':
+        return BordeauxDistrictFilter
     }
   }
 }

@@ -1,5 +1,6 @@
 import { IncompleteAd } from '@interfaces/ad'
 import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
+import { BordeauxEncadrementItem } from './json-item-bordeaux'
 import { EstEnsembleEncadrementItem } from './json-item-est-ensemble'
 import { LilleDistrictItem, LilleEncadrementItem } from './json-item-lille'
 import { LyonEncadrementItem } from './json-item-lyon'
@@ -73,4 +74,5 @@ export type EncadrementItem =
   PlaineCommuneEncadrementItem |
   LyonEncadrementItem |
   LilleEncadrementItem |
-  MontpellierEncadrementItem
+  MontpellierEncadrementItem |
+  BordeauxEncadrementItem

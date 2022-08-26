@@ -13,12 +13,13 @@ export const DISPLAY_ZONE_FIELD = 'displayZone'
 export const DISTRICT_FIELD = `properties.${DISPLAY_ZONE_FIELD}`
 
 export const CITY_FILE_PATHS = {
-  paris: 'json-data/quartier_paris_geodata.json',
-  lille: 'json-data/quartier_lille_geodata.json',
-  plaineCommune: 'json-data/quartier_plaine-commune_geodata.json',
-  estEnsemble: 'json-data/quartier_est-ensemble_geodata.json',
+  paris: 'json-data/quartier_paris.geojson',
+  lille: 'json-data/quartier_lille.geojson',
+  plaineCommune: 'json-data/quartier_plaine-commune.geojson',
+  estEnsemble: 'json-data/quartier_est-ensemble.geojson',
   lyon: 'json-data/encadrements_lyon.json',
-  montpellier: 'json-data/quartier_montpellier_geodata.json',
+  montpellier: 'json-data/quartier_montpellier.geojson',
+  bordeaux: 'json-data/quartier_bordeaux.geojson',
 }
 
 export class DistrictsList {
@@ -101,6 +102,7 @@ export class DistrictsList {
       case 'plaineCommune':
       case 'estEnsemble':
       case 'montpellier':
+      case 'bordeaux':
         return `Zone ${data['properties']['Zone']}`
     }
   }

@@ -176,9 +176,14 @@ export const cityList: CityList = {
     postalCodePossibilities: ['34000', '34070', '34080', '34090'],
     postalCodeRegex: [/\b34[0-9]{3}\b/g],
   },
+  bordeaux: {
+    mainCity: 'bordeaux',
+    postalCodePossibilities: ['30072', '33300', '33800', '33100', '33200', '33000'],
+    postalCodeRegex: [/\b33[0-9]{3}\b/g],
+  },
 }
 
-export type AvailableMainCities = 'paris' | 'lille' | 'plaineCommune' | 'lyon' | 'estEnsemble' | 'montpellier';
+export type AvailableMainCities = 'paris' | 'lille' | 'plaineCommune' | 'lyon' | 'estEnsemble' | 'montpellier' | 'bordeaux';
 export type AvailableCities = keyof typeof cityList & string;
 
 export class CityService {

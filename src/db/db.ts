@@ -50,6 +50,7 @@ const plaineCommuneAddressSchema = require('./plaine_commune-address.model')
 const lyonAddressSchema = require('./lyon-address.model')
 const estEnsembleAddressSchema = require('./est_ensemble-address.model')
 const montpellierAddressSchema = require('./montpellier-address.model')
+const bordeauxAddressSchema = require('./bordeaux-address.model')
 
 export const Rent = rentConnection.model('Rent', rentSchema)
 export const IncompleteRent = rentConnection.model(
@@ -89,6 +90,11 @@ export const EstEnsembleAddress = encadrementAddress1Connection.model(
 export const MontpellierAddress = encadrementAddress1Connection.model(
   'montpellieraddresses',
   montpellierAddressSchema
+)
+
+export const BordeauxAddress = encadrementAddress1Connection.model(
+  'bordeauxaddresses',
+  bordeauxAddressSchema
 )
 
 export const closeAllConnections = () => {
