@@ -223,6 +223,7 @@ export class CityService {
     switch (city) {
       case 'plaineCommune':
       case 'estEnsemble':
+      case 'bordeaux':
         return true
       default:
         return false
