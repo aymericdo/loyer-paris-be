@@ -10,6 +10,7 @@ export const regexString = (value: string): string => {
     hasCharges: /prix charge[s]? comprise[s]?/g,
     surface: /(9|\d{2})(?= ?(m2\b|metre|m²))/g,
     isHouse: /maison/g,
+    particulier: /particulier/g,
   }
 
   if (Object.keys(regex).includes(value)) {

@@ -144,9 +144,7 @@ export class SelogerScrapping {
       renter: isParticulier
         ? PARTICULIER_TERM
         : renter
-          ? renter.textContent.includes('particulier')
-            ? PARTICULIER_TERM
-            : renter.textContent
+          ? renter.textContent
           : null,
       rooms: rooms && rooms.textContent,
       surface: surface && surface.textContent,

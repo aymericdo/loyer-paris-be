@@ -9,6 +9,7 @@ import { AvailableCities, cityList, CityService } from '@services/address/city'
 import { PostalCodeStrategyFactory } from '@services/address/postalcode'
 import { ERROR_CODE } from '@services/api/errors'
 import { PrettyLog } from '@services/helpers/pretty-log'
+import { PARTICULIER_TERM } from '@services/websites/website'
 
 export class DigService {
   ad: Ad = null
@@ -203,7 +204,10 @@ export class DigService {
       'orpi',
       'logicimmo',
     ]
-    return possibleBadRenter.includes(this.ad.renter) ? null : this.ad.renter
+
+    const renter = possibleBadRenter.includes(this.ad.renter) ? null : this.ad.renter
+
+    return renter?.match(regexString('particulier'))?.length ? PARTICULIER_TERM : renter
   }
 
   private digForIsHouse(): boolean {
