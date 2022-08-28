@@ -17,7 +17,7 @@ export const CITY_FILE_PATHS = {
   lille: 'json-data/quartier_lille.geojson',
   plaineCommune: 'json-data/quartier_plaine-commune.geojson',
   estEnsemble: 'json-data/quartier_est-ensemble.geojson',
-  lyon: 'json-data/encadrements_lyon.json',
+  lyon: 'json-data/quartier_lyon.geojson',
   montpellier: 'json-data/quartier_montpellier.geojson',
   bordeaux: 'json-data/quartier_bordeaux.geojson',
 }

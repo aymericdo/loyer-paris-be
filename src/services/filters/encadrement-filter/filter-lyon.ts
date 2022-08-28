@@ -9,7 +9,7 @@ export class FilterLyon extends EncadrementFilterParent {
   city: AvailableMainCities = 'lyon'
 
   filter(): FilteredResult[] {
-    // Extract possible range time from rangeRents (json-data/encadrements_lyon.json)
+    // Extract possible range time from rangeRents (json-data/quartier_lyon.geojson)
     const rangeTime = ['avant 1946', '1946-70', '1971-90', 'après 1990']
 
     const districtsMatched = new LyonDistrictFilter(
