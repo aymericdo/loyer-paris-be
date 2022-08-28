@@ -1,24 +1,12 @@
 import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
 
 export interface LyonEncadrementItem {
-  type: 'Feature';
-  properties: {
-    codeiris: string;
-    zonage: string;
-    insee: string;
-    valeurs: {
-      '1': RoomCountItem;
-      '2': RoomCountItem;
-      '3': RoomCountItem;
-      '4 et plus': RoomCountItem;
-    };
-    commune: string;
-    gid: string;
-    [DISPLAY_ZONE_FIELD]: string;
-  };
-  geometry: {
-    type: 'Polygon';
-    coordinates: number[][][];
+  zonage: string;
+  valeurs: {
+    '1': RoomCountItem;
+    '2': RoomCountItem;
+    '3': RoomCountItem;
+    '4 et plus': RoomCountItem;
   };
 }
 
@@ -53,4 +41,16 @@ export interface UnitItemComplete extends UnitItem {
   roomCount: string;
   yearBuilt: string;
   isFurnished: string;
+}
+
+export interface LyonDistrictItem {
+  type: 'Feature';
+  properties: {
+    zonage: string;
+    commune: string;
+  };
+  geometry: {
+    type: 'Polygon';
+    coordinates: number[][][];
+  };
 }

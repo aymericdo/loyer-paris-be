@@ -24,9 +24,14 @@ export class FilterLyon extends EncadrementFilterParent {
     ).getRangeTimeDates()
 
     const rentList: UnitItemComplete[] = this.bigFlatten(
-      districtsMatched
+      (this.rangeRentsJson() as LyonEncadrementItem[])
     ).filter((rangeRent) => {
       return (
+        (districtsMatched?.length
+          ? districtsMatched
+            .map((district) => +district.properties.zonage)
+            .includes(+rangeRent.zone)
+          : true) &&
         (timeDates?.length ? timeDates.includes(rangeRent.yearBuilt) : true) &&
         (this.infoToFilter.roomCount
           ? +this.infoToFilter.roomCount < 4
@@ -57,14 +62,14 @@ export class FilterLyon extends EncadrementFilterParent {
 
   private bigFlatten(list: LyonEncadrementItem[]): UnitItemComplete[] {
     return list.reduce((prev, val) => {
-      const zone = val.properties.zonage
-      Object.keys(val.properties.valeurs).forEach((roomCountItemKey) => {
+      const zone = val.zonage
+      Object.keys(val.valeurs).forEach((roomCountItemKey) => {
         const roomCount = roomCountItemKey
-        Object.keys(val.properties.valeurs[roomCountItemKey]).forEach(
+        Object.keys(val.valeurs[roomCountItemKey]).forEach(
           (yearBuiltItemKey) => {
             const yearBuilt = yearBuiltItemKey
             Object.keys(
-              val.properties.valeurs[roomCountItemKey][yearBuilt]
+              val.valeurs[roomCountItemKey][yearBuilt]
             ).forEach((isFurnishedItemKey) => {
               const isFurnished = isFurnishedItemKey
               if (
@@ -78,7 +83,7 @@ export class FilterLyon extends EncadrementFilterParent {
                 })
               ) {
                 prev.push({
-                  ...val.properties.valeurs[roomCountItemKey][yearBuilt][
+                  ...val.valeurs[roomCountItemKey][yearBuilt][
                     isFurnishedItemKey
                   ],
                   zone,

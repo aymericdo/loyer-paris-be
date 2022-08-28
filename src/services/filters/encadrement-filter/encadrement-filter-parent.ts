@@ -10,7 +10,7 @@ const CITY_FILE_PATHS = {
   lille: 'json-data/encadrements_lille.json',
   plaineCommune: 'json-data/encadrements_plaine-commune.json',
   estEnsemble: 'json-data/encadrements_est-ensemble.json',
-  lyon: 'json-data/quartier_lyon.geojson',
+  lyon: 'json-data/encadrements_lyon.geojson',
   montpellier: 'json-data/encadrements_montpellier.json',
   bordeaux: 'json-data/encadrements_bordeaux.json',
 }
