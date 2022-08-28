@@ -8,6 +8,8 @@ import cors from 'cors'
 import * as Sentry from '@sentry/node'
 import { CronJobsService } from '@cronjobs/cronjobs'
 
+import path from 'path'
+
 const app = express()
 
 app.use(cors())
@@ -25,6 +27,8 @@ app.use(
     parameterLimit: 50000,
   })
 )
+
+app.use(express.static(path.resolve('./json-data')))
 
 // Blacklist the following IPs
 const ips = ['109.11.33.58']

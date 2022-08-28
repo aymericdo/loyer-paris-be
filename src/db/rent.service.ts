@@ -447,7 +447,6 @@ export async function getRelevantAdsData(
         isHouse: 1,
         longitude: 1,
         latitude: 1,
-        postalCode: 1,
       },
       {
         sort: { createdAt: -1 },
