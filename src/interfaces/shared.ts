@@ -76,3 +76,8 @@ export type EncadrementItem =
   LilleEncadrementItem |
   MontpellierEncadrementItem |
   BordeauxEncadrementItem
+
+export interface GeojsonFile {
+  type: 'FeatureCollection'
+  features: DistrictItem[]
+}

@@ -2,6 +2,7 @@ import path from 'path'
 import * as fs from 'fs'
 import { AvailableMainCities } from '@services/address/city'
 import { Memoize } from 'typescript-memoize'
+import { GeojsonFile } from '@interfaces/shared'
 
 interface DistrictElem {
   value: string;
@@ -30,7 +31,7 @@ export class DistrictsList {
   }
 
   @Memoize()
-  currentGeodata() {
+  currentGeodata(): GeojsonFile {
     const file = this.geodataFile()
     return {
       ...file,
@@ -42,6 +43,12 @@ export class DistrictsList {
         },
       }))
     }
+  }
+
+  currentPolygon(displayZoneField: string) {
+    return this.currentGeodata().features.find((feature) => {
+      return feature.properties[DISPLAY_ZONE_FIELD] === displayZoneField
+    })?.geometry
   }
 
   currentGeodataWithGroupBy() {

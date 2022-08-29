@@ -1,7 +1,9 @@
 import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
 import { AvailableMainCities, cityList } from '@services/address/city'
+import { DistrictsList } from '@services/districts/districts-list'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'
+import randomPositionInPolygon from 'random-position-in-polygon'
 
 function getCity(city: AvailableMainCities) {
   const cities = Object.keys(cityList).filter((c) => cityList[c].mainCity === city)
@@ -407,8 +409,12 @@ interface RelevantAdsData {
   url: string;
   district: string;
   city: string;
+  longitude: string;
+  latitude: string;
   isHouse: boolean;
+  blurry: boolean;
 }
+
 export async function getRelevantAdsData(
   filterParam: {
     city: string;
@@ -431,7 +437,7 @@ export async function getRelevantAdsData(
   const filter = buildFilter(filterParam)
 
   try {
-    return (await Rent.find(
+    const ads = (await Rent.find(
       filter,
       {
         id: 1,
@@ -454,6 +460,27 @@ export async function getRelevantAdsData(
         limit: perPage,
       }
     )) as unknown as RelevantAdsData[]
+
+    return ads.map((ad) => {
+      ad.blurry = false
+
+      if (!ad.longitude || !ad.latitude) {
+        const mainCity = cityList[ad.city].mainCity
+
+        const polygon = new DistrictsList(mainCity as AvailableMainCities).currentPolygon(ad.district)
+
+        const point = randomPositionInPolygon({
+          type: 'Feature',
+          geometry: polygon
+        })
+
+        ad.longitude = point[0]
+        ad.latitude = point[1]
+        ad.blurry = true
+      }
+
+      return ad
+    })
   } catch (err) {
     if (err) {
       throw err
