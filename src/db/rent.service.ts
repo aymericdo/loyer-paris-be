@@ -459,7 +459,7 @@ export async function getRelevantAdsData(
         skip: page * perPage,
         limit: perPage,
       }
-    )) as unknown as RelevantAdsData[]
+    ).lean() as unknown as RelevantAdsData[])
 
     return ads.map((ad) => {
       let blurry = false
