@@ -462,7 +462,7 @@ export async function getRelevantAdsData(
     )) as unknown as RelevantAdsData[]
 
     return ads.map((ad) => {
-      ad.blurry = false
+      let blurry = false
 
       if (!ad.longitude || !ad.latitude) {
         const mainCity = cityList[ad.city].mainCity
@@ -476,10 +476,13 @@ export async function getRelevantAdsData(
 
         ad.longitude = point[0]
         ad.latitude = point[1]
-        ad.blurry = true
+        blurry = true
       }
 
-      return ad
+      return {
+        ...ad,
+        blurry,
+      }
     })
   } catch (err) {
     if (err) {
