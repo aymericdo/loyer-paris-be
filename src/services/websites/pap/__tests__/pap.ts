@@ -68,7 +68,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: {
             order: 0,
-            value: 'St-Germain-l\'Auxerrois',
+            value: 'Halles',
           },
           hasFurniture: {
             order: 1,
@@ -89,15 +89,15 @@ describe('pap', () => {
           isHouse: { order: 5, value: undefined },
           max: {
             order: 6,
-            value: 45.1,
+            value: 40.6,
           },
           maxAuthorized: {
             order: 7,
-            value: 541.2,
+            value: 487.2,
           },
           promoPercentage: {
             order: 8,
-            value: 27.84,
+            value: 35.04,
           },
         },
         isLegal: false,
