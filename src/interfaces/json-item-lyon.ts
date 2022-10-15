@@ -54,3 +54,16 @@ export interface LyonDistrictItem {
     coordinates: number[][][];
   };
 }
+
+export interface BordeauxDistrictItem {
+  type: 'Feature';
+  properties: {
+    com_code: number;
+    zonage: string;
+    commune: string;
+  };
+  geometry: {
+    type: 'Polygon';
+    coordinates: number[][][];
+  };
+}

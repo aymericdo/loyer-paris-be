@@ -9,7 +9,7 @@ export class FilterBordeaux extends EncadrementFilterParent {
   city: AvailableMainCities = 'bordeaux'
 
   filter(): FilteredResult[] {
-    const rangeTime = ['avant 1946', '1971-1990', '1946-1970', '1991-2005', 'apres 2005']
+    const rangeTime = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
 
     const districtsMatched = new BordeauxDistrictFilter(
       this.infoToFilter.postalCode,
