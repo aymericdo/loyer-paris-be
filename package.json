@@ -45,7 +45,7 @@
     "module-alias": "^2.2.2",
     "mongoose": "^5.7.5",
     "node-cache": "^5.0.2",
-    "node-cron": "^3.0.0",
+    "node-cron": "^3.0.2",
     "point-in-polygon": "^1.0.1",
     "random-position-in-polygon": "^1.0.6",
     "twitter-api-v2": "^1.6.5",
