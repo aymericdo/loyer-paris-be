@@ -36,7 +36,6 @@ app.use(IpFilter(ips, { mode: 'deny' }))
 
 app.use('/seloger', require('./api/websites/seloger.controller'))
 app.use('/leboncoin', require('./api/websites/leboncoin.controller'))
-app.use('/jinka', require('./api/websites/loueragile.controller'))
 app.use('/pap', require('./api/websites/pap.controller'))
 app.use('/logic-immo', require('./api/websites/logicimmo.controller'))
 app.use('/lefigaro', require('./api/websites/lefigaro.controller'))

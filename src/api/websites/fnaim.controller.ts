@@ -9,7 +9,9 @@ function getByDataV2(req: Request, res: Response) {
     `-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`,
     'blue'
   )
-  res.status(410)
+  const fnaim = new Fnaim(res, { body: req.body })
+
+  fnaim.analyse()
 }
 
 module.exports = router
