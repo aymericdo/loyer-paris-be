@@ -2,6 +2,7 @@ import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
 import { AvailableMainCities, cityList } from '@services/address/city'
 import { DistrictsList } from '@services/districts/districts-list'
+import { roundNumber } from '@services/helpers/round-number'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'
 import randomPositionInPolygon from 'random-position-in-polygon'
 
@@ -406,6 +407,9 @@ interface RelevantAdsData {
   createdAt: Date;
   hasFurniture: boolean;
   price: number;
+  maxPrice: number;
+  priceExcludingCharges: number;
+  isLegal: boolean;
   url: string;
   district: string;
   city: string;
@@ -421,6 +425,7 @@ export async function getRelevantAdsData(
     districtList: string[];
     surfaceRange: number[];
     priceRange: number[];
+    exceedingRange: number[];
     roomRange: number[];
     hasFurniture: boolean;
     isHouse: boolean;
@@ -447,6 +452,9 @@ export async function getRelevantAdsData(
         createdAt: 1,
         hasFurniture: 1,
         price: 1,
+        maxPrice: 1,
+        isLegal: 1,
+        priceExcludingCharges: 1,
         district: 1,
         url: 1,
         city: 1,
@@ -479,9 +487,15 @@ export async function getRelevantAdsData(
         blurry = true
       }
 
+      const exceeding = !ad.isLegal ? roundNumber(ad.priceExcludingCharges - ad.maxPrice) : null
+      delete ad.isLegal
+      delete ad.priceExcludingCharges
+      delete ad.maxPrice
+
       return {
         ...ad,
         blurry,
+        exceeding,
       }
     })
   } catch (err) {
@@ -496,6 +510,7 @@ export async function getRelevantAdsDataTotalCount(filterParam: {
   districtList: string[];
   surfaceRange: number[];
   priceRange: number[];
+  exceedingRange: number[];
   roomRange: number[];
   hasFurniture: boolean;
   isHouse: boolean;
@@ -510,6 +525,7 @@ function buildFilter(filterParam: {
   districtList: string[];
   surfaceRange: number[];
   priceRange: number[];
+  exceedingRange: number[];
   roomRange: number[];
   hasFurniture: boolean;
   isHouse: boolean;
@@ -547,6 +563,15 @@ function buildFilter(filterParam: {
     filter['price'] = {
       $gte: filterParam.priceRange[0],
       $lte: filterParam.priceRange[1],
+    }
+  }
+
+  if (filterParam.exceedingRange?.length) {
+    filter['$expr'] = {
+      $and: [
+        { $lte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, filterParam.exceedingRange[1]] },
+        { $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, filterParam.exceedingRange[0]] },
+      ]
     }
   }
 

@@ -11,18 +11,20 @@ export async function getRelevantAds(req: Request, res: Response) {
   const city: string = (req.query.cityValue as string) || null
   const districtValues: string = (req.query.districtValues as string) || null
   const priceValue = (req.query.priceValue as string) || null
+  const exceedingValue = (req.query.exceedingValue as string) || null
   const furnishedValue = (req.query.furnishedValue as string) || null
   const surfaceValue: string = (req.query.surfaceValue as string) || null
   const roomValue: string = (req.query.roomValue as string) || null
   const isHouseValue: string = (req.query.isHouseValue as string) || null
   const isLegalValue: string = (req.query.isLegal as string) || null
 
-  const districtList: string[] = districtValues
-    ?.split(',')
-    ?.map((v) => v)
-    .filter(Boolean)
+  const districtList: string[] =
+    districtValues ?
+      districtValues.split(',')?.map((v) => v).filter(Boolean)
+      : []
   const surfaceRange: number[] = surfaceValue?.split(',')?.map((v) => +v)
   const priceRange: number[] = priceValue?.split(',')?.map((v) => +v)
+  const exceedingRange: number[] = exceedingValue?.split(',')?.map((v) => +v)
   const roomRange: number[] = roomValue?.split(',')?.map((v) => +v)
   const hasFurniture: boolean =
     furnishedValue === 'furnished'
@@ -39,6 +41,7 @@ export async function getRelevantAds(req: Request, res: Response) {
     districtList,
     surfaceRange,
     priceRange,
+    exceedingRange,
     roomRange,
     hasFurniture,
     isHouse,
