@@ -32,9 +32,14 @@ export async function getRelevantAds(req: Request, res: Response) {
       : furnishedValue === 'nonFurnished'
         ? false
         : null
-  const isLegal: boolean =
-    isLegalValue != null ? isLegalValue === 'true' : true
-  const isHouse: boolean = isHouseValue != 'null' ? +isHouseValue === 1 : null
+
+  if (!isLegalValue || !['true', 'false'].includes(isLegalValue)) {
+    res.status(403).json('isLegal need to be passed as query parameter')
+    return
+  }
+
+  const isLegal: boolean = isLegalValue === 'true'
+  const isHouse: boolean = isHouseValue && isHouseValue != 'null' ? +isHouseValue === 1 : null
 
   const filter = {
     city,
