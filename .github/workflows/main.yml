@@ -15,8 +15,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  runs:
-    using: 'node16'
   test:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
