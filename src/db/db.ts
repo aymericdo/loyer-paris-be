@@ -41,6 +41,19 @@ encadrementAddress1Connection.catch((e) => {
   console.error(e)
 })
 
+const encadrementAddress2Connection = createConnection(
+  process.env.MONGODB_URI_ENCADREMENT_ADDRESS2 || localConnectionString,
+  {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+)
+
+encadrementAddress2Connection.catch((e) => {
+  console.error(e)
+})
+
 const rentSchema = require('./rent.model')
 const incompleteRentSchema = require('./incomplete-rent.model')
 const empriseBatieSchema = require('./emprisebatie.model')
@@ -77,22 +90,22 @@ export const PlaineCommuneAddress = encadrementAddress1Connection.model(
   plaineCommuneAddressSchema
 )
 
-export const LyonAddress = encadrementAddress1Connection.model(
+export const LyonAddress = encadrementAddress2Connection.model(
   'lyonaddress',
   lyonAddressSchema
 )
 
-export const EstEnsembleAddress = encadrementAddress1Connection.model(
+export const EstEnsembleAddress = encadrementAddress2Connection.model(
   'estensembleaddress',
   estEnsembleAddressSchema
 )
 
-export const MontpellierAddress = encadrementAddress1Connection.model(
+export const MontpellierAddress = encadrementAddress2Connection.model(
   'montpellieraddresses',
   montpellierAddressSchema
 )
 
-export const BordeauxAddress = encadrementAddress1Connection.model(
+export const BordeauxAddress = encadrementAddress2Connection.model(
   'bordeauxaddresses',
   bordeauxAddressSchema
 )
@@ -101,4 +114,5 @@ export const closeAllConnections = () => {
   rentConnection.close()
   empriseBatieConnection.close()
   encadrementAddress1Connection.close()
+  encadrementAddress2Connection.close()
 }
