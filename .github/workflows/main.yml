@@ -15,6 +15,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  runs:
+    using: 'node16'
   test:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,13 +31,13 @@ jobs:
         mongodb-version: ['4.0']
     steps:
       - name: Copy repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
           persist-credentials: false
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
