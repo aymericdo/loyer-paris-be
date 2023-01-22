@@ -42,7 +42,7 @@ export class FilterParis extends EncadrementFilterParent {
 
     const rentList = (this.rangeRentsJson() as ParisEncadrementItem[]).filter((rangeRent) => {
       return (
-        currentYear === rangeRent.annee &&
+        rangeRent.annee === 2022 && // hard coded to avoid the glitch of july
         (zones?.length
           ? zones
             .map((zoneRent) => zoneRent.id_zone)
