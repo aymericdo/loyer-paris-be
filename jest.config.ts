@@ -5,6 +5,7 @@ const { defaults: tsjPreset } = require('ts-jest/presets')
 export default async (): Promise<Config.InitialOptions> => {
   return {
     testEnvironment: 'node',
+    globalTeardown: '<rootDir>/test-teardown-globals.ts',
     preset: '@shelf/jest-mongodb',
     roots: ['<rootDir>/src/'],
     testTimeout: 120000,

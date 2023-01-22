@@ -110,9 +110,9 @@ export const BordeauxAddress = encadrementAddress2Connection.model(
   bordeauxAddressSchema
 )
 
-export const closeAllConnections = () => {
-  rentConnection.close()
-  empriseBatieConnection.close()
-  encadrementAddress1Connection.close()
-  encadrementAddress2Connection.close()
+export const closeAllConnections = async () => {
+  await rentConnection.close()
+  await empriseBatieConnection.close()
+  await encadrementAddress1Connection.close()
+  await encadrementAddress2Connection.close()
 }

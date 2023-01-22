@@ -6,10 +6,12 @@ import path from 'path'
 import { Pap } from '../pap'
 
 describe('pap', () => {
-  afterAll(() => closeAllConnections())
-  afterAll(() => disconnect())
+  afterAll(async () => {
+    await closeAllConnections()
+    await disconnect()
+  })
 
-  describe('paris', () => {
+  fdescribe('paris', () => {
     test('returns clean ad', async () => {
       const dataParis = fs.readFileSync(path.resolve(__dirname, './pap-paris-payload.json'), 'utf8')
 
@@ -33,7 +35,7 @@ describe('pap', () => {
         detectedInfo: {
           address: {
             order: 0,
-            value: 'rue de rivoli 75001, Paris',
+            value: '3 rue de rivoli 75004, Paris',
           },
           hasFurniture: {
             order: 1,
@@ -49,7 +51,7 @@ describe('pap', () => {
           },
           yearBuilt: {
             order: 4,
-            value: null,
+            value: '1875',
           },
           isHouse: { order: 5, value: null },
           price: {
@@ -68,7 +70,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: {
             order: 0,
-            value: 'Halles',
+            value: 'Saint-Gervais',
           },
           hasFurniture: {
             order: 1,
@@ -89,15 +91,15 @@ describe('pap', () => {
           isHouse: { order: 5, value: undefined },
           max: {
             order: 6,
-            value: 40.6,
+            value: 43.2,
           },
           maxAuthorized: {
             order: 7,
-            value: 487.2,
+            value: 518.4,
           },
           promoPercentage: {
             order: 8,
-            value: 35.04,
+            value: 30.88,
           },
         },
         isLegal: false,

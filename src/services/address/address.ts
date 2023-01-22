@@ -151,6 +151,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
       .sort({ score: { $meta: 'textScore' } })
       .limit(10)
       .lean()) as any
+
     return result
       ? result.map((r) => ({
         item: {
@@ -224,6 +225,7 @@ export class ParisAddressStrategy extends DefaultAddressStrategy {
       .sort({ score: { $meta: 'textScore' } })
       .limit(10)
       .lean()) as any
+
     return result
       ? result.map((r) => ({
         item: {
