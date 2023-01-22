@@ -68,7 +68,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: {
             order: 0,
-            value: 'Halles',
+            value: 'Place-Vendôme',
           },
           hasFurniture: {
             order: 1,
@@ -89,15 +89,15 @@ describe('pap', () => {
           isHouse: { order: 5, value: undefined },
           max: {
             order: 6,
-            value: 40.6,
+            value: 45.1,
           },
           maxAuthorized: {
             order: 7,
-            value: 487.2,
+            value: 541.2,
           },
           promoPercentage: {
             order: 8,
-            value: 35.04,
+            value: 27.84,
           },
         },
         isLegal: false,

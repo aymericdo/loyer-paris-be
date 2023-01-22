@@ -31,7 +31,7 @@ describe('seloger', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: 'rue du faubourg saint-antoine 75011, Paris' },
+          address: { order: 0, value: 'a rue du faubourg saint-antoine 75011, Paris' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: 3 },
           surface: { order: 3, value: 58 },
