@@ -16,10 +16,10 @@ export class BienIciScrapping {
       '[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.description'
     )
     const price = document.querySelector(
-      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.thePrice'
+      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.ad-price__the-price'
     )
     const charges = document.querySelector(
-      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice div.feesInfos'
+      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice div.ad-price__fees-infos'
     )
     const hasCharges = document.querySelector(
       '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.perMonth'
