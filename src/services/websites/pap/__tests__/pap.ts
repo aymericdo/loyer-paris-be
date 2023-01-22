@@ -11,7 +11,7 @@ describe('pap', () => {
     await disconnect()
   })
 
-  fdescribe('paris', () => {
+  describe('paris', () => {
     test('returns clean ad', async () => {
       const dataParis = fs.readFileSync(path.resolve(__dirname, './pap-paris-payload.json'), 'utf8')
 

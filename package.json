@@ -11,7 +11,7 @@
     "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
     "build": "rimraf ./build && tsc",
     "test": "jest --forceExit --detectOpenHandles --no-cache",
-    "test:watch": "jest --watchAll  --forceExit",
+    "test:watch": "jest --forceExit --detectOpenHandles --no-cache --watchAll",
     "dev": "ts-node-dev --transpile-only ./src/index.ts",
     "prod": "tsc && node ./build/src/index.js",
     "debug": "tsc && node --inspect ./build/src/index.js",
