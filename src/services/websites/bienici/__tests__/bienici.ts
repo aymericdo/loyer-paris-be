@@ -6,8 +6,10 @@ import fs from 'fs'
 import path from 'path'
 
 describe('bienici', () => {
-  afterAll(() => closeAllConnections())
-  afterAll(() => disconnect())
+  afterAll(async () => {
+    await closeAllConnections()
+    await disconnect()
+  })
 
   describe('paris', () => {
     test('returns clean ad', async () => {

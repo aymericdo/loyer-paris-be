@@ -6,8 +6,10 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 describe('seloger', () => {
-  afterAll(() => closeAllConnections())
-  afterAll(() => disconnect())
+  afterAll(async () => {
+    await closeAllConnections()
+    await disconnect()
+  })
 
   describe('paris', () => {
     test('returns clean ad', async () => {
