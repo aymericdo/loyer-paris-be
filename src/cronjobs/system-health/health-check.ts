@@ -6,23 +6,24 @@ export class HealthCheck {
   async call() {
     const countByWebsite = await rentService.getCountByWebsite()
 
-    WEBSITE_LIST.forEach((website) => {
-      if (FUNNIEST_WEBSITES.includes(website)) return
+    let message = 'Voici un petit récap du nombre d\'annonces sauvergardées par site aujourd\'hui :\n'
 
-      if (!Object.prototype.hasOwnProperty.call(countByWebsite, website))
+    const iterableWebsite = WEBSITE_LIST.filter((website) => {
+      return !FUNNIEST_WEBSITES.includes(website)
+    })
+
+    iterableWebsite.forEach((website, index) => {
+      if (!Object.prototype.hasOwnProperty.call(countByWebsite, website)) {
         countByWebsite[website] = 0
+      }
 
-      if (countByWebsite[website] < 5) {
-        const message = `${countByWebsite[website] > 0 ? 'Seulement' : ''} ${
-          countByWebsite[website]
-        } annonce${countByWebsite[website] > 1 ? 's' : ''} ${
-          countByWebsite[website] > 1 ? 'ont' : 'a'
-        } été sauvegardée${
-          countByWebsite[website] > 1 ? 's' : ''
-        } pour ${website} aujourd'hui.`
-
-        new Slack().sendMessage('#health-check', message)
+      if (index === iterableWebsite.length - 1) {
+        message += `${website}: ${countByWebsite[website]}`
+      } else {
+        message += `${website}: ${countByWebsite[website]}, \n`
       }
     })
+
+    new Slack().sendMessage('#health-check', message)
   }
 }
