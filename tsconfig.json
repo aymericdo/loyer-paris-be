@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "es5",
     "downlevelIteration": true,
     "module": "commonjs",
     "experimentalDecorators": true,
