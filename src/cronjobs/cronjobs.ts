@@ -4,7 +4,7 @@ import { HealthCheck } from '@cronjobs/system-health/health-check'
 
 const TIMEZONE = 'Europe/Paris'
 export class CronJobsService {
-  static watch() {
+  watch() {
     // https://crontab.guru/#0_8_*_*_1
     schedule(
       '0 8 * * 5',

@@ -60,7 +60,7 @@ app.use('/version', require('./api/version.controller'))
 
 if (process.env.CURRENT_ENV === 'prod') {
   // Watch the cronjobs
-  new CronJobsService.watch()
+  new CronJobsService().watch()
 }
 
 Sentry.init({
