@@ -30,7 +30,7 @@ export class GensdeconfianceScrapping {
       }
     })
 
-    if (!title || isARent?.textContent.includes('Locations immobilières')) {
+    if (!title || !isARent?.textContent.includes('Locations immobilières')) {
       return null
     }
 
