@@ -9,6 +9,8 @@ export class GensdeconfianceScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
+    const isARent = document.querySelector('#post-title-breadcrumb > small')
+
     const title = document.querySelector('#post-title')
     const description = document.querySelector('#ad-description')
     const price = document.querySelector(
@@ -28,13 +30,12 @@ export class GensdeconfianceScrapping {
       }
     })
 
-    if (!title) {
+    if (!title || isARent?.textContent.includes('Locations immobilières')) {
       return null
     }
 
     const cityLabelText =
-      cityLabel &&
-      cityLabel.textContent
+      cityLabel?.textContent
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .split('—')[1]
@@ -42,17 +43,16 @@ export class GensdeconfianceScrapping {
     return {
       id: null,
       cityLabel: cityLabelText,
-      address: address && address.textContent,
-      charges: charges && charges.textContent,
+      address: address?.textContent,
+      charges: charges?.textContent,
       hasCharges:
-        charges &&
-        charges.textContent &&
+        charges?.textContent &&
         charges.textContent.match(/\d+/)[0] &&
         +charges.textContent.match(/\d+/)[0] > 0,
-      description: description && description.textContent,
-      price: price && price.textContent,
-      surface: surface && surface.textContent,
-      title: title && title.textContent,
+      description: description?.textContent,
+      price: price?.textContent,
+      surface: surface?.textContent,
+      title: title?.textContent,
     }
   }
 }
