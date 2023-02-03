@@ -25,6 +25,7 @@ export interface FacebookMapping {
 export interface LeboncoinMapping {
   id: string;
   cityLabel: string;
+  dpe: DPE;
   body: string;
   furnished: string;
   hasCharges: boolean;

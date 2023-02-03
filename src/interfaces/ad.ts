@@ -8,7 +8,7 @@ export interface Ad {
   cityLabel?: string;
   coord?: Coordinate;
   description: string;
-  dpe?: DPE;
+  dpe?: DPE | null;
   furnished?: boolean;
   hasCharges?: boolean;
   neighborhood?: string;
