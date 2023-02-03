@@ -1,5 +1,5 @@
-import { Coordinate } from '@interfaces/shared'
-import { AvailableCities } from '@services/address/city'
+import { Coordinate } from "@interfaces/shared";
+import { AvailableCities } from "@services/address/city";
 
 export interface Ad {
   id: string;
@@ -8,6 +8,7 @@ export interface Ad {
   cityLabel?: string;
   coord?: Coordinate;
   description: string;
+  dpe?: DPE;
   furnished?: boolean;
   hasCharges?: boolean;
   neighborhood?: string;
@@ -38,6 +39,7 @@ export interface CleanAd {
   charges: number;
   hasCharges: boolean;
   isHouse?: boolean;
+  dpe?: DPE;
 }
 
 export interface InfoToFilter {
@@ -67,3 +69,5 @@ export interface IncompleteAd {
   url: string;
   city?: string;
 }
+
+export type DPE = "A" | "B" | "C" | "D" | "E" | "F" | "G";

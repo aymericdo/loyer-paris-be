@@ -1,4 +1,5 @@
-import { Coordinate } from '@interfaces/shared'
+import { Coordinate } from "@interfaces/shared";
+import { DPE } from "./ad";
 
 export interface Body {
   noMoreData?: boolean;
@@ -116,6 +117,7 @@ export interface SelogerMapping {
   surface: string;
   title: string;
   yearBuilt: string;
+  dpe: DPE;
 }
 
 export interface GensdeconfianceMapping {

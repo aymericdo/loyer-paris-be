@@ -1,11 +1,13 @@
-import { Rent } from '@db/db'
-import { AvailableCities } from '@services/address/city'
-import { PrettyLog } from '@services/helpers/pretty-log'
+import { Rent } from "@db/db";
+import { DPE } from "@interfaces/ad";
+import { AvailableCities } from "@services/address/city";
+import { PrettyLog } from "@services/helpers/pretty-log";
 
 interface SavedInfo {
   id: string;
   address: string;
   district: string;
+  dpe?: DPE;
   city: AvailableCities;
   hasFurniture?: boolean;
   isHouse?: boolean;
@@ -26,10 +28,10 @@ interface SavedInfo {
 }
 
 export class SaveRentService {
-  adToSave: SavedInfo = null
+  adToSave: SavedInfo = null;
 
   constructor(adToSave: SavedInfo) {
-    this.adToSave = adToSave
+    this.adToSave = adToSave;
   }
 
   async save(): Promise<void> {
@@ -68,23 +70,23 @@ export class SaveRentService {
       }),
       ...(this.adToSave.stations != null &&
         this.adToSave.stations.length && {
-        stations: this.adToSave.stations,
-      }),
+          stations: this.adToSave.stations,
+        }),
       ...(this.adToSave.yearBuilt != null &&
         this.adToSave.yearBuilt.length && {
-        yearBuilt: this.adToSave.yearBuilt,
-      }),
-    })
-    PrettyLog.call('saving ad')
+          yearBuilt: this.adToSave.yearBuilt,
+        }),
+    });
+    PrettyLog.call("saving ad");
 
     try {
-      await rent.save()
-      PrettyLog.call('ad saved', 'green')
+      await rent.save();
+      PrettyLog.call("ad saved", "green");
     } catch (err) {
       if (err.code === 11000) {
-        PrettyLog.call('⚠️  ad already saved', 'red')
+        PrettyLog.call("⚠️  ad already saved", "red");
       } else {
-        console.error(err)
+        console.error(err);
       }
     }
   }
