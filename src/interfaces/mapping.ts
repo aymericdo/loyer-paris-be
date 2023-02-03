@@ -25,7 +25,7 @@ export interface FacebookMapping {
 export interface LeboncoinMapping {
   id: string;
   cityLabel: string;
-  dpe: DPE;
+  dpe: DPE | null;
   body: string;
   furnished: string;
   hasCharges: boolean;
@@ -98,6 +98,7 @@ export interface PapMapping {
   id: string;
   cityLabel: string;
   description: string;
+  dpe: DPE | null;
   price: string;
   rooms: string;
   surface: string;
@@ -110,6 +111,7 @@ export interface SelogerMapping {
   charges: string;
   cityLabel: string;
   description: string;
+  dpe: DPE | null;
   furnished: boolean;
   hasCharges: boolean;
   price: string;
@@ -118,7 +120,6 @@ export interface SelogerMapping {
   surface: string;
   title: string;
   yearBuilt: string;
-  dpe: DPE;
 }
 
 export interface GensdeconfianceMapping {
