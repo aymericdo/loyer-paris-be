@@ -70,6 +70,7 @@ export interface LogicimmoMapping {
   charges: string
   cityLabel: string
   description: string
+  dpe: string | null
   furnished: boolean
   price: string
   renter: string

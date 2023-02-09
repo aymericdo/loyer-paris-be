@@ -64,11 +64,14 @@ export class LogicimmoScrapping {
       return null
     }
 
+    const dpe = document.querySelector('article.DPE > ul > li > span[tabindex]')
+
     return {
       id: null,
       cityLabel: cityLabel && cityLabel.textContent,
       charges: charges && charges.textContent,
       description: description && description.textContent,
+      dpe: dpe?.textContent,
       furnished: furnished && !!furnished.textContent,
       price: price && price.textContent,
       renter: renter && renter.textContent,

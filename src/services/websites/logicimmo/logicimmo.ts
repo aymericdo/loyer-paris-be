@@ -43,6 +43,7 @@ export class LogicImmo extends Website {
       charges: cleanup.number(ad.charges),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
+      dpe: ad.dpe,
       furnished: ad.furnished,
       price: cleanup.price(ad.price),
       renter: ad.renter ? cleanup.string(ad.renter) : PARTICULIER_TERM,
