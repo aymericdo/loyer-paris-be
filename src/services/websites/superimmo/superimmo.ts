@@ -41,6 +41,7 @@ export class Superimmo extends Website {
       id: ad.id.toString(),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
+      dpe: ad.dpe,
       price: cleanup.price(ad.price),
       renter: ad.renter ? cleanup.string(ad.renter) : null,
       rooms: cleanup.number(ad.rooms),

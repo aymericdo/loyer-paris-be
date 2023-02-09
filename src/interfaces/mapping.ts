@@ -194,6 +194,7 @@ export interface SuperimmoMapping {
   title: string
   cityLabel: string
   description: string
+  dpe: string | null
   hasCharges: boolean
   charges: string
   price: string

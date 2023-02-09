@@ -57,10 +57,13 @@ export class SuperimmoScrapping {
       return null
     }
 
+    const dpe = document.querySelector('table.dpe-table > tbody > tr > td > table > tbody > tr.current')
+
     return {
       id: null,
       cityLabel: cityLabel?.textContent,
       description: description?.textContent,
+      dpe: dpe?.textContent,
       charges: charges?.textContent,
       price: price?.textContent,
       hasCharges: !!price?.textContent?.includes('CC'),
