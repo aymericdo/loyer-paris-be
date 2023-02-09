@@ -1,9 +1,9 @@
-import * as cleanup from '@services/helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { LuxResidenceMapping } from '@interfaces/mapping'
-import { LuxResidenceScrapping } from './lux-residence.scrapping'
 import { ERROR_CODE } from '@services/api/errors'
+import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'
+import { LuxResidenceScrapping } from './lux-residence.scrapping'
 export class LuxResidence extends Website {
   website: WebsiteType = 'luxresidence'
 

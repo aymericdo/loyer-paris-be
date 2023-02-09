@@ -1,6 +1,6 @@
-import { DistrictFilterParent } from './district-filter-parent'
-import { AvailableMainCities } from '@services/address/city'
 import { ParisDistrictItem } from '@interfaces/json-item-paris'
+import { AvailableMainCities } from '@services/address/city'
+import { DistrictFilterParent } from './district-filter-parent'
 
 export class ParisDistrictFilter extends DistrictFilterParent {
   city: AvailableMainCities = 'paris'
@@ -12,10 +12,7 @@ export class ParisDistrictFilter extends DistrictFilterParent {
   protected getDistrictFromPostalCode(): ParisDistrictItem[] {
     if (this.postalCode) {
       // 75010 -> 10  75009 -> 9
-      const code =
-        this.postalCode.slice(-2)[0] === '0'
-          ? this.postalCode.slice(-1)
-          : this.postalCode.slice(-2)
+      const code = this.postalCode.slice(-2)[0] === '0' ? this.postalCode.slice(-1) : this.postalCode.slice(-2)
 
       return (this.getDistrictsJson() as ParisDistrictItem[]).filter((district) => {
         return district.properties.c_ar === +code

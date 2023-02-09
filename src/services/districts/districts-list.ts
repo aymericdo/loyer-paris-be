@@ -1,13 +1,13 @@
-import path from 'path'
-import * as fs from 'fs'
-import { AvailableMainCities } from '@services/address/city'
-import { Memoize } from 'typescript-memoize'
 import { GeojsonFile } from '@interfaces/shared'
+import { AvailableMainCities } from '@services/address/city'
+import * as fs from 'fs'
+import path from 'path'
+import { Memoize } from 'typescript-memoize'
 
 interface DistrictElem {
-  value: string;
-  groupBy: string | null;
-  displaySequence: number;
+  value: string
+  groupBy: string | null
+  displaySequence: number
 }
 
 export const DISPLAY_ZONE_FIELD = 'displayZone'
@@ -41,7 +41,7 @@ export class DistrictsList {
           ...data.properties,
           [DISPLAY_ZONE_FIELD]: this.zoneByCity(data),
         },
-      }))
+      })),
     }
   }
 
@@ -52,22 +52,15 @@ export class DistrictsList {
   }
 
   currentGeodataWithGroupBy() {
-    return this.currentGeodata().features
-      .reduce((prev: DistrictElem[], data) => {
+    return this.currentGeodata()
+      .features.reduce((prev: DistrictElem[], data) => {
         switch (this.city) {
           case 'paris': {
-            if (
-              !prev.some(
-                (elem: DistrictElem) =>
-                  elem.value === data['properties']['l_qu']
-              )
-            ) {
+            if (!prev.some((elem: DistrictElem) => elem.value === data['properties']['l_qu'])) {
               prev.push({
                 value: data['properties']['l_qu'],
                 displaySequence: data['properties']['c_ar'],
-                groupBy: `${data['properties']['c_ar']}${(data['properties'][
-                  'c_ar'
-                ] > 1
+                groupBy: `${data['properties']['c_ar']}${(data['properties']['c_ar'] > 1
                   ? 'ème'
                   : 'er'
                 ).toString()} arrondissement`,
@@ -76,12 +69,7 @@ export class DistrictsList {
             break
           }
           default: {
-            if (
-              !prev.some(
-                (elem: DistrictElem) =>
-                  elem.value === this.zoneByCity(data)
-              )
-            ) {
+            if (!prev.some((elem: DistrictElem) => elem.value === this.zoneByCity(data))) {
               prev.push({
                 value: this.zoneByCity(data),
                 displaySequence: data['properties'][DISPLAY_ZONE_FIELD],
@@ -115,11 +103,6 @@ export class DistrictsList {
   }
 
   private geodataFile() {
-    return JSON.parse(
-      fs.readFileSync(
-        path.join(CITY_FILE_PATHS[this.city]),
-        'utf8'
-      )
-    )
+    return JSON.parse(fs.readFileSync(path.join(CITY_FILE_PATHS[this.city]), 'utf8'))
   }
 }

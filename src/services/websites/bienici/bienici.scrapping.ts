@@ -1,5 +1,5 @@
-import { virtualConsole } from '@services/helpers/jsdome'
 import { BienIciMapping } from '@interfaces/mapping'
+import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -30,19 +30,18 @@ export class BienIciScrapping {
     const cityLabel = document.querySelector(
       '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1 > span'
     )
-    const features = Array.from(document.querySelectorAll(
-      '[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.detailsSection.detailsSection_aboutThisProperty > div.allDetails > .labelInfo'
-    ))
+    const features = Array.from(
+      document.querySelectorAll(
+        '[id^=section-detailed] > div > div.detailedSheetOtherInfo > section.detailsSection.detailsSection_aboutThisProperty > div.allDetails > .labelInfo'
+      )
+    )
 
     let furnished = false
     let surface = null
     let rooms = null
 
     features.forEach((feature) => {
-      if (
-        feature.textContent.match(/m²/g) &&
-        !feature.textContent.toLowerCase().includes('balcon')
-      ) {
+      if (feature.textContent.match(/m²/g) && !feature.textContent.toLowerCase().includes('balcon')) {
         surface = feature
       } else if (feature.textContent.match(/pièce/g)) {
         rooms = feature
@@ -62,9 +61,7 @@ export class BienIciScrapping {
       furnished,
       price: price?.textContent,
       hasCharges: !!hasCharges?.textContent?.includes('charges comprises'),
-      charges:
-        charges?.textContent?.match(/\d+/)?.length &&
-        charges?.textContent?.match(/\d+/)[0],
+      charges: charges?.textContent?.match(/\d+/)?.length && charges?.textContent?.match(/\d+/)[0],
       renter: renter?.getAttribute('title'),
       rooms: rooms?.textContent,
       surface: surface?.textContent,

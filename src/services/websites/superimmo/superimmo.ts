@@ -1,9 +1,9 @@
-import * as cleanup from '@services/helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { SuperimmoMapping } from '@interfaces/mapping'
+import { ERROR_CODE } from '@services/api/errors'
+import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'
 import { SuperimmoScrapping } from './superimmo.scrapping'
-import { ERROR_CODE } from '@services/api/errors'
 export class Superimmo extends Website {
   website: WebsiteType = 'superimmo'
 

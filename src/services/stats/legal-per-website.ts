@@ -1,8 +1,8 @@
-import { Vega } from '@services/helpers/vega'
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/helpers/pretty-log'
 import * as rentService from '@db/rent.service'
 import { ERROR500_MSG } from '@services/api/errors'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { Vega } from '@services/helpers/vega'
+import { Request, Response } from 'express'
 
 export function getLegalPerWebsite(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getLegalPerWebsite`, 'blue')
@@ -20,9 +20,7 @@ export function getLegalPerWebsite(req: Request, res: Response) {
           text: 'Annonces non conformes par site web',
         },
         data: {
-          values: data.map((res) =>
-            res.website === 'loueragile' ? { ...res, website: 'jinka' } : res
-          ),
+          values: data.map((res) => (res.website === 'loueragile' ? { ...res, website: 'jinka' } : res)),
         },
         mark: { type: 'bar', tooltip: true },
         transform: [

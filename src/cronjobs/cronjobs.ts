@@ -1,6 +1,6 @@
-import { schedule } from 'node-cron'
 import { NameAndShameService } from '@cronjobs/delation/name-and-shame'
 import { HealthCheck } from '@cronjobs/system-health/health-check'
+import { schedule } from 'node-cron'
 
 const TIMEZONE = 'Europe/Paris'
 export class CronJobsService {

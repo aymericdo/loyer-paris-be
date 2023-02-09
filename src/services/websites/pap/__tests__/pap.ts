@@ -1,7 +1,7 @@
 import { closeAllConnections } from '@db/db'
 import { Body } from '@interfaces/mapping'
-import { disconnect } from 'mongoose'
 import fs from 'fs'
+import { disconnect } from 'mongoose'
 import path from 'path'
 import { Pap } from '../pap'
 
@@ -103,8 +103,7 @@ describe('pap', () => {
           },
         },
         isLegal: false,
-        moreInfo:
-          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
+        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
   })
@@ -205,8 +204,7 @@ describe('pap', () => {
           promoPercentage: { order: 8, value: 21.35 },
         },
         isLegal: false,
-        moreInfo:
-          'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
+        moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
     })
   })

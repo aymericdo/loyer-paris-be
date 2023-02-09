@@ -30,9 +30,7 @@ export abstract class EncadrementFilterParent {
 
     // Get the worst case scenario
     const worstCase = rentList.length
-      ? rentList.reduce((prev, current) =>
-        prev.maxPrice > current.maxPrice ? prev : current
-      )
+      ? rentList.reduce((prev, current) => (prev.maxPrice > current.maxPrice ? prev : current))
       : null
 
     return worstCase
@@ -40,8 +38,6 @@ export abstract class EncadrementFilterParent {
 
   @Memoize()
   protected rangeRentsJson(): EncadrementItem[] {
-    return JSON.parse(
-      fs.readFileSync(path.join(CITY_FILE_PATHS[this.city]), 'utf8')
-    )
+    return JSON.parse(fs.readFileSync(path.join(CITY_FILE_PATHS[this.city]), 'utf8'))
   }
 }

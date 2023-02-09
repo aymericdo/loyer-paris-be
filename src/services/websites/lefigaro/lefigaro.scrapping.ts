@@ -1,6 +1,6 @@
-import { virtualConsole } from '@services/helpers/jsdome'
 import { LefigaroMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api/errors'
+import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -10,32 +10,22 @@ export class LefigaroScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const title = document.querySelector(
-      'div.main-classified > div > section > h1#classified-main-infos'
-    )
+    const title = document.querySelector('div.main-classified > div > section > h1#classified-main-infos')
 
-    const description = document.querySelector(
-      'div.main-classified > div > section > div.classified-description > p'
-    )
-    const price = document.querySelector(
-      'div.main-classified > div > section > div.classified-price'
-    )
+    const description = document.querySelector('div.main-classified > div > section > div.classified-description > p')
+    const price = document.querySelector('div.main-classified > div > section > div.classified-price')
     const charges = document.querySelector(
       'div.main-classified > div > div.classified-about-price > ul > li:nth-child(1) > span.about-price-fees-label'
     )
-    const hasCharges = document.querySelector(
-      'div.main-classified > div > section > div.classified-price > span'
-    )
-    const cityLabel = document.querySelector(
-      'div.main-classified > div > section > h1 > span'
-    )
+    const hasCharges = document.querySelector('div.main-classified > div > section > div.classified-price > span')
+    const cityLabel = document.querySelector('div.main-classified > div > section > h1 > span')
     const renter = document.querySelector(
       '#middle-inquiry > div.classifieds-about-agency > div > div.agency__desc > strong'
     )
 
-    const features = Array.from(document.querySelectorAll(
-      'div.main-classified > div > div.classified-features > ul.features-list > li .feature'
-    ))
+    const features = Array.from(
+      document.querySelectorAll('div.main-classified > div > div.classified-features > ul.features-list > li .feature')
+    )
 
     let furnished = null
     let surface = null

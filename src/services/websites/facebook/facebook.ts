@@ -1,9 +1,9 @@
-import * as cleanup from '@services/helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { FacebookMapping } from '@interfaces/mapping'
+import { ERROR_CODE } from '@services/api/errors'
+import * as cleanup from '@services/helpers/cleanup'
 import { PARTICULIER_TERM, Website, WebsiteType } from '@services/websites/website'
 import { FacebookScrapping } from './facebook.scrapping'
-import { ERROR_CODE } from '@services/api/errors'
 export class Facebook extends Website {
   website: WebsiteType = 'facebook'
 

@@ -1,10 +1,10 @@
-import { Vega } from '@services/helpers/vega'
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/helpers/pretty-log'
 import * as rentService from '@db/rent.service'
-import { DistrictsList, DISTRICT_FIELD } from '@services/districts/districts-list'
-import { ERROR500_MSG } from '@services/api/errors'
 import { AvailableMainCities } from '@services/address/city'
+import { ERROR500_MSG } from '@services/api/errors'
+import { DISTRICT_FIELD, DistrictsList } from '@services/districts/districts-list'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { Vega } from '@services/helpers/vega'
+import { Request, Response } from 'express'
 
 export function getChloroplethMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
@@ -17,7 +17,7 @@ export function getChloroplethMap(req: Request, res: Response) {
     .getChloroplethMapData(city, dateRange)
     .then((data) => {
       const reduced: {
-        [district: string]: { isLegal: number; count: number };
+        [district: string]: { isLegal: number; count: number }
       } = data.reduce((m, d: { isLegal: boolean; district: string }) => {
         if (!m[d.district]) {
           m[d.district] = {

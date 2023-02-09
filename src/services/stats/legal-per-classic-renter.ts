@@ -1,8 +1,8 @@
-import { Vega } from '@services/helpers/vega'
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/helpers/pretty-log'
 import * as rentService from '@db/rent.service'
 import { ERROR500_MSG } from '@services/api/errors'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { Vega } from '@services/helpers/vega'
+import { Request, Response } from 'express'
 
 export async function getLegalPerClassicRenter(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} isLegalPerClassicRenter`, 'blue')
@@ -15,32 +15,11 @@ export async function getLegalPerClassicRenter(req: Request, res: Response) {
       dateRange,
       /plaza.*immobilier/i
     )
-    const century21Data = await rentService.getLegalPerClassicRenterData(
-      req.params.city,
-      dateRange,
-      /century.*21/i
-    )
-    const fonciaData = await rentService.getLegalPerClassicRenterData(
-      req.params.city,
-      dateRange,
-      /foncia/i
-    )
-    const laforetData = await rentService.getLegalPerClassicRenterData(
-      req.params.city,
-      dateRange,
-      /laforet/i
-    )
-    const guyHoquetData = await rentService.getLegalPerClassicRenterData(
-      req.params.city,
-      dateRange,
-      /guy.*hoquet/i
-    )
-    const orpiData = await rentService.getLegalPerClassicRenterData(
-      req.params.city,
-      dateRange,
-      /orpi/i,
-      'orpi'
-    )
+    const century21Data = await rentService.getLegalPerClassicRenterData(req.params.city, dateRange, /century.*21/i)
+    const fonciaData = await rentService.getLegalPerClassicRenterData(req.params.city, dateRange, /foncia/i)
+    const laforetData = await rentService.getLegalPerClassicRenterData(req.params.city, dateRange, /laforet/i)
+    const guyHoquetData = await rentService.getLegalPerClassicRenterData(req.params.city, dateRange, /guy.*hoquet/i)
+    const orpiData = await rentService.getLegalPerClassicRenterData(req.params.city, dateRange, /orpi/i, 'orpi')
 
     const data = [
       ...plazaImmoData.map((d) => ({

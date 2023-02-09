@@ -1,9 +1,9 @@
 import { FilteredResult } from '@interfaces/ad'
-import { AvailableMainCities } from '@services/address/city'
-import { YearBuiltService } from '@services/helpers/year-built'
-import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
-import { LilleDistrictFilter } from '@services/filters/district-filter/lille-district'
 import { LilleEncadrementItem } from '@interfaces/json-item-lille'
+import { AvailableMainCities } from '@services/address/city'
+import { LilleDistrictFilter } from '@services/filters/district-filter/lille-district'
+import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
+import { YearBuiltService } from '@services/helpers/year-built'
 
 export class FilterLille extends EncadrementFilterParent {
   city: AvailableMainCities = 'lille'
@@ -18,21 +18,14 @@ export class FilterLille extends EncadrementFilterParent {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(
-      rangeTime,
-      this.infoToFilter.yearBuilt
-    ).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
 
     const rentList = (this.rangeRentsJson() as LilleEncadrementItem[]).filter((rangeRent) => {
       return (
         (districtsMatched?.length
-          ? districtsMatched
-            .map((district) => district.properties.zonage)
-            .includes(rangeRent.fields.zone)
+          ? districtsMatched.map((district) => district.properties.zonage).includes(rangeRent.fields.zone)
           : true) &&
-        (timeDates?.length
-          ? timeDates.includes(rangeRent.fields.epoque_construction)
-          : true) &&
+        (timeDates?.length ? timeDates.includes(rangeRent.fields.epoque_construction) : true) &&
         (this.infoToFilter.roomCount
           ? +this.infoToFilter.roomCount < 4
             ? +rangeRent.fields.nb_pieces === +this.infoToFilter.roomCount
@@ -41,10 +34,7 @@ export class FilterLille extends EncadrementFilterParent {
       )
     })
 
-    const isFurnished =
-      this.infoToFilter.hasFurniture === null
-        ? true
-        : this.infoToFilter.hasFurniture
+    const isFurnished = this.infoToFilter.hasFurniture === null ? true : this.infoToFilter.hasFurniture
 
     return rentList
       .map((r) => ({

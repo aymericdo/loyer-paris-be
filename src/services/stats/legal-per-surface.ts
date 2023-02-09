@@ -1,8 +1,8 @@
-import { Vega } from '@services/helpers/vega'
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/helpers/pretty-log'
 import * as rentService from '@db/rent.service'
 import { ERROR500_MSG } from '@services/api/errors'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { Vega } from '@services/helpers/vega'
+import { Request, Response } from 'express'
 
 export function getLegalPerSurface(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} isLegalPerSurface`, 'blue')
@@ -23,9 +23,7 @@ export function getLegalPerSurface(req: Request, res: Response) {
           values: data,
         },
         mark: { type: 'bar', tooltip: true },
-        transform: [
-          { calculate: 'datum.isLegal ? \'Oui\' : \'Non\'', as: 'isLegal' },
-        ],
+        transform: [{ calculate: 'datum.isLegal ? \'Oui\' : \'Non\'', as: 'isLegal' }],
         encoding: {
           x: {
             bin: {

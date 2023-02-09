@@ -1,9 +1,9 @@
-import * as cleanup from '@services/helpers/cleanup'
-import { GensdeconfianceMapping } from '@interfaces/mapping'
 import { Ad } from '@interfaces/ad'
-import { Website, WebsiteType, PARTICULIER_TERM } from '@services/websites/website'
-import { GensdeconfianceScrapping } from './gensdeconfiance.scrapping'
+import { GensdeconfianceMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api/errors'
+import * as cleanup from '@services/helpers/cleanup'
+import { PARTICULIER_TERM, Website, WebsiteType } from '@services/websites/website'
+import { GensdeconfianceScrapping } from './gensdeconfiance.scrapping'
 
 export class Gensdeconfiance extends Website {
   website: WebsiteType = 'gensdeconfiance'

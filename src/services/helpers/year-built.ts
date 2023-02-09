@@ -20,31 +20,16 @@ export class YearBuiltService {
     const yearBuiltRange: number[] =
       this.yearBuilt.length === 2
         ? this.yearBuilt[0] === null
-          ? Array.from(
-            { length: this.yearBuilt[1] - oldestYear + 1 },
-            (v, k) => oldestYear + k
-          )
+          ? Array.from({ length: this.yearBuilt[1] - oldestYear + 1 }, (v, k) => oldestYear + k)
           : this.yearBuilt[1] === null
-            ? Array.from(
-              { length: currentYear - this.yearBuilt[0] + 1 },
-              (v, k) => this.yearBuilt[0] + k
-            )
-            : Array.from(
-              { length: this.yearBuilt[1] - this.yearBuilt[0] + 1 },
-              (v, k) => this.yearBuilt[0] + k
-            )
+            ? Array.from({ length: currentYear - this.yearBuilt[0] + 1 }, (v, k) => this.yearBuilt[0] + k)
+            : Array.from({ length: this.yearBuilt[1] - this.yearBuilt[0] + 1 }, (v, k) => this.yearBuilt[0] + k)
         : this.yearBuilt
 
     return this.rangeTime.filter((time: string, index: number) => {
       const rangeYearBuilt: (string | number)[] = time
         .split(/[\s-]+/)
-        .map((year: any) =>
-          isNaN(year)
-            ? index === 0
-              ? '<'
-              : '>'
-            : this.formatYearDate(year.toString())
-        )
+        .map((year: any) => (isNaN(year) ? (index === 0 ? '<' : '>') : this.formatYearDate(year.toString())))
 
       return yearBuiltRange.some((yb: number) => {
         return typeof rangeYearBuilt[0] === 'number'
@@ -98,8 +83,7 @@ export class YearBuiltService {
   }
 
   static getYearBuiltFromBuilding(building) {
-    const yearBuilt = building &&
-      building.properties.an_const && [+building.properties.an_const]
+    const yearBuilt = building && building.properties.an_const && [+building.properties.an_const]
     const periodBuilt =
       building &&
       building.properties.c_perconst &&
@@ -107,10 +91,7 @@ export class YearBuiltService {
         ? [null, +building.properties.c_perconst.slice(-4)]
         : building.properties.c_perconst.toLowerCase().includes('après')
           ? [+building.properties.c_perconst.slice(-4), null]
-          : [
-            +building.properties.c_perconst.slice(0, 4),
-            +building.properties.c_perconst.slice(-4),
-          ])
+          : [+building.properties.c_perconst.slice(0, 4), +building.properties.c_perconst.slice(-4)])
     return yearBuilt || periodBuilt
   }
 

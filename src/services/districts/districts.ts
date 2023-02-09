@@ -1,7 +1,7 @@
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/helpers/pretty-log'
-import { DistrictsList } from '@services/districts/districts-list'
 import { AvailableMainCities } from '@services/address/city'
+import { DistrictsList } from '@services/districts/districts-list'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { Request, Response } from 'express'
 
 export function getDistricts(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getDistricts`, 'blue')

@@ -1,8 +1,8 @@
-import * as cleanup from '@services/helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { LogicimmoMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api/errors'
-import { Website, WebsiteType, PARTICULIER_TERM } from '@services/websites/website'
+import * as cleanup from '@services/helpers/cleanup'
+import { PARTICULIER_TERM, Website, WebsiteType } from '@services/websites/website'
 import { LogicimmoScrapping } from './logicimmo.scrapping'
 
 export class LogicImmo extends Website {
