@@ -41,6 +41,8 @@ export class LefigaroScrapping {
       }
     })
 
+    const dpe = document.querySelector('div.container-dpe > div.pointer')
+
     if (!title) {
       return null
     }
@@ -55,6 +57,7 @@ export class LefigaroScrapping {
       charges: charges && charges.textContent,
       hasCharges: hasCharges && !!hasCharges.textContent,
       description: description && description.textContent,
+      dpe: dpe?.textContent,
       furnished: furnished && furnished.textContent,
       price: price && price.textContent,
       renter: renter && renter.textContent,

@@ -55,6 +55,7 @@ export interface LefigaroMapping {
   charges: string
   cityLabel: string
   description: string
+  dpe: string | null
   furnished: boolean
   hasCharges: boolean
   price: string
