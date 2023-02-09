@@ -41,6 +41,7 @@ export class BienIci extends Website {
       id: ad.id.toString(),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
+      dpe: ad.dpe,
       furnished: ad.furnished,
       price: cleanup.price(ad.price),
       renter: ad.renter ? cleanup.string(ad.renter) : null,

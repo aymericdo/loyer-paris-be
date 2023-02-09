@@ -8,7 +8,7 @@ export interface Ad {
   cityLabel?: string
   coord?: Coordinate
   description: string
-  dpe?: DPE | null
+  dpe?: string | null
   furnished?: boolean
   hasCharges?: boolean
   neighborhood?: string
@@ -39,7 +39,7 @@ export interface CleanAd {
   charges: number
   hasCharges: boolean
   isHouse?: boolean
-  dpe?: DPE
+  dpe?: string | null
 }
 
 export interface InfoToFilter {
@@ -69,5 +69,3 @@ export interface IncompleteAd {
   url: string
   city?: string
 }
-
-export type DPE = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'

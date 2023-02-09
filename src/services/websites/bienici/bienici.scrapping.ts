@@ -36,6 +36,8 @@ export class BienIciScrapping {
       )
     )
 
+    const dpe = document.querySelector('div.dpe-line__classification > span > div')
+
     let furnished = false
     let surface = null
     let rooms = null
@@ -58,6 +60,7 @@ export class BienIciScrapping {
       id: null,
       cityLabel: cityLabel && cityLabel.textContent,
       description: description && description.textContent,
+      dpe: dpe?.textContent,
       furnished,
       price: price?.textContent,
       hasCharges: !!hasCharges?.textContent?.includes('charges comprises'),

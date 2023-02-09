@@ -1,5 +1,4 @@
 import { Coordinate } from '@interfaces/shared'
-import { DPE } from './ad'
 
 export interface Body {
   noMoreData?: boolean
@@ -25,7 +24,7 @@ export interface FacebookMapping {
 export interface LeboncoinMapping {
   id: string
   cityLabel: string
-  dpe: DPE | null
+  dpe: string | null
   body: string
   furnished: string
   hasCharges: boolean
@@ -98,7 +97,7 @@ export interface PapMapping {
   id: string
   cityLabel: string
   description: string
-  dpe: DPE | null
+  dpe: string | null
   price: string
   rooms: string
   surface: string
@@ -111,7 +110,7 @@ export interface SelogerMapping {
   charges: string
   cityLabel: string
   description: string
-  dpe: DPE | null
+  dpe: string | null
   furnished: boolean
   hasCharges: boolean
   price: string
@@ -163,6 +162,7 @@ export interface BienIciMapping {
   title: string
   cityLabel: string
   description: string
+  dpe: string | null
   furnished: boolean
   hasCharges: boolean
   charges: string
