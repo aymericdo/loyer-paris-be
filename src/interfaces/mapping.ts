@@ -82,6 +82,7 @@ export interface OrpiMapping {
   cityLabel: string
   coord: Coordinate
   description: string
+  dpe: string | null
   furnished: boolean
   hasCharges: boolean
   price: number
