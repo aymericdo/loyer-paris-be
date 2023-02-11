@@ -11,30 +11,30 @@ export class LefigaroScrapping {
     }).window
 
     const title = document.querySelector(
-      '#app > div > main > div.main-classified > div > section > h1'
+      'div.main-classified > div > section > h1#classified-main-infos'
     )
 
     const description = document.querySelector(
-      '#app > div > main > div.main-classified > div > section > div.classified-description > p'
+      'div.main-classified > div > section > div.classified-description > p'
     )
     const price = document.querySelector(
-      '#app > div > main > div.main-classified > div > section > div.classified-price'
+      'div.main-classified > div > section > div.classified-price'
     )
     const charges = document.querySelector(
-      '#app > div > main > div.main-classified > div > div.classified-about-price > ul > li:nth-child(1) > span.about-price-fees-label'
+      'div.main-classified > div > div.classified-about-price > ul > li:nth-child(1) > span.about-price-fees-label'
     )
     const hasCharges = document.querySelector(
-      '#app > div > main > div.main-classified > div > section > div.classified-price > span'
+      'div.main-classified > div > section > div.classified-price > span'
     )
     const cityLabel = document.querySelector(
-      '#app > div > main > div.main-classified > div > section > h1 > span'
+      'div.main-classified > div > section > h1 > span'
     )
     const renter = document.querySelector(
       '#middle-inquiry > div.classifieds-about-agency > div > div.agency__desc > strong'
     )
 
     const features = Array.from(document.querySelectorAll(
-      '#app > div > main > div.main-classified > div > div.classified-features > ul.features-list > li .feature'
+      'div.main-classified > div > div.classified-features > ul.features-list > li .feature'
     ))
 
     let furnished = null
