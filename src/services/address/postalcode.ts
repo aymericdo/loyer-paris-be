@@ -44,7 +44,6 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
     }
 
     const postalCode =
-      (ad.postalCode && this.digForPostalCode1(city, ad.postalCode)) ||
       (ad.cityLabel &&
         (this.digForPostalCode1(city, ad.cityLabel) ||
           this.digForPostalCode2(city, ad.cityLabel))) ||
@@ -53,7 +52,9 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
           this.digForPostalCode2(city, ad.title))) ||
       (ad.description &&
         (this.digForPostalCode1(city, ad.description) ||
-          this.digForPostalCode2(city, ad.description)))
+          this.digForPostalCode2(city, ad.description))) ||
+      (cityList[city].postalCodePossibilities[0].endsWith('000') &&
+        cityList[city].postalCodePossibilities[0])
 
     return postalCode &&
       cityList[city].postalCodePossibilities.includes(postalCode.toString())

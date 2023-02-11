@@ -178,7 +178,7 @@ export const cityList: CityList = {
   },
   bordeaux: {
     mainCity: 'bordeaux',
-    postalCodePossibilities: ['33300', '33800', '33100', '33200', '33000'],
+    postalCodePossibilities: ['33000', '33300', '33800', '33100', '33200'],
     postalCodeRegex: [/\b33[0-9]{3}\b/g],
   },
 }
