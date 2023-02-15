@@ -1,4 +1,4 @@
-import { Ad, CleanAd, DPE } from '@interfaces/ad'
+import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
 import { AddressStrategyFactory } from '@services/address/address'
 import { AvailableCities, CityService, cityList } from '@services/address/city'
@@ -194,7 +194,7 @@ export class DigService {
     )
   }
 
-  private digForDPE(): DPE {
+  private digForDPE(): string | null {
     return this.ad.dpe
   }
 }
