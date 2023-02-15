@@ -1,5 +1,4 @@
 import { Rent } from '@db/db'
-import { DPE } from '@interfaces/ad'
 import { AvailableCities } from '@services/address/city'
 import { PrettyLog } from '@services/helpers/pretty-log'
 
@@ -7,7 +6,7 @@ interface SavedInfo {
   id: string
   address: string
   district: string
-  dpe?: DPE
+  dpe?: string | null
   city: AvailableCities
   hasFurniture?: boolean
   isHouse?: boolean
@@ -45,6 +44,7 @@ export class SaveRentService {
       priceExcludingCharges: this.adToSave.priceExcludingCharges,
       surface: this.adToSave.surface,
       city: this.adToSave.city,
+      dpe: this.adToSave.dpe,
       district: this.adToSave.district,
       ...(this.adToSave.address != null && {
         address: this.adToSave.address,
