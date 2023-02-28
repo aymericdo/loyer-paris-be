@@ -1,17 +1,17 @@
-import { regexString } from '@services/helpers/regex'
+import {
+  BordeauxAddress,
+  EstEnsembleAddress,
+  LilleAddress,
+  LyonAddress,
+  MontpellierAddress,
+  ParisAddress,
+  PlaineCommuneAddress,
+} from '@db/db'
 import { Ad } from '@interfaces/ad'
 import { AddressItem, Coordinate } from '@interfaces/shared'
 import { AvailableCities, cityList } from '@services/address/city'
 import * as cleanup from '@services/helpers/cleanup'
-import {
-  LilleAddress,
-  LyonAddress,
-  ParisAddress,
-  PlaineCommuneAddress,
-  EstEnsembleAddress,
-  MontpellierAddress,
-  BordeauxAddress,
-} from '@db/db'
+import { regexString } from '@services/helpers/regex'
 
 export const dbMapping = {
   paris: ParisAddress,
@@ -24,7 +24,7 @@ export const dbMapping = {
 }
 
 export interface AddressStrategy {
-  getAddress(): Promise<[string, Coordinate, Coordinate]>;
+  getAddress(): Promise<[string, Coordinate, Coordinate]>
 }
 
 export class AddressStrategyFactory {
@@ -54,16 +54,10 @@ export class DefaultAddressStrategy implements AddressStrategy {
   }
 
   public async getAddress(): Promise<[string, Coordinate, Coordinate]> {
-    const tab = [this.ad.address, this.ad.title, this.ad.description].filter(
-      Boolean
-    )
+    const tab = [this.ad.address, this.ad.title, this.ad.description].filter(Boolean)
 
     for (const text of tab) {
-      const result = await this.digForAddressInText(
-        this.city,
-        this.postalCode,
-        text
-      )
+      const result = await this.digForAddressInText(this.city, this.postalCode, text)
       if (result) {
         const coord = this.getCoordinate()
         const blurryCoord = this.getCoordinate(true)
@@ -73,19 +67,15 @@ export class DefaultAddressStrategy implements AddressStrategy {
     return [null, null, null]
   }
 
-  protected async digForAddressInText(
-    city: string,
-    postalCode: string,
-    text: string
-  ): Promise<string> {
+  protected async digForAddressInText(city: string, postalCode: string, text: string): Promise<string> {
     const addressRe = new RegExp(regexString('address'))
     const addressesFromRegex = text.match(addressRe) as string[]
     if (addressesFromRegex?.length) {
       const addressesQueries = this.querifyAddresses(city, addressesFromRegex)
       const result: {
-        item: AddressItem;
-        score: number;
-        streetNumber: string;
+        item: AddressItem
+        score: number
+        streetNumber: string
       }[] = (
         await Promise.all(
           addressesQueries.map(async (query) => {
@@ -100,9 +90,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
       if (result?.length) {
         this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
         return result[0].streetNumber
-          ? cleanup
-            .string(result[0].item.address)
-            .replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
+          ? cleanup.string(result[0].item.address).replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
           : cleanup
             .string(result[0].item.address)
             .replace(/^\d+(b|t)?/g, '')
@@ -115,14 +103,9 @@ export class DefaultAddressStrategy implements AddressStrategy {
     }
   }
 
-  protected querifyAddresses(
-    city: string,
-    addressesFromRegex: string[]
-  ): string[] {
+  protected querifyAddresses(city: string, addressesFromRegex: string[]): string[] {
     return addressesFromRegex
-      .map((a) =>
-        cleanup.address(a, city) ? `${cleanup.address(a, city)}` : null
-      )
+      .map((a) => (cleanup.address(a, city) ? `${cleanup.address(a, city)}` : null))
       .filter(Boolean)
   }
 
@@ -131,9 +114,9 @@ export class DefaultAddressStrategy implements AddressStrategy {
     query: string
   ): Promise<
     {
-      item: AddressItem;
-      score: number;
-      streetNumber: string;
+      item: AddressItem
+      score: number
+      streetNumber: string
     }[]
   > {
     if (!query) {
@@ -185,10 +168,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
         }
         : null
 
-    if (
-      coordinatesFromAd?.lng.toString().length > 9 &&
-      coordinatesFromAd?.lat.toString().length > 9
-    ) {
+    if (coordinatesFromAd?.lng.toString().length > 9 && coordinatesFromAd?.lat.toString().length > 9) {
       return coordinatesFromAd
     } else {
       if (blurry) {
@@ -206,9 +186,9 @@ export class ParisAddressStrategy extends DefaultAddressStrategy {
     query: string
   ): Promise<
     {
-      item: AddressItem;
-      score: number;
-      streetNumber: string;
+      item: AddressItem
+      score: number
+      streetNumber: string
     }[]
   > {
     if (!query) {

@@ -1,5 +1,5 @@
-import express from 'express'
 import { getManualResult } from '@services/simulator/manual-result'
+import express from 'express'
 
 const router = express.Router()
 

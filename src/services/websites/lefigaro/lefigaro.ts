@@ -1,7 +1,7 @@
-import * as cleanup from '@services/helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { LefigaroMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api/errors'
+import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'
 import { LefigaroScrapping } from './lefigaro.scrapping'
 
@@ -43,6 +43,7 @@ export class LeFigaro extends Website {
       charges: cleanup.number(ad.charges),
       cityLabel: ad.cityLabel,
       description: cleanup.string(ad.description),
+      dpe: ad.dpe,
       furnished: ad.furnished,
       hasCharges: ad.hasCharges,
       price: cleanup.price(ad.price),

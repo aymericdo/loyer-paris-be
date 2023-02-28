@@ -1,7 +1,7 @@
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/helpers/pretty-log'
 import * as rentService from '@db/rent.service'
 import { ERROR500_MSG } from '@services/api/errors'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { Request, Response } from 'express'
 
 export function getWelcomeText(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getWelcomeText`, 'blue')
@@ -12,17 +12,12 @@ export function getWelcomeText(req: Request, res: Response) {
     .then((data) => {
       const rents = data
 
-      const isIllegalPercentage = Math.round(
-        (100 * rents.filter((rent) => !rent.isLegal).length) / rents.length
-      )
+      const isIllegalPercentage = Math.round((100 * rents.filter((rent) => !rent.isLegal).length) / rents.length)
 
       const pivotSurface = 30
-      const lessThanNSquareMeters = rents.filter(
-        (rent) => rent.surface < pivotSurface
-      )
+      const lessThanNSquareMeters = rents.filter((rent) => rent.surface < pivotSurface)
       const isSmallSurfaceIllegalPercentage = Math.round(
-        (100 * lessThanNSquareMeters.filter((rent) => !rent.isLegal).length) /
-          lessThanNSquareMeters.length
+        (100 * lessThanNSquareMeters.filter((rent) => !rent.isLegal).length) / lessThanNSquareMeters.length
       )
 
       return res.json({

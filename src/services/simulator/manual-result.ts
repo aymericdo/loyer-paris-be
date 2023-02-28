@@ -1,9 +1,9 @@
-import { Response, Request } from 'express'
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { PrettyLog } from '@services/helpers/pretty-log'
-import { roundNumber } from '@services/helpers/round-number'
 import { AvailableMainCities, CityService } from '@services/address/city'
 import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { roundNumber } from '@services/helpers/round-number'
+import { Request, Response } from 'express'
 
 export function getManualResult(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getManualResult`, 'blue')
@@ -15,8 +15,7 @@ export function getManualResult(req: Request, res: Response) {
   const surfaceValue: string = (req.query.surfaceValue as string) || null
   const roomValue: string = (req.query.roomValue as string) || null
   const isHouseValue: string = (req.query.isHouseValue as string) || null
-  const dateBuiltValueStr: string =
-    (req.query.dateBuiltValueStr as string) || null
+  const dateBuiltValueStr: string = (req.query.dateBuiltValueStr as string) || null
 
   if (!city || !districtValue || !priceValue || !furnishedValue || !surfaceValue || !roomValue) {
     res.status(403)
@@ -28,12 +27,7 @@ export function getManualResult(req: Request, res: Response) {
   const price: number = +priceValue
   const room: number = +roomValue
   const dateBuiltStr: number = +dateBuiltValueStr
-  const hasFurniture: boolean =
-    furnishedValue === 'furnished'
-      ? true
-      : furnishedValue === 'nonFurnished'
-        ? false
-        : null
+  const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
 
   const isHouse: boolean = +isHouseValue === 1
 

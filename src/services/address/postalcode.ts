@@ -2,7 +2,7 @@ import { Ad } from '@interfaces/ad'
 import { cityList } from './city'
 
 export interface PostalCodeStrategy {
-  getPostalCode(): string;
+  getPostalCode(): string
 }
 
 export class PostalCodeStrategyFactory {
@@ -44,22 +44,13 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
     }
 
     const postalCode =
-      (ad.cityLabel &&
-        (this.digForPostalCode1(city, ad.cityLabel) ||
-          this.digForPostalCode2(city, ad.cityLabel))) ||
-      (ad.title &&
-        (this.digForPostalCode1(city, ad.title) ||
-          this.digForPostalCode2(city, ad.title))) ||
+      (ad.cityLabel && (this.digForPostalCode1(city, ad.cityLabel) || this.digForPostalCode2(city, ad.cityLabel))) ||
+      (ad.title && (this.digForPostalCode1(city, ad.title) || this.digForPostalCode2(city, ad.title))) ||
       (ad.description &&
-        (this.digForPostalCode1(city, ad.description) ||
-          this.digForPostalCode2(city, ad.description))) ||
-      (cityList[city].postalCodePossibilities[0].endsWith('000') &&
-        cityList[city].postalCodePossibilities[0])
+        (this.digForPostalCode1(city, ad.description) || this.digForPostalCode2(city, ad.description))) ||
+      (cityList[city].postalCodePossibilities[0].endsWith('000') && cityList[city].postalCodePossibilities[0])
 
-    return postalCode &&
-      cityList[city].postalCodePossibilities.includes(postalCode.toString())
-      ? postalCode
-      : null
+    return postalCode && cityList[city].postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
   }
 
   protected digForPostalCode1(city: string, text: string): string {
@@ -76,23 +67,14 @@ export class ParisPostalCodeStrategy extends DefaultPostalCodeStrategy {
   protected digForPostalCode2(city: string, text: string): string {
     const postalCode2Re = new RegExp(cityList[city].postalCodeRegex[1])
     const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
-    return match
-      ? match.trim().length === 1
-        ? `7500${match.trim()}`
-        : `750${match.trim()}`
-      : null
+    return match ? (match.trim().length === 1 ? `7500${match.trim()}` : `750${match.trim()}`) : null
   }
 }
 
 export class LyonPostalCodeStrategy extends DefaultPostalCodeStrategy {
   protected digForPostalCode2(city: string, text: string): string {
-    const postalCode2Re =
-      city === 'lyon' && new RegExp(cityList[city].postalCodeRegex[1])
+    const postalCode2Re = city === 'lyon' && new RegExp(cityList[city].postalCodeRegex[1])
     const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
-    return match
-      ? match.trim().length === 1
-        ? `6900${match.trim()}`
-        : `690${match.trim()}`
-      : null
+    return match ? (match.trim().length === 1 ? `6900${match.trim()}` : `690${match.trim()}`) : null
   }
 }

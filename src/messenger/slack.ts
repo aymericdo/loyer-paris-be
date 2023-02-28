@@ -1,4 +1,4 @@
-import { WebClient, LogLevel } from '@slack/web-api'
+import { LogLevel, WebClient } from '@slack/web-api'
 
 export class Slack {
   client = new WebClient(process.env.BOT_USER_OAUTH_TOKEN, {

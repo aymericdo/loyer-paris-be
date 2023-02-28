@@ -1,15 +1,15 @@
-import { getPriceExcludingCharges } from '@services/helpers/charges'
-import { roundNumber } from '@services/helpers/round-number'
 import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
 import { Body } from '@interfaces/mapping'
 import { ApiError } from '@interfaces/shared'
+import { AvailableCities, CityService, cityList } from '@services/address/city'
 import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'
-import { DigService } from '@services/diggers/dig'
 import { SerializerService } from '@services/api/serializer'
-import { Response } from 'express'
-import { AvailableCities, cityList, CityService } from '@services/address/city'
 import { SaveRentService } from '@services/db/save-rent'
+import { DigService } from '@services/diggers/dig'
 import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
+import { getPriceExcludingCharges } from '@services/helpers/charges'
+import { roundNumber } from '@services/helpers/round-number'
+import { Response } from 'express'
 
 export const PARTICULIER_TERM = 'Particulier'
 
@@ -31,17 +31,14 @@ export const WEBSITE_LIST = [
 ] as const
 
 export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']
-export type WebsiteType = typeof WEBSITE_LIST[number]
+export type WebsiteType = (typeof WEBSITE_LIST)[number]
 
 export abstract class Website {
   website: WebsiteType = null
   body: Body = null
   res: Response = null
 
-  constructor(
-    res: Response,
-    props: { body: Body; id?: string },
-  ) {
+  constructor(res: Response, props: { body: Body; id?: string }) {
     this.res = res
     this.body = props.body
   }
@@ -57,7 +54,7 @@ export abstract class Website {
       })
   }
 
-  abstract mapping(): Promise<Ad>;
+  abstract mapping(): Promise<Ad>
 
   async digData() {
     const ad: Ad = await this.mapping()
@@ -73,14 +70,8 @@ export abstract class Website {
       const filteredResult: FilteredResult = new CurrentEncadrementFilter(cleanAd).find()
 
       if (filteredResult) {
-        const maxAuthorized = roundNumber(
-          filteredResult.maxPrice * cleanAd.surface
-        )
-        const priceExcludingCharges = getPriceExcludingCharges(
-          cleanAd.price,
-          cleanAd.charges,
-          cleanAd.hasCharges
-        )
+        const maxAuthorized = roundNumber(filteredResult.maxPrice * cleanAd.surface)
+        const priceExcludingCharges = getPriceExcludingCharges(cleanAd.price, cleanAd.charges, cleanAd.hasCharges)
         const isLegal = priceExcludingCharges <= maxAuthorized
 
         await new SaveRentService({
@@ -88,6 +79,7 @@ export abstract class Website {
           address: cleanAd.address,
           city: cleanAd.city,
           district: filteredResult.districtName,
+          dpe: cleanAd.dpe,
           hasFurniture: cleanAd.hasFurniture,
           isHouse: cleanAd.isHouse,
           postalCode: cleanAd.postalCode,

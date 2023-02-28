@@ -1,5 +1,5 @@
-import { virtualConsole } from '@services/helpers/jsdome'
 import { PapMapping } from '@interfaces/mapping'
+import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -16,9 +16,7 @@ export class PapScrapping {
     const itemTags = Array.from(document.querySelectorAll('.item-tags > li > strong'))
     const stations = Array.from(document.querySelectorAll('ul.item-transports > li > span.label'))
 
-    const sectionName = document.querySelector(
-      '[itemprop=itemListElement] > a[itemprop=item] > span[itemprop=name]'
-    )
+    const sectionName = document.querySelector('[itemprop=itemListElement] > a[itemprop=item] > span[itemprop=name]')
 
     let surface = null
     let rooms = null
@@ -31,11 +29,9 @@ export class PapScrapping {
       }
     })
 
-    if (
-      !sectionName ||
-      sectionName.textContent.trim() !== 'Location Appartement' ||
-      !title
-    ) {
+    const dpe = document.querySelector('div.energy-indice > ul > li.active')
+
+    if (!sectionName || sectionName.textContent.trim() !== 'Location Appartement' || !title) {
       return null
     }
 
@@ -43,6 +39,7 @@ export class PapScrapping {
       id: null,
       cityLabel: cityLabel && cityLabel.textContent,
       description: description && description.textContent,
+      dpe: dpe && dpe.textContent,
       price: price && price.textContent.replace('.', ''),
       rooms: rooms && rooms.textContent,
       stations: stations && stations.map((station) => station.textContent),

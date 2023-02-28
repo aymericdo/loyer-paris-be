@@ -23,6 +23,7 @@ const schema = new Schema({
   renter: { type: String, required: false },
   createdAt: { type: Date, default: Date.now },
   stations: { type: [String], required: false, default: undefined },
+  dpe: { type: String, required: false },
 })
 
 schema.index({ id: 1, website: 1, priceExcludingCharges: 1 }, { unique: true })

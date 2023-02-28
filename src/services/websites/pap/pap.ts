@@ -1,8 +1,8 @@
-import * as cleanup from '@services/helpers/cleanup'
-import { Website, WebsiteType, PARTICULIER_TERM } from '@services/websites/website'
 import { Ad } from '@interfaces/ad'
 import { PapMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api/errors'
+import * as cleanup from '@services/helpers/cleanup'
+import { PARTICULIER_TERM, Website, WebsiteType } from '@services/websites/website'
 import { PapScrapping } from './pap.scrapping'
 
 export class Pap extends Website {
@@ -46,13 +46,13 @@ export class Pap extends Website {
       id: ad.id.toString(),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
+      dpe: ad.dpe,
       price: cleanup.price(ad.price),
       rooms: cleanup.number(ad.rooms),
       renter: PARTICULIER_TERM,
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),
-      stations:
-        ad.stations && ad.stations.map((station) => cleanup.string(station)),
+      stations: ad.stations && ad.stations.map((station) => cleanup.string(station)),
     }
   }
 }

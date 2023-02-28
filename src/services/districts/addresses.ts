@@ -1,10 +1,10 @@
-import { Request, Response } from 'express'
-import { PrettyLog } from '@services/helpers/pretty-log'
-import { dbMapping, ParisAddressStrategy } from '@services/address/address'
+import { ParisAddressItem, ParisDistrictItem } from '@interfaces/json-item-paris'
+import { AddressItemDB, DefaultAddressItem, DefaultDistrictItem } from '@interfaces/shared'
+import { ParisAddressStrategy, dbMapping } from '@services/address/address'
 import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
-import { AddressItemDB, DefaultAddressItem, DefaultDistrictItem } from '@interfaces/shared'
-import { ParisAddressItem, ParisDistrictItem } from '@interfaces/json-item-paris'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { Request, Response } from 'express'
 import { DISPLAY_ZONE_FIELD } from './districts-list'
 
 export async function getAddresses(req: Request, res: Response) {
@@ -17,12 +17,13 @@ export async function getAddresses(req: Request, res: Response) {
     return
   }
 
-  let data: AddressItemDB[] = await dbMapping[city].find(
-    {
-      $text: { $search: addressQuery.toString() },
-    },
-    { score: { $meta: 'textScore' } }
-  )
+  let data: AddressItemDB[] = await dbMapping[city]
+    .find(
+      {
+        $text: { $search: addressQuery.toString() },
+      },
+      { score: { $meta: 'textScore' } }
+    )
     .sort({ score: { $meta: 'textScore' } })
     .limit(10)
     .lean()
@@ -50,26 +51,19 @@ export async function getAddresses(req: Request, res: Response) {
       break
     default:
       data = (data as DefaultAddressItem[]).map((elem) => {
-        const currentDistrictFilter = new CurrentDistrictFilter(
-          elem.code_postal,
-          {
-            lng: elem.geometry.coordinates[0],
-            lat: elem.geometry.coordinates[1],
-          }
-        )
+        const currentDistrictFilter = new CurrentDistrictFilter(elem.code_postal, {
+          lng: elem.geometry.coordinates[0],
+          lat: elem.geometry.coordinates[1],
+        })
 
         const district = currentDistrictFilter.getFirstDistrict() as DefaultDistrictItem
 
         return {
           ...elem,
           fields: {
-            l_adr: `${elem.numero}${elem.rep || ''} ${elem.nom_voie} (${
-              elem.code_postal
-            })`,
+            l_adr: `${elem.numero}${elem.rep || ''} ${elem.nom_voie} (${elem.code_postal})`,
           },
-          districtName: district
-            ? district.properties[DISPLAY_ZONE_FIELD]
-            : null,
+          districtName: district ? district.properties[DISPLAY_ZONE_FIELD] : null,
         }
       })
       break

@@ -1,7 +1,7 @@
-import inside from 'point-in-polygon'
 import { Coordinate, DefaultDistrictItem, DistrictItem } from '@interfaces/shared'
-import { DistrictsList } from '@services/districts/districts-list'
 import { AvailableMainCities } from '@services/address/city'
+import { DistrictsList } from '@services/districts/districts-list'
+import inside from 'point-in-polygon'
 
 export class DistrictFilterParent {
   city: AvailableMainCities = null
@@ -9,11 +9,7 @@ export class DistrictFilterParent {
   postalCode: string = null
   districtName: string = null
 
-  constructor(
-    postalCode: string,
-    coordinates?: Coordinate,
-    districtName?: string
-  ) {
+  constructor(postalCode: string, coordinates?: Coordinate, districtName?: string) {
     this.coordinates = coordinates
     this.postalCode = postalCode
     this.districtName = districtName
@@ -31,14 +27,9 @@ export class DistrictFilterParent {
     const districtFromCoordinate =
       this.coordinates?.lat &&
       this.coordinates?.lng &&
-      this.getDistrictFromCoordinate(
-        this.coordinates.lat,
-        this.coordinates.lng
-      )
+      this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
-    return districtFromCoordinate?.length
-      ? districtFromCoordinate
-      : this.getDistrictFromPostalCode()
+    return districtFromCoordinate?.length ? districtFromCoordinate : this.getDistrictFromPostalCode()
   }
 
   protected getDistrictsJson(): DistrictItem[] {
@@ -61,10 +52,7 @@ export class DistrictFilterParent {
     }
   }
 
-  private getDistrictFromCoordinate(
-    lat: number,
-    lng: number
-  ): DistrictItem[] {
+  private getDistrictFromCoordinate(lat: number, lng: number): DistrictItem[] {
     const district = (this.getDistrictsJson() as DefaultDistrictItem[]).find((district) =>
       inside([+lng, +lat], district.geometry.coordinates[0])
     )

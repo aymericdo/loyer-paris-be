@@ -1,13 +1,15 @@
-import { Vega } from '@services/helpers/vega'
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/helpers/pretty-log'
 import * as rentService from '@db/rent.service'
 import { cityList } from '@services/address/city'
 import { ERROR500_MSG } from '@services/api/errors'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { Vega } from '@services/helpers/vega'
+import { Request, Response } from 'express'
 
 export function getPriceDifference(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} priceDifference`, 'blue')
-  const postalCodePossibilities = Object.values(cityList).filter((city) => city.mainCity === req.params.city).flatMap((city) => city.postalCodePossibilities)
+  const postalCodePossibilities = Object.values(cityList)
+    .filter((city) => city.mainCity === req.params.city)
+    .flatMap((city) => city.postalCodePossibilities)
 
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')

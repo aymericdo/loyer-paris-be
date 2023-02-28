@@ -1,7 +1,7 @@
-import { Response, Request } from 'express'
+import { getRelevantAdsData, getRelevantAdsDataTotalCount } from '@db/rent.service'
 import { ERROR500_MSG } from '@services/api/errors'
 import { PrettyLog } from '@services/helpers/pretty-log'
-import { getRelevantAdsData, getRelevantAdsDataTotalCount } from '@db/rent.service'
+import { Request, Response } from 'express'
 
 export async function getRelevantAds(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getRelevantAds`, 'blue')
@@ -18,20 +18,17 @@ export async function getRelevantAds(req: Request, res: Response) {
   const isHouseValue: string = (req.query.isHouseValue as string) || null
   const isLegalValue: string = (req.query.isLegal as string) || null
 
-  const districtList: string[] =
-    districtValues ?
-      districtValues.split(',')?.map((v) => v).filter(Boolean)
-      : []
+  const districtList: string[] = districtValues
+    ? districtValues
+      .split(',')
+      ?.map((v) => v)
+      .filter(Boolean)
+    : []
   const surfaceRange: number[] = surfaceValue?.split(',')?.map((v) => +v)
   const priceRange: number[] = priceValue?.split(',')?.map((v) => +v)
   const exceedingRange: number[] = exceedingValue?.split(',')?.map((v) => +v)
   const roomRange: number[] = roomValue?.split(',')?.map((v) => +v)
-  const hasFurniture: boolean =
-    furnishedValue === 'furnished'
-      ? true
-      : furnishedValue === 'nonFurnished'
-        ? false
-        : null
+  const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
 
   if (!isLegalValue || !['true', 'false'].includes(isLegalValue)) {
     res.status(403).json('isLegal need to be passed as query parameter')
@@ -53,10 +50,7 @@ export async function getRelevantAds(req: Request, res: Response) {
     isLegal,
   }
 
-  Promise.all([
-    getRelevantAdsData(filter, { page, perPage }),
-    getRelevantAdsDataTotalCount(filter),
-  ])
+  Promise.all([getRelevantAdsData(filter, { page, perPage }), getRelevantAdsDataTotalCount(filter)])
     .then(([data, total]) => {
       res.set({
         'X-Total-Count': total.toString(),

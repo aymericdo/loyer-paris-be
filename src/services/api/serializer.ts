@@ -1,36 +1,37 @@
+import { FilteredResult } from '@interfaces/ad'
+import { AvailableCities, AvailableMainCities, cityList } from '@services/address/city'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
-import { FilteredResult } from '@interfaces/ad'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { AvailableCities, AvailableMainCities, cityList } from '@services/address/city'
 
 interface SerializedInfo {
-  address: string;
-  charges?: number;
-  hasCharges?: boolean;
-  city: AvailableCities;
-  hasFurniture?: boolean;
-  isHouse?: boolean;
-  isLegal: boolean;
-  maxAuthorized: number;
-  postalCode: string;
-  price: number;
-  priceExcludingCharges: number;
-  roomCount?: number;
-  surface: number;
-  yearBuilt?: number[];
+  address: string
+  charges?: number
+  hasCharges?: boolean
+  city: AvailableCities
+  hasFurniture?: boolean
+  isHouse?: boolean
+  isLegal: boolean
+  maxAuthorized: number
+  postalCode: string
+  price: number
+  priceExcludingCharges: number
+  roomCount?: number
+  surface: number
+  yearBuilt?: number[]
 }
 
 export class SerializerService {
   MORE_INFO: { [city in AvailableMainCities]: string } = {
-    paris:
-      'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
+    paris: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
     lyon: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
     lille: 'https://encadrement-loyers.lille.fr/',
     plaineCommune: 'https://plainecommune.fr/encadrementdesloyers/',
     estEnsemble: 'https://www.est-ensemble.fr/lencadrement-des-loyers-sera-applique-en-decembre-est-ensemble',
-    montpellier: 'https://www.montpellier3m.fr/lencadrement-des-loyers-entre-en-application-montpellier-compter-du-1er-juillet-2022',
-    bordeaux: 'https://www.bordeaux-metropole.fr/Vivre-habiter/Se-loger-et-habiter/Mettre-son-logement-en-location/Encadrement-des-loyers-a-Bordeaux',
+    montpellier:
+      'https://www.montpellier3m.fr/lencadrement-des-loyers-entre-en-application-montpellier-compter-du-1er-juillet-2022',
+    bordeaux:
+      'https://www.bordeaux-metropole.fr/Vivre-habiter/Se-loger-et-habiter/Mettre-son-logement-en-location/Encadrement-des-loyers-a-Bordeaux',
   }
   serializedInfo: SerializedInfo = null
   filteredResult: FilteredResult = null
@@ -60,16 +61,15 @@ export class SerializerService {
       yearBuilt,
     } = this.serializedInfo
 
-    const cityCapitalize =
-      (city as string).charAt(0).toUpperCase() + (city as string).slice(1)
+    const cityCapitalize = (city as string).charAt(0).toUpperCase() + (city as string).slice(1)
 
     return {
       detectedInfo: {
         address: {
           order: 0,
-          value: `${address || ''}${
-            postalCode ? (address ? ' ' + postalCode : postalCode) : ''
-          }${address || postalCode ? ', ' : ''}${cityCapitalize}`,
+          value: `${address || ''}${postalCode ? (address ? ' ' + postalCode : postalCode) : ''}${
+            address || postalCode ? ', ' : ''
+          }${cityCapitalize}`,
         },
         hasFurniture: { order: 1, value: hasFurniture },
         roomCount: { order: 2, value: roomCount },
@@ -100,9 +100,7 @@ export class SerializerService {
         maxAuthorized: { order: 7, value: !isLegal ? maxAuthorized : null },
         promoPercentage: {
           order: 8,
-          value: !isLegal
-            ? roundNumber(100 - (maxAuthorized * 100) / priceExcludingCharges)
-            : null,
+          value: !isLegal ? roundNumber(100 - (maxAuthorized * 100) / priceExcludingCharges) : null,
         },
       },
       isLegal,

@@ -1,7 +1,7 @@
-import { DistrictFilterParent } from './district-filter-parent'
-import { AvailableMainCities } from '@services/address/city'
-import { DefaultDistrictItem } from '@interfaces/shared'
 import { BordeauxDistrictItem } from '@interfaces/json-item-lyon'
+import { DefaultDistrictItem } from '@interfaces/shared'
+import { AvailableMainCities } from '@services/address/city'
+import { DistrictFilterParent } from './district-filter-parent'
 
 export class BordeauxDistrictFilter extends DistrictFilterParent {
   city: AvailableMainCities = 'bordeaux'

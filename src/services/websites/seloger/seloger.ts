@@ -1,9 +1,9 @@
-import * as cleanup from '@services/helpers/cleanup'
-import { SelogerMapping } from '@interfaces/mapping'
 import { Ad } from '@interfaces/ad'
+import { SelogerMapping } from '@interfaces/mapping'
+import { ERROR_CODE } from '@services/api/errors'
+import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'
 import { SelogerScrapping } from './seloger.scrapping'
-import { ERROR_CODE } from '@services/api/errors'
 
 export class SeLoger extends Website {
   website: WebsiteType = 'seloger'

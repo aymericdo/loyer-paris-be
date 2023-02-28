@@ -1,8 +1,8 @@
-import * as cleanup from '@services/helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { LogicimmoMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api/errors'
-import { Website, WebsiteType, PARTICULIER_TERM } from '@services/websites/website'
+import * as cleanup from '@services/helpers/cleanup'
+import { PARTICULIER_TERM, Website, WebsiteType } from '@services/websites/website'
 import { LogicimmoScrapping } from './logicimmo.scrapping'
 
 export class LogicImmo extends Website {
@@ -43,6 +43,7 @@ export class LogicImmo extends Website {
       charges: cleanup.number(ad.charges),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
+      dpe: ad.dpe,
       furnished: ad.furnished,
       price: cleanup.price(ad.price),
       renter: ad.renter ? cleanup.string(ad.renter) : PARTICULIER_TERM,

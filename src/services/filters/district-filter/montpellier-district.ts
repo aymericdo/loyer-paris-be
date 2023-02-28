@@ -1,6 +1,6 @@
-import { DistrictFilterParent } from './district-filter-parent'
-import { AvailableMainCities } from '@services/address/city'
 import { DefaultDistrictItem } from '@interfaces/shared'
+import { AvailableMainCities } from '@services/address/city'
+import { DistrictFilterParent } from './district-filter-parent'
 
 export class MontpellierDistrictFilter extends DistrictFilterParent {
   city: AvailableMainCities = 'montpellier'
