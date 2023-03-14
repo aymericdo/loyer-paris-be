@@ -4,6 +4,7 @@ import { getAdoptionRate } from '@services/stats/adoption'
 import { getChloroplethMap } from '@services/stats/chloropleth-map'
 import { getIsLegalVariation } from '@services/stats/is-legal-variation'
 import { getLegalPerClassicRenter } from '@services/stats/legal-per-classic-renter'
+import { getLegalPerDPE } from '@services/stats/legal-per-dpe'
 import { getLegalPerRenter } from '@services/stats/legal-per-renter'
 import { getLegalPerSurface } from '@services/stats/legal-per-surface'
 import { getLegalPerWebsite } from '@services/stats/legal-per-website'
@@ -73,5 +74,6 @@ router.get('/is-legal-variation/:city', getIsLegalVariation)
 router.get('/is-legal-per-renter/:city', getLegalPerRenter)
 router.get('/is-legal-per-classic-renter/:city', getLegalPerClassicRenter)
 router.get('/is-legal-per-website/:city', getLegalPerWebsite)
+router.get('/is-legal-per-dpe/:city', getLegalPerDPE)
 
 module.exports = router
