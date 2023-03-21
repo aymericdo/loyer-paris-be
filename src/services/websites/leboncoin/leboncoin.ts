@@ -41,7 +41,7 @@ export class LeBonCoin extends Website {
       id: ad.id.toString(),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.body),
-      dpe: ad.dpe,
+      dpe: ad.dpe ? cleanup.string(ad.dpe) : null,
       furnished: ad.furnished
         ? ad.furnished === 'Meublé'
           ? true

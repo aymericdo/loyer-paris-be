@@ -26,6 +26,12 @@ export class OrpiScrapping {
       hasChargesElement.parentNode.textContent.includes('charges comprises')
 
     const dpe = document.querySelector('li.c-dpe__index--active')
+    const dpeRegex = /([A-Z])/g
+    let dpeText = null
+
+    if (dpe && dpe.textContent) {
+      dpeText = dpe.textContent.replace(dpeRegex, ' $1').trim()
+    }
 
     return {
       id: dataElement.prdref,
@@ -37,7 +43,7 @@ export class OrpiScrapping {
       charges: charges && charges.textContent,
       hasCharges,
       description: description && description.textContent,
-      dpe: dpe?.textContent,
+      dpe: dpeText ?? null,
       furnished: !!dataElement.meuble,
       postalCode: dataElement.codePostal,
       price: dataElement.prdamount,

@@ -51,7 +51,7 @@ export class Orpi extends Website {
         lng: +ad.coord.lng,
       },
       description: cleanup.string(ad.description),
-      dpe: ad.dpe,
+      dpe: ad.dpe ? cleanup.string(ad.dpe) : null,
       hasCharges: ad.hasCharges,
       furnished: ad.furnished,
       price: ad.price,
