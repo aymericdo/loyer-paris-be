@@ -79,7 +79,7 @@ export function getLegalPerDPE(req: Request, res: Response) {
             { field: 'dpe', title: 'DPE ', type: 'nominal' },
             {
               field: 'numberAds',
-              title: "Nombre total d'annonces ",
+              title: 'Nombre total d\'annonces ',
               type: 'nominal',
             },
           ],
