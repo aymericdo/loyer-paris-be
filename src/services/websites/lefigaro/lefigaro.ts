@@ -43,7 +43,7 @@ export class LeFigaro extends Website {
       charges: cleanup.number(ad.charges),
       cityLabel: ad.cityLabel,
       description: cleanup.string(ad.description),
-      dpe: ad.dpe,
+      dpe: ad.dpe ? cleanup.string(ad.dpe) : null,
       furnished: ad.furnished,
       hasCharges: ad.hasCharges,
       price: cleanup.price(ad.price),

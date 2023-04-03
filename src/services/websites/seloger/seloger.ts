@@ -43,6 +43,7 @@ export class SeLoger extends Website {
       charges: cleanup.number(ad.charges),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
+      dpe: ad.dpe ? cleanup.string(ad.dpe) : null,
       furnished: ad.furnished,
       hasCharges: ad.hasCharges,
       price: cleanup.price(ad.price),

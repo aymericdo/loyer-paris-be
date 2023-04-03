@@ -297,6 +297,38 @@ export async function getLegalPerRenterData(
   }
 }
 
+export async function getLegalPerDPEData(
+  city: string,
+  dateRange: string[]
+): Promise<{ isLegal: boolean; dpe: string }[]> {
+  const filter = {
+    dpe: { $exists: true },
+    surface: { $lte: 100 },
+    website: { $nin: FUNNIEST_WEBSITES },
+  }
+
+  if (city !== 'all') {
+    filter['city'] = getCity(city as AvailableMainCities)
+  }
+
+  if (dateRange?.length) {
+    filter['createdAt'] = {
+      $gte: dateRange[0],
+      $lte: dateRange[1],
+    }
+  }
+  try {
+    return (await Rent.find(filter, { isLegal: 1, dpe: 1 })) as unknown as {
+      isLegal: boolean
+      dpe: string
+    }[]
+  } catch (err) {
+    if (err) {
+      throw err
+    }
+  }
+}
+
 export async function getLegalPerWebsiteData(
   city: string,
   dateRange: string[]
