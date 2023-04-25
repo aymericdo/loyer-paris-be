@@ -9,7 +9,7 @@ export function string(string: string): string {
 }
 
 export function price(price: string): number {
-  const match = price?.replace(/\s|,/g, '').match(/\d+/g)
+  const match = price?.replace(/\s|/g, '').replace(',', '.').match(/\d+(\.\d{1,2})?/g)
   return match != null ? +match[0] : null
 }
 
@@ -24,13 +24,7 @@ export function streetNumber(address: string): number {
 }
 
 export function address(string: string, city: AvailableCities): string {
-  const blackList = [
-    'commercante',
-    'navette',
-    'calme',
-    'tranquille',
-    'parking',
-  ]
+  const blackList = ['commercante', 'navette', 'calme', 'tranquille', 'parking']
   if (blackList.some((w) => string.includes(w))) return null
   return string
     .replace('bd ', 'boulevard ')
