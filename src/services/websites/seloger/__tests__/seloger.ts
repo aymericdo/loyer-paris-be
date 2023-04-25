@@ -1,9 +1,9 @@
 import { closeAllConnections } from '@db/db'
 import { Body } from '@interfaces/mapping'
-import { disconnect } from 'mongoose'
-import { SeLoger } from '../seloger'
 import * as fs from 'fs'
+import { disconnect } from 'mongoose'
 import * as path from 'path'
+import { SeLoger } from '../seloger'
 
 describe('seloger', () => {
   afterAll(async () => {
@@ -55,8 +55,7 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: 19.2 },
         },
         isLegal: false,
-        moreInfo:
-          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
+        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
   })
@@ -154,8 +153,7 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: null },
         },
         isLegal: true,
-        moreInfo:
-          'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
+        moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
     })
   })

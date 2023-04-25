@@ -2,27 +2,21 @@ import { createConnection } from 'mongoose'
 
 const localConnectionString = 'mongodb://localhost/loyer-paris-be'
 
-const rentConnection = createConnection(
-  process.env.MONGODB_URI || localConnectionString,
-  {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-)
+const rentConnection = createConnection(process.env.MONGODB_URI || localConnectionString, {
+  useCreateIndex: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 
 rentConnection.catch((e) => {
   console.error(e)
 })
 
-const empriseBatieConnection = createConnection(
-  process.env.MONGODB_URI_EMPRISE_BATIE || localConnectionString,
-  {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-)
+const empriseBatieConnection = createConnection(process.env.MONGODB_URI_EMPRISE_BATIE || localConnectionString, {
+  useCreateIndex: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 
 empriseBatieConnection.catch((e) => {
   console.error(e)
@@ -66,49 +60,25 @@ const montpellierAddressSchema = require('./montpellier-address.model')
 const bordeauxAddressSchema = require('./bordeaux-address.model')
 
 export const Rent = rentConnection.model('Rent', rentSchema)
-export const IncompleteRent = rentConnection.model(
-  'IncompleteRent',
-  incompleteRentSchema
-)
-export const EmpriseBatie = empriseBatieConnection.model(
-  'Batie',
-  empriseBatieSchema
-)
+export const IncompleteRent = rentConnection.model('IncompleteRent', incompleteRentSchema)
+export const EmpriseBatie = empriseBatieConnection.model('Batie', empriseBatieSchema)
 
-export const ParisAddress = encadrementAddress1Connection.model(
-  'parisaddress',
-  parisAddressSchema
-)
+export const ParisAddress = encadrementAddress1Connection.model('parisaddress', parisAddressSchema)
 
-export const LilleAddress = encadrementAddress1Connection.model(
-  'lilleaddress',
-  lilleAddressSchema
-)
+export const LilleAddress = encadrementAddress1Connection.model('lilleaddress', lilleAddressSchema)
 
 export const PlaineCommuneAddress = encadrementAddress1Connection.model(
   'plainecommuneaddress',
   plaineCommuneAddressSchema
 )
 
-export const LyonAddress = encadrementAddress2Connection.model(
-  'lyonaddress',
-  lyonAddressSchema
-)
+export const LyonAddress = encadrementAddress2Connection.model('lyonaddress', lyonAddressSchema)
 
-export const EstEnsembleAddress = encadrementAddress2Connection.model(
-  'estensembleaddress',
-  estEnsembleAddressSchema
-)
+export const EstEnsembleAddress = encadrementAddress2Connection.model('estensembleaddress', estEnsembleAddressSchema)
 
-export const MontpellierAddress = encadrementAddress2Connection.model(
-  'montpellieraddresses',
-  montpellierAddressSchema
-)
+export const MontpellierAddress = encadrementAddress2Connection.model('montpellieraddresses', montpellierAddressSchema)
 
-export const BordeauxAddress = encadrementAddress2Connection.model(
-  'bordeauxaddresses',
-  bordeauxAddressSchema
-)
+export const BordeauxAddress = encadrementAddress2Connection.model('bordeauxaddresses', bordeauxAddressSchema)
 
 export const closeAllConnections = async () => {
   await rentConnection.close()

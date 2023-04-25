@@ -1,11 +1,10 @@
-import express, { NextFunction, Request, Response } from 'express'
-import axios from 'axios'
-import { PrettyLog } from '@services/helpers/pretty-log'
 import { IpService } from '@services/helpers/ip'
+import { PrettyLog } from '@services/helpers/pretty-log'
 import { getAdoptionRate } from '@services/stats/adoption'
 import { getChloroplethMap } from '@services/stats/chloropleth-map'
 import { getIsLegalVariation } from '@services/stats/is-legal-variation'
 import { getLegalPerClassicRenter } from '@services/stats/legal-per-classic-renter'
+import { getLegalPerDPE } from '@services/stats/legal-per-dpe'
 import { getLegalPerRenter } from '@services/stats/legal-per-renter'
 import { getLegalPerSurface } from '@services/stats/legal-per-surface'
 import { getLegalPerWebsite } from '@services/stats/legal-per-website'
@@ -13,6 +12,8 @@ import { getMap } from '@services/stats/map'
 import { getPriceDifference } from '@services/stats/price-difference'
 import { getPriceVariation } from '@services/stats/price-variation'
 import { getWelcomeText } from '@services/stats/welcome-text'
+import axios from 'axios'
+import express, { NextFunction, Request, Response } from 'express'
 const router = express.Router()
 
 router.get('/need-captcha', getNeedCaptcha)
@@ -56,9 +57,7 @@ router.use('/', function (req: Request, res: Response, next: NextFunction) {
         next()
       })
       .catch(() => {
-        return res
-          .status(500)
-          .json({ message: 'oops, something went wrong on our side' })
+        return res.status(500).json({ message: 'oops, something went wrong on our side' })
       })
   }
 })
@@ -75,5 +74,6 @@ router.get('/is-legal-variation/:city', getIsLegalVariation)
 router.get('/is-legal-per-renter/:city', getLegalPerRenter)
 router.get('/is-legal-per-classic-renter/:city', getLegalPerClassicRenter)
 router.get('/is-legal-per-website/:city', getLegalPerWebsite)
+router.get('/is-legal-per-dpe/:city', getLegalPerDPE)
 
 module.exports = router

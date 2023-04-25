@@ -1,9 +1,9 @@
-import { Website, WebsiteType, PARTICULIER_TERM } from '@services/websites/website'
-import * as cleanup from '@services/helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { LeboncoinMapping } from '@interfaces/mapping'
-import { LeboncoinScrapping } from './leboncoin.scrapping'
 import { ERROR_CODE } from '@services/api/errors'
+import * as cleanup from '@services/helpers/cleanup'
+import { PARTICULIER_TERM, Website, WebsiteType } from '@services/websites/website'
+import { LeboncoinScrapping } from './leboncoin.scrapping'
 
 export class LeBonCoin extends Website {
   website: WebsiteType = 'leboncoin'
@@ -41,6 +41,7 @@ export class LeBonCoin extends Website {
       id: ad.id.toString(),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.body),
+      dpe: ad.dpe ? cleanup.string(ad.dpe) : null,
       furnished: ad.furnished
         ? ad.furnished === 'Meublé'
           ? true

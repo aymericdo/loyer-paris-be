@@ -1,9 +1,9 @@
-import { Body } from '@interfaces/mapping'
 import { closeAllConnections } from '@db/db'
-import { disconnect } from 'mongoose'
-import { BienIci } from '../bienici'
+import { Body } from '@interfaces/mapping'
 import fs from 'fs'
+import { disconnect } from 'mongoose'
 import path from 'path'
+import { BienIci } from '../bienici'
 
 describe('bienici', () => {
   afterAll(async () => {
@@ -55,8 +55,7 @@ describe('bienici', () => {
           promoPercentage: { order: 8, value: 18.16 },
         },
         isLegal: false,
-        moreInfo:
-          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
+        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
   })

@@ -1,5 +1,5 @@
-import { AvailableMainCities } from '@services/address/city'
 import { LyonDistrictItem } from '@interfaces/json-item-lyon'
+import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterParent } from './district-filter-parent'
 
 export class LyonDistrictFilter extends DistrictFilterParent {
@@ -18,9 +18,7 @@ export class LyonDistrictFilter extends DistrictFilterParent {
   protected getDistrictFromPostalCode(): LyonDistrictItem[] {
     if (this.postalCode) {
       return (this.getDistrictsJson() as LyonDistrictItem[]).filter((district) => {
-        return (
-          this.getPostalCode(district.properties.commune) === this.postalCode
-        )
+        return this.getPostalCode(district.properties.commune) === this.postalCode
       })
     } else {
       return []

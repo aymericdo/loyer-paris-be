@@ -1,5 +1,5 @@
-import TwitterApi from 'twitter-api-v2'
 import * as rentService from '@db/rent.service'
+import TwitterApi from 'twitter-api-v2'
 
 const MAX_DELTA = 200
 export class NameAndShameService {
@@ -15,7 +15,7 @@ export class NameAndShameService {
   v2Client = this.client.v2
 
   async call() {
-    [
+    ;[
       ['paris', 'Paris', '@Paris'],
       ['plaineCommune', 'Plaine Commune', '@prefpolice'],
       ['lille', 'Lille', '@prefet59'],
@@ -27,11 +27,9 @@ export class NameAndShameService {
       const ads = await rentService.getShamefulAdsData(city, MAX_DELTA)
 
       if (ads.length) {
-        let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${
-          ads.length
-        } annonce${ads.length > 1 ? 's' : ''} à ${cityValue} dépassai${
-          ads.length > 1 ? 'en' : ''
-        }t l'encadrement d'au moins ${MAX_DELTA}€ : `
+        let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${
+          ads.length > 1 ? 's' : ''
+        } à ${cityValue} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${MAX_DELTA}€ : `
         tweetText += ads
           .filter((ad) => !!ad.url)
           .slice(0, 5)
@@ -43,13 +41,7 @@ export class NameAndShameService {
         tweetText += `\ncc ${prefecture}`
         const { data: createdTweet } = await this.v2Client.tweet(tweetText)
         // eslint-disable-next-line no-console
-        console.log(
-          'Tweet',
-          createdTweet.id,
-          ':',
-          createdTweet.text,
-          'has been sent !'
-        )
+        console.log('Tweet', createdTweet.id, ':', createdTweet.text, 'has been sent !')
       }
     })
   }

@@ -1,9 +1,9 @@
-import { Body } from '@interfaces/mapping'
-import { Orpi } from '../orpi'
-import { disconnect } from 'mongoose'
 import { closeAllConnections } from '@db/db'
+import { Body } from '@interfaces/mapping'
 import fs from 'fs'
+import { disconnect } from 'mongoose'
 import path from 'path'
+import { Orpi } from '../orpi'
 
 describe('orpi', () => {
   afterAll(async () => {
@@ -55,8 +55,7 @@ describe('orpi', () => {
           promoPercentage: { order: 8, value: 4.25 },
         },
         isLegal: false,
-        moreInfo:
-          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
+        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
   })

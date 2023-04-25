@@ -1,5 +1,5 @@
-import { virtualConsole } from '@services/helpers/jsdome'
 import { GensdeconfianceMapping } from '@interfaces/mapping'
+import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -13,12 +13,8 @@ export class GensdeconfianceScrapping {
 
     const title = document.querySelector('#post-title')
     const description = document.querySelector('#ad-description')
-    const price = document.querySelector(
-      '#col-ad div.price-table > div:nth-child(1) > div.price-table__value'
-    )
-    const charges = document.querySelector(
-      '#col-ad div.price-table > div:nth-child(2) > div.price-table__value'
-    )
+    const price = document.querySelector('#col-ad div.price-table > div:nth-child(1) > div.price-table__value')
+    const charges = document.querySelector('#col-ad div.price-table > div:nth-child(2) > div.price-table__value')
     const address = document.querySelector('#ad-address > p')
     const cityLabel = document.querySelector('#post-title-breadcrumb > small')
     const itemTags = Array.from(document.querySelectorAll('div > ul > li > div'))
@@ -34,11 +30,10 @@ export class GensdeconfianceScrapping {
       return null
     }
 
-    const cityLabelText =
-      cityLabel?.textContent
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .split('—')[1]
+    const cityLabelText = cityLabel?.textContent
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .split('—')[1]
 
     return {
       id: null,
@@ -46,9 +41,7 @@ export class GensdeconfianceScrapping {
       address: address?.textContent,
       charges: charges?.textContent,
       hasCharges:
-        charges?.textContent &&
-        charges.textContent.match(/\d+/)[0] &&
-        +charges.textContent.match(/\d+/)[0] > 0,
+        charges?.textContent && charges.textContent.match(/\d+/)[0] && +charges.textContent.match(/\d+/)[0] > 0,
       description: description?.textContent,
       price: price?.textContent,
       surface: surface?.textContent,

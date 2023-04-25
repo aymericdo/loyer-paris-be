@@ -3,26 +3,27 @@ import { AvailableCities } from '@services/address/city'
 import { PrettyLog } from '@services/helpers/pretty-log'
 
 interface SavedInfo {
-  id: string;
-  address: string;
-  district: string;
-  city: AvailableCities;
-  hasFurniture?: boolean;
-  isHouse?: boolean;
-  isLegal: boolean;
-  latitude?: number;
-  longitude?: number;
-  maxPrice: number;
-  postalCode: string;
-  price: number;
-  priceExcludingCharges: number;
-  renter?: string;
-  roomCount?: number;
-  stations?: string[];
-  surface: number;
-  website: string;
-  url: string;
-  yearBuilt?: number[];
+  id: string
+  address: string
+  district: string
+  dpe?: string | null
+  city: AvailableCities
+  hasFurniture?: boolean
+  isHouse?: boolean
+  isLegal: boolean
+  latitude?: number
+  longitude?: number
+  maxPrice: number
+  postalCode: string
+  price: number
+  priceExcludingCharges: number
+  renter?: string
+  roomCount?: number
+  stations?: string[]
+  surface: number
+  website: string
+  url: string
+  yearBuilt?: number[]
 }
 
 export class SaveRentService {
@@ -43,6 +44,7 @@ export class SaveRentService {
       priceExcludingCharges: this.adToSave.priceExcludingCharges,
       surface: this.adToSave.surface,
       city: this.adToSave.city,
+      dpe: this.adToSave.dpe,
       district: this.adToSave.district,
       ...(this.adToSave.address != null && {
         address: this.adToSave.address,

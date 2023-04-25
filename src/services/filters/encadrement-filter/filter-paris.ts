@@ -1,12 +1,12 @@
+import { FilteredResult } from '@interfaces/ad'
+import { ParisEncadrementItem, ParisQuartierItem } from '@interfaces/json-item-paris'
+import { AvailableMainCities } from '@services/address/city'
+import { ParisDistrictFilter } from '@services/filters/district-filter/paris-district'
+import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
+import { YearBuiltService } from '@services/helpers/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
-import { ParisEncadrementItem, ParisQuartierItem } from '@interfaces/json-item-paris'
-import { FilteredResult } from '@interfaces/ad'
-import { YearBuiltService } from '@services/helpers/year-built'
-import { ParisDistrictFilter } from '@services/filters/district-filter/paris-district'
 import { Memoize } from 'typescript-memoize'
-import { AvailableMainCities } from '@services/address/city'
-import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterParis extends EncadrementFilterParent {
   city: AvailableMainCities = 'paris'
@@ -21,10 +21,7 @@ export class FilterParis extends EncadrementFilterParent {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(
-      rangeTime,
-      this.infoToFilter.yearBuilt
-    ).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
 
     let currentYear = +new Date().getFullYear()
 
@@ -33,24 +30,16 @@ export class FilterParis extends EncadrementFilterParent {
     }
 
     const zones: ParisQuartierItem[] = this.mappingQuartierZoneParisJson().filter((zoneRent) => {
-      return (districtsMatched?.length
-        ? districtsMatched
-          .map((district) => district.properties.c_qu)
-          .includes(zoneRent.id_quartier)
-        : [])
+      return districtsMatched?.length
+        ? districtsMatched.map((district) => district.properties.c_qu).includes(zoneRent.id_quartier)
+        : []
     })
 
     const rentList = (this.rangeRentsJson() as ParisEncadrementItem[]).filter((rangeRent) => {
       return (
         rangeRent.annee === 2022 && // hard coded to avoid the glitch of july
-        (zones?.length
-          ? zones
-            .map((zoneRent) => zoneRent.id_zone)
-            .includes(rangeRent.id_zone)
-          : true) &&
-        (timeDates?.length
-          ? timeDates.includes(rangeRent.epoque)
-          : true) &&
+        (zones?.length ? zones.map((zoneRent) => zoneRent.id_zone).includes(rangeRent.id_zone) : true) &&
+        (timeDates?.length ? timeDates.includes(rangeRent.epoque) : true) &&
         (this.infoToFilter.roomCount
           ? +this.infoToFilter.roomCount < 4
             ? +rangeRent.piece === +this.infoToFilter.roomCount
@@ -80,8 +69,6 @@ export class FilterParis extends EncadrementFilterParent {
 
   @Memoize()
   private mappingQuartierZoneParisJson(): ParisQuartierItem[] {
-    return JSON.parse(
-      fs.readFileSync(path.join('json-data/encadrements_paris_quartiers.json'), 'utf8')
-    )
+    return JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris_quartiers.json'), 'utf8'))
   }
 }

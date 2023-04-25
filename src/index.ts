@@ -1,12 +1,12 @@
-import 'module-alias/register'
 import dotenv from 'dotenv'
+import 'module-alias/register'
 dotenv.config()
 
+import { CronJobsService } from '@cronjobs/cronjobs'
+import * as Sentry from '@sentry/node'
+import cors from 'cors'
 import express from 'express'
 import { IpFilter } from 'express-ipfilter'
-import cors from 'cors'
-import * as Sentry from '@sentry/node'
-import { CronJobsService } from '@cronjobs/cronjobs'
 
 import path from 'path'
 

@@ -1,8 +1,8 @@
-import * as cleanup from '@services/helpers/cleanup'
-import { Website, WebsiteType, PARTICULIER_TERM } from '@services/websites/website'
 import { Ad } from '@interfaces/ad'
 import { LocserviceMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api/errors'
+import * as cleanup from '@services/helpers/cleanup'
+import { PARTICULIER_TERM, Website, WebsiteType } from '@services/websites/website'
 import { LocserviceScrapping } from './locservice.scrapping'
 
 export class Locservice extends Website {

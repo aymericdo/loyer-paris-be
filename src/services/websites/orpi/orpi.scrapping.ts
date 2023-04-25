@@ -1,5 +1,5 @@
-import { virtualConsole } from '@services/helpers/jsdome'
 import { OrpiMapping } from '@interfaces/mapping'
+import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -15,17 +15,23 @@ export class OrpiScrapping {
 
     const dataElement = JSON.parse((dataDOM as any).dataset.eulerianAction)
     const description = document.querySelector('div.o-container > p')
-    const chargesElement = Array.from(document.querySelectorAll(
-      '.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li'
-    ))
-    const charges = chargesElement.find(
-      (element) => element.textContent.search('Provisions pour charges') !== -1
+    const chargesElement = Array.from(
+      document.querySelectorAll('.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li')
     )
+    const charges = chargesElement.find((element) => element.textContent.search('Provisions pour charges') !== -1)
     const hasChargesElement = document.querySelector('p.u-mt-n > span.u-h1')
     const hasCharges =
       hasChargesElement &&
       hasChargesElement.parentNode &&
       hasChargesElement.parentNode.textContent.includes('charges comprises')
+
+    const dpe = document.querySelector('li.c-dpe__index--active')
+    const dpeRegex = /([A-Z])/g
+    let dpeText = null
+
+    if (dpe && dpe.textContent) {
+      dpeText = dpe.textContent.replace(dpeRegex, ' $1').trim()
+    }
 
     return {
       id: dataElement.prdref,
@@ -37,6 +43,7 @@ export class OrpiScrapping {
       charges: charges && charges.textContent,
       hasCharges,
       description: description && description.textContent,
+      dpe: dpeText ?? null,
       furnished: !!dataElement.meuble,
       postalCode: dataElement.codePostal,
       price: dataElement.prdamount,

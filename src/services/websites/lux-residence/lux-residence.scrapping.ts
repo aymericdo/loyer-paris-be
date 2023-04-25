@@ -1,5 +1,5 @@
-import { virtualConsole } from '@services/helpers/jsdome'
 import { LuxResidenceMapping } from '@interfaces/mapping'
+import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -23,9 +23,11 @@ export class LuxResidenceScrapping {
       '#detailsTab > div > div.detailsBlock.plus > ul > li.singleCriteria.furnished'
     )
 
-    const features = Array.from(document.querySelectorAll(
-      '#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.criteria > span'
-    ))
+    const features = Array.from(
+      document.querySelectorAll(
+        '#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.criteria > span'
+      )
+    )
 
     let surface = null
     let rooms = null

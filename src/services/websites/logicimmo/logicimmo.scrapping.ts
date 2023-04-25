@@ -22,14 +22,18 @@ export class LogicimmoScrapping {
       'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span'
     )
 
-    const chargeNode = Array.from(document.querySelectorAll(
-      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl'
-    ))
+    const chargeNode = Array.from(
+      document.querySelectorAll(
+        'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl'
+      )
+    )
 
     const offerCriteria = Array.from(document.querySelectorAll('#dtlTechniqueBox > li.dtlTechiqueItm'))
-    const itemTags = Array.from(document.querySelectorAll(
-      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressTopBlock > .propertyTypeInfos > em.feature'
-    ))
+    const itemTags = Array.from(
+      document.querySelectorAll(
+        'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressTopBlock > .propertyTypeInfos > em.feature'
+      )
+    )
 
     let charges = null
     chargeNode.forEach((elem) => {
@@ -60,11 +64,14 @@ export class LogicimmoScrapping {
       return null
     }
 
+    const dpe = document.querySelector('article.DPE > ul > li > span[tabindex]')
+
     return {
       id: null,
       cityLabel: cityLabel && cityLabel.textContent,
       charges: charges && charges.textContent,
       description: description && description.textContent,
+      dpe: dpe?.textContent,
       furnished: furnished && !!furnished.textContent,
       price: price && price.textContent,
       renter: renter && renter.textContent,

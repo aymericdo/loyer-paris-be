@@ -1,10 +1,10 @@
-import { Vega } from '@services/helpers/vega'
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/helpers/pretty-log'
 import * as rentService from '@db/rent.service'
-import { DistrictsList, DISTRICT_FIELD } from '@services/districts/districts-list'
-import { ERROR500_MSG } from '@services/api/errors'
 import { AvailableMainCities } from '@services/address/city'
+import { ERROR500_MSG } from '@services/api/errors'
+import { DISTRICT_FIELD, DistrictsList } from '@services/districts/districts-list'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { Vega } from '@services/helpers/vega'
+import { Request, Response } from 'express'
 
 export function getMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getMap`, 'blue')
@@ -38,9 +38,7 @@ export function getMap(req: Request, res: Response) {
             data: {
               values: data,
             },
-            transform: [
-              { calculate: 'datum.isLegal ? \'Oui\' : \'Non\'', as: 'isLegal' },
-            ],
+            transform: [{ calculate: 'datum.isLegal ? \'Oui\' : \'Non\'', as: 'isLegal' }],
             encoding: {
               longitude: {
                 field: 'longitude',

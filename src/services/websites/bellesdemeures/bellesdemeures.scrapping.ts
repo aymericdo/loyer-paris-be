@@ -1,5 +1,5 @@
-import { virtualConsole } from '@services/helpers/jsdome'
 import { BellesDemeuresMapping } from '@interfaces/mapping'
+import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -25,17 +25,17 @@ export class BellesDemeuresScrapping {
       'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemVille'
     )
 
-    const features = Array.from(document.querySelectorAll(
-      'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecs > ul > li'
-    ))
-    const features2 = Array.from(document.querySelectorAll(
-      '#wrapper > div.detail > div > div.detailWrapInfos > div:nth-child(5) > div:nth-child(2) > ul > li > ul > li'
-    ))
+    const features = Array.from(
+      document.querySelectorAll('div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecs > ul > li')
+    )
+    const features2 = Array.from(
+      document.querySelectorAll(
+        '#wrapper > div.detail > div > div.detailWrapInfos > div:nth-child(5) > div:nth-child(2) > ul > li > ul > li'
+      )
+    )
 
     const cityLabel = cityLabelNode?.textContent?.split('•').length
-      ? cityLabelNode.textContent.split('•')[
-        cityLabelNode.textContent.split('•').length - 1
-      ]
+      ? cityLabelNode.textContent.split('•')[cityLabelNode.textContent.split('•').length - 1]
       : cityLabelNode?.textContent
 
     let furnished = false
@@ -43,10 +43,7 @@ export class BellesDemeuresScrapping {
     let rooms = null
 
     features.forEach((feature) => {
-      if (
-        feature.textContent.match(/M²/g) ||
-        feature.textContent.match(/m²/g)
-      ) {
+      if (feature.textContent.match(/M²/g) || feature.textContent.match(/m²/g)) {
         surface = feature
       } else if (feature.textContent.match(/Pièce/g)) {
         rooms = feature

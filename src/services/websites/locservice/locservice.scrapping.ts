@@ -1,5 +1,5 @@
-import { virtualConsole } from '@services/helpers/jsdome'
 import { LocserviceMapping } from '@interfaces/mapping'
+import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -11,9 +11,7 @@ export class LocserviceScrapping {
 
     const title = document.querySelector('#resume_titre > h2')
 
-    const description = document.querySelector(
-      '#descriptif_detail_left > div.innerDetail'
-    )
+    const description = document.querySelector('#descriptif_detail_left > div.innerDetail')
 
     const price = document.querySelector('#resume_detail > ul > li.loyer')
     const furnished = document.querySelector('#resume_detail > ul > li.meuble')
@@ -27,12 +25,8 @@ export class LocserviceScrapping {
       description: description?.textContent,
       furnished: furnished?.textContent.includes('Loué meublé'),
       price: price && price.textContent,
-      rooms:
-        surface.textContent?.match(/\d+ pièce/g) &&
-        surface.textContent?.match(/\d+ pièce/g)[0],
-      surface:
-        surface.textContent?.match(/\d+ m²/g) &&
-        surface.textContent?.match(/\d+ m²/g)[0],
+      rooms: surface.textContent?.match(/\d+ pièce/g) && surface.textContent?.match(/\d+ pièce/g)[0],
+      surface: surface.textContent?.match(/\d+ m²/g) && surface.textContent?.match(/\d+ m²/g)[0],
       title: title && title.textContent,
     }
   }

@@ -1,8 +1,8 @@
-import { Vega } from '@services/helpers/vega'
-import { Response, Request } from 'express'
-import { PrettyLog } from '@services/helpers/pretty-log'
 import * as rentService from '@db/rent.service'
 import { ERROR500_MSG } from '@services/api/errors'
+import { PrettyLog } from '@services/helpers/pretty-log'
+import { Vega } from '@services/helpers/vega'
+import { Request, Response } from 'express'
 
 export function getIsLegalVariation(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} isLegalVariation`, 'blue')
@@ -21,30 +21,13 @@ export function getIsLegalVariation(req: Request, res: Response) {
     .filter(Boolean)
   const surfaceRange: number[] = surfaceValue?.split(',')?.map((v) => +v)
   const roomRange: number[] = roomValue?.split(',')?.map((v) => +v)
-  const hasFurniture: boolean =
-    furnishedValue === 'furnished'
-      ? true
-      : furnishedValue === 'nonFurnished'
-        ? false
-        : null
+  const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
 
   const isParticulier =
-    isParticulierValue.toLowerCase() === 'true'
-      ? true
-      : isParticulierValue.toLowerCase() === 'false'
-        ? false
-        : null
+    isParticulierValue.toLowerCase() === 'true' ? true : isParticulierValue.toLowerCase() === 'false' ? false : null
 
   rentService
-    .getLegalVarData(
-      req.params.city,
-      districtList,
-      surfaceRange,
-      roomRange,
-      hasFurniture,
-      dateRange,
-      isParticulier
-    )
+    .getLegalVarData(req.params.city, districtList, surfaceRange, roomRange, hasFurniture, dateRange, isParticulier)
     .then((data) => {
       const vegaOpt = Vega.commonOpt()
       const vegaMap = {
@@ -161,9 +144,7 @@ export function getIsLegalVariation(req: Request, res: Response) {
           },
           { filter: 'datum.isLegal === false' },
           {
-            joinaggregate: [
-              { op: 'count', field: 'isLegal', as: 'numberIllegal' },
-            ],
+            joinaggregate: [{ op: 'count', field: 'isLegal', as: 'numberIllegal' }],
             groupby: ['date'],
           },
           {

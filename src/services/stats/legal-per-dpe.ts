@@ -4,26 +4,27 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 
-export function getLegalPerRenter(req: Request, res: Response) {
-  PrettyLog.call(`-> ${req.baseUrl} isLegalPerRenter`, 'blue')
+export function getLegalPerDPE(req: Request, res: Response) {
+  PrettyLog.call(`-> ${req.baseUrl} isLegalPerDPE`, 'blue')
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')
 
   rentService
-    .getLegalPerRenterData(req.params.city, dateRange)
+    .getLegalPerDPEData(req.params.city, dateRange)
     .then((data) => {
       const vegaOpt = Vega.commonOpt()
       const vegaMap = {
         ...vegaOpt,
         title: {
           ...vegaOpt.title,
-          text: 'Annonces non conformes par agence (sans filtre)',
+          text: 'Annonces non conformes par DPE',
         },
         data: {
           values: data,
         },
         mark: { type: 'bar', tooltip: true },
         transform: [
+          { filter: 'datum.dpe != null' },
           {
             joinaggregate: [
               {
@@ -32,10 +33,10 @@ export function getLegalPerRenter(req: Request, res: Response) {
                 as: 'numberAds',
               },
             ],
-            groupby: ['renter'],
+            groupby: ['dpe'],
           },
           { filter: 'datum.isLegal === false' },
-          { filter: 'datum.numberAds > 10' },
+          { filter: 'datum.numberAds > 5' },
           {
             joinaggregate: [
               {
@@ -44,7 +45,7 @@ export function getLegalPerRenter(req: Request, res: Response) {
                 as: 'numberIllegal',
               },
             ],
-            groupby: ['renter'],
+            groupby: ['dpe'],
           },
           {
             calculate: 'datum.numberIllegal / datum.numberAds * 100',
@@ -57,8 +58,8 @@ export function getLegalPerRenter(req: Request, res: Response) {
         ],
         encoding: {
           x: {
-            field: 'renter',
-            title: 'Agence',
+            field: 'dpe',
+            title: 'DPE',
             type: 'nominal',
             sort: '-y',
           },
@@ -75,7 +76,7 @@ export function getLegalPerRenter(req: Request, res: Response) {
               title: 'Annonces non conformes ',
               format: '.2%',
             },
-            { field: 'renter', title: 'Agence ', type: 'nominal' },
+            { field: 'dpe', title: 'DPE ', type: 'nominal' },
             {
               field: 'numberAds',
               title: 'Nombre total d\'annonces ',

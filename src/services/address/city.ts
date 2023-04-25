@@ -1,15 +1,15 @@
-import * as cleanup from '@services/helpers/cleanup'
 import { Ad } from '@interfaces/ad'
 import { ERROR_CODE } from '@services/api/errors'
+import * as cleanup from '@services/helpers/cleanup'
 import { PrettyLog } from '@services/helpers/pretty-log'
 
 type CityList = {
   [key: string]: {
-    mainCity: AvailableMainCities;
-    postalCodePossibilities: string[];
-    postalCodeRegex: RegExp[];
-  };
-};
+    mainCity: AvailableMainCities
+    postalCodePossibilities: string[]
+    postalCodeRegex: RegExp[]
+  }
+}
 
 export const cityList: CityList = {
   paris: {
@@ -37,10 +37,7 @@ export const cityList: CityList = {
       '75019',
       '75020',
     ],
-    postalCodeRegex: [
-      /\b75[0-1][0-9]{2}\b/g,
-      /((?<=paris )[0-9]{1,2})|([0-9]{1,2} ?(?=er|ème|e|eme))/g,
-    ],
+    postalCodeRegex: [/\b75[0-1][0-9]{2}\b/g, /((?<=paris )[0-9]{1,2})|([0-9]{1,2} ?(?=er|ème|e|eme))/g],
   },
   hellemmes: {
     mainCity: 'lille',
@@ -104,22 +101,8 @@ export const cityList: CityList = {
   },
   lyon: {
     mainCity: 'lyon',
-    postalCodePossibilities: [
-      '69001',
-      '69002',
-      '69003',
-      '69004',
-      '69005',
-      '69006',
-      '69007',
-      '69008',
-      '69009',
-      '69100',
-    ],
-    postalCodeRegex: [
-      /\b690[0-9]{2}\b/g,
-      /((?<=lyon )[0-9]{1})|([0-9]{1} ?(?=er|ème|e|eme))/g,
-    ],
+    postalCodePossibilities: ['69001', '69002', '69003', '69004', '69005', '69006', '69007', '69008', '69009', '69100'],
+    postalCodeRegex: [/\b690[0-9]{2}\b/g, /((?<=lyon )[0-9]{1})|([0-9]{1} ?(?=er|ème|e|eme))/g],
   },
   villeurbanne: {
     mainCity: 'lyon',
@@ -183,8 +166,15 @@ export const cityList: CityList = {
   },
 }
 
-export type AvailableMainCities = 'paris' | 'lille' | 'plaineCommune' | 'lyon' | 'estEnsemble' | 'montpellier' | 'bordeaux';
-export type AvailableCities = keyof typeof cityList & string;
+export type AvailableMainCities =
+  | 'paris'
+  | 'lille'
+  | 'plaineCommune'
+  | 'lyon'
+  | 'estEnsemble'
+  | 'montpellier'
+  | 'bordeaux'
+export type AvailableCities = keyof typeof cityList & string
 
 export class CityService {
   cityInList: AvailableCities
@@ -200,9 +190,7 @@ export class CityService {
       }
     }
 
-    const cityInList: AvailableCities = Object.keys(cityList).find((city) =>
-      cityName.includes(city)
-    )
+    const cityInList: AvailableCities = Object.keys(cityList).find((city) => cityName.includes(city))
 
     if (!cityInList) {
       PrettyLog.call(`city "${cityName}" not found in the list`, 'yellow')

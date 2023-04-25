@@ -1,9 +1,9 @@
 import { FilteredResult } from '@interfaces/ad'
 import { PlaineCommuneEncadrementItem } from '@interfaces/json-item-plaine-commune'
 import { AvailableMainCities } from '@services/address/city'
-import { YearBuiltService } from '@services/helpers/year-built'
 import { PlaineCommuneDistrictFilter } from '@services/filters/district-filter/plaine-commune-district'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
+import { YearBuiltService } from '@services/helpers/year-built'
 
 export class FilterPlaineCommune extends EncadrementFilterParent {
   city: AvailableMainCities = 'plaineCommune'
@@ -18,21 +18,14 @@ export class FilterPlaineCommune extends EncadrementFilterParent {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(
-      rangeTime,
-      this.infoToFilter.yearBuilt
-    ).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
 
     const rentList = (this.rangeRentsJson() as PlaineCommuneEncadrementItem[]).filter((rangeRent) => {
       return (
         (districtsMatched?.length
-          ? districtsMatched
-            .map((district) => district.properties.Zone)
-            .includes(rangeRent['zone'].toString())
+          ? districtsMatched.map((district) => district.properties.Zone).includes(rangeRent['zone'].toString())
           : true) &&
-        (timeDates?.length
-          ? timeDates.includes(rangeRent['annee_de_construction'])
-          : true) &&
+        (timeDates?.length ? timeDates.includes(rangeRent['annee_de_construction']) : true) &&
         (this.infoToFilter.roomCount
           ? +this.infoToFilter.roomCount < 4
             ? +rangeRent['nombre_de_piece'] === +this.infoToFilter.roomCount
