@@ -9,7 +9,7 @@ export function string(string: string): string {
 }
 
 export function price(price: string): number {
-  const match = price?.replace(/\s|,/g, '').match(/\d+/g)
+  const match = price?.replace(/\s|/g, '').replace(',', '.').match(/\d+(\.\d{1,2})?/g)
   return match != null ? +match[0] : null
 }
 
