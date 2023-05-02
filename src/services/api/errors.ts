@@ -28,19 +28,16 @@ export class ApiErrorsService {
       switch (this.error?.error as ERROR_CODE) {
         case ERROR_CODE.Filter:
           PrettyLog.call(this.error.msg, 'red')
-          new SentryService().error(this.error.msg)
           break
         case ERROR_CODE.Partner:
         case ERROR_CODE.City:
           PrettyLog.call(this.error.msg)
-          new SentryService().light(this.error.msg)
           break
         case ERROR_CODE.Minimal:
         case ERROR_CODE.Other:
         case ERROR_CODE.Address:
         case ERROR_CODE.Price:
         case ERROR_CODE.Surface:
-          new SentryService().warning(this.error.msg)
           PrettyLog.call(this.error.msg, 'yellow')
           break
         default: {
