@@ -2,15 +2,15 @@ import { EmpriseBatie } from '@db/db'
 
 export class YearBuiltService {
   rangeTime: string[]
-  yearBuilt: number[]
+  universalRangeTime: [number, number][]
 
-  constructor(rangeTime: string[], yearBuilt: number[]) {
+  constructor(rangeTime: string[], universalRangeTime: [number, number][]) {
     this.rangeTime = rangeTime
-    this.yearBuilt = yearBuilt
+    this.universalRangeTime = universalRangeTime
   }
 
-  getRangeTimeDates(): string[] {
-    if (!this.yearBuilt) {
+  getRangeTimeFromYearBuilt(yearBuilt: number[]): string[] {
+    if (!yearBuilt) {
       return null
     }
 
@@ -26,41 +26,32 @@ export class YearBuiltService {
     // elsif yearBuilt is two elements
     // => possibleYearsBuilt is [yearBuilt[0] - yearBuilt[1]]
     const possibleYearsBuilt: number[] =
-      this.yearBuilt.length === 2
-        ? this.yearBuilt[0] === null
-          ? Array.from({ length: this.yearBuilt[1] - oldestYear + 1 }, (v, k) => oldestYear + k)
-          : this.yearBuilt[1] === null
-            ? Array.from({ length: currentYear - this.yearBuilt[0] + 1 }, (v, k) => this.yearBuilt[0] + k)
-            : Array.from({ length: this.yearBuilt[1] - this.yearBuilt[0] + 1 }, (v, k) => this.yearBuilt[0] + k)
-        : this.yearBuilt
+      yearBuilt.length === 2
+        ? yearBuilt[0] === null
+          ? Array.from({ length: yearBuilt[1] - oldestYear + 1 }, (v, k) => oldestYear + k)
+          : yearBuilt[1] === null
+            ? Array.from({ length: currentYear - yearBuilt[0] + 1 }, (v, k) => yearBuilt[0] + 1 + k)
+            : Array.from({ length: yearBuilt[1] - yearBuilt[0] + 1 }, (v, k) => yearBuilt[0] + k)
+        : yearBuilt
 
-    return this.rangeTime.filter((time: string, index: number) => {
-      const rangeYearBuilt: (string | number)[] = time
-        .split(/[\s-]+/)
-        .map((year: any) => {
-          if (isNaN(year)) {
-            // not just a year (>, après, etc)
-            return (index === 0 ? '<' : '>')
-          } else {
-            return this.formatYearDate(year.toString())
-          }
-        })
-
-      console.log(rangeYearBuilt)
+    return this.rangeTime.filter((_time: string, index: number) => {
+      // 'avant 1946' -> [null, 1946]
+      // '1946-70' -> [1946, 1970]
+      const universalRangeTime: number[] = this.universalRangeTime[index]
 
       return possibleYearsBuilt.some((yb: number) => {
-        return typeof rangeYearBuilt[0] === 'number'
-          ? rangeYearBuilt[0] < yb && +rangeYearBuilt[1] >= yb
-          : rangeYearBuilt[0] === '<'
-            ? yb < +rangeYearBuilt[1]
-            : rangeYearBuilt[0] === '>'
-              ? yb > +rangeYearBuilt[1]
-              : false
+        if (universalRangeTime[0] === null) {
+          return yb < +universalRangeTime[1]
+        } else if (universalRangeTime[1] === null) {
+          return yb > +universalRangeTime[0]
+        } else {
+          return universalRangeTime[0] < yb && +universalRangeTime[1] >= yb
+        }
       })
     })
   }
 
-  static formatAsDateBuilt(dateBuilt: string): number[] {
+  static formatAsYearBuilt(dateBuilt: string): number[] {
     if (dateBuilt === '-1') {
       return [+dateBuilt]
     }
@@ -69,14 +60,14 @@ export class YearBuiltService {
       return [null, +dateBuilt.match(/\d+/)[0]]
     }
 
-    if (dateBuilt.endsWith('>')) {
+    if (dateBuilt.startsWith('>')) {
       return [+dateBuilt.match(/\d+/)[0], null]
     }
 
     return dateBuilt.split('-').map((date) => +date)
   }
 
-  static getDateFormatted(periodBuilt: number[]): string {
+  static getDisplayableYearBuilt(periodBuilt: number[]): string {
     if (!periodBuilt) {
       return null
     }
@@ -126,13 +117,5 @@ export class YearBuiltService {
           ? [+building.properties.c_perconst.slice(-4), null]
           : [+building.properties.c_perconst.slice(0, 4), +building.properties.c_perconst.slice(-4)])
     return yearBuilt || periodBuilt
-  }
-
-  private formatYearDate(year: string): number {
-    if (year.length === 2) {
-      return +`19${year}`
-    } else {
-      return +year
-    }
   }
 }

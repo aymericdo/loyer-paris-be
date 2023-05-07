@@ -27,9 +27,10 @@ export function getManualResult(req: Request, res: Response) {
   const surface: number = +surfaceValue
   const price: number = +priceValue
   const room: number = +roomValue
-  const dateBuiltStr: number[] = YearBuiltService.formatAsDateBuilt(dateBuiltValueStr)
+  const dateBuiltStr: number[] = YearBuiltService.formatAsYearBuilt(dateBuiltValueStr)
   const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
 
+  console.log(dateBuiltStr)
   const isHouse: boolean = +isHouseValue === 1
 
   const CurrentEncadrementFilter = new EncadrementFilterFactory(city).currentFilter()
@@ -47,7 +48,11 @@ export function getManualResult(req: Request, res: Response) {
     params['isHouse'] = isHouse
   }
 
-  const filteredResult: FilteredResult[] = new CurrentEncadrementFilter(params).filter()
+  const currentEncadrementFilter = new CurrentEncadrementFilter(params)
+
+  const filteredResult: FilteredResult[] = currentEncadrementFilter.filter()
+
+  console.log(filteredResult)
 
   res.json(
     filteredResult.map((r) => {
@@ -57,6 +62,9 @@ export function getManualResult(req: Request, res: Response) {
         ...r,
         maxTotalPrice: roundNumber(r.maxPrice * surface),
         isLegal: r.maxPrice * surface > price,
+        yearBuilt: YearBuiltService.getDisplayableYearBuilt(
+          currentEncadrementFilter.rangeTimeToUniversalRangeTime(r.yearBuilt)
+        )
       }
     })
   )

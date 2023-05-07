@@ -17,7 +17,7 @@ export class FilterLyon extends EncadrementFilterParent {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.universalRangeTime).getRangeTimeFromYearBuilt(this.infoToFilter.yearBuilt)
 
     const rentList: UnitItemComplete[] = this.bigFlatten(this.rangeRentsJson() as LyonEncadrementItem[]).filter(
       (rangeRent) => {

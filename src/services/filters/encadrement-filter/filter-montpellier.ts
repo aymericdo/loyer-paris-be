@@ -9,7 +9,7 @@ export class FilterMontpellier extends EncadrementFilterParent {
   city: AvailableMainCities = 'montpellier'
   // Extract possible range time from rangeRents (json-data/encadrements_montpellier.json)
   rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', '1991-2005', 'apres 2005']
-  universalRangeTime: string[] = ['<1946', '1946-1970', '1971-1990', '1991-2005', '>2005']
+  universalRangeTime: [number, number][] = [[null, 1946], [1946, 1970], [1971, 1990], [1991, 2005], [2005, null]]
 
   filter(): FilteredResult[] {
     const districtsMatched = new MontpellierDistrictFilter(
@@ -18,7 +18,7 @@ export class FilterMontpellier extends EncadrementFilterParent {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.universalRangeTime).getRangeTimeFromYearBuilt(this.infoToFilter.yearBuilt)
 
     const rentList = (this.rangeRentsJson() as MontpellierEncadrementItem[]).filter((rangeRent) => {
       return (

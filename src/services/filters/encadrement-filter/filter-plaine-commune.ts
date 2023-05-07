@@ -17,7 +17,7 @@ export class FilterPlaineCommune extends EncadrementFilterParent {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.universalRangeTime).getRangeTimeFromYearBuilt(this.infoToFilter.yearBuilt)
 
     const rentList = (this.rangeRentsJson() as PlaineCommuneEncadrementItem[]).filter((rangeRent) => {
       return (

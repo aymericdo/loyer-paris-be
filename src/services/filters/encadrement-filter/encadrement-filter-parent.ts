@@ -19,7 +19,7 @@ export abstract class EncadrementFilterParent {
   infoToFilter: InfoToFilter = null
   city: AvailableMainCities
   rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
-  universalRangeTime: string[] = ['<1946', '1946-1970', '1971-1990', '>1990']
+  universalRangeTime: [number, number][] = [[null, 1946], [1946, 1970], [1971, 1990], [1990, null]]
 
   constructor(infoToFilter: InfoToFilter) {
     this.infoToFilter = infoToFilter
@@ -36,6 +36,16 @@ export abstract class EncadrementFilterParent {
       : null
 
     return worstCase
+  }
+
+  rangeTimeToUniversalRangeTime(rangeTime: string): [number, number] {
+    const index = this.rangeTime.indexOf(rangeTime)
+
+    if (index === -1) {
+      return null
+    }
+
+    return this.universalRangeTime[index]
   }
 
   @Memoize()

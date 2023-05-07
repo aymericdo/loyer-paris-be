@@ -76,7 +76,7 @@ export class SerializerService {
         surface: { order: 3, value: surface },
         yearBuilt: {
           order: 4,
-          value: YearBuiltService.getDateFormatted(yearBuilt),
+          value: YearBuiltService.getDisplayableYearBuilt(yearBuilt),
         },
         isHouse: { order: 5, value: isHouse ? 'Maison' : null },
         price: { order: 6, value: roundNumber(price) },
