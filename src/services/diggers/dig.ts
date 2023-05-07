@@ -9,7 +9,7 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { regexString } from '@services/helpers/regex'
 import { stringToNumber } from '@services/helpers/string-to-number'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { PARTICULIER_TERM } from '@services/websites/website'
+import { PARTICULIER_WORD } from '@services/websites/website'
 export class DigService {
   ad: Ad = null
 
@@ -87,15 +87,17 @@ export class DigService {
   private async digForYearBuilt(coordinates?: Coordinate): Promise<number[]> {
     if (this.ad.yearBuilt && this.ad.yearBuilt != null && !isNaN(this.ad.yearBuilt)) {
       return [+this.ad.yearBuilt]
-    } else {
+    } else if (coordinates) {
       const building =
         coordinates &&
         coordinates.lat &&
         coordinates.lng &&
-        (await YearBuiltService.getBuilding(coordinates.lat, coordinates.lng))
+        (await YearBuiltService.getEmpriseBatieBuilding(coordinates.lat, coordinates.lng))
       const yearBuiltFromBuilding = building && YearBuiltService.getYearBuiltFromBuilding(building)
 
       return yearBuiltFromBuilding
+    } else {
+      return null
     }
   }
 
@@ -165,7 +167,7 @@ export class DigService {
 
     const renter = possibleBadRenter.includes(this.ad.renter) ? null : this.ad.renter
 
-    return renter?.match(regexString('particulier'))?.length ? PARTICULIER_TERM : renter
+    return renter?.match(regexString('particulier'))?.length ? PARTICULIER_WORD : renter
   }
 
   private digForIsHouse(): boolean {

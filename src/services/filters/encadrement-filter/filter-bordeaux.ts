@@ -7,17 +7,16 @@ import { YearBuiltService } from '@services/helpers/year-built'
 
 export class FilterBordeaux extends EncadrementFilterParent {
   city: AvailableMainCities = 'bordeaux'
+  rangeTime = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
 
   filter(): FilteredResult[] {
-    const rangeTime = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
-
     const districtsMatched = new BordeauxDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
 
     const rentList = (this.rangeRentsJson() as BordeauxEncadrementItem[]).filter((rangeRent) => {
       return (
@@ -54,7 +53,7 @@ export class FilterBordeaux extends EncadrementFilterParent {
         isHouse: r['maison'] ? 'Maison' : null,
       }))
       .sort((a, b) => {
-        return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
+        return this.rangeTime.indexOf(a.yearBuilt) - this.rangeTime.indexOf(b.yearBuilt)
       })
   }
 }

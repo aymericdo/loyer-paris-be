@@ -17,7 +17,15 @@ export class YearBuiltService {
     const oldestYear = 1000
     const currentYear: number = new Date().getFullYear()
 
-    const yearBuiltRange: number[] =
+    // if yearBuilt is only one date
+    // => possibleYearsBuilt is [yearBuilt]
+    // elsif yearBuilt is two elements and the first one is null
+    // => possibleYearsBuilt is [oldestYear - yearBuilt[1]]
+    // elsif yearBuilt is two elements and the last one is null
+    // => possibleYearsBuilt is [yearBuilt[0] - currentYear]
+    // elsif yearBuilt is two elements
+    // => possibleYearsBuilt is [yearBuilt[0] - yearBuilt[1]]
+    const possibleYearsBuilt: number[] =
       this.yearBuilt.length === 2
         ? this.yearBuilt[0] === null
           ? Array.from({ length: this.yearBuilt[1] - oldestYear + 1 }, (v, k) => oldestYear + k)
@@ -29,18 +37,43 @@ export class YearBuiltService {
     return this.rangeTime.filter((time: string, index: number) => {
       const rangeYearBuilt: (string | number)[] = time
         .split(/[\s-]+/)
-        .map((year: any) => (isNaN(year) ? (index === 0 ? '<' : '>') : this.formatYearDate(year.toString())))
+        .map((year: any) => {
+          if (isNaN(year)) {
+            // not just a year (>, après, etc)
+            return (index === 0 ? '<' : '>')
+          } else {
+            return this.formatYearDate(year.toString())
+          }
+        })
 
-      return yearBuiltRange.some((yb: number) => {
+      console.log(rangeYearBuilt)
+
+      return possibleYearsBuilt.some((yb: number) => {
         return typeof rangeYearBuilt[0] === 'number'
-          ? rangeYearBuilt[0] < yb && rangeYearBuilt[1] >= yb
+          ? rangeYearBuilt[0] < yb && +rangeYearBuilt[1] >= yb
           : rangeYearBuilt[0] === '<'
-            ? yb < rangeYearBuilt[1]
+            ? yb < +rangeYearBuilt[1]
             : rangeYearBuilt[0] === '>'
-              ? yb > rangeYearBuilt[1]
+              ? yb > +rangeYearBuilt[1]
               : false
       })
     })
+  }
+
+  static formatAsDateBuilt(dateBuilt: string): number[] {
+    if (dateBuilt === '-1') {
+      return [+dateBuilt]
+    }
+
+    if (dateBuilt.startsWith('<')) {
+      return [null, +dateBuilt.match(/\d+/)[0]]
+    }
+
+    if (dateBuilt.endsWith('>')) {
+      return [+dateBuilt.match(/\d+/)[0], null]
+    }
+
+    return dateBuilt.split('-').map((date) => +date)
   }
 
   static getDateFormatted(periodBuilt: number[]): string {
@@ -62,7 +95,7 @@ export class YearBuiltService {
   }
 
   // Pour paris only ↴
-  static async getBuilding(lat: number, lng: number) {
+  static async getEmpriseBatieBuilding(lat: number, lng: number) {
     return await EmpriseBatie.findOne(
       {
         geometry: {

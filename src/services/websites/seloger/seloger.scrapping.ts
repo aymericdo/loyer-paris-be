@@ -1,6 +1,6 @@
 import { SelogerMapping } from '@interfaces/mapping'
 import { virtualConsole } from '@services/helpers/jsdome'
-import { PARTICULIER_TERM } from '@services/websites/website'
+import { PARTICULIER_WORD } from '@services/websites/website'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -112,7 +112,7 @@ export class SelogerScrapping {
       furnished,
       hasCharges: price && price.textContent.includes('CC'),
       price: price && price.textContent,
-      renter: isParticulier ? PARTICULIER_TERM : renter ? renter.textContent : null,
+      renter: isParticulier ? PARTICULIER_WORD : renter ? renter.textContent : null,
       rooms: rooms && rooms.textContent,
       surface: surface && surface.textContent,
       yearBuilt: yearBuilt && yearBuilt.textContent,

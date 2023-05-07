@@ -18,6 +18,8 @@ const CITY_FILE_PATHS = {
 export abstract class EncadrementFilterParent {
   infoToFilter: InfoToFilter = null
   city: AvailableMainCities
+  rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
+  universalRangeTime: string[] = ['<1946', '1946-1970', '1971-1990', '>1990']
 
   constructor(infoToFilter: InfoToFilter) {
     this.infoToFilter = infoToFilter

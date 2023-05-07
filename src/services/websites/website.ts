@@ -11,7 +11,7 @@ import { getPriceExcludingCharges } from '@services/helpers/charges'
 import { roundNumber } from '@services/helpers/round-number'
 import { Response } from 'express'
 
-export const PARTICULIER_TERM = 'Particulier'
+export const PARTICULIER_WORD = 'Particulier'
 
 export const WEBSITE_LIST = [
   'bellesdemeures',

@@ -7,18 +7,18 @@ import { YearBuiltService } from '@services/helpers/year-built'
 
 export class FilterMontpellier extends EncadrementFilterParent {
   city: AvailableMainCities = 'montpellier'
+  // Extract possible range time from rangeRents (json-data/encadrements_montpellier.json)
+  rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', '1991-2005', 'apres 2005']
+  universalRangeTime: string[] = ['<1946', '1946-1970', '1971-1990', '1991-2005', '>2005']
 
   filter(): FilteredResult[] {
-    // Extract possible range time from rangeRents (json-data/encadrements_montpellier.json)
-    const rangeTime = ['avant 1946', '1971-1990', '1946-1970', '1991-2005', 'apres 2005']
-
     const districtsMatched = new MontpellierDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
 
     const rentList = (this.rangeRentsJson() as MontpellierEncadrementItem[]).filter((rangeRent) => {
       return (
@@ -49,7 +49,7 @@ export class FilterMontpellier extends EncadrementFilterParent {
         yearBuilt: r['annee_de_construction'],
       }))
       .sort((a, b) => {
-        return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
+        return this.rangeTime.indexOf(a.yearBuilt) - this.rangeTime.indexOf(b.yearBuilt)
       })
   }
 }

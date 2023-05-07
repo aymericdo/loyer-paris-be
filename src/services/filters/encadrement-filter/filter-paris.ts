@@ -10,18 +10,17 @@ import { Memoize } from 'typescript-memoize'
 
 export class FilterParis extends EncadrementFilterParent {
   city: AvailableMainCities = 'paris'
+  // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
+  rangeTime: string[] = ['Avant 1946', '1946-1970', '1971-1990', 'Après 1990']
 
   filter(): FilteredResult[] {
-    // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
-    const rangeTime = ['Avant 1946', '1971-1990', '1946-1970', 'Après 1990']
-
     const districtsMatched = new ParisDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
 
     let currentYear = +new Date().getFullYear()
 
@@ -63,7 +62,7 @@ export class FilterParis extends EncadrementFilterParent {
         yearBuilt: r.epoque,
       }))
       .sort((a, b) => {
-        return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
+        return this.rangeTime.indexOf(a.yearBuilt) - this.rangeTime.indexOf(b.yearBuilt)
       })
   }
 

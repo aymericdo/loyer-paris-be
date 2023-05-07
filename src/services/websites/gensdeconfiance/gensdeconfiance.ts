@@ -2,7 +2,7 @@ import { Ad } from '@interfaces/ad'
 import { GensdeconfianceMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
-import { PARTICULIER_TERM, Website, WebsiteType } from '@services/websites/website'
+import { PARTICULIER_WORD, Website, WebsiteType } from '@services/websites/website'
 import { GensdeconfianceScrapping } from './gensdeconfiance.scrapping'
 
 export class Gensdeconfiance extends Website {
@@ -45,7 +45,7 @@ export class Gensdeconfiance extends Website {
       description: cleanup.string(ad.description),
       hasCharges: ad.hasCharges,
       price: cleanup.price(ad.price),
-      renter: PARTICULIER_TERM,
+      renter: PARTICULIER_WORD,
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),
     }

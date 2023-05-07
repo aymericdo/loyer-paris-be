@@ -7,18 +7,17 @@ import { YearBuiltService } from '@services/helpers/year-built'
 
 export class FilterLille extends EncadrementFilterParent {
   city: AvailableMainCities = 'lille'
+  // Extract possible range time from rangeRents (json-data/encadrements_lille.json)
+  rangeTime = ['< 1946', '1946 - 1970', '1971 - 1990', '> 1990']
 
   filter(): FilteredResult[] {
-    // Extract possible range time from rangeRents (json-data/encadrements_lille.json)
-    const rangeTime = ['< 1946', '1971 - 1990', '1946 - 1970', '> 1990']
-
     const districtsMatched = new LilleDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
 
     const rentList = (this.rangeRentsJson() as LilleEncadrementItem[]).filter((rangeRent) => {
       return (
@@ -50,7 +49,7 @@ export class FilterLille extends EncadrementFilterParent {
         yearBuilt: r.fields.epoque_construction,
       }))
       .sort((a, b) => {
-        return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
+        return this.rangeTime.indexOf(a.yearBuilt) - this.rangeTime.indexOf(b.yearBuilt)
       })
   }
 }

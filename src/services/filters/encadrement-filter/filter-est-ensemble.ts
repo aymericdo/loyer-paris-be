@@ -7,10 +7,10 @@ import { YearBuiltService } from '@services/helpers/year-built'
 
 export class FilterEstEnsemble extends EncadrementFilterParent {
   city: AvailableMainCities = 'estEnsemble'
+  // Extract possible range time from rangeRents (json-data/encadrements_est-ensemble.json)
+  rangeTime = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
 
   filter(): FilteredResult[] {
-    // Extract possible range time from rangeRents (json-data/encadrements_est-ensemble.json)
-    const rangeTime = ['avant 1946', '1971-1990', '1946-1970', 'apres 1990']
 
     const districtsMatched = new EstEnsembleDistrictFilter(
       this.infoToFilter.postalCode,
@@ -18,7 +18,7 @@ export class FilterEstEnsemble extends EncadrementFilterParent {
       this.infoToFilter.districtName
     ).getDistricts()
 
-    const timeDates: string[] = new YearBuiltService(rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
+    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.infoToFilter.yearBuilt).getRangeTimeDates()
 
     const rentList = (this.rangeRentsJson() as EstEnsembleEncadrementItem[]).filter((rangeRent) => {
       return (
@@ -55,7 +55,7 @@ export class FilterEstEnsemble extends EncadrementFilterParent {
         isHouse: r['maison'] ? 'Maison' : null,
       }))
       .sort((a, b) => {
-        return rangeTime.indexOf(a.yearBuilt) - rangeTime.indexOf(b.yearBuilt)
+        return this.rangeTime.indexOf(a.yearBuilt) - this.rangeTime.indexOf(b.yearBuilt)
       })
   }
 }

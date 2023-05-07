@@ -2,7 +2,7 @@ import { Ad } from '@interfaces/ad'
 import { FacebookMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
-import { PARTICULIER_TERM, Website, WebsiteType } from '@services/websites/website'
+import { PARTICULIER_WORD, Website, WebsiteType } from '@services/websites/website'
 import { FacebookScrapping } from './facebook.scrapping'
 export class Facebook extends Website {
   website: WebsiteType = 'facebook'
@@ -44,7 +44,7 @@ export class Facebook extends Website {
       description: cleanup.string(ad.description),
       furnished: ad.furnished,
       price: cleanup.price(ad.price),
-      renter: ad.renter ? cleanup.string(ad.renter) : PARTICULIER_TERM,
+      renter: ad.renter ? cleanup.string(ad.renter) : PARTICULIER_WORD,
       rooms: cleanup.number(ad.rooms),
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),

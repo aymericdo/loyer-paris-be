@@ -3,6 +3,7 @@ import { AvailableMainCities, CityService } from '@services/address/city'
 import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
+import { YearBuiltService } from '@services/helpers/year-built'
 import { Request, Response } from 'express'
 
 export function getManualResult(req: Request, res: Response) {
@@ -26,7 +27,7 @@ export function getManualResult(req: Request, res: Response) {
   const surface: number = +surfaceValue
   const price: number = +priceValue
   const room: number = +roomValue
-  const dateBuiltStr: number = +dateBuiltValueStr
+  const dateBuiltStr: number[] = YearBuiltService.formatAsDateBuilt(dateBuiltValueStr)
   const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
 
   const isHouse: boolean = +isHouseValue === 1
@@ -36,7 +37,7 @@ export function getManualResult(req: Request, res: Response) {
     postalCode: null,
     coordinates: null,
     blurryCoordinates: null,
-    yearBuilt: dateBuiltStr === -1 ? null : [dateBuiltStr],
+    yearBuilt: dateBuiltStr[0] === -1 ? null : dateBuiltStr,
     districtName: district,
     roomCount: room,
     hasFurniture,
