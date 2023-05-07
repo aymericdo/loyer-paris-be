@@ -30,7 +30,6 @@ export function getManualResult(req: Request, res: Response) {
   const dateBuiltStr: number[] = YearBuiltService.formatAsYearBuilt(dateBuiltValueStr)
   const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
 
-  console.log(dateBuiltStr)
   const isHouse: boolean = +isHouseValue === 1
 
   const CurrentEncadrementFilter = new EncadrementFilterFactory(city).currentFilter()
@@ -51,8 +50,6 @@ export function getManualResult(req: Request, res: Response) {
   const currentEncadrementFilter = new CurrentEncadrementFilter(params)
 
   const filteredResult: FilteredResult[] = currentEncadrementFilter.filter()
-
-  console.log(filteredResult)
 
   res.json(
     filteredResult.map((r) => {
