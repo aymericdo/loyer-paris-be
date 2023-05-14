@@ -11,6 +11,7 @@ import { getPriceExcludingCharges } from '@services/helpers/charges'
 import { roundNumber } from '@services/helpers/round-number'
 import { Response } from 'express'
 
+export const DPE_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 export const PARTICULIER_WORD = 'Particulier'
 
 export const WEBSITE_LIST = [

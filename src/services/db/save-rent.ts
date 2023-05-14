@@ -44,8 +44,10 @@ export class SaveRentService {
       priceExcludingCharges: this.adToSave.priceExcludingCharges,
       surface: this.adToSave.surface,
       city: this.adToSave.city,
-      dpe: this.adToSave.dpe,
       district: this.adToSave.district,
+      ...(this.adToSave.dpe != null && {
+        dpe: this.adToSave.dpe,
+      }),
       ...(this.adToSave.address != null && {
         address: this.adToSave.address,
       }),

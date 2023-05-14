@@ -9,7 +9,7 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { regexString } from '@services/helpers/regex'
 import { stringToNumber } from '@services/helpers/string-to-number'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { PARTICULIER_WORD } from '@services/websites/website'
+import { PARTICULIER_WORD, DPE_LIST } from '@services/websites/website'
 export class DigService {
   ad: Ad = null
 
@@ -197,6 +197,7 @@ export class DigService {
   }
 
   private digForDPE(): string | null {
-    return this.ad.dpe
+    const DPE = this.ad.dpe.toUpperCase()
+    return DPE.split(' ').find((word) => DPE_LIST.includes(word))
   }
 }
