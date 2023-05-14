@@ -197,7 +197,7 @@ export class DigService {
   }
 
   private digForDPE(): string | null {
-    const DPE = this.ad.dpe.toUpperCase()
-    return DPE.split(' ').find((word) => DPE_LIST.includes(word))
+    const DPE = this.ad.dpe?.toUpperCase()
+    return DPE?.split(' ')?.find((word) => DPE_LIST.includes(word)) || null
   }
 }
