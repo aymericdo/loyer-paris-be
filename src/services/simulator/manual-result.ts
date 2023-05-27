@@ -19,7 +19,7 @@ export function getManualResult(req: Request, res: Response) {
   const dateBuiltValueStr: string = (req.query.dateBuiltValueStr as string) || null
 
   if (!city || !districtValue || !priceValue || !furnishedValue || !surfaceValue || !roomValue) {
-    res.status(403)
+    res.status(403).send('missing params')
     return
   }
 
