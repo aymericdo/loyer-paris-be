@@ -11,11 +11,11 @@ export class FnaimScrapping {
     }).window
 
     const tabs = Array.from(document.querySelectorAll('#annonceFiche > div.ariane > span > a > span'))
-    const title = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header > div.titreButtons > h1')
+    const title = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header > div > h1')
     const description = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > div:nth-child(5) > p')
-    const price = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header > div.left > h3 > span')
+    const price = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header h3 > span')
     const chargesNode = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > div.description > p')
-    const hasCharges = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header > div.left > span')
+    const hasCharges = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header > div.mainInfo > div')
     const renter = document.querySelector(
       '#annonceFiche > div.annonce_fiche.fiche > div.caracteristique.agence > div > div.coordonnees > div > a'
     )
