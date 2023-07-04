@@ -36,7 +36,7 @@ export class FilterParis extends EncadrementFilterParent {
 
     const rentList = (this.rangeRentsJson() as ParisEncadrementItem[]).filter((rangeRent) => {
       return (
-        rangeRent.annee === 2022 && // hard coded to avoid the glitch of july
+        rangeRent.annee === currentYear &&
         (zones?.length ? zones.map((zoneRent) => zoneRent.id_zone).includes(rangeRent.id_zone) : true) &&
         (timeDates?.length ? timeDates.includes(rangeRent.epoque) : true) &&
         (this.infoToFilter.roomCount
