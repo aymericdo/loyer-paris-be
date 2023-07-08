@@ -46,7 +46,7 @@ describe('seloger', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Sainte-Marguerite' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 3 },
+          roomCount: { order: 2, value: '3' },
           surface: { order: 3, value: 58 },
           dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
