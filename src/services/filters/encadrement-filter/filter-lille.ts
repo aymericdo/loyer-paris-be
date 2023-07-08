@@ -7,8 +7,8 @@ import { YearBuiltService } from '@services/helpers/year-built'
 
 export class FilterLille extends EncadrementFilterParent {
   city: AvailableMainCities = 'lille'
-  // Extract possible range time from rangeRents (json-data/encadrements_lille.json)
-  rangeTime = ['< 1946', '1946 - 1970', '1971 - 1990', '> 1990']
+  // Extract possible range time from rangeRents (json-data/encadrements_lille_2023.json)
+  rangeTime = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
 
   filter(): FilteredResult[] {
     const districtsMatched = new LilleDistrictFilter(
@@ -22,31 +22,30 @@ export class FilterLille extends EncadrementFilterParent {
     const rentList = (this.rangeRentsJson() as LilleEncadrementItem[]).filter((rangeRent) => {
       return (
         (districtsMatched?.length
-          ? districtsMatched.map((district) => district.properties.zonage).includes(rangeRent.fields.zone)
+          ? districtsMatched.map((district) => +district.properties.zonage).includes(+rangeRent['zone'])
           : true) &&
-        (timeDates?.length ? timeDates.includes(rangeRent.fields.epoque_construction) : true) &&
+        (timeDates?.length ? timeDates.includes(rangeRent['annee_de_construction']) : true) &&
         (this.infoToFilter.roomCount
           ? +this.infoToFilter.roomCount < 4
-            ? +rangeRent.fields.nb_pieces === +this.infoToFilter.roomCount
-            : rangeRent.fields.nb_pieces === '4 et +'
+            ? +rangeRent['nombre_de_piece'] === +this.infoToFilter.roomCount
+            : rangeRent['nombre_de_piece'] === '4 et plus'
+          : true) &&
+        (this.infoToFilter.hasFurniture != null
+          ? this.infoToFilter.hasFurniture
+            ? rangeRent['meuble']
+            : !rangeRent['meuble']
           : true)
       )
     })
 
-    const isFurnished = this.infoToFilter.hasFurniture === null ? true : this.infoToFilter.hasFurniture
-
     return rentList
       .map((r) => ({
-        maxPrice: isFurnished
-          ? +r.fields.loyer_de_reference_majore_meublees
-          : +r.fields.loyer_de_reference_majore_non_meublees,
-        minPrice: isFurnished
-          ? +r.fields.loyer_de_reference_minore_meublees
-          : +r.fields.loyer_de_reference_minore_non_meublees,
-        districtName: `Zone ${r.fields.zone}`,
-        isFurnished,
-        roomCount: r.fields.nb_pieces,
-        yearBuilt: r.fields.epoque_construction,
+        maxPrice: +r['prix_max'].toString().replace(',', '.'),
+        minPrice: +r['prix_min'].toString().replace(',', '.'),
+        districtName: `Zone ${r['zone']}`,
+        isFurnished: r['meuble'],
+        roomCount: r['nombre_de_piece'],
+        yearBuilt: r['annee_de_construction'],
       }))
       .sort((a, b) => {
         return this.rangeTime.indexOf(a.yearBuilt) - this.rangeTime.indexOf(b.yearBuilt)

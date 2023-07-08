@@ -1,21 +1,13 @@
 import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
 
 export interface LilleEncadrementItem {
-  datasetid: string
-  recordid: string
-  fields: {
-    majoration_unitaire_du_loyer_de_reference_meublees: number
-    zone: number
-    loyer_de_reference_non_meublees: number
-    loyer_de_reference_meublees: number
-    loyer_de_reference_minore_non_meublees: number
-    loyer_de_reference_minore_meublees: number
-    loyer_de_reference_majore_non_meublees: number
-    loyer_de_reference_majore_meublees: string
-    epoque_construction: string
-    nb_pieces: string
-  }
-  record_timestamp: string
+  zone: number
+  meuble: boolean
+  nombre_de_piece: string
+  annee_de_construction: string
+  prix_min: string
+  prix_med: string
+  prix_max: string
 }
 
 export interface LilleDistrictItem {

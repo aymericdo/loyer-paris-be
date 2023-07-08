@@ -51,7 +51,7 @@ describe('pap', () => {
           },
           yearBuilt: {
             order: 4,
-            value: '1875',
+            value: null,
           },
           isHouse: { order: 5, value: null },
           price: {
@@ -91,15 +91,15 @@ describe('pap', () => {
           isHouse: { order: 5, value: undefined },
           max: {
             order: 6,
-            value: 43.2,
+            value: 43.9,
           },
           maxAuthorized: {
             order: 7,
-            value: 518.4,
+            value: 526.8,
           },
           promoPercentage: {
             order: 8,
-            value: 30.88,
+            value: 29.76,
           },
         },
         isLegal: false,
@@ -143,9 +143,9 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: '3' },
+          roomCount: { order: 2, value: 3 },
           surface: { order: 3, value: 90 },
-          dateRange: { order: 4, value: '> 1990' },
+          dateRange: { order: 4, value: 'apres 1990' },
           isHouse: { order: 5, value: undefined },
           max: { order: 6, value: null },
           maxAuthorized: { order: 7, value: null },
@@ -199,9 +199,9 @@ describe('pap', () => {
           surface: { order: 3, value: 34 },
           dateRange: { order: 4, value: 'après 1990' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 22.9 },
-          maxAuthorized: { order: 7, value: 778.6 },
-          promoPercentage: { order: 8, value: 21.35 },
+          max: { order: 6, value: 23.6 },
+          maxAuthorized: { order: 7, value: 802.4 },
+          promoPercentage: { order: 8, value: 18.95 },
         },
         isLegal: false,
         moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
