@@ -14,6 +14,11 @@ const app = express()
 
 app.use(cors())
 
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.CURRENT_ENV === 'prod' ? 'production' : 'local',
+})
+
 app.use(
   express.json({
     limit: '1mb',
@@ -62,28 +67,6 @@ if (process.env.CURRENT_ENV === 'prod') {
   // Watch the cronjobs
   new CronJobsService().watch()
 }
-
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  environment: process.env.CURRENT_ENV === 'prod' ? 'production' : 'local',
-  integrations: [
-    // enable HTTP calls tracing
-    new Sentry.Integrations.Http({ tracing: true }),
-    // enable Express.js middleware tracing
-    new Sentry.Integrations.Express({ app }),
-  ],
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-})
-
-// RequestHandler creates a separate execution context using domains, so that every
-// transaction/span/breadcrumb is attached to its own Hub instance
-app.use(Sentry.Handlers.requestHandler())
-
-// TracingHandler creates a trace for every incoming request
-app.use(Sentry.Handlers.tracingHandler())
 
 const port = process.env.PORT || 3000
 // eslint-disable-next-line no-console
