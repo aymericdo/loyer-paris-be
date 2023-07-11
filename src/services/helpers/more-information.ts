@@ -3,7 +3,7 @@ import { AvailableMainCities } from '@services/address/city'
 export const MORE_INFO: { [city in AvailableMainCities]: string } = {
   paris: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
   lyon: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
-  lille: 'https://encadrement-loyers.lille.fr/',
+  lille: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
   plaineCommune: 'https://plainecommune.fr/encadrementdesloyers/',
   estEnsemble: 'https://www.est-ensemble.fr/lencadrement-des-loyers-sera-applique-en-decembre-est-ensemble',
   montpellier:

@@ -28,7 +28,7 @@
     "meuble_txt": "meublé",
     "max": 34.68,
     "min": 20.23,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.9,
     "annee": 2020
   },
@@ -39,7 +39,7 @@
     "meuble_txt": "meublé",
     "max": 30.12,
     "min": 17.57,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.1,
     "annee": 2021
   },
@@ -61,7 +61,7 @@
     "meuble_txt": "non meublé",
     "max": 27.48,
     "min": 16.03,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.9,
     "annee": 2020
   },
@@ -72,7 +72,7 @@
     "meuble_txt": "meublé",
     "max": 31.08,
     "min": 18.13,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.9,
     "annee": 2020
   },
@@ -94,7 +94,7 @@
     "meuble_txt": "non meublé",
     "max": 27.48,
     "min": 16.03,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.9,
     "annee": 2020
   },
@@ -127,7 +127,7 @@
     "meuble_txt": "non meublé",
     "max": 27.6,
     "min": 16.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23,
     "annee": 2020
   },
@@ -138,7 +138,7 @@
     "meuble_txt": "non meublé",
     "max": 30.12,
     "min": 17.57,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.1,
     "annee": 2020
   },
@@ -160,7 +160,7 @@
     "meuble_txt": "non meublé",
     "max": 31.44,
     "min": 18.34,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.2,
     "annee": 2020
   },
@@ -193,7 +193,7 @@
     "meuble_txt": "meublé",
     "max": 31.2,
     "min": 18.2,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26,
     "annee": 2020
   },
@@ -204,7 +204,7 @@
     "meuble_txt": "meublé",
     "max": 31.08,
     "min": 18.13,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.9,
     "annee": 2020
   },
@@ -303,7 +303,7 @@
     "meuble_txt": "non meublé",
     "max": 33.84,
     "min": 19.74,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.2,
     "annee": 2020
   },
@@ -457,7 +457,7 @@
     "meuble_txt": "non meublé",
     "max": 21.72,
     "min": 12.67,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 18.1,
     "annee": 2020
   },
@@ -479,7 +479,7 @@
     "meuble_txt": "non meublé",
     "max": 24.84,
     "min": 14.49,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.7,
     "annee": 2020
   },
@@ -490,7 +490,7 @@
     "meuble_txt": "meublé",
     "max": 27.24,
     "min": 15.89,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.7,
     "annee": 2020
   },
@@ -501,7 +501,7 @@
     "meuble_txt": "non meublé",
     "max": 25.68,
     "min": 14.98,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.4,
     "annee": 2020
   },
@@ -600,7 +600,7 @@
     "meuble_txt": "non meublé",
     "max": 23.28,
     "min": 13.58,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.4,
     "annee": 2020
   },
@@ -611,7 +611,7 @@
     "meuble_txt": "meublé",
     "max": 28.08,
     "min": 16.38,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.4,
     "annee": 2020
   },
@@ -622,7 +622,7 @@
     "meuble_txt": "meublé",
     "max": 40.56,
     "min": 23.66,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 33.8,
     "annee": 2020
   },
@@ -655,7 +655,7 @@
     "meuble_txt": "meublé",
     "max": 30.12,
     "min": 17.57,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.1,
     "annee": 2020
   },
@@ -776,7 +776,7 @@
     "meuble_txt": "non meublé",
     "max": 24.24,
     "min": 14.14,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.2,
     "annee": 2020
   },
@@ -798,7 +798,7 @@
     "meuble_txt": "meublé",
     "max": 32.16,
     "min": 18.76,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.8,
     "annee": 2020
   },
@@ -820,7 +820,7 @@
     "meuble_txt": "meublé",
     "max": 27,
     "min": 15.75,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.5,
     "annee": 2020
   },
@@ -952,7 +952,7 @@
     "meuble_txt": "non meublé",
     "max": 26.04,
     "min": 15.19,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.7,
     "annee": 2020
   },
@@ -963,7 +963,7 @@
     "meuble_txt": "meublé",
     "max": 29.4,
     "min": 17.15,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.5,
     "annee": 2020
   },
@@ -996,7 +996,7 @@
     "meuble_txt": "non meublé",
     "max": 26.04,
     "min": 15.19,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.7,
     "annee": 2020
   },
@@ -1051,7 +1051,7 @@
     "meuble_txt": "non meublé",
     "max": 26.4,
     "min": 15.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22,
     "annee": 2020
   },
@@ -1073,7 +1073,7 @@
     "meuble_txt": "non meublé",
     "max": 25.68,
     "min": 14.98,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.4,
     "annee": 2020
   },
@@ -1084,7 +1084,7 @@
     "meuble_txt": "meublé",
     "max": 29.28,
     "min": 17.08,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.4,
     "annee": 2020
   },
@@ -1161,7 +1161,7 @@
     "meuble_txt": "non meublé",
     "max": 18.4,
     "min": 10.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 15.3,
     "annee": 2019
   },
@@ -1183,7 +1183,7 @@
     "meuble_txt": "meublé",
     "max": 20.4,
     "min": 11.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 17,
     "annee": 2020
   },
@@ -1403,7 +1403,7 @@
     "meuble_txt": "non meublé",
     "max": 24.6,
     "min": 14.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.5,
     "annee": 2019
   },
@@ -1436,7 +1436,7 @@
     "meuble_txt": "meublé",
     "max": 34.4,
     "min": 20.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.7,
     "annee": 2019
   },
@@ -1447,7 +1447,7 @@
     "meuble_txt": "meublé",
     "max": 32,
     "min": 18.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.7,
     "annee": 2019
   },
@@ -1546,7 +1546,7 @@
     "meuble_txt": "non meublé",
     "max": 27.5,
     "min": 16,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.9,
     "annee": 2019
   },
@@ -1590,7 +1590,7 @@
     "meuble_txt": "non meublé",
     "max": 20.4,
     "min": 11.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 17,
     "annee": 2019
   },
@@ -1612,7 +1612,7 @@
     "meuble_txt": "non meublé",
     "max": 24.1,
     "min": 14.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.1,
     "annee": 2019
   },
@@ -1656,7 +1656,7 @@
     "meuble_txt": "meublé",
     "max": 27.4,
     "min": 16,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.8,
     "annee": 2019
   },
@@ -1689,7 +1689,7 @@
     "meuble_txt": "meublé",
     "max": 28,
     "min": 16.3,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.3,
     "annee": 2019
   },
@@ -1744,7 +1744,7 @@
     "meuble_txt": "non meublé",
     "max": 24.2,
     "min": 14.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.2,
     "annee": 2019
   },
@@ -1755,7 +1755,7 @@
     "meuble_txt": "meublé",
     "max": 35.8,
     "min": 20.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 29.8,
     "annee": 2019
   },
@@ -1766,7 +1766,7 @@
     "meuble_txt": "meublé",
     "max": 25.7,
     "min": 15,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.4,
     "annee": 2019
   },
@@ -1777,7 +1777,7 @@
     "meuble_txt": "meublé",
     "max": 30.2,
     "min": 17.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.2,
     "annee": 2019
   },
@@ -1799,7 +1799,7 @@
     "meuble_txt": "meublé",
     "max": 33.6,
     "min": 19.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28,
     "annee": 2019
   },
@@ -1898,7 +1898,7 @@
     "meuble_txt": "meublé",
     "max": 32.6,
     "min": 19,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.2,
     "annee": 2019
   },
@@ -1931,7 +1931,7 @@
     "meuble_txt": "meublé",
     "max": 32.6,
     "min": 19,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.2,
     "annee": 2019
   },
@@ -1953,7 +1953,7 @@
     "meuble_txt": "non meublé",
     "max": 25.2,
     "min": 14.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21,
     "annee": 2019
   },
@@ -2063,7 +2063,7 @@
     "meuble_txt": "non meublé",
     "max": 23.8,
     "min": 13.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.8,
     "annee": 2019
   },
@@ -2118,7 +2118,7 @@
     "meuble_txt": "meublé",
     "max": 33.84,
     "min": 19.74,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.2,
     "annee": 2021
   },
@@ -2162,7 +2162,7 @@
     "meuble_txt": "non meublé",
     "max": 30.12,
     "min": 17.57,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.1,
     "annee": 2021
   },
@@ -2184,7 +2184,7 @@
     "meuble_txt": "non meublé",
     "max": 26.04,
     "min": 15.19,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.7,
     "annee": 2021
   },
@@ -2272,7 +2272,7 @@
     "meuble_txt": "meublé",
     "max": 29.16,
     "min": 17.01,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.3,
     "annee": 2021
   },
@@ -2294,7 +2294,7 @@
     "meuble_txt": "non meublé",
     "max": 31.44,
     "min": 18.34,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.2,
     "annee": 2021
   },
@@ -2305,7 +2305,7 @@
     "meuble_txt": "non meublé",
     "max": 25.92,
     "min": 15.12,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.6,
     "annee": 2021
   },
@@ -2316,7 +2316,7 @@
     "meuble_txt": "non meublé",
     "max": 29.4,
     "min": 17.15,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.5,
     "annee": 2021
   },
@@ -2349,7 +2349,7 @@
     "meuble_txt": "non meublé",
     "max": 23.8,
     "min": 13.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.8,
     "annee": 2019
   },
@@ -2371,7 +2371,7 @@
     "meuble_txt": "non meublé",
     "max": 27.4,
     "min": 16,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.8,
     "annee": 2019
   },
@@ -2393,7 +2393,7 @@
     "meuble_txt": "meublé",
     "max": 30.4,
     "min": 17.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.3,
     "annee": 2019
   },
@@ -2415,7 +2415,7 @@
     "meuble_txt": "meublé",
     "max": 31,
     "min": 18.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.8,
     "annee": 2019
   },
@@ -2426,7 +2426,7 @@
     "meuble_txt": "non meublé",
     "max": 35,
     "min": 20.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 29.2,
     "annee": 2019
   },
@@ -2514,7 +2514,7 @@
     "meuble_txt": "non meublé",
     "max": 24.7,
     "min": 14.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.6,
     "annee": 2019
   },
@@ -2525,7 +2525,7 @@
     "meuble_txt": "meublé",
     "max": 28.8,
     "min": 16.8,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24,
     "annee": 2019
   },
@@ -2580,7 +2580,7 @@
     "meuble_txt": "non meublé",
     "max": 25.3,
     "min": 14.8,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.1,
     "annee": 2019
   },
@@ -2591,7 +2591,7 @@
     "meuble_txt": "meublé",
     "max": 34.56,
     "min": 20.16,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.8,
     "annee": 2021
   },
@@ -2624,7 +2624,7 @@
     "meuble_txt": "non meublé",
     "max": 28.68,
     "min": 16.73,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.9,
     "annee": 2021
   },
@@ -2657,7 +2657,7 @@
     "meuble_txt": "meublé",
     "max": 31.32,
     "min": 18.27,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.1,
     "annee": 2021
   },
@@ -2723,7 +2723,7 @@
     "meuble_txt": "non meublé",
     "max": 34.32,
     "min": 20.02,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.6,
     "annee": 2021
   },
@@ -2778,7 +2778,7 @@
     "meuble_txt": "meublé",
     "max": 30,
     "min": 17.5,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25,
     "annee": 2021
   },
@@ -2855,7 +2855,7 @@
     "meuble_txt": "non meublé",
     "max": 26.64,
     "min": 15.54,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.2,
     "annee": 2021
   },
@@ -2932,7 +2932,7 @@
     "meuble_txt": "non meublé",
     "max": 26.76,
     "min": 15.61,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.3,
     "annee": 2021
   },
@@ -2943,7 +2943,7 @@
     "meuble_txt": "meublé",
     "max": 27.6,
     "min": 16.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23,
     "annee": 2021
   },
@@ -3075,7 +3075,7 @@
     "meuble_txt": "non meublé",
     "max": 30.12,
     "min": 17.57,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.1,
     "annee": 2021
   },
@@ -3097,7 +3097,7 @@
     "meuble_txt": "non meublé",
     "max": 22.8,
     "min": 13.3,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19,
     "annee": 2021
   },
@@ -3196,7 +3196,7 @@
     "meuble_txt": "meublé",
     "max": 34.44,
     "min": 20.09,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.7,
     "annee": 2021
   },
@@ -3306,7 +3306,7 @@
     "meuble_txt": "non meublé",
     "max": 23.64,
     "min": 13.79,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.7,
     "annee": 2021
   },
@@ -3317,7 +3317,7 @@
     "meuble_txt": "non meublé",
     "max": 30.96,
     "min": 18.06,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.8,
     "annee": 2021
   },
@@ -3339,7 +3339,7 @@
     "meuble_txt": "non meublé",
     "max": 24.48,
     "min": 14.28,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.4,
     "annee": 2021
   },
@@ -3394,7 +3394,7 @@
     "meuble_txt": "non meublé",
     "max": 27.96,
     "min": 16.31,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.3,
     "annee": 2021
   },
@@ -3438,7 +3438,7 @@
     "meuble_txt": "non meublé",
     "max": 33.4,
     "min": 19.5,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.8,
     "annee": 2019
   },
@@ -3449,7 +3449,7 @@
     "meuble_txt": "non meublé",
     "max": 25.8,
     "min": 15.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.5,
     "annee": 2019
   },
@@ -3537,7 +3537,7 @@
     "meuble_txt": "non meublé",
     "max": 28.9,
     "min": 16.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.1,
     "annee": 2019
   },
@@ -3614,7 +3614,7 @@
     "meuble_txt": "meublé",
     "max": 20.8,
     "min": 12.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 17.3,
     "annee": 2019
   },
@@ -3625,7 +3625,7 @@
     "meuble_txt": "non meublé",
     "max": 26.4,
     "min": 15.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22,
     "annee": 2019
   },
@@ -3647,7 +3647,7 @@
     "meuble_txt": "non meublé",
     "max": 23.6,
     "min": 13.8,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.7,
     "annee": 2019
   },
@@ -3658,7 +3658,7 @@
     "meuble_txt": "non meublé",
     "max": 26.8,
     "min": 15.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.3,
     "annee": 2019
   },
@@ -3669,7 +3669,7 @@
     "meuble_txt": "non meublé",
     "max": 24.2,
     "min": 14.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.2,
     "annee": 2019
   },
@@ -3680,7 +3680,7 @@
     "meuble_txt": "meublé",
     "max": 29.2,
     "min": 17,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.3,
     "annee": 2019
   },
@@ -3746,7 +3746,7 @@
     "meuble_txt": "non meublé",
     "max": 25.92,
     "min": 15.12,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.6,
     "annee": 2021
   },
@@ -3768,7 +3768,7 @@
     "meuble_txt": "non meublé",
     "max": 24.84,
     "min": 14.49,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.7,
     "annee": 2021
   },
@@ -3801,7 +3801,7 @@
     "meuble_txt": "meublé",
     "max": 30.96,
     "min": 18.06,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.8,
     "annee": 2021
   },
@@ -4021,7 +4021,7 @@
     "meuble_txt": "non meublé",
     "max": 27.8,
     "min": 16.2,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.2,
     "annee": 2019
   },
@@ -4065,7 +4065,7 @@
     "meuble_txt": "non meublé",
     "max": 20.5,
     "min": 12,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 17.1,
     "annee": 2019
   },
@@ -4120,7 +4120,7 @@
     "meuble_txt": "meublé",
     "max": 27.8,
     "min": 16.2,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.2,
     "annee": 2019
   },
@@ -4131,7 +4131,7 @@
     "meuble_txt": "non meublé",
     "max": 25.2,
     "min": 14.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21,
     "annee": 2019
   },
@@ -4164,7 +4164,7 @@
     "meuble_txt": "non meublé",
     "max": 25.7,
     "min": 15,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.4,
     "annee": 2019
   },
@@ -4197,7 +4197,7 @@
     "meuble_txt": "non meublé",
     "max": 25.9,
     "min": 15.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.6,
     "annee": 2019
   },
@@ -4285,7 +4285,7 @@
     "meuble_txt": "meublé",
     "max": 30.36,
     "min": 17.71,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.3,
     "annee": 2020
   },
@@ -4296,7 +4296,7 @@
     "meuble_txt": "non meublé",
     "max": 29.04,
     "min": 16.94,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.2,
     "annee": 2020
   },
@@ -4307,7 +4307,7 @@
     "meuble_txt": "non meublé",
     "max": 30.36,
     "min": 17.71,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.3,
     "annee": 2020
   },
@@ -4340,7 +4340,7 @@
     "meuble_txt": "meublé",
     "max": 29.64,
     "min": 17.29,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.7,
     "annee": 2020
   },
@@ -4351,7 +4351,7 @@
     "meuble_txt": "non meublé",
     "max": 24.48,
     "min": 14.28,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.4,
     "annee": 2020
   },
@@ -4505,7 +4505,7 @@
     "meuble_txt": "non meublé",
     "max": 24.12,
     "min": 14.07,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.1,
     "annee": 2020
   },
@@ -4527,7 +4527,7 @@
     "meuble_txt": "non meublé",
     "max": 18,
     "min": 10.5,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 15,
     "annee": 2020
   },
@@ -4549,7 +4549,7 @@
     "meuble_txt": "meublé",
     "max": 20.5,
     "min": 12,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 17.1,
     "annee": 2019
   },
@@ -4582,7 +4582,7 @@
     "meuble_txt": "meublé",
     "max": 26.8,
     "min": 15.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.3,
     "annee": 2019
   },
@@ -4593,7 +4593,7 @@
     "meuble_txt": "non meublé",
     "max": 29.2,
     "min": 17,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.3,
     "annee": 2019
   },
@@ -4637,7 +4637,7 @@
     "meuble_txt": "non meublé",
     "max": 28.9,
     "min": 16.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.1,
     "annee": 2019
   },
@@ -4681,7 +4681,7 @@
     "meuble_txt": "meublé",
     "max": 37.7,
     "min": 22,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 31.4,
     "annee": 2019
   },
@@ -4703,7 +4703,7 @@
     "meuble_txt": "meublé",
     "max": 28.3,
     "min": 16.5,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.6,
     "annee": 2019
   },
@@ -4714,7 +4714,7 @@
     "meuble_txt": "meublé",
     "max": 31.7,
     "min": 18.5,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.4,
     "annee": 2019
   },
@@ -4736,7 +4736,7 @@
     "meuble_txt": "meublé",
     "max": 29.9,
     "min": 17.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.9,
     "annee": 2019
   },
@@ -4769,7 +4769,7 @@
     "meuble_txt": "non meublé",
     "max": 25.4,
     "min": 14.8,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.2,
     "annee": 2019
   },
@@ -4802,7 +4802,7 @@
     "meuble_txt": "non meublé",
     "max": 25.2,
     "min": 14.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21,
     "annee": 2019
   },
@@ -4879,7 +4879,7 @@
     "meuble_txt": "meublé",
     "max": 27.24,
     "min": 15.89,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.7,
     "annee": 2020
   },
@@ -4923,7 +4923,7 @@
     "meuble_txt": "meublé",
     "max": 34.08,
     "min": 19.88,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.4,
     "annee": 2020
   },
@@ -5033,7 +5033,7 @@
     "meuble_txt": "meublé",
     "max": 35.52,
     "min": 20.72,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 29.6,
     "annee": 2020
   },
@@ -5044,7 +5044,7 @@
     "meuble_txt": "non meublé",
     "max": 28.68,
     "min": 16.73,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.9,
     "annee": 2020
   },
@@ -5143,7 +5143,7 @@
     "meuble_txt": "non meublé",
     "max": 30.72,
     "min": 17.92,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.6,
     "annee": 2020
   },
@@ -5154,7 +5154,7 @@
     "meuble_txt": "meublé",
     "max": 29.04,
     "min": 16.94,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.2,
     "annee": 2020
   },
@@ -5176,7 +5176,7 @@
     "meuble_txt": "meublé",
     "max": 24.6,
     "min": 14.35,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.5,
     "annee": 2020
   },
@@ -5198,7 +5198,7 @@
     "meuble_txt": "meublé",
     "max": 26.28,
     "min": 15.33,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.9,
     "annee": 2020
   },
@@ -5242,7 +5242,7 @@
     "meuble_txt": "meublé",
     "max": 29.16,
     "min": 17.01,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.3,
     "annee": 2020
   },
@@ -5264,7 +5264,7 @@
     "meuble_txt": "non meublé",
     "max": 24,
     "min": 14,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20,
     "annee": 2020
   },
@@ -5286,7 +5286,7 @@
     "meuble_txt": "meublé",
     "max": 27.96,
     "min": 16.31,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.3,
     "annee": 2020
   },
@@ -5297,7 +5297,7 @@
     "meuble_txt": "non meublé",
     "max": 25.8,
     "min": 15.05,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.5,
     "annee": 2020
   },
@@ -5352,7 +5352,7 @@
     "meuble_txt": "meublé",
     "max": 31.68,
     "min": 18.48,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.4,
     "annee": 2020
   },
@@ -5385,7 +5385,7 @@
     "meuble_txt": "non meublé",
     "max": 27.12,
     "min": 15.82,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.6,
     "annee": 2020
   },
@@ -5396,7 +5396,7 @@
     "meuble_txt": "meublé",
     "max": 32.04,
     "min": 18.69,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.7,
     "annee": 2020
   },
@@ -5418,7 +5418,7 @@
     "meuble_txt": "non meublé",
     "max": 28.08,
     "min": 16.38,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.4,
     "annee": 2020
   },
@@ -5451,7 +5451,7 @@
     "meuble_txt": "meublé",
     "max": 29.4,
     "min": 17.15,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.5,
     "annee": 2020
   },
@@ -5495,7 +5495,7 @@
     "meuble_txt": "meublé",
     "max": 33.24,
     "min": 19.39,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.7,
     "annee": 2021
   },
@@ -5517,7 +5517,7 @@
     "meuble_txt": "non meublé",
     "max": 17.28,
     "min": 10.08,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 14.4,
     "annee": 2021
   },
@@ -5528,7 +5528,7 @@
     "meuble_txt": "meublé",
     "max": 30.24,
     "min": 17.64,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.2,
     "annee": 2021
   },
@@ -5583,7 +5583,7 @@
     "meuble_txt": "meublé",
     "max": 27.24,
     "min": 15.89,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.7,
     "annee": 2021
   },
@@ -5638,7 +5638,7 @@
     "meuble_txt": "non meublé",
     "max": 24.48,
     "min": 14.28,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.4,
     "annee": 2021
   },
@@ -5759,7 +5759,7 @@
     "meuble_txt": "non meublé",
     "max": 28.44,
     "min": 16.59,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.7,
     "annee": 2021
   },
@@ -5781,7 +5781,7 @@
     "meuble_txt": "non meublé",
     "max": 27.96,
     "min": 16.31,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.3,
     "annee": 2021
   },
@@ -5814,7 +5814,7 @@
     "meuble_txt": "non meublé",
     "max": 27.84,
     "min": 16.24,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.2,
     "annee": 2021
   },
@@ -5825,7 +5825,7 @@
     "meuble_txt": "meublé",
     "max": 29.04,
     "min": 16.94,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.2,
     "annee": 2021
   },
@@ -5946,7 +5946,7 @@
     "meuble_txt": "meublé",
     "max": 26.64,
     "min": 15.54,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.2,
     "annee": 2021
   },
@@ -5979,7 +5979,7 @@
     "meuble_txt": "non meublé",
     "max": 25.08,
     "min": 14.63,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.9,
     "annee": 2021
   },
@@ -6067,7 +6067,7 @@
     "meuble_txt": "meublé",
     "max": 22.44,
     "min": 13.09,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 18.7,
     "annee": 2021
   },
@@ -6111,7 +6111,7 @@
     "meuble_txt": "meublé",
     "max": 33.12,
     "min": 19.32,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.6,
     "annee": 2021
   },
@@ -6133,7 +6133,7 @@
     "meuble_txt": "meublé",
     "max": 30.12,
     "min": 17.57,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.1,
     "annee": 2021
   },
@@ -6144,7 +6144,7 @@
     "meuble_txt": "meublé",
     "max": 19.44,
     "min": 11.34,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 16.2,
     "annee": 2021
   },
@@ -6155,7 +6155,7 @@
     "meuble_txt": "meublé",
     "max": 26.04,
     "min": 15.19,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.7,
     "annee": 2021
   },
@@ -6199,7 +6199,7 @@
     "meuble_txt": "non meublé",
     "max": 29.88,
     "min": 17.43,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.9,
     "annee": 2021
   },
@@ -6232,7 +6232,7 @@
     "meuble_txt": "meublé",
     "max": 35.4,
     "min": 20.65,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 29.5,
     "annee": 2021
   },
@@ -6276,7 +6276,7 @@
     "meuble_txt": "meublé",
     "max": 27.12,
     "min": 15.82,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.6,
     "annee": 2020
   },
@@ -6298,7 +6298,7 @@
     "meuble_txt": "non meublé",
     "max": 17.52,
     "min": 10.22,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 14.6,
     "annee": 2020
   },
@@ -6309,7 +6309,7 @@
     "meuble_txt": "meublé",
     "max": 25.32,
     "min": 14.77,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.1,
     "annee": 2020
   },
@@ -6331,7 +6331,7 @@
     "meuble_txt": "meublé",
     "max": 26.8,
     "min": 15.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.3,
     "annee": 2019
   },
@@ -6375,7 +6375,7 @@
     "meuble_txt": "non meublé",
     "max": 18.1,
     "min": 10.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 15.1,
     "annee": 2019
   },
@@ -6386,7 +6386,7 @@
     "meuble_txt": "meublé",
     "max": 31,
     "min": 18.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.8,
     "annee": 2019
   },
@@ -6397,7 +6397,7 @@
     "meuble_txt": "non meublé",
     "max": 31.7,
     "min": 18.5,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.4,
     "annee": 2019
   },
@@ -6430,7 +6430,7 @@
     "meuble_txt": "non meublé",
     "max": 29.9,
     "min": 17.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.9,
     "annee": 2019
   },
@@ -6474,7 +6474,7 @@
     "meuble_txt": "meublé",
     "max": 28.4,
     "min": 16.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.7,
     "annee": 2019
   },
@@ -6485,7 +6485,7 @@
     "meuble_txt": "non meublé",
     "max": 23.6,
     "min": 13.8,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.7,
     "annee": 2019
   },
@@ -6496,7 +6496,7 @@
     "meuble_txt": "non meublé",
     "max": 21.4,
     "min": 12.5,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 17.8,
     "annee": 2019
   },
@@ -6562,7 +6562,7 @@
     "meuble_txt": "meublé",
     "max": 28.6,
     "min": 16.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.8,
     "annee": 2019
   },
@@ -6606,7 +6606,7 @@
     "meuble_txt": "meublé",
     "max": 34.8,
     "min": 20.3,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 29,
     "annee": 2021
   },
@@ -6617,7 +6617,7 @@
     "meuble_txt": "non meublé",
     "max": 19.6,
     "min": 11.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 16.3,
     "annee": 2019
   },
@@ -6650,7 +6650,7 @@
     "meuble_txt": "meublé",
     "max": 28.4,
     "min": 16.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.7,
     "annee": 2019
   },
@@ -6683,7 +6683,7 @@
     "meuble_txt": "non meublé",
     "max": 27.4,
     "min": 16,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.8,
     "annee": 2019
   },
@@ -6727,7 +6727,7 @@
     "meuble_txt": "meublé",
     "max": 29.16,
     "min": 17.01,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.3,
     "annee": 2021
   },
@@ -6771,7 +6771,7 @@
     "meuble_txt": "non meublé",
     "max": 26.28,
     "min": 15.33,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.9,
     "annee": 2021
   },
@@ -6782,7 +6782,7 @@
     "meuble_txt": "non meublé",
     "max": 25.8,
     "min": 15.05,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.5,
     "annee": 2021
   },
@@ -6804,7 +6804,7 @@
     "meuble_txt": "non meublé",
     "max": 30.6,
     "min": 17.85,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.5,
     "annee": 2021
   },
@@ -6837,7 +6837,7 @@
     "meuble_txt": "non meublé",
     "max": 29.8,
     "min": 17.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.8,
     "annee": 2019
   },
@@ -6870,7 +6870,7 @@
     "meuble_txt": "meublé",
     "max": 29.5,
     "min": 17.2,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.6,
     "annee": 2019
   },
@@ -6969,7 +6969,7 @@
     "meuble_txt": "meublé",
     "max": 39.6,
     "min": 23.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 33,
     "annee": 2019
   },
@@ -7035,7 +7035,7 @@
     "meuble_txt": "meublé",
     "max": 32,
     "min": 18.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.7,
     "annee": 2019
   },
@@ -7046,7 +7046,7 @@
     "meuble_txt": "meublé",
     "max": 29.88,
     "min": 17.43,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.9,
     "annee": 2020
   },
@@ -7057,7 +7057,7 @@
     "meuble_txt": "meublé",
     "max": 31.92,
     "min": 18.62,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.6,
     "annee": 2020
   },
@@ -7145,7 +7145,7 @@
     "meuble_txt": "meublé",
     "max": 28.56,
     "min": 16.66,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.8,
     "annee": 2020
   },
@@ -7178,7 +7178,7 @@
     "meuble_txt": "non meublé",
     "max": 28.32,
     "min": 16.52,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.6,
     "annee": 2020
   },
@@ -7189,7 +7189,7 @@
     "meuble_txt": "non meublé",
     "max": 25.32,
     "min": 14.77,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.1,
     "annee": 2020
   },
@@ -7222,7 +7222,7 @@
     "meuble_txt": "non meublé",
     "max": 20.28,
     "min": 11.83,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 16.9,
     "annee": 2020
   },
@@ -7299,7 +7299,7 @@
     "meuble_txt": "non meublé",
     "max": 25.68,
     "min": 14.98,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.4,
     "annee": 2021
   },
@@ -7321,7 +7321,7 @@
     "meuble_txt": "meublé",
     "max": 28.92,
     "min": 16.87,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.1,
     "annee": 2021
   },
@@ -7387,7 +7387,7 @@
     "meuble_txt": "non meublé",
     "max": 21,
     "min": 12.25,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 17.5,
     "annee": 2021
   },
@@ -7431,7 +7431,7 @@
     "meuble_txt": "non meublé",
     "max": 28.32,
     "min": 16.52,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.6,
     "annee": 2021
   },
@@ -7464,7 +7464,7 @@
     "meuble_txt": "meublé",
     "max": 27.96,
     "min": 16.31,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.3,
     "annee": 2021
   },
@@ -7541,7 +7541,7 @@
     "meuble_txt": "non meublé",
     "max": 23.4,
     "min": 13.65,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.5,
     "annee": 2021
   },
@@ -7563,7 +7563,7 @@
     "meuble_txt": "meublé",
     "max": 31.44,
     "min": 18.34,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.2,
     "annee": 2021
   },
@@ -7607,7 +7607,7 @@
     "meuble_txt": "non meublé",
     "max": 29.64,
     "min": 17.29,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.7,
     "annee": 2021
   },
@@ -7629,7 +7629,7 @@
     "meuble_txt": "meublé",
     "max": 29.16,
     "min": 17.01,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.3,
     "annee": 2021
   },
@@ -7750,7 +7750,7 @@
     "meuble_txt": "non meublé",
     "max": 25.68,
     "min": 14.98,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.4,
     "annee": 2021
   },
@@ -7794,7 +7794,7 @@
     "meuble_txt": "meublé",
     "max": 23,
     "min": 13.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.2,
     "annee": 2019
   },
@@ -7882,7 +7882,7 @@
     "meuble_txt": "meublé",
     "max": 33.72,
     "min": 19.67,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.1,
     "annee": 2020
   },
@@ -7893,7 +7893,7 @@
     "meuble_txt": "non meublé",
     "max": 24.72,
     "min": 14.42,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.6,
     "annee": 2020
   },
@@ -7959,7 +7959,7 @@
     "meuble_txt": "meublé",
     "max": 38.28,
     "min": 22.33,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 31.9,
     "annee": 2020
   },
@@ -7992,7 +7992,7 @@
     "meuble_txt": "non meublé",
     "max": 35.88,
     "min": 20.93,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 29.9,
     "annee": 2020
   },
@@ -8003,7 +8003,7 @@
     "meuble_txt": "non meublé",
     "max": 24.72,
     "min": 14.42,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.6,
     "annee": 2020
   },
@@ -8058,7 +8058,7 @@
     "meuble_txt": "non meublé",
     "max": 29.4,
     "min": 17.15,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.5,
     "annee": 2020
   },
@@ -8080,7 +8080,7 @@
     "meuble_txt": "non meublé",
     "max": 26.64,
     "min": 15.54,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.2,
     "annee": 2020
   },
@@ -8157,7 +8157,7 @@
     "meuble_txt": "non meublé",
     "max": 28.2,
     "min": 16.45,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.5,
     "annee": 2020
   },
@@ -8190,7 +8190,7 @@
     "meuble_txt": "meublé",
     "max": 30.6,
     "min": 17.85,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.5,
     "annee": 2020
   },
@@ -8322,7 +8322,7 @@
     "meuble_txt": "non meublé",
     "max": 29.88,
     "min": 17.43,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.9,
     "annee": 2020
   },
@@ -8333,7 +8333,7 @@
     "meuble_txt": "meublé",
     "max": 32.4,
     "min": 18.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27,
     "annee": 2020
   },
@@ -8366,7 +8366,7 @@
     "meuble_txt": "meublé",
     "max": 33.24,
     "min": 19.39,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.7,
     "annee": 2020
   },
@@ -8520,7 +8520,7 @@
     "meuble_txt": "non meublé",
     "max": 23.04,
     "min": 13.44,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.2,
     "annee": 2020
   },
@@ -8597,7 +8597,7 @@
     "meuble_txt": "non meublé",
     "max": 26.88,
     "min": 15.68,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.4,
     "annee": 2020
   },
@@ -8707,7 +8707,7 @@
     "meuble_txt": "non meublé",
     "max": 28.1,
     "min": 16.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.4,
     "annee": 2019
   },
@@ -8751,7 +8751,7 @@
     "meuble_txt": "meublé",
     "max": 31.4,
     "min": 18.3,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.2,
     "annee": 2019
   },
@@ -8773,7 +8773,7 @@
     "meuble_txt": "meublé",
     "max": 29,
     "min": 16.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.2,
     "annee": 2019
   },
@@ -8784,7 +8784,7 @@
     "meuble_txt": "non meublé",
     "max": 26.9,
     "min": 15.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.4,
     "annee": 2019
   },
@@ -8839,7 +8839,7 @@
     "meuble_txt": "meublé",
     "max": 22.2,
     "min": 12.95,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 18.5,
     "annee": 2020
   },
@@ -8850,7 +8850,7 @@
     "meuble_txt": "meublé",
     "max": 34.32,
     "min": 20.02,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.6,
     "annee": 2020
   },
@@ -8872,7 +8872,7 @@
     "meuble_txt": "meublé",
     "max": 29.04,
     "min": 16.94,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.2,
     "annee": 2020
   },
@@ -8982,7 +8982,7 @@
     "meuble_txt": "non meublé",
     "max": 24.12,
     "min": 14.07,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.1,
     "annee": 2020
   },
@@ -8993,7 +8993,7 @@
     "meuble_txt": "non meublé",
     "max": 25.08,
     "min": 14.63,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.9,
     "annee": 2020
   },
@@ -9114,7 +9114,7 @@
     "meuble_txt": "non meublé",
     "max": 30.5,
     "min": 17.8,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.4,
     "annee": 2019
   },
@@ -9169,7 +9169,7 @@
     "meuble_txt": "non meublé",
     "max": 21.24,
     "min": 12.39,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 17.7,
     "annee": 2021
   },
@@ -9213,7 +9213,7 @@
     "meuble_txt": "non meublé",
     "max": 30.72,
     "min": 17.92,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.6,
     "annee": 2021
   },
@@ -9268,7 +9268,7 @@
     "meuble_txt": "meublé",
     "max": 27.2,
     "min": 15.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.7,
     "annee": 2019
   },
@@ -9279,7 +9279,7 @@
     "meuble_txt": "meublé",
     "max": 26.9,
     "min": 15.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.4,
     "annee": 2019
   },
@@ -9334,7 +9334,7 @@
     "meuble_txt": "non meublé",
     "max": 28.3,
     "min": 16.5,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.6,
     "annee": 2019
   },
@@ -9367,7 +9367,7 @@
     "meuble_txt": "meublé",
     "max": 27.4,
     "min": 16,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.8,
     "annee": 2019
   },
@@ -9455,7 +9455,7 @@
     "meuble_txt": "non meublé",
     "max": 25.56,
     "min": 14.91,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.3,
     "annee": 2021
   },
@@ -9477,7 +9477,7 @@
     "meuble_txt": "meublé",
     "max": 32.52,
     "min": 18.97,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.1,
     "annee": 2021
   },
@@ -9554,7 +9554,7 @@
     "meuble_txt": "non meublé",
     "max": 24.36,
     "min": 14.21,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.3,
     "annee": 2021
   },
@@ -9576,7 +9576,7 @@
     "meuble_txt": "meublé",
     "max": 33.84,
     "min": 19.74,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.2,
     "annee": 2021
   },
@@ -9620,7 +9620,7 @@
     "meuble_txt": "meublé",
     "max": 27.6,
     "min": 16.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23,
     "annee": 2021
   },
@@ -9664,7 +9664,7 @@
     "meuble_txt": "non meublé",
     "max": 36.6,
     "min": 21.35,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 30.5,
     "annee": 2021
   },
@@ -9774,7 +9774,7 @@
     "meuble_txt": "meublé",
     "max": 28.2,
     "min": 16.45,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.5,
     "annee": 2021
   },
@@ -9785,7 +9785,7 @@
     "meuble_txt": "meublé",
     "max": 32.28,
     "min": 18.83,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.9,
     "annee": 2021
   },
@@ -9796,7 +9796,7 @@
     "meuble_txt": "non meublé",
     "max": 25.8,
     "min": 15.05,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.5,
     "annee": 2021
   },
@@ -9818,7 +9818,7 @@
     "meuble_txt": "meublé",
     "max": 31.92,
     "min": 18.62,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.6,
     "annee": 2021
   },
@@ -9862,7 +9862,7 @@
     "meuble_txt": "non meublé",
     "max": 28.92,
     "min": 16.87,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.1,
     "annee": 2021
   },
@@ -9895,7 +9895,7 @@
     "meuble_txt": "meublé",
     "max": 26.28,
     "min": 15.33,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.9,
     "annee": 2021
   },
@@ -10104,7 +10104,7 @@
     "meuble_txt": "meublé",
     "max": 29.88,
     "min": 17.43,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.9,
     "annee": 2021
   },
@@ -10126,7 +10126,7 @@
     "meuble_txt": "meublé",
     "max": 33.36,
     "min": 19.46,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.8,
     "annee": 2021
   },
@@ -10181,7 +10181,7 @@
     "meuble_txt": "meublé",
     "max": 23.88,
     "min": 13.93,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.9,
     "annee": 2021
   },
@@ -10269,7 +10269,7 @@
     "meuble_txt": "meublé",
     "max": 27.96,
     "min": 16.31,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.3,
     "annee": 2020
   },
@@ -10335,7 +10335,7 @@
     "meuble_txt": "meublé",
     "max": 27.72,
     "min": 16.17,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.1,
     "annee": 2020
   },
@@ -10368,7 +10368,7 @@
     "meuble_txt": "meublé",
     "max": 28.92,
     "min": 16.87,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.1,
     "annee": 2020
   },
@@ -10467,7 +10467,7 @@
     "meuble_txt": "non meublé",
     "max": 28.92,
     "min": 16.87,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.1,
     "annee": 2020
   },
@@ -10478,7 +10478,7 @@
     "meuble_txt": "meublé",
     "max": 32.64,
     "min": 19.04,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.2,
     "annee": 2020
   },
@@ -10500,7 +10500,7 @@
     "meuble_txt": "meublé",
     "max": 25.1,
     "min": 14.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.9,
     "annee": 2019
   },
@@ -10566,7 +10566,7 @@
     "meuble_txt": "meublé",
     "max": 31.1,
     "min": 18.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 25.9,
     "annee": 2019
   },
@@ -10577,7 +10577,7 @@
     "meuble_txt": "non meublé",
     "max": 27.8,
     "min": 16.2,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.2,
     "annee": 2019
   },
@@ -10599,7 +10599,7 @@
     "meuble_txt": "meublé",
     "max": 24.1,
     "min": 14.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.1,
     "annee": 2019
   },
@@ -10621,7 +10621,7 @@
     "meuble_txt": "meublé",
     "max": 29.3,
     "min": 17.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.4,
     "annee": 2019
   },
@@ -10632,7 +10632,7 @@
     "meuble_txt": "meublé",
     "max": 28,
     "min": 16.3,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.3,
     "annee": 2019
   },
@@ -10676,7 +10676,7 @@
     "meuble_txt": "non meublé",
     "max": 25.9,
     "min": 15.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.6,
     "annee": 2019
   },
@@ -10731,7 +10731,7 @@
     "meuble_txt": "meublé",
     "max": 29.3,
     "min": 17.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.4,
     "annee": 2019
   },
@@ -10753,7 +10753,7 @@
     "meuble_txt": "meublé",
     "max": 19.44,
     "min": 11.34,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 16.2,
     "annee": 2021
   },
@@ -10797,7 +10797,7 @@
     "meuble_txt": "non meublé",
     "max": 24.96,
     "min": 14.56,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.8,
     "annee": 2021
   },
@@ -10830,7 +10830,7 @@
     "meuble_txt": "non meublé",
     "max": 19.68,
     "min": 11.48,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 16.4,
     "annee": 2020
   },
@@ -10841,7 +10841,7 @@
     "meuble_txt": "meublé",
     "max": 33.48,
     "min": 19.53,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.9,
     "annee": 2020
   },
@@ -10863,7 +10863,7 @@
     "meuble_txt": "non meublé",
     "max": 28.44,
     "min": 16.59,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.7,
     "annee": 2020
   },
@@ -10907,7 +10907,7 @@
     "meuble_txt": "meublé",
     "max": 27.24,
     "min": 15.89,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.7,
     "annee": 2020
   },
@@ -10984,7 +10984,7 @@
     "meuble_txt": "non meublé",
     "max": 25.8,
     "min": 15.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.5,
     "annee": 2019
   },
@@ -11061,7 +11061,7 @@
     "meuble_txt": "non meublé",
     "max": 29.3,
     "min": 17.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.4,
     "annee": 2019
   },
@@ -11094,7 +11094,7 @@
     "meuble_txt": "meublé",
     "max": 23.2,
     "min": 13.5,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.3,
     "annee": 2019
   },
@@ -11116,7 +11116,7 @@
     "meuble_txt": "meublé",
     "max": 27.36,
     "min": 15.96,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.8,
     "annee": 2021
   },
@@ -11215,7 +11215,7 @@
     "meuble_txt": "non meublé",
     "max": 21,
     "min": 12.25,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 17.5,
     "annee": 2020
   },
@@ -11237,7 +11237,7 @@
     "meuble_txt": "non meublé",
     "max": 26.4,
     "min": 15.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22,
     "annee": 2021
   },
@@ -11259,7 +11259,7 @@
     "meuble_txt": "non meublé",
     "max": 22.32,
     "min": 13.02,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 18.6,
     "annee": 2021
   },
@@ -11281,7 +11281,7 @@
     "meuble_txt": "non meublé",
     "max": 26.88,
     "min": 15.68,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.4,
     "annee": 2021
   },
@@ -11292,7 +11292,7 @@
     "meuble_txt": "non meublé",
     "max": 24.24,
     "min": 14.14,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.2,
     "annee": 2021
   },
@@ -11380,7 +11380,7 @@
     "meuble_txt": "non meublé",
     "max": 26.52,
     "min": 15.47,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.1,
     "annee": 2021
   },
@@ -11391,7 +11391,7 @@
     "meuble_txt": "meublé",
     "max": 29.76,
     "min": 17.36,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.8,
     "annee": 2021
   },
@@ -11402,7 +11402,7 @@
     "meuble_txt": "meublé",
     "max": 31.44,
     "min": 18.34,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.2,
     "annee": 2021
   },
@@ -11413,7 +11413,7 @@
     "meuble_txt": "non meublé",
     "max": 25.92,
     "min": 15.12,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.6,
     "annee": 2020
   },
@@ -11424,7 +11424,7 @@
     "meuble_txt": "meublé",
     "max": 32.76,
     "min": 19.11,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.3,
     "annee": 2020
   },
@@ -11490,7 +11490,7 @@
     "meuble_txt": "meublé",
     "max": 33,
     "min": 19.3,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.5,
     "annee": 2019
   },
@@ -11534,7 +11534,7 @@
     "meuble_txt": "non meublé",
     "max": 22.7,
     "min": 13.2,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 18.9,
     "annee": 2019
   },
@@ -11567,7 +11567,7 @@
     "meuble_txt": "non meublé",
     "max": 23.8,
     "min": 13.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.8,
     "annee": 2019
   },
@@ -11633,7 +11633,7 @@
     "meuble_txt": "non meublé",
     "max": 29.4,
     "min": 17.15,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.5,
     "annee": 2021
   },
@@ -11688,7 +11688,7 @@
     "meuble_txt": "meublé",
     "max": 29.52,
     "min": 17.22,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.6,
     "annee": 2021
   },
@@ -11710,7 +11710,7 @@
     "meuble_txt": "non meublé",
     "max": 29.52,
     "min": 17.22,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.6,
     "annee": 2021
   },
@@ -11776,7 +11776,7 @@
     "meuble_txt": "meublé",
     "max": 31.4,
     "min": 18.3,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.2,
     "annee": 2019
   },
@@ -11886,7 +11886,7 @@
     "meuble_txt": "meublé",
     "max": 33.72,
     "min": 19.67,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.1,
     "annee": 2020
   },
@@ -11908,7 +11908,7 @@
     "meuble_txt": "meublé",
     "max": 29.04,
     "min": 16.94,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.2,
     "annee": 2020
   },
@@ -11930,7 +11930,7 @@
     "meuble_txt": "non meublé",
     "max": 26.28,
     "min": 15.33,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.9,
     "annee": 2020
   },
@@ -12172,7 +12172,7 @@
     "meuble_txt": "meublé",
     "max": 26.9,
     "min": 15.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.4,
     "annee": 2019
   },
@@ -12205,7 +12205,7 @@
     "meuble_txt": "non meublé",
     "max": 28,
     "min": 16.3,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.3,
     "annee": 2019
   },
@@ -12271,7 +12271,7 @@
     "meuble_txt": "non meublé",
     "max": 28.3,
     "min": 16.5,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.6,
     "annee": 2019
   },
@@ -12348,7 +12348,7 @@
     "meuble_txt": "non meublé",
     "max": 25.92,
     "min": 15.12,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.6,
     "annee": 2021
   },
@@ -12359,7 +12359,7 @@
     "meuble_txt": "meublé",
     "max": 38.64,
     "min": 22.54,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 32.2,
     "annee": 2021
   },
@@ -12370,7 +12370,7 @@
     "meuble_txt": "meublé",
     "max": 29.04,
     "min": 16.94,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.2,
     "annee": 2021
   },
@@ -12447,7 +12447,7 @@
     "meuble_txt": "non meublé",
     "max": 19.92,
     "min": 11.62,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 16.6,
     "annee": 2021
   },
@@ -12469,7 +12469,7 @@
     "meuble_txt": "meublé",
     "max": 26.76,
     "min": 15.61,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.3,
     "annee": 2021
   },
@@ -12480,7 +12480,7 @@
     "meuble_txt": "meublé",
     "max": 22.1,
     "min": 12.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 18.4,
     "annee": 2019
   },
@@ -12513,7 +12513,7 @@
     "meuble_txt": "non meublé",
     "max": 24.12,
     "min": 14.07,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.1,
     "annee": 2020
   },
@@ -12568,7 +12568,7 @@
     "meuble_txt": "meublé",
     "max": 29.2,
     "min": 17,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.3,
     "annee": 2019
   },
@@ -12612,7 +12612,7 @@
     "meuble_txt": "meublé",
     "max": 33.7,
     "min": 19.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28.1,
     "annee": 2019
   },
@@ -12656,7 +12656,7 @@
     "meuble_txt": "meublé",
     "max": 28.4,
     "min": 16.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.7,
     "annee": 2019
   },
@@ -12667,7 +12667,7 @@
     "meuble_txt": "meublé",
     "max": 31.6,
     "min": 18.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.3,
     "annee": 2019
   },
@@ -12711,7 +12711,7 @@
     "meuble_txt": "non meublé",
     "max": 26.04,
     "min": 15.19,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.7,
     "annee": 2020
   },
@@ -12744,7 +12744,7 @@
     "meuble_txt": "meublé",
     "max": 31.68,
     "min": 18.48,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.4,
     "annee": 2020
   },
@@ -12788,7 +12788,7 @@
     "meuble_txt": "non meublé",
     "max": 22.2,
     "min": 13,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 18.5,
     "annee": 2019
   },
@@ -12843,7 +12843,7 @@
     "meuble_txt": "non meublé",
     "max": 28.08,
     "min": 16.38,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.4,
     "annee": 2020
   },
@@ -12854,7 +12854,7 @@
     "meuble_txt": "meublé",
     "max": 23.76,
     "min": 13.86,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.8,
     "annee": 2020
   },
@@ -12887,7 +12887,7 @@
     "meuble_txt": "non meublé",
     "max": 17.28,
     "min": 10.08,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 14.4,
     "annee": 2021
   },
@@ -12997,7 +12997,7 @@
     "meuble_txt": "meublé",
     "max": 29.4,
     "min": 17.15,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.5,
     "annee": 2020
   },
@@ -13052,7 +13052,7 @@
     "meuble_txt": "non meublé",
     "max": 26.2,
     "min": 15.3,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.8,
     "annee": 2019
   },
@@ -13184,7 +13184,7 @@
     "meuble_txt": "non meublé",
     "max": 29.64,
     "min": 17.29,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.7,
     "annee": 2020
   },
@@ -13195,7 +13195,7 @@
     "meuble_txt": "meublé",
     "max": 26.04,
     "min": 15.19,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.7,
     "annee": 2020
   },
@@ -13239,7 +13239,7 @@
     "meuble_txt": "meublé",
     "max": 22.92,
     "min": 13.37,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.1,
     "annee": 2020
   },
@@ -13250,7 +13250,7 @@
     "meuble_txt": "meublé",
     "max": 19.8,
     "min": 11.55,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 16.5,
     "annee": 2020
   },
@@ -13294,7 +13294,7 @@
     "meuble_txt": "meublé",
     "max": 28.9,
     "min": 16.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.1,
     "annee": 2019
   },
@@ -13404,7 +13404,7 @@
     "meuble_txt": "meublé",
     "max": 28.92,
     "min": 16.87,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.1,
     "annee": 2021
   },
@@ -13536,7 +13536,7 @@
     "meuble_txt": "meublé",
     "max": 32.2,
     "min": 18.8,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.8,
     "annee": 2019
   },
@@ -13569,7 +13569,7 @@
     "meuble_txt": "non meublé",
     "max": 29.88,
     "min": 17.43,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.9,
     "annee": 2020
   },
@@ -13602,7 +13602,7 @@
     "meuble_txt": "meublé",
     "max": 33.6,
     "min": 19.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 28,
     "annee": 2021
   },
@@ -13646,7 +13646,7 @@
     "meuble_txt": "meublé",
     "max": 28.8,
     "min": 16.8,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24,
     "annee": 2021
   },
@@ -13657,7 +13657,7 @@
     "meuble_txt": "meublé",
     "max": 32.04,
     "min": 18.69,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 26.7,
     "annee": 2021
   },
@@ -13668,7 +13668,7 @@
     "meuble_txt": "meublé",
     "max": 41.16,
     "min": 24.01,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 34.3,
     "annee": 2021
   },
@@ -13679,7 +13679,7 @@
     "meuble_txt": "non meublé",
     "max": 25.56,
     "min": 14.91,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.3,
     "annee": 2020
   },
@@ -13723,7 +13723,7 @@
     "meuble_txt": "non meublé",
     "max": 23.88,
     "min": 13.93,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.9,
     "annee": 2020
   },
@@ -13767,7 +13767,7 @@
     "meuble_txt": "meublé",
     "max": 27.36,
     "min": 15.96,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.8,
     "annee": 2020
   },
@@ -13778,7 +13778,7 @@
     "meuble_txt": "meublé",
     "max": 28.32,
     "min": 16.52,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.6,
     "annee": 2020
   },
@@ -13833,7 +13833,7 @@
     "meuble_txt": "meublé",
     "max": 25.68,
     "min": 14.98,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.4,
     "annee": 2021
   },
@@ -13855,7 +13855,7 @@
     "meuble_txt": "meublé",
     "max": 23.64,
     "min": 13.79,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.7,
     "annee": 2021
   },
@@ -13954,7 +13954,7 @@
     "meuble_txt": "meublé",
     "max": 29.3,
     "min": 17.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.4,
     "annee": 2019
   },
@@ -13987,7 +13987,7 @@
     "meuble_txt": "non meublé",
     "max": 26.28,
     "min": 15.33,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.9,
     "annee": 2021
   },
@@ -13998,7 +13998,7 @@
     "meuble_txt": "meublé",
     "max": 33.12,
     "min": 19.32,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.6,
     "annee": 2021
   },
@@ -14031,7 +14031,7 @@
     "meuble_txt": "non meublé",
     "max": 25.68,
     "min": 14.98,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.4,
     "annee": 2020
   },
@@ -14064,7 +14064,7 @@
     "meuble_txt": "non meublé",
     "max": 22.44,
     "min": 13.09,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 18.7,
     "annee": 2020
   },
@@ -14086,7 +14086,7 @@
     "meuble_txt": "non meublé",
     "max": 25.1,
     "min": 14.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.9,
     "annee": 2019
   },
@@ -14185,7 +14185,7 @@
     "meuble_txt": "meublé",
     "max": 33.1,
     "min": 19.3,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 27.6,
     "annee": 2019
   },
@@ -14218,7 +14218,7 @@
     "meuble_txt": "non meublé",
     "max": 27.48,
     "min": 16.03,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.9,
     "annee": 2021
   },
@@ -14251,7 +14251,7 @@
     "meuble_txt": "non meublé",
     "max": 24.7,
     "min": 14.4,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.6,
     "annee": 2019
   },
@@ -14284,7 +14284,7 @@
     "meuble_txt": "meublé",
     "max": 29.52,
     "min": 17.22,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.6,
     "annee": 2021
   },
@@ -14361,7 +14361,7 @@
     "meuble_txt": "non meublé",
     "max": 25.9,
     "min": 15.1,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.6,
     "annee": 2019
   },
@@ -14383,7 +14383,7 @@
     "meuble_txt": "non meublé",
     "max": 25.6,
     "min": 14.9,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 21.3,
     "annee": 2019
   },
@@ -14427,7 +14427,7 @@
     "meuble_txt": "meublé",
     "max": 26.9,
     "min": 15.7,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.4,
     "annee": 2019
   },
@@ -14449,7 +14449,7 @@
     "meuble_txt": "meublé",
     "max": 25.08,
     "min": 14.63,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 20.9,
     "annee": 2021
   },
@@ -14471,7 +14471,7 @@
     "meuble_txt": "non meublé",
     "max": 23.16,
     "min": 13.51,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.3,
     "annee": 2021
   },
@@ -14482,7 +14482,7 @@
     "meuble_txt": "meublé",
     "max": 28.08,
     "min": 16.38,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.4,
     "annee": 2021
   },
@@ -14493,7 +14493,7 @@
     "meuble_txt": "non meublé",
     "max": 23.76,
     "min": 13.86,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 19.8,
     "annee": 2021
   },
@@ -14559,7 +14559,7 @@
     "meuble_txt": "non meublé",
     "max": 26.76,
     "min": 15.61,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 22.3,
     "annee": 2021
   },
@@ -14581,7 +14581,7 @@
     "meuble_txt": "meublé",
     "max": 29.28,
     "min": 17.08,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 24.4,
     "annee": 2021
   },
@@ -14636,7 +14636,7 @@
     "meuble_txt": "non meublé",
     "max": 28.4,
     "min": 16.6,
-    "piece": 4,
+    "piece": "4 et plus",
     "ref": 23.7,
     "annee": 2019
   },
@@ -19725,7 +19725,7 @@
   {
     "annee": 2023,
     "id_zone": 2,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 23.6,
@@ -19736,7 +19736,7 @@
   {
     "annee": 2023,
     "id_zone": 2,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 29.8,
@@ -19747,7 +19747,7 @@
   {
     "annee": 2023,
     "id_zone": 11,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 19.8,
@@ -19769,7 +19769,7 @@
   {
     "annee": 2023,
     "id_zone": 2,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 26.4,
@@ -19835,7 +19835,7 @@
   {
     "annee": 2023,
     "id_zone": 13,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 17,
@@ -19890,7 +19890,7 @@
   {
     "annee": 2023,
     "id_zone": 4,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 25,
@@ -19978,7 +19978,7 @@
   {
     "annee": 2023,
     "id_zone": 8,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 27,
@@ -19989,7 +19989,7 @@
   {
     "annee": 2023,
     "id_zone": 13,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 16.5,
@@ -20000,7 +20000,7 @@
   {
     "annee": 2023,
     "id_zone": 2,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 26,
@@ -20022,7 +20022,7 @@
   {
     "annee": 2023,
     "id_zone": 13,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 15,
@@ -20033,7 +20033,7 @@
   {
     "annee": 2023,
     "id_zone": 14,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 23.8,
@@ -20209,7 +20209,7 @@
   {
     "annee": 2023,
     "id_zone": 14,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 19.7,
@@ -20275,7 +20275,7 @@
   {
     "annee": 2023,
     "id_zone": 11,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 22.2,
@@ -20374,7 +20374,7 @@
   {
     "annee": 2023,
     "id_zone": 4,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 25.9,
@@ -20396,7 +20396,7 @@
   {
     "annee": 2023,
     "id_zone": 13,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 14.6,
@@ -20462,7 +20462,7 @@
   {
     "annee": 2023,
     "id_zone": 10,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 22,
@@ -20583,7 +20583,7 @@
   {
     "annee": 2023,
     "id_zone": 1,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 34.2,
@@ -20616,7 +20616,7 @@
   {
     "annee": 2023,
     "id_zone": 6,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 23,
@@ -20649,7 +20649,7 @@
   {
     "annee": 2023,
     "id_zone": 10,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 22.3,
@@ -20693,7 +20693,7 @@
   {
     "annee": 2023,
     "id_zone": 9,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 23.8,
@@ -20737,7 +20737,7 @@
   {
     "annee": 2023,
     "id_zone": 4,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 29.3,
@@ -20836,7 +20836,7 @@
   {
     "annee": 2023,
     "id_zone": 7,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 24.2,
@@ -20990,7 +20990,7 @@
   {
     "annee": 2023,
     "id_zone": 10,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 22.9,
@@ -21012,7 +21012,7 @@
   {
     "annee": 2023,
     "id_zone": 1,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 32.8,
@@ -21122,7 +21122,7 @@
   {
     "annee": 2023,
     "id_zone": 2,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 29.4,
@@ -21144,7 +21144,7 @@
   {
     "annee": 2023,
     "id_zone": 4,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 23.7,
@@ -21166,7 +21166,7 @@
   {
     "annee": 2023,
     "id_zone": 1,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 27.9,
@@ -21232,7 +21232,7 @@
   {
     "annee": 2023,
     "id_zone": 11,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 20,
@@ -21243,7 +21243,7 @@
   {
     "annee": 2023,
     "id_zone": 9,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 22.3,
@@ -21298,7 +21298,7 @@
   {
     "annee": 2023,
     "id_zone": 4,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 28.3,
@@ -21320,7 +21320,7 @@
   {
     "annee": 2023,
     "id_zone": 11,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 22.6,
@@ -21364,7 +21364,7 @@
   {
     "annee": 2023,
     "id_zone": 2,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 26.7,
@@ -21386,7 +21386,7 @@
   {
     "annee": 2023,
     "id_zone": 3,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 27.8,
@@ -21452,7 +21452,7 @@
   {
     "annee": 2023,
     "id_zone": 11,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 21.7,
@@ -21529,7 +21529,7 @@
   {
     "annee": 2023,
     "id_zone": 4,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 27.5,
@@ -21540,7 +21540,7 @@
   {
     "annee": 2023,
     "id_zone": 6,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 23,
@@ -21606,7 +21606,7 @@
   {
     "annee": 2023,
     "id_zone": 11,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 24.5,
@@ -21683,7 +21683,7 @@
   {
     "annee": 2023,
     "id_zone": 7,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 22.4,
@@ -21738,7 +21738,7 @@
   {
     "annee": 2023,
     "id_zone": 4,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 26.8,
@@ -21749,7 +21749,7 @@
   {
     "annee": 2023,
     "id_zone": 5,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 23.5,
@@ -21925,7 +21925,7 @@
   {
     "annee": 2023,
     "id_zone": 5,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 25,
@@ -21980,7 +21980,7 @@
   {
     "annee": 2023,
     "id_zone": 10,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 25.9,
@@ -22002,7 +22002,7 @@
   {
     "annee": 2023,
     "id_zone": 1,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 28.3,
@@ -22013,7 +22013,7 @@
   {
     "annee": 2023,
     "id_zone": 3,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 25.9,
@@ -22035,7 +22035,7 @@
   {
     "annee": 2023,
     "id_zone": 11,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 25.1,
@@ -22068,7 +22068,7 @@
   {
     "annee": 2023,
     "id_zone": 13,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 19.9,
@@ -22123,7 +22123,7 @@
   {
     "annee": 2023,
     "id_zone": 4,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 24.3,
@@ -22178,7 +22178,7 @@
   {
     "annee": 2023,
     "id_zone": 10,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 24.9,
@@ -22189,7 +22189,7 @@
   {
     "annee": 2023,
     "id_zone": 10,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 23.7,
@@ -22222,7 +22222,7 @@
   {
     "annee": 2023,
     "id_zone": 5,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 25.1,
@@ -22255,7 +22255,7 @@
   {
     "annee": 2023,
     "id_zone": 10,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 25.2,
@@ -22387,7 +22387,7 @@
   {
     "annee": 2023,
     "id_zone": 6,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 24.3,
@@ -22409,7 +22409,7 @@
   {
     "annee": 2023,
     "id_zone": 2,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 25.8,
@@ -22475,7 +22475,7 @@
   {
     "annee": 2023,
     "id_zone": 5,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 24.2,
@@ -22497,7 +22497,7 @@
   {
     "annee": 2023,
     "id_zone": 12,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 19,
@@ -22530,7 +22530,7 @@
   {
     "annee": 2023,
     "id_zone": 14,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 21,
@@ -22563,7 +22563,7 @@
   {
     "annee": 2023,
     "id_zone": 14,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 18.6,
@@ -22574,7 +22574,7 @@
   {
     "annee": 2023,
     "id_zone": 2,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 22.8,
@@ -22618,7 +22618,7 @@
   {
     "annee": 2023,
     "id_zone": 6,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 26,
@@ -22640,7 +22640,7 @@
   {
     "annee": 2023,
     "id_zone": 10,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 21,
@@ -22651,7 +22651,7 @@
   {
     "annee": 2023,
     "id_zone": 14,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 21.1,
@@ -22673,7 +22673,7 @@
   {
     "annee": 2023,
     "id_zone": 5,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 21.4,
@@ -22695,7 +22695,7 @@
   {
     "annee": 2023,
     "id_zone": 13,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 22.9,
@@ -22783,7 +22783,7 @@
   {
     "annee": 2023,
     "id_zone": 3,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 28.4,
@@ -22794,7 +22794,7 @@
   {
     "annee": 2023,
     "id_zone": 14,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 22.6,
@@ -22805,7 +22805,7 @@
   {
     "annee": 2023,
     "id_zone": 13,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 20.3,
@@ -22827,7 +22827,7 @@
   {
     "annee": 2023,
     "id_zone": 5,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 20.8,
@@ -22882,7 +22882,7 @@
   {
     "annee": 2023,
     "id_zone": 11,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 22.4,
@@ -22937,7 +22937,7 @@
   {
     "annee": 2023,
     "id_zone": 1,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 29,
@@ -22948,7 +22948,7 @@
   {
     "annee": 2023,
     "id_zone": 9,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 25.2,
@@ -22981,7 +22981,7 @@
   {
     "annee": 2023,
     "id_zone": 5,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 22.1,
@@ -23014,7 +23014,7 @@
   {
     "annee": 2023,
     "id_zone": 12,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 22,
@@ -23036,7 +23036,7 @@
   {
     "annee": 2023,
     "id_zone": 14,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 20,
@@ -23069,7 +23069,7 @@
   {
     "annee": 2023,
     "id_zone": 6,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 27.6,
@@ -23080,7 +23080,7 @@
   {
     "annee": 2023,
     "id_zone": 6,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 27.5,
@@ -23091,7 +23091,7 @@
   {
     "annee": 2023,
     "id_zone": 6,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 24.4,
@@ -23102,7 +23102,7 @@
   {
     "annee": 2023,
     "id_zone": 3,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 24.6,
@@ -23223,7 +23223,7 @@
   {
     "annee": 2023,
     "id_zone": 1,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 25,
@@ -23256,7 +23256,7 @@
   {
     "annee": 2023,
     "id_zone": 7,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 21.7,
@@ -23278,7 +23278,7 @@
   {
     "annee": 2023,
     "id_zone": 7,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 23.4,
@@ -23289,7 +23289,7 @@
   {
     "annee": 2023,
     "id_zone": 1,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 24.7,
@@ -23333,7 +23333,7 @@
   {
     "annee": 2023,
     "id_zone": 9,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 17.2,
@@ -23344,7 +23344,7 @@
   {
     "annee": 2023,
     "id_zone": 7,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 27.3,
@@ -23388,7 +23388,7 @@
   {
     "annee": 2023,
     "id_zone": 9,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 21.1,
@@ -23410,7 +23410,7 @@
   {
     "annee": 2023,
     "id_zone": 14,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 17.4,
@@ -23520,7 +23520,7 @@
   {
     "annee": 2023,
     "id_zone": 7,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 25.3,
@@ -23542,7 +23542,7 @@
   {
     "annee": 2023,
     "id_zone": 5,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 22.2,
@@ -23586,7 +23586,7 @@
   {
     "annee": 2023,
     "id_zone": 9,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 22.5,
@@ -23641,7 +23641,7 @@
   {
     "annee": 2023,
     "id_zone": 9,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 19.4,
@@ -23663,7 +23663,7 @@
   {
     "annee": 2023,
     "id_zone": 12,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 19.5,
@@ -23729,7 +23729,7 @@
   {
     "annee": 2023,
     "id_zone": 8,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "non meublé",
     "ref": 22.7,
@@ -23773,7 +23773,7 @@
   {
     "annee": 2023,
     "id_zone": 3,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 25.4,
@@ -23828,7 +23828,7 @@
   {
     "annee": 2023,
     "id_zone": 12,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 25.2,
@@ -23839,7 +23839,7 @@
   {
     "annee": 2023,
     "id_zone": 13,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 17.6,
@@ -23861,7 +23861,7 @@
   {
     "annee": 2023,
     "id_zone": 1,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 30.3,
@@ -23872,7 +23872,7 @@
   {
     "annee": 2023,
     "id_zone": 8,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 25.7,
@@ -23894,7 +23894,7 @@
   {
     "annee": 2023,
     "id_zone": 3,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "meublé",
     "ref": 29.3,
@@ -23938,7 +23938,7 @@
   {
     "annee": 2023,
     "id_zone": 7,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Avant 1946",
     "meuble_txt": "meublé",
     "ref": 26.4,
@@ -23949,7 +23949,7 @@
   {
     "annee": 2023,
     "id_zone": 12,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 22.1,
@@ -24081,7 +24081,7 @@
   {
     "annee": 2023,
     "id_zone": 8,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 26.2,
@@ -24202,7 +24202,7 @@
   {
     "annee": 2023,
     "id_zone": 9,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 19.9,
@@ -24224,7 +24224,7 @@
   {
     "annee": 2023,
     "id_zone": 3,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 28.7,
@@ -24246,7 +24246,7 @@
   {
     "annee": 2023,
     "id_zone": 12,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 22.3,
@@ -24290,7 +24290,7 @@
   {
     "annee": 2023,
     "id_zone": 6,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 26,
@@ -24345,7 +24345,7 @@
   {
     "annee": 2023,
     "id_zone": 12,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 21.5,
@@ -24389,7 +24389,7 @@
   {
     "annee": 2023,
     "id_zone": 7,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 24.5,
@@ -24400,7 +24400,7 @@
   {
     "annee": 2023,
     "id_zone": 3,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 25.1,
@@ -24499,7 +24499,7 @@
   {
     "annee": 2023,
     "id_zone": 8,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "non meublé",
     "ref": 21.5,
@@ -24521,7 +24521,7 @@
   {
     "annee": 2023,
     "id_zone": 12,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "meublé",
     "ref": 25,
@@ -24543,7 +24543,7 @@
   {
     "annee": 2023,
     "id_zone": 8,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "Après 1990",
     "meuble_txt": "non meublé",
     "ref": 23.9,
@@ -24565,7 +24565,7 @@
   {
     "annee": 2023,
     "id_zone": 8,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1971-1990",
     "meuble_txt": "non meublé",
     "ref": 23.2,
@@ -24587,7 +24587,7 @@
   {
     "annee": 2023,
     "id_zone": 8,
-    "piece": 4,
+    "piece": "4 et plus",
     "epoque": "1946-1970",
     "meuble_txt": "meublé",
     "ref": 24.3,
