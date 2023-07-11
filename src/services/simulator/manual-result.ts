@@ -63,7 +63,7 @@ export function getManualResult(req: Request, res: Response) {
         yearBuilt: YearBuiltService.getDisplayableYearBuilt(
           currentEncadrementFilter.rangeTimeToUniversalRangeTime(r.yearBuilt)
         ),
-        moreInfo: MORE_INFO[cityList[city].mainCity],
+        moreInfo: MORE_INFO[city],
       }
     })
   )
