@@ -1,6 +1,7 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { AvailableMainCities, CityService } from '@services/address/city'
+import { AvailableMainCities, CityService, cityList } from '@services/address/city'
 import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
+import { MORE_INFO } from '@services/helpers/more-information'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
@@ -61,7 +62,8 @@ export function getManualResult(req: Request, res: Response) {
         isLegal: r.maxPrice * surface > price,
         yearBuilt: YearBuiltService.getDisplayableYearBuilt(
           currentEncadrementFilter.rangeTimeToUniversalRangeTime(r.yearBuilt)
-        )
+        ),
+        moreInfo: MORE_INFO[cityList[city].mainCity],
       }
     })
   )
