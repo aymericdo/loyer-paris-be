@@ -1,16 +1,15 @@
 import * as Sentry from '@sentry/node'
-import { Severity } from '@sentry/node'
 
 export class SentryService {
   error(message: string) {
-    Sentry.captureMessage(message, Severity.Error)
+    Sentry.captureMessage(message, 'error')
   }
 
   warning(message: string) {
-    Sentry.captureMessage(message, Severity.Warning)
+    Sentry.captureMessage(message, 'warning')
   }
 
   light(message: string) {
-    Sentry.captureMessage(message, Severity.Log)
+    Sentry.captureMessage(message, 'log')
   }
 }

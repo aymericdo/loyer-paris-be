@@ -1,5 +1,5 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { AvailableMainCities, CityService, cityList } from '@services/address/city'
+import { AvailableMainCities, CityService } from '@services/address/city'
 import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
 import { MORE_INFO } from '@services/helpers/more-information'
 import { PrettyLog } from '@services/helpers/pretty-log'

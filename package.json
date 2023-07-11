@@ -22,7 +22,7 @@
   "author": "Aymeric & Thomas",
   "license": "ISC",
   "dependencies": {
-    "@sentry/node": "^5.7.1",
+    "@sentry/node": "^7.57.0",
     "@slack/web-api": "^6.6.0",
     "@types/cli-color": "^0.3.30",
     "@types/cors": "^2.8.6",
