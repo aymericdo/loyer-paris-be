@@ -10,7 +10,7 @@ import { DISPLAY_ZONE_FIELD } from './districts-list'
 export async function getAddresses(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
   const city = req.params.city as AvailableMainCities
-  const addressQuery = req.query.q
+  const addressQuery = req.query.q.toString()
 
   if (addressQuery.length < 2) {
     res.json([])
@@ -20,7 +20,7 @@ export async function getAddresses(req: Request, res: Response) {
   let data: AddressItemDB[] = await dbMapping[city]
     .find(
       {
-        $text: { $search: addressQuery.toString() },
+        $text: { $search: addressQuery },
       },
       { score: { $meta: 'textScore' } }
     )

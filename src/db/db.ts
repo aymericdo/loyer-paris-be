@@ -2,51 +2,16 @@ import { createConnection } from 'mongoose'
 
 const localConnectionString = 'mongodb://localhost/loyer-paris-be'
 
-const rentConnection = createConnection(process.env.MONGODB_URI || localConnectionString, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+const rentConnection = createConnection(process.env.MONGODB_URI || localConnectionString)
 
-rentConnection.catch((e) => {
-  console.error(e)
-})
-
-const empriseBatieConnection = createConnection(process.env.MONGODB_URI_EMPRISE_BATIE || localConnectionString, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-
-empriseBatieConnection.catch((e) => {
-  console.error(e)
-})
+const empriseBatieConnection = createConnection(process.env.MONGODB_URI_EMPRISE_BATIE || localConnectionString)
 
 const encadrementAddress1Connection = createConnection(
-  process.env.MONGODB_URI_ENCADREMENT_ADDRESS1 || localConnectionString,
-  {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-)
-
-encadrementAddress1Connection.catch((e) => {
-  console.error(e)
-})
+  process.env.MONGODB_URI_ENCADREMENT_ADDRESS1 || localConnectionString)
 
 const encadrementAddress2Connection = createConnection(
-  process.env.MONGODB_URI_ENCADREMENT_ADDRESS2 || localConnectionString,
-  {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
+  process.env.MONGODB_URI_ENCADREMENT_ADDRESS2 || localConnectionString
 )
-
-encadrementAddress2Connection.catch((e) => {
-  console.error(e)
-})
 
 const rentSchema = require('./rent.model')
 const incompleteRentSchema = require('./incomplete-rent.model')
