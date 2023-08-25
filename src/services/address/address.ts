@@ -147,7 +147,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
           },
         },
         score: r.score,
-        streetNumber: cleanup.streetNumber(query).toString(),
+        streetNumber: cleanup.streetNumber(query)?.toString(),
       }))
       : []
   }
@@ -218,7 +218,7 @@ export class ParisAddressStrategy extends DefaultAddressStrategy {
           },
         },
         score: r.score,
-        streetNumber: cleanup.streetNumber(query).toString(),
+        streetNumber: cleanup.streetNumber(query)?.toString(),
       }))
       : []
   }
