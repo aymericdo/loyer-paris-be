@@ -66,3 +66,7 @@ export interface ParisAddressItem {
     c_ar: number
   }
 }
+
+export interface ParisAddressItemDB extends ParisAddressItem {
+  score: number;
+}

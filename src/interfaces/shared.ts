@@ -50,6 +50,10 @@ export interface DefaultAddressItem {
   }
 }
 
+export interface DefaultAddressItemDB extends DefaultAddressItem {
+  score: number;
+}
+
 export interface DefaultDistrictItem {
   type: 'Feature'
   properties: {

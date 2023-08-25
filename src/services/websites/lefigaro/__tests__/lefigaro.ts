@@ -4,6 +4,7 @@ import fs from 'fs'
 import { disconnect } from 'mongoose'
 import path from 'path'
 import { LeFigaro } from '../lefigaro'
+import { Response } from 'express'
 
 describe('lefigaro', () => {
   afterAll(async () => {
@@ -22,10 +23,10 @@ describe('lefigaro', () => {
         url: 'https://immobilier.lefigaro.fr/annonces/annonce-31231985.html1',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const lefigaro = new LeFigaro(mockResponse, { body })
 
@@ -71,10 +72,10 @@ describe('lefigaro', () => {
         url: 'https://immobilier.lefigaro.fr/annonces/annonce-31231985.html1',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const lefigaro = new LeFigaro(mockResponse, { body })
 

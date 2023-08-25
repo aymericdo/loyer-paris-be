@@ -4,6 +4,7 @@ import fs from 'fs'
 import { disconnect } from 'mongoose'
 import path from 'path'
 import { Pap } from '../pap'
+import { Response } from 'express'
 
 describe('pap', () => {
   afterAll(async () => {
@@ -22,10 +23,10 @@ describe('pap', () => {
         url: 'https://pap.fr/lkdfsklnf?r421900951',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const pap = new Pap(mockResponse, { body })
 
@@ -119,10 +120,10 @@ describe('pap', () => {
         url: 'https://pap.fr/lkdfsklnf?r421900951',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const pap = new Pap(mockResponse, { body })
 
@@ -168,10 +169,10 @@ describe('pap', () => {
         url: 'https://pap.fr/lkdfsklnf?r421900951',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const pap = new Pap(mockResponse, { body })
 

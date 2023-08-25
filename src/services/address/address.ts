@@ -8,7 +8,8 @@ import {
   PlaineCommuneAddress,
 } from '@db/db'
 import { Ad } from '@interfaces/ad'
-import { AddressItem, Coordinate } from '@interfaces/shared'
+import { ParisAddressItemDB } from '@interfaces/json-item-paris'
+import { AddressItem, Coordinate, DefaultAddressItemDB } from '@interfaces/shared'
 import { AvailableCities, cityList } from '@services/address/city'
 import * as cleanup from '@services/helpers/cleanup'
 import { regexString } from '@services/helpers/regex'
@@ -124,7 +125,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
     }
 
     const addressDb = dbMapping[cityList[city].mainCity]
-    const result = (await addressDb
+    const result: DefaultAddressItemDB[] = (await addressDb
       .find(
         {
           $text: { $search: query },
@@ -133,10 +134,10 @@ export class DefaultAddressStrategy implements AddressStrategy {
       )
       .sort({ score: { $meta: 'textScore' } })
       .limit(10)
-      .lean()) as any
+      .lean()) as DefaultAddressItemDB[]
 
     return result
-      ? result.map((r) => ({
+      ? result.map((r: DefaultAddressItemDB) => ({
         item: {
           address: `${r.numero} ${r.nom_voie}`,
           postalCode: r.code_postal.toString(),
@@ -146,7 +147,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
           },
         },
         score: r.score,
-        streetNumber: cleanup.streetNumber(query),
+        streetNumber: cleanup.streetNumber(query).toString(),
       }))
       : []
   }
@@ -204,10 +205,10 @@ export class ParisAddressStrategy extends DefaultAddressStrategy {
       )
       .sort({ score: { $meta: 'textScore' } })
       .limit(10)
-      .lean()) as any
+      .lean()) as ParisAddressItemDB[]
 
     return result
-      ? result.map((r) => ({
+      ? result.map((r: ParisAddressItemDB) => ({
         item: {
           address: r.fields.l_adr,
           postalCode: ParisAddressStrategy.postalCodeFormat(r.fields.c_ar.toString()),
@@ -217,7 +218,7 @@ export class ParisAddressStrategy extends DefaultAddressStrategy {
           },
         },
         score: r.score,
-        streetNumber: cleanup.streetNumber(query),
+        streetNumber: cleanup.streetNumber(query).toString(),
       }))
       : []
   }

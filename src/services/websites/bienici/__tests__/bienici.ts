@@ -4,6 +4,7 @@ import fs from 'fs'
 import { disconnect } from 'mongoose'
 import path from 'path'
 import { BienIci } from '../bienici'
+import { Response } from 'express'
 
 describe('bienici', () => {
   afterAll(async () => {
@@ -22,10 +23,10 @@ describe('bienici', () => {
         url: 'https://www.bienici.com/annonce/location/paris-11e/appartement/2pieces/guy-hoquet-immo-facile-4938963?q=%2Frecherche%2Flocation%2Fparis-11e-75011',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const bienici = new BienIci(mockResponse, { body })
 
@@ -71,10 +72,10 @@ describe('bienici', () => {
         url: 'https://www.bienici.com/annonce/location/paris-11e/appartement/2pieces/guy-hoquet-immo-facile-4938963?q=%2Frecherche%2Flocation%2Fparis-11e-75011',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const bienici = new BienIci(mockResponse, { body })
 
