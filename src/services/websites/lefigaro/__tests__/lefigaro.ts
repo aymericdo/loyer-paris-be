@@ -105,7 +105,7 @@ describe('lefigaro', () => {
           promoPercentage: { order: 8, value: 24.47 },
         },
         isLegal: false,
-        moreInfo: 'https://encadrement-loyers.lille.fr/',
+        moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
   })

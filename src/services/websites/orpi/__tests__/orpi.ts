@@ -105,7 +105,7 @@ describe('orpi', () => {
           promoPercentage: { order: 8, value: null },
         },
         isLegal: true,
-        moreInfo: 'https://encadrement-loyers.lille.fr/',
+        moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
   })
