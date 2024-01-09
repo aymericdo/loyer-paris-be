@@ -5,7 +5,7 @@ import { schedule } from 'node-cron'
 const TIMEZONE = 'Europe/Paris'
 export class CronJobsService {
   watch() {
-    // https://crontab.guru/#0_8_*_*_1
+    // https://crontab.guru/#0_8_*_*_1 :)
     schedule(
       '0 8 * * 5',
       async () => {
