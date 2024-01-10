@@ -15,7 +15,6 @@
     "test:watch": "jest --forceExit --detectOpenHandles --no-cache --watchAll",
     "dev": "ts-node-dev --transpile-only ./src/index.ts",
     "prod": "tsc && node ./build/src/index.js",
-    "build:prod": "rimraf ./build && tsc && node ./build/src/index.js",
     "debug": "tsc && node --inspect ./build/src/index.js",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix"
