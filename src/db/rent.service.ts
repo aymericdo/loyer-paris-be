@@ -467,6 +467,8 @@ export async function getRelevantAdsData(
 
   const filter = buildFilter(filterParam)
 
+  console.log(filter)
+
   try {
     const ads = (await Rent.find(
       filter,
@@ -494,6 +496,8 @@ export async function getRelevantAdsData(
         limit: perPage,
       }
     ).lean()) as unknown as RelevantAdsData[]
+
+    console.log(ads)
 
     return ads.map((ad) => {
       let blurry = false
@@ -592,19 +596,19 @@ function buildFilter(filterParam: {
     }
   }
 
+  if (filterParam.roomRange?.length) {
+    filter['roomCount'] = {
+      $gte: filterParam.roomRange[0],
+      $lte: filterParam.roomRange[1],
+    }
+  }
+
   if (filterParam.exceedingRange?.length) {
     filter['$expr'] = {
       $and: [
         { $lte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, filterParam.exceedingRange[1]] },
         { $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, filterParam.exceedingRange[0]] },
       ],
-    }
-  }
-
-  if (filterParam.roomRange?.length) {
-    filter['roomCount'] = {
-      $gte: filterParam.roomRange[0],
-      $lte: filterParam.roomRange[1],
     }
   }
 
