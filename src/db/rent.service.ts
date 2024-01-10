@@ -467,8 +467,6 @@ export async function getRelevantAdsData(
 
   const filter = buildFilter(filterParam)
 
-  console.log(filter)
-
   try {
     const ads = (await Rent.find(
       filter,
@@ -496,8 +494,6 @@ export async function getRelevantAdsData(
         limit: perPage,
       }
     ).lean()) as unknown as RelevantAdsData[]
-
-    console.log(ads)
 
     return ads.map((ad) => {
       let blurry = false
