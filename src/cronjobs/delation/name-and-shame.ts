@@ -15,7 +15,7 @@ export class NameAndShameService {
   v2Client = this.client.v2
 
   async call() {
-    ;[
+    [
       ['paris', 'Paris', '@Paris'],
       ['plaineCommune', 'Plaine Commune', '@prefpolice'],
       ['lille', 'Lille', '@prefet59'],
