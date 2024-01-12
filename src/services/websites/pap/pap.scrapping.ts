@@ -1,4 +1,5 @@
 import { PapMapping } from '@interfaces/mapping'
+import { ERROR_CODE } from '@services/api/errors'
 import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
@@ -16,7 +17,9 @@ export class PapScrapping {
     const itemTags = Array.from(document.querySelectorAll('.item-tags > li > strong'))
     const stations = Array.from(document.querySelectorAll('ul.item-transports > li > span.label'))
 
-    const sectionName = document.querySelector('[itemprop=itemListElement] > a[itemprop=item] > span[itemprop=name]')
+    const sectionName = document.querySelector(
+      'body > div.details-annonce-container > div > div.main-content > div > ol > li:nth-child(2)'
+    )
 
     let surface = null
     let rooms = null
@@ -31,8 +34,12 @@ export class PapScrapping {
 
     const dpe = document.querySelector('div.energy-indice > ul > li.active')
 
-    if (!sectionName || sectionName.textContent.trim() !== 'Location Appartement' || !title) {
+    if (!title) {
       return null
+    }
+
+    if (!sectionName || sectionName.textContent.trim() !== 'Location') {
+      throw { error: ERROR_CODE.Other, msg: 'not a rent' }
     }
 
     return {

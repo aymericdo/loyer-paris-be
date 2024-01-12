@@ -21,14 +21,14 @@ Sentry.init({
 
 app.use(
   express.json({
-    limit: '1mb',
+    limit: '5mb',
     type: ['application/json', 'text/plain'],
   })
 )
 
 app.use(
   express.urlencoded({
-    limit: '1mb',
+    limit: '5mb',
     extended: true,
     parameterLimit: 50000,
   })

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "18.x",
+    "node": "20.x",
     "npm": "9.x"
   },
   "scripts": {
@@ -14,7 +14,7 @@
     "test": "jest --forceExit --detectOpenHandles --no-cache",
     "test:watch": "jest --forceExit --detectOpenHandles --no-cache --watchAll",
     "dev": "ts-node-dev --transpile-only ./src/index.ts",
-    "prod": "tsc && node ./build/src/index.js",
+    "prod": "node ./build/src/index.js",
     "debug": "tsc && node --inspect ./build/src/index.js",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix"

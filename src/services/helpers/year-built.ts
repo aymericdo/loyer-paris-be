@@ -96,14 +96,11 @@ export class YearBuiltService {
           },
         },
       },
-      (err, batie) => {
-        if (err) {
-          console.error(err)
-        }
-
-        return batie
-      }
-    )
+    ).then((batie) => {
+      return batie
+    }).catch((err) => {
+      console.error(err)
+    })
   }
 
   static getYearBuiltFromBuilding(building) {

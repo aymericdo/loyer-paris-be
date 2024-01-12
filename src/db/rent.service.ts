@@ -592,19 +592,19 @@ function buildFilter(filterParam: {
     }
   }
 
+  if (filterParam.roomRange?.length) {
+    filter['roomCount'] = {
+      $gte: filterParam.roomRange[0],
+      $lte: filterParam.roomRange[1],
+    }
+  }
+
   if (filterParam.exceedingRange?.length) {
     filter['$expr'] = {
       $and: [
         { $lte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, filterParam.exceedingRange[1]] },
         { $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, filterParam.exceedingRange[0]] },
       ],
-    }
-  }
-
-  if (filterParam.roomRange?.length) {
-    filter['roomCount'] = {
-      $gte: filterParam.roomRange[0],
-      $lte: filterParam.roomRange[1],
     }
   }
 

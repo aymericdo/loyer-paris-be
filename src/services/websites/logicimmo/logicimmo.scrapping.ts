@@ -12,26 +12,23 @@ export class LogicimmoScrapping {
     const description = document.querySelector(
       'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div > div.blocDescrProperty > article > p.descrProperty'
     )
-    const price = document.querySelector(
-      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > ul > li.infoPriceBox > span'
-    )
-    const cityLabel = document.querySelector(
-      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressBottomBlock > strong > em'
-    )
+    const price = document.querySelector('body > main > div > div.mainContent > div.offerDetailContainer > section > div > h1 > div > div.offerSummaryPricing > p')
+
+    const cityLabel = document.querySelector('body > main > div > div.mainContent > div > section > div > h1 > div > div.offerSummaryDetails > p.locality')
     const renter = document.querySelector(
-      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span'
+      'body > main > div > div.mainContent > div.offerDetailContainer > div.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span'
     )
 
     const chargeNode = Array.from(
       document.querySelectorAll(
-        'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > section.aboutPriceBox > ul > ul > li.aboutPriceEl'
+        'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section > div.aboutPriceBox .aboutPriceContainer ul.aboutPriceList > li'
       )
     )
 
     const offerCriteria = Array.from(document.querySelectorAll('#dtlTechniqueBox > li.dtlTechiqueItm'))
     const itemTags = Array.from(
       document.querySelectorAll(
-        'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div.infosAnnounceBox > div > div > h1 > div.addressTopBlock > .propertyTypeInfos > em.feature'
+        'body > main > div > div > div.offerDetailContainer > section > div > h1 > div > div.offerSummaryDetails > p'
       )
     )
 

@@ -27,7 +27,7 @@ export async function getRelevantAds(req: Request, res: Response) {
   const surfaceRange: number[] = surfaceValue?.split(',')?.map((v) => +v)
   const priceRange: number[] = priceValue?.split(',')?.map((v) => +v)
   const exceedingRange: number[] = exceedingValue?.split(',')?.map((v) => +v)
-  const roomRange: number[] = roomValue?.split(',')?.map((v) => +v)
+  const roomRange: number[] = roomValue && roomValue !== '1,6' && roomValue?.split(',')?.map((v) => +v)
   const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
 
   if (!isLegalValue || !['true', 'false'].includes(isLegalValue)) {

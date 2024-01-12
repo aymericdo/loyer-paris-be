@@ -4,6 +4,7 @@ import fs from 'fs'
 import { disconnect } from 'mongoose'
 import path from 'path'
 import { Orpi } from '../orpi'
+import { Response } from 'express'
 
 describe('orpi', () => {
   afterAll(async () => {
@@ -22,10 +23,10 @@ describe('orpi', () => {
         url: 'https://www.orpi.com/annonce-location-appartement-t1-paris-11-75011-b-e1y6bt/',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const orpi = new Orpi(mockResponse, { body })
 
@@ -71,10 +72,10 @@ describe('orpi', () => {
         url: 'https://www.orpi.com/annonce-location-appartement-t1-paris-11-75011-b-e1y6bt/',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const orpi = new Orpi(mockResponse, { body })
 
@@ -104,7 +105,7 @@ describe('orpi', () => {
           promoPercentage: { order: 8, value: null },
         },
         isLegal: true,
-        moreInfo: 'https://encadrement-loyers.lille.fr/',
+        moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
   })

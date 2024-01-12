@@ -4,6 +4,7 @@ import * as fs from 'fs'
 import { disconnect } from 'mongoose'
 import * as path from 'path'
 import { SeLoger } from '../seloger'
+import { Response } from 'express'
 
 describe('seloger', () => {
   afterAll(async () => {
@@ -22,10 +23,10 @@ describe('seloger', () => {
         url: 'https://seloger.com/dfdsfs?ad=234523',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const seloger = new SeLoger(mockResponse, { body })
 
@@ -71,10 +72,10 @@ describe('seloger', () => {
         url: 'https://seloger.com/dfdsfs?ad=234523',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const seloger = new SeLoger(mockResponse, { body })
 
@@ -104,7 +105,7 @@ describe('seloger', () => {
           promoPercentage: { order: 8, value: 4.73 },
         },
         isLegal: false,
-        moreInfo: 'https://encadrement-loyers.lille.fr/',
+        moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
   })
@@ -120,10 +121,10 @@ describe('seloger', () => {
         url: 'https://seloger.com/dfdsfs?ad=234523',
       }
 
-      const mockResponse: any = {
+      const mockResponse: Response = {
         json: jest.fn(),
         status: jest.fn(),
-      }
+      } as unknown as Response
 
       const seloger = new SeLoger(mockResponse, { body })
 
