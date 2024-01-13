@@ -8,7 +8,7 @@ export class CronJobsService {
     // https://crontab.guru/#0_8_*_*_1 :)
     schedule(
       // '0 8 * * 5',
-      '35 15 * * 6',
+      '39 15 * * 6',
       async () => {
         try {
           if (process.env.STOP_TWITTER) { return }
