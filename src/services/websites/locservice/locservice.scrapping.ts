@@ -18,11 +18,14 @@ export class LocserviceScrapping {
     const surface = document.querySelector('#resume_detail > ul > li.surface')
     const cityLabel = document.querySelector('#YouAreThere > div:nth-child(1)')
 
+    const dpe = document.querySelector('#resume_detail > ul > li.dpe > div:nth-child(1) > span')
+
     return {
       id: null,
       cityLabel: cityLabel && cityLabel.textContent,
       hasCharges: price?.textContent.includes('CC'),
       description: description?.textContent,
+      dpe: dpe?.textContent,
       furnished: furnished?.textContent.includes('Loué meublé'),
       price: price && price.textContent.replace('.', ''),
       rooms: surface.textContent?.match(/\d+ pièce/g) && surface.textContent?.match(/\d+ pièce/g)[0],

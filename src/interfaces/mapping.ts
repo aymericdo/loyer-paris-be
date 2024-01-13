@@ -208,6 +208,7 @@ export interface LocserviceMapping {
   id: string
   title: string
   cityLabel: string
+  dpe: string | null
   description: string
   hasCharges: boolean
   furnished: boolean
