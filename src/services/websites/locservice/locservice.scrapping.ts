@@ -16,7 +16,7 @@ export class LocserviceScrapping {
     const price = document.querySelector('#resume_detail > ul > li.loyer')
     const furnished = document.querySelector('#resume_detail > ul > li.meuble')
     const surface = document.querySelector('#resume_detail > ul > li.surface')
-    const cityLabel = document.querySelector('#YouAreThere > a:nth-child(1)')
+    const cityLabel = document.querySelector('#YouAreThere > div:nth-child(1)')
 
     return {
       id: null,
