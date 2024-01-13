@@ -16,12 +16,12 @@ export class NameAndShameService {
 
   async call() {
     [
-      ['paris', 'Paris', '@Paris'],
-      ['plaineCommune', 'Plaine Commune', '@prefpolice'],
-      ['lille', 'Lille', '@prefet59'],
-      ['lyon', 'Lyon', '@prefetrhone'],
-      ['estEnsemble', 'Est Ensemble', '@prefpolice'],
-      ['bordeaux', 'Bordeaux', '@PrefAquitaine33'],
+      // ['paris', 'Paris', '@Paris'],
+      // ['plaineCommune', 'Plaine Commune', '@prefpolice'],
+      // ['lille', 'Lille', '@prefet59'],
+      // ['lyon', 'Lyon', '@prefetrhone'],
+      // ['estEnsemble', 'Est Ensemble', '@prefpolice'],
+      // ['bordeaux', 'Bordeaux', '@PrefAquitaine33'],
       ['montpellier', 'Montpellier', '@Prefet34'],
     ].forEach(async ([city, cityValue, prefecture]) => {
       const ads = await rentService.getShamefulAdsData(city, MAX_DELTA)
