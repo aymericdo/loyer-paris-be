@@ -1,15 +1,15 @@
-import { captureMessage, Severity } from '@sentry/node'
+import { captureMessage } from '@sentry/node'
 
 export class SentryService {
   error(message: string) {
-    captureMessage(message, Severity.Error)
+    captureMessage(message, 'error')
   }
 
   warning(message: string) {
-    captureMessage(message, Severity.Warning)
+    captureMessage(message, 'warning')
   }
 
   light(message: string) {
-    captureMessage(message, Severity.Log)
+    captureMessage(message, 'log')
   }
 }
