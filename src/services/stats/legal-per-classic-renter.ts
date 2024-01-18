@@ -1,5 +1,5 @@
 import * as rentService from '@db/rent.service'
-import { ERROR500_MSG } from '@services/api/errors'
+import { ApiErrorsService } from '@services/api/errors'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
@@ -107,12 +107,7 @@ export async function getLegalPerClassicRenter(req: Request, res: Response) {
 
     res.json(vegaMap)
   } catch (err) {
-    console.error(err)
-    if (err.status) {
-      res.status(err.status).json(err)
-    } else {
-      PrettyLog.call(ERROR500_MSG, 'red')
-      res.status(500).json(err)
-    }
+    const status = new ApiErrorsService(err).getStatus()
+    res.status(status).json(err)
   }
 }

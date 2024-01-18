@@ -14,7 +14,7 @@ export enum ERROR_CODE {
   Partner = 'partner',
 }
 
-export const ERROR500_MSG = 'ERROR 500'
+export const ERROR500_MSG = '[ERROR 500]'
 
 export class ApiErrorsService {
   error: ApiError = null
@@ -41,7 +41,7 @@ export class ApiErrorsService {
           PrettyLog.call(this.error.msg, 'yellow')
           break
         default: {
-          const errorMsg = this.error.msg || ERROR500_MSG
+          const errorMsg = `${ERROR500_MSG} ${this.error}`
           PrettyLog.call(errorMsg, 'red')
           new SentryService().error(errorMsg)
           break

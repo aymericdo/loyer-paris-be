@@ -32,23 +32,17 @@ export async function getMapData(
     }
   }
 
-  try {
-    return (await Rent.find(filter, {
-      isLegal: 1,
-      latitude: 1,
-      longitude: 1,
-      district: 1,
-    })) as unknown as {
+  return (await Rent.find(filter, {
+    isLegal: 1,
+    latitude: 1,
+    longitude: 1,
+    district: 1,
+  })) as unknown as {
       isLegal: boolean
       latitude: number
       longitude: number
       district: string
     }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
 }
 
 export async function getChloroplethMapData(
@@ -70,13 +64,7 @@ export async function getChloroplethMapData(
     }
   }
 
-  try {
-    return await Rent.find(filter, { isLegal: 1, district: 1 }).lean()
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+  return await Rent.find(filter, { isLegal: 1, district: 1 }).lean()
 }
 
 export async function getPriceDiffData(
@@ -101,21 +89,15 @@ export async function getPriceDiffData(
     }
   }
 
-  try {
-    return (await Rent.find(filter, {
-      maxPrice: 1,
-      postalCode: 1,
-      priceExcludingCharges: 1,
-    })) as unknown as {
-      maxPrice: number
-      postalCode: string
-      priceExcludingCharges: number
-    }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+  return (await Rent.find(filter, {
+    maxPrice: 1,
+    postalCode: 1,
+    priceExcludingCharges: 1,
+  })) as unknown as {
+    maxPrice: number
+    postalCode: string
+    priceExcludingCharges: number
+  }[]
 }
 
 export async function getLegalVarData(
@@ -168,19 +150,13 @@ export async function getLegalVarData(
     }
   }
 
-  try {
-    return (await Rent.find(filter, {
-      createdAt: 1,
-      isLegal: 1,
-    })) as unknown as {
-      isLegal: boolean
-      createdAt: string
-    }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+  return (await Rent.find(filter, {
+    createdAt: 1,
+    isLegal: 1,
+  })) as unknown as {
+    isLegal: boolean
+    createdAt: string
+  }[]
 }
 
 export async function getPriceVarData(
@@ -209,21 +185,15 @@ export async function getPriceVarData(
     }
   }
 
-  try {
-    return (await Rent.find(filter, {
-      createdAt: 1,
-      maxPrice: 1,
-      priceExcludingCharges: 1,
-    })) as unknown as {
-      createdAt: string
-      maxPrice: number
-      priceExcludingCharges: number
-    }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+  return (await Rent.find(filter, {
+    createdAt: 1,
+    maxPrice: 1,
+    priceExcludingCharges: 1,
+  })) as unknown as {
+    createdAt: string
+    maxPrice: number
+    priceExcludingCharges: number
+  }[]
 }
 
 export async function getLegalPerClassicRenterData(
@@ -253,16 +223,11 @@ export async function getLegalPerClassicRenterData(
       $lte: dateRange[1],
     }
   }
-  try {
-    return (await Rent.find(filter, {
-      isLegal: 1,
-      renter: 1,
-    }).lean()) as unknown as { isLegal: boolean; renter: string }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+
+  return (await Rent.find(filter, {
+    isLegal: 1,
+    renter: 1,
+  }).lean()) as unknown as { isLegal: boolean; renter: string }[]
 }
 
 export async function getLegalPerRenterData(
@@ -285,16 +250,11 @@ export async function getLegalPerRenterData(
       $lte: dateRange[1],
     }
   }
-  try {
-    return (await Rent.find(filter, { isLegal: 1, renter: 1 })) as unknown as {
-      isLegal: boolean
-      renter: string
-    }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+
+  return (await Rent.find(filter, { isLegal: 1, renter: 1 })) as unknown as {
+    isLegal: boolean
+    renter: string
+  }[]
 }
 
 export async function getLegalPerDPEData(
@@ -317,16 +277,11 @@ export async function getLegalPerDPEData(
       $lte: dateRange[1],
     }
   }
-  try {
-    return (await Rent.find(filter, { isLegal: 1, dpe: 1 })) as unknown as {
-      isLegal: boolean
-      dpe: string
-    }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+
+  return (await Rent.find(filter, { isLegal: 1, dpe: 1 })) as unknown as {
+    isLegal: boolean
+    dpe: string
+  }[]
 }
 
 export async function getLegalPerWebsiteData(
@@ -348,19 +303,14 @@ export async function getLegalPerWebsiteData(
       $lte: dateRange[1],
     }
   }
-  try {
-    return (await Rent.find(filter, {
-      isLegal: 1,
-      website: 1,
-    }).lean()) as unknown as {
-      isLegal: boolean
-      website: string
-    }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+
+  return (await Rent.find(filter, {
+    isLegal: 1,
+    website: 1,
+  }).lean()) as unknown as {
+    isLegal: boolean
+    website: string
+  }[]
 }
 
 export async function getLegalPerSurfaceData(
@@ -382,28 +332,17 @@ export async function getLegalPerSurfaceData(
       $lte: dateRange[1],
     }
   }
-  try {
-    return (await Rent.find(filter, { isLegal: 1, surface: 1 })) as unknown as {
-      isLegal: boolean
-      surface: number
-    }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+
+  return (await Rent.find(filter, { isLegal: 1, surface: 1 })) as unknown as {
+    isLegal: boolean
+    surface: number
+  }[]
 }
 
 export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
-  try {
-    return (await Rent.find({}, { createdAt: 1 })) as unknown as {
-      createdAt: string
-    }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+  return (await Rent.find({}, { createdAt: 1 })) as unknown as {
+    createdAt: string
+  }[]
 }
 
 export async function getWelcomeData(city: string = null): Promise<{ isLegal: boolean; surface: number }[]> {
@@ -413,16 +352,10 @@ export async function getWelcomeData(city: string = null): Promise<{ isLegal: bo
     filter['city'] = getCity(city as AvailableMainCities)
   }
 
-  try {
-    return (await Rent.find(filter, { isLegal: 1, surface: 1 })) as unknown as {
-      isLegal: boolean
-      surface: number
-    }[]
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+  return (await Rent.find(filter, { isLegal: 1, surface: 1 })) as unknown as {
+    isLegal: boolean
+    surface: number
+  }[]
 }
 
 interface RelevantAdsData {
@@ -467,68 +400,62 @@ export async function getRelevantAdsData(
 
   const filter = buildFilter(filterParam)
 
-  try {
-    const ads = (await Rent.find(
-      filter,
-      {
-        id: 1,
-        surface: 1,
-        roomCount: 1,
-        website: 1,
-        createdAt: 1,
-        hasFurniture: 1,
-        price: 1,
-        maxPrice: 1,
-        isLegal: 1,
-        priceExcludingCharges: 1,
-        district: 1,
-        url: 1,
-        city: 1,
-        isHouse: 1,
-        longitude: 1,
-        latitude: 1,
-      },
-      {
-        sort: { createdAt: -1 },
-        skip: page * perPage,
-        limit: perPage,
-      }
-    ).lean()) as unknown as RelevantAdsData[]
-
-    return ads.map((ad) => {
-      let blurry = false
-
-      if (!ad.longitude || !ad.latitude) {
-        const mainCity = cityList[ad.city].mainCity
-
-        const polygon = new DistrictsList(mainCity as AvailableMainCities).currentPolygon(ad.district)
-
-        const point = randomPositionInPolygon({
-          type: 'Feature',
-          geometry: polygon,
-        })
-
-        ad.longitude = point[0]
-        ad.latitude = point[1]
-        blurry = true
-      }
-
-      const exceeding = !ad.isLegal ? roundNumber(ad.priceExcludingCharges - ad.maxPrice) : null
-      delete ad.isLegal
-      delete ad.priceExcludingCharges
-      delete ad.maxPrice
-
-      return {
-        ...ad,
-        blurry,
-        exceeding,
-      }
-    })
-  } catch (err) {
-    if (err) {
-      throw err
+  const ads = (await Rent.find(
+    filter,
+    {
+      id: 1,
+      surface: 1,
+      roomCount: 1,
+      website: 1,
+      createdAt: 1,
+      hasFurniture: 1,
+      price: 1,
+      maxPrice: 1,
+      isLegal: 1,
+      priceExcludingCharges: 1,
+      district: 1,
+      url: 1,
+      city: 1,
+      isHouse: 1,
+      longitude: 1,
+      latitude: 1,
+    },
+    {
+      sort: { createdAt: -1 },
+      skip: page * perPage,
+      limit: perPage,
     }
-  }
+  ).lean()) as unknown as RelevantAdsData[]
+
+  return ads.map((ad) => {
+    let blurry = false
+
+    if (!ad.longitude || !ad.latitude) {
+      const mainCity = cityList[ad.city].mainCity
+
+      const polygon = new DistrictsList(mainCity as AvailableMainCities).currentPolygon(ad.district)
+
+      const point = randomPositionInPolygon({
+        type: 'Feature',
+        geometry: polygon,
+      })
+
+      ad.longitude = point[0]
+      ad.latitude = point[1]
+      blurry = true
+    }
+
+    const exceeding = !ad.isLegal ? roundNumber(ad.priceExcludingCharges - ad.maxPrice) : null
+    delete ad.isLegal
+    delete ad.priceExcludingCharges
+    delete ad.maxPrice
+
+    return {
+      ...ad,
+      blurry,
+      exceeding,
+    }
+  })
 }
 
 export async function getRelevantAdsDataTotalCount(filterParam: {
@@ -612,16 +539,10 @@ function buildFilter(filterParam: {
 }
 
 export async function getAdById(id: string, website: string): Promise<DataBaseItem> {
-  try {
-    return (await Rent.findOne({
-      id,
-      website,
-    })) as unknown as Promise<DataBaseItem>
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+  return (await Rent.findOne({
+    id,
+    website,
+  })) as unknown as Promise<DataBaseItem>
 }
 
 export async function getShamefulAdsData(
@@ -647,29 +568,23 @@ export async function getShamefulAdsData(
     },
   }
 
-  try {
-    return (await Rent.find(
-      filter,
-      {
-        website: 1,
-        priceExcludingCharges: 1,
-        maxPrice: 1,
-        url: 1,
-      },
-      {
-        sort: { createdAt: -1 },
-      }
-    )) as unknown as {
-      url: string
-      website: string
-      priceExcludingCharges: number
-      maxPrice: number
-    }[]
-  } catch (err) {
-    if (err) {
-      throw err
+  return (await Rent.find(
+    filter,
+    {
+      website: 1,
+      priceExcludingCharges: 1,
+      maxPrice: 1,
+      url: 1,
+    },
+    {
+      sort: { createdAt: -1 },
     }
-  }
+  )) as unknown as {
+    url: string
+    website: string
+    priceExcludingCharges: number
+    maxPrice: number
+  }[]
 }
 
 export async function getCountByWebsite(): Promise<{
@@ -678,31 +593,25 @@ export async function getCountByWebsite(): Promise<{
   const today = new Date()
   const minDate = new Date(today.setDate(today.getDate() - 1))
 
-  try {
-    return (
-      (await Rent.aggregate([
-        {
-          $match: { createdAt: { $gte: minDate } },
-        },
-        {
-          $group: {
-            _id: { website: '$website' },
-            count: {
-              $sum: 1,
-            },
+  return (
+    (await Rent.aggregate([
+      {
+        $match: { createdAt: { $gte: minDate } },
+      },
+      {
+        $group: {
+          _id: { website: '$website' },
+          count: {
+            $sum: 1,
           },
         },
-      ])) as unknown as {
-        _id: { website: string }
-        count: number
-      }[]
-    ).reduce((prev, obj) => {
-      prev[obj._id.website] = obj.count
-      return prev
-    }, {})
-  } catch (err) {
-    if (err) {
-      throw err
-    }
-  }
+      },
+    ])) as unknown as {
+      _id: { website: string }
+      count: number
+    }[]
+  ).reduce((prev, obj) => {
+    prev[obj._id.website] = obj.count
+    return prev
+  }, {})
 }

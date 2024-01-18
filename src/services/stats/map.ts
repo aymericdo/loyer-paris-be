@@ -1,6 +1,6 @@
 import * as rentService from '@db/rent.service'
 import { AvailableMainCities } from '@services/address/city'
-import { ERROR500_MSG } from '@services/api/errors'
+import { ApiErrorsService, ERROR500_MSG } from '@services/api/errors'
 import { DISTRICT_FIELD, DistrictsList } from '@services/districts/districts-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
@@ -68,12 +68,7 @@ export function getMap(req: Request, res: Response) {
       res.json(vegaMap)
     })
     .catch((err) => {
-      console.error(err)
-      if (err.status) {
-        res.status(err.status).json(err)
-      } else {
-        PrettyLog.call(ERROR500_MSG, 'red')
-        res.status(500).json(err)
-      }
+      const status = new ApiErrorsService(err).getStatus()
+      res.status(status).json(err)
     })
 }
