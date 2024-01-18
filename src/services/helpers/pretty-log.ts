@@ -4,7 +4,7 @@ import clc from 'cli-color'
 export class PrettyLog {
   static call(message: string, color?: string) {
     const date = new Date()
-    const log = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}] ${message}`
+    const log = `[${date.toISOString()}] ${message}`
     if (color === 'red') {
       console.log(clc.redBright(log))
     } else if (color === 'blue') {
