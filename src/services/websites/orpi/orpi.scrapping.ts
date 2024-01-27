@@ -13,7 +13,7 @@ export class OrpiScrapping {
 
     if (!dataDOM) return null
 
-    const dataElement = JSON.parse((dataDOM as unknown as { dataset: { eulerianAction: string } }).dataset.eulerianAction)
+    const dataElement = JSON.parse((dataDOM as unknown as { dataset: { tmAction: string } }).dataset.tmAction)
     const description = document.querySelector('div.o-container > p')
     const chargesElement = Array.from(
       document.querySelectorAll('.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li')
