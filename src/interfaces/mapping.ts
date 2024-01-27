@@ -82,18 +82,15 @@ export interface OrpiMapping {
   id: string
   charges: string
   cityLabel: string
-  coord: Coordinate
   description: string
   dpe: string | null
   furnished: boolean
   hasCharges: boolean
-  price: number
-  postalCode: string
+  price: string
   renter: string
   rooms: number
   surface: number
   title: string
-  yearBuilt: number
 }
 
 export interface PapMapping {
