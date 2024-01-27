@@ -25,8 +25,8 @@ export class OrpiScrapping {
     const dpeRegex = /([A-Z])/g
     let dpeText = null
 
-    if (dpe && dpe.textContent) {
-      dpeText = dpe.textContent.replace(dpeRegex, ' $1').trim()
+    if (dpe?.textContent) {
+      dpeText = dpe?.textContent?.replace(dpeRegex, ' $1')?.trim()
     }
 
     const features = document.querySelectorAll('#collapse-details > div ul.o-grid li')
