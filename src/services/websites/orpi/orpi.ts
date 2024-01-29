@@ -46,21 +46,15 @@ export class Orpi extends Website {
       id: ad.id.toString(),
       charges: cleanup.number(ad.charges),
       cityLabel: cleanup.string(ad.cityLabel),
-      coord: {
-        lat: +ad.coord.lat,
-        lng: +ad.coord.lng,
-      },
       description: cleanup.string(ad.description),
       dpe: ad.dpe ? cleanup.string(ad.dpe) : null,
       hasCharges: ad.hasCharges,
       furnished: ad.furnished,
-      price: ad.price,
-      postalCode: ad.postalCode,
+      price: cleanup.price(ad.price),
       renter: cleanup.string(ad.renter),
       rooms: ad.rooms,
       surface: ad.surface,
       title: cleanup.string(ad.title),
-      yearBuilt: !!ad.yearBuilt && ad.yearBuilt,
     }
   }
 }

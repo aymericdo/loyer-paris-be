@@ -41,7 +41,7 @@ export class ApiErrorsService {
           PrettyLog.call(this.error.msg, 'yellow')
           break
         default: {
-          const errorMsg = `${ERROR500_MSG} ${this.error}`
+          const errorMsg = `${ERROR500_MSG} ${this.error?.stack || this.error}`
           PrettyLog.call(errorMsg, 'red')
           new SentryService().error(errorMsg)
           break
