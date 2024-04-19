@@ -8,3 +8,16 @@ export interface BordeauxEncadrementItem {
   prix_med: string;
   prix_max: string;
 }
+
+export interface BordeauxDistrictItem {
+  type: 'Feature'
+  properties: {
+    com_code: number
+    zonage: string
+    commune: string
+  }
+  geometry: {
+    type: 'Polygon'
+    coordinates: number[][][]
+  }
+}

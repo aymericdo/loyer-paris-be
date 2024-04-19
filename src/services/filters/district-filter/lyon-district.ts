@@ -9,22 +9,6 @@ export class LyonDistrictFilter extends DistrictFilterParent {
     return super.getDistricts() as LyonDistrictItem[]
   }
 
-  protected getDistrictFromName(): LyonDistrictItem[] {
-    return (this.getDistrictsJson() as LyonDistrictItem[]).filter((district) => {
-      return +district.properties.zonage === +this.districtName.match(/\d+/)[0]
-    })
-  }
-
-  protected getDistrictFromPostalCode(): LyonDistrictItem[] {
-    if (this.postalCode) {
-      return (this.getDistrictsJson() as LyonDistrictItem[]).filter((district) => {
-        return this.getPostalCode(district.properties.commune) === this.postalCode
-      })
-    } else {
-      return []
-    }
-  }
-
   private getPostalCode(cityName: string): string {
     switch (cityName) {
       case 'Villeurbanne':

@@ -91,12 +91,11 @@ export class DistrictsList {
     switch (this.city) {
       case 'paris':
         return data['properties']['l_qu']
+      case 'lille':
       case 'lyon':
-        return `Zone ${data['properties']['zonage']}`
       case 'plaineCommune':
       case 'estEnsemble':
       case 'montpellier':
-      case 'lille':
       case 'bordeaux':
         return `Zone ${data['properties']['Zone']}`
     }
