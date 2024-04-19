@@ -22,7 +22,7 @@ export class FilterLille extends EncadrementFilterParent {
     const rentList = (this.rangeRentsJson() as LilleEncadrementItem[]).filter((rangeRent) => {
       return (
         (districtsMatched?.length
-          ? districtsMatched.map((district) => +district.properties.zonage).includes(+rangeRent['zone'])
+          ? districtsMatched.map((district) => +district.properties.Zone).includes(+rangeRent['zone'])
           : true) &&
         (timeDates?.length ? timeDates.includes(rangeRent['annee_de_construction']) : true) &&
         (this.infoToFilter.roomCount

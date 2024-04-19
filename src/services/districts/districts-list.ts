@@ -92,10 +92,9 @@ export class DistrictsList {
       case 'paris':
         return data['properties']['l_qu']
       case 'lille':
-        return `Zone ${data['properties']['zonage']}`
+      case 'lyon':
       case 'plaineCommune':
       case 'estEnsemble':
-      case 'lyon':
       case 'montpellier':
       case 'bordeaux':
         return `Zone ${data['properties']['Zone']}`
