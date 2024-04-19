@@ -8,10 +8,4 @@ export class LilleDistrictFilter extends DistrictFilterParent {
   getDistricts(): LilleDistrictItem[] {
     return super.getDistricts() as LilleDistrictItem[]
   }
-
-  protected getDistrictFromName(): LilleDistrictItem[] {
-    return (this.getDistrictsJson() as LilleDistrictItem[]).filter((district) => {
-      return +district.properties.zonage === +this.districtName.match(/\d+/)[0]
-    })
-  }
 }
