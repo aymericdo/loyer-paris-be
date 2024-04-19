@@ -23,7 +23,7 @@ export class FilterLyon extends EncadrementFilterParent {
       (rangeRent) => {
         return (
           (districtsMatched?.length
-            ? districtsMatched.map((district) => +district.properties.zonage).includes(+rangeRent.zone)
+            ? districtsMatched.map((district) => +district.properties.Zone).includes(+rangeRent.zone)
             : true) &&
           (timeDates?.length ? timeDates.includes(rangeRent.yearBuilt) : true) &&
           (this.infoToFilter.roomCount
