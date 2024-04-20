@@ -8,20 +8,6 @@ export interface LyonEncadrementItem {
   prix_max: string
 }
 
-export interface UnitItem {
-  loyer_reference: number
-  majoration_unitaire: number
-  loyer_reference_majore: number
-  loyer_reference_minore: number
-}
-
-export interface UnitItemComplete extends UnitItem {
-  zone: string
-  roomCount: string
-  yearBuilt: string
-  isFurnished: string
-}
-
 export interface LyonDistrictItem {
   type: 'Feature'
   properties: {
