@@ -1,5 +1,3 @@
-import { Coordinate } from '@interfaces/shared'
-
 export interface Body {
   noMoreData?: boolean
   platform: string

@@ -1,6 +1,6 @@
 import * as rentService from '@db/rent.service'
 import { cityList } from '@services/address/city'
-import { ApiErrorsService, ERROR500_MSG } from '@services/api/errors'
+import { ApiErrorsService } from '@services/api/errors'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
