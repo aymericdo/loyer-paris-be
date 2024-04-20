@@ -1,6 +1,6 @@
 import { IncompleteAd } from '@interfaces/ad'
 import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
-import { BordeauxEncadrementItem } from './json-item-bordeaux'
+import { BordeauxDistrictItem, BordeauxEncadrementItem } from './json-item-bordeaux'
 import { EstEnsembleEncadrementItem } from './json-item-est-ensemble'
 import { LilleDistrictItem, LilleEncadrementItem } from './json-item-lille'
 import { LyonDistrictItem, LyonEncadrementItem } from './json-item-lyon'
@@ -71,7 +71,7 @@ export interface DefaultDistrictItem {
 
 export type AddressItemDB = DefaultAddressItem | ParisAddressItem
 
-export type DistrictItem = DefaultDistrictItem | LilleDistrictItem | LyonDistrictItem | ParisDistrictItem
+export type DistrictItem = DefaultDistrictItem | LilleDistrictItem | LyonDistrictItem | ParisDistrictItem | BordeauxDistrictItem
 
 export type EncadrementItem =
   | ParisEncadrementItem

@@ -17,8 +17,7 @@ export interface LilleDistrictItem {
     coordinates: number[][][]
   }
   properties: {
-    zonage: number
-    geo_point_2d: [number, number]
+    Zone: number
     [DISPLAY_ZONE_FIELD]: string
   }
 }

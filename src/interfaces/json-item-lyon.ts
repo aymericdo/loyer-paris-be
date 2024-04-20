@@ -25,21 +25,7 @@ export interface UnitItemComplete extends UnitItem {
 export interface LyonDistrictItem {
   type: 'Feature'
   properties: {
-    zonage: string
-    commune: string
-  }
-  geometry: {
-    type: 'Polygon'
-    coordinates: number[][][]
-  }
-}
-
-export interface BordeauxDistrictItem {
-  type: 'Feature'
-  properties: {
-    com_code: number
-    zonage: string
-    commune: string
+    Zone: string
   }
   geometry: {
     type: 'Polygon'

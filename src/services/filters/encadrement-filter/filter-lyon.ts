@@ -8,7 +8,8 @@ import { YearBuiltService } from '@services/helpers/year-built'
 export class FilterLyon extends EncadrementFilterParent {
   city: AvailableMainCities = 'lyon'
   // Extract possible range time from rangeRents (json-data/quartier_lyon.geojson)
-  rangeTime = ['avant 1946', '1946-70', '1971-90', 'après 1990']
+  rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', '1991-2005', 'apres 2005']
+  universalRangeTime: [number, number][] = [[null, 1946], [1946, 1970], [1971, 1990], [1991, 2005], [2005, null]]
 
   filter(): FilteredResult[] {
     const districtsMatched = new LyonDistrictFilter(
@@ -24,7 +25,7 @@ export class FilterLyon extends EncadrementFilterParent {
     const rentList = (this.rangeRentsJson() as LyonEncadrementItem[]).filter((rangeRent) => {
       return (
         (districtsMatched?.length
-          ? districtsMatched.map((district) => +district.properties.zonage).includes(+rangeRent['zone'])
+          ? districtsMatched.map((district) => +district.properties.Zone).includes(+rangeRent['zone'])
           : true) &&
         (timeDates?.length ? timeDates.includes(rangeRent['annee_de_construction']) : true) &&
         (this.infoToFilter.roomCount
