@@ -7,7 +7,7 @@ import { Memoize } from 'typescript-memoize'
 
 const CITY_FILE_PATHS = {
   paris: 'json-data/encadrements_paris.json',
-  lille: 'json-data/encadrements_lille_2023.json',
+  lille: 'json-data/encadrements_lille_2024.json',
   plaineCommune: 'json-data/encadrements_plaine-commune_2023.json',
   estEnsemble: 'json-data/encadrements_est-ensemble_2023.json',
   lyon: 'json-data/encadrements_lyon_2024.json',
