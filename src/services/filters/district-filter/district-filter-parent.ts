@@ -29,6 +29,9 @@ export class DistrictFilterParent {
       this.coordinates?.lng &&
       this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
+    console.log(this.coordinates)
+    console.log('districtFromCoordinate', districtFromCoordinate)
+
     return districtFromCoordinate?.length ? districtFromCoordinate : this.getDistrictFromPostalCode()
   }
 
@@ -54,7 +57,7 @@ export class DistrictFilterParent {
 
   private getDistrictFromCoordinate(lat: number, lng: number): DistrictItem[] {
     const district = (this.getDistrictsJson() as DefaultDistrictItem[]).find((district) =>
-      inside([+lng, +lat], district.geometry.coordinates[0])
+      inside([+lng, +lat], district.geometry.coordinates[0].flat())
     )
     return district ? [district] : []
   }

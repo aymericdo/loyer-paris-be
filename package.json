@@ -22,6 +22,7 @@
   "author": "Aymeric & Thomas",
   "license": "ISC",
   "dependencies": {
+    "@mapbox/geojson-rewind": "^0.5.2",
     "@sentry/node": "^7.64.0",
     "@slack/web-api": "^7.0.0",
     "@types/cli-color": "^2.0.2",
