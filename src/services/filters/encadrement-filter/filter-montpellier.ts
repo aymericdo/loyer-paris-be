@@ -13,6 +13,7 @@ export class FilterMontpellier extends EncadrementFilterParent {
 
   async filter(): Promise<FilteredResult[]> {
     const districtsMatched = await new MontpellierDistrictFilter(
+      this.infoToFilter.city,
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName

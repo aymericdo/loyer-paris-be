@@ -6,7 +6,8 @@ import { EncadrementFilterParent } from '@services/filters/encadrement-filter/en
 import { YearBuiltService } from '@services/helpers/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
-import { Memoize } from 'typescript-memoize'
+
+const mappingQuartierZoneParisJson: ParisQuartierItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris_quartiers.json'), 'utf8'))
 
 export class FilterParis extends EncadrementFilterParent {
   city: AvailableMainCities = 'paris'
@@ -15,6 +16,7 @@ export class FilterParis extends EncadrementFilterParent {
 
   async filter(): Promise<FilteredResult[]> {
     const districtsMatched = await new ParisDistrictFilter(
+      this.infoToFilter.city,
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName
@@ -28,10 +30,10 @@ export class FilterParis extends EncadrementFilterParent {
       currentYear -= 1
     }
 
-    const zones: ParisQuartierItem[] = this.mappingQuartierZoneParisJson().filter((zoneRent) => {
+    const zones: ParisQuartierItem[] = mappingQuartierZoneParisJson.filter((zoneRent) => {
       return districtsMatched?.length
         ? districtsMatched.map((district) => district.properties.c_qu).includes(zoneRent.id_quartier)
-        : []
+        : false
     })
 
     const rentList = (this.rangeRentsJson() as ParisEncadrementItem[]).filter((rangeRent) => {
@@ -64,10 +66,5 @@ export class FilterParis extends EncadrementFilterParent {
       .sort((a, b) => {
         return this.rangeTime.indexOf(a.yearBuilt) - this.rangeTime.indexOf(b.yearBuilt)
       })
-  }
-
-  @Memoize()
-  private mappingQuartierZoneParisJson(): ParisQuartierItem[] {
-    return JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris_quartiers.json'), 'utf8'))
   }
 }

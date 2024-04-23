@@ -5,7 +5,7 @@ import { DefaultDistrictItem } from '@interfaces/shared'
 
 export class LilleDistrictFilter extends DistrictFilterParent {
   GeojsonCollection = LilleGeojson
-  city: AvailableMainCities = 'lille'
+  mainCity: AvailableMainCities = 'lille'
 
   async getDistricts(): Promise<DefaultDistrictItem[]> {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>

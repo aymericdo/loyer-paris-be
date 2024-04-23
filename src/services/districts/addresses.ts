@@ -34,6 +34,7 @@ export async function getAddresses(req: Request, res: Response) {
     case 'paris':
       data = (data as ParisAddressItemDB[]).map((elem) => {
         const parisDistrictFilter = new CurrentDistrictFilter(
+          city,
           ParisAddressStrategy.postalCodeFormat(elem.fields.c_ar.toString()),
           {
             lng: elem.geometry.coordinates[0],
@@ -51,10 +52,13 @@ export async function getAddresses(req: Request, res: Response) {
       break
     default:
       data = (data as DefaultAddressItemDB[]).map((elem) => {
-        const currentDistrictFilter = new CurrentDistrictFilter(elem.code_postal, {
-          lng: elem.geometry.coordinates[0],
-          lat: elem.geometry.coordinates[1],
-        })
+        const currentDistrictFilter = new CurrentDistrictFilter(
+          elem.nom_commune,
+          elem.code_postal, {
+            lng: elem.geometry.coordinates[0],
+            lat: elem.geometry.coordinates[1],
+          }
+        )
 
         const district = currentDistrictFilter.getFirstDistrict() as DefaultDistrictItem
 

@@ -12,6 +12,7 @@ export class FilterLille extends EncadrementFilterParent {
 
   async filter(): Promise<FilteredResult[]> {
     const districtsMatched = await new LilleDistrictFilter(
+      this.infoToFilter.city,
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName

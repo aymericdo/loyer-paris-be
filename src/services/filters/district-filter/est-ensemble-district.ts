@@ -5,7 +5,7 @@ import { EstEnsembleGeojson } from '@db/db'
 
 export class EstEnsembleDistrictFilter extends DistrictFilterParent {
   GeojsonCollection = EstEnsembleGeojson
-  city: AvailableMainCities = 'estEnsemble'
+  mainCity: AvailableMainCities = 'estEnsemble'
 
   async getDistricts(): Promise<DefaultDistrictItem[]> {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>

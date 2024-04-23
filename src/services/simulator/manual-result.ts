@@ -41,6 +41,7 @@ export async function getManualResult(req: Request, res: Response) {
     yearBuilt: dateBuiltStr[0] === -1 ? null : dateBuiltStr,
     districtName: district,
     roomCount: room,
+    city: null,
     hasFurniture,
   }
 

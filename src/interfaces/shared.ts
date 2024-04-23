@@ -3,7 +3,7 @@ import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
 import { BordeauxDistrictItem, BordeauxEncadrementItem } from './json-item-bordeaux'
 import { EstEnsembleEncadrementItem } from './json-item-est-ensemble'
 import { LilleEncadrementItem } from './json-item-lille'
-import { LyonEncadrementItem } from './json-item-lyon'
+import { LyonDistrictItem, LyonEncadrementItem } from './json-item-lyon'
 import { MontpellierEncadrementItem } from './json-item-montpellier'
 import { ParisAddressItemDB, ParisDistrictItem, ParisEncadrementItem } from './json-item-paris'
 import { PlaineCommuneDistrictItem, PlaineCommuneEncadrementItem } from './json-item-plaine-commune'
@@ -66,7 +66,7 @@ export interface DefaultDistrictItem {
 
 export type AddressItemDB = DefaultAddressItemDB | ParisAddressItemDB
 
-export type DistrictItem = DefaultDistrictItem | ParisDistrictItem | BordeauxDistrictItem | PlaineCommuneDistrictItem
+export type DistrictItem = DefaultDistrictItem | ParisDistrictItem | BordeauxDistrictItem | PlaineCommuneDistrictItem | LyonDistrictItem
 
 export type EncadrementItem =
   | ParisEncadrementItem

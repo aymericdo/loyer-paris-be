@@ -1,16 +1,17 @@
 import { Coordinate, DistrictItem } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/address/city'
-import { DistrictsList } from '@services/districts/districts-list'
+import { AvailableCities, AvailableMainCities } from '@services/address/city'
 
 export class DistrictFilterParent {
   GeojsonCollection = null
-  city: AvailableMainCities = null
+  mainCity: AvailableMainCities = null
+  city: AvailableCities = null
 
   coordinates: Coordinate = null
   postalCode: string = null
   districtName: string = null
 
-  constructor(postalCode: string, coordinates?: Coordinate, districtName?: string) {
+  constructor(city: AvailableCities, postalCode: string, coordinates?: Coordinate, districtName?: string) {
+    this.city = city
     this.coordinates = coordinates
     this.postalCode = postalCode
     this.districtName = districtName

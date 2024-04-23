@@ -4,7 +4,7 @@ import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterParent } from './district-filter-parent'
 
 export class BordeauxDistrictFilter extends DistrictFilterParent {
-  city: AvailableMainCities = 'bordeaux'
+  mainCity: AvailableMainCities = 'bordeaux'
 
   async getDistricts(): Promise<DefaultDistrictItem[]> {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>
@@ -19,7 +19,8 @@ export class BordeauxDistrictFilter extends DistrictFilterParent {
       )
       return districts?.length ? districts : []
     } else {
-      return []
+      // There is not other city in the Bordeaux Agglomeration
+      return await this.GeojsonCollection.find({})
     }
   }
 }

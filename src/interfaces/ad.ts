@@ -47,6 +47,7 @@ export interface InfoToFilter {
   hasFurniture: boolean
   postalCode: string
   coordinates: Coordinate
+  city: AvailableCities
   blurryCoordinates: Coordinate
   yearBuilt: number[]
   districtName?: string

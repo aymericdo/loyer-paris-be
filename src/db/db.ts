@@ -61,6 +61,7 @@ export const EstEnsembleAddress = encadrementAddress2Connection.model('estensemb
 export const MontpellierAddress = encadrementAddress2Connection.model('montpellieraddresses', montpellierAddressSchema)
 export const BordeauxAddress = encadrementAddress2Connection.model('bordeauxaddresses', bordeauxAddressSchema)
 
+// https://www.data.gouv.fr/fr/datasets/resultats-des-observatoires-locaux-des-loyers-par-agglomeration/
 export const LyonGeojson = encadrementZone1Connection.model('lyongeojsons', zoneSchema)
 export const LilleGeojson = encadrementZone1Connection.model('lillegeojsons', zoneSchema)
 export const PlaineCommuneGeojson = encadrementZone1Connection.model('plainecommunegeojsons', zoneSchema)

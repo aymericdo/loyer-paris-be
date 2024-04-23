@@ -8,14 +8,14 @@ import { ParisDistrictFilter } from './paris-district'
 import { PlaineCommuneDistrictFilter } from './plaine-commune-district'
 
 export class DistrictFilterFactory {
-  city: AvailableMainCities
+  mainCity: AvailableMainCities
 
-  constructor(city: AvailableMainCities) {
-    this.city = city
+  constructor(mainCity: AvailableMainCities) {
+    this.mainCity = mainCity
   }
 
   currentFilter() {
-    switch (this.city) {
+    switch (this.mainCity) {
       case 'paris':
         return ParisDistrictFilter
       case 'lille':

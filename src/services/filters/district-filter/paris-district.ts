@@ -5,7 +5,7 @@ import { ParisGeojson } from '@db/db'
 
 export class ParisDistrictFilter extends DistrictFilterParent {
   GeojsonCollection = ParisGeojson
-  city: AvailableMainCities = 'paris'
+  mainCity: AvailableMainCities = 'paris'
 
   async getDistricts(): Promise<ParisDistrictItem[]> {
     return super.getDistricts() as Promise<ParisDistrictItem[]>
