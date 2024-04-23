@@ -33,6 +33,7 @@ const rentConnection = makeNewConnection(process.env.MONGODB_URI || localConnect
 const empriseBatieConnection = makeNewConnection(process.env.MONGODB_URI_EMPRISE_BATIE || localConnectionString)
 const encadrementAddress1Connection = makeNewConnection(process.env.MONGODB_URI_ENCADREMENT_ADDRESS1 || localConnectionString)
 const encadrementAddress2Connection = makeNewConnection(process.env.MONGODB_URI_ENCADREMENT_ADDRESS2 || localConnectionString)
+const encadrementZone1Connection = makeNewConnection(process.env.MONGODB_URI_ZONES || localConnectionString)
 
 const rentSchema = require('./rent.model')
 const incompleteRentSchema = require('./incomplete-rent.model')
@@ -44,6 +45,7 @@ const lyonAddressSchema = require('./lyon-address.model')
 const estEnsembleAddressSchema = require('./est_ensemble-address.model')
 const montpellierAddressSchema = require('./montpellier-address.model')
 const bordeauxAddressSchema = require('./bordeaux-address.model')
+const zoneSchema = require('./zone.model')
 
 export const Rent = rentConnection.model('Rent', rentSchema)
 export const IncompleteRent = rentConnection.model('IncompleteRent', incompleteRentSchema)
@@ -59,9 +61,18 @@ export const EstEnsembleAddress = encadrementAddress2Connection.model('estensemb
 export const MontpellierAddress = encadrementAddress2Connection.model('montpellieraddresses', montpellierAddressSchema)
 export const BordeauxAddress = encadrementAddress2Connection.model('bordeauxaddresses', bordeauxAddressSchema)
 
+export const LyonGeojson = encadrementZone1Connection.model('lyongeojsons', zoneSchema)
+export const LilleGeojson = encadrementZone1Connection.model('lillegeojsons', zoneSchema)
+export const PlaineCommuneGeojson = encadrementZone1Connection.model('plainecommunegeojsons', zoneSchema)
+export const EstEnsembleGeojson = encadrementZone1Connection.model('estensemblegeojsons', zoneSchema)
+export const ParisGeojson = encadrementZone1Connection.model('parisgeojsons', zoneSchema)
+export const MontpellierGeojson = encadrementZone1Connection.model('montpelliergeojsons', zoneSchema)
+export const BordeauxGeojson = encadrementZone1Connection.model('bordeauxgeojsons', zoneSchema)
+
 export const closeAllConnections = async () => {
   await rentConnection.close()
   await empriseBatieConnection.close()
   await encadrementAddress1Connection.close()
   await encadrementAddress2Connection.close()
+  await encadrementZone1Connection.close()
 }

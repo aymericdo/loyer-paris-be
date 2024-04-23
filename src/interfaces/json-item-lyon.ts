@@ -7,14 +7,3 @@ export interface LyonEncadrementItem {
   prix_med: string
   prix_max: string
 }
-
-export interface LyonDistrictItem {
-  type: 'Feature'
-  properties: {
-    Zone: string
-  }
-  geometry: {
-    type: 'Polygon'
-    coordinates: number[][][]
-  }
-}

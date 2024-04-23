@@ -1,10 +1,11 @@
-import { Coordinate, DefaultDistrictItem, DistrictItem } from '@interfaces/shared'
+import { Coordinate, DistrictItem } from '@interfaces/shared'
 import { AvailableMainCities } from '@services/address/city'
 import { DistrictsList } from '@services/districts/districts-list'
-import inside from 'point-in-polygon'
 
 export class DistrictFilterParent {
+  GeojsonCollection = null
   city: AvailableMainCities = null
+
   coordinates: Coordinate = null
   postalCode: string = null
   districtName: string = null
@@ -19,7 +20,7 @@ export class DistrictFilterParent {
     return this.getDistricts()[0] as DistrictItem
   }
 
-  getDistricts(): DistrictItem[] {
+  async getDistricts(): Promise<DistrictItem[]> {
     if (this.districtName) {
       return this.getDistrictFromName()
     }
@@ -27,38 +28,44 @@ export class DistrictFilterParent {
     const districtFromCoordinate =
       this.coordinates?.lat &&
       this.coordinates?.lng &&
-      this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
+      await this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
-    console.log(this.coordinates)
-    console.log('districtFromCoordinate', districtFromCoordinate)
-
-    return districtFromCoordinate?.length ? districtFromCoordinate : this.getDistrictFromPostalCode()
+    return districtFromCoordinate?.length ? districtFromCoordinate : this.getDistrictsFromPostalCode()
   }
 
   protected getDistrictsJson(): DistrictItem[] {
     return new DistrictsList(this.city as AvailableMainCities).currentGeodata().features
   }
 
-  protected getDistrictFromName(): DistrictItem[] {
-    return (this.getDistrictsJson() as DefaultDistrictItem[]).filter((district) => {
-      return +district.properties.Zone === +this.districtName.match(/\d+/)[0]
-    })
-  }
-
-  protected getDistrictFromPostalCode(): DistrictItem[] {
-    if (this.postalCode) {
-      return (this.getDistrictsJson() as DefaultDistrictItem[]).filter((district) => {
-        return district.properties.CODE_POST === this.postalCode
-      })
-    } else {
-      return []
-    }
-  }
-
-  private getDistrictFromCoordinate(lat: number, lng: number): DistrictItem[] {
-    const district = (this.getDistrictsJson() as DefaultDistrictItem[]).find((district) =>
-      inside([+lng, +lat], district.geometry.coordinates[0].flat())
+  protected async getDistrictFromName(): Promise<DistrictItem[]> {
+    const zone: number = +this.districtName.match(/\d+/)[0]
+    const districts = await this.GeojsonCollection.find(
+      {
+        'properties.Zone': { $in: [zone, zone.toString()] }
+      },
     )
+
+    return districts?.length ? districts : []
+  }
+
+  protected getDistrictsFromPostalCode(): DistrictItem[] {
+    return []
+  }
+
+  private async getDistrictFromCoordinate(lat: number, lng: number): Promise<DistrictItem[]> {
+    const district = await this.GeojsonCollection.findOne(
+      {
+        geometry: {
+          $geoIntersects: {
+            $geometry: {
+              type: 'Point',
+              coordinates: [lng, lat]
+            }
+          }
+        }
+      }
+    )
+
     return district ? [district] : []
   }
 }

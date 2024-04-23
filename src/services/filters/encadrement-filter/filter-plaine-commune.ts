@@ -10,8 +10,8 @@ export class FilterPlaineCommune extends EncadrementFilterParent {
   // Extract possible range time from rangeRents (json-data/encadrements_plaine-commune.json)
   rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
 
-  filter(): FilteredResult[] {
-    const districtsMatched = new PlaineCommuneDistrictFilter(
+  async filter(): Promise<FilteredResult[]> {
+    const districtsMatched = await new PlaineCommuneDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName
@@ -22,7 +22,7 @@ export class FilterPlaineCommune extends EncadrementFilterParent {
     const rentList = (this.rangeRentsJson() as PlaineCommuneEncadrementItem[]).filter((rangeRent) => {
       return (
         (districtsMatched?.length
-          ? districtsMatched.map((district) => district.properties.Zone).includes(rangeRent['zone'].toString())
+          ? districtsMatched.map((district) => +district.properties.Zone).includes(+rangeRent['zone'])
           : true) &&
         (timeDates?.length ? timeDates.includes(rangeRent['annee_de_construction']) : true) &&
         (this.infoToFilter.roomCount

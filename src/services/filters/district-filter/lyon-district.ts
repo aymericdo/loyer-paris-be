@@ -1,12 +1,14 @@
-import { LyonDistrictItem } from '@interfaces/json-item-lyon'
 import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterParent } from './district-filter-parent'
+import { LyonGeojson } from '@db/db'
+import { DefaultDistrictItem } from '@interfaces/shared'
 
 export class LyonDistrictFilter extends DistrictFilterParent {
+  GeojsonCollection = LyonGeojson
   city: AvailableMainCities = 'lyon'
 
-  getDistricts(): LyonDistrictItem[] {
-    return super.getDistricts() as LyonDistrictItem[]
+  async getDistricts(): Promise<DefaultDistrictItem[]> {
+    return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
   private getPostalCode(cityName: string): string {

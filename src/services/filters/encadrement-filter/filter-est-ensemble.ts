@@ -10,9 +10,8 @@ export class FilterEstEnsemble extends EncadrementFilterParent {
   // Extract possible range time from rangeRents (json-data/encadrements_est-ensemble.json)
   rangeTime = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
 
-  filter(): FilteredResult[] {
-
-    const districtsMatched = new EstEnsembleDistrictFilter(
+  async filter(): Promise<FilteredResult[]> {
+    const districtsMatched = await new EstEnsembleDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName

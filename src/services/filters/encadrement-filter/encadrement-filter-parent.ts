@@ -25,10 +25,10 @@ export abstract class EncadrementFilterParent {
     this.infoToFilter = infoToFilter
   }
 
-  abstract filter(): FilteredResult[]
+  abstract filter(): Promise<FilteredResult[]>
 
-  find(): FilteredResult {
-    const rentList = this.filter()
+  async find(): Promise<FilteredResult> {
+    const rentList = await this.filter()
 
     // Get the worst case scenario
     const worstCase = rentList.length

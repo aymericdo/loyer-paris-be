@@ -68,7 +68,7 @@ export abstract class Website {
       const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
 
       const CurrentEncadrementFilter = new EncadrementFilterFactory(cityList[city].mainCity).currentFilter()
-      const filteredResult: FilteredResult = new CurrentEncadrementFilter(cleanAd).find()
+      const filteredResult: FilteredResult = await new CurrentEncadrementFilter(cleanAd).find()
 
       if (filteredResult) {
         const maxAuthorized = roundNumber(filteredResult.maxPrice * cleanAd.surface)

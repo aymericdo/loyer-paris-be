@@ -2,11 +2,11 @@ import { IncompleteAd } from '@interfaces/ad'
 import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
 import { BordeauxDistrictItem, BordeauxEncadrementItem } from './json-item-bordeaux'
 import { EstEnsembleEncadrementItem } from './json-item-est-ensemble'
-import { LilleDistrictItem, LilleEncadrementItem } from './json-item-lille'
-import { LyonDistrictItem, LyonEncadrementItem } from './json-item-lyon'
+import { LilleEncadrementItem } from './json-item-lille'
+import { LyonEncadrementItem } from './json-item-lyon'
 import { MontpellierEncadrementItem } from './json-item-montpellier'
-import { ParisAddressItem, ParisDistrictItem, ParisEncadrementItem } from './json-item-paris'
-import { PlaineCommuneEncadrementItem } from './json-item-plaine-commune'
+import { ParisAddressItemDB, ParisDistrictItem, ParisEncadrementItem } from './json-item-paris'
+import { PlaineCommuneDistrictItem, PlaineCommuneEncadrementItem } from './json-item-plaine-commune'
 
 export interface Coordinate {
   lat: number
@@ -27,7 +27,7 @@ export interface AddressItem {
   coordinate: Coordinate
 }
 
-export interface DefaultAddressItem {
+interface DefaultAddressItem {
   id: string
   numero: string
   rep: string
@@ -58,20 +58,15 @@ export interface DefaultAddressItemDB extends DefaultAddressItem {
 export interface DefaultDistrictItem {
   type: 'Feature'
   properties: {
-    ID_BD_Topo: string
-    INSEE_COM: string
-    CODE_POST: string
-    NOM_COM: string
-    SIREN_EPCI: string
-    Zone: string
+    Zone: number
     [DISPLAY_ZONE_FIELD]: string
   }
   geometry: { type: 'MultiPolygon'; coordinates: number[][][] }
 }
 
-export type AddressItemDB = DefaultAddressItem | ParisAddressItem
+export type AddressItemDB = DefaultAddressItemDB | ParisAddressItemDB
 
-export type DistrictItem = DefaultDistrictItem | LilleDistrictItem | LyonDistrictItem | ParisDistrictItem | BordeauxDistrictItem
+export type DistrictItem = DefaultDistrictItem | ParisDistrictItem | BordeauxDistrictItem | PlaineCommuneDistrictItem
 
 export type EncadrementItem =
   | ParisEncadrementItem
