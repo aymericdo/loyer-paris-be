@@ -39,7 +39,7 @@ export class DistrictsList {
         ...data,
         properties: {
           ...data.properties,
-          [DISPLAY_ZONE_FIELD]: this.zoneByCity(data),
+          [DISPLAY_ZONE_FIELD]: DistrictsList.digZoneInProperties(this.city, data['properties']),
         },
       })),
     }
@@ -69,9 +69,9 @@ export class DistrictsList {
             break
           }
           default: {
-            if (!prev.some((elem: DistrictElem) => elem.value === this.zoneByCity(data))) {
+            if (!prev.some((elem: DistrictElem) => elem.value === DistrictsList.digZoneInProperties(this.city, data['properties']))) {
               prev.push({
-                value: this.zoneByCity(data),
+                value: DistrictsList.digZoneInProperties(this.city, data['properties']),
                 displaySequence: data['properties'][DISPLAY_ZONE_FIELD],
                 groupBy: null,
               })
@@ -87,17 +87,17 @@ export class DistrictsList {
       })
   }
 
-  private zoneByCity(data) {
-    switch (this.city) {
+  static digZoneInProperties(city: AvailableMainCities, data: unknown) {
+    switch (city) {
       case 'paris':
-        return data['properties']['l_qu']
+        return data['l_qu']
       case 'lille':
       case 'lyon':
       case 'plaineCommune':
       case 'estEnsemble':
       case 'montpellier':
       case 'bordeaux':
-        return `Zone ${data['properties']['Zone']}`
+        return `Zone ${data['Zone']}`
     }
   }
 

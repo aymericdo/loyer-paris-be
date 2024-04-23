@@ -5,7 +5,7 @@ import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
-import { DISPLAY_ZONE_FIELD } from './districts-list'
+import { DISPLAY_ZONE_FIELD, DistrictsList } from './districts-list'
 
 export async function getAddresses(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
@@ -32,7 +32,7 @@ export async function getAddresses(req: Request, res: Response) {
 
   switch (city) {
     case 'paris':
-      data = (data as ParisAddressItemDB[]).map((elem) => {
+      data = await Promise.all((data as ParisAddressItemDB[]).map(async (elem) => {
         const parisDistrictFilter = new CurrentDistrictFilter(
           city,
           ParisAddressStrategy.postalCodeFormat(elem.fields.c_ar.toString()),
@@ -42,16 +42,16 @@ export async function getAddresses(req: Request, res: Response) {
           }
         )
 
-        const district = parisDistrictFilter.getFirstDistrict() as ParisDistrictItem
+        const district = await parisDistrictFilter.getFirstDistrict() as ParisDistrictItem
 
         return {
           ...elem,
-          districtName: district ? district.properties[DISPLAY_ZONE_FIELD] : null,
+          districtName: district ? DistrictsList.digZoneInProperties(city, district['properties']) : null,
         }
-      })
+      }))
       break
     default:
-      data = (data as DefaultAddressItemDB[]).map((elem) => {
+      data = await Promise.all((data as DefaultAddressItemDB[]).map(async (elem) => {
         const currentDistrictFilter = new CurrentDistrictFilter(
           elem.nom_commune,
           elem.code_postal, {
@@ -60,16 +60,16 @@ export async function getAddresses(req: Request, res: Response) {
           }
         )
 
-        const district = currentDistrictFilter.getFirstDistrict() as DefaultDistrictItem
+        const district = await currentDistrictFilter.getFirstDistrict() as DefaultDistrictItem
 
         return {
           ...elem,
           fields: {
             l_adr: `${elem.numero}${elem.rep || ''} ${elem.nom_voie} (${elem.code_postal})`,
           },
-          districtName: district ? district.properties[DISPLAY_ZONE_FIELD] : null,
+          districtName: district ? DistrictsList.digZoneInProperties(city, district['properties']) : null,
         }
-      })
+      }))
       break
   }
 

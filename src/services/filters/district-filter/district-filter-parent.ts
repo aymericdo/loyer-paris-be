@@ -17,8 +17,8 @@ export class DistrictFilterParent {
     this.districtName = districtName
   }
 
-  getFirstDistrict(): DistrictItem {
-    return this.getDistricts()[0] as DistrictItem
+  async getFirstDistrict(): Promise<DistrictItem> {
+    return (await this.getDistricts())[0] as DistrictItem
   }
 
   async getDistricts(): Promise<DistrictItem[]> {
