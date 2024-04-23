@@ -12,13 +12,14 @@ export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
-  protected getDistrictsFromPostalCode(): PlaineCommuneDistrictItem[] {
-    if (this.postalCode) {
-      return (this.getDistrictsJson() as PlaineCommuneDistrictItem[]).filter((district) => {
-        return +district.properties.CODE_POST === +this.postalCode
-      })
-    } else {
-      return []
-    }
+  protected async getDistrictsFromPostalCode(): Promise<PlaineCommuneDistrictItem[]> {
+    if (!this.postalCode) return []
+
+    const districts = await this.GeojsonCollection.find(
+      {
+        'properties.CODE_POST': +this.postalCode
+      },
+    )
+    return districts?.length ? districts : []
   }
 }

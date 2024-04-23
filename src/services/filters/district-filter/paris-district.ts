@@ -11,22 +11,27 @@ export class ParisDistrictFilter extends DistrictFilterParent {
     return super.getDistricts() as Promise<ParisDistrictItem[]>
   }
 
-  protected getDistrictsFromPostalCode(): ParisDistrictItem[] {
-    if (this.postalCode) {
-      // 75010 -> 10  75009 -> 9
-      const code = this.postalCode.slice(-2)[0] === '0' ? this.postalCode.slice(-1) : this.postalCode.slice(-2)
+  protected async getDistrictsFromPostalCode(): Promise<ParisDistrictItem[]> {
+    if (!this.postalCode) return []
 
-      return (this.getDistrictsJson() as ParisDistrictItem[]).filter((district) => {
-        return district.properties.c_ar === +code
-      })
-    } else {
-      return []
-    }
+    // 75010 -> 10  75009 -> 9
+    const code = this.postalCode.slice(-2)[0] === '0' ? this.postalCode.slice(-1) : this.postalCode.slice(-2)
+    const districts = await this.GeojsonCollection.find(
+      {
+        'properties.c_ar': +code
+      },
+    )
+
+    return districts?.length ? districts : []
   }
 
   protected async getDistrictFromName(): Promise<ParisDistrictItem[]> {
-    return (this.getDistrictsJson() as ParisDistrictItem[]).filter((district) => {
-      return district.properties.l_qu === this.districtName
-    })
+    const districts = await this.GeojsonCollection.find(
+      {
+        'properties.l_qu': this.districtName
+      },
+    )
+
+    return districts?.length ? districts : []
   }
 }

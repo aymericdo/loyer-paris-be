@@ -26,15 +26,13 @@ export class DistrictFilterParent {
     }
 
     const districtFromCoordinate =
-      this.coordinates?.lat &&
-      this.coordinates?.lng &&
       await this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
 
-    return districtFromCoordinate?.length ? districtFromCoordinate : this.getDistrictsFromPostalCode()
-  }
+    if (districtFromCoordinate.length) {
+      return districtFromCoordinate
+    }
 
-  protected getDistrictsJson(): DistrictItem[] {
-    return new DistrictsList(this.city as AvailableMainCities).currentGeodata().features
+    return this.getDistrictsFromPostalCode()
   }
 
   protected async getDistrictFromName(): Promise<DistrictItem[]> {
@@ -48,11 +46,13 @@ export class DistrictFilterParent {
     return districts?.length ? districts : []
   }
 
-  protected getDistrictsFromPostalCode(): DistrictItem[] {
+  protected async getDistrictsFromPostalCode(): Promise<DistrictItem[]> {
     return []
   }
 
   private async getDistrictFromCoordinate(lat: number, lng: number): Promise<DistrictItem[]> {
+    if (!this.coordinates?.lat || !this.coordinates?.lng) return []
+
     const district = await this.GeojsonCollection.findOne(
       {
         geometry: {
