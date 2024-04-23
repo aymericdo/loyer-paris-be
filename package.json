@@ -22,6 +22,7 @@
   "author": "Aymeric & Thomas",
   "license": "ISC",
   "dependencies": {
+    "@mapbox/geojson-rewind": "^0.5.2",
     "@sentry/node": "^7.64.0",
     "@slack/web-api": "^7.0.0",
     "@types/cli-color": "^2.0.2",
@@ -29,7 +30,6 @@
     "@types/express": "^4.17.17",
     "@types/geojson": "^7946.0.10",
     "@types/node-cron": "^3.0.8",
-    "@types/point-in-polygon": "^1.1.1",
     "@types/xml2json": "^0.11.4",
     "async": "^3.2.4",
     "axios": "^1.4.0",
@@ -46,7 +46,6 @@
     "mongoose": "^8.1.0",
     "node-cache": "^5.1.2",
     "node-cron": "^3.0.2",
-    "point-in-polygon": "^1.1.0",
     "random-position-in-polygon": "^1.0.6",
     "twitter-api-v2": "^1.15.1",
     "typescript-memoize": "^1.1.1"

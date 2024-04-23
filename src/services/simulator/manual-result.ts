@@ -7,7 +7,7 @@ import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { Request, Response } from 'express'
 
-export function getManualResult(req: Request, res: Response) {
+export async function getManualResult(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getManualResult`, 'blue')
 
   const city: AvailableMainCities = req.params.city as AvailableMainCities
@@ -50,7 +50,7 @@ export function getManualResult(req: Request, res: Response) {
 
   const currentEncadrementFilter = new CurrentEncadrementFilter(params)
 
-  const filteredResult: FilteredResult[] = currentEncadrementFilter.filter()
+  const filteredResult: FilteredResult[] = await currentEncadrementFilter.filter()
 
   res.json(
     filteredResult.map((r) => {

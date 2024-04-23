@@ -5,6 +5,7 @@ import { DISTRICT_FIELD, DistrictsList } from '@services/districts/districts-lis
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
+import rewind from '@mapbox/geojson-rewind'
 
 export function getChloroplethMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
@@ -46,7 +47,7 @@ export function getChloroplethMap(req: Request, res: Response) {
         ...Vega.commonOpt(),
         data: {
           format: { type: 'json', property: 'features' },
-          values: geodata,
+          values: rewind(geodata, true),
         },
         transform: [
           {

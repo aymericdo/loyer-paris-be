@@ -1,5 +1,5 @@
-import { ParisAddressItem, ParisDistrictItem } from '@interfaces/json-item-paris'
-import { AddressItemDB, DefaultAddressItem, DefaultDistrictItem } from '@interfaces/shared'
+import { ParisAddressItemDB, ParisDistrictItem } from '@interfaces/json-item-paris'
+import { AddressItemDB, DefaultAddressItemDB, DefaultDistrictItem } from '@interfaces/shared'
 import { ParisAddressStrategy, dbMapping } from '@services/address/address'
 import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
@@ -32,7 +32,7 @@ export async function getAddresses(req: Request, res: Response) {
 
   switch (city) {
     case 'paris':
-      data = (data as ParisAddressItem[]).map((elem) => {
+      data = (data as ParisAddressItemDB[]).map((elem) => {
         const parisDistrictFilter = new CurrentDistrictFilter(
           ParisAddressStrategy.postalCodeFormat(elem.fields.c_ar.toString()),
           {
@@ -50,7 +50,7 @@ export async function getAddresses(req: Request, res: Response) {
       })
       break
     default:
-      data = (data as DefaultAddressItem[]).map((elem) => {
+      data = (data as DefaultAddressItemDB[]).map((elem) => {
         const currentDistrictFilter = new CurrentDistrictFilter(elem.code_postal, {
           lng: elem.geometry.coordinates[0],
           lat: elem.geometry.coordinates[1],

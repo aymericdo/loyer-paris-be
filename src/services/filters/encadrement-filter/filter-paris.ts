@@ -13,8 +13,8 @@ export class FilterParis extends EncadrementFilterParent {
   // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
   rangeTime: string[] = ['Avant 1946', '1946-1970', '1971-1990', 'Après 1990']
 
-  filter(): FilteredResult[] {
-    const districtsMatched = new ParisDistrictFilter(
+  async filter(): Promise<FilteredResult[]> {
+    const districtsMatched = await new ParisDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName

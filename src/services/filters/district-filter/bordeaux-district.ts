@@ -6,15 +6,18 @@ import { DistrictFilterParent } from './district-filter-parent'
 export class BordeauxDistrictFilter extends DistrictFilterParent {
   city: AvailableMainCities = 'bordeaux'
 
-  getDistricts(): DefaultDistrictItem[] {
-    return super.getDistricts() as DefaultDistrictItem[]
+  async getDistricts(): Promise<DefaultDistrictItem[]> {
+    return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
-  protected getDistrictFromPostalCode(): BordeauxDistrictItem[] {
+  protected async getDistrictsFromPostalCode(): Promise<BordeauxDistrictItem[]> {
     if (this.postalCode) {
-      return (this.getDistrictsJson() as BordeauxDistrictItem[]).filter((district) => {
-        return district.properties.com_code === +this.postalCode
-      })
+      const districts = await this.GeojsonCollection.find(
+        {
+          'properties.com_code': +this.postalCode
+        },
+      )
+      return districts?.length ? districts : []
     } else {
       return []
     }

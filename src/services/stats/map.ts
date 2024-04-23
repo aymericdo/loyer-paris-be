@@ -5,6 +5,7 @@ import { DISTRICT_FIELD, DistrictsList } from '@services/districts/districts-lis
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
+import rewind from '@mapbox/geojson-rewind'
 
 export function getMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getMap`, 'blue')
@@ -22,7 +23,7 @@ export function getMap(req: Request, res: Response) {
           {
             data: {
               format: { type: 'json', property: 'features' },
-              values: geodata,
+              values: rewind(geodata, true),
             },
             projection: { type: 'mercator' },
             mark: {

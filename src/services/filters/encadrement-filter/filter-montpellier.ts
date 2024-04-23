@@ -11,8 +11,8 @@ export class FilterMontpellier extends EncadrementFilterParent {
   rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', '1991-2005', 'apres 2005']
   universalRangeTime: [number, number][] = [[null, 1946], [1946, 1970], [1971, 1990], [1991, 2005], [2005, null]]
 
-  filter(): FilteredResult[] {
-    const districtsMatched = new MontpellierDistrictFilter(
+  async filter(): Promise<FilteredResult[]> {
+    const districtsMatched = await new MontpellierDistrictFilter(
       this.infoToFilter.postalCode,
       this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
       this.infoToFilter.districtName

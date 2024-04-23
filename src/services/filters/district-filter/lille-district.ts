@@ -1,11 +1,13 @@
-import { LilleDistrictItem } from '@interfaces/json-item-lille'
 import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterParent } from './district-filter-parent'
+import { LilleGeojson } from '@db/db'
+import { DefaultDistrictItem } from '@interfaces/shared'
 
 export class LilleDistrictFilter extends DistrictFilterParent {
+  GeojsonCollection = LilleGeojson
   city: AvailableMainCities = 'lille'
 
-  getDistricts(): LilleDistrictItem[] {
-    return super.getDistricts() as LilleDistrictItem[]
+  async getDistricts(): Promise<DefaultDistrictItem[]> {
+    return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 }
