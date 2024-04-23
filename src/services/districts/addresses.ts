@@ -5,7 +5,7 @@ import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
-import { DISPLAY_ZONE_FIELD, DistrictsList } from './districts-list'
+import { DistrictsList } from './districts-list'
 
 export async function getAddresses(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
