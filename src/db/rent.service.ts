@@ -227,7 +227,7 @@ export async function getLegalPerClassicRenterData(
   return (await Rent.find(filter, {
     isLegal: 1,
     renter: 1,
-  })) as unknown as { isLegal: boolean; renter: string }[]
+  }).lean()) as unknown as { isLegal: boolean; renter: string }[]
 }
 
 export async function getLegalPerRenterData(
