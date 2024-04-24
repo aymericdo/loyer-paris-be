@@ -12,12 +12,12 @@ export class LyonDistrictFilter extends DistrictFilterParent {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
-  protected async getDistrictsFromPostalCode(): Promise<LyonDistrictItem[]> {
-    if (!this.postalCode || !this.city) return []
+  protected async getDistrictsFromCity(): Promise<LyonDistrictItem[]> {
+    if (!this.city) return []
 
     const districts = await this.GeojsonCollection.find(
       {
-        'properties.city': new RegExp(`/^${this.city}$/`, 'i')
+        'properties.city': { $regex: this.city,  $options: 'i' }
       },
     )
     return districts?.length ? districts : []

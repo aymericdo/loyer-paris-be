@@ -22,4 +22,15 @@ export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
     )
     return districts?.length ? districts : []
   }
+
+  protected async getDistrictsFromCity(): Promise<PlaineCommuneDistrictItem[]> {
+    if (!this.city) return []
+
+    const districts = await this.GeojsonCollection.find(
+      {
+        'properties.NOM_COM': { $regex: this.city,  $options: 'i' }
+      },
+    )
+    return districts?.length ? districts : []
+  }
 }

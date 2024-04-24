@@ -11,7 +11,7 @@ export class MontpellierDistrictFilter extends DistrictFilterParent {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
-  protected async getDistrictsFromPostalCode(): Promise<DistrictItem[]> {
+  protected async getDistrictsFromCity(): Promise<DistrictItem[]> {
     // There is not other city in the Montpellier Agglomeration
     return await this.GeojsonCollection.find({})
   }

@@ -10,11 +10,11 @@ export class DistrictFilterParent {
   postalCode: string = null
   districtName: string = null
 
-  constructor(city: AvailableCities, postalCode: string, coordinates?: Coordinate, districtName?: string) {
-    this.city = city
+  constructor(coordinates: Coordinate, options?: { city?: AvailableCities, postalCode?: string, districtName?: string }) {
     this.coordinates = coordinates
-    this.postalCode = postalCode
-    this.districtName = districtName
+    this.city = options?.city
+    this.postalCode = options?.postalCode
+    this.districtName = options?.districtName
   }
 
   async getFirstDistrict(): Promise<DistrictItem> {
@@ -33,7 +33,21 @@ export class DistrictFilterParent {
       return districtFromCoordinate
     }
 
-    return this.getDistrictsFromPostalCode()
+    const districtFromPostalCode =
+      await this.getDistrictsFromPostalCode()
+
+    if (districtFromPostalCode.length) {
+      return districtFromPostalCode
+    }
+
+    const districtFromSpecificCity =
+      await this.getDistrictsFromCity()
+
+    if (districtFromSpecificCity.length) {
+      return districtFromSpecificCity
+    }
+
+    return await this.getDistrictsFromMainCity()
   }
 
   protected async getDistrictFromName(): Promise<DistrictItem[]> {
@@ -49,6 +63,14 @@ export class DistrictFilterParent {
 
   protected async getDistrictsFromPostalCode(): Promise<DistrictItem[]> {
     return []
+  }
+
+  protected async getDistrictsFromCity(): Promise<DistrictItem[]> {
+    return []
+  }
+
+  protected async getDistrictsFromMainCity(): Promise<DistrictItem[]> {
+    return await this.GeojsonCollection.find({})
   }
 
   private async getDistrictFromCoordinate(lat: number, lng: number): Promise<DistrictItem[]> {

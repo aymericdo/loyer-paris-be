@@ -7,12 +7,12 @@ import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
 
-export function getMap(req: Request, res: Response) {
+export async function getMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getMap`, 'blue')
   const city: AvailableMainCities = req.params.city as AvailableMainCities
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')
-  const geodata = new DistrictsList(city as AvailableMainCities).currentGeodata()
+  const geodata = await new DistrictsList(city as AvailableMainCities).currentGeodata()
 
   rentService
     .getMapData(city, dateRange)

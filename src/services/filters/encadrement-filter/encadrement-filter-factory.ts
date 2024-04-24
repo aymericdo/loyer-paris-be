@@ -14,7 +14,7 @@ export class EncadrementFilterFactory {
     this.city = city
   }
 
-  currentFilter() {
+  currentEncadrementFilter() {
     switch (this.city) {
       case 'paris':
         return FilterParis

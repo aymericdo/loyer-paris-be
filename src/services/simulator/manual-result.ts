@@ -33,15 +33,15 @@ export async function getManualResult(req: Request, res: Response) {
 
   const isHouse: boolean = +isHouseValue === 1
 
-  const CurrentEncadrementFilter = new EncadrementFilterFactory(city).currentFilter()
+  const CurrentEncadrementFilter = new EncadrementFilterFactory(city).currentEncadrementFilter()
   const params: InfoToFilter = {
+    city: null,
     postalCode: null,
     coordinates: null,
     blurryCoordinates: null,
     yearBuilt: dateBuiltStr[0] === -1 ? null : dateBuiltStr,
     districtName: district,
     roomCount: room,
-    city: null,
     hasFurniture,
   }
 

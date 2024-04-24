@@ -1,13 +1,13 @@
-import { GeojsonFile } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/address/city'
+import { DistrictItem, GeojsonFile } from '@interfaces/shared'
+import { AvailableCities, AvailableMainCities } from '@services/address/city'
+import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
 import * as fs from 'fs'
 import path from 'path'
-import { Memoize } from 'typescript-memoize'
 
 interface DistrictElem {
   value: string
   groupBy: string | null
-  displaySequence: number
+  displaySequence: number | string
 }
 
 export const DISPLAY_ZONE_FIELD = 'displayZone'
@@ -24,70 +24,77 @@ export const CITY_FILE_PATHS = {
 }
 
 export class DistrictsList {
-  city: AvailableMainCities
+  CurrentDistrictFilter = null
+  mainCity: AvailableMainCities
+  city: AvailableCities
 
-  constructor(city: AvailableMainCities) {
-    this.city = city
+  constructor(city: AvailableMainCities, options?: { specificCity?: AvailableCities }) {
+    this.mainCity = city
+    this.city = options?.specificCity
+    this.CurrentDistrictFilter = new DistrictFilterFactory(this.mainCity).currentDistrictFilter()
   }
 
-  @Memoize()
-  currentGeodata(): GeojsonFile {
-    const file = this.geodataFile()
+  async currentGeodata(): Promise<GeojsonFile> {
+    const features: DistrictItem[] = await new this.CurrentDistrictFilter(
+      { lat: null, lng: null },
+      { city: this.city },
+    ).getDistricts()
+
     return {
-      ...file,
-      features: file.features.map((data) => ({
+      type: 'FeatureCollection',
+      features: features.map((data) => ({
         ...data,
         properties: {
           ...data.properties,
-          [DISPLAY_ZONE_FIELD]: DistrictsList.digZoneInProperties(this.city, data['properties']),
+          [DISPLAY_ZONE_FIELD]: DistrictsList.digZoneInProperties(this.mainCity, data['properties']) as string,
         },
-      })),
+      })) as DistrictItem[],
     }
   }
 
-  currentPolygon(displayZoneField: string) {
-    return this.currentGeodata().features.find((feature) => {
-      return feature.properties[DISPLAY_ZONE_FIELD] === displayZoneField
-    })?.geometry
+  async currentFeature(displayZoneField: string): Promise<DistrictItem> {
+    return await new this.CurrentDistrictFilter(
+      { lat: null, lng: null },
+      { city: this.city, districtName: displayZoneField },
+    ).getFirstDistrict()
   }
 
-  currentGeodataWithGroupBy() {
-    return this.currentGeodata()
-      .features.reduce((prev: DistrictElem[], data) => {
-        switch (this.city) {
-          case 'paris': {
-            if (!prev.some((elem: DistrictElem) => elem.value === data['properties']['l_qu'])) {
-              prev.push({
-                value: data['properties']['l_qu'],
-                displaySequence: data['properties']['c_ar'],
-                groupBy: `${data['properties']['c_ar']}${(data['properties']['c_ar'] > 1
-                  ? 'ème'
-                  : 'er'
-                ).toString()} arrondissement`,
-              })
-            }
-            break
+  async currentGeodataWithGroupBy(): Promise<DistrictElem[]> {
+    return ((await this.currentGeodata()).features as DistrictItem[]).reduce((prev: DistrictElem[], data) => {
+      switch (this.city) {
+        case 'paris': {
+          if (!prev.some((elem: DistrictElem) => elem.value === data['properties']['l_qu'])) {
+            prev.push({
+              value: data['properties'][DISPLAY_ZONE_FIELD],
+              displaySequence: data['properties']['c_ar'],
+              groupBy: `${data['properties']['c_ar']}${(data['properties']['c_ar'] > 1
+                ? 'ème'
+                : 'er'
+              ).toString()} arrondissement`,
+            })
           }
-          default: {
-            if (!prev.some((elem: DistrictElem) => elem.value === DistrictsList.digZoneInProperties(this.city, data['properties']))) {
-              prev.push({
-                value: DistrictsList.digZoneInProperties(this.city, data['properties']),
-                displaySequence: data['properties'][DISPLAY_ZONE_FIELD],
-                groupBy: null,
-              })
-            }
-            break
-          }
+          break
         }
+        default: {
+          if (!prev.some((elem: DistrictElem) => elem.value === data['properties'][DISPLAY_ZONE_FIELD])) {
+            prev.push({
+              value: data['properties'][DISPLAY_ZONE_FIELD],
+              displaySequence: data['properties'][DISPLAY_ZONE_FIELD],
+              groupBy: null,
+            })
+          }
+          break
+        }
+      }
 
-        return prev
-      }, [])
+      return prev
+    }, [])
       .sort((a: DistrictElem, b: DistrictElem) => {
         return a.displaySequence > b.displaySequence ? 1 : -1
       })
   }
 
-  static digZoneInProperties(city: AvailableMainCities, data: unknown) {
+  static digZoneInProperties(city: AvailableMainCities, data: unknown): string {
     switch (city) {
       case 'paris':
         return data['l_qu']
@@ -102,6 +109,6 @@ export class DistrictsList {
   }
 
   private geodataFile() {
-    return JSON.parse(fs.readFileSync(path.join(CITY_FILE_PATHS[this.city]), 'utf8'))
+    return JSON.parse(fs.readFileSync(path.join(CITY_FILE_PATHS[this.mainCity]), 'utf8'))
   }
 }

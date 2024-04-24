@@ -13,10 +13,11 @@ export class FilterLyon extends EncadrementFilterParent {
 
   async filter(): Promise<FilteredResult[]> {
     const districtsMatched = await new LyonDistrictFilter(
-      this.infoToFilter.city,
-      this.infoToFilter.postalCode,
-      this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates,
-      this.infoToFilter.districtName
+      this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates, {
+        city: this.infoToFilter.city,
+        postalCode: this.infoToFilter.postalCode,
+        districtName: this.infoToFilter.districtName,
+      }
     ).getDistricts()
 
     const timeDates: string[] = new YearBuiltService(this.rangeTime, this.universalRangeTime).getRangeTimeFromYearBuilt(

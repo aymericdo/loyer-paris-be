@@ -22,9 +22,10 @@ const schema = new Schema({
 })
 
 schema.index(
-  { nom_voie: 'text', numero: 'text' },
+  { nom_commune: 'text', nom_voie: 'text', numero: 'text' },
   {
     weights: {
+      nom_commune: 10,
       nom_voie: 10,
       numero: 1,
     },
@@ -33,7 +34,7 @@ schema.index(
 )
 
 schema.index(
-  { nom_voie: 1, numero: 1 },
+  { nom_commune: 1, nom_voie: 1, numero: 1 },
   {
     collation: {
       locale: 'fr',

@@ -8,11 +8,10 @@ import {
   PlaineCommuneAddress,
 } from '@db/db'
 import { Ad } from '@interfaces/ad'
-import { ParisAddressItemDB } from '@interfaces/json-item-paris'
-import { AddressItem, Coordinate, DefaultAddressItemDB } from '@interfaces/shared'
+import { Coordinate, AddressItem, DefaultAddressItemDB, AddressItemDB } from '@interfaces/shared'
 import { AvailableCities, cityList } from '@services/address/city'
-import * as cleanup from '@services/helpers/cleanup'
 import { regexString } from '@services/helpers/regex'
+import * as cleanup from '@services/helpers/cleanup'
 
 export const dbMapping = {
   paris: ParisAddress,
@@ -24,24 +23,25 @@ export const dbMapping = {
   bordeaux: BordeauxAddress,
 }
 
-export interface AddressStrategy {
-  getAddress(): Promise<[string, Coordinate, Coordinate]>
-}
+export abstract class AddressService {
+  abstract getAddress(): Promise<[string, Coordinate, Coordinate]>
 
-export class AddressStrategyFactory {
-  getDiggerStrategy(city: string, postalCode: string, ad: Ad): AddressStrategy {
-    switch (city) {
-      case 'paris': {
-        return new ParisAddressStrategy(city, postalCode, ad)
-      }
-      default: {
-        return new DefaultAddressStrategy(city, postalCode, ad)
-      }
-    }
+  static async getAddresses(city: AvailableCities, query: string): Promise<AddressItemDB[]> {
+    const addressDb = dbMapping[cityList[city].mainCity]
+    return (await addressDb
+      .find(
+        {
+          $text: { $search: query },
+        },
+        { score: { $meta: 'textScore' } }
+      )
+      .sort({ score: { $meta: 'textScore' } })
+      .limit(5)
+      .lean()) as DefaultAddressItemDB[]
   }
 }
 
-export class DefaultAddressStrategy implements AddressStrategy {
+export class DefaultAddressService implements AddressService {
   private city: AvailableCities
   private postalCode: string
   private ad: Ad
@@ -54,7 +54,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
     this.ad = ad
   }
 
-  public async getAddress(): Promise<[string, Coordinate, Coordinate]> {
+  async getAddress(): Promise<[string, Coordinate, Coordinate]> {
     const tab = [this.ad.address, this.ad.title, this.ad.description].filter(Boolean)
 
     for (const text of tab) {
@@ -68,11 +68,12 @@ export class DefaultAddressStrategy implements AddressStrategy {
     return [null, null, null]
   }
 
-  protected async digForAddressInText(city: string, postalCode: string, text: string): Promise<string> {
+  private async digForAddressInText(city: string, postalCode: string, text: string): Promise<string> {
     const addressRe = new RegExp(regexString('address'))
     const addressesFromRegex = text.match(addressRe) as string[]
     if (addressesFromRegex?.length) {
       const addressesQueries = this.querifyAddresses(city, addressesFromRegex)
+
       const result: {
         item: AddressItem
         score: number
@@ -104,14 +105,14 @@ export class DefaultAddressStrategy implements AddressStrategy {
     }
   }
 
-  protected querifyAddresses(city: string, addressesFromRegex: string[]): string[] {
+  private querifyAddresses(city: AvailableCities, addressesFromRegex: string[]): string[] {
     return addressesFromRegex
-      .map((a) => (cleanup.address(a, city) ? `${cleanup.address(a, city)}` : null))
+      .map((a) => (cleanup.address(a, city) ?? null))
       .filter(Boolean)
   }
 
   protected async getAddressCompleted(
-    city: string,
+    city: AvailableCities,
     query: string
   ): Promise<
     {
@@ -124,17 +125,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
       return null
     }
 
-    const addressDb = dbMapping[cityList[city].mainCity]
-    const result: DefaultAddressItemDB[] = (await addressDb
-      .find(
-        {
-          $text: { $search: query },
-        },
-        { score: { $meta: 'textScore' } }
-      )
-      .sort({ score: { $meta: 'textScore' } })
-      .limit(10)
-      .lean()) as DefaultAddressItemDB[]
+    const result: DefaultAddressItemDB[] = await AddressService.getAddresses(city, query) as DefaultAddressItemDB[]
 
     return result
       ? result.map((r: DefaultAddressItemDB) => ({
@@ -142,8 +133,8 @@ export class DefaultAddressStrategy implements AddressStrategy {
           address: `${r.numero} ${r.nom_voie}`,
           postalCode: r.code_postal.toString(),
           coordinate: {
-            lng: +r.geometry.coordinates[0],
-            lat: +r.geometry.coordinates[1],
+            lng: +r.geometry?.coordinates[0],
+            lat: +r.geometry?.coordinates[1],
           },
         },
         score: r.score,
@@ -152,7 +143,7 @@ export class DefaultAddressStrategy implements AddressStrategy {
       : []
   }
 
-  protected setCoordinates(coord: Coordinate, streetNumber: string): void {
+  private setCoordinates(coord: Coordinate, streetNumber: string): void {
     if (streetNumber) {
       this.coordinates = { ...coord }
     } else {
@@ -178,53 +169,5 @@ export class DefaultAddressStrategy implements AddressStrategy {
         return this.coordinates || coordinatesFromAd
       }
     }
-  }
-}
-
-export class ParisAddressStrategy extends DefaultAddressStrategy {
-  protected async getAddressCompleted(
-    city: string,
-    query: string
-  ): Promise<
-    {
-      item: AddressItem
-      score: number
-      streetNumber: string
-    }[]
-  > {
-    if (!query) {
-      return null
-    }
-    const addressDb = dbMapping[cityList[city].mainCity]
-    const result = (await addressDb
-      .find(
-        {
-          $text: { $search: query },
-        },
-        { score: { $meta: 'textScore' } }
-      )
-      .sort({ score: { $meta: 'textScore' } })
-      .limit(10)
-      .lean()) as ParisAddressItemDB[]
-
-    return result
-      ? result.map((r: ParisAddressItemDB) => ({
-        item: {
-          address: r.fields.l_adr,
-          postalCode: ParisAddressStrategy.postalCodeFormat(r.fields.c_ar.toString()),
-          coordinate: {
-            lng: r.fields.geom.coordinates[0],
-            lat: r.fields.geom.coordinates[1],
-          },
-        },
-        score: r.score,
-        streetNumber: cleanup.streetNumber(query)?.toString(),
-      }))
-      : []
-  }
-
-  static postalCodeFormat(postalCode: string): string {
-    // 10 -> 75010 9 -> 75009
-    return postalCode.length === 1 ? `7500${postalCode}` : `750${postalCode}`
   }
 }

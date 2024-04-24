@@ -1,13 +1,14 @@
-import { AvailableMainCities } from '@services/address/city'
+import { AvailableCities, AvailableMainCities } from '@services/address/city'
 import { DistrictsList } from '@services/districts/districts-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
 
-export function getDistricts(req: Request, res: Response) {
+export async function getDistricts(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getDistricts`, 'blue')
-  const city = req.params.city
+  const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
+  const city: AvailableCities = req.query.city as AvailableCities
 
-  const geodata = new DistrictsList(city as AvailableMainCities).currentGeodataWithGroupBy()
+  const geodata = await new DistrictsList(mainCity as AvailableMainCities, { specificCity: city }).currentGeodataWithGroupBy()
 
   res.json(geodata)
 }
