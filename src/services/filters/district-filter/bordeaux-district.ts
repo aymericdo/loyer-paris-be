@@ -11,16 +11,18 @@ export class BordeauxDistrictFilter extends DistrictFilterParent {
   }
 
   protected async getDistrictsFromPostalCode(): Promise<BordeauxDistrictItem[]> {
-    if (this.postalCode) {
-      const districts = await this.GeojsonCollection.find(
-        {
-          'properties.com_code': +this.postalCode
-        },
-      )
-      return districts?.length ? districts : []
-    } else {
-      // There is not other city in the Bordeaux Agglomeration
-      return await this.GeojsonCollection.find({})
-    }
+    if (!this.postalCode) { return [] }
+
+    const districts = await this.GeojsonCollection.find(
+      {
+        'properties.com_code': +this.postalCode
+      },
+    )
+    return districts?.length ? districts : []
+  }
+
+  protected async getDistrictsFromCity(): Promise<BordeauxDistrictItem[]> {
+    // There is not other city in the Bordeaux Agglomeration
+    return await this.GeojsonCollection.find({})
   }
 }

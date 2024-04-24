@@ -28,6 +28,6 @@ export function address(string: string, city: AvailableCities): string {
   if (blackList.some((w) => string.includes(w))) return null
   return string
     .replace('bd ', 'boulevard ')
-    .replace(city as string, '')
+    .replace(city as string, '') // remove the city from the postal address
     .trim()
 }

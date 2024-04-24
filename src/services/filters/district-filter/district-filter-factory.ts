@@ -14,7 +14,7 @@ export class DistrictFilterFactory {
     this.mainCity = mainCity
   }
 
-  currentFilter() {
+  currentDistrictFilter() {
     switch (this.mainCity) {
       case 'paris':
         return ParisDistrictFilter

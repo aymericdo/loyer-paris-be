@@ -10,4 +10,9 @@ export class LilleDistrictFilter extends DistrictFilterParent {
   async getDistricts(): Promise<DefaultDistrictItem[]> {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
+
+  protected async getDistrictsFromCity(): Promise<DefaultDistrictItem[]> {
+    // There is not other city in the Lille Agglomeration
+    return await this.GeojsonCollection.find({})
+  }
 }

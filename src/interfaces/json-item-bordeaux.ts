@@ -1,3 +1,5 @@
+import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
+
 export interface BordeauxEncadrementItem {
   zone: number;
   maison: boolean;
@@ -15,6 +17,7 @@ export interface BordeauxDistrictItem {
     com_code: number
     zonage: string
     commune: string
+    [DISPLAY_ZONE_FIELD]: string
   }
   geometry: {
     type: 'Polygon'

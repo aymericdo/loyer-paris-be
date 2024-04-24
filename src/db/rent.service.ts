@@ -64,7 +64,7 @@ export async function getChloroplethMapData(
     }
   }
 
-  return await Rent.find(filter, { isLegal: 1, district: 1 }).lean()
+  return await Rent.find(filter, { isLegal: 1, district: 1 })
 }
 
 export async function getPriceDiffData(
@@ -227,7 +227,7 @@ export async function getLegalPerClassicRenterData(
   return (await Rent.find(filter, {
     isLegal: 1,
     renter: 1,
-  }).lean()) as unknown as { isLegal: boolean; renter: string }[]
+  })) as unknown as { isLegal: boolean; renter: string }[]
 }
 
 export async function getLegalPerRenterData(
@@ -307,7 +307,7 @@ export async function getLegalPerWebsiteData(
   return (await Rent.find(filter, {
     isLegal: 1,
     website: 1,
-  }).lean()) as unknown as {
+  })) as unknown as {
     isLegal: boolean
     website: string
   }[]
@@ -427,18 +427,15 @@ export async function getRelevantAdsData(
     }
   ).lean()) as unknown as RelevantAdsData[]
 
-  return ads.map((ad) => {
+  return await Promise.all(ads.map(async (ad) => {
     let blurry = false
 
     if (!ad.longitude || !ad.latitude) {
       const mainCity = cityList[ad.city].mainCity
 
-      const polygon = new DistrictsList(mainCity as AvailableMainCities).currentPolygon(ad.district)
+      const feature = await new DistrictsList(mainCity as AvailableMainCities).currentFeature(ad.district)
 
-      const point = randomPositionInPolygon({
-        type: 'Feature',
-        geometry: polygon,
-      })
+      const point = randomPositionInPolygon(feature)
 
       ad.longitude = point[0]
       ad.latitude = point[1]
@@ -455,7 +452,7 @@ export async function getRelevantAdsData(
       blurry,
       exceeding,
     }
-  })
+  }))
 }
 
 export async function getRelevantAdsDataTotalCount(filterParam: {

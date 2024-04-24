@@ -1,6 +1,6 @@
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
-import { AddressStrategyFactory } from '@services/address/address'
+import { AddressServiceFactory } from '@services/address/address-factory'
 import { AvailableCities, CityService, cityList } from '@services/address/city'
 import { PostalCodeStrategyFactory } from '@services/address/postalcode'
 import { ERROR_CODE } from '@services/api/errors'
@@ -58,8 +58,8 @@ export class DigService {
 
     // Order is important here
     const postalCode = postalCodeStrategy.getPostalCode()
-    const addressStrategy = new AddressStrategyFactory().getDiggerStrategy(city, postalCode, this.ad)
-    const [address, coordinates, blurryCoordinates] = await addressStrategy.getAddress()
+    const addressService = new AddressServiceFactory().getDiggerStrategy(city, postalCode, this.ad)
+    const [address, coordinates, blurryCoordinates] = await addressService.getAddress()
 
     const stations = this.ad.stations
 

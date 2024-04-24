@@ -67,7 +67,7 @@ export abstract class Website {
     try {
       const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
 
-      const CurrentEncadrementFilter = new EncadrementFilterFactory(cityList[city].mainCity).currentFilter()
+      const CurrentEncadrementFilter = new EncadrementFilterFactory(cityList[city].mainCity).currentEncadrementFilter()
       const filteredResult: FilteredResult = await new CurrentEncadrementFilter(cleanAd).find()
 
       if (filteredResult) {
