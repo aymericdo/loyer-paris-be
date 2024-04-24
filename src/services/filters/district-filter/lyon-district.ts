@@ -19,7 +19,7 @@ export class LyonDistrictFilter extends DistrictFilterParent {
       {
         'properties.city': { $regex: this.city,  $options: 'i' }
       },
-    )
+    ).lean()
     return districts?.length ? districts : []
   }
 }

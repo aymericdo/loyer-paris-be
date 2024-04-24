@@ -17,12 +17,12 @@ export class BordeauxDistrictFilter extends DistrictFilterParent {
       {
         'properties.com_code': +this.postalCode
       },
-    )
+    ).lean()
     return districts?.length ? districts : []
   }
 
   protected async getDistrictsFromCity(): Promise<BordeauxDistrictItem[]> {
     // There is not other city in the Bordeaux Agglomeration
-    return await this.GeojsonCollection.find({})
+    return await this.GeojsonCollection.find({}).lean()
   }
 }

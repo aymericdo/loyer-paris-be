@@ -56,7 +56,7 @@ export class DistrictFilterParent {
       {
         'properties.Zone': { $in: [zone, zone.toString()] }
       },
-    )
+    ).lean()
 
     return districts?.length ? districts : []
   }
@@ -70,7 +70,7 @@ export class DistrictFilterParent {
   }
 
   protected async getDistrictsFromMainCity(): Promise<DistrictItem[]> {
-    return await this.GeojsonCollection.find({})
+    return await this.GeojsonCollection.find({}).lean()
   }
 
   private async getDistrictFromCoordinate(lat: number, lng: number): Promise<DistrictItem[]> {
@@ -87,7 +87,7 @@ export class DistrictFilterParent {
           }
         }
       }
-    )
+    ).lean()
 
     return district ? [district] : []
   }

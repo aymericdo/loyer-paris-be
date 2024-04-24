@@ -19,7 +19,7 @@ export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
       {
         'properties.CODE_POST': +this.postalCode
       },
-    )
+    ).lean()
     return districts?.length ? districts : []
   }
 
@@ -30,7 +30,7 @@ export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
       {
         'properties.NOM_COM': { $regex: this.city,  $options: 'i' }
       },
-    )
+    ).lean()
     return districts?.length ? districts : []
   }
 }

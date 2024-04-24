@@ -20,7 +20,7 @@ export class ParisDistrictFilter extends DistrictFilterParent {
       {
         'properties.c_ar': +code
       },
-    )
+    ).lean()
 
     return districts?.length ? districts : []
   }
@@ -30,7 +30,7 @@ export class ParisDistrictFilter extends DistrictFilterParent {
       {
         'properties.l_qu': this.districtName
       },
-    )
+    ).lean()
 
     return districts?.length ? districts : []
   }
