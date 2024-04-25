@@ -27,7 +27,7 @@ export class DistrictFilterParent {
     }
 
     const districtFromCoordinate =
-      await this.getDistrictFromCoordinate(this.coordinates.lat, this.coordinates.lng)
+      await this.getDistrictFromCoordinate(this.coordinates?.lat, this.coordinates?.lng)
 
     if (districtFromCoordinate.length) {
       return districtFromCoordinate
