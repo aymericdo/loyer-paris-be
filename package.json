@@ -23,7 +23,8 @@
   "license": "ISC",
   "dependencies": {
     "@mapbox/geojson-rewind": "^0.5.2",
-    "@sentry/node": "^7.64.0",
+    "@sentry/node": "^7.112.2",
+    "@sentry/profiling-node": "^7.112.2",
     "@slack/web-api": "^7.0.0",
     "@types/cli-color": "^2.0.2",
     "@types/cors": "^2.8.13",
