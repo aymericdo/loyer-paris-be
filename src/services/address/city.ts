@@ -1,4 +1,5 @@
 import { Ad } from '@interfaces/ad'
+import { Slack } from '@messenger/slack'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { PrettyLog } from '@services/helpers/pretty-log'
@@ -193,7 +194,10 @@ export class CityService {
     const cityInList: AvailableCities = Object.keys(cityList).find((city) => cityName.includes(city))
 
     if (!cityInList) {
-      PrettyLog.call(`city "${cityName}" not found in the list`, 'yellow')
+      const message = `city "${cityName}" not found in the list`
+      PrettyLog.call(message, 'yellow')
+      new Slack().sendMessage('#bad-location', message)
+
       throw {
         error: ERROR_CODE.City,
         msg: 'city not found in the list',

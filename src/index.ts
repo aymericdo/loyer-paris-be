@@ -10,6 +10,7 @@ import { IpFilter } from 'express-ipfilter'
 
 import path from 'path'
 import { nodeProfilingIntegration } from '@sentry/profiling-node'
+import { Slack } from '@messenger/slack'
 
 const app = express()
 
@@ -87,6 +88,13 @@ if (process.env.CURRENT_ENV === 'prod') {
 }
 
 app.use(Sentry.Handlers.errorHandler())
+
+// Optional fallthrough error handler
+app.use(function onError(err, req, res, next) {
+  new Slack().sendMessage('#errors', `${err} (id: ${res.sentry})`)
+
+  next()
+})
 
 const port = process.env.PORT || 3000
 // eslint-disable-next-line no-console
