@@ -1,7 +1,6 @@
 import { IncompleteRent } from '@db/db'
 import { ApiError } from '@interfaces/shared'
 import { PrettyLog } from '@services/helpers/pretty-log'
-import { SentryService } from '@services/helpers/sentry'
 
 export enum ERROR_CODE {
   Other = 'other',
@@ -43,8 +42,6 @@ export class ApiErrorsService {
         default: {
           const errorMsg = `${ERROR500_MSG} ${this.error?.stack || this.error}`
           PrettyLog.call(errorMsg, 'red')
-          new SentryService().error(errorMsg)
-          break
         }
       }
 
@@ -66,7 +63,10 @@ export class ApiErrorsService {
       case ERROR_CODE.Partner:
         return 503
       default:
-        return 500
+        throw {
+          error: ERROR500_MSG,
+          msg: `${this.error?.stack.toString() || this.error.toString()}`,
+        }
     }
   }
 
