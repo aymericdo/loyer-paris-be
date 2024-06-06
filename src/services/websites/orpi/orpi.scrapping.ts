@@ -14,19 +14,22 @@ export class OrpiScrapping {
     const chargesElement = Array.from(
       document.querySelectorAll('.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li')
     )
-    const cityElement = document.querySelector('body > main > article > div > div > div > div > div > div > div > div > div > h1 > span > span')
-    const priceElement = document.querySelector('body > main > article p > span')
+    const hasChargesElement = Array.from(
+      document.querySelectorAll('body > main > article > div > div > div > div > div > div > div > div > div > p > small')
+    )
+    const cityElement = document.querySelector('body > main > article > div > div > div > div > div > div > div > div > div > h1 > span')
+    const priceElement = document.querySelector('body > main > article > div > div > div > div > div > div > div > div > div > p > strong')
     const charges = chargesElement.find((element) => element.textContent.search('Provisions pour charges') !== -1)
-    const hasChargesElement = document.querySelector('p.u-mt-n > span.u-h1')
-    const hasCharges = hasChargesElement?.parentNode?.textContent?.includes('charges comprises')
+    const hasCharges = hasChargesElement.some((element) => element.textContent?.toLowerCase().includes('charges comprises'))
     const renter = document.querySelector('body > main > article > section > div > div > div > div > div > div > div > h3')
 
     const dpe = document.querySelector('li.c-dpe__index--active')
-    const dpeRegex = /([A-Z])/g
+    const dpeRegex = /([ABCDEFG])/
     let dpeText = null
 
     if (dpe?.textContent) {
-      dpeText = dpe?.textContent?.replace(dpeRegex, ' $1')?.trim()
+      const matches = dpe?.textContent?.match(dpeRegex)
+      dpeText = matches?.length && matches[0]
     }
 
     const features = document.querySelectorAll('#collapse-details > div ul.o-grid li')
