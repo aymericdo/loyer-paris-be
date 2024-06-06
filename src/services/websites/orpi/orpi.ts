@@ -52,7 +52,7 @@ export class Orpi extends Website {
       furnished: ad.furnished,
       price: cleanup.price(ad.price),
       renter: cleanup.string(ad.renter),
-      rooms: ad.rooms,
+      rooms: cleanup.number(ad.rooms),
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),
     }

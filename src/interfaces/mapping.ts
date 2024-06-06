@@ -86,7 +86,7 @@ export interface OrpiMapping {
   hasCharges: boolean
   price: string
   renter: string
-  rooms: number
+  rooms: string
   surface: string
   title: string
 }
