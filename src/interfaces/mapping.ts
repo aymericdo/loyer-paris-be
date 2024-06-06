@@ -87,7 +87,7 @@ export interface OrpiMapping {
   price: string
   renter: string
   rooms: number
-  surface: number
+  surface: string
   title: string
 }
 
