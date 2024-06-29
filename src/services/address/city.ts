@@ -177,6 +177,8 @@ export type AvailableMainCities =
   | 'bordeaux'
 export type AvailableCities = keyof typeof cityList & string
 
+export const mainCityList: AvailableMainCities[] = Object.values(cityList).map((city) => city.mainCity)
+
 export class CityService {
   cityInList: AvailableCities
 
