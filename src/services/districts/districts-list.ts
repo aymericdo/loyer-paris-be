@@ -1,10 +1,12 @@
 import { DistrictItem, GeojsonFile } from '@interfaces/shared'
-import { AvailableCities, AvailableMainCities } from '@services/address/city'
+import { AvailableCities, AvailableMainCities, CityService, cityList } from '@services/address/city'
 import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
+import { capitalizeFirstLetter } from '@services/helpers/capitalize'
 import * as fs from 'fs'
 import path from 'path'
 
 interface DistrictElem {
+  label: string
   value: string
   groupBy: string | null
   displaySequence: number | string
@@ -59,39 +61,46 @@ export class DistrictsList {
     ).getFirstDistrict()
   }
 
-  async currentGeodataWithGroupBy(): Promise<DistrictElem[]> {
-    return ((await this.currentGeodata()).features as DistrictItem[]).reduce((prev: DistrictElem[], data) => {
-      switch (this.city) {
-        case 'paris': {
-          if (!prev.some((elem: DistrictElem) => elem.value === data['properties']['l_qu'])) {
-            prev.push({
-              value: data['properties'][DISPLAY_ZONE_FIELD],
-              displaySequence: data['properties']['c_ar'],
-              groupBy: `${data['properties']['c_ar']}${(data['properties']['c_ar'] > 1
-                ? 'ème'
-                : 'er'
-              ).toString()} arrondissement`,
-            })
-          }
-          break
+  async districtElemWithGroupBy(): Promise<DistrictElem[]> {
+    return Object.keys(cityList)
+      .filter((city) => {
+        if (this.city) {
+          return this.city === city
+        } else {
+          return cityList[city].mainCity === this.mainCity
         }
-        default: {
-          if (!prev.some((elem: DistrictElem) => elem.value === data['properties'][DISPLAY_ZONE_FIELD])) {
+      })
+      .reduce((prev, city) => {
+        const currentZones = cityList[city].zones
+        if (Array.isArray(currentZones)) {
+          (currentZones as string[]).forEach((zone) => {
+            const labelZone = capitalizeFirstLetter(`${city} (zone ${zone})`)
+
             prev.push({
-              value: data['properties'][DISPLAY_ZONE_FIELD],
-              displaySequence: data['properties'][DISPLAY_ZONE_FIELD],
+              value: zone,
+              label: labelZone,
+              displaySequence: labelZone,
               groupBy: null,
             })
-          }
-          break
+          })
+        } else {
+          Object.keys(currentZones).forEach((arrondissement: string) => {
+            currentZones[arrondissement].forEach((zone: string) => {
+              prev.push({
+                value: zone,
+                label: zone,
+                displaySequence: arrondissement,
+                groupBy: `${arrondissement}${(+arrondissement > 1
+                  ? 'ème'
+                  : 'er'
+                ).toString()} arrondissement`,
+              })
+            })
+          })
         }
-      }
 
-      return prev
-    }, [])
-      .sort((a: DistrictElem, b: DistrictElem) => {
-        return a.displaySequence > b.displaySequence ? 1 : -1
-      })
+        return prev
+      }, [])
   }
 
   static digZoneInProperties(city: AvailableMainCities, data: unknown): string {

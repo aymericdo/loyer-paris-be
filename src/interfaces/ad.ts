@@ -68,5 +68,5 @@ export interface IncompleteAd {
   id: string
   website: string
   url: string
-  city?: string
+  city?: AvailableCities
 }

@@ -48,7 +48,7 @@ export class DefaultAddressService implements AddressService {
   coordinates: Coordinate
   blurryCoordinates: Coordinate
 
-  constructor(city: string, postalCode: string, ad: Ad) {
+  constructor(city: AvailableCities, postalCode: string, ad: Ad) {
     this.city = city
     this.postalCode = postalCode
     this.ad = ad
@@ -68,7 +68,7 @@ export class DefaultAddressService implements AddressService {
     return [null, null, null]
   }
 
-  private async digForAddressInText(city: string, postalCode: string, text: string): Promise<string> {
+  private async digForAddressInText(city: AvailableCities, postalCode: string, text: string): Promise<string> {
     const addressRe = new RegExp(regexString('address'))
     const addressesFromRegex = text.match(addressRe) as string[]
     if (addressesFromRegex?.length) {

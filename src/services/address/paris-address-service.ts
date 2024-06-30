@@ -1,12 +1,12 @@
 import { ParisAddressItemDB } from '@interfaces/json-item-paris'
 import { AddressItem } from '@interfaces/shared'
-import { cityList } from '@services/address/city'
-import { AddressService, DefaultAddressService, dbMapping } from '@services/address/default-address-service'
+import { AvailableCities } from '@services/address/city'
+import { AddressService, DefaultAddressService } from '@services/address/default-address-service'
 import * as cleanup from '@services/helpers/cleanup'
 
 export class ParisAddressService extends DefaultAddressService {
   protected async getAddressCompleted(
-    city: string,
+    city: AvailableCities,
     query: string
   ): Promise<
     {
