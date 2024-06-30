@@ -12,7 +12,7 @@ const CITY_FILE_PATHS = {
   estEnsemble: 'json-data/encadrements_est-ensemble_2024.json',
   lyon: 'json-data/encadrements_lyon_2024.json',
   montpellier: 'json-data/encadrements_montpellier_2024.json',
-  bordeaux: 'json-data/encadrements_bordeaux_2023.json',
+  bordeaux: 'json-data/encadrements_bordeaux_2024.json',
 }
 
 export abstract class EncadrementFilterParent {
