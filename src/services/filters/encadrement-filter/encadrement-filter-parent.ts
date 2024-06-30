@@ -11,7 +11,7 @@ const CITY_FILE_PATHS = {
   plaineCommune: 'json-data/encadrements_plaine-commune_2024.json',
   estEnsemble: 'json-data/encadrements_est-ensemble_2024.json',
   lyon: 'json-data/encadrements_lyon_2024.json',
-  montpellier: 'json-data/encadrements_montpellier_2023.json',
+  montpellier: 'json-data/encadrements_montpellier_2024.json',
   bordeaux: 'json-data/encadrements_bordeaux_2023.json',
 }
 
