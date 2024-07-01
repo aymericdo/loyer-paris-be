@@ -98,7 +98,7 @@ describe('bienici', () => {
           hasFurniture: { order: 1, value: false },
           roomCount: { order: 2, value: 2 },
           surface: { order: 3, value: 41.01 },
-          dateRange: { order: 4, value: 'apres 1990' },
+          dateRange: { order: 4, value: 'Après 1990' },
           isHouse: { order: 5, value: undefined },
           max: { order: 6, value: null },
           maxAuthorized: { order: 7, value: null },
