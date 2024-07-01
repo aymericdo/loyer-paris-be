@@ -1,8 +1,7 @@
 import { PapMapping } from '@interfaces/mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import { virtualConsole } from '@services/helpers/jsdome'
-import jsdom from 'jsdom'
-const { JSDOM } = jsdom
+import { JSDOM } from 'jsdom'
 
 export class PapScrapping {
   static scrap(data: string): PapMapping {
