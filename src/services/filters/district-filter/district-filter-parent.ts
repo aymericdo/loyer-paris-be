@@ -1,4 +1,4 @@
-import { Coordinate, DistrictItem } from '@interfaces/shared'
+import { AddressItemDB, Coordinate, DefaultAddressItemDB, DistrictItem } from '@interfaces/shared'
 import { AvailableCities, AvailableMainCities } from '@services/address/city'
 
 export class DistrictFilterParent {
@@ -15,6 +15,25 @@ export class DistrictFilterParent {
     this.city = options?.city
     this.postalCode = options?.postalCode
     this.districtName = options?.districtName
+  }
+
+  digZoneInProperties(data: unknown): string {
+    return `Zone ${data['Zone']}`
+  }
+
+  buildItem(district: DistrictItem, elem: AddressItemDB): DefaultAddressItemDB {
+    return {
+      ...elem,
+      districtName: district ? this.digZoneInProperties(district['properties']) : null,
+      fields: {
+        l_adr: `${(elem as DefaultAddressItemDB).numero}${(elem as DefaultAddressItemDB).rep || ''} `+
+          `${(elem as DefaultAddressItemDB).nom_voie} (${(elem as DefaultAddressItemDB).code_postal})`,
+      },
+    } as DefaultAddressItemDB
+  }
+
+  buildGroupBy(_elem: string): string {
+    return null
   }
 
   async getFirstDistrict(): Promise<DistrictItem> {

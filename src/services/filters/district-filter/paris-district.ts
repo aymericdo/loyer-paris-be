@@ -2,6 +2,7 @@ import { ParisDistrictItem } from '@interfaces/json-item-paris'
 import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterParent } from './district-filter-parent'
 import { ParisGeojson } from '@db/db'
+import { AddressItemDB, DefaultAddressItemDB, DistrictItem } from '@interfaces/shared'
 
 export class ParisDistrictFilter extends DistrictFilterParent {
   GeojsonCollection = ParisGeojson
@@ -9,6 +10,24 @@ export class ParisDistrictFilter extends DistrictFilterParent {
 
   async getDistricts(): Promise<ParisDistrictItem[]> {
     return super.getDistricts() as Promise<ParisDistrictItem[]>
+  }
+
+  digZoneInProperties(data: unknown): string {
+    return data['l_qu']
+  }
+
+  buildItem(district: DistrictItem, elem: AddressItemDB): DefaultAddressItemDB {
+    return {
+      ...elem,
+      districtName: district ? this.digZoneInProperties(district['properties']) : null,
+    } as DefaultAddressItemDB
+  }
+
+  buildGroupBy(arrondissement: string): string {
+    return `${arrondissement}${(+arrondissement > 1
+      ? 'ème'
+      : 'er'
+    ).toString()} arrondissement`
   }
 
   protected async getDistrictsFromPostalCode(): Promise<ParisDistrictItem[]> {

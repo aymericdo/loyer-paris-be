@@ -53,6 +53,10 @@ interface DefaultAddressItem {
 
 export interface DefaultAddressItemDB extends DefaultAddressItem {
   score: number;
+  districtName: string | null;
+  fields: {
+    l_adr: string
+  }
 }
 
 export interface DefaultDistrictItem {
