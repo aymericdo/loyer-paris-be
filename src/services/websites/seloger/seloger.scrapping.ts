@@ -38,13 +38,13 @@ export class SelogerScrapping {
       )
     const itemTags =
       (document.querySelector('[class^=Summarystyled__TagsWrapper] > div') &&
-        Array.from(document.querySelectorAll('[class^=Summarystyled__TagsWrapper] > div'))) ||
+        [...document.querySelectorAll('[class^=Summarystyled__TagsWrapper] > div')]) ||
       []
     const optionsSection =
       (document.querySelector('section.categorie .criteria-wrapper > div') &&
-        Array.from(document.querySelectorAll('section.categorie .criteria-wrapper > div'))) ||
+        [...document.querySelectorAll('section.categorie .criteria-wrapper > div')]) ||
       (document.querySelector('.GeneralList__List-sc-9gtpjm-0.BAyYz > li') &&
-        Array.from(document.querySelectorAll('.GeneralList__List-sc-9gtpjm-0.BAyYz > li')))
+        [...document.querySelectorAll('.GeneralList__List-sc-9gtpjm-0.BAyYz > li')])
     const chargesElement =
       document.querySelector('section.categorie.with-padding-bottom .sh-text-light') ||
       document.querySelector(

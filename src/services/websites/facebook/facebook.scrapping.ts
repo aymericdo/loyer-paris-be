@@ -35,11 +35,11 @@ export class FacebookScrapping {
       '[id^=mount_] > div > div:nth-child(1) > div > div > div > div > div > div > div > div > div > div > div > div > div:nth-child(1) > div > div > div > div > div > div > div.xsag5q8 > div > div > div:nth-child(1) > span'
     )
 
-    const features = Array.from(
-      document.querySelectorAll(
+    const features = [
+      ...document.querySelectorAll(
         '[id^=mount_] div.xwib8y2 div.xjyslct'
       )
-    )
+    ]
 
     let furnished = null
     let surface = null

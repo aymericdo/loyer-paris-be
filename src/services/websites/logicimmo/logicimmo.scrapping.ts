@@ -19,18 +19,18 @@ export class LogicimmoScrapping {
       'body > main > div > div.mainContent > div.offerDetailContainer > div.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span'
     )
 
-    const chargeNode = Array.from(
-      document.querySelectorAll(
+    const chargeNode = [
+      ...document.querySelectorAll(
         'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section > div.aboutPriceBox .aboutPriceContainer ul.aboutPriceList > li'
       )
-    )
+    ]
 
-    const offerCriteria = Array.from(document.querySelectorAll('#dtlTechniqueBox > li.dtlTechiqueItm'))
-    const itemTags = Array.from(
-      document.querySelectorAll(
+    const offerCriteria = [...document.querySelectorAll('#dtlTechniqueBox > li.dtlTechiqueItm')]
+    const itemTags = [
+      ...document.querySelectorAll(
         'body > main > div > div > div.offerDetailContainer > section > div > h1 > div > div.offerSummaryDetails > p'
       )
-    )
+    ]
 
     let charges = null
     chargeNode.forEach((elem) => {

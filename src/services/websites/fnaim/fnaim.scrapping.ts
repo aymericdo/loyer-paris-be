@@ -10,7 +10,7 @@ export class FnaimScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const tabs = Array.from(document.querySelectorAll('#annonceFiche > div.ariane > span > a > span'))
+    const tabs = [...document.querySelectorAll('#annonceFiche > div.ariane > span > a > span')]
     const title = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header > div > h1')
     const description = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > div:nth-child(5) > p')
     const price = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header h3 > span')
@@ -20,8 +20,8 @@ export class FnaimScrapping {
       '#annonceFiche > div.annonce_fiche.fiche > div.caracteristique.agence > div > div.coordonnees > div > a'
     )
     const cityLabel = document.querySelector('#annonceFiche > div.ariane')
-    const features = Array.from(document.querySelectorAll('#annonceFiche > div.annonce_fiche.fiche > ul > li'))
-    const features2 = Array.from(document.querySelectorAll('#logementBlock > ul > li'))
+    const features = [...document.querySelectorAll('#annonceFiche > div.annonce_fiche.fiche > ul > li')]
+    const features2 = [...document.querySelectorAll('#logementBlock > ul > li')]
 
     let surface = null
     let rooms = null
