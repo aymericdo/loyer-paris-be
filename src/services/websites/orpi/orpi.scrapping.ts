@@ -32,7 +32,7 @@ export class OrpiScrapping {
       dpeText = matches?.length && matches[0]
     }
 
-    const features = document.querySelectorAll('#collapse-details > div ul.o-grid li')
+    const features = [...document.querySelectorAll('body > main > article > section > div > div > div > div > div > div > div > div > ul > li')]
 
     let furnished = false
     let surface = null
