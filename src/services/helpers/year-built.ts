@@ -67,6 +67,11 @@ export class YearBuiltService {
     return dateBuilt.split('-').map((date) => +date)
   }
 
+  static formatAfterBeforeWord(dateStr: string): string {
+    const res = dateStr.replace(/apres/i, 'Après')
+    return res.replace(/avant/i, 'Avant')
+  }
+
   static getDisplayableYearBuilt(periodBuilt: number[]): string {
     if (!periodBuilt) {
       return null
@@ -81,7 +86,7 @@ export class YearBuiltService {
         return `${periodBuilt[0]}-${periodBuilt[1]}`
       }
     } else {
-      return periodBuilt.toString()
+      return this.formatAfterBeforeWord(periodBuilt.toString())
     }
   }
 

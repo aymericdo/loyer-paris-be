@@ -81,7 +81,7 @@ export class SerializerService {
         hasFurniture: { order: 1, value: this.filteredResult.isFurnished },
         roomCount: { order: 2, value: this.filteredResult.roomCount },
         surface: { order: 3, value: surface },
-        dateRange: { order: 4, value: this.filteredResult.yearBuilt },
+        dateRange: { order: 4, value: YearBuiltService.formatAfterBeforeWord(this.filteredResult.yearBuilt) },
         isHouse: { order: 5, value: this.filteredResult.isHouse },
         max: {
           order: 6,
