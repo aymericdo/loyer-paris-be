@@ -106,7 +106,7 @@ export class YearBuiltService {
       building.properties.c_perconst &&
       (building.properties.c_perconst.toLowerCase().includes('avant')
         ? [null, +building.properties.c_perconst.slice(-4)]
-        : building.properties.c_perconst.toLowerCase().includes('après')
+        : building.properties.c_perconst.toLowerCase().includes('apres')
           ? [+building.properties.c_perconst.slice(-4), null]
           : [+building.properties.c_perconst.slice(0, 4), +building.properties.c_perconst.slice(-4)])
     return yearBuilt || periodBuilt

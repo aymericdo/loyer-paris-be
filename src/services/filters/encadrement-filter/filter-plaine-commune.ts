@@ -7,8 +7,6 @@ import { YearBuiltService } from '@services/helpers/year-built'
 
 export class FilterPlaineCommune extends EncadrementFilterParent {
   city: AvailableMainCities = 'plaineCommune'
-  // Extract possible range time from rangeRents (json-data/encadrements_plaine-commune.json)
-  rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
 
   async filter(): Promise<FilteredResult[]> {
     const districtsMatched = await new PlaineCommuneDistrictFilter(
