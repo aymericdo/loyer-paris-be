@@ -48,6 +48,7 @@ export class Pap extends Website {
       description: cleanup.string(ad.description),
       dpe: ad.dpe ? cleanup.string(ad.dpe) : null,
       price: cleanup.price(ad.price),
+      charges: cleanup.price(ad.charges),
       rooms: cleanup.number(ad.rooms),
       renter: PARTICULIER_WORD,
       surface: cleanup.number(ad.surface),

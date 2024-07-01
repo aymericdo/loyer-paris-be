@@ -20,6 +20,17 @@ export class PapScrapping {
       'body > div.details-annonce-container > div > div.main-content > div > ol > li:nth-child(2)'
     )
 
+    const rowPrices = [...document.querySelectorAll(
+      'body > div.details-annonce-container > div > div.main-content.details-item > div > div.row > div.col-1-3'
+    )]
+
+    let charges = null
+    rowPrices.forEach((row) => {
+      if (row.textContent.match(/Dont charges/g)) {
+        charges = row
+      }
+    })
+
     let surface = null
     let rooms = null
 
@@ -43,14 +54,15 @@ export class PapScrapping {
 
     return {
       id: null,
-      cityLabel: cityLabel && cityLabel.textContent,
-      description: description && description.textContent,
-      dpe: dpe && dpe.textContent,
-      price: price && price.textContent.replace('.', ''),
-      rooms: rooms && rooms.textContent,
-      stations: stations && stations.map((station) => station.textContent),
-      surface: surface && surface.textContent,
-      title: title && title.textContent,
+      cityLabel: cityLabel?.textContent,
+      description: description?.textContent,
+      dpe: dpe?.textContent,
+      price: price?.textContent.replace('.', ''),
+      charges: charges?.textContent,
+      rooms: rooms?.textContent,
+      stations: stations?.map((station) => station.textContent),
+      surface: surface?.textContent,
+      title: title?.textContent,
     }
   }
 }

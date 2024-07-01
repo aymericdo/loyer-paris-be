@@ -97,6 +97,7 @@ export interface PapMapping {
   description: string
   dpe: string | null
   price: string
+  charges: string
   rooms: string
   surface: string
   title: string

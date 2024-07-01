@@ -61,7 +61,7 @@ describe('pap', () => {
           },
           charges: {
             order: 7,
-            value: null,
+            value: 100,
           },
           hasCharges: {
             order: 8,
@@ -100,7 +100,7 @@ describe('pap', () => {
           },
           promoPercentage: {
             order: 8,
-            value: 13.85,
+            value: 6.67,
           },
         },
         isLegal: false,
