@@ -12,7 +12,7 @@ export async function getDistricts(req: Request, res: Response) {
   }
 
   const city: AvailableCities = req.query.city as AvailableCities
-  const geodata = await new DistrictsList(mainCity as AvailableMainCities, { specificCity: city }).currentGeodataWithGroupBy()
+  const districtsItems = await new DistrictsList(mainCity as AvailableMainCities, { specificCity: city }).districtElemWithGroupBy()
 
-  res.json(geodata)
+  res.json(districtsItems)
 }

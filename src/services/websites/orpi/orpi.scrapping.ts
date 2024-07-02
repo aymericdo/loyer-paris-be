@@ -1,4 +1,4 @@
-import { OrpiMapping } from '@interfaces/mapping'
+import { OrpiMapping } from '@interfaces/scrap-mapping'
 import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
@@ -11,12 +11,12 @@ export class OrpiScrapping {
 
     const titleElement = document.querySelector('body > main > article > div > div > div > div > div > div > div > div > div > h1')
     const descriptionElement = document.querySelector('div.o-container div.c-preview')
-    const chargesElement = Array.from(
-      document.querySelectorAll('.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li')
-    )
-    const hasChargesElement = Array.from(
-      document.querySelectorAll('body > main > article > div > div > div > div > div > div > div > div > div > p > small')
-    )
+    const chargesElement = [
+      ...document.querySelectorAll('.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li')
+    ]
+    const hasChargesElement = [
+      ...document.querySelectorAll('body > main > article > div > div > div > div > div > div > div > div > div > p > small')
+    ]
     const cityElement = document.querySelector('body > main > article > div > div > div > div > div > div > div > div > div > h1 > span')
     const priceElement = document.querySelector('body > main > article > div > div > div > div > div > div > div > div > div > p > strong')
     const charges = chargesElement.find((element) => element.textContent.search('Provisions pour charges') !== -1)
@@ -32,7 +32,7 @@ export class OrpiScrapping {
       dpeText = matches?.length && matches[0]
     }
 
-    const features = document.querySelectorAll('#collapse-details > div ul.o-grid li')
+    const features = [...document.querySelectorAll('#collapse-details div ul.o-grid li')]
 
     let furnished = false
     let surface = null

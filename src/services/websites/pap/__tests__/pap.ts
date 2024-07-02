@@ -1,5 +1,5 @@
 import { closeAllConnections } from '@db/db'
-import { Body } from '@interfaces/mapping'
+import { Body } from '@interfaces/scrap-mapping'
 import fs from 'fs'
 import { disconnect } from 'mongoose'
 import path from 'path'
@@ -36,7 +36,7 @@ describe('pap', () => {
         detectedInfo: {
           address: {
             order: 0,
-            value: '3 rue de rivoli 75004, Paris',
+            value: '75005, Paris',
           },
           hasFurniture: {
             order: 1,
@@ -44,11 +44,11 @@ describe('pap', () => {
           },
           roomCount: {
             order: 2,
-            value: 1,
+            value: 2,
           },
           surface: {
             order: 3,
-            value: 12,
+            value: 28,
           },
           yearBuilt: {
             order: 4,
@@ -57,11 +57,11 @@ describe('pap', () => {
           isHouse: { order: 5, value: null },
           price: {
             order: 6,
-            value: 750,
+            value: 1300,
           },
           charges: {
             order: 7,
-            value: null,
+            value: 100,
           },
           hasCharges: {
             order: 8,
@@ -71,7 +71,7 @@ describe('pap', () => {
         computedInfo: {
           neighborhood: {
             order: 0,
-            value: 'Saint-Gervais',
+            value: 'Saint-Victor',
           },
           hasFurniture: {
             order: 1,
@@ -79,11 +79,11 @@ describe('pap', () => {
           },
           roomCount: {
             order: 2,
-            value: '1',
+            value: '2',
           },
           surface: {
             order: 3,
-            value: 12,
+            value: 28,
           },
           dateRange: {
             order: 4,
@@ -92,15 +92,15 @@ describe('pap', () => {
           isHouse: { order: 5, value: undefined },
           max: {
             order: 6,
-            value: 43.9,
+            value: 40,
           },
           maxAuthorized: {
             order: 7,
-            value: 526.8,
+            value: 1120,
           },
           promoPercentage: {
             order: 8,
-            value: 29.76,
+            value: 6.67,
           },
         },
         isLegal: false,
@@ -131,28 +131,28 @@ describe('pap', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: '59000, Lille' },
+          address: { order: 0, value: 'cite casseville 59000, Lille' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 3 },
-          surface: { order: 3, value: 90 },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 50 },
           yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
-          price: { order: 6, value: 1265 },
-          charges: { order: 7, value: 196 },
+          price: { order: 6, value: 880 },
+          charges: { order: 7, value: null },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Zone 1' },
+          neighborhood: { order: 0, value: 'Zone 3' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 3 },
-          surface: { order: 3, value: 90 },
-          dateRange: { order: 4, value: 'apres 1990' },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 50 },
+          dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: null },
-          maxAuthorized: { order: 7, value: null },
-          promoPercentage: { order: 8, value: null },
+          max: { order: 6, value: 17.5 },
+          maxAuthorized: { order: 7, value: 875 },
+          promoPercentage: { order: 8, value: 0.57 },
         },
-        isLegal: true,
+        isLegal: false,
         moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
@@ -182,27 +182,27 @@ describe('pap', () => {
         detectedInfo: {
           address: {
             order: 0,
-            value: '69005, Lyon',
+            value: '69100, Villeurbanne',
           },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 1 },
-          surface: { order: 3, value: 34 },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 30 },
           yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
-          price: { order: 6, value: 990 },
+          price: { order: 6, value: 740 },
           charges: { order: 7, value: null },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Zone 1' },
+          neighborhood: { order: 0, value: 'Zone 2' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: '1' },
-          surface: { order: 3, value: 34 },
-          dateRange: { order: 4, value: 'après 1990' },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 30 },
+          dateRange: { order: 4, value: 'Après 2005' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 23.6 },
-          maxAuthorized: { order: 7, value: 802.4 },
-          promoPercentage: { order: 8, value: 18.95 },
+          max: { order: 6, value: 20.4 },
+          maxAuthorized: { order: 7, value: 612 },
+          promoPercentage: { order: 8, value: 17.3 },
         },
         isLegal: false,
         moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',

@@ -1,8 +1,7 @@
-import { PapMapping } from '@interfaces/mapping'
+import { PapMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import { virtualConsole } from '@services/helpers/jsdome'
-import jsdom from 'jsdom'
-const { JSDOM } = jsdom
+import { JSDOM } from 'jsdom'
 
 export class PapScrapping {
   static scrap(data: string): PapMapping {
@@ -14,12 +13,23 @@ export class PapScrapping {
     const description = document.querySelector('.item-description > div > p')
     const price = document.querySelector('h1.item-title > span.item-price')
     const cityLabel = document.querySelector('div.item-description > h2')
-    const itemTags = Array.from(document.querySelectorAll('.item-tags > li > strong'))
-    const stations = Array.from(document.querySelectorAll('ul.item-transports > li > span.label'))
+    const itemTags = [...document.querySelectorAll('.item-tags > li > strong')]
+    const stations = [...document.querySelectorAll('ul.item-transports > li > span.label')]
 
     const sectionName = document.querySelector(
       'body > div.details-annonce-container > div > div.main-content > div > ol > li:nth-child(2)'
     )
+
+    const rowPrices = [...document.querySelectorAll(
+      'body > div.details-annonce-container > div > div.main-content.details-item > div > div.row > div.col-1-3'
+    )]
+
+    let charges = null
+    rowPrices.forEach((row) => {
+      if (row.textContent.match(/Dont charges/g)) {
+        charges = row
+      }
+    })
 
     let surface = null
     let rooms = null
@@ -44,14 +54,15 @@ export class PapScrapping {
 
     return {
       id: null,
-      cityLabel: cityLabel && cityLabel.textContent,
-      description: description && description.textContent,
-      dpe: dpe && dpe.textContent,
-      price: price && price.textContent.replace('.', ''),
-      rooms: rooms && rooms.textContent,
-      stations: stations && stations.map((station) => station.textContent),
-      surface: surface && surface.textContent,
-      title: title && title.textContent,
+      cityLabel: cityLabel?.textContent,
+      description: description?.textContent,
+      dpe: dpe?.textContent,
+      price: price?.textContent.replace('.', ''),
+      charges: charges?.textContent,
+      rooms: rooms?.textContent,
+      stations: stations?.map((station) => station.textContent),
+      surface: surface?.textContent,
+      title: title?.textContent,
     }
   }
 }

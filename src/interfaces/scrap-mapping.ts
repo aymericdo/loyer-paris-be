@@ -33,21 +33,6 @@ export interface LeboncoinMapping {
   subject: string
 }
 
-export interface LeboncoinAPIMapping {
-  id: string
-  list_id: string
-  subject: string
-  body: string
-  price: string[]
-  attributes: { [detail: string]: string }[]
-  location: {
-    lng: string
-    lat: string
-    city: string
-    zipcode: string
-  }
-}
-
 export interface LefigaroMapping {
   id: string
   charges: string
@@ -97,6 +82,7 @@ export interface PapMapping {
   description: string
   dpe: string | null
   price: string
+  charges: string
   rooms: string
   surface: string
   title: string

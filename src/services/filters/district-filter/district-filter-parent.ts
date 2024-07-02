@@ -1,20 +1,40 @@
-import { Coordinate, DistrictItem } from '@interfaces/shared'
+import { AddressItemDB, Coordinate, DefaultAddressItemDB, DistrictItem } from '@interfaces/shared'
 import { AvailableCities, AvailableMainCities } from '@services/address/city'
 
 export class DistrictFilterParent {
   GeojsonCollection = null
   mainCity: AvailableMainCities = null
   city: AvailableCities = null
-
   coordinates: Coordinate = null
   postalCode: string = null
   districtName: string = null
 
-  constructor(coordinates: Coordinate, options?: { city?: AvailableCities, postalCode?: string, districtName?: string }) {
+  constructor(
+    { coordinates, city, postalCode, districtName }:
+    { coordinates?: Coordinate, city?: AvailableCities, postalCode?: string, districtName?: string }) {
     this.coordinates = coordinates
-    this.city = options?.city
-    this.postalCode = options?.postalCode
-    this.districtName = options?.districtName
+    this.city = city
+    this.postalCode = postalCode
+    this.districtName = districtName
+  }
+
+  digZoneInProperties(data: unknown): string {
+    return `Zone ${data['Zone']}`
+  }
+
+  buildItem(district: DistrictItem, elem: AddressItemDB): DefaultAddressItemDB {
+    return {
+      ...elem,
+      districtName: district ? this.digZoneInProperties(district['properties']) : null,
+      fields: {
+        l_adr: `${(elem as DefaultAddressItemDB).numero}${(elem as DefaultAddressItemDB).rep || ''} `+
+          `${(elem as DefaultAddressItemDB).nom_voie} (${(elem as DefaultAddressItemDB).code_postal})`,
+      },
+    } as DefaultAddressItemDB
+  }
+
+  buildGroupBy(_elem: string): string {
+    return null
   }
 
   async getFirstDistrict(): Promise<DistrictItem> {
@@ -74,7 +94,7 @@ export class DistrictFilterParent {
   }
 
   private async getDistrictFromCoordinate(lat: number, lng: number): Promise<DistrictItem[]> {
-    if (!this.coordinates?.lat || !this.coordinates?.lng) return []
+    if (!lat || !lng) return []
 
     const district = await this.GeojsonCollection.findOne(
       {

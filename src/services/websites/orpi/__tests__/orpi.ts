@@ -1,5 +1,5 @@
 import { closeAllConnections } from '@db/db'
-import { Body } from '@interfaces/mapping'
+import { Body } from '@interfaces/scrap-mapping'
 import fs from 'fs'
 import { disconnect } from 'mongoose'
 import path from 'path'
@@ -34,26 +34,26 @@ describe('orpi', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: '75013, Paris' },
-          hasFurniture: { order: 1, value: false },
-          roomCount: { order: 2, value: 2 },
-          surface: { order: 3, value: 33.3 },
+          address: { order: 0, value: '75019, Paris' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 1 },
+          surface: { order: 3, value: 10.45 },
           yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
-          price: { order: 6, value: 1218 },
-          charges: { order: 7, value: 112 },
+          price: { order: 6, value: 550 },
+          charges: { order: 7, value: 20 },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Croulebarbe' },
-          hasFurniture: { order: 1, value: false },
-          roomCount: { order: 2, value: '2' },
-          surface: { order: 3, value: 33.3 },
-          dateRange: { order: 4, value: 'Après 1990' },
+          neighborhood: { order: 0, value: 'Villette' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: '1' },
+          surface: { order: 3, value: 10.45 },
+          dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 32 },
-          maxAuthorized: { order: 7, value: 1065.6 },
-          promoPercentage: { order: 8, value: 3.65 },
+          max: { order: 6, value: 37.3 },
+          maxAuthorized: { order: 7, value: 389.78 },
+          promoPercentage: { order: 8, value: 26.46 },
         },
         isLegal: false,
         moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
@@ -84,27 +84,27 @@ describe('orpi', () => {
       expect(data).toEqual({
         detectedInfo: {
           address: { order: 0, value: '59000, Lille' },
-          hasFurniture: { order: 1, value: false },
-          roomCount: { order: 2, value: 3 },
-          surface: { order: 3, value: 67.65 },
-          yearBuilt: { order: 4, value: '1914' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 19.6 },
+          yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
-          price: { order: 6, value: 900 },
-          charges: { order: 7, value: null },
+          price: { order: 6, value: 525 },
+          charges: { order: 7, value: 60 },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
-          hasFurniture: { order: 1, value: false },
-          roomCount: { order: 2, value: 3 },
-          surface: { order: 3, value: 67.65 },
-          dateRange: { order: 4, value: 'avant 1946' },
+          hasFurniture: { order: 1, value: true },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 19.6 },
+          dateRange: { order: 4, value: 'Après 1990' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: null },
-          maxAuthorized: { order: 7, value: null },
-          promoPercentage: { order: 8, value: null },
+          max: { order: 6, value: 19.1 },
+          maxAuthorized: { order: 7, value: 374.36 },
+          promoPercentage: { order: 8, value: 19.49 },
         },
-        isLegal: true,
+        isLegal: false,
         moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })

@@ -1,1 +1,0 @@
-web: node --max-old-space-size=4096 ./build/src/index.js

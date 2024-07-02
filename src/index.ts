@@ -6,7 +6,6 @@ import { CronJobsService } from '@cronjobs/cronjobs'
 import * as Sentry from '@sentry/node'
 import cors from 'cors'
 import express from 'express'
-import { IpFilter } from 'express-ipfilter'
 
 import path from 'path'
 import { nodeProfilingIntegration } from '@sentry/profiling-node'
@@ -54,10 +53,6 @@ app.use(
 )
 
 app.use(express.static(path.resolve('./json-data')))
-
-// Blacklist the following IPs
-const ips = ['109.11.33.58']
-app.use(IpFilter(ips, { mode: 'deny' }))
 
 app.use('/seloger', require('./api/websites/seloger.controller'))
 app.use('/leboncoin', require('./api/websites/leboncoin.controller'))

@@ -69,4 +69,5 @@ export interface ParisAddressItem {
 
 export interface ParisAddressItemDB extends ParisAddressItem {
   score: number;
+  districtName: string | null;
 }

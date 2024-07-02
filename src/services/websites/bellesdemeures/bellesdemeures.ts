@@ -1,5 +1,5 @@
 import { Ad } from '@interfaces/ad'
-import { BellesDemeuresMapping } from '@interfaces/mapping'
+import { BellesDemeuresMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'

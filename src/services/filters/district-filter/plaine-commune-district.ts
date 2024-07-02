@@ -1,7 +1,7 @@
 import { DefaultDistrictItem } from '@interfaces/shared'
 import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterParent } from './district-filter-parent'
-import { PlaineCommuneDistrictItem } from '@interfaces/json-item-plaine-commune'
+import { PlaineCommuneDistrictItem } from '@interfaces/plaine-commune'
 import { PlaineCommuneGeojson } from '@db/db'
 
 export class PlaineCommuneDistrictFilter extends DistrictFilterParent {

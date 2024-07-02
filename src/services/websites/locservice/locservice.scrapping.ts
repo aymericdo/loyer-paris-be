@@ -1,4 +1,4 @@
-import { LocserviceMapping } from '@interfaces/mapping'
+import { LocserviceMapping } from '@interfaces/scrap-mapping'
 import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
