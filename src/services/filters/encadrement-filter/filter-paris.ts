@@ -7,12 +7,12 @@ import { YearBuiltService } from '@services/helpers/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
 
-const mappingQuartierZoneParisJson: ParisQuartierItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris_quartiers.json'), 'utf8'))
-
 export class FilterParis extends EncadrementFilterParent {
   city: AvailableMainCities = 'paris'
   // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
   rangeTime: string[] = ['Avant 1946', '1946-1970', '1971-1990', 'Après 1990']
+
+  mappingQuartierZoneParisJson: ParisQuartierItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris_quartiers.json'), 'utf8'))
 
   async filter(): Promise<FilteredResult[]> {
     const districtsMatched = await new ParisDistrictFilter(
@@ -31,11 +31,13 @@ export class FilterParis extends EncadrementFilterParent {
       currentYear -= 1
     }
 
-    const zones: ParisQuartierItem[] = mappingQuartierZoneParisJson.filter((zoneRent) => {
+    const zones: ParisQuartierItem[] = this.mappingQuartierZoneParisJson.filter((zoneRent) => {
       return districtsMatched?.length
         ? districtsMatched.map((district) => district.properties.c_qu).includes(zoneRent.id_quartier)
         : false
     })
+
+    console.log(zones)
 
     const rentList = (this.rangeRentsJson() as ParisEncadrementItem[]).filter((rangeRent) => {
       return (
@@ -54,6 +56,8 @@ export class FilterParis extends EncadrementFilterParent {
           : true)
       )
     })
+
+    console.log(rentList.map((r) => r.id_zone))
 
     return rentList
       .map((r) => ({
