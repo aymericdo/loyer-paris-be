@@ -37,6 +37,7 @@ export class FilterParis extends EncadrementFilterParent {
         : false
     })
 
+    console.log(this.mappingQuartierZoneParisJson)
     console.log(zones)
 
     const rentList = (this.rangeRentsJson() as ParisEncadrementItem[]).filter((rangeRent) => {
