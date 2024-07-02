@@ -24,7 +24,6 @@ jobs:
       MONGODB_URI_ZONES: ${{ secrets.MONGODB_URI_ZONES }}
 
     runs-on: ubuntu-latest
-    using: 'node20'
     strategy:
       matrix:
         node-version: [21.x]
