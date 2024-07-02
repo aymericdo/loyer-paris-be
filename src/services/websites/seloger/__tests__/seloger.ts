@@ -29,7 +29,6 @@ describe('seloger', () => {
       } as unknown as Response
 
       const seloger = new SeLoger(mockResponse, { body })
-
       const data = await seloger.digData()
 
       expect(data).toEqual({
