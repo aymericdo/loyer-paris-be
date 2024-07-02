@@ -3,8 +3,6 @@ import clc from 'cli-color'
 
 export class PrettyLog {
   static call(message: string, color?: string) {
-    if (process.env.CURRENT_ENV === 'test') return
-
     const date = new Date()
     const log = `[${date.toISOString()}] ${message}`
     if (color === 'red') {
