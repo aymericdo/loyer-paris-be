@@ -12,13 +12,13 @@ export class FilterLyon extends EncadrementFilterParent {
   universalRangeTime: [number, number][] = [[null, 1946], [1946, 1970], [1971, 1990], [1991, 2005], [2005, null]]
 
   async filter(): Promise<FilteredResult[]> {
-    const districtsMatched = await new LyonDistrictFilter(
-      this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates, {
-        city: this.infoToFilter.city,
-        postalCode: this.infoToFilter.postalCode,
-        districtName: this.infoToFilter.districtName,
-      }
-    ).getDistricts()
+    const districtsMatched = await new LyonDistrictFilter({
+      coordinates: this.infoToFilter.coordinates,
+      blurryCoordinates: this.infoToFilter.blurryCoordinates,
+      city: this.infoToFilter.city,
+      postalCode: this.infoToFilter.postalCode,
+      districtName: this.infoToFilter.districtName,
+    }).getDistricts()
 
     const timeDates: string[] = new YearBuiltService(this.rangeTime, this.universalRangeTime).getRangeTimeFromYearBuilt(
       this.infoToFilter.yearBuilt

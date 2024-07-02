@@ -27,7 +27,6 @@ export class DistrictsList {
     this.city = options?.specificCity
     this.district = options?.specificDistrict
     this.currentDistrictFilter = new (new DistrictFilterFactory(this.mainCity).currentDistrictFilter())(
-      { lat: null, lng: null },
       { city: this.city, districtName: this.district },
     )
   }

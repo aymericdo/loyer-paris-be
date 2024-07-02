@@ -9,13 +9,13 @@ export class FilterEstEnsemble extends EncadrementFilterParent {
   city: AvailableMainCities = 'estEnsemble'
 
   async filter(): Promise<FilteredResult[]> {
-    const districtsMatched = await new EstEnsembleDistrictFilter(
-      this.infoToFilter.coordinates || this.infoToFilter.blurryCoordinates, {
-        city: this.infoToFilter.city,
-        postalCode: this.infoToFilter.postalCode,
-        districtName: this.infoToFilter.districtName,
-      }
-    ).getDistricts()
+    const districtsMatched = await new EstEnsembleDistrictFilter({
+      coordinates: this.infoToFilter.coordinates,
+      blurryCoordinates: this.infoToFilter.blurryCoordinates,
+      city: this.infoToFilter.city,
+      postalCode: this.infoToFilter.postalCode,
+      districtName: this.infoToFilter.districtName,
+    }).getDistricts()
 
     const timeDates: string[] = new YearBuiltService(this.rangeTime, this.universalRangeTime).getRangeTimeFromYearBuilt(this.infoToFilter.yearBuilt)
 

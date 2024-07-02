@@ -23,8 +23,10 @@ export async function getAddresses(req: Request, res: Response) {
   // Add [districtName] to all elements
   data = await Promise.all(data.map(async (elem: AddressItemDB) => {
     const currentDistrictFilter = new CurrentDistrictFilter({
-      lng: elem.geometry.coordinates[0],
-      lat: elem.geometry.coordinates[1],
+      coordinates: {
+        lng: elem.geometry.coordinates[0],
+        lat: elem.geometry.coordinates[1],
+      }
     })
 
     const district = await currentDistrictFilter.getFirstDistrict()

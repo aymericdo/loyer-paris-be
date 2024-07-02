@@ -5,16 +5,19 @@ export class DistrictFilterParent {
   GeojsonCollection = null
   mainCity: AvailableMainCities = null
   city: AvailableCities = null
-
   coordinates: Coordinate = null
+  blurryCoordinates: Coordinate = null
   postalCode: string = null
   districtName: string = null
 
-  constructor(coordinates: Coordinate, options?: { city?: AvailableCities, postalCode?: string, districtName?: string }) {
+  constructor(
+    { coordinates, blurryCoordinates, city, postalCode, districtName }:
+    { coordinates?: Coordinate, blurryCoordinates?: Coordinate, city?: AvailableCities, postalCode?: string, districtName?: string }) {
     this.coordinates = coordinates
-    this.city = options?.city
-    this.postalCode = options?.postalCode
-    this.districtName = options?.districtName
+    this.blurryCoordinates = blurryCoordinates
+    this.city = city
+    this.postalCode = postalCode
+    this.districtName = districtName
   }
 
   digZoneInProperties(data: unknown): string {
@@ -50,6 +53,13 @@ export class DistrictFilterParent {
 
     if (districtFromCoordinate.length) {
       return districtFromCoordinate
+    }
+
+    const districtFromBlurryCoordinate =
+      await this.getDistrictFromCoordinate(this.blurryCoordinates?.lat, this.blurryCoordinates?.lng)
+
+    if (districtFromBlurryCoordinate.length) {
+      return districtFromBlurryCoordinate
     }
 
     const districtFromPostalCode =
@@ -93,7 +103,7 @@ export class DistrictFilterParent {
   }
 
   private async getDistrictFromCoordinate(lat: number, lng: number): Promise<DistrictItem[]> {
-    if (!this.coordinates?.lat || !this.coordinates?.lng) return []
+    if (!lat || !lng) return []
 
     const district = await this.GeojsonCollection.findOne(
       {
