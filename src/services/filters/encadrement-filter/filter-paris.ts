@@ -36,8 +36,8 @@ export class FilterParis extends EncadrementFilterParent {
   async isHasFurnitureMatch(rangeRent: ParisEncadrementItem): Promise<boolean> {
     return this.infoToFilter.hasFurniture != null
       ? this.infoToFilter.hasFurniture
-        ? !!rangeRent.meuble_txt.match(/^meubl/g).length
-        : !!rangeRent.meuble_txt.match(/^non meubl/g).length
+        ? !!rangeRent.meuble_txt.match(/^meubl/g)?.length
+        : !!rangeRent.meuble_txt.match(/^non meubl/g)?.length
       : true
   }
 
