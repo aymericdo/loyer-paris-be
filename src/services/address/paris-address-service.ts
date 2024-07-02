@@ -1,6 +1,6 @@
 import { ParisAddressItemDB } from '@interfaces/paris'
 import { AddressItem } from '@interfaces/shared'
-import { AvailableCities } from '@services/address/city'
+import { AvailableCities } from '@services/filters/city-filter/valid-cities-list'
 import { AddressService, DefaultAddressService } from '@services/address/default-address-service'
 import * as cleanup from '@services/helpers/cleanup'
 

@@ -1,5 +1,5 @@
 import { Ad } from '@interfaces/ad'
-import { AvailableCities } from '@services/address/city'
+import { AvailableCities } from '@services/filters/city-filter/valid-cities-list'
 import { AddressService, DefaultAddressService } from '@services/address/default-address-service'
 import { ParisAddressService } from '@services/address/paris-address-service'
 

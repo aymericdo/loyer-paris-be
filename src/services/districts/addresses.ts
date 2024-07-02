@@ -1,6 +1,6 @@
 import { AddressItemDB } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/address/city'
-import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
+import { AvailableCities, AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
 import { AddressService } from '@services/address/default-address-service'
@@ -8,7 +8,7 @@ import { AddressService } from '@services/address/default-address-service'
 export async function getAddresses(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
   const mainCity = req.params.city as AvailableMainCities
-  const city = req.query.city.toString()
+  const city: AvailableCities = req.query.city.toString() as AvailableCities
   const addressQuery = req.query.q.toString()
 
   if (addressQuery.length < 2) {

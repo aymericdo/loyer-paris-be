@@ -1,6 +1,6 @@
 import { DistrictItem, GeojsonFile } from '@interfaces/shared'
-import { AvailableCities, AvailableMainCities, cityList } from '@services/address/city'
-import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
+import { AvailableCities, AvailableMainCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 import { capitalizeFirstLetter } from '@services/helpers/capitalize'
 
 interface DistrictElem {

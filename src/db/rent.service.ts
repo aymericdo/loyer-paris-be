@@ -1,7 +1,7 @@
 import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
-import { AvailableMainCities, cityList } from '@services/address/city'
 import { DistrictsList } from '@services/districts/districts-list'
+import { AvailableMainCities, cityList } from '@services/filters/city-filter/valid-cities-list'
 import { roundNumber } from '@services/helpers/round-number'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'
 import randomPositionInPolygon from 'random-position-in-polygon'

@@ -1,43 +1,9 @@
-import { Ad } from '@interfaces/ad'
-import { Slack } from '@messenger/slack'
-import { ERROR_CODE } from '@services/api/errors'
-import * as cleanup from '@services/helpers/cleanup'
-import { PrettyLog } from '@services/helpers/pretty-log'
-
-type CityList = {
-  [key: string]: {
-    mainCity: AvailableMainCities
-    postalCodePossibilities: string[]
-    postalCodeRegex: RegExp[]
-    zones?: string[] | { [key: string]: string[] }
-  }
-}
-
-export const cityList: CityList = {
+export const cityList = {
   paris: {
     mainCity: 'paris',
     postalCodePossibilities: [
-      '75001',
-      '75002',
-      '75003',
-      '75004',
-      '75005',
-      '75006',
-      '75007',
-      '75008',
-      '75009',
-      '75010',
-      '75011',
-      '75012',
-      '75013',
-      '75014',
-      '75015',
-      '75016',
-      '75116',
-      '75017',
-      '75018',
-      '75019',
-      '75020',
+      '75001', '75002', '75003', '75004', '75005', '75006', '75007', '75008', '75009', '75010',
+      '75011', '75012', '75013', '75014', '75015', '75016', '75116', '75017', '75018', '75019', '75020',
     ],
     postalCodeRegex: [/\b75[0-1][0-9]{2}\b/g, /((?<=paris )[0-9]{1,2})|([0-9]{1,2} ?(?=er|ème|e|eme))/g],
     zones: {
@@ -210,63 +176,21 @@ export const cityList: CityList = {
     postalCodeRegex: [/\b33[0-9]{3}\b/g],
     zones: ['Zone 1', 'Zone 2', 'Zone 3', 'Zone 4'],
   },
-}
+} as const
 
-export type AvailableMainCities =
-  | 'paris'
-  | 'lille'
-  | 'plaineCommune'
-  | 'lyon'
-  | 'estEnsemble'
-  | 'montpellier'
-  | 'bordeaux'
 export type AvailableCities = keyof typeof cityList
+export type AvailableMainCities = typeof cityList[AvailableCities]['mainCity']
 
 export const mainCityList: AvailableMainCities[] = Object.values(cityList).map((city) => city.mainCity)
 
-export class CityService {
-  cityInList: AvailableCities
-
-  constructor(ad: Ad) {
-    const cityName = cleanup.string(ad.cityLabel)
-
-    if (!cityName || !cityName?.length) {
-      throw {
-        error: ERROR_CODE.Address,
-        msg: 'city not found',
-        isIncompleteAd: true,
-      }
-    }
-
-    const cityInList: AvailableCities = Object.keys(cityList).find((city) => cityName.includes(city))
-
-    if (!cityInList) {
-      const message = `city '${cityName}' not found in the list`
-      PrettyLog.call(message, 'yellow')
-      new Slack().sendMessage('#bad-location', message)
-
-      throw {
-        error: ERROR_CODE.City,
-        msg: 'city not found in the list',
-      }
-    }
-
-    this.cityInList = cityInList as AvailableCities
-  }
-
-  findCity(): AvailableCities {
-    return this.cityInList
-  }
-
-  static canHaveHouse(city: AvailableMainCities): boolean {
-    // https://www.youtube.com/watch?v=TuxMwALL_S4&ab_channel=Charted
-    switch (city) {
-      case 'plaineCommune':
-      case 'estEnsemble':
-      case 'bordeaux':
-        return true
-      default:
-        return false
-    }
+export const canHaveHouse = (city: AvailableMainCities): boolean => {
+  // https://www.youtube.com/watch?v=TuxMwALL_S4&ab_channel=Charted
+  switch (city) {
+    case 'plaineCommune':
+    case 'estEnsemble':
+    case 'bordeaux':
+      return true
+    default:
+      return false
   }
 }

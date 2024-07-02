@@ -1,5 +1,5 @@
 import * as rentService from '@db/rent.service'
-import { AvailableMainCities } from '@services/address/city'
+import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
 import { ApiErrorsService } from '@services/api/errors'
 import { DISTRICT_FIELD, DistrictsList } from '@services/districts/districts-list'
 import { PrettyLog } from '@services/helpers/pretty-log'

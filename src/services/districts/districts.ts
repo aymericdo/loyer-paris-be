@@ -1,4 +1,4 @@
-import { AvailableCities, AvailableMainCities, mainCityList } from '@services/address/city'
+import { AvailableCities, AvailableMainCities, mainCityList } from '@services/filters/city-filter/valid-cities-list'
 import { DistrictsList } from '@services/districts/districts-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'

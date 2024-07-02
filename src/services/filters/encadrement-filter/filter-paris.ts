@@ -1,7 +1,6 @@
 import { FilteredResult } from '@interfaces/ad'
 import { ParisDistrictItem, ParisEncadrementItem, ParisQuartierItem } from '@interfaces/paris'
-import { AvailableMainCities } from '@services/address/city'
-import { ParisDistrictFilter } from '@services/filters/district-filter/paris-district'
+import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -10,15 +9,9 @@ import { Memoize } from 'typescript-memoize'
 const mappingQuartierZoneParisJson: ParisQuartierItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris_quartiers.json'), 'utf8'))
 
 export class FilterParis extends EncadrementFilterParent {
-  city: AvailableMainCities = 'paris'
-  DistrictFilter = ParisDistrictFilter
+  mainCity: AvailableMainCities = 'paris'
   // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
   rangeTime: string[] = ['Avant 1946', '1946-1970', '1971-1990', 'Après 1990']
-
-  async filter(): Promise<FilteredResult[]> {
-    const rentList = await this.filterRents()
-    return await this.mappingResult(rentList)
-  }
 
   protected async isDistrictMatch(districtsMatched: ParisDistrictItem[], rangeRent: ParisEncadrementItem): Promise<boolean> {
     const zones = this.getParisZones(districtsMatched)

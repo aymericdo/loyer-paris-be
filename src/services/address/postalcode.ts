@@ -1,5 +1,5 @@
 import { Ad } from '@interfaces/ad'
-import { AvailableCities, cityList } from './city'
+import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
 
 export interface PostalCodeStrategy {
   getPostalCode(): string
@@ -7,19 +7,16 @@ export interface PostalCodeStrategy {
 
 export class PostalCodeStrategyFactory {
   getDiggerStrategy(city: AvailableCities, ad: Ad): PostalCodeStrategy {
-    const parisStrategy = new ParisPostalCodeStrategy(city, ad)
-    const lyonStrategy = new LyonPostalCodeStrategy(city, ad)
-    const defaultStrategy = new DefaultPostalCodeStrategy(city, ad)
     switch (city) {
       case 'paris': {
-        return parisStrategy
+        return new ParisPostalCodeStrategy(city, ad)
       }
       case 'lyon':
       case 'villeurbanne': {
-        return lyonStrategy
+        return new LyonPostalCodeStrategy(city, ad)
       }
       default: {
-        return defaultStrategy
+        return new DefaultPostalCodeStrategy(city, ad)
       }
     }
   }
@@ -39,8 +36,9 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
   }
 
   protected digForPostalCode(city: AvailableCities, ad: Ad): string {
-    if (cityList[city].postalCodePossibilities.length === 1) {
-      return cityList[city].postalCodePossibilities[0]
+    const postalCodePossibilities: string[] = cityList[city].postalCodePossibilities as unknown as string[]
+    if (postalCodePossibilities.length === 1) {
+      return postalCodePossibilities[0]
     }
 
     const postalCode =
@@ -48,9 +46,9 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
       (ad.title && (this.digForPostalCode1(city, ad.title) || this.digForPostalCode2(city, ad.title))) ||
       (ad.description &&
         (this.digForPostalCode1(city, ad.description) || this.digForPostalCode2(city, ad.description))) ||
-      (cityList[city].postalCodePossibilities[0].endsWith('000') && cityList[city].postalCodePossibilities[0])
+      (postalCodePossibilities[0].endsWith('000') && postalCodePossibilities[0])
 
-    return postalCode && cityList[city].postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
+    return postalCode && postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
   }
 
   protected digForPostalCode1(city: AvailableCities, text: string): string {

@@ -1,6 +1,6 @@
 import { ParisDistrictItem } from '@interfaces/paris'
-import { AvailableMainCities } from '@services/address/city'
-import { DistrictFilterParent } from './district-filter-parent'
+import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { ParisGeojson } from '@db/db'
 import { AddressItemDB, DefaultAddressItemDB, DistrictItem } from '@interfaces/shared'
 

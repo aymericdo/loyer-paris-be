@@ -1,5 +1,5 @@
 import * as rentService from '@db/rent.service'
-import { cityList } from '@services/address/city'
+import { cityList } from '@services/filters/city-filter/valid-cities-list'
 import { ApiErrorsService } from '@services/api/errors'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'

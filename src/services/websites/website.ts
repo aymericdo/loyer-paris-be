@@ -1,7 +1,7 @@
 import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
 import { Body } from '@interfaces/scrap-mapping'
 import { ApiError } from '@interfaces/shared'
-import { AvailableCities, CityService, cityList } from '@services/address/city'
+import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
 import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'
 import { SerializerService } from '@services/api/serializer'
 import { SaveRentService } from '@services/db/save-rent'
@@ -10,6 +10,7 @@ import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/e
 import { getPriceExcludingCharges } from '@services/helpers/charges'
 import { roundNumber } from '@services/helpers/round-number'
 import { Response } from 'express'
+import { CityFilter } from '@services/filters/city-filter/city-filter'
 
 export const DPE_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 export const PARTICULIER_WORD = 'Particulier'
@@ -61,7 +62,7 @@ export abstract class Website {
     const ad: Ad = await this.mapping()
     const url = this.body.url && new URL(this.body.url)
 
-    const cityService = new CityService(ad)
+    const cityService = new CityFilter(ad.cityLabel)
     const city: AvailableCities = cityService.findCity()
 
     try {

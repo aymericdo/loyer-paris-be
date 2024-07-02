@@ -1,7 +1,7 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { AvailableMainCities, CityService } from '@services/address/city'
+import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { getInfoLink } from '@services/filters/city-filter/more-information'
 import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
-import { MORE_INFO } from '@services/helpers/more-information'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
@@ -10,7 +10,7 @@ import { Request, Response } from 'express'
 export async function getManualResult(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getManualResult`, 'blue')
 
-  const city: AvailableMainCities = req.params.city as AvailableMainCities
+  const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
   const districtValue: string = (req.query.districtValue as string) || null
   const priceValue = (req.query.priceValue as string) || null
   const furnishedValue = (req.query.furnishedValue as string) || null
@@ -19,7 +19,7 @@ export async function getManualResult(req: Request, res: Response) {
   const isHouseValue: string = (req.query.isHouseValue as string) || null
   const dateBuiltValueStr: string = (req.query.dateBuiltValueStr as string) || null
 
-  if (!city || !districtValue || !priceValue || !furnishedValue || !surfaceValue || !roomValue) {
+  if (!mainCity || !districtValue || !priceValue || !furnishedValue || !surfaceValue || !roomValue) {
     res.status(403).send('missing params')
     return
   }
@@ -30,10 +30,9 @@ export async function getManualResult(req: Request, res: Response) {
   const room: number = +roomValue
   const dateBuiltStr: number[] = YearBuiltService.formatAsYearBuilt(dateBuiltValueStr)
   const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
+  const isHouse: boolean = isHouseValue !== null ? +isHouseValue === 1 : false
 
-  const isHouse: boolean = +isHouseValue === 1
-
-  const CurrentEncadrementFilter = new EncadrementFilterFactory(city).currentEncadrementFilter()
+  const CurrentEncadrementFilter = new EncadrementFilterFactory(mainCity).currentEncadrementFilter()
   const params: InfoToFilter = {
     city: null,
     postalCode: null,
@@ -43,14 +42,10 @@ export async function getManualResult(req: Request, res: Response) {
     districtName: district,
     roomCount: room,
     hasFurniture,
-  }
-
-  if (CityService.canHaveHouse(city)) {
-    params['isHouse'] = isHouse
+    isHouse,
   }
 
   const currentEncadrementFilter = new CurrentEncadrementFilter(params)
-
   const filteredResult: FilteredResult[] = await currentEncadrementFilter.filter()
 
   res.json(
@@ -64,7 +59,7 @@ export async function getManualResult(req: Request, res: Response) {
         yearBuilt: YearBuiltService.getDisplayableYearBuilt(
           currentEncadrementFilter.rangeTimeToUniversalRangeTime(r.yearBuilt)
         ),
-        moreInfo: MORE_INFO[city],
+        moreInfo: getInfoLink(mainCity),
       }
     })
   )

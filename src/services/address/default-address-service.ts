@@ -9,7 +9,7 @@ import {
 } from '@db/db'
 import { Ad } from '@interfaces/ad'
 import { Coordinate, AddressItem, DefaultAddressItemDB, AddressItemDB } from '@interfaces/shared'
-import { AvailableCities, cityList } from '@services/address/city'
+import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
 import { regexString } from '@services/helpers/regex'
 import * as cleanup from '@services/helpers/cleanup'
 

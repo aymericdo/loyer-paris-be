@@ -1,34 +1,32 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import { Coordinate, DefaultDistrictItem, DefaultEncadrementItem, DistrictItem, EncadrementItem, EncadrementItemWithHouse } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/address/city'
+import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { canHaveHouse } from '@services/filters/city-filter/valid-cities-list'
+import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 import { YearBuiltService } from '@services/helpers/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
 import { Memoize } from 'typescript-memoize'
 
-const CITY_FILE_PATHS = {
-  paris: 'json-data/encadrements_paris.json',
-  lille: 'json-data/encadrements_lille_2024.json',
-  plaineCommune: 'json-data/encadrements_plaine-commune_2024.json',
-  estEnsemble: 'json-data/encadrements_est-ensemble_2024.json',
-  lyon: 'json-data/encadrements_lyon_2024.json',
-  montpellier: 'json-data/encadrements_montpellier_2024.json',
-  bordeaux: 'json-data/encadrements_bordeaux_2024.json',
-}
-
 export abstract class EncadrementFilterParent {
   DistrictFilter = null
+  rangeRentsJsonPath = null
   infoToFilter: InfoToFilter = null
-  city: AvailableMainCities
+  mainCity: AvailableMainCities
   rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
   universalRangeTime: [number, number][] = [[null, 1946], [1946, 1970], [1971, 1990], [1990, null]]
   canHaveHouse = false
 
   constructor(infoToFilter: InfoToFilter) {
     this.infoToFilter = infoToFilter
+    this.DistrictFilter = new DistrictFilterFactory(this.mainCity).currentDistrictFilter()
+    this.canHaveHouse = canHaveHouse(this.mainCity)
   }
 
-  abstract filter(): Promise<FilteredResult[]>
+  async filter(): Promise<FilteredResult[]> {
+    const rentList = await this.filterRents()
+    return await this.mappingResult(rentList)
+  }
 
   async find(): Promise<FilteredResult> {
     const rentList = await this.filter()
@@ -153,6 +151,6 @@ export abstract class EncadrementFilterParent {
 
   @Memoize()
   protected rangeRentsJson(): EncadrementItem[] {
-    return JSON.parse(fs.readFileSync(path.join(CITY_FILE_PATHS[this.city]), 'utf8'))
+    return JSON.parse(fs.readFileSync(path.join(this.rangeRentsJsonPath), 'utf8'))
   }
 }

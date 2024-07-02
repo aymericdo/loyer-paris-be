@@ -1,6 +1,6 @@
 import { DefaultDistrictItem, DistrictItem } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/address/city'
-import { DistrictFilterParent } from './district-filter-parent'
+import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { MontpellierGeojson } from '@db/db'
 
 export class MontpellierDistrictFilter extends DistrictFilterParent {

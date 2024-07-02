@@ -1,9 +1,10 @@
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
 import { AddressServiceFactory } from '@services/address/address-factory'
-import { AvailableCities, CityService, cityList } from '@services/address/city'
+import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
 import { PostalCodeStrategyFactory } from '@services/address/postalcode'
 import { ERROR_CODE } from '@services/api/errors'
+import { canHaveHouse } from '@services/filters/city-filter/valid-cities-list'
 import * as cleanup from '@services/helpers/cleanup'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { regexString } from '@services/helpers/regex'
@@ -29,7 +30,7 @@ export class DigService {
     const renter = this.digForRenter()
     const charges = this.digForCharges()
     const hasCharges = this.digForHasCharges()
-    const isHouse = CityService.canHaveHouse(cityList[city].mainCity) ? this.digForIsHouse() : null
+    const isHouse = canHaveHouse(cityList[city].mainCity) ? this.digForIsHouse() : null
     const dpe = this.digForDPE()
 
     return {

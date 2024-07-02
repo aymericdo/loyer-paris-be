@@ -1,11 +1,11 @@
-import { AvailableMainCities } from '@services/address/city'
-import { BordeauxDistrictFilter } from './bordeaux-district'
-import { EstEnsembleDistrictFilter } from './est-ensemble-district'
-import { LilleDistrictFilter } from './lille-district'
-import { LyonDistrictFilter } from './lyon-district'
-import { MontpellierDistrictFilter } from './montpellier-district'
-import { ParisDistrictFilter } from './paris-district'
-import { PlaineCommuneDistrictFilter } from './plaine-commune-district'
+import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { BordeauxDistrictFilter } from './district-filter-bordeaux'
+import { EstEnsembleDistrictFilter } from './district-filter-est-ensemble'
+import { LilleDistrictFilter } from './district-filter-lille'
+import { LyonDistrictFilter } from './district-filter-lyon'
+import { MontpellierDistrictFilter } from './district-filter-montpellier'
+import { ParisDistrictFilter } from './district-filter-paris'
+import { PlaineCommuneDistrictFilter } from './district-filter-plaine-commune'
 
 export class DistrictFilterFactory {
   mainCity: AvailableMainCities
