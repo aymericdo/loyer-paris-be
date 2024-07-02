@@ -31,16 +31,6 @@ export class FilterParis extends EncadrementFilterParent {
       currentYear -= 1
     }
 
-    console.log({
-      coordinates: this.infoToFilter.coordinates,
-      blurryCoordinates: this.infoToFilter.blurryCoordinates,
-      city: this.infoToFilter.city,
-      postalCode: this.infoToFilter.postalCode,
-      districtName: this.infoToFilter.districtName,
-    })
-
-    console.log(districtsMatched)
-
     const zones: ParisQuartierItem[] = mappingQuartierZoneParisJson.filter((zoneRent) => {
       return districtsMatched?.length
         ? districtsMatched.map((district) => district.properties.c_qu).includes(zoneRent.id_quartier)
