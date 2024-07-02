@@ -1,65 +1,84 @@
 import { FilteredResult } from '@interfaces/ad'
-import { ParisEncadrementItem, ParisQuartierItem } from '@interfaces/json-item-paris'
+import { ParisDistrictItem, ParisEncadrementItem, ParisQuartierItem } from '@interfaces/paris'
 import { AvailableMainCities } from '@services/address/city'
 import { ParisDistrictFilter } from '@services/filters/district-filter/paris-district'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
-import { YearBuiltService } from '@services/helpers/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
+import { Memoize } from 'typescript-memoize'
 
 const mappingQuartierZoneParisJson: ParisQuartierItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris_quartiers.json'), 'utf8'))
 
 export class FilterParis extends EncadrementFilterParent {
   city: AvailableMainCities = 'paris'
+  DistrictFilter = ParisDistrictFilter
   // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
   rangeTime: string[] = ['Avant 1946', '1946-1970', '1971-1990', 'Après 1990']
 
   async filter(): Promise<FilteredResult[]> {
-    const districtsMatched = await new ParisDistrictFilter({
-      coordinates: this.infoToFilter.coordinates,
-      blurryCoordinates: this.infoToFilter.blurryCoordinates,
-      city: this.infoToFilter.city,
-      postalCode: this.infoToFilter.postalCode,
-      districtName: this.infoToFilter.districtName,
-    }).getDistricts()
+    const rentList = await this.filterRents()
+    return await this.mappingResult(rentList)
+  }
 
-    const timeDates: string[] = new YearBuiltService(this.rangeTime, this.universalRangeTime).getRangeTimeFromYearBuilt(this.infoToFilter.yearBuilt)
+  protected async isDistrictMatch(districtsMatched: ParisDistrictItem[], rangeRent: ParisEncadrementItem): Promise<boolean> {
+    const zones = this.getParisZones(districtsMatched)
+    return zones?.length ? zones.some((zoneRent) => zoneRent.id_zone === rangeRent.id_zone) : true
+  }
 
+  protected async isRoomCountMatch(rangeRent: ParisEncadrementItem): Promise<boolean> {
+    return this.infoToFilter.roomCount
+      ? +this.infoToFilter.roomCount < 4
+        ? +rangeRent.piece === +this.infoToFilter.roomCount
+        : rangeRent.piece.toString() === '4 et plus'
+      : true
+  }
+
+  async isHasFurnitureMatch(rangeRent: ParisEncadrementItem): Promise<boolean> {
+    return this.infoToFilter.hasFurniture != null
+      ? this.infoToFilter.hasFurniture
+        ? !!rangeRent.meuble_txt.match(/^meubl/g).length
+        : !!rangeRent.meuble_txt.match(/^non meubl/g).length
+      : true
+  }
+
+  protected async filterRents(): Promise<(ParisEncadrementItem & { districtName: string })[]> {
     let currentYear = +new Date().getFullYear()
 
     if (new Date().getMonth() < 6) {
       currentYear -= 1
     }
 
-    const zones: ParisQuartierItem[] = mappingQuartierZoneParisJson.filter((zoneRent) => {
-      return districtsMatched?.length
-        ? districtsMatched.map((district) => district.properties.c_qu).includes(zoneRent.id_quartier)
-        : false
-    })
+    const rangeRents = (this.rangeRentsJson() as ParisEncadrementItem[])
+    const districtsMatched: ParisDistrictItem[] = await super.districtsMatched() as ParisDistrictItem[]
+    const zones = this.getParisZones(districtsMatched)
 
-    const rentList = (this.rangeRentsJson() as ParisEncadrementItem[]).filter((rangeRent) => {
-      return (
+    return (await Promise.all(rangeRents.map(async (rangeRent) => ({
+      value: rangeRent,
+      include: (
         rangeRent.annee === currentYear &&
-        (zones?.length ? zones.map((zoneRent) => zoneRent.id_zone).includes(rangeRent.id_zone) : true) &&
-        (timeDates?.length ? timeDates.includes(rangeRent.epoque) : true) &&
-        (this.infoToFilter.roomCount
-          ? +this.infoToFilter.roomCount < 4
-            ? +rangeRent.piece === +this.infoToFilter.roomCount
-            : rangeRent.piece.toString() === '4 et plus'
-          : true) &&
-        (this.infoToFilter.hasFurniture != null
-          ? this.infoToFilter.hasFurniture
-            ? rangeRent.meuble_txt.match(/^meubl/g)
-            : rangeRent.meuble_txt.match(/^non meubl/g)
-          : true)
+        await this.isDistrictMatch(districtsMatched, rangeRent) &&
+        await this.isYearBuiltMatch(rangeRent) &&
+        await this.isRoomCountMatch(rangeRent) &&
+        await this.isHasFurnitureMatch(rangeRent) &&
+        await this.isHasHouseMatch(rangeRent)
       )
-    })
+    }))))
+      .filter((v: { value: ParisEncadrementItem, include: boolean }) => v.include)
+      .map(({ value }) => value)
+      .map((rangeRent: ParisEncadrementItem) => {
+        return {
+          ...rangeRent,
+          districtName: zones.find((zone) => zone.id_zone === rangeRent.id_zone).nom_quartier,
+        }
+      })
+  }
 
+  protected async mappingResult(rentList: (ParisEncadrementItem & { districtName: string })[]): Promise<FilteredResult[]> {
     return rentList
       .map((r) => ({
         maxPrice: +r.max,
         minPrice: +r.min,
-        districtName: zones.find((zone) => zone.id_zone === r.id_zone).nom_quartier,
+        districtName: r.districtName,
         isFurnished: !!r.meuble_txt.match(/^meubl/g),
         roomCount: r.piece.toString(),
         yearBuilt: r.epoque,
@@ -67,5 +86,17 @@ export class FilterParis extends EncadrementFilterParent {
       .sort((a, b) => {
         return this.rangeTime.indexOf(a.yearBuilt) - this.rangeTime.indexOf(b.yearBuilt)
       })
+  }
+
+  @Memoize()
+  private getParisZones(districtsMatched: ParisDistrictItem[]): ParisQuartierItem[] {
+    if (!districtsMatched?.length) {
+      return []
+    }
+
+    const quartiersMatched = districtsMatched.map((district) => district.properties.c_qu)
+    return mappingQuartierZoneParisJson.filter((zoneRent) => {
+      return quartiersMatched.includes(zoneRent.id_quartier)
+    })
   }
 }

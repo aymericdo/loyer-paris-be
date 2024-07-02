@@ -258,10 +258,6 @@ export class CityService {
     return this.cityInList
   }
 
-  static findCityWithPostalCode(postalCode: string): AvailableCities {
-    return Object.keys(cityList).find((city) => cityList[city].postalCodePossibilities.includes(postalCode))
-  }
-
   static canHaveHouse(city: AvailableMainCities): boolean {
     // https://www.youtube.com/watch?v=TuxMwALL_S4&ab_channel=Charted
     switch (city) {

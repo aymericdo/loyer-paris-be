@@ -1,5 +1,5 @@
 import { closeAllConnections } from '@db/db'
-import { Body } from '@interfaces/mapping'
+import { Body } from '@interfaces/scrap-mapping'
 import fs from 'fs'
 import { disconnect } from 'mongoose'
 import path from 'path'

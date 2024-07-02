@@ -9,7 +9,7 @@ export class YearBuiltService {
     this.universalRangeTime = universalRangeTime
   }
 
-  getRangeTimeFromYearBuilt(yearBuilt: number[]): string[] {
+  getDateRangeFromYearBuilt(yearBuilt: number[]): string[] {
     if (!yearBuilt) {
       return null
     }

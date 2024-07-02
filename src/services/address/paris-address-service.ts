@@ -1,4 +1,4 @@
-import { ParisAddressItemDB } from '@interfaces/json-item-paris'
+import { ParisAddressItemDB } from '@interfaces/paris'
 import { AddressItem } from '@interfaces/shared'
 import { AvailableCities } from '@services/address/city'
 import { AddressService, DefaultAddressService } from '@services/address/default-address-service'

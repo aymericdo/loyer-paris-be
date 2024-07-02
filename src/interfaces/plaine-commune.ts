@@ -1,4 +1,9 @@
+import { DefaultDistrictItem } from '@interfaces/shared'
 import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
+
+export interface PlaineCommuneEncadrementItem extends DefaultDistrictItem {
+  maison: boolean
+}
 
 export interface PlaineCommuneDistrictItem {
   type: 'Feature'
@@ -12,15 +17,4 @@ export interface PlaineCommuneDistrictItem {
     [DISPLAY_ZONE_FIELD]: string
   }
   geometry: { type: 'MultiPolygon'; coordinates: number[][][] }
-}
-
-export interface PlaineCommuneEncadrementItem {
-  zone: number
-  maison: boolean
-  meuble: boolean
-  nombre_de_piece: string
-  annee_de_construction: string
-  prix_min: string
-  prix_med: string
-  prix_max: string
 }

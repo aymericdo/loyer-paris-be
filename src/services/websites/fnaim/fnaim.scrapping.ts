@@ -1,4 +1,4 @@
-import { FnaimMapping } from '@interfaces/mapping'
+import { FnaimMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'

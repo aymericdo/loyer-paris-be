@@ -1,4 +1,4 @@
-import { ParisDistrictItem } from '@interfaces/json-item-paris'
+import { ParisDistrictItem } from '@interfaces/paris'
 import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterParent } from './district-filter-parent'
 import { ParisGeojson } from '@db/db'

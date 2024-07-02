@@ -1,4 +1,4 @@
-import { SelogerMapping } from '@interfaces/mapping'
+import { SelogerMapping } from '@interfaces/scrap-mapping'
 import { virtualConsole } from '@services/helpers/jsdome'
 import { PARTICULIER_WORD } from '@services/websites/website'
 import jsdom from 'jsdom'

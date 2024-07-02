@@ -1,4 +1,4 @@
-import { BordeauxDistrictItem } from '@interfaces/json-item-bordeaux'
+import { BordeauxDistrictItem } from '@interfaces/bordeaux'
 import { DefaultDistrictItem } from '@interfaces/shared'
 import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterParent } from './district-filter-parent'

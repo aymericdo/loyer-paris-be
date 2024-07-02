@@ -6,15 +6,13 @@ export class DistrictFilterParent {
   mainCity: AvailableMainCities = null
   city: AvailableCities = null
   coordinates: Coordinate = null
-  blurryCoordinates: Coordinate = null
   postalCode: string = null
   districtName: string = null
 
   constructor(
-    { coordinates, blurryCoordinates, city, postalCode, districtName }:
-    { coordinates?: Coordinate, blurryCoordinates?: Coordinate, city?: AvailableCities, postalCode?: string, districtName?: string }) {
+    { coordinates, city, postalCode, districtName }:
+    { coordinates?: Coordinate, city?: AvailableCities, postalCode?: string, districtName?: string }) {
     this.coordinates = coordinates
-    this.blurryCoordinates = blurryCoordinates
     this.city = city
     this.postalCode = postalCode
     this.districtName = districtName
@@ -53,13 +51,6 @@ export class DistrictFilterParent {
 
     if (districtFromCoordinate.length) {
       return districtFromCoordinate
-    }
-
-    const districtFromBlurryCoordinate =
-      await this.getDistrictFromCoordinate(this.blurryCoordinates?.lat, this.blurryCoordinates?.lng)
-
-    if (districtFromBlurryCoordinate.length) {
-      return districtFromBlurryCoordinate
     }
 
     const districtFromPostalCode =

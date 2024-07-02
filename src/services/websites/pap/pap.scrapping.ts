@@ -1,4 +1,4 @@
-import { PapMapping } from '@interfaces/mapping'
+import { PapMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import { virtualConsole } from '@services/helpers/jsdome'
 import { JSDOM } from 'jsdom'

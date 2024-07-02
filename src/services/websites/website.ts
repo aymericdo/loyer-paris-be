@@ -1,5 +1,5 @@
 import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
-import { Body } from '@interfaces/mapping'
+import { Body } from '@interfaces/scrap-mapping'
 import { ApiError } from '@interfaces/shared'
 import { AvailableCities, CityService, cityList } from '@services/address/city'
 import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'

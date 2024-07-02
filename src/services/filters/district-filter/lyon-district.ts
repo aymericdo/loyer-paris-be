@@ -2,7 +2,7 @@ import { AvailableMainCities } from '@services/address/city'
 import { DistrictFilterParent } from './district-filter-parent'
 import { LyonGeojson } from '@db/db'
 import { DefaultDistrictItem } from '@interfaces/shared'
-import { LyonDistrictItem } from '@interfaces/json-item-lyon'
+import { LyonDistrictItem } from '@interfaces/lyon'
 
 export class LyonDistrictFilter extends DistrictFilterParent {
   GeojsonCollection = LyonGeojson

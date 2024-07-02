@@ -1,12 +1,12 @@
 import { IncompleteAd } from '@interfaces/ad'
 import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
-import { BordeauxDistrictItem, BordeauxEncadrementItem } from './json-item-bordeaux'
-import { EstEnsembleEncadrementItem } from './json-item-est-ensemble'
-import { LilleEncadrementItem } from './json-item-lille'
-import { LyonDistrictItem, LyonEncadrementItem } from './json-item-lyon'
-import { MontpellierEncadrementItem } from './json-item-montpellier'
-import { ParisAddressItemDB, ParisDistrictItem, ParisEncadrementItem } from './json-item-paris'
-import { PlaineCommuneDistrictItem, PlaineCommuneEncadrementItem } from './json-item-plaine-commune'
+import {  BordeauxDistrictItem, BordeauxEncadrementItem } from './bordeaux'
+import { EstEnsembleEncadrementItem } from './est-ensemble'
+import { LyonDistrictItem, LyonEncadrementItem } from './lyon'
+import { MontpellierEncadrementItem } from './montpellier'
+import { ParisAddressItemDB, ParisDistrictItem, ParisEncadrementItem } from './paris'
+import { PlaineCommuneDistrictItem, PlaineCommuneEncadrementItem } from './plaine-commune'
+import { LilleEncadrementItem } from '@interfaces/lille'
 
 export interface Coordinate {
   lat: number
@@ -59,6 +59,16 @@ export interface DefaultAddressItemDB extends DefaultAddressItem {
   }
 }
 
+export interface DefaultEncadrementItem {
+  zone: number;
+  meuble: boolean;
+  nombre_de_piece: string;
+  annee_de_construction: string;
+  prix_min: string;
+  prix_med: string;
+  prix_max: string;
+}
+
 export interface DefaultDistrictItem {
   type: 'Feature'
   properties: {
@@ -70,15 +80,22 @@ export interface DefaultDistrictItem {
 
 export type AddressItemDB = DefaultAddressItemDB | ParisAddressItemDB
 
-export type DistrictItem = DefaultDistrictItem | ParisDistrictItem | BordeauxDistrictItem | PlaineCommuneDistrictItem | LyonDistrictItem
+export type DistrictItem = DefaultDistrictItem | ParisDistrictItem | PlaineCommuneDistrictItem | LyonDistrictItem | BordeauxDistrictItem
 
 export type EncadrementItem =
+  | DefaultEncadrementItem
   | ParisEncadrementItem
   | EstEnsembleEncadrementItem
   | PlaineCommuneEncadrementItem
   | LyonEncadrementItem
   | LilleEncadrementItem
   | MontpellierEncadrementItem
+  | BordeauxEncadrementItem
+  | EncadrementItemWithHouse
+
+export type EncadrementItemWithHouse =
+  | EstEnsembleEncadrementItem
+  | PlaineCommuneEncadrementItem
   | BordeauxEncadrementItem
 
 export interface GeojsonFile {

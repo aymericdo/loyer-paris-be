@@ -1,22 +1,16 @@
+import { DefaultDistrictItem } from '@interfaces/shared'
 import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
 
-export interface BordeauxEncadrementItem {
-  zone: number;
+export interface BordeauxEncadrementItem extends DefaultDistrictItem {
   maison: boolean;
-  meuble: boolean;
-  nombre_de_piece: string;
-  annee_de_construction: string;
-  prix_min: string;
-  prix_med: string;
-  prix_max: string;
 }
 
 export interface BordeauxDistrictItem {
   type: 'Feature'
   properties: {
     com_code: number
-    zonage: string
     commune: string
+    Zone: string
     [DISPLAY_ZONE_FIELD]: string
   }
   geometry: {
