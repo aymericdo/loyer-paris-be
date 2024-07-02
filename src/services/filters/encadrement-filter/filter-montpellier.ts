@@ -1,7 +1,9 @@
 import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { MontpellierDistrictFilter } from '@services/filters/district-filter/district-filter-montpellier'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
 export class FilterMontpellier extends EncadrementFilterParent {
+  DistrictFilter = MontpellierDistrictFilter
   mainCity: AvailableMainCities = 'montpellier'
   rangeRentsJsonPath = 'json-data/encadrements_montpellier_2024.json'
   // Extract possible range time from rangeRents (json-data/encadrements_montpellier.json)
