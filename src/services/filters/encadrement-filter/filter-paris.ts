@@ -10,6 +10,7 @@ const mappingQuartierZoneParisJson: ParisQuartierItem[] = JSON.parse(fs.readFile
 
 export class FilterParis extends EncadrementFilterParent {
   mainCity: AvailableMainCities = 'paris'
+  rangeRentsJsonPath = 'json-data/encadrements_paris.json'
   // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
   rangeTime: string[] = ['Avant 1946', '1946-1970', '1971-1990', 'Après 1990']
 
