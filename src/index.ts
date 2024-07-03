@@ -74,6 +74,7 @@ app.use('/stats', require('./api/stats.controller'))
 app.use('/shop', require('./api/shop.controller'))
 app.use('/simulator', require('./api/simulator.controller'))
 app.use('/districts', require('./api/districts.controller'))
+app.use('/cities', require('./api/cities.controller'))
 
 app.use('/version', require('./api/version.controller'))
 
