@@ -33,7 +33,7 @@ describe('seloger', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: 'rue du faubourg saint-antoine 75011, Paris' },
+          address: { order: 0, value: '85 rue du faubourg saint-antoine 75011, Paris' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: 3 },
           surface: { order: 3, value: 58 },
@@ -44,15 +44,15 @@ describe('seloger', () => {
           hasCharges: { order: 8, value: true },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Roquette' },
+          neighborhood: { order: 0, value: 'Sainte-Marguerite' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: '3' },
           surface: { order: 3, value: 58 },
           dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 32.9 },
-          maxAuthorized: { order: 7, value: 1908.2 },
-          promoPercentage: { order: 8, value: 18.45 },
+          max: { order: 6, value: 34.2 },
+          maxAuthorized: { order: 7, value: 1983.6 },
+          promoPercentage: { order: 8, value: 15.23 },
         },
         isLegal: false,
         moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
