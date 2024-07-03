@@ -1,26 +1,6 @@
 import { Ad } from '@interfaces/ad'
+import { PostalCodeStrategy } from '@services/diggers/postal-code/postal-code-factory'
 import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
-
-export interface PostalCodeStrategy {
-  getPostalCode(): string
-}
-
-export class PostalCodeStrategyFactory {
-  getDiggerStrategy(city: AvailableCities, ad: Ad): PostalCodeStrategy {
-    switch (city) {
-      case 'paris': {
-        return new ParisPostalCodeStrategy(city, ad)
-      }
-      case 'lyon':
-      case 'villeurbanne': {
-        return new LyonPostalCodeStrategy(city, ad)
-      }
-      default: {
-        return new DefaultPostalCodeStrategy(city, ad)
-      }
-    }
-  }
-}
 
 export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
   private city: AvailableCities
@@ -58,21 +38,5 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
 
   protected digForPostalCode2(_city: AvailableCities, _text: string): string {
     return null
-  }
-}
-
-export class ParisPostalCodeStrategy extends DefaultPostalCodeStrategy {
-  protected digForPostalCode2(city: AvailableCities, text: string): string {
-    const postalCode2Re = new RegExp(cityList[city].postalCodeRegex[1])
-    const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
-    return match ? (match.trim().length === 1 ? `7500${match.trim()}` : `750${match.trim()}`) : null
-  }
-}
-
-export class LyonPostalCodeStrategy extends DefaultPostalCodeStrategy {
-  protected digForPostalCode2(city: AvailableCities, text: string): string {
-    const postalCode2Re = city === 'lyon' && new RegExp(cityList[city].postalCodeRegex[1])
-    const match = text.match(postalCode2Re) && text.match(postalCode2Re)[0]
-    return match ? (match.trim().length === 1 ? `6900${match.trim()}` : `690${match.trim()}`) : null
   }
 }

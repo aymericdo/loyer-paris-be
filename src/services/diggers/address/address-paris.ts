@@ -1,7 +1,7 @@
 import { ParisAddressItemDB } from '@interfaces/paris'
 import { AddressItem } from '@interfaces/shared'
+import { DefaultAddressService, AddressService } from '@services/diggers/address/address-default'
 import { AvailableCities } from '@services/filters/city-filter/valid-cities-list'
-import { AddressService, DefaultAddressService } from '@services/address/default-address-service'
 import * as cleanup from '@services/helpers/cleanup'
 
 export class ParisAddressService extends DefaultAddressService {

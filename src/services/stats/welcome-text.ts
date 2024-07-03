@@ -1,11 +1,12 @@
 import * as rentService from '@db/rent.service'
 import { ApiErrorsService } from '@services/api/errors'
+import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
 
 export function getWelcomeText(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getWelcomeText`, 'blue')
-  const city = req.params.city
+  const city: AvailableMainCities & 'all' = req.params.city as AvailableMainCities & 'all'
 
   rentService
     .getWelcomeData(city)
@@ -16,7 +17,7 @@ export function getWelcomeText(req: Request, res: Response) {
 
       const pivotSurface = 30
       const lessThanNSquareMeters = rents.filter((rent) => rent.surface < pivotSurface)
-      const isSmallSurfaceIllegalPercentage = Math.round(
+      const isIllegalPercentageUnderPivot = Math.round(
         (100 * lessThanNSquareMeters.filter((rent) => !rent.isLegal).length) / lessThanNSquareMeters.length
       )
 
@@ -24,7 +25,7 @@ export function getWelcomeText(req: Request, res: Response) {
         numberRents: rents.length,
         pivotSurface: pivotSurface,
         isIllegalPercentage,
-        isSmallSurfaceIllegalPercentage,
+        isIllegalPercentageUnderPivot
       })
     })
     .catch((err) => {

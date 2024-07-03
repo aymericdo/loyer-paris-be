@@ -1,7 +1,7 @@
 import { Ad } from '@interfaces/ad'
 import { AvailableCities } from '@services/filters/city-filter/valid-cities-list'
-import { AddressService, DefaultAddressService } from '@services/address/default-address-service'
-import { ParisAddressService } from '@services/address/paris-address-service'
+import { AddressService, DefaultAddressService } from '@services/diggers/address/address-default'
+import { ParisAddressService } from '@services/diggers/address/address-paris'
 
 export class AddressServiceFactory {
   getDiggerStrategy(city: AvailableCities, postalCode: string, ad: Ad): AddressService {

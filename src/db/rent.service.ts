@@ -1,14 +1,14 @@
 import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
 import { DistrictsList } from '@services/districts/districts-list'
-import { AvailableMainCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities, AvailableMainCities, cityList } from '@services/filters/city-filter/valid-cities-list'
 import { roundNumber } from '@services/helpers/round-number'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'
 import randomPositionInPolygon from 'random-position-in-polygon'
 
-function getCity(city: AvailableMainCities) {
-  const cities = Object.keys(cityList).filter((c) => cityList[c].mainCity === city)
-  return { $in: cities }
+function getCityFilter(city: AvailableMainCities): { $in: AvailableCities[] } {
+  const cities = Object.keys(cityList).filter((c) => cityList[c].mainCity === city) as AvailableCities[]
+  return { '$in': cities }
 }
 
 export async function getMapData(
@@ -22,7 +22,7 @@ export async function getMapData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -54,7 +54,7 @@ export async function getChloroplethMapData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -79,7 +79,7 @@ export async function getPriceDiffData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -119,7 +119,7 @@ export async function getLegalVarData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   if (districtList?.length) {
@@ -175,7 +175,7 @@ export async function getPriceVarData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -214,7 +214,7 @@ export async function getLegalPerClassicRenterData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -241,7 +241,7 @@ export async function getLegalPerRenterData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -268,7 +268,7 @@ export async function getLegalPerDPEData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -294,7 +294,7 @@ export async function getLegalPerWebsiteData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -323,7 +323,7 @@ export async function getLegalPerSurfaceData(
   }
 
   if (city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   if (dateRange?.length) {
@@ -345,11 +345,11 @@ export async function getAdoptionData(): Promise<{ createdAt: string }[]> {
   }[]
 }
 
-export async function getWelcomeData(city: string = null): Promise<{ isLegal: boolean; surface: number }[]> {
+export async function getWelcomeData(city: AvailableMainCities & 'all'): Promise<{ isLegal: boolean; surface: number }[]> {
   const filter = {}
 
   if (city && city !== 'all') {
-    filter['city'] = getCity(city as AvailableMainCities)
+    filter['city'] = getCityFilter(city as AvailableMainCities)
   }
 
   return (await Rent.find(filter, { isLegal: 1, surface: 1 })) as unknown as {
@@ -487,7 +487,7 @@ function buildFilter(filterParam: {
   const filter = { isLegal: filterParam.isLegal, createdAt: { $gte: minDate } }
 
   if (filterParam.city !== 'all') {
-    filter['city'] = getCity(filterParam.city as AvailableMainCities)
+    filter['city'] = getCityFilter(filterParam.city as AvailableMainCities)
   }
 
   if (filterParam.districtList?.length) {
@@ -559,7 +559,7 @@ export async function getShamefulAdsData(
   const filter = {
     isLegal: false,
     createdAt: { $gte: minDate },
-    city: getCity(city as AvailableMainCities),
+    city: getCityFilter(city as AvailableMainCities),
     $expr: {
       $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta],
     },
