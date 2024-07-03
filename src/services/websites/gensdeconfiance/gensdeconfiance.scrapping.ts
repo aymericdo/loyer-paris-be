@@ -1,4 +1,4 @@
-import { GensdeconfianceMapping } from '@interfaces/mapping'
+import { GensdeconfianceMapping } from '@interfaces/scrap-mapping'
 import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
@@ -17,7 +17,7 @@ export class GensdeconfianceScrapping {
     const charges = document.querySelector('#col-ad div.price-table > div:nth-child(2) > div.price-table__value')
     const address = document.querySelector('#ad-address > p')
     const cityLabel = document.querySelector('#post-title-breadcrumb > small')
-    const itemTags = Array.from(document.querySelectorAll('div > ul > li > div'))
+    const itemTags = [...document.querySelectorAll('div > ul > li > div')]
     let surface = null
 
     itemTags.forEach((tag) => {

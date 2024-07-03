@@ -1,5 +1,5 @@
 import { closeAllConnections } from '@db/db'
-import { Body } from '@interfaces/mapping'
+import { Body } from '@interfaces/scrap-mapping'
 import * as fs from 'fs'
 import { disconnect } from 'mongoose'
 import * as path from 'path'
@@ -29,12 +29,11 @@ describe('seloger', () => {
       } as unknown as Response
 
       const seloger = new SeLoger(mockResponse, { body })
-
       const data = await seloger.digData()
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: 'rue du faubourg saint-antoine 75011, Paris' },
+          address: { order: 0, value: '85 rue du faubourg saint-antoine 75011, Paris' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: 3 },
           surface: { order: 3, value: 58 },
@@ -51,9 +50,9 @@ describe('seloger', () => {
           surface: { order: 3, value: 58 },
           dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 33.2 },
-          maxAuthorized: { order: 7, value: 1925.6 },
-          promoPercentage: { order: 8, value: 17.71 },
+          max: { order: 6, value: 34.2 },
+          maxAuthorized: { order: 7, value: 1983.6 },
+          promoPercentage: { order: 8, value: 15.23 },
         },
         isLegal: false,
         moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
@@ -94,15 +93,15 @@ describe('seloger', () => {
           hasCharges: { order: 8, value: true },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Zone 2' },
+          neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: 1 },
           surface: { order: 3, value: 17 },
-          dateRange: { order: 4, value: 'avant 1946' },
+          dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 23.2 },
-          maxAuthorized: { order: 7, value: 394.4 },
-          promoPercentage: { order: 8, value: 4.73 },
+          max: { order: 6, value: 24 },
+          maxAuthorized: { order: 7, value: 408 },
+          promoPercentage: { order: 8, value: 1.45 },
         },
         isLegal: false,
         moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
@@ -145,9 +144,9 @@ describe('seloger', () => {
         computedInfo: {
           neighborhood: { order: 0, value: 'Zone 1' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: '3' },
+          roomCount: { order: 2, value: 3 },
           surface: { order: 3, value: 72 },
-          dateRange: { order: 4, value: 'après 1990' },
+          dateRange: { order: 4, value: 'Après 2005' },
           isHouse: { order: 5, value: undefined },
           max: { order: 6, value: null },
           maxAuthorized: { order: 7, value: null },

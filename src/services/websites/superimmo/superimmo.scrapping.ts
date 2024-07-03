@@ -1,4 +1,4 @@
-import { SuperimmoMapping } from '@interfaces/mapping'
+import { SuperimmoMapping } from '@interfaces/scrap-mapping'
 import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
@@ -22,18 +22,18 @@ export class SuperimmoScrapping {
       'body > main > div.listing-show-wrapper > div.listing-top-content > div.agency-wrapper > div.agency-content > div.header-agency > div.agency-title'
     )
 
-    const features = Array.from(
-      document.querySelectorAll(
+    const features = [
+      ...document.querySelectorAll(
         'body > main > div.listing-show-wrapper > div.listing-top-content > div.gallery > div.listing-header > div > h1 .picto'
       )
-    )
+    ]
 
     const cityLabel = features[features.length - 1]
-    const features2 = Array.from(
-      document.querySelectorAll(
+    const features2 = [
+      ...document.querySelectorAll(
         'body > main > div.listing-show-wrapper > div.listing-content > section:nth-child(8) > table > tbody > tr td'
       )
-    )
+    ]
 
     let surface = null
     let rooms = null

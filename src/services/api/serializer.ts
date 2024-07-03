@@ -1,6 +1,6 @@
 import { FilteredResult } from '@interfaces/ad'
-import { AvailableCities, cityList } from '@services/address/city'
-import { MORE_INFO } from '@services/helpers/more-information'
+import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { getInfoLink } from '@services/filters/city-filter/more-information'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
@@ -81,7 +81,7 @@ export class SerializerService {
         hasFurniture: { order: 1, value: this.filteredResult.isFurnished },
         roomCount: { order: 2, value: this.filteredResult.roomCount },
         surface: { order: 3, value: surface },
-        dateRange: { order: 4, value: this.filteredResult.yearBuilt },
+        dateRange: { order: 4, value: YearBuiltService.formatAfterBeforeWord(this.filteredResult.yearBuilt) },
         isHouse: { order: 5, value: this.filteredResult.isHouse },
         max: {
           order: 6,
@@ -94,7 +94,7 @@ export class SerializerService {
         },
       },
       isLegal,
-      moreInfo: MORE_INFO[cityList[city].mainCity],
+      moreInfo: getInfoLink(cityList[city].mainCity),
     }
   }
 }

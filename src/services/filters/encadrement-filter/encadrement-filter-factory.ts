@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/address/city'
+import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
 import { FilterBordeaux } from './filter-bordeaux'
 import { FilterEstEnsemble } from './filter-est-ensemble'
 import { FilterLille } from './filter-lille'
@@ -8,14 +8,14 @@ import { FilterParis } from './filter-paris'
 import { FilterPlaineCommune } from './filter-plaine-commune'
 
 export class EncadrementFilterFactory {
-  city: AvailableMainCities
+  mainCity: AvailableMainCities
 
-  constructor(city: AvailableMainCities) {
-    this.city = city
+  constructor(mainCity: AvailableMainCities) {
+    this.mainCity = mainCity
   }
 
   currentEncadrementFilter() {
-    switch (this.city) {
+    switch (this.mainCity) {
       case 'paris':
         return FilterParis
       case 'lille':

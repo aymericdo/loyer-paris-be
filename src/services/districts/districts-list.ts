@@ -1,10 +1,10 @@
 import { DistrictItem, GeojsonFile } from '@interfaces/shared'
-import { AvailableCities, AvailableMainCities } from '@services/address/city'
-import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
-import * as fs from 'fs'
-import path from 'path'
+import { AvailableCities, AvailableMainCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
+import { capitalizeFirstLetter } from '@services/helpers/capitalize'
 
 interface DistrictElem {
+  label: string
   value: string
   groupBy: string | null
   displaySequence: number | string
@@ -13,32 +13,26 @@ interface DistrictElem {
 export const DISPLAY_ZONE_FIELD = 'displayZone'
 export const DISTRICT_FIELD = `properties.${DISPLAY_ZONE_FIELD}`
 
-export const CITY_FILE_PATHS = {
-  paris: 'json-data/quartier_paris.geojson',
-  lille: 'json-data/quartier_lille.geojson',
-  plaineCommune: 'json-data/quartier_plaine-commune.geojson',
-  estEnsemble: 'json-data/quartier_est-ensemble.geojson',
-  lyon: 'json-data/quartier_lyon.geojson',
-  montpellier: 'json-data/quartier_montpellier.geojson',
-  bordeaux: 'json-data/quartier_bordeaux.geojson',
-}
-
 export class DistrictsList {
-  CurrentDistrictFilter = null
+  currentDistrictFilter = null
   mainCity: AvailableMainCities
   city: AvailableCities
+  district: string
 
-  constructor(city: AvailableMainCities, options?: { specificCity?: AvailableCities }) {
+  constructor(
+    city: AvailableMainCities,
+    options?: { specificCity?: AvailableCities, specificDistrict?: string },
+  ) {
     this.mainCity = city
     this.city = options?.specificCity
-    this.CurrentDistrictFilter = new DistrictFilterFactory(this.mainCity).currentDistrictFilter()
+    this.district = options?.specificDistrict
+    this.currentDistrictFilter = new (new DistrictFilterFactory(this.mainCity).currentDistrictFilter())(
+      { city: this.city, districtName: this.district },
+    )
   }
 
   async currentGeodata(): Promise<GeojsonFile> {
-    const features: DistrictItem[] = await new this.CurrentDistrictFilter(
-      { lat: null, lng: null },
-      { city: this.city },
-    ).getDistricts()
+    const features: DistrictItem[] = await this.currentDistrictFilter.getDistricts()
 
     return {
       type: 'FeatureCollection',
@@ -46,69 +40,54 @@ export class DistrictsList {
         ...data,
         properties: {
           ...data.properties,
-          [DISPLAY_ZONE_FIELD]: DistrictsList.digZoneInProperties(this.mainCity, data['properties']) as string,
+          [DISPLAY_ZONE_FIELD]: this.currentDistrictFilter.digZoneInProperties(data['properties']),
         },
       })) as DistrictItem[],
     }
   }
 
-  async currentFeature(displayZoneField: string): Promise<DistrictItem> {
-    return await new this.CurrentDistrictFilter(
-      { lat: null, lng: null },
-      { city: this.city, districtName: displayZoneField },
-    ).getFirstDistrict()
+  async currentFeature(): Promise<DistrictItem> {
+    return await this.currentDistrictFilter.getFirstDistrict()
   }
 
-  async currentGeodataWithGroupBy(): Promise<DistrictElem[]> {
-    return ((await this.currentGeodata()).features as DistrictItem[]).reduce((prev: DistrictElem[], data) => {
-      switch (this.city) {
-        case 'paris': {
-          if (!prev.some((elem: DistrictElem) => elem.value === data['properties']['l_qu'])) {
-            prev.push({
-              value: data['properties'][DISPLAY_ZONE_FIELD],
-              displaySequence: data['properties']['c_ar'],
-              groupBy: `${data['properties']['c_ar']}${(data['properties']['c_ar'] > 1
-                ? 'ème'
-                : 'er'
-              ).toString()} arrondissement`,
-            })
-          }
-          break
+  async districtElemWithGroupBy(): Promise<DistrictElem[]> {
+    return Object.keys(cityList)
+      .filter((city) => {
+        if (this.city) {
+          return this.city === city
+        } else {
+          return cityList[city].mainCity === this.mainCity
         }
-        default: {
-          if (!prev.some((elem: DistrictElem) => elem.value === data['properties'][DISPLAY_ZONE_FIELD])) {
-            prev.push({
-              value: data['properties'][DISPLAY_ZONE_FIELD],
-              displaySequence: data['properties'][DISPLAY_ZONE_FIELD],
-              groupBy: null,
-            })
-          }
-          break
-        }
-      }
-
-      return prev
-    }, [])
-      .sort((a: DistrictElem, b: DistrictElem) => {
-        return a.displaySequence > b.displaySequence ? 1 : -1
       })
-  }
+      .reduce((prev, city) => {
+        const currentZones = cityList[city].zones
+        if (currentZones) {
+          if (Array.isArray(currentZones)) {
+            (currentZones as string[]).forEach((zone) => {
+              const labelZone = capitalizeFirstLetter(`${city} (${zone})`)
 
-  static digZoneInProperties(city: AvailableMainCities, data: unknown): string {
-    switch (city) {
-      case 'paris':
-        return data['l_qu']
-      case 'lille':
-      case 'lyon':
-      case 'plaineCommune':
-      case 'estEnsemble':
-      case 'montpellier':
-      case 'bordeaux':
-        return `Zone ${data['Zone']}`
-    }
-  }
+              prev.push({
+                value: zone,
+                label: labelZone,
+                displaySequence: labelZone,
+                groupBy: null,
+              })
+            })
+          } else {
+            Object.keys(currentZones).forEach((arrondissement: string) => {
+              currentZones[arrondissement].forEach((zone: string) => {
+                prev.push({
+                  value: zone,
+                  label: zone,
+                  displaySequence: arrondissement,
+                  groupBy: this.currentDistrictFilter.buildGroupBy(arrondissement),
+                })
+              })
+            })
+          }
+        }
 
-  private geodataFile() {
-    return JSON.parse(fs.readFileSync(path.join(CITY_FILE_PATHS[this.mainCity]), 'utf8'))
+        return prev
+      }, [])
   }
 }

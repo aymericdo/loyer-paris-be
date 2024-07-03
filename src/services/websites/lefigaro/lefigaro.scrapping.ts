@@ -1,4 +1,4 @@
-import { LefigaroMapping } from '@interfaces/mapping'
+import { LefigaroMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
@@ -23,9 +23,9 @@ export class LefigaroScrapping {
       '#middle-inquiry > div.classifieds-about-agency > div > div.agency__desc > strong'
     )
 
-    const features = Array.from(
-      document.querySelectorAll('div.main-classified > div > div.classified-features > ul.features-list > li .feature')
-    )
+    const features = [
+      ...document.querySelectorAll('div.main-classified > div > div.classified-features > ul.features-list > li .feature')
+    ]
 
     let furnished = null
     let surface = null

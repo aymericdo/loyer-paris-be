@@ -1,4 +1,4 @@
-import { BellesDemeuresMapping } from '@interfaces/mapping'
+import { BellesDemeuresMapping } from '@interfaces/scrap-mapping'
 import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
@@ -25,14 +25,14 @@ export class BellesDemeuresScrapping {
       'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemVille'
     )
 
-    const features = Array.from(
-      document.querySelectorAll('div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecs > ul > li')
-    )
-    const features2 = Array.from(
-      document.querySelectorAll(
+    const features = [
+      ...document.querySelectorAll('div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecs > ul > li')
+    ]
+    const features2 = [
+      ...document.querySelectorAll(
         '#wrapper > div.detail > div > div.detailWrapInfos > div:nth-child(5) > div:nth-child(2) > ul > li > ul > li'
       )
-    )
+    ]
 
     const cityLabel = cityLabelNode?.textContent?.split('•').length
       ? cityLabelNode.textContent.split('•')[cityLabelNode.textContent.split('•').length - 1]

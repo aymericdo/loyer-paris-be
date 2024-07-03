@@ -1,15 +1,16 @@
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
-import { AddressServiceFactory } from '@services/address/address-factory'
-import { AvailableCities, CityService, cityList } from '@services/address/city'
-import { PostalCodeStrategyFactory } from '@services/address/postalcode'
+import { AddressServiceFactory } from '@services/diggers/address/address-factory'
+import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
 import { ERROR_CODE } from '@services/api/errors'
+import { canHaveHouse } from '@services/filters/city-filter/valid-cities-list'
 import * as cleanup from '@services/helpers/cleanup'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { regexString } from '@services/helpers/regex'
 import { stringToNumber } from '@services/helpers/string-to-number'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { PARTICULIER_WORD, DPE_LIST } from '@services/websites/website'
+import { PostalCodeStrategyFactory } from '@services/diggers/postal-code/postal-code-factory'
 export class DigService {
   ad: Ad = null
 
@@ -29,7 +30,7 @@ export class DigService {
     const renter = this.digForRenter()
     const charges = this.digForCharges()
     const hasCharges = this.digForHasCharges()
-    const isHouse = CityService.canHaveHouse(cityList[city].mainCity) ? this.digForIsHouse() : null
+    const isHouse = canHaveHouse(cityList[city].mainCity) ? this.digForIsHouse() : null
     const dpe = this.digForDPE()
 
     return {
