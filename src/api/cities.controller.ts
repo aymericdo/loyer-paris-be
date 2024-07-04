@@ -5,7 +5,7 @@ const router = express.Router()
 router.get('/', getValidCityList)
 function getValidCityList(req: Request, res: Response) {
   res.json(Object.keys(cityList).reduce((prev, city) => {
-    const cityData = cityList[city]
+    const cityData = { ...cityList[city] }
     delete cityData.postalCodePossibilities
     delete cityData.postalCodeRegex
     prev[city] = cityData

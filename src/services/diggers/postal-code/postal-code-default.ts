@@ -17,7 +17,7 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
 
   protected digForPostalCode(city: AvailableCities, ad: Ad): string {
     const postalCodePossibilities: string[] = cityList[city].postalCodePossibilities as unknown as string[]
-    if (postalCodePossibilities.length === 1) {
+    if (postalCodePossibilities?.length === 1) {
       return postalCodePossibilities[0]
     }
 
