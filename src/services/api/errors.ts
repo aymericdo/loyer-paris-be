@@ -65,7 +65,7 @@ export class ApiErrorsService {
       default:
         throw {
           error: ERROR500_MSG,
-          msg: `${this.error?.stack.toString() || this.error.toString()}`,
+          msg: `${this.error?.stack?.toString() || this.error.toString()}`,
         }
     }
   }
