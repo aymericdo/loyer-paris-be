@@ -1,4 +1,3 @@
-import { PostalCodeDefault } from '@services/diggers/postal-code/encadrement-postal-code-default'
 import { PostalCodeBordeaux } from '@services/diggers/postal-code/postal-code-bordeaux'
 import { PostalCodeEstEnsemble } from '@services/diggers/postal-code/postal-code-est-ensemble'
 import { PostalCodeLille } from '@services/diggers/postal-code/postal-code-lille'
