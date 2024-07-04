@@ -1,9 +1,9 @@
 import { string } from '@services/helpers/cleanup'
 import { ERROR_CODE } from '@services/api/errors'
-import { AvailableCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Slack } from '@messenger/slack'
-import { cityList } from '@services/filters/city-filter/valid-cities-list'
+import { getCityList } from '@services/filters/city-filter/city-list'
 
 export class CityFilter {
   cityText: string
@@ -23,7 +23,7 @@ export class CityFilter {
       }
     }
 
-    const cityInList: AvailableCities = Object.keys(cityList).find((city) => cityName.includes(city)) as AvailableCities
+    const cityInList: AvailableCities = getCityList().find((city) => cityName.includes(city)) as AvailableCities
 
     if (!cityInList) {
       const message = `city '${cityName}' not found in the list`

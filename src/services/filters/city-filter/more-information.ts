@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export const getInfoLink = (mainCity: AvailableMainCities): string => {
   switch (mainCity) {

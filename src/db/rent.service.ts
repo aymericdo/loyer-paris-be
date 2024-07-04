@@ -1,13 +1,13 @@
 import { Rent } from '@db/db'
 import { DataBaseItem } from '@interfaces/database-item'
 import { DistrictsList } from '@services/districts/districts-list'
-import { AvailableCities, AvailableMainCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities, AvailableMainCities, getCitiesFromMainCity, getMainCity } from '@services/filters/city-filter/city-list'
 import { roundNumber } from '@services/helpers/round-number'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'
 import randomPositionInPolygon from 'random-position-in-polygon'
 
-function getCityFilter(city: AvailableMainCities): { $in: AvailableCities[] } {
-  const cities = Object.keys(cityList).filter((c) => cityList[c].mainCity === city) as AvailableCities[]
+function getCityFilter(mainCity: AvailableMainCities): { $in: AvailableCities[] } {
+  const cities = getCitiesFromMainCity(mainCity)
   return { '$in': cities }
 }
 
@@ -371,7 +371,7 @@ interface RelevantAdsData {
   isLegal: boolean
   url: string
   district: string
-  city: string
+  city: AvailableCities
   longitude: string
   latitude: string
   isHouse: boolean
@@ -431,7 +431,7 @@ export async function getRelevantAdsData(
     let blurry = false
 
     if (!ad.longitude || !ad.latitude) {
-      const mainCity = cityList[ad.city].mainCity
+      const mainCity = getMainCity(ad.city as AvailableCities)
 
       const feature = await new DistrictsList(mainCity as AvailableMainCities, { specificDistrict: ad.district }).currentFeature()
 

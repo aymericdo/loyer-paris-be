@@ -1,16 +1,16 @@
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
 import { AddressServiceFactory } from '@services/diggers/address/address-factory'
-import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
 import { ERROR_CODE } from '@services/api/errors'
-import { canHaveHouse } from '@services/filters/city-filter/valid-cities-list'
+import { canHaveHouse } from '@services/filters/city-filter/city-list'
 import * as cleanup from '@services/helpers/cleanup'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { regexString } from '@services/helpers/regex'
 import { stringToNumber } from '@services/helpers/string-to-number'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { PARTICULIER_WORD, DPE_LIST } from '@services/websites/website'
-import { PostalCodeStrategyFactory } from '@services/diggers/postal-code/postal-code-factory'
+import { PostalCodeFactory } from '@services/diggers/postal-code/encadrement-postal-code-factory'
 export class DigService {
   ad: Ad = null
 
@@ -30,7 +30,7 @@ export class DigService {
     const renter = this.digForRenter()
     const charges = this.digForCharges()
     const hasCharges = this.digForHasCharges()
-    const isHouse = canHaveHouse(cityList[city].mainCity) ? this.digForIsHouse() : null
+    const isHouse = canHaveHouse(getMainCity(city)) ? this.digForIsHouse() : null
     const dpe = this.digForDPE()
 
     return {
@@ -55,12 +55,13 @@ export class DigService {
   }
 
   private async digForAddress(city: AvailableCities): Promise<[string, string, string[], Coordinate, Coordinate]> {
-    const postalCodeStrategy = new PostalCodeStrategyFactory().getDiggerStrategy(city, this.ad)
+    const mainCity = getMainCity(city)
+    const CurrentPostalCodeService = new PostalCodeFactory(mainCity).currentPostalCodeService()
 
     // Order is important here
-    const postalCode = postalCodeStrategy.getPostalCode()
-    const addressService = new AddressServiceFactory().getDiggerStrategy(city, postalCode, this.ad)
-    const [address, coordinates, blurryCoordinates] = await addressService.getAddress()
+    const postalCode = new CurrentPostalCodeService(city).getPostalCode(this.ad)
+    const CurrentAddressService = new AddressServiceFactory(city).currentAddressService()
+    const [address, coordinates, blurryCoordinates] = await new CurrentAddressService(city, postalCode, this.ad).getAddress()
 
     const stations = this.ad.stations
 

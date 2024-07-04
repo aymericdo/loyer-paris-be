@@ -1,22 +1,30 @@
 import { Ad } from '@interfaces/ad'
-import { PostalCodeStrategy } from '@services/diggers/postal-code/postal-code-factory'
-import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities } from '@services/filters/city-filter/city-list'
 
-export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
-  private city: AvailableCities
-  private ad: Ad
+export class PostalCodeDefault {
+  protected postalCodePossibilities: { [city: string]: { postalCodes: string[], regex: RegExp[] } } = null
+  private city: AvailableCities | 'all'
 
-  constructor(city: AvailableCities, ad: Ad) {
+  constructor(city: AvailableCities | 'all') {
     this.city = city
-    this.ad = ad
   }
 
-  public getPostalCode(): string {
-    return this.ad.postalCode || this.digForPostalCode(this.city, this.ad)
+  getPostalCodePossibilities(): string[] {
+    if (this.city === 'all') {
+      return Object.keys(this.postalCodePossibilities).flatMap(city => this.postalCodePossibilities[city].postalCodes)
+    } else {
+      return this.postalCodePossibilities[this.city].postalCodes
+    }
+  }
+
+  getPostalCode(ad: Ad): string {
+    if (this.city !== 'all') {
+      return ad.postalCode || this.digForPostalCode(this.city, ad)
+    }
   }
 
   protected digForPostalCode(city: AvailableCities, ad: Ad): string {
-    const postalCodePossibilities: string[] = cityList[city].postalCodePossibilities as unknown as string[]
+    const postalCodePossibilities: string[] = this.postalCodePossibilities[city].postalCodes as unknown as string[]
     if (postalCodePossibilities?.length === 1) {
       return postalCodePossibilities[0]
     }
@@ -32,7 +40,7 @@ export class DefaultPostalCodeStrategy implements PostalCodeStrategy {
   }
 
   protected digForPostalCode1(city: AvailableCities, text: string): string {
-    const postalCodeRe = new RegExp(cityList[city].postalCodeRegex[0])
+    const postalCodeRe = new RegExp(this.postalCodePossibilities[city].regex[0])
     return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
   }
 

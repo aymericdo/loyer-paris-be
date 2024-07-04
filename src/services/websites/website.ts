@@ -1,7 +1,7 @@
 import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
 import { Body } from '@interfaces/scrap-mapping'
 import { ApiError } from '@interfaces/shared'
-import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
 import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'
 import { SerializerService } from '@services/api/serializer'
 import { SaveRentService } from '@services/db/save-rent'
@@ -68,7 +68,7 @@ export abstract class Website {
     try {
       const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
 
-      const CurrentEncadrementFilter = new EncadrementFilterFactory(cityList[city].mainCity).currentEncadrementFilter()
+      const CurrentEncadrementFilter = new EncadrementFilterFactory(getMainCity(city)).currentEncadrementFilter()
       const filteredResult: FilteredResult = await new CurrentEncadrementFilter(cleanAd).find()
 
       if (filteredResult) {

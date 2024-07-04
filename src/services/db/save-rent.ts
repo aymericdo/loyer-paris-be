@@ -1,5 +1,5 @@
 import { Rent } from '@db/db'
-import { AvailableCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 
 interface SavedInfo {

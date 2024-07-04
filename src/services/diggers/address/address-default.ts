@@ -9,7 +9,7 @@ import {
 } from '@db/db'
 import { Ad } from '@interfaces/ad'
 import { Coordinate, AddressItem, DefaultAddressItemDB, AddressItemDB } from '@interfaces/shared'
-import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
 import { regexString } from '@services/helpers/regex'
 import * as cleanup from '@services/helpers/cleanup'
 
@@ -27,7 +27,7 @@ export abstract class AddressService {
   abstract getAddress(): Promise<[string, Coordinate, Coordinate]>
 
   static async getAddresses(city: AvailableCities, query: string): Promise<AddressItemDB[]> {
-    const addressDb = dbMapping[cityList[city].mainCity]
+    const addressDb = dbMapping[getMainCity(city)]
     return (await addressDb
       .find(
         {
@@ -41,7 +41,7 @@ export abstract class AddressService {
   }
 }
 
-export class DefaultAddressService implements AddressService {
+export class AddressDefault implements AddressService {
   private city: AvailableCities
   private postalCode: string
   private ad: Ad

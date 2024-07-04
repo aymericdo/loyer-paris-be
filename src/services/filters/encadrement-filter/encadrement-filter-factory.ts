@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { FilterBordeaux } from './filter-bordeaux'
 import { FilterEstEnsemble } from './filter-est-ensemble'
 import { FilterLille } from './filter-lille'

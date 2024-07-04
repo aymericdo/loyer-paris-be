@@ -1,5 +1,5 @@
 import { AddressItemDB, Coordinate, DefaultAddressItemDB, DistrictItem } from '@interfaces/shared'
-import { AvailableCities, AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities, AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export class DistrictFilterParent {
   GeojsonCollection = null

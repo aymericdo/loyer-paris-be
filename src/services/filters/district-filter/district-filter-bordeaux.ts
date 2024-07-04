@@ -1,10 +1,10 @@
 import { BordeauxDistrictItem } from '@interfaces/bordeaux'
 import { DefaultDistrictItem } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { BordeauxGeojson } from '@db/db'
 
-export class BordeauxDistrictFilter extends DistrictFilterParent {
+export class DistrictFilterBordeaux extends DistrictFilterParent {
   GeojsonCollection = BordeauxGeojson
   mainCity: AvailableMainCities = 'bordeaux'
 

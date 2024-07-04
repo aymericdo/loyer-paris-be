@@ -1,10 +1,10 @@
 import { DefaultDistrictItem } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { PlaineCommuneDistrictItem } from '@interfaces/plaine-commune'
 import { PlaineCommuneGeojson } from '@db/db'
 
-export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
+export class DistrictFilterPlaineCommune extends DistrictFilterParent {
   GeojsonCollection = PlaineCommuneGeojson
   mainCity: AvailableMainCities = 'plaineCommune'
 

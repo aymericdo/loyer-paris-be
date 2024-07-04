@@ -1,11 +1,11 @@
-import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
-import { BordeauxDistrictFilter } from './district-filter-bordeaux'
-import { EstEnsembleDistrictFilter } from './district-filter-est-ensemble'
-import { LilleDistrictFilter } from './district-filter-lille'
-import { LyonDistrictFilter } from './district-filter-lyon'
-import { MontpellierDistrictFilter } from './district-filter-montpellier'
-import { ParisDistrictFilter } from './district-filter-paris'
-import { PlaineCommuneDistrictFilter } from './district-filter-plaine-commune'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { DistrictFilterBordeaux } from './district-filter-bordeaux'
+import { DistrictFilterEstEnsemble } from './district-filter-est-ensemble'
+import { DistrictFilterLille } from './district-filter-lille'
+import { DistrictFilterLyon } from './district-filter-lyon'
+import { DistrictFilterMontpellier } from './district-filter-montpellier'
+import { DistrictFilterParis } from './district-filter-paris'
+import { DistrictFilterPlaineCommune } from './district-filter-plaine-commune'
 
 export class DistrictFilterFactory {
   mainCity: AvailableMainCities
@@ -17,19 +17,19 @@ export class DistrictFilterFactory {
   currentDistrictFilter() {
     switch (this.mainCity) {
       case 'paris':
-        return ParisDistrictFilter
+        return DistrictFilterParis
       case 'lille':
-        return LilleDistrictFilter
+        return DistrictFilterLille
       case 'plaineCommune':
-        return PlaineCommuneDistrictFilter
+        return DistrictFilterPlaineCommune
       case 'estEnsemble':
-        return EstEnsembleDistrictFilter
+        return DistrictFilterEstEnsemble
       case 'lyon':
-        return LyonDistrictFilter
+        return DistrictFilterLyon
       case 'montpellier':
-        return MontpellierDistrictFilter
+        return DistrictFilterMontpellier
       case 'bordeaux':
-        return BordeauxDistrictFilter
+        return DistrictFilterBordeaux
     }
   }
 }

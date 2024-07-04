@@ -1,9 +1,9 @@
-import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { LilleGeojson } from '@db/db'
 import { DefaultDistrictItem } from '@interfaces/shared'
 
-export class LilleDistrictFilter extends DistrictFilterParent {
+export class DistrictFilterLille extends DistrictFilterParent {
   GeojsonCollection = LilleGeojson
   mainCity: AvailableMainCities = 'lille'
 

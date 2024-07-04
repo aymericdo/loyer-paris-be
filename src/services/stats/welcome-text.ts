@@ -1,6 +1,6 @@
 import * as rentService from '@db/rent.service'
 import { ApiErrorsService } from '@services/api/errors'
-import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
 

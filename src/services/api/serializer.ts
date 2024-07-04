@@ -1,5 +1,5 @@
 import { FilteredResult } from '@interfaces/ad'
-import { AvailableCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
 import { getInfoLink } from '@services/filters/city-filter/more-information'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
@@ -94,7 +94,7 @@ export class SerializerService {
         },
       },
       isLegal,
-      moreInfo: getInfoLink(cityList[city].mainCity),
+      moreInfo: getInfoLink(getMainCity(city)),
     }
   }
 }

@@ -1,5 +1,5 @@
 import { DistrictItem, GeojsonFile } from '@interfaces/shared'
-import { AvailableCities, AvailableMainCities, cityList } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities, AvailableMainCities, getCityList, getCityZones } from '@services/filters/city-filter/city-list'
 import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 import { capitalizeFirstLetter } from '@services/helpers/capitalize'
 
@@ -51,16 +51,9 @@ export class DistrictsList {
   }
 
   async districtElemWithGroupBy(): Promise<DistrictElem[]> {
-    return Object.keys(cityList)
-      .filter((city) => {
-        if (this.city) {
-          return this.city === city
-        } else {
-          return cityList[city].mainCity === this.mainCity
-        }
-      })
-      .reduce((prev, city) => {
-        const currentZones = cityList[city].zones
+    return getCityList(this.mainCity, this.city)
+      .reduce((prev, city: AvailableCities) => {
+        const currentZones = getCityZones(city)
         if (currentZones) {
           if (Array.isArray(currentZones)) {
             (currentZones as string[]).forEach((zone) => {

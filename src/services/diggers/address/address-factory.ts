@@ -1,16 +1,21 @@
-import { Ad } from '@interfaces/ad'
-import { AvailableCities } from '@services/filters/city-filter/valid-cities-list'
-import { AddressService, DefaultAddressService } from '@services/diggers/address/address-default'
-import { ParisAddressService } from '@services/diggers/address/address-paris'
+import { AvailableCities } from '@services/filters/city-filter/city-list'
+import { AddressDefault } from '@services/diggers/address/address-default'
+import { AddressParis } from '@services/diggers/address/address-paris'
 
 export class AddressServiceFactory {
-  getDiggerStrategy(city: AvailableCities, postalCode: string, ad: Ad): AddressService {
-    switch (city) {
+  city: AvailableCities
+
+  constructor(city: AvailableCities) {
+    this.city = city
+  }
+
+  currentAddressService() {
+    switch (this.city) {
       case 'paris': {
-        return new ParisAddressService(city, postalCode, ad)
+        return AddressParis
       }
       default: {
-        return new DefaultAddressService(city, postalCode, ad)
+        return AddressDefault
       }
     }
   }

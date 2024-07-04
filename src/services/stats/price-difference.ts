@@ -1,15 +1,18 @@
 import * as rentService from '@db/rent.service'
-import { cityList } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { ApiErrorsService } from '@services/api/errors'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
+import { PostalCodeFactory } from '@services/diggers/postal-code/encadrement-postal-code-factory'
 
 export function getPriceDifference(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} priceDifference`, 'blue')
-  const postalCodePossibilities = Object.values(cityList)
-    .filter((city) => city.mainCity === req.params.city)
-    .flatMap((city) => city.postalCodePossibilities)
+
+  const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
+
+  const CurrentPostalCodeService = new PostalCodeFactory(mainCity).currentPostalCodeService()
+  const postalCodePossibilities = new CurrentPostalCodeService('all').getPostalCodePossibilities()
 
   const dateValue: string = req.query.dateValue as string
   const dateRange: string[] = dateValue?.split(',')

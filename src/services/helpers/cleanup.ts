@@ -1,4 +1,4 @@
-import { AvailableCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableCities } from '@services/filters/city-filter/city-list'
 
 export function string(string: string): string {
   return string

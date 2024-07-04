@@ -1,10 +1,10 @@
 import { ParisDistrictItem } from '@interfaces/paris'
-import { AvailableMainCities } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { ParisGeojson } from '@db/db'
 import { AddressItemDB, DefaultAddressItemDB, DistrictItem } from '@interfaces/shared'
 
-export class ParisDistrictFilter extends DistrictFilterParent {
+export class DistrictFilterParis extends DistrictFilterParent {
   GeojsonCollection = ParisGeojson
   mainCity: AvailableMainCities = 'paris'
 

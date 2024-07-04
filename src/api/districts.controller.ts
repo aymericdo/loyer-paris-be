@@ -1,7 +1,7 @@
 import { AddressItemDB } from '@interfaces/shared'
 import { AddressService } from '@services/diggers/address/address-default'
 import { DistrictsList } from '@services/districts/districts-list'
-import { AvailableMainCities, AvailableCities, mainCityList } from '@services/filters/city-filter/valid-cities-list'
+import { AvailableMainCities, AvailableCities, mainCityList } from '@services/filters/city-filter/city-list'
 import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import express, { Request, Response } from 'express'
