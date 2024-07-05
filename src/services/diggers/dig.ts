@@ -169,7 +169,7 @@ export class DigService {
 
     const renter = possibleBadRenter.includes(this.ad.renter) ? null : this.ad.renter
 
-    return renter?.match(regexString('particulier'))?.length ? PARTICULIER_WORD : renter
+    return renter?.match(regexString('particulier'))?.length ? PARTICULIER_WORD : cleanup.string(renter)
   }
 
   private digForIsHouse(): boolean {
