@@ -1,5 +1,5 @@
-import * as rentService from '@db/rent.service'
 import { ApiErrorsService } from '@services/api/errors'
+import { getClassicData } from '@services/db/queries/get-classic-data'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
@@ -8,9 +8,8 @@ export function getWelcomeText(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getWelcomeText`, 'blue')
   const city: AvailableMainCities & 'all' = req.params.city as AvailableMainCities & 'all'
 
-  rentService
-    .getWelcomeData(city)
-    .then((data) => {
+  getClassicData(city, null, {}, { isLegal: 1, surface: 1 })
+    .then((data: { isLegal: boolean; surface: number }[]) => {
       const rents = data
 
       const isIllegalPercentage = Math.round((100 * rents.filter((rent) => !rent.isLegal).length) / rents.length)

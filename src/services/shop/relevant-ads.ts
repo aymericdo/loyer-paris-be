@@ -1,5 +1,6 @@
-import { getRelevantAdsData, getRelevantAdsDataTotalCount } from '@db/rent.service'
 import { ApiErrorsService } from '@services/api/errors'
+import { getRelevantAdsData, getRelevantAdsDataTotalCount } from '@services/db/queries/get-relevants-ad'
+import { AvailableCityZones, AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
 
@@ -8,7 +9,7 @@ export async function getRelevantAds(req: Request, res: Response) {
   const page: number = +req.query.page
   const perPage: number = +req.query.perPage
 
-  const city: string = (req.query.cityValue as string) || null
+  const city: AvailableMainCities = (req.query.cityValue as AvailableMainCities) || null
   const districtValues: string = (req.query.districtValues as string) || null
   const priceValue = (req.query.priceValue as string) || null
   const exceedingValue = (req.query.exceedingValue as string) || null
@@ -18,16 +19,16 @@ export async function getRelevantAds(req: Request, res: Response) {
   const isHouseValue: string = (req.query.isHouseValue as string) || null
   const isLegalValue: string = (req.query.isLegal as string) || null
 
-  const districtList: string[] = districtValues
+  const districtList = (districtValues
     ? districtValues
       .split(',')
       ?.map((v) => v)
       .filter(Boolean)
-    : []
-  const surfaceRange: number[] = surfaceValue?.split(',')?.map((v) => +v)
-  const priceRange: number[] = priceValue?.split(',')?.map((v) => +v)
-  const exceedingRange: number[] = exceedingValue?.split(',')?.map((v) => +v)
-  const roomRange: number[] = roomValue && roomValue !== '1,6' && roomValue?.split(',')?.map((v) => +v)
+    : []) as unknown as AvailableCityZones
+  const surfaceRange: [number, number] = surfaceValue?.split(',')?.map((v) => +v).splice(0, 2) as [number, number]
+  const priceRange: [number, number] = priceValue?.split(',')?.map((v) => +v).splice(0, 2) as [number, number]
+  const exceedingRange: [number, number] = exceedingValue?.split(',')?.map((v) => +v).splice(0, 2) as [number, number]
+  const roomRange: [number, number] = roomValue?.split(',')?.map((v) => +v).splice(0, 2) as [number, number]
   const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
 
   if (!isLegalValue || !['true', 'false'].includes(isLegalValue)) {

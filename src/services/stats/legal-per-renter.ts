@@ -1,16 +1,18 @@
-import * as rentService from '@db/rent.service'
 import { ApiErrorsService } from '@services/api/errors'
+import { getClassicData } from '@services/db/queries/get-classic-data'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 
 export function getLegalPerRenter(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} isLegalPerRenter`, 'blue')
-  const dateValue: string = req.query.dateValue as string
-  const dateRange: string[] = dateValue?.split(',')
 
-  rentService
-    .getLegalPerRenterData(req.params.city, dateRange)
+  const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
+  const dateValue: string = req.query.dateValue as string
+  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
+
+  getClassicData(mainCity, dateRange, { renter: { $exists: true } }, { isLegal: 1, renter: 1 })
     .then((data) => {
       const vegaOpt = Vega.commonOpt()
       const vegaMap = {

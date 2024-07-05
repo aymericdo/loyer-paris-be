@@ -1,10 +1,10 @@
-import * as rentService from '@db/rent.service'
 import { Slack } from '@messenger/slack'
+import { getAdsOfTodayByWebsite } from '@services/db/queries/get-ads-of-today-by-website'
 import { FUNNIEST_WEBSITES, WEBSITE_LIST } from '@services/websites/website'
 
 export class HealthCheck {
   async call() {
-    const countByWebsite = await rentService.getCountByWebsite()
+    const countByWebsite = await getAdsOfTodayByWebsite()
 
     let message = 'Voici un petit récap du nombre d\'annonces sauvergardées par site aujourd\'hui :\n'
 

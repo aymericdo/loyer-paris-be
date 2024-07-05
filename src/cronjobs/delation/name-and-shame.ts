@@ -1,5 +1,8 @@
-import * as rentService from '@db/rent.service'
+import { getShamefulAdsData } from '@services/db/queries/get-shameful-ads'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import TwitterApi from 'twitter-api-v2'
+
+type CityInfo = [AvailableMainCities, string, string]
 
 const MAX_DELTA = 200
 export class NameAndShameService {
@@ -23,8 +26,8 @@ export class NameAndShameService {
       ['estEnsemble', 'Est Ensemble', '@prefpolice'],
       ['bordeaux', 'Bordeaux', '@PrefAquitaine33'],
       ['montpellier', 'Montpellier', '@Prefet34'],
-    ].forEach(async ([city, cityValue, prefecture]) => {
-      const ads = await rentService.getShamefulAdsData(city, MAX_DELTA)
+    ].forEach(async ([city, cityValue, prefecture]: CityInfo) => {
+      const ads = await getShamefulAdsData(city, MAX_DELTA)
 
       if (ads.length) {
         let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${

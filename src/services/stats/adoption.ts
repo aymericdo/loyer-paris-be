@@ -1,5 +1,5 @@
-import * as rentService from '@db/rent.service'
 import { ApiErrorsService } from '@services/api/errors'
+import { getAllWithoutFilterData } from '@services/db/queries/get-all-without-filter'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
@@ -7,8 +7,7 @@ import { Request, Response } from 'express'
 export function getAdoptionRate(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} adoption`, 'blue')
 
-  rentService
-    .getAdoptionData()
+  getAllWithoutFilterData()
     .then((data) => {
       const vegaMap = {
         ...Vega.commonOpt(),
