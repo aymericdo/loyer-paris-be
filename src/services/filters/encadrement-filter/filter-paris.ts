@@ -1,6 +1,5 @@
 import { FilteredResult } from '@interfaces/ad'
 import { ParisDistrictItem, ParisEncadrementItem, ParisQuartierItem } from '@interfaces/paris'
-import { EncadrementItem } from '@interfaces/shared'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { DistrictFilterParis } from '@services/filters/district-filter/district-filter-paris'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
