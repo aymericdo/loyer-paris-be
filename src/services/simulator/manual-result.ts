@@ -28,7 +28,7 @@ export async function getManualResult(req: Request, res: Response) {
   const surface: number = +surfaceValue
   const price: number = +priceValue
   const room: number = +roomValue
-  const dateBuiltStr: number[] = YearBuiltService.formatAsYearBuilt(dateBuiltValueStr)
+  const dateBuiltRange: [number, number] = YearBuiltService.formatAsYearBuilt(dateBuiltValueStr)
   const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
   const isHouse: boolean = isHouseValue !== null ? +isHouseValue === 1 : false
 
@@ -38,7 +38,7 @@ export async function getManualResult(req: Request, res: Response) {
     postalCode: null,
     coordinates: null,
     blurryCoordinates: null,
-    yearBuilt: dateBuiltStr[0] === -1 ? null : dateBuiltStr,
+    yearBuilt: dateBuiltRange[0] === -1 ? null : dateBuiltRange,
     districtName: district,
     roomCount: room,
     hasFurniture,

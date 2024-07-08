@@ -53,7 +53,8 @@ export class DistrictsList {
   async districtElemWithGroupBy(): Promise<DistrictElem[]> {
     return getCityList(this.mainCity, this.city)
       .reduce((prev, city: AvailableCities) => {
-        const currentZones = getCityZones(city)
+        let currentZones = getCityZones(city)
+        if (!currentZones) currentZones = getCityZones(this.mainCity as AvailableCities)
         if (currentZones) {
           if (Array.isArray(currentZones)) {
             (currentZones as string[]).forEach((zone) => {

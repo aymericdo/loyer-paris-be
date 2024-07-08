@@ -1,4 +1,4 @@
-export const cityList = {
+const cityList = {
   paris: {
     mainCity: 'paris',
     zones: {
@@ -26,11 +26,11 @@ export const cityList = {
   },
   hellemmes: {
     mainCity: 'lille',
-    zones: [],
+    zones: null,
   },
   lomme: {
     mainCity: 'lille',
-    zones: [],
+    zones: null,
   },
   lille: {
     mainCity: 'lille',
@@ -78,7 +78,7 @@ export const cityList = {
   },
   villeurbanne: {
     mainCity: 'lyon',
-    zones: [],
+    zones: null,
   },
   bagnolet: {
     mainCity: 'estEnsemble',
@@ -138,15 +138,3 @@ export const getCitiesFromMainCity = (mainCity: AvailableMainCities): AvailableC
   Object.keys(cityList).filter((city: AvailableCities) => cityList[city].mainCity === mainCity) as AvailableCities[]
 export const getCityZones = (city: AvailableCities): AvailableCityZones => cityList[city].zones
 export const getCityListObjectClone = () => ({ ...cityList })
-
-export const canHaveHouse = (city: AvailableMainCities): boolean => {
-  // https://www.youtube.com/watch?v=TuxMwALL_S4&ab_channel=Charted
-  switch (city) {
-    case 'plaineCommune':
-    case 'estEnsemble':
-    case 'bordeaux':
-      return true
-    default:
-      return false
-  }
-}

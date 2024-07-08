@@ -1,0 +1,36 @@
+import { AvailableCities, AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { capitalizeFirstLetter } from '@services/helpers/capitalize'
+
+export const labelizeCity = (city: AvailableMainCities | AvailableCities): string => {
+  switch (city) {
+    case 'paris': return 'Paris'
+    case 'lyon': return 'Lyon'
+    case 'lille': return 'Lille'
+    case 'plaineCommune': return 'Plaine Commune'
+    case 'estEnsemble': return 'Est Ensemble'
+    case 'montpellier': return 'Montpellier'
+    case 'bordeaux': return 'Bordeaux'
+    case 'aubervilliers': return 'Aubervilliers'
+    case 'epinay-sur-seine': return 'Épinay-sur-Seine'
+    case 'ile-saint-denis': return 'L\'Île-Saint-Denis'
+    case 'courneuve': return 'La Courneuve'
+    case 'pierrefitte': return 'Pierrefitte-sur-Seine'
+    case 'saint-denis': return 'Saint-Denis'
+    case 'saint-ouen': return 'Saint-Ouen-sur-Seine'
+    case 'stains': return 'Stains'
+    case 'villetaneuse': return 'Villetaneuse'
+    case 'villeurbanne': return 'Villeurbanne'
+    case 'bagnolet': return 'Bagnolet'
+    case 'bobigny': return 'Bobigny'
+    case 'bondy': return 'Bondy'
+    case 'le pré-saint-gervais': return 'Le Pré Saint-Gervais'
+    case 'les lilas': return 'Les Lilas'
+    case 'montreuil': return 'Montreuil'
+    case 'noisy-le-sec': return 'Noisy-le-Sec'
+    case 'pantin': return 'Pantin'
+    case 'romainville': return 'Romainville'
+    case 'hellemmes': return 'Hellemmes-Lille'
+    case 'lomme': return 'Lomme'
+    default: return capitalizeFirstLetter(city)
+  }
+}

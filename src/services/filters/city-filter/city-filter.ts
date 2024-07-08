@@ -1,9 +1,8 @@
 import { string } from '@services/helpers/cleanup'
 import { ERROR_CODE } from '@services/api/errors'
-import { AvailableCities } from '@services/filters/city-filter/city-list'
+import { AvailableCities, getCityList } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Slack } from '@messenger/slack'
-import { getCityList } from '@services/filters/city-filter/city-list'
 
 export class CityFilter {
   cityText: string

@@ -3,7 +3,6 @@ import { Coordinate } from '@interfaces/shared'
 import { AddressServiceFactory } from '@services/diggers/address/address-factory'
 import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
 import { ERROR_CODE } from '@services/api/errors'
-import { canHaveHouse } from '@services/filters/city-filter/city-list'
 import * as cleanup from '@services/helpers/cleanup'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { regexString } from '@services/helpers/regex'
@@ -11,6 +10,7 @@ import { stringToNumber } from '@services/helpers/string-to-number'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { PARTICULIER_WORD, DPE_LIST } from '@services/websites/website'
 import { PostalCodeFactory } from '@services/diggers/postal-code/encadrement-postal-code-factory'
+import { canHaveHouse } from '@services/filters/city-filter/can-have-house'
 export class DigService {
   ad: Ad = null
 

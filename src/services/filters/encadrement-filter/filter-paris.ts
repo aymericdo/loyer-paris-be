@@ -1,5 +1,6 @@
 import { FilteredResult } from '@interfaces/ad'
 import { ParisDistrictItem, ParisEncadrementItem, ParisQuartierItem } from '@interfaces/paris'
+import { EncadrementItem } from '@interfaces/shared'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { DistrictFilterParis } from '@services/filters/district-filter/district-filter-paris'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
@@ -27,6 +28,11 @@ export class FilterParis extends EncadrementFilterParent {
         ? +rangeRent.piece === +this.infoToFilter.roomCount
         : rangeRent.piece.toString() === '4 et plus'
       : true
+  }
+
+  protected async isYearBuiltMatch(rangeRent: ParisEncadrementItem): Promise<boolean> {
+    const dateRange = this.dateRangeMatched()
+    return (dateRange?.length ? dateRange.includes(rangeRent.epoque) : true)
   }
 
   async isHasFurnitureMatch(rangeRent: ParisEncadrementItem): Promise<boolean> {

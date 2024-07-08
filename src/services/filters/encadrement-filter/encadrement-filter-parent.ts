@@ -1,7 +1,8 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import { Coordinate, DefaultDistrictItem, DefaultEncadrementItem, DistrictItem, EncadrementItem, EncadrementItemWithHouse } from '@interfaces/shared'
+import { canHaveHouse } from '@services/filters/city-filter/can-have-house'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
-import { canHaveHouse } from '@services/filters/city-filter/city-list'
+import { dateBuiltRange } from '@services/filters/city-filter/date-build-range'
 import { YearBuiltService } from '@services/helpers/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -13,10 +14,13 @@ export abstract class EncadrementFilterParent {
   infoToFilter: InfoToFilter = null
   mainCity: AvailableMainCities
   rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
-  universalRangeTime: [number, number][] = [[null, 1946], [1946, 1970], [1971, 1990], [1990, null]]
+  universalRangeTime: [number, number][] = null
+  canHaveHouse: boolean = false
 
   constructor(infoToFilter: InfoToFilter) {
     this.infoToFilter = infoToFilter
+    this.universalRangeTime = dateBuiltRange(this.mainCity)
+    this.canHaveHouse = canHaveHouse(this.mainCity)
   }
 
   async filter(): Promise<FilteredResult[]> {
@@ -88,7 +92,7 @@ export abstract class EncadrementFilterParent {
   }
 
   protected async isHasHouseMatch(rangeRent: EncadrementItem): Promise<boolean> {
-    if (!canHaveHouse(this.mainCity)) return true
+    if (!this.canHaveHouse) return true
 
     return this.infoToFilter.isHouse != null
       ? this.infoToFilter.isHouse
@@ -127,7 +131,7 @@ export abstract class EncadrementFilterParent {
           yearBuilt: rent.annee_de_construction,
         }
 
-        if (canHaveHouse(this.mainCity)) {
+        if (this.canHaveHouse) {
           res['isHouse'] = (rent as unknown as EncadrementItemWithHouse).maison ? 'Maison' : null
         }
 

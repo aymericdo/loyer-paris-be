@@ -51,20 +51,13 @@ export class YearBuiltService {
     })
   }
 
-  static formatAsYearBuilt(dateBuilt: string): number[] {
+  static formatAsYearBuilt(dateBuilt: string): [number, number] {
+    // dateBuilt can be -1, or date1,date2 as date1 or date2 can be null
     if (dateBuilt === '-1') {
-      return [+dateBuilt]
+      return [+dateBuilt, null]
     }
 
-    if (dateBuilt.startsWith('<')) {
-      return [null, +dateBuilt.match(/\d+/)[0]]
-    }
-
-    if (dateBuilt.startsWith('>')) {
-      return [+dateBuilt.match(/\d+/)[0], null]
-    }
-
-    return dateBuilt.split('-').map((date) => +date)
+    return dateBuilt.split(',').map((date) => +date) as [number, number]
   }
 
   static formatAfterBeforeWord(dateStr: string): string {
