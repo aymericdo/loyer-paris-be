@@ -15,8 +15,10 @@ function getValidCityList(req: Request, res: Response) {
       ...copyCityList[city],
       dateBuiltRange: dateBuiltRange(mainCity),
       hasHouse: canHaveHouse(mainCity),
-      displayName: labelizeCity(city),
-      displayNameMainCity: labelizeCity(mainCity),
+      displayName: {
+        city: labelizeCity(city),
+        mainCity: labelizeCity(mainCity),
+      }
     }
 
     return prev
