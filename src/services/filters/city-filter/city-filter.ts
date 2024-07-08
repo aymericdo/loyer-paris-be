@@ -3,6 +3,7 @@ import { ERROR_CODE } from '@services/api/errors'
 import { AvailableCities, getCityList } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Slack } from '@messenger/slack'
+import Fuse from 'fuse.js'
 
 export class CityFilter {
   cityText: string
@@ -22,7 +23,9 @@ export class CityFilter {
       }
     }
 
-    const cityInList: AvailableCities = getCityList().find((city) => cityName.includes(city)) as AvailableCities
+    const fuse = new Fuse(getCityList(), {})
+    const result = fuse.search(cityName)
+    const cityInList: AvailableCities = result.length ? result[0].item as AvailableCities : null
 
     if (!cityInList) {
       const message = `city '${cityName}' not found in the list`
