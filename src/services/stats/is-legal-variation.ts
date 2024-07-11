@@ -1,5 +1,5 @@
 import { ApiErrorsService } from '@services/api/errors'
-import { getLegalPerDate } from '@services/db/queries/get-legal-per-date'
+import { getLegalPerDate2 } from '@services/db/queries/get-legal-per-date2'
 import { AvailableCityZones, AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
@@ -28,7 +28,7 @@ export function getIsLegalVariation(req: Request, res: Response) {
   const isParticulier =
     isParticulierValue.toLowerCase() === 'true' ? true : isParticulierValue.toLowerCase() === 'false' ? false : null
 
-  getLegalPerDate(mainCity, districtList, surfaceRange, roomRange, hasFurniture, dateRange, isParticulier)
+  getLegalPerDate2(mainCity, districtList, surfaceRange, roomRange, hasFurniture, dateRange, isParticulier)
     .then((data) => {
       const vegaOpt = Vega.commonOpt()
       const vegaMap = {
@@ -44,115 +44,35 @@ export function getIsLegalVariation(req: Request, res: Response) {
         data: {
           values: data,
         },
-        encoding: { x: { field: 'date', type: 'temporal' } },
-        layer: [
+        "encoding": {
+          "x": {
+            "field": "weekDate",
+            "type": "ordinal",
+            "title": "Semaine"
+          },
+          "y": {
+            "field": "illegalPercentageDecimal",
+            "type": "quantitative",
+            "title": "Pourcentage illégal (%)",
+            "axis": { "format": ".1%" }
+          },
+          "tooltip": [
+            { "field": "weekDate", "type": "nominal", "title": "Semaine" },
+            { "field": "illegalPercentageDecimal", "type": "quantitative", "title": "Pourcentage illégal", "format": ".1%" },
+            { "field": "totalCount", "type": "quantitative", "title": "Total" }
+          ]
+        },
+        "layer": [
           {
-            mark: { type: 'line', color: '#f03434', tooltip: true, size: 1 },
-            encoding: {
-              x: { field: 'date', type: 'temporal' },
-              y: {
-                field: 'percentOfTotal',
-                type: 'quantitative',
-                title: 'Pourcentage d\'annonces non conformes (rouge)',
-              },
-            },
+            "mark": { "type": "line", "point": true, "interpolate": "monotone" }
           },
           {
-            transform: [
-              {
-                loess: 'percentOfTotal',
-                on: 'date',
-                bandwidth: 0.5,
-                as: ['date', 'smoothPercentOfTotal'],
-              },
-            ],
-            layer: [
-              {
-                mark: {
-                  type: 'line',
-                  color: '#fdcd56',
-                  tooltip: true,
-                  size: 4,
-                },
-                encoding: {
-                  x: { field: 'date', type: 'temporal' },
-                  y: {
-                    field: 'smoothPercentOfTotal',
-                    type: 'quantitative',
-                    title: 'Pourcentage lissé (jaune) (%)',
-                  },
-                },
-              },
-              {
-                mark: { type: 'point', fill: '#fff' },
-                transform: [{ filter: { param: 'hover', empty: false } }],
-                encoding: {
-                  x: { field: 'date', type: 'temporal' },
-                  color: { value: '#fff' },
-                  y: { field: 'smoothPercentOfTotal', type: 'quantitative' },
-                },
-              },
-              {
-                mark: 'rule',
-                transform: [
-                  {
-                    calculate: 'datum.smoothPercentOfTotal / 100',
-                    as: 'smoothPercentOfTotal0to1',
-                  },
-                ],
-                encoding: {
-                  x: { field: 'date', type: 'temporal' },
-                  opacity: {
-                    condition: { value: 0.4, param: 'hover', empty: false },
-                    value: 0,
-                  },
-                  color: { value: '#fff' },
-                  tooltip: [
-                    {
-                      field: 'smoothPercentOfTotal0to1',
-                      title: 'Pourcentage lissé ',
-                      type: 'quantitative',
-                      format: '.2%',
-                    },
-                    {
-                      field: 'date',
-                      title: 'Date ',
-                      type: 'temporal',
-                    },
-                  ],
-                },
-                params: [
-                  {
-                    name: 'hover',
-                    select: {
-                      type: 'point',
-                      fields: ['date'],
-                      nearest: true,
-                      on: 'mouseover',
-                      clear: 'mouseout',
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-        transform: [
-          { timeUnit: 'yearweekday', field: 'createdAt', as: 'date' },
-          {
-            joinaggregate: [{ op: 'count', field: 'id', as: 'numberAds' }],
-            groupby: ['date'],
-          },
-          { filter: 'datum.isLegal === false' },
-          {
-            joinaggregate: [{ op: 'count', field: 'isLegal', as: 'numberIllegal' }],
-            groupby: ['date'],
-          },
-          {
-            calculate: 'datum.numberIllegal / datum.numberAds * 100',
-            as: 'percentOfTotal',
-          },
-        ],
+            "mark": { "type": "text", "align": "left", "dx": 5, "dy": -5 },
+            "encoding": {
+              "text": { "field": "illegalPercentageDecimal", "type": "quantitative", "format": ".1%" }
+            }
+          }
+        ]
       }
 
       res.json(vegaMap)
