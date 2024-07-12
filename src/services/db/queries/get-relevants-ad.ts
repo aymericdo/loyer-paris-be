@@ -111,12 +111,14 @@ export async function getRelevantAdsData(
     if (!ad.longitude || !ad.latitude) {
       const mainCity = getMainCity(ad.city as AvailableCities)
 
-      const feature = await new DistrictsList(mainCity as AvailableMainCities, { specificDistrict: ad.district }).currentFeature()
+      const feature = await new DistrictsList(mainCity as AvailableMainCities, { specificDistrict: ad.district, specificCity: ad.city }).currentFeature()
 
-      const point = randomPositionInPolygon(feature)
+      if (feature) {
+        const point = randomPositionInPolygon(feature)
 
-      ad.longitude = point[0]
-      ad.latitude = point[1]
+        ad.longitude = point[0]
+        ad.latitude = point[1]
+      }
       blurry = true
     }
 
