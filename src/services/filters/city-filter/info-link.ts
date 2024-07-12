@@ -1,6 +1,6 @@
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 
-export const getInfoLink = (mainCity: AvailableMainCities): string => {
+export const infoLink = (mainCity: AvailableMainCities): string => {
   switch (mainCity) {
     case 'paris': return 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712'
     case 'lyon': return 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html'

@@ -7,6 +7,20 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import express, { Request, Response } from 'express'
 const router = express.Router()
 
+router.get('/geojson/:city', getGeodata)
+async function getGeodata(req: Request, res: Response) {
+  PrettyLog.call(`-> ${req.baseUrl} getGeodata`, 'blue')
+  const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
+  if (!mainCityList.includes(mainCity)) {
+    res.status(403).json({ message: 'City params not valid' })
+    return
+  }
+
+  const geodata = await new DistrictsList(mainCity as AvailableMainCities).currentGeodata()
+
+  res.json(geodata)
+}
+
 router.get('/list/:city', getDistricts)
 async function getDistricts(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getDistricts`, 'blue')

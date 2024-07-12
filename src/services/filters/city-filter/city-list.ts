@@ -130,7 +130,11 @@ export type AvailableCities = keyof typeof cityList
 export type AvailableMainCities = typeof cityList[AvailableCities]['mainCity']
 export type AvailableCityZones = typeof cityList[AvailableCities]['zones']
 
-export const mainCityList: AvailableMainCities[] = Object.values(cityList).map((city) => city.mainCity)
+export const mainCityList: AvailableMainCities[] = Object.values(cityList).reduce((prev, city) => {
+  if (prev.includes(city.mainCity)) return prev
+  prev.push(city.mainCity)
+  return prev
+}, [])
 export const getCityList = (mainCity: AvailableMainCities = null, city: AvailableCities = null): AvailableCities[] =>
   city ? [city] : mainCity ? getCitiesFromMainCity(mainCity) : Object.keys(cityList) as AvailableCities[]
 export const getMainCity = (city: AvailableCities): AvailableMainCities => cityList[city].mainCity

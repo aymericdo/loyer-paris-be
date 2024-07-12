@@ -1,7 +1,7 @@
 import { AvailableCities, AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { capitalizeFirstLetter } from '@services/helpers/capitalize'
 
-export const labelizeCity = (city: AvailableMainCities | AvailableCities): string => {
+export const label = (city: AvailableMainCities | AvailableCities): string => {
   switch (city) {
     case 'paris': return 'Paris'
     case 'lyon': return 'Lyon'

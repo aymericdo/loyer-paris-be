@@ -1,6 +1,6 @@
 import { FilteredResult } from '@interfaces/ad'
 import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
-import { getInfoLink } from '@services/filters/city-filter/more-information'
+import { infoLink } from '@services/filters/city-filter/info-link'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
@@ -94,7 +94,7 @@ export class SerializerService {
         },
       },
       isLegal,
-      moreInfo: getInfoLink(getMainCity(city)),
+      moreInfo: infoLink(getMainCity(city)),
     }
   }
 }
