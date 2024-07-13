@@ -59,7 +59,7 @@ export class DigService {
     const CurrentPostalCodeService = new PostalCodeFactory(mainCity).currentPostalCodeService()
 
     // Order is important here
-    const postalCode = new CurrentPostalCodeService(city).getPostalCode(this.ad)
+    const postalCode = new CurrentPostalCodeService(mainCity, city).getPostalCode(this.ad)
     const CurrentAddressService = new AddressServiceFactory(city).currentAddressService()
     const [address, coordinates, blurryCoordinates] = await new CurrentAddressService(city, postalCode, this.ad).getAddress()
 

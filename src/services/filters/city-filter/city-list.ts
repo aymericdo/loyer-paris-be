@@ -124,6 +124,10 @@ const cityList = {
     mainCity: 'bordeaux',
     zones: ['Zone 1', 'Zone 2', 'Zone 3', 'Zone 4'],
   },
+  'la rochelle': {
+    mainCity: 'la rochelle',
+    zones: [],
+  },
 } as const
 
 export type AvailableCities = keyof typeof cityList

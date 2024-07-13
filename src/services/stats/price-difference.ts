@@ -12,7 +12,7 @@ export function getPriceDifference(req: Request, res: Response) {
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
   const CurrentPostalCodeService = new PostalCodeFactory(mainCity).currentPostalCodeService()
-  const postalCodePossibilities = new CurrentPostalCodeService('all').getPostalCodePossibilities()
+  const postalCodePossibilities = new CurrentPostalCodeService(mainCity, 'all').getPostalCodePossibilities()
 
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
