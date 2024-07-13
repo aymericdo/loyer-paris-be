@@ -23,9 +23,12 @@ export class CityFilter {
       }
     }
 
-    const fuse = new Fuse(getCityList(), {})
-    const result = fuse.search(cityName)
-    const cityInList: AvailableCities = result.length ? result[0].item as AvailableCities : null
+    let cityInList: AvailableCities = getCityList().find((city) => cityName.includes(city))
+    if (!cityInList) {
+      const fuse = new Fuse(getCityList(), {})
+      const result = fuse.search(cityName)
+      cityInList = result.length ? result[0].item as AvailableCities : null
+    }
 
     if (!cityInList) {
       const message = `city '${cityName}' not found in the list`

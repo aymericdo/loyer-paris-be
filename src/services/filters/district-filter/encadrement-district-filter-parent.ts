@@ -22,6 +22,10 @@ export class DistrictFilterParent {
     return `Zone ${data['Zone']}`
   }
 
+  digCityInProperties(_data: unknown): string {
+    return null
+  }
+
   buildItem(district: DistrictItem, elem: AddressItemDB): DefaultAddressItemDB {
     return {
       ...elem,
@@ -43,7 +47,7 @@ export class DistrictFilterParent {
 
   async getDistricts(): Promise<DistrictItem[]> {
     if (this.districtName) {
-      return this.getDistrictFromName()
+      return await this.getDistrictFromName()
     }
 
     const districtFromCoordinate =

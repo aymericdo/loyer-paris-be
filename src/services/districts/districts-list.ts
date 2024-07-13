@@ -10,6 +10,7 @@ interface DistrictElem {
   displaySequence: number | string
 }
 
+export const DISPLAY_CITY_FIELD = 'displayCity'
 export const DISPLAY_ZONE_FIELD = 'displayZone'
 export const DISTRICT_FIELD = `properties.${DISPLAY_ZONE_FIELD}`
 
@@ -41,6 +42,7 @@ export class DistrictsList {
         properties: {
           ...data.properties,
           [DISPLAY_ZONE_FIELD]: this.currentDistrictFilter.digZoneInProperties(data['properties']),
+          [DISPLAY_CITY_FIELD]: this.currentDistrictFilter.digCityInProperties(data['properties']),
         },
       })) as DistrictItem[],
     }

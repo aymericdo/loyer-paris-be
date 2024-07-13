@@ -1,7 +1,7 @@
 import { IncompleteAd } from '@interfaces/ad'
 import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
 import {  BordeauxDistrictItem, BordeauxEncadrementItem } from './bordeaux'
-import { EstEnsembleEncadrementItem } from './est-ensemble'
+import { EstEnsembleDistrictItem, EstEnsembleEncadrementItem } from './est-ensemble'
 import { LyonDistrictItem, LyonEncadrementItem } from './lyon'
 import { MontpellierEncadrementItem } from './montpellier'
 import { ParisAddressItemDB, ParisDistrictItem, ParisEncadrementItem } from './paris'
@@ -80,7 +80,7 @@ export interface DefaultDistrictItem {
 
 export type AddressItemDB = DefaultAddressItemDB | ParisAddressItemDB
 
-export type DistrictItem = DefaultDistrictItem | ParisDistrictItem | PlaineCommuneDistrictItem | LyonDistrictItem | BordeauxDistrictItem
+export type DistrictItem = DefaultDistrictItem | ParisDistrictItem | PlaineCommuneDistrictItem | EstEnsembleDistrictItem | LyonDistrictItem | BordeauxDistrictItem
 
 export type EncadrementItem =
   | DefaultEncadrementItem

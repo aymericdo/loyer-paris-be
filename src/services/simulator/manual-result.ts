@@ -1,6 +1,6 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
-import { getInfoLink } from '@services/filters/city-filter/more-information'
+import { infoLink } from '@services/filters/city-filter/info-link'
 import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
@@ -59,7 +59,7 @@ export async function getManualResult(req: Request, res: Response) {
         yearBuilt: YearBuiltService.getDisplayableYearBuilt(
           currentEncadrementFilter.rangeTimeToUniversalRangeTime(r.yearBuilt)
         ),
-        moreInfo: getInfoLink(mainCity),
+        moreInfo: infoLink(mainCity),
       }
     })
   )

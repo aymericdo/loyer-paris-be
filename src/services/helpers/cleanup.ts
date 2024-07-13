@@ -5,6 +5,8 @@ export function string(string: string): string {
     ?.toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\n/g, '')
+    .replace(/\s+/g, ' ')
     .trim()
 }
 
