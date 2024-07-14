@@ -8,6 +8,7 @@ import { Request, Response } from 'express'
 export function getIsLegalVariation(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} isLegalVariation`, 'blue')
 
+
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
