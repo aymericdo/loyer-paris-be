@@ -55,8 +55,8 @@ describe('bienici', () => {
           maxAuthorized: { order: 7, value: 654.48 },
           promoPercentage: { order: 8, value: 15 },
         },
-        isLegal: false,
         isFake: false,
+        isLegal: false,
         moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })

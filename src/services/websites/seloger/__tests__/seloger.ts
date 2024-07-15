@@ -54,8 +54,8 @@ describe('seloger', () => {
           maxAuthorized: { order: 7, value: 1983.6 },
           promoPercentage: { order: 8, value: 15.23 },
         },
-        isLegal: false,
         isFake: false,
+        isLegal: false,
         moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
@@ -104,8 +104,8 @@ describe('seloger', () => {
           maxAuthorized: { order: 7, value: 408 },
           promoPercentage: { order: 8, value: 1.45 },
         },
-        isLegal: false,
         isFake: false,
+        isLegal: false,
         moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
