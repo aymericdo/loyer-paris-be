@@ -56,6 +56,7 @@ describe('lefigaro', () => {
           promoPercentage: { order: 8, value: 7.38 },
         },
         isLegal: false,
+        isFake: false,
         moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
@@ -105,6 +106,7 @@ describe('lefigaro', () => {
           promoPercentage: { order: 8, value: 26.29 },
         },
         isLegal: false,
+        isFake: false,
         moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })

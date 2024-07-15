@@ -104,6 +104,7 @@ describe('pap', () => {
           },
         },
         isLegal: false,
+        isFake: false,
         moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
@@ -153,6 +154,7 @@ describe('pap', () => {
           promoPercentage: { order: 8, value: 0.57 },
         },
         isLegal: false,
+        isFake: false,
         moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
@@ -205,6 +207,7 @@ describe('pap', () => {
           promoPercentage: { order: 8, value: 17.3 },
         },
         isLegal: false,
+        isFake: false,
         moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
     })
