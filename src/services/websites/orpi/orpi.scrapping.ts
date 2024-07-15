@@ -39,7 +39,7 @@ export class OrpiScrapping {
     let rooms = null
 
     features.forEach((feature) => {
-      if (feature.textContent.match(/m²/g) && !feature.textContent.toLowerCase().includes('balcon')) {
+      if (feature.textContent.match(/Surface.*m²/g) && !feature.textContent.toLowerCase().includes('balcon')) {
         surface = feature
       } else if (feature.textContent.match(/pièce/g)) {
         rooms = feature
