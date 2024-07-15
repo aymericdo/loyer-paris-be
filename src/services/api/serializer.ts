@@ -1,6 +1,8 @@
 import { FilteredResult } from '@interfaces/ad'
 import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
+import { isFake } from '@services/filters/city-filter/fake'
 import { infoLink } from '@services/filters/city-filter/info-link'
+import { label } from '@services/filters/city-filter/label'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
@@ -51,15 +53,13 @@ export class SerializerService {
       yearBuilt,
     } = this.serializedInfo
 
-    const cityCapitalize = (city as string).charAt(0).toUpperCase() + (city as string).slice(1)
-
     return {
       detectedInfo: {
         address: {
           order: 0,
           value: `${address || ''}${postalCode ? (address ? ' ' + postalCode : postalCode) : ''}${
             address || postalCode ? ', ' : ''
-          }${cityCapitalize}`,
+          }${label(city)}`,
         },
         hasFurniture: { order: 1, value: hasFurniture },
         roomCount: { order: 2, value: roomCount },
@@ -94,6 +94,7 @@ export class SerializerService {
         },
       },
       isLegal,
+      isFake: isFake(getMainCity(city)),
       moreInfo: infoLink(getMainCity(city)),
     }
   }

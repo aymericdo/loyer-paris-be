@@ -1,7 +1,8 @@
 import { AddressItemDB } from '@interfaces/shared'
-import { AddressService } from '@services/diggers/address/address-default'
+import { AddressService } from '@services/diggers/address/address-service'
 import { DistrictsList } from '@services/districts/districts-list'
 import { AvailableMainCities, AvailableCities, mainCityList } from '@services/filters/city-filter/city-list'
+import { isFake } from '@services/filters/city-filter/fake'
 import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import express, { Request, Response } from 'express'
@@ -11,7 +12,7 @@ router.get('/geojson/:city', getGeodata)
 async function getGeodata(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getGeodata`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  if (!mainCityList.includes(mainCity)) {
+  if (!mainCityList.includes(mainCity) || isFake(mainCity)) {
     res.status(403).json({ message: 'City params not valid' })
     return
   }
@@ -25,7 +26,7 @@ router.get('/list/:city', getDistricts)
 async function getDistricts(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getDistricts`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  if (!mainCityList.includes(mainCity)) {
+  if (!mainCityList.includes(mainCity) || isFake(mainCity)) {
     res.status(403).json({ message: 'City params not valid' })
     return
   }
@@ -49,6 +50,11 @@ async function getAddresses(req: Request, res: Response) {
   }
 
   let data: AddressItemDB[] = await AddressService.getAddresses(city, addressQuery) as AddressItemDB[]
+
+  if (isFake(mainCity)) {
+    res.json(data)
+    return
+  }
 
   const CurrentDistrictFilter = new DistrictFilterFactory(mainCity).currentDistrictFilter()
 

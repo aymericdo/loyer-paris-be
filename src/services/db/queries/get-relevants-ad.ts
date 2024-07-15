@@ -2,6 +2,7 @@ import { Rent } from '@db/db'
 import { getCityFilter, getClassicWebsiteFilter, getDistrictFilter, getExceedingFilter, getFurnitureFilter, getHouseFilter, getPriceFilter, getRoomFilter, getSurfaceFilter } from '@services/db/queries/common'
 import { DistrictsList } from '@services/districts/districts-list'
 import { AvailableCities, AvailableCityZones, AvailableMainCities, getMainCity } from '@services/filters/city-filter/city-list'
+import { isFake } from '@services/filters/city-filter/fake'
 import { roundNumber } from '@services/helpers/round-number'
 import randomPositionInPolygon from 'random-position-in-polygon'
 
@@ -26,7 +27,7 @@ interface RelevantAdsData {
 }
 
 function buildFilter(filterParam: {
-  city: AvailableMainCities
+  city: AvailableMainCities | 'all'
   districtList: AvailableCityZones
   surfaceRange: [number, number]
   priceRange: [number, number]
@@ -58,7 +59,7 @@ function buildFilter(filterParam: {
 
 export async function getRelevantAdsData(
   filterParam: {
-    city: AvailableMainCities
+    city: AvailableMainCities | 'all'
     districtList: AvailableCityZones
     surfaceRange: [number, number]
     priceRange: [number, number]
@@ -108,10 +109,14 @@ export async function getRelevantAdsData(
   return await Promise.all(ads.map(async (ad) => {
     let blurry = false
 
-    if (!ad.longitude || !ad.latitude) {
-      const mainCity = getMainCity(ad.city as AvailableCities)
-
-      const feature = await new DistrictsList(mainCity as AvailableMainCities, { specificDistrict: ad.district, specificCity: ad.city }).currentFeature()
+    const mainCity = getMainCity(ad.city)
+    if (!isFake(mainCity) && !ad.longitude || !ad.latitude) {
+      const feature = await new DistrictsList(
+        mainCity, {
+          specificDistrict: ad.district,
+          specificCity: ad.city,
+        },
+      ).currentFeature()
 
       if (feature) {
         const point = randomPositionInPolygon(feature)
@@ -136,7 +141,7 @@ export async function getRelevantAdsData(
 }
 
 export async function getRelevantAdsDataTotalCount(filterParam: {
-  city: AvailableMainCities
+  city: AvailableMainCities | 'all'
   districtList: AvailableCityZones
   surfaceRange: [number, number]
   priceRange: [number, number]

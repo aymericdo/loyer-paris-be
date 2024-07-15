@@ -1,0 +1,51 @@
+import { AvailableCities } from '@services/filters/city-filter/city-list'
+
+export const zones = (city: AvailableCities): string[] | { [key: string]: string[] } => {
+  switch (city) {
+    case 'paris': return {
+      1: ['Palais-Royal','Halles','St-Germain-l\'Auxerrois','Place-Vendôme'],
+      2: ['Gaillon','Mail','Vivienne','Bonne-Nouvelle'],
+      3: ['Enfants-Rouges','Arts-et-Metiers','Sainte-Avoie','Archives'],
+      4: ['Arsenal','Saint-Gervais','Notre-Dame','Saint-Merri'],
+      5: ['Saint-Victor','Val-de-Grace','Jardin-des-Plantes','Sorbonne'],
+      6: ['Saint-Germain-des-Prés','Notre-Dame-des-Champs','Odeon','Monnaie'],
+      7: ['Saint-Thomas-d\'Aquin','Gros-Caillou','Ecole-Militaire','Invalides'],
+      8: ['Madeleine','Europe','Faubourg-du-Roule','Champs-Elysées'],
+      9: ['Faubourg-Montmartre','Saint-Georges','Chaussée-d\'Antin','Rochechouart'],
+      10: ['Porte-Saint-Martin','Hôpital-Saint-Louis','Saint-Vincent-de-Paul','Porte-Saint-Denis'],
+      11: ['Saint-Ambroise','Roquette','Folie-Méricourt','Sainte-Marguerite'],
+      12: ['Picpus','Quinze-Vingts','Bel-Air','Bercy'],
+      13: ['Maison-Blanche','Salpêtrière','Gare','Croulebarbe'],
+      14: ['Parc-de-Montsouris','Plaisance','Montparnasse','Petit-Montrouge'],
+      15: ['Grenelle','Necker','Javel','Saint-Lambert'],
+      16: ['Chaillot','Porte-Dauphine','Auteuil','Muette'],
+      17: ['Epinettes','Plaine de Monceaux','Batignolles','Ternes'],
+      18: ['Clignancourt','Grandes-Carrières','Goutte-d\'Or','La Chapelle'],
+      19: ['Villette','Amérique','Pont-de-Flandre','Combat'],
+      20: ['Charonne','Belleville','Saint-Fargeau','Père-Lachaise'],
+    }
+    case 'lyon': return ['Zone 1', 'Zone 2', 'Zone 3', 'Zone 4', 'Zone 5']
+    case 'lille': return ['Zone 1', 'Zone 2', 'Zone 3', 'Zone 4', 'Zone 5']
+    case 'montpellier': return ['Zone 1', 'Zone 2', 'Zone 3', 'Zone 4', 'Zone 5']
+    case 'bordeaux': return ['Zone 1', 'Zone 2', 'Zone 3', 'Zone 4']
+    case 'aubervilliers': return ['Zone 314']
+    case 'epinay-sur-seine': return ['Zone 315']
+    case 'ile-saint-denis': return ['Zone 312']
+    case 'courneuve': return ['Zone 316']
+    case 'pierrefitte': return ['Zone 317']
+    case 'saint-denis': return ['Zone 311', 'Zone 312']
+    case 'saint-ouen': return ['Zone 310']
+    case 'stains': return ['Zone 318']
+    case 'villetaneuse': return ['Zone 316']
+    case 'bagnolet': return ['Zone 308']
+    case 'bobigny': return ['Zone 315']
+    case 'bondy': return ['Zone 318']
+    case 'le pré-saint-gervais': return ['Zone 308']
+    case 'les lilas': return ['Zone 307']
+    case 'montreuil': return ['Zone 307', 'Zone 308']
+    case 'noisy-le-sec': return ['Zone 311']
+    case 'pantin': return ['Zone 308']
+    case 'romainville': return ['Zone 313']
+    default: return null
+  }
+}
