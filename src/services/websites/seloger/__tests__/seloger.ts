@@ -154,6 +154,7 @@ describe('seloger', () => {
           maxAuthorized: { order: 7, value: null },
           promoPercentage: { order: 8, value: null },
         },
+        isFake: false,
         isLegal: true,
         moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })

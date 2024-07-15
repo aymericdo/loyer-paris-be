@@ -105,6 +105,7 @@ describe('bienici', () => {
           maxAuthorized: { order: 7, value: null },
           promoPercentage: { order: 8, value: null },
         },
+        isFake: false,
         isLegal: true,
         moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
