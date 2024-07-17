@@ -11,18 +11,18 @@ export class AvendrealouerScrapping {
     const document = window.document
 
     const blocDetail = document.querySelector('#debutBlocDetail')
-    const title = blocDetail.querySelector('h1')
-    const price = blocDetail.querySelector('.dLJgUN')
-    const cityLabel = blocDetail.querySelector('.leBNzy')
+    const title = blocDetail?.querySelector('h1')
+    const price = blocDetail?.querySelector('.dLJgUN')
+    const cityLabel = blocDetail?.querySelector('.leBNzy')
 
     const blocPro = document.querySelector('#blocProfessional')
-    const description = blocPro.querySelector('p.hQNjCq')
-    const renter = blocPro.querySelector('.kryojw .leTyeh')
+    const description = blocPro?.querySelector('p.hQNjCq')
+    const renter = blocPro?.querySelector('.kryojw .leTyeh')
 
     // const dpe = [...document.querySelectorAll('#adview-energy-link > div')].find((a) => window.getComputedStyle(a, '::before').backgroundColor !== 'rgba(0, 0, 0, 0)')
 
-    const features = [...blocDetail.querySelectorAll('.bdszss div.iOPKLj')]
-    const features2 = [...blocPro.querySelectorAll('ul > li')]
+    const features = blocDetail ? [...blocDetail.querySelectorAll('.bdszss div.iOPKLj')] : []
+    const features2 = blocPro ? [...blocPro.querySelectorAll('ul > li')] : []
 
     let furnished = null
     let surface = null
@@ -45,7 +45,7 @@ export class AvendrealouerScrapping {
     })
 
     const blocPrice = document.querySelector('#blocPrice')
-    const features3 = [...blocPrice.querySelectorAll('p')]
+    const features3 = blocPrice ? [...blocPrice.querySelectorAll('p')] : []
 
     let charges = null
     features3.forEach((feature) => {

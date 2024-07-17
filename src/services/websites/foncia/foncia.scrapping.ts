@@ -10,14 +10,14 @@ export class FonciaScrapping {
     }).window
 
     const main = document.querySelector('.infos .main')
-    const title = main.querySelector('.section-title')
-    const description = main.querySelector('.section-description')
+    const title = main?.querySelector('.section-title')
+    const description = main?.querySelector('.section-description')
     const secondary = document.querySelector('.infos .secondary')
-    const price = secondary.querySelector('.price .price-value')
+    const price = secondary?.querySelector('.price .price-value')
 
-    const cityLabel = secondary.querySelector('.location')
-    const address = secondary.querySelector('.location')
-    let surface = secondary.querySelector('.main-features .surface')
+    const cityLabel = secondary?.querySelector('.location')
+    const address = secondary?.querySelector('.location')
+    let surface = secondary?.querySelector('.main-features .surface')
 
     const dpeImg = document.querySelector('.dpe-diagnostic > img')
     const dpeMatches = dpeImg?.alt?.match(/(?<=Diagnostic classe énergie : )[ABCDEFG]/g)

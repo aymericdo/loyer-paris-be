@@ -18,7 +18,7 @@ export class LefigaroScrapping {
       'div.main-classified > div > div.classified-about-price > ul > li:nth-child(1) > span.about-price-fees-label'
     )
     const hasCharges = document.querySelector('.classified-price .fees')
-    const cityLabel = title.querySelector('span')
+    const cityLabel = title?.querySelector('span')
     const renter = document.querySelector(
       '#middle-inquiry > div.classifieds-about-agency > div > div.agency__desc > strong'
     )
