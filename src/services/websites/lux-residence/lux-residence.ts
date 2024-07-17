@@ -43,9 +43,11 @@ export class LuxResidence extends Website {
       description: cleanup.string(ad.description),
       furnished: ad.furnished,
       price: cleanup.price(ad.price),
+      charges: cleanup.price(ad.charges),
       renter: ad.renter ? cleanup.string(ad.renter) : null,
       rooms: cleanup.number(ad.rooms),
       surface: cleanup.number(ad.surface),
+      dpe: ad.dpe ? cleanup.string(ad.dpe) : null,
     }
   }
 }

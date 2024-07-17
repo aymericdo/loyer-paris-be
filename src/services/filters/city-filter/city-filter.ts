@@ -25,9 +25,9 @@ export class CityFilter {
 
     let currentCity: AvailableCities = getCityList().find((city) => cityName.includes(city))
     if (!currentCity) {
-      const fuse = new Fuse(getCityList(), {})
+      const fuse = new Fuse(getCityList(), { minMatchCharLength: 4, includeScore: true })
       const result = fuse.search(cityName)
-      currentCity = result.length ? result[0].item as AvailableCities : null
+      currentCity = result.length && result[0].score < 0.3 ? result[0].item as AvailableCities : null
     }
 
     if (!currentCity) {

@@ -9,34 +9,38 @@ export class LuxResidenceScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const description = document.querySelector('#descriptionSection > div')
-    const price = document.querySelector(
-      '#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.price'
-    )
-    const renter = document.querySelector(
-      '#appContainer > div > div > div > div > section.carouselImageContainer > section > div > span.agency > span.agencyName'
-    )
-    const cityLabel = document.querySelector(
-      '#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.city'
-    )
-    const furnished = document.querySelector(
-      '#detailsTab > div > div.detailsBlock.plus > ul > li.singleCriteria.furnished'
-    )
+    const description = document.querySelector('#descriptionSection')
+    const price = document.querySelector('#appContainer > div div.informationSale > span.price')
+    const renter = document.querySelector('#appContainer > div div.infosAgency > span.nameAgency')
+    const cityLabel = document.querySelector('#appContainer > div .breadcrumb ul .last-level.breadCrumb-link')
+    const surface = document.querySelector('#appContainer .informationProperty .criteria .singleCriteria.area')
+    const rooms = document.querySelector('#appContainer .informationProperty .criteria .singleCriteria.nbrRoom')
+    const dpe = document.querySelector('[data-testid="dpeClasseActive"]')
 
     const features = [
       ...document.querySelectorAll(
-        '#appContainer > div > div > div > div > section.carouselImageContainer > section > h1 > span.criteria > span'
+        '#appContainer .detailsBlock .listBlock > .listBlock-item'
       )
     ]
 
-    let surface = null
-    let rooms = null
+    let furnished = null
+    let charges = null
 
     features.forEach((feature) => {
-      if (feature.textContent.match(/m2/g)) {
-        surface = feature
-      } else if (feature.textContent.match(/pièce/g)) {
-        rooms = feature
+      if (feature.textContent.match(/Meublé/g)) {
+        furnished = feature
+      }
+    })
+
+    const priceFeatures = [
+      ...document.querySelectorAll(
+        '#appContainer .sc-1i8oomw-6.bxBoqJ'
+      )
+    ]
+
+    priceFeatures.forEach((feature) => {
+      if (feature.textContent.match(/Charges forfaitaires/g)) {
+        charges = feature
       }
     })
 
@@ -46,13 +50,15 @@ export class LuxResidenceScrapping {
 
     return {
       id: null,
-      cityLabel: cityLabel && cityLabel.textContent,
-      description: description && description.textContent,
+      cityLabel: cityLabel?.textContent,
+      description: description?.textContent,
       furnished: furnished && !!furnished.textContent,
-      price: price && price.textContent,
-      renter: renter && renter.textContent,
-      rooms: rooms && rooms.textContent,
-      surface: surface && surface.textContent,
+      price: price?.textContent,
+      renter: renter?.textContent,
+      rooms: rooms?.textContent,
+      surface: surface?.textContent,
+      dpe: dpe?.textContent,
+      charges: charges?.textContent,
     }
   }
 }

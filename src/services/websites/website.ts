@@ -15,7 +15,7 @@ import { isFake } from '@services/filters/city-filter/fake'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export const DPE_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-export const PARTICULIER_WORD = 'Particulier'
+export const PARTICULIER = 'Particulier'
 
 export const WEBSITE_LIST = [
   'bellesdemeures',
@@ -32,6 +32,8 @@ export const WEBSITE_LIST = [
   'pap',
   'seloger',
   'superimmo',
+  'foncia',
+  'avendrealouer'
 ] as const
 
 export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']

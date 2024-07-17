@@ -47,6 +47,7 @@ export class BellesDemeures extends Website {
       rooms: cleanup.number(ad.rooms),
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),
+      dpe: cleanup.string(ad.dpe),
     }
   }
 }
