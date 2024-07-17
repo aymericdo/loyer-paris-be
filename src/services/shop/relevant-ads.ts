@@ -9,7 +9,7 @@ export async function getRelevantAds(req: Request, res: Response) {
   const page: number = +req.query.page
   const perPage: number = +req.query.perPage
 
-  const city: AvailableMainCities = (req.query.cityValue as AvailableMainCities) || null
+  const city: AvailableMainCities | 'all' = (req.query.cityValue as AvailableMainCities | 'all') || null
   const districtValues: string = (req.query.districtValues as string) || null
   const priceValue = (req.query.priceValue as string) || null
   const exceedingValue = (req.query.exceedingValue as string) || null

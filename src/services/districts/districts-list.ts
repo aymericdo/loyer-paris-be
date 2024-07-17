@@ -1,7 +1,8 @@
 import { DistrictItem, GeojsonFile } from '@interfaces/shared'
-import { AvailableCities, AvailableMainCities, getCityList, getCityZones } from '@services/filters/city-filter/city-list'
+import { AvailableCities, AvailableMainCities, getCityList } from '@services/filters/city-filter/city-list'
+import { label } from '@services/filters/city-filter/label'
+import { zones } from '@services/filters/city-filter/zones'
 import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
-import { capitalizeFirstLetter } from '@services/helpers/capitalize'
 
 interface DistrictElem {
   label: string
@@ -55,12 +56,12 @@ export class DistrictsList {
   async districtElemWithGroupBy(): Promise<DistrictElem[]> {
     return getCityList(this.mainCity, this.city)
       .reduce((prev, city: AvailableCities) => {
-        let currentZones = getCityZones(city)
-        if (!currentZones) currentZones = getCityZones(this.mainCity as AvailableCities)
+        let currentZones = zones(city)
+        if (!currentZones) currentZones = zones(this.mainCity as AvailableCities)
         if (currentZones) {
           if (Array.isArray(currentZones)) {
             (currentZones as string[]).forEach((zone) => {
-              const labelZone = capitalizeFirstLetter(`${city} (${zone})`)
+              const labelZone = `${label(city)} (${zone})`
 
               prev.push({
                 value: zone,

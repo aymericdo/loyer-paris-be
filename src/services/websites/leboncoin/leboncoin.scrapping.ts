@@ -18,11 +18,11 @@ export class LeboncoinScrapping {
     const cityLabel = document.querySelector('#grid > article > div:nth-child(2) > div > div > p')
 
     const surface = document.querySelector(
-      '#grid > article div div[data-qa-id=criteria_item_square] > div > div > span'
+      '#grid > article div div[data-qa-id=criteria_item_square] > div > div div p'
     )
-    const rooms = document.querySelector('#grid > article div div[data-qa-id=criteria_item_rooms] > div > div > span')
+    const rooms = document.querySelector('#grid > article div div[data-qa-id=criteria_item_rooms] > div > div div p')
     const furnished = document.querySelector(
-      '#grid > article div div[data-qa-id=criteria_item_furnished] > div > div > span'
+      '#grid > article div div[data-qa-id=criteria_item_furnished] > div > div div p'
     )
 
     const dpe = document.querySelector('#grid > article div div[data-qa-id=criteria_item_energy_rate] .styles_active__2SvNh')

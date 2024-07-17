@@ -8,7 +8,7 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { regexString } from '@services/helpers/regex'
 import { stringToNumber } from '@services/helpers/string-to-number'
 import { YearBuiltService } from '@services/helpers/year-built'
-import { PARTICULIER_WORD, DPE_LIST } from '@services/websites/website'
+import { PARTICULIER, DPE_LIST } from '@services/websites/website'
 import { PostalCodeFactory } from '@services/diggers/postal-code/encadrement-postal-code-factory'
 import { canHaveHouse } from '@services/filters/city-filter/can-have-house'
 export class DigService {
@@ -59,7 +59,7 @@ export class DigService {
     const CurrentPostalCodeService = new PostalCodeFactory(mainCity).currentPostalCodeService()
 
     // Order is important here
-    const postalCode = new CurrentPostalCodeService(city).getPostalCode(this.ad)
+    const postalCode = new CurrentPostalCodeService(mainCity, city).getPostalCode(this.ad)
     const CurrentAddressService = new AddressServiceFactory(city).currentAddressService()
     const [address, coordinates, blurryCoordinates] = await new CurrentAddressService(city, postalCode, this.ad).getAddress()
 
@@ -169,7 +169,7 @@ export class DigService {
 
     const renter = possibleBadRenter.includes(this.ad.renter) ? null : this.ad.renter
 
-    return renter?.match(regexString('particulier'))?.length ? PARTICULIER_WORD : cleanup.string(renter)
+    return renter?.match(regexString('particulier'))?.length ? PARTICULIER : cleanup.string(renter)
   }
 
   private digForIsHouse(): boolean {
@@ -187,7 +187,7 @@ export class DigService {
       this.ad.charges ||
       (this.ad.description?.match(regexString('charges')) &&
         cleanup.price(this.ad.description.match(regexString('charges'))[0]))
-    return +charges < 300 ? charges : null // to be defensive
+    return +charges
   }
 
   private digForHasCharges(): boolean {

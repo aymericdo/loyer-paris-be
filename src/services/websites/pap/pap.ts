@@ -2,7 +2,7 @@ import { Ad } from '@interfaces/ad'
 import { PapMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
-import { PARTICULIER_WORD, Website, WebsiteType } from '@services/websites/website'
+import { PARTICULIER, Website, WebsiteType } from '@services/websites/website'
 import { PapScrapping } from './pap.scrapping'
 
 export class Pap extends Website {
@@ -50,7 +50,7 @@ export class Pap extends Website {
       price: cleanup.price(ad.price),
       charges: cleanup.price(ad.charges),
       rooms: cleanup.number(ad.rooms),
-      renter: PARTICULIER_WORD,
+      renter: PARTICULIER,
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),
       stations: ad.stations && ad.stations.map((station) => cleanup.string(station)),

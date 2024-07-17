@@ -24,6 +24,9 @@ export class BellesDemeuresScrapping {
     const cityLabelNode = document.querySelector(
       'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemVille'
     )
+    const dpe = document.querySelector(
+      '#DpePage .diagnosticBoxActive'
+    )
 
     const features = [
       ...document.querySelectorAll('div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecs > ul > li')
@@ -71,6 +74,7 @@ export class BellesDemeuresScrapping {
       rooms: rooms?.textContent,
       surface: surface?.textContent,
       title: title?.textContent,
+      dpe: dpe?.textContent,
     }
   }
 }

@@ -11,9 +11,11 @@ import { getPriceExcludingCharges } from '@services/helpers/charges'
 import { roundNumber } from '@services/helpers/round-number'
 import { Response } from 'express'
 import { CityFilter } from '@services/filters/city-filter/city-filter'
+import { isFake } from '@services/filters/city-filter/fake'
+import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export const DPE_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-export const PARTICULIER_WORD = 'Particulier'
+export const PARTICULIER = 'Particulier'
 
 export const WEBSITE_LIST = [
   'bellesdemeures',
@@ -30,6 +32,8 @@ export const WEBSITE_LIST = [
   'pap',
   'seloger',
   'superimmo',
+  'foncia',
+  'avendrealouer'
 ] as const
 
 export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']
@@ -64,6 +68,7 @@ export abstract class Website {
 
     const cityService = new CityFilter(ad.cityLabel)
     const city: AvailableCities = cityService.findCity()
+    const mainCity: AvailableMainCities = getMainCity(city)
 
     try {
       const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
@@ -81,6 +86,7 @@ export abstract class Website {
           address: cleanAd.address,
           city: cleanAd.city,
           district: filteredResult.districtName,
+          isFake: isFake(mainCity),
           dpe: cleanAd.dpe,
           hasFurniture: cleanAd.hasFurniture,
           isHouse: cleanAd.isHouse,
