@@ -4,7 +4,14 @@ import { FUNNIEST_WEBSITES, WEBSITE_LIST } from '@services/websites/website'
 
 export class HealthCheck {
   async call() {
-    const countByWebsite = await getAdsOfTodayByWebsite()
+    const data: {
+      website: string, count: number
+    }[] = await getAdsOfTodayByWebsite()
+
+    const countByWebsite = data.reduce((prev, obj) => {
+      prev[obj.website] = obj.count
+      return prev
+    }, {})
 
     let message = 'Voici un petit récap du nombre d\'annonces sauvergardées par site aujourd\'hui :\n'
 

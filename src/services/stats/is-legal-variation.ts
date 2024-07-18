@@ -44,115 +44,91 @@ export function getIsLegalVariation(req: Request, res: Response) {
         data: {
           values: data,
         },
-        encoding: { x: { field: 'date', type: 'temporal' } },
+        transform: [
+          {
+            calculate: 'datum.illegalPercentage / 100',
+            as: 'illegalPercentageDecimal'
+          },
+          {
+            calculate: 'datetime(parseInt(split(datum.weekDate, \'-\')[0]), 0, 1 + (parseInt(split(datum.weekDate, \'-\')[1])-1)*7)',
+            as: 'date'
+          }
+        ],
         layer: [
           {
-            mark: { type: 'line', color: '#f03434', tooltip: true, size: 1 },
-            encoding: {
-              x: { field: 'date', type: 'temporal' },
-              y: {
-                field: 'percentOfTotal',
-                type: 'quantitative',
-                title: 'Pourcentage d\'annonces non conformes (rouge)',
-              },
+            mark: {
+              type: 'line',
+              interpolate: 'monotone',
+              color: '#fff',
+              size: 1,
             },
+            encoding: {
+              x: { field: 'date', type: 'temporal', title: 'Semaine' },
+              color: { 'value': '#fff' },
+              y: {
+                field: 'illegalPercentageDecimal',
+                type: 'quantitative',
+                title: 'Pourcentage non conforme (%)',
+                axis: { format: '.1%' }
+              },
+              tooltip: [
+                {
+                  field: 'date',
+                  type: 'temporal',
+                  format: 'Semaine %W-%Y',
+                  title: 'Semaine'
+                },
+                {
+                  field: 'illegalPercentageDecimal',
+                  type: 'quantitative',
+                  title: 'Pourcentage non conforme',
+                  format: '.1%'
+                },
+                { field: 'totalCount', type: 'quantitative', title: 'Total' }
+              ]
+            }
           },
           {
+            mark: {
+              type: 'line',
+              interpolate: 'monotone',
+              color: '#fdcd56',
+              size: 4,
+            },
             transform: [
               {
-                loess: 'percentOfTotal',
+                loess: 'illegalPercentageDecimal',
                 on: 'date',
-                bandwidth: 0.5,
-                as: ['date', 'smoothPercentOfTotal'],
-              },
+                bandwidth: 0.4,
+              }
             ],
-            layer: [
-              {
-                mark: {
-                  type: 'line',
-                  color: '#fdcd56',
-                  tooltip: true,
-                  size: 4,
-                },
-                encoding: {
-                  x: { field: 'date', type: 'temporal' },
-                  y: {
-                    field: 'smoothPercentOfTotal',
-                    type: 'quantitative',
-                    title: 'Pourcentage lissé (jaune) (%)',
-                  },
-                },
+            encoding: {
+              x: {
+                field: 'date',
+                type: 'temporal',
+                'axis': { format: 'Semaine %W-%Y' }
               },
-              {
-                mark: { type: 'point', fill: '#fff' },
-                transform: [{ filter: { param: 'hover', empty: false } }],
-                encoding: {
-                  x: { field: 'date', type: 'temporal' },
-                  color: { value: '#fff' },
-                  y: { field: 'smoothPercentOfTotal', type: 'quantitative' },
-                },
+              y: {
+                field: 'illegalPercentageDecimal',
+                type: 'quantitative',
               },
-              {
-                mark: 'rule',
-                transform: [
-                  {
-                    calculate: 'datum.smoothPercentOfTotal / 100',
-                    as: 'smoothPercentOfTotal0to1',
-                  },
-                ],
-                encoding: {
-                  x: { field: 'date', type: 'temporal' },
-                  opacity: {
-                    condition: { value: 0.4, param: 'hover', empty: false },
-                    value: 0,
-                  },
-                  color: { value: '#fff' },
-                  tooltip: [
-                    {
-                      field: 'smoothPercentOfTotal0to1',
-                      title: 'Pourcentage lissé ',
-                      type: 'quantitative',
-                      format: '.2%',
-                    },
-                    {
-                      field: 'date',
-                      title: 'Date ',
-                      type: 'temporal',
-                    },
-                  ],
+              tooltip: [
+                {
+                  field: 'date',
+                  type: 'temporal',
+                  format: 'Semaine %W-%Y',
+                  title: 'Semaine'
                 },
-                params: [
-                  {
-                    name: 'hover',
-                    select: {
-                      type: 'point',
-                      fields: ['date'],
-                      nearest: true,
-                      on: 'mouseover',
-                      clear: 'mouseout',
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-        transform: [
-          { timeUnit: 'yearweekday', field: 'createdAt', as: 'date' },
-          {
-            joinaggregate: [{ op: 'count', field: 'id', as: 'numberAds' }],
-            groupby: ['date'],
-          },
-          { filter: 'datum.isLegal === false' },
-          {
-            joinaggregate: [{ op: 'count', field: 'isLegal', as: 'numberIllegal' }],
-            groupby: ['date'],
-          },
-          {
-            calculate: 'datum.numberIllegal / datum.numberAds * 100',
-            as: 'percentOfTotal',
-          },
-        ],
+                {
+                  field: 'illegalPercentageDecimal',
+                  type: 'quantitative',
+                  title: 'Pourcentage lissé',
+                  format: '.1%'
+                }
+              ]
+            }
+          }
+        ]
       }
 
       res.json(vegaMap)

@@ -5,7 +5,7 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
-import { getClassicData } from '@services/db/queries/get-classic-data'
+import { getLegalPerDistrict } from '@services/db/queries/get-legal-per-district'
 import { isFake } from '@services/filters/city-filter/fake'
 
 export async function getChloroplethMap(req: Request, res: Response) {
@@ -21,34 +21,8 @@ export async function getChloroplethMap(req: Request, res: Response) {
 
   const geodata = await new DistrictsList(city as AvailableMainCities).currentGeodata()
 
-  getClassicData(city, dateRange, {}, { isLegal: 1, district: 1 })
-    .then((data: { isLegal: boolean, district: string }[]) => {
-      const reduced: {
-        [district: string]: { isLegal: number; count: number }
-      } = data.reduce((m, d: { isLegal: boolean; district: string }) => {
-        if (!m[d.district]) {
-          m[d.district] = {
-            count: 1,
-            isLegal: d.isLegal ? 1 : 0,
-          }
-        } else {
-          if (d.isLegal) {
-            m[d.district].isLegal += 1
-          }
-          m[d.district].count += 1
-        }
-        return m
-      }, {})
-
-      const result = Object.keys(reduced).map((district: string) => {
-        const value = reduced[district]
-        return {
-          district,
-          isIllegal: Math.round((1 - value.isLegal / value.count) * 100),
-          totalCount: value.count,
-        }
-      })
-
+  getLegalPerDistrict(city, dateRange)
+    .then((result: { illegalPercentage: number, isIllegalCount: number, totalCount: number, district: string }[]) => {
       const vegaMap = {
         ...Vega.commonOpt(),
         data: {
@@ -63,11 +37,11 @@ export async function getChloroplethMap(req: Request, res: Response) {
                 values: result,
               },
               key: 'district',
-              fields: ['isIllegal', 'district', 'totalCount'],
+              fields: ['illegalPercentage', 'isIllegalCount', 'district', 'totalCount'],
             },
           },
           {
-            calculate: 'datum.isIllegal / 100',
+            calculate: 'datum.illegalPercentage / 100',
             as: 'isIllegal0to1',
           },
         ],
@@ -77,7 +51,7 @@ export async function getChloroplethMap(req: Request, res: Response) {
         mark: 'geoshape',
         encoding: {
           color: {
-            field: 'isIllegal',
+            field: 'illegalPercentage',
             type: 'quantitative',
             scale: { scheme: 'reds' },
             title: 'Non conformité (%)',
@@ -93,6 +67,11 @@ export async function getChloroplethMap(req: Request, res: Response) {
               field: 'district',
               type: 'nominal',
               title: 'Quartier ',
+            },
+            {
+              field: 'isIllegalCount',
+              type: 'quantitative',
+              title: 'Nombre d\'annonces non conforme ',
             },
             {
               field: 'totalCount',
