@@ -1,15 +1,14 @@
 import { Ad } from '@interfaces/ad'
-import { LocserviceMapping } from '@interfaces/scrap-mapping'
+import { FonciaMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
-import { PARTICULIER, Website, WebsiteType } from '@services/websites/website'
-import { LocserviceScrapping } from './locservice.scrapping'
-
-export class Locservice extends Website {
-  website: WebsiteType = 'locservice'
+import { Website, WebsiteType } from '@services/websites/website'
+import { FonciaScrapping } from './foncia.scrapping'
+export class Foncia extends Website {
+  website: WebsiteType = 'foncia'
 
   async mapping(): Promise<Ad> {
-    let ad: LocserviceMapping = null
+    let ad: FonciaMapping = null
     if (!this.body.id) {
       throw {
         error: ERROR_CODE.Minimal,
@@ -17,7 +16,14 @@ export class Locservice extends Website {
       }
     }
 
-    const scrap = LocserviceScrapping.scrap(JSON.parse(this.body.data))
+    if (this.body.noMoreData) {
+      throw {
+        error: ERROR_CODE.Minimal,
+        msg: `no more data for ${this.website}/${this.body.platform}`,
+      }
+    }
+
+    const scrap = FonciaScrapping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {
@@ -35,13 +41,15 @@ export class Locservice extends Website {
       id: ad.id.toString(),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
-      hasCharges: ad.hasCharges,
-      furnished: ad.furnished,
       price: cleanup.price(ad.price),
-      renter: PARTICULIER,
+      renter: ad.renter ? cleanup.string(ad.renter) : null,
       rooms: cleanup.number(ad.rooms),
+      hasCharges: ad.hasCharges,
+      charges: cleanup.number(ad.charges),
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),
+      address: cleanup.string(ad.address),
+      dpe: cleanup.string(ad.dpe),
     }
   }
 }

@@ -9,11 +9,9 @@ export interface Body {
 export interface FacebookMapping {
   id: string
   cityLabel: string
-  address: string
   description: string
   furnished: boolean
   price: string
-  renter: string
   rooms: string
   surface: string
   title: string
@@ -76,6 +74,36 @@ export interface OrpiMapping {
   title: string
 }
 
+export interface FonciaMapping {
+  id: string
+  charges: string
+  cityLabel: string
+  description: string
+  dpe: string | null
+  hasCharges: boolean
+  price: string
+  renter: string
+  rooms: string
+  surface: string
+  title: string
+  address: string
+}
+
+export interface AvendrealouerMapping {
+  id: string
+  charges: string
+  cityLabel: string
+  description: string
+  furnished: boolean
+  hasCharges: boolean
+  price: string
+  renter: string
+  rooms: string
+  surface: string
+  title: string
+  yearBuilt: string
+}
+
 export interface PapMapping {
   id: string
   cityLabel: string
@@ -126,6 +154,8 @@ export interface LuxResidenceMapping {
   price: string
   renter: string
   surface: string
+  dpe: string
+  charges: string
 }
 
 export interface BellesDemeuresMapping {
@@ -139,6 +169,7 @@ export interface BellesDemeuresMapping {
   rooms: string
   renter: string
   surface: string
+  dpe: string
 }
 
 export interface BienIciMapping {

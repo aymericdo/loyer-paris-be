@@ -10,6 +10,7 @@ interface SavedInfo {
   city: AvailableCities
   hasFurniture?: boolean
   isHouse?: boolean
+  isFake?: boolean
   isLegal: boolean
   latitude?: number
   longitude?: number
@@ -48,6 +49,9 @@ export class SaveRentService {
       ...(this.adToSave.dpe != null && {
         dpe: this.adToSave.dpe,
       }),
+      ...(this.adToSave.isFake != null && {
+        isFake: this.adToSave.isFake,
+      }),
       ...(this.adToSave.address != null && {
         address: this.adToSave.address,
       }),
@@ -66,7 +70,9 @@ export class SaveRentService {
       ...(this.adToSave.longitude != null && {
         longitude: this.adToSave.longitude,
       }),
-      ...(this.adToSave.renter != null && { renter: this.adToSave.renter }),
+      ...(this.adToSave.renter != null && {
+        renter: this.adToSave.renter,
+      }),
       ...(this.adToSave.roomCount != null && {
         roomCount: this.adToSave.roomCount,
       }),

@@ -1,19 +1,21 @@
 import { Ad } from '@interfaces/ad'
-import { AvailableCities } from '@services/filters/city-filter/city-list'
+import { AvailableCities, AvailableMainCities, getCityList } from '@services/filters/city-filter/city-list'
+import { postalCodes } from '@services/filters/city-filter/postal-codes'
 
 export class PostalCodeDefault {
-  protected postalCodePossibilities: { [city: string]: { postalCodes: string[], regex: RegExp[] } } = null
+  private mainCity: AvailableMainCities
   private city: AvailableCities | 'all'
 
-  constructor(city: AvailableCities | 'all') {
+  constructor(mainCity: AvailableMainCities, city: AvailableCities | 'all') {
+    this.mainCity = mainCity
     this.city = city
   }
 
   getPostalCodePossibilities(): string[] {
     if (this.city === 'all') {
-      return Object.keys(this.postalCodePossibilities).flatMap(city => this.postalCodePossibilities[city].postalCodes)
+      return getCityList(this.mainCity).flatMap(city => postalCodes(city).postalCodes)
     } else {
-      return this.postalCodePossibilities[this.city].postalCodes
+      return postalCodes(this.city).postalCodes
     }
   }
 
@@ -24,7 +26,7 @@ export class PostalCodeDefault {
   }
 
   protected digForPostalCode(city: AvailableCities, ad: Ad): string {
-    const postalCodePossibilities: string[] = this.postalCodePossibilities[city].postalCodes as unknown as string[]
+    const postalCodePossibilities: string[] = postalCodes(city).postalCodes as unknown as string[]
     if (postalCodePossibilities?.length === 1) {
       return postalCodePossibilities[0]
     }
@@ -40,7 +42,7 @@ export class PostalCodeDefault {
   }
 
   protected digForPostalCode1(city: AvailableCities, text: string): string {
-    const postalCodeRe = new RegExp(this.postalCodePossibilities[city].regex[0])
+    const postalCodeRe = new RegExp(postalCodes(city).regex[0])
     return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
   }
 

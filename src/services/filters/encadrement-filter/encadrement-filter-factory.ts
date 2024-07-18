@@ -6,6 +6,7 @@ import { FilterLyon } from './filter-lyon'
 import { FilterMontpellier } from './filter-montpellier'
 import { FilterParis } from './filter-paris'
 import { FilterPlaineCommune } from './filter-plaine-commune'
+import { FilterFakes } from '@services/filters/encadrement-filter/filter-fakes'
 
 export class EncadrementFilterFactory {
   mainCity: AvailableMainCities
@@ -30,6 +31,8 @@ export class EncadrementFilterFactory {
         return FilterMontpellier
       case 'bordeaux':
         return FilterBordeaux
+      default:
+        return FilterFakes
     }
   }
 }

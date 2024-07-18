@@ -2,7 +2,7 @@ import { Ad } from '@interfaces/ad'
 import { FacebookMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
-import { PARTICULIER_WORD, Website, WebsiteType } from '@services/websites/website'
+import { PARTICULIER, Website, WebsiteType } from '@services/websites/website'
 import { FacebookScrapping } from './facebook.scrapping'
 export class Facebook extends Website {
   website: WebsiteType = 'facebook'
@@ -39,12 +39,11 @@ export class Facebook extends Website {
 
     return {
       id: ad.id.toString(),
-      address: cleanup.string(ad.address),
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
       furnished: ad.furnished,
       price: cleanup.price(ad.price),
-      renter: ad.renter ? cleanup.string(ad.renter) : PARTICULIER_WORD,
+      renter: PARTICULIER,
       rooms: cleanup.number(ad.rooms),
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),

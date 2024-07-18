@@ -10,15 +10,15 @@ export class LefigaroScrapping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const title = document.querySelector('div.main-classified > div > section > h1#classified-main-infos')
+    const title = document.querySelector('#classified-main-infos')
 
-    const description = document.querySelector('div.main-classified > div > section > div.classified-description > p')
-    const price = document.querySelector('div.main-classified > div > section > div.classified-price')
+    const description = document.querySelector('.classified-description > p')
+    const price = document.querySelector('.classified-price')
     const charges = document.querySelector(
       'div.main-classified > div > div.classified-about-price > ul > li:nth-child(1) > span.about-price-fees-label'
     )
-    const hasCharges = document.querySelector('div.main-classified > div > section > div.classified-price > span')
-    const cityLabel = document.querySelector('div.main-classified > div > section > h1 > span')
+    const hasCharges = document.querySelector('.classified-price .fees')
+    const cityLabel = title?.querySelector('span')
     const renter = document.querySelector(
       '#middle-inquiry > div.classifieds-about-agency > div > div.agency__desc > strong'
     )
@@ -32,7 +32,7 @@ export class LefigaroScrapping {
     let rooms = null
 
     features.forEach((feature) => {
-      if (feature.textContent.match(/m²/g)) {
+      if (feature.textContent.match(/m².*surface/g)) {
         surface = feature
       } else if (feature.textContent.match(/pièce/g)) {
         rooms = feature
@@ -41,7 +41,7 @@ export class LefigaroScrapping {
       }
     })
 
-    const dpe = document.querySelector('div.container-dpe > div.pointer')
+    const dpe = document.querySelector('div.container-dpe .dpe-list > .active')
 
     if (!title) {
       return null
@@ -58,7 +58,7 @@ export class LefigaroScrapping {
       hasCharges: hasCharges && !!hasCharges.textContent,
       description: description && description.textContent,
       dpe: dpe?.textContent,
-      furnished: furnished && furnished.textContent,
+      furnished: furnished?.textContent,
       price: price && price.textContent,
       renter: renter && renter.textContent,
       rooms: rooms && rooms.textContent,

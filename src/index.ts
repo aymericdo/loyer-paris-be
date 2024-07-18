@@ -68,6 +68,8 @@ app.use('/bienici', require('./api/websites/bienici.controller'))
 app.use('/fnaim', require('./api/websites/fnaim.controller'))
 app.use('/superimmo', require('./api/websites/superimmo.controller'))
 app.use('/locservice', require('./api/websites/locservice.controller'))
+app.use('/foncia', require('./api/websites/foncia.controller'))
+app.use('/avendrealouer', require('./api/websites/avendrealouer.controller'))
 
 app.use('/stats', require('./api/stats.controller'))
 

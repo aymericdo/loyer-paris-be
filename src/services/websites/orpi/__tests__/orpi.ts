@@ -55,6 +55,7 @@ describe('orpi', () => {
           maxAuthorized: { order: 7, value: 389.78 },
           promoPercentage: { order: 8, value: 26.46 },
         },
+        isFake: false,
         isLegal: false,
         moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
@@ -104,6 +105,7 @@ describe('orpi', () => {
           maxAuthorized: { order: 7, value: 374.36 },
           promoPercentage: { order: 8, value: 19.49 },
         },
+        isFake: false,
         isLegal: false,
         moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })

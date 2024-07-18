@@ -6,12 +6,19 @@ import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
 import { getClassicData } from '@services/db/queries/get-classic-data'
+import { isFake } from '@services/filters/city-filter/fake'
 
 export async function getChloroplethMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
   const city: AvailableMainCities = req.params.city as AvailableMainCities
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
+
+  if (isFake(city)) {
+    res.status(403).json({ message: 'City params not valid' })
+    return
+  }
+
   const geodata = await new DistrictsList(city as AvailableMainCities).currentGeodata()
 
   getClassicData(city, dateRange, {}, { isLegal: 1, district: 1 })

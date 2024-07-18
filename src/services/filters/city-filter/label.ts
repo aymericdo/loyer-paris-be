@@ -31,6 +31,7 @@ export const label = (city: AvailableMainCities | AvailableCities): string => {
     case 'romainville': return 'Romainville'
     case 'hellemmes': return 'Hellemmes-Lille'
     case 'lomme': return 'Lomme'
+    case 'la rochelle': return 'La Rochelle'
     default: return capitalizeFirstLetter(city)
   }
 }

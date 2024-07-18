@@ -1,45 +1,9 @@
-import {
-  BordeauxAddress,
-  EstEnsembleAddress,
-  LilleAddress,
-  LyonAddress,
-  MontpellierAddress,
-  ParisAddress,
-  PlaineCommuneAddress,
-} from '@db/db'
 import { Ad } from '@interfaces/ad'
-import { Coordinate, AddressItem, DefaultAddressItemDB, AddressItemDB } from '@interfaces/shared'
-import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
+import { Coordinate, AddressItem, DefaultAddressItemDB } from '@interfaces/shared'
+import { AvailableCities } from '@services/filters/city-filter/city-list'
 import { regexString } from '@services/helpers/regex'
 import * as cleanup from '@services/helpers/cleanup'
-
-export const dbMapping = {
-  paris: ParisAddress,
-  lyon: LyonAddress,
-  lille: LilleAddress,
-  plaineCommune: PlaineCommuneAddress,
-  estEnsemble: EstEnsembleAddress,
-  montpellier: MontpellierAddress,
-  bordeaux: BordeauxAddress,
-}
-
-export abstract class AddressService {
-  abstract getAddress(): Promise<[string, Coordinate, Coordinate]>
-
-  static async getAddresses(city: AvailableCities, query: string): Promise<AddressItemDB[]> {
-    const addressDb = dbMapping[getMainCity(city)]
-    return (await addressDb
-      .find(
-        {
-          $text: { $search: query },
-        },
-        { score: { $meta: 'textScore' } }
-      )
-      .sort({ score: { $meta: 'textScore' } })
-      .limit(5)
-      .lean()) as DefaultAddressItemDB[]
-  }
-}
+import { AddressService } from '@services/diggers/address/address-service'
 
 export class AddressDefault implements AddressService {
   private city: AvailableCities
@@ -130,7 +94,7 @@ export class AddressDefault implements AddressService {
     return result
       ? result.map((r: DefaultAddressItemDB) => ({
         item: {
-          address: `${r.numero} ${r.nom_voie}`,
+          address: `${r.numero ? r.numero : ''} ${r.nom_voie}`,
           postalCode: r.code_postal.toString(),
           coordinate: {
             lng: +r.geometry?.coordinates[0],

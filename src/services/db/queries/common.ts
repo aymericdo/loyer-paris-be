@@ -1,4 +1,4 @@
-import { AvailableMainCities, AvailableCities, getCitiesFromMainCity, AvailableCityZones } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities, AvailableCities, getCitiesFromMainCity, AvailableCityZones, fakeCities } from '@services/filters/city-filter/city-list'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'
 
 export function getClassicWebsiteFilter(): { website: { $nin: typeof FUNNIEST_WEBSITES } } {
@@ -11,8 +11,8 @@ export function getWebsiteFilter(website?: string): { website: string | { $nin: 
   return { website: { $nin: FUNNIEST_WEBSITES } }
 }
 
-export function getCityFilter(mainCity: AvailableMainCities | 'all'): { city: { $in: AvailableCities[] } } | Record<string, never> {
-  if (!mainCity || mainCity === 'all') return {}
+export function getCityFilter(mainCity: AvailableMainCities | 'all'): { city: { $in: AvailableCities[] } } | { city: { $nin: string[] } } | Record<string, never> {
+  if (!mainCity || mainCity === 'all') return { city: { $nin: fakeCities } }
 
   const cities = getCitiesFromMainCity(mainCity)
   return { city: { '$in': cities } }
