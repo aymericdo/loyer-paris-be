@@ -68,7 +68,7 @@ export function getIsLegalVariation(req: Request, res: Response) {
               y: {
                 field: 'illegalPercentageDecimal',
                 type: 'quantitative',
-                title: 'Pourcentage illégal (%)',
+                title: 'Pourcentage non conforme (%)',
                 axis: { format: '.1%' }
               },
               tooltip: [
@@ -81,7 +81,7 @@ export function getIsLegalVariation(req: Request, res: Response) {
                 {
                   field: 'illegalPercentageDecimal',
                   type: 'quantitative',
-                  title: 'Pourcentage illégal',
+                  title: 'Pourcentage non conforme',
                   format: '.1%'
                 },
                 { field: 'totalCount', type: 'quantitative', title: 'Total' }
