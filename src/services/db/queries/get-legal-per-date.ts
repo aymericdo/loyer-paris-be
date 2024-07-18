@@ -105,6 +105,11 @@ export async function getLegalPerDate(
         }
       }
     },
+    {
+      $match: {
+        totalCount: { $gte: 10 }
+      }
+    },
     { $sort: { weekDate: 1 } }
   ]
 
