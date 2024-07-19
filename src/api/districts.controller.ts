@@ -1,5 +1,5 @@
 import { DataGouvAddressItem } from '@interfaces/address'
-import { AddressService } from '@services/diggers/address/address-service'
+import { AddressService } from '@services/diggers/address-service'
 import { DistrictsList } from '@services/districts/districts-list'
 import { AvailableMainCities, AvailableCities, mainCityList } from '@services/filters/city-filter/city-list'
 import { isFake } from '@services/filters/city-filter/fake'

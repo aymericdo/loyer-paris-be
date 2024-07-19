@@ -4,7 +4,7 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import { getClassicData } from '@services/db/queries/get-classic-data'
-import { PostalCodeService } from '@services/diggers/postal-code/postal-code-service'
+import { PostalCodeService } from '@services/diggers/postal-code-service'
 
 export function getPriceDifference(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} priceDifference`, 'blue')
