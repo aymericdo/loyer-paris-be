@@ -4,7 +4,7 @@ import { postalCodes } from '@services/filters/city-filter/postal-codes'
 
 export class PostalCodeDefault {
   private mainCity: AvailableMainCities
-  private city: AvailableCities | 'all'
+  protected city: AvailableCities | 'all'
 
   constructor(mainCity: AvailableMainCities, city: AvailableCities | 'all') {
     this.mainCity = mainCity
@@ -20,33 +20,33 @@ export class PostalCodeDefault {
   }
 
   getPostalCode(ad: Ad): string {
-    if (this.city !== 'all') {
-      return ad.postalCode || this.digForPostalCode(this.city, ad)
-    }
+    return ad.postalCode || this.digForPostalCode(ad)
   }
 
-  protected digForPostalCode(city: AvailableCities, ad: Ad): string {
-    const postalCodePossibilities: string[] = postalCodes(city).postalCodes as unknown as string[]
+  protected digForPostalCode(ad: Ad): string {
+    const postalCodePossibilities: string[] = this.getPostalCodePossibilities()
     if (postalCodePossibilities?.length === 1) {
       return postalCodePossibilities[0]
     }
 
     const postalCode =
-      (ad.cityLabel && (this.digForPostalCode1(city, ad.cityLabel) || this.digForPostalCode2(city, ad.cityLabel))) ||
-      (ad.title && (this.digForPostalCode1(city, ad.title) || this.digForPostalCode2(city, ad.title))) ||
+      (ad.cityLabel && (this.digForPostalCode1(ad.cityLabel) || this.digForPostalCode2(ad.cityLabel))) ||
+      (ad.title && (this.digForPostalCode1(ad.title) || this.digForPostalCode2(ad.title))) ||
       (ad.description &&
-        (this.digForPostalCode1(city, ad.description) || this.digForPostalCode2(city, ad.description))) ||
+        (this.digForPostalCode1(ad.description) || this.digForPostalCode2(ad.description))) ||
       (postalCodePossibilities[0].endsWith('000') && postalCodePossibilities[0])
 
     return postalCode && postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
   }
 
-  protected digForPostalCode1(city: AvailableCities, text: string): string {
-    const postalCodeRe = new RegExp(postalCodes(city).regex[0])
+  protected digForPostalCode1(text: string): string {
+    if (this.city === 'all') return null
+
+    const postalCodeRe = new RegExp(postalCodes(this.city).regex[0])
     return text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
   }
 
-  protected digForPostalCode2(_city: AvailableCities, _text: string): string {
+  protected digForPostalCode2(_text: string): string {
     return null
   }
 }
