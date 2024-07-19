@@ -44,7 +44,7 @@ async function getAddresses(req: Request, res: Response) {
   const city: AvailableCities = req.query.city.toString() as AvailableCities
   const addressQuery = req.query.q.toString()
 
-  if (addressQuery.length < 2) {
+  if (addressQuery.trim().length < 4) {
     res.json([])
     return
   }

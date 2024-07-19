@@ -9,6 +9,8 @@ export abstract class AddressService {
   abstract getAddress(): Promise<[string, Coordinate, Coordinate]>
 
   static async getAddresses(city: AvailableCities, query: string): Promise<DataGouvAddressItem[]> {
+    if (query.trim().length < 4) return []
+
     const limit = 5
 
     try {
