@@ -45,7 +45,7 @@ export class PostalCodeService {
     const regexs = postalCodes(this.city).regex
 
     let postalCodeRe = new RegExp(regexs[0])
-    const res = text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
+    let res = text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
 
     if (res) {
       return res
@@ -58,9 +58,9 @@ export class PostalCodeService {
       // get '75' for '75011'
       const startOfPostalCode = this.getPostalCodePossibilities()[0].slice(0, 2)
 
-      return match ? (match.length === 1 ? `${startOfPostalCode}00${match}` : `${startOfPostalCode}0${match}`) : null
+      res = match ? (match.length === 1 ? `${startOfPostalCode}00${match}` : `${startOfPostalCode}0${match}`) : null
     }
 
-    return null
+    return res
   }
 }
