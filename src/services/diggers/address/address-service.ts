@@ -1,26 +1,17 @@
-import {
-  BordeauxAddress,
-  EstEnsembleAddress,
-  LilleAddress,
-  LyonAddress,
-  MontpellierAddress,
-  ParisAddress,
-  PlaineCommuneAddress,
-} from '@db/db'
 import { DataGouvAddress } from '@interfaces/address'
-import { Coordinate, AddressItemDB, DefaultAddressItemDB } from '@interfaces/shared'
-import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
+import { Coordinate, AddressItemDB } from '@interfaces/shared'
+import { AvailableCities } from '@services/filters/city-filter/city-list'
 import axios from 'axios'
 
-const dbMapping = {
-  paris: ParisAddress,
-  lyon: LyonAddress,
-  lille: LilleAddress,
-  plaineCommune: PlaineCommuneAddress,
-  estEnsemble: EstEnsembleAddress,
-  montpellier: MontpellierAddress,
-  bordeaux: BordeauxAddress,
-}
+// const dbMapping = {
+//   paris: ParisAddress,
+//   lyon: LyonAddress,
+//   lille: LilleAddress,
+//   plaineCommune: PlaineCommuneAddress,
+//   estEnsemble: EstEnsembleAddress,
+//   montpellier: MontpellierAddress,
+//   bordeaux: BordeauxAddress,
+// }
 
 export abstract class AddressService {
   abstract getAddress(): Promise<[string, Coordinate, Coordinate]>
