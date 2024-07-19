@@ -28,3 +28,7 @@ export interface DataGouvAddress {
   'version': 'draft',
   'features': DataGouvAddressItem[],
 }
+
+export interface FinalDataGouvAddressItem extends DataGouvAddressItem {
+  districtName: string | null;
+}

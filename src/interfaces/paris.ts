@@ -37,37 +37,3 @@ export interface ParisDistrictItem {
     [DISPLAY_ZONE_FIELD]: string
   }
 }
-
-export interface ParisAddressItem {
-  datasetid: 'adresse_paris'
-  recordid: string
-  record_timestamp: string
-  geometry: {
-    type: 'Point'
-    coordinates: [number, number]
-  }
-  fields: {
-    n_sq_ad: number
-    l_adr: string
-    a_nvoie: number
-    objectid: number
-    n_sq_vo: number
-    l_nvoie: string
-    b_offstdf: string
-    geom_x_y: [number, number]
-    geom: {
-      type: 'Point'
-      coordinates: [number, number]
-    }
-    n_sq_ar: number
-    b_hors75: string
-    b_angle: string
-    n_voie: number
-    c_ar: number
-  }
-}
-
-export interface ParisAddressItemDB extends ParisAddressItem {
-  score: number;
-  districtName: string | null;
-}

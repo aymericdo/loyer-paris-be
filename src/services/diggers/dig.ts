@@ -1,6 +1,5 @@
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
-import { AddressServiceFactory } from '@services/diggers/address/address-factory'
 import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
@@ -9,8 +8,9 @@ import { regexString } from '@services/helpers/regex'
 import { stringToNumber } from '@services/helpers/string-to-number'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { PARTICULIER, DPE_LIST } from '@services/websites/website'
-import { PostalCodeFactory } from '@services/diggers/postal-code/encadrement-postal-code-factory'
 import { canHaveHouse } from '@services/filters/city-filter/can-have-house'
+import { AddressService } from '@services/diggers/address-service'
+import { PostalCodeService } from '@services/diggers/postal-code-service'
 export class DigService {
   ad: Ad = null
 
@@ -56,12 +56,10 @@ export class DigService {
 
   private async digForAddress(city: AvailableCities): Promise<[string, string, string[], Coordinate, Coordinate]> {
     const mainCity = getMainCity(city)
-    const CurrentPostalCodeService = new PostalCodeFactory(mainCity).currentPostalCodeService()
 
     // Order is important here
-    const postalCode = new CurrentPostalCodeService(mainCity, city).getPostalCode(this.ad)
-    const CurrentAddressService = new AddressServiceFactory(city).currentAddressService()
-    const [address, coordinates, blurryCoordinates] = await new CurrentAddressService(city, postalCode, this.ad).getAddress()
+    const postalCode = new PostalCodeService(mainCity, city).getPostalCode(this.ad)
+    const [address, coordinates, blurryCoordinates] = await new AddressService(city, postalCode, this.ad).getAddress()
 
     const stations = this.ad.stations
 
