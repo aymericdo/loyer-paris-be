@@ -26,21 +26,21 @@ export abstract class AddressService {
   abstract getAddress(): Promise<[string, Coordinate, Coordinate]>
 
   static async getAddresses(city: AvailableCities, query: string): Promise<AddressItemDB[]> {
-    const addressDb = dbMapping[getMainCity(city)]
+    // const addressDb = dbMapping[getMainCity(city)]
     const limit = 5
 
-    if (addressDb) {
-      return (await addressDb
-        .find(
-          {
-            $text: { $search: query },
-          },
-          { score: { $meta: 'textScore' } }
-        )
-        .sort({ score: { $meta: 'textScore' } })
-        .limit(limit)
-        .lean()) as DefaultAddressItemDB[]
-    }
+    // if (addressDb) {
+    //   return (await addressDb
+    //     .find(
+    //       {
+    //         $text: { $search: query },
+    //       },
+    //       { score: { $meta: 'textScore' } }
+    //     )
+    //     .sort({ score: { $meta: 'textScore' } })
+    //     .limit(limit)
+    //     .lean()) as DefaultAddressItemDB[]
+    // }
 
     const result = await axios.get(`https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&autocomplete=1`)
     const dataGouv: DataGouvAddress = result.data
