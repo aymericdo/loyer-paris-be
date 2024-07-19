@@ -3,10 +3,12 @@ import { Coordinate, AddressItem } from '@interfaces/shared'
 import { AvailableCities } from '@services/filters/city-filter/city-list'
 import { regexString } from '@services/helpers/regex'
 import * as cleanup from '@services/helpers/cleanup'
-import { AddressService } from '@services/diggers/address/address-service'
-import { DataGouvAddressItem } from '@interfaces/address'
+import { DataGouvAddress, DataGouvAddressItem } from '@interfaces/address'
+import axios from 'axios'
+import { codeInsee } from '@services/filters/city-filter/code-insee'
+import { PrettyLog } from '@services/helpers/pretty-log'
 
-export class AddressDefault implements AddressService {
+export class AddressService {
   private city: AvailableCities
   private postalCode: string
   private ad: Ad
@@ -17,6 +19,20 @@ export class AddressDefault implements AddressService {
     this.city = city
     this.postalCode = postalCode
     this.ad = ad
+  }
+
+  static async getAddresses(city: AvailableCities, query: string): Promise<DataGouvAddressItem[]> {
+    if (query.trim().length < 4) return []
+
+    const limit = 5
+
+    try {
+      const result = await axios.get(`https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${codeInsee(city)}&autocomplete=1`)
+      const dataGouv: DataGouvAddress = result.data
+      return dataGouv.features
+    } catch (error) {
+      PrettyLog.call(JSON.stringify(error), 'red')
+    }
   }
 
   async getAddress(): Promise<[string, Coordinate, Coordinate]> {
@@ -58,10 +74,7 @@ export class AddressDefault implements AddressService {
         this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
         return result[0].streetNumber
           ? cleanup.string(result[0].item.address).replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
-          : cleanup
-            .string(result[0].item.address)
-            .replace(/^\d+(b|t)?/g, '')
-            .trim()
+          : cleanup.string(result[0].item.address).replace(/^\d+(b|t)?/g, '').trim()
       } else {
         return null
       }
