@@ -47,7 +47,11 @@ export class PostalCodeService {
     let postalCodeRe = new RegExp(regexs[0])
     const res = text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
 
-    if (!res && haveArrondissements(this.city) && regexs.length > 1) {
+    if (res) {
+      return res
+    }
+
+    if (haveArrondissements(this.city) && regexs.length > 1) {
       postalCodeRe = new RegExp(regexs[1])
       const match = text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
 
@@ -55,8 +59,8 @@ export class PostalCodeService {
       const startOfPostalCode = this.getPostalCodePossibilities()[0].slice(0, 2)
 
       return match ? (match.length === 1 ? `${startOfPostalCode}00${match}` : `${startOfPostalCode}0${match}`) : null
-    } else {
-      return null
     }
+
+    return null
   }
 }
