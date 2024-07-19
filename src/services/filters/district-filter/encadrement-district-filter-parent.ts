@@ -1,4 +1,5 @@
-import { AddressItemDB, Coordinate, DefaultAddressItemDB, DistrictItem } from '@interfaces/shared'
+import { DataGouvAddressItem, FinalDataGouvAddressItem } from '@interfaces/address'
+import { Coordinate, DistrictItem } from '@interfaces/shared'
 import { AvailableCities, AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export class DistrictFilterParent {
@@ -26,15 +27,11 @@ export class DistrictFilterParent {
     return null
   }
 
-  buildItem(district: DistrictItem, elem: AddressItemDB): DefaultAddressItemDB {
+  buildItem(district: DistrictItem, elem: DataGouvAddressItem): FinalDataGouvAddressItem {
     return {
       ...elem,
       districtName: district ? this.digZoneInProperties(district['properties']) : null,
-      fields: {
-        l_adr: `${(elem as DefaultAddressItemDB).numero}${(elem as DefaultAddressItemDB).rep || ''} `+
-          `${(elem as DefaultAddressItemDB).nom_voie} (${(elem as DefaultAddressItemDB).code_postal})`,
-      },
-    } as DefaultAddressItemDB
+    } as FinalDataGouvAddressItem
   }
 
   buildGroupBy(_elem: string): string {

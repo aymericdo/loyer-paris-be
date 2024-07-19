@@ -4,7 +4,7 @@ import {  BordeauxDistrictItem, BordeauxEncadrementItem } from './bordeaux'
 import { EstEnsembleDistrictItem, EstEnsembleEncadrementItem } from './est-ensemble'
 import { LyonDistrictItem, LyonEncadrementItem } from './lyon'
 import { MontpellierEncadrementItem } from './montpellier'
-import { ParisAddressItemDB, ParisDistrictItem, ParisEncadrementItem } from './paris'
+import { ParisDistrictItem, ParisEncadrementItem } from './paris'
 import { PlaineCommuneDistrictItem, PlaineCommuneEncadrementItem } from './plaine-commune'
 import { LilleEncadrementItem } from '@interfaces/lille'
 
@@ -27,38 +27,6 @@ export interface AddressItem {
   coordinate: Coordinate
 }
 
-interface DefaultAddressItem {
-  id: string
-  numero: string
-  rep: string
-  nom_voie: string
-  code_postal: string
-  code_insee: string
-  nom_commune: string
-  code_insee_ancienne_commune: string
-  nom_ancienne_commune: string
-  x: string
-  y: string
-  lon: string
-  lat: string
-  libelle_acheminement: string
-  nom_afnor: string
-  source_position: string
-  source_nom_voie: string
-  geometry: {
-    type: 'Point'
-    coordinates: [number, number]
-  }
-}
-
-export interface DefaultAddressItemDB extends DefaultAddressItem {
-  score: number;
-  districtName: string | null;
-  fields: {
-    l_adr: string
-  }
-}
-
 export interface DefaultEncadrementItem {
   zone: number;
   meuble: boolean;
@@ -77,8 +45,6 @@ export interface DefaultDistrictItem {
   }
   geometry: { type: 'MultiPolygon'; coordinates: number[][][] }
 }
-
-export type AddressItemDB = DefaultAddressItemDB | ParisAddressItemDB
 
 export type DistrictItem = DefaultDistrictItem | ParisDistrictItem | PlaineCommuneDistrictItem | EstEnsembleDistrictItem | LyonDistrictItem | BordeauxDistrictItem
 

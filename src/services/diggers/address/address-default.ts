@@ -1,9 +1,10 @@
 import { Ad } from '@interfaces/ad'
-import { Coordinate, AddressItem, DefaultAddressItemDB } from '@interfaces/shared'
+import { Coordinate, AddressItem } from '@interfaces/shared'
 import { AvailableCities } from '@services/filters/city-filter/city-list'
 import { regexString } from '@services/helpers/regex'
 import * as cleanup from '@services/helpers/cleanup'
 import { AddressService } from '@services/diggers/address/address-service'
+import { DataGouvAddressItem } from '@interfaces/address'
 
 export class AddressDefault implements AddressService {
   private city: AvailableCities
@@ -89,19 +90,19 @@ export class AddressDefault implements AddressService {
       return null
     }
 
-    const result: DefaultAddressItemDB[] = await AddressService.getAddresses(city, query) as DefaultAddressItemDB[]
+    const result: DataGouvAddressItem[] = await AddressService.getAddresses(city, query)
 
     return result
-      ? result.map((r: DefaultAddressItemDB) => ({
+      ? result.map((r: DataGouvAddressItem) => ({
         item: {
-          address: `${r.numero ? r.numero : ''} ${r.nom_voie}`,
-          postalCode: r.code_postal.toString(),
+          address: r.properties.name,
+          postalCode: r.properties.postcode,
           coordinate: {
             lng: +r.geometry?.coordinates[0],
             lat: +r.geometry?.coordinates[1],
           },
         },
-        score: r.score,
+        score: r.properties.score,
         streetNumber: cleanup.streetNumber(query)?.toString(),
       }))
       : []

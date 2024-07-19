@@ -1,4 +1,4 @@
-import { AddressItemDB } from '@interfaces/shared'
+import { DataGouvAddressItem } from '@interfaces/address'
 import { AddressService } from '@services/diggers/address/address-service'
 import { DistrictsList } from '@services/districts/districts-list'
 import { AvailableMainCities, AvailableCities, mainCityList } from '@services/filters/city-filter/city-list'
@@ -49,7 +49,7 @@ async function getAddresses(req: Request, res: Response) {
     return
   }
 
-  let data: AddressItemDB[] = await AddressService.getAddresses(city, addressQuery) as AddressItemDB[]
+  let data: DataGouvAddressItem[] = await AddressService.getAddresses(city, addressQuery)
 
   if (isFake(mainCity)) {
     res.json(data)
@@ -59,7 +59,7 @@ async function getAddresses(req: Request, res: Response) {
   const CurrentDistrictFilter = new DistrictFilterFactory(mainCity).currentDistrictFilter()
 
   // Add [districtName] to all elements
-  data = await Promise.all(data.map(async (elem: AddressItemDB) => {
+  data = await Promise.all(data.map(async (elem: DataGouvAddressItem) => {
     const currentDistrictFilter = new CurrentDistrictFilter({
       coordinates: {
         lng: elem.geometry.coordinates[0],
@@ -69,7 +69,7 @@ async function getAddresses(req: Request, res: Response) {
 
     const district = await currentDistrictFilter.getFirstDistrict()
     return currentDistrictFilter.buildItem(district, elem)
-  })) as AddressItemDB[]
+  })) as DataGouvAddressItem[]
 
   res.json(data)
 }
