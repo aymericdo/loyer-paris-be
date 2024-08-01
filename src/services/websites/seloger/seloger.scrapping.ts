@@ -82,7 +82,7 @@ export class SelogerScrapping {
       return el.textContent.match(/^Année de construction/g)
     })
 
-    const basicFeatures = document.querySelectorAll('[data-test="basic-features"] > div')
+    const basicFeatures = [...document.querySelectorAll('[data-test="basic-features"] > div')]
     if (!yearBuilt) {
       yearBuilt = basicFeatures?.find((el) => {
         return el.textContent.match(/^Construit en/g)
@@ -115,16 +115,16 @@ export class SelogerScrapping {
       id: null,
       cityLabel: cityLabelText,
       charges,
-      description: description && description.textContent,
+      description: description?.textContent,
       furnished,
       hasCharges: price && price.textContent.includes('CC'),
-      price: price && price.textContent,
+      price: price?.textContent,
       renter: isParticulier ? PARTICULIER : renter ? renter.textContent : null,
-      rooms: rooms && rooms.textContent,
-      surface: surface && surface.textContent,
-      yearBuilt: yearBuilt && yearBuilt.textContent,
-      title: title && title.textContent,
-      dpe: dpeElem && dpeElem.textContent,
+      rooms: rooms?.textContent,
+      surface: surface?.textContent,
+      yearBuilt: yearBuilt?.textContent,
+      title: title?.textContent,
+      dpe: dpeElem?.textContent,
     }
   }
 }
