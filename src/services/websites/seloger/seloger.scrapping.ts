@@ -78,9 +78,16 @@ export class SelogerScrapping {
       return el.textContent.match(/^Meublé/g)
     })
 
-    const yearBuilt = optionsSection?.find((el) => {
+    let yearBuilt = optionsSection?.find((el) => {
       return el.textContent.match(/^Année de construction/g)
     })
+
+    const basicFeatures = document.querySelectorAll('[data-test="basic-features"] > div')
+    if (!yearBuilt) {
+      yearBuilt = basicFeatures?.find((el) => {
+        return el.textContent.match(/^Construit en/g)
+      })
+    }
 
     let isParticulier = false
 

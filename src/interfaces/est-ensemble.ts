@@ -1,7 +1,7 @@
-import { DefaultDistrictItem } from '@interfaces/shared'
+import { DefaultEncadrementItem } from '@interfaces/shared'
 import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
 
-export interface EstEnsembleEncadrementItem extends DefaultDistrictItem {
+export interface EstEnsembleEncadrementItem extends DefaultEncadrementItem {
   maison: boolean
 }
 
