@@ -32,6 +32,7 @@ export class AddressService {
       return dataGouv.features
     } catch (error) {
       PrettyLog.call(JSON.stringify(error), 'red')
+      throw error
     }
   }
 

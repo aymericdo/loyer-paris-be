@@ -40,7 +40,7 @@ export class ApiErrorsService {
           PrettyLog.call(this.error.msg, 'yellow')
           break
         default: {
-          const errorMsg = `${ERROR500_MSG} ${this.error?.stack || this.error}`
+          const errorMsg = `${ERROR500_MSG} ${this.error?.stack || JSON.stringify(this.error)}`
           PrettyLog.call(errorMsg, 'red')
         }
       }

@@ -49,7 +49,13 @@ async function getAddresses(req: Request, res: Response) {
     return
   }
 
-  let data: DataGouvAddressItem[] = await AddressService.getAddresses(city, addressQuery)
+  let data: DataGouvAddressItem[] = []
+  try {
+    data = await AddressService.getAddresses(city, addressQuery)
+  } catch (error) {
+    res.json(data)
+    return
+  }
 
   if (isFake(mainCity)) {
     res.json(data)
