@@ -14,8 +14,10 @@ export class Slack {
         text: message,
       })
 
-      // eslint-disable-next-line no-console
-      console.log(result)
+      if (process.env.CURRENT_ENV !== 'prod') {
+        // eslint-disable-next-line no-console
+        console.log(result)
+      }
     } catch (error) {
       console.error(error)
     }
