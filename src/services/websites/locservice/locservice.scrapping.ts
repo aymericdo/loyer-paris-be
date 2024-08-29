@@ -26,7 +26,7 @@ export class LocserviceScrapping {
       hasCharges: price?.textContent.includes('CC'),
       description: description?.textContent,
       dpe: dpe?.textContent,
-      furnished: furnished?.textContent.includes('Loué meublé'),
+      furnished: furnished?.textContent?.toLowerCase().replace(' ', '').trim().includes('louémeublé'),
       price: price && price.textContent.replace('.', ''),
       rooms: surface.textContent?.match(/\d+ pièce/g) && surface.textContent?.match(/\d+ pièce/g)[0],
       surface: surface.textContent?.match(/\d+ m²/g) && surface.textContent?.match(/\d+ m²/g)[0],
