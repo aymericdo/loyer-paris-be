@@ -29,6 +29,7 @@ export const codeInsee = (city: AvailableCities): string => {
     case 'pantin': return '93055'
     case 'romainville': return '93063'
     case 'la rochelle': return '17300'
+    case 'annecy': return '74010'
     default: return ''
   }
 }

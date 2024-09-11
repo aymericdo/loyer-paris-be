@@ -29,6 +29,7 @@ const CITIES = {
   bordeaux: ['bordeaux'],
   montpellier: ['montpellier'],
   'la rochelle': ['la rochelle'],
+  'annecy': ['annecy'],
 } as const
 
 export type AvailableMainCities = keyof typeof CITIES

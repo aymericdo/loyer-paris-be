@@ -32,6 +32,7 @@ export const label = (city: AvailableMainCities | AvailableCities): string => {
     case 'hellemmes': return 'Hellemmes-Lille'
     case 'lomme': return 'Lomme'
     case 'la rochelle': return 'La Rochelle'
+    case 'annecy': return 'Annecy'
     default: return capitalizeFirstLetter(city)
   }
 }

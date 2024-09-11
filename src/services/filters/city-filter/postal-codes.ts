@@ -15,7 +15,7 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
     }
     case 'lille': return {
       postalCodes: ['59000', '59260', '59160', '59800', '59777'],
-      regex: [/\b59[0-9]{3}\b/g],
+      regex: [/\b59000\b/g, /\b59260\b/g, /\b59160\b/g, /\b59800\b/g, /\b59777\b/g],
     }
     case 'hellemmes': return {
       postalCodes: ['59260'],
@@ -27,11 +27,11 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
     }
     case 'montpellier': return {
       postalCodes: ['34000', '34070', '34080', '34090'],
-      regex: [/\b34[0-9]{3}\b/g],
+      regex: [/\b34000\b/g, /\b34070\b/g, /\b34080\b/g, /\b34090\b/g],
     }
     case 'bordeaux': return {
       postalCodes: ['33000', '33300', '33800', '33100', '33200'],
-      regex: [/\b33[0-9]{3}\b/g],
+      regex: [/\b33000\b/g, /\b33300\b/g, /\b33800\b/g, /\b33100\b/g, /\b33200\b/g],
     }
     case 'aubervilliers': return {
       postalCodes: ['93300'],
@@ -112,6 +112,10 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
     case 'la rochelle': return {
       postalCodes: ['17000'],
       regex: [/\b17000\b/g],
+    }
+    case 'annecy': return {
+      postalCodes: ['74000', '74370', '74600', '74940', '74960'],
+      regex: [/\b74000\b/g, /\b74370\b/g, /\b74600\b/g, /\b74940\b/g, /\b74960\b/g],
     }
   }
 }
