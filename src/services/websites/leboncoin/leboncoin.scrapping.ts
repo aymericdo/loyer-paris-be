@@ -46,7 +46,7 @@ export class LeboncoinScrapping {
       rooms: rooms?.textContent,
       subject: subject?.textContent,
       surface: surface?.textContent,
-      isHouse: isHouse?.textContent.include('Maison') || false,
+      isHouse: isHouse?.textContent?.includes('Maison') || false,
     }
   }
 }
