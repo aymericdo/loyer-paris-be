@@ -30,6 +30,11 @@ export function getIsLegalVariation(req: Request, res: Response) {
 
   getLegalPerDate(mainCity, districtList, surfaceRange, roomRange, hasFurniture, dateRange, isParticulier)
     .then((data) => {
+      if (!data.length) {
+        res.status(403).json({ message: 'not enough data' })
+        return
+      }
+
       const vegaOpt = Vega.commonOpt()
       const vegaMap = {
         ...vegaOpt,

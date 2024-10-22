@@ -12,6 +12,11 @@ export function getPriceVariation(req: Request, res: Response) {
   const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
   getClassicData(mainCity, dateRange, { isLegal: false }, { createdAt: 1, maxPrice: 1, priceExcludingCharges: 1 })
     .then((data) => {
+      if (!data.length) {
+        res.status(403).json({ message: 'not enough data' })
+        return
+      }
+
       const vegaOpt = Vega.commonOpt()
       const vegaMap = {
         ...vegaOpt,
