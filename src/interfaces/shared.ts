@@ -7,6 +7,7 @@ import { MontpellierEncadrementItem } from './montpellier'
 import { ParisDistrictItem, ParisEncadrementItem } from './paris'
 import { PlaineCommuneDistrictItem, PlaineCommuneEncadrementItem } from './plaine-commune'
 import { LilleEncadrementItem } from '@interfaces/lille'
+import { PaysBasqueDistrictItem, PaysBasqueEncadrementItem } from '@interfaces/pays-basque'
 
 export interface Coordinate {
   lat: number
@@ -46,23 +47,28 @@ export interface DefaultDistrictItem {
   geometry: { type: 'MultiPolygon'; coordinates: number[][][] }
 }
 
-export type DistrictItem = DefaultDistrictItem | ParisDistrictItem | PlaineCommuneDistrictItem | EstEnsembleDistrictItem | LyonDistrictItem | BordeauxDistrictItem
+export type DistrictItem =
+  DefaultDistrictItem
+  | ParisDistrictItem
+  | PlaineCommuneDistrictItem
+  | EstEnsembleDistrictItem
+  | LyonDistrictItem
+  | BordeauxDistrictItem
+  | PaysBasqueDistrictItem
 
 export type EncadrementItem =
-  | DefaultEncadrementItem
+  DefaultEncadrementItem
   | ParisEncadrementItem
-  | EstEnsembleEncadrementItem
-  | PlaineCommuneEncadrementItem
   | LyonEncadrementItem
   | LilleEncadrementItem
   | MontpellierEncadrementItem
-  | BordeauxEncadrementItem
   | EncadrementItemWithHouse
 
 export type EncadrementItemWithHouse =
   | EstEnsembleEncadrementItem
   | PlaineCommuneEncadrementItem
   | BordeauxEncadrementItem
+  | PaysBasqueEncadrementItem
 
 export interface GeojsonFile {
   type: 'FeatureCollection'
