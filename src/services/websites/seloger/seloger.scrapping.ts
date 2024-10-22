@@ -12,13 +12,12 @@ export class SelogerScrapping {
 
     const title =
       document.querySelector('.detail-title.title1') ||
-      document.querySelector('.Title__ShowcaseTitleContainer-sc-4479bn-0') ||
-      document.querySelector('.Summarystyled__Title-sc-1u9xobv-3')
+      document.querySelector('[class^="Title__ShowcaseTitleContainer-sc"]') ||
+      document.querySelector('[class^="Summarystyled__Title-sc"]')
     const description =
       document.querySelector('div.description-bien > section.categorie > p') ||
-      document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.dMkXAI') ||
-      document.querySelector('.TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.koqVoo') ||
-      document.querySelector('.Descriptionstyled__StyledShowMoreText-sc-1uunii4-2')
+      document.querySelector('[class^="TitledDescription__TitledDescriptionContent-sc-"]') ||
+      document.querySelector('[class^="Descriptionstyled__StyledShowMoreText-sc-"]')
     const price = document.querySelector('[class^=Summarystyled__PriceContainer]')
 
     const cityLabel =
@@ -27,15 +26,11 @@ export class SelogerScrapping {
       document.querySelector('p > span[class^=Localizationstyled__City]')
     const renter =
       document.querySelector('.agence-title') ||
-      document.querySelector('.LightSummary__Title-f6k8ax-2.kqLAJb') ||
-      document.querySelector('.LightSummary__Title-f6k8ax-1.lnUnld') ||
+      document.querySelector('[class^="LightSummary__Title-"]') ||
+      document.querySelector('h3[class^="LightSummarystyled__Title-sc-"]') ||
       document.querySelector('#agence-info > div.Agency__PrimaryBlock-sc-1rsw64j-5.dNsjKe > h3') ||
-      document.querySelector(
-        'div.Wrapper__ContactWrapper-sc-wbkua2-0.fZhnkl > div > div > div.LightSummarystyled__SummaryContainer-sc-k5t1l5-8.gapjyf > h3.LightSummarystyled__Title-sc-k5t1l5-1'
-      ) ||
-      document.querySelector(
-        'div.Wrapper__ContactWrapper-sc-wbkua2-0.fZhnkl > div > div > div.LightSummarystyled__TextContainer-sc-k5t1l5-9.ehuHOZ > div.LightSummarystyled__SubNameDiv-sc-k5t1l5-7.gxaKvx'
-      )
+      document.querySelector('[class^="LightSummarystyled__SubNameDiv-sc-"]')
+
     const itemTags =
       (document.querySelector('[class^=Summarystyled__TagsWrapper] > div') &&
         [...document.querySelectorAll('[class^=Summarystyled__TagsWrapper] > div')]) ||
@@ -47,12 +42,9 @@ export class SelogerScrapping {
         [...document.querySelectorAll('.GeneralList__List-sc-9gtpjm-0.BAyYz > li')])
     const chargesElement =
       document.querySelector('section.categorie.with-padding-bottom .sh-text-light') ||
-      document.querySelector(
-        '#a-propos-de-ce-prix .TitledDescription__TitledDescriptionContent-sc-1r4hqf5-1.dMkXAI > div'
-      ) ||
-      document.querySelector(
-        'section.Pricestyled__Container-sc-r5ze64-1.chwYTh > div.Pricestyled__LeftColumn-sc-r5ze64-2.exUqVO > div.Pricestyled__Panel-sc-r5ze64-4.gCpVOb'
-      )
+      document.querySelector('h3[class^="LightSummarystyled__SubNameDiv-sc-"]') ||
+      document.querySelector('#a-propos-de-ce-prix [class^="TitledDescription__TitledDescriptionContent-sc-"] > div') ||
+      document.querySelector('section [class^="Pricestyled__Panel-sc-"]')
 
     let surface = null
     let rooms = null
@@ -107,9 +99,7 @@ export class SelogerScrapping {
 
     const cityLabelText = cityLabel && cityLabel.textContent
 
-    const dpeElem = document.querySelector(
-      '.Preview__PreviewTile-sc-9hhhpm-1 Preview__PreviewFocusedTile-sc-9hhhpm-2 > p'
-    )
+    const dpeElem = document.querySelector('[data-test="diagnostics-preview-bar-energy"] div div[class^="Previewstyled__Grade-sc-"]')
 
     return {
       id: null,
