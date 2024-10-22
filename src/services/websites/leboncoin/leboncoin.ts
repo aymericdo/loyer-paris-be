@@ -55,6 +55,7 @@ export class LeBonCoin extends Website {
       rooms: cleanup.number(ad.rooms),
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.subject),
+      isHouse: ad.isHouse,
     }
   }
 }

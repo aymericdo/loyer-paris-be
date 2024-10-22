@@ -20,6 +20,7 @@ export interface Ad {
   surface: number
   title?: string
   yearBuilt?: number
+  isHouse?: boolean
 }
 
 export interface CleanAd {

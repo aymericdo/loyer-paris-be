@@ -24,6 +24,9 @@ export class LeboncoinScrapping {
     const furnished = document.querySelector(
       '#grid > article div div[data-qa-id=criteria_item_furnished] > div > div div p'
     )
+    const isHouse = document.querySelector(
+      '#grid > article div div[data-qa-id=criteria_item_real_estate_type] > div > div div p'
+    )
 
     const dpe = document.querySelector('#grid > article div div[data-qa-id=criteria_item_energy_rate] .styles_active__2SvNh')
 
@@ -43,6 +46,7 @@ export class LeboncoinScrapping {
       rooms: rooms?.textContent,
       subject: subject?.textContent,
       surface: surface?.textContent,
+      isHouse: isHouse?.textContent.include('Maison') || false,
     }
   }
 }

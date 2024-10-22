@@ -171,6 +171,10 @@ export class DigService {
   }
 
   private digForIsHouse(): boolean {
+    if (this.ad.isHouse) {
+      return true
+    }
+
     const isHouseFromTitle =
       this.ad.title?.match(regexString('isHouse')) && this.ad.title?.match(regexString('isHouse'))[0]
 

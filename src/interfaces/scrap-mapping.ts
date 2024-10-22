@@ -29,6 +29,7 @@ export interface LeboncoinMapping {
   rooms: string
   surface: string
   subject: string
+  isHouse: boolean
 }
 
 export interface LefigaroMapping {
