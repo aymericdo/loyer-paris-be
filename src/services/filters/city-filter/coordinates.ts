@@ -9,6 +9,7 @@ export const coordinates = (city: AvailableMainCities): [number, number] => {
     case 'lyon': return [45.7578137, 4.8320114]
     case 'montpellier': return [43.6112422, 3.8767337]
     case 'bordeaux': return [44.841225, -0.5800364]
+    case 'paysBasque': return [43.4417106, -1.6293269]
     default: return [46.2513662, 4.755835]
   }
 }

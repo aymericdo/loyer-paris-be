@@ -9,6 +9,7 @@ export const infoLink = (mainCity: AvailableMainCities): string => {
     case 'estEnsemble': return 'https://www.est-ensemble.fr/lencadrement-des-loyers-sera-applique-en-decembre-est-ensemble'
     case 'montpellier': return 'https://www.montpellier3m.fr/lencadrement-des-loyers-entre-en-application-montpellier-compter-du-1er-juillet-2022'
     case 'bordeaux': return 'https://www.bordeaux-metropole.fr/Vivre-habiter/Se-loger-et-habiter/Mettre-son-logement-en-location/Encadrement-des-loyers-a-Bordeaux'
+    case 'paysBasque': return 'https://www.communaute-paysbasque.fr/a-la-une-2/actualites/actualite/lencadrement-des-loyers-au-pays-basque-entre-en-vigueur-le-25-novembre-prochain'
     default: return null
   }
 }

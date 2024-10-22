@@ -117,5 +117,101 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
       postalCodes: ['74000', '74370', '74600', '74940', '74960'],
       regex: [/\b74000\b/g, /\b74370\b/g, /\b74600\b/g, /\b74940\b/g, /\b74960\b/g],
     }
+    case 'ahetze': return {
+      postalCodes: ['64210'],
+      regex: [/\b64210\b/g],
+    }
+    case 'anglet': return {
+      postalCodes: ['64600'],
+      regex: [/\b64600\b/g],
+    }
+    case 'arbonne': return {
+      postalCodes: ['64210'],
+      regex: [/\b64210\b/g],
+    }
+    case 'arcangues': return {
+      postalCodes: ['64200'],
+      regex: [/\b64200\b/g],
+    }
+    case 'ascain': return {
+      postalCodes: ['64310'],
+      regex: [/\b64310\b/g],
+    }
+    case 'bassussarry': return {
+      postalCodes: ['64200'],
+      regex: [/\b64200\b/g],
+    }
+    case 'bayonne': return {
+      postalCodes: ['64100'],
+      regex: [/\b64100\b/g],
+    }
+    case 'biarritz': return {
+      postalCodes: ['64200'],
+      regex: [/\b64200\b/g],
+    }
+    case 'bidart': return {
+      postalCodes: ['64210'],
+      regex: [/\b64210\b/g],
+    }
+    case 'biriatou': return {
+      postalCodes: ['64700'],
+      regex: [/\b64700\b/g],
+    }
+    case 'boucau': return {
+      postalCodes: ['64340'],
+      regex: [/\b64340\b/g],
+    }
+    case 'ciboure': return {
+      postalCodes: ['64500'],
+      regex: [/\b64500\b/g],
+    }
+    case 'guéthary': return {
+      postalCodes: ['64210'],
+      regex: [/\b64210\b/g],
+    }
+    case 'hendaye': return {
+      postalCodes: ['64700'],
+      regex: [/\b64700\b/g],
+    }
+    case 'jatxou': return {
+      postalCodes: ['64480'],
+      regex: [/\b64480\b/g],
+    }
+    case 'lahonce': return {
+      postalCodes: ['64990'],
+      regex: [/\b64990\b/g],
+    }
+    case 'larressore': return {
+      postalCodes: ['64480'],
+      regex: [/\b64480\b/g],
+    }
+    case 'mouguerre': return {
+      postalCodes: ['64990'],
+      regex: [/\b64990\b/g],
+    }
+    case 'saint-jean-de-luz': return {
+      postalCodes: ['64500'],
+      regex: [/\b64500\b/g],
+    }
+    case 'saint-pierre d\'irube': return {
+      postalCodes: ['64990'],
+      regex: [/\b64990\b/g],
+    }
+    case 'urcuit': return {
+      postalCodes: ['64990'],
+      regex: [/\b64990\b/g],
+    }
+    case 'urrugne': return {
+      postalCodes: ['64122', '64700'],
+      regex: [/\b64122\b/g, /\b64700\b/g],
+    }
+    case 'ustaritz': return {
+      postalCodes: ['64480'],
+      regex: [/\b64480\b/g],
+    }
+    case 'villefranque': return {
+      postalCodes: ['64990'],
+      regex: [/\b64990\b/g],
+    }
   }
 }

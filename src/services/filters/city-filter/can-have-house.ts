@@ -6,6 +6,7 @@ export const canHaveHouse = (city: AvailableMainCities): boolean => {
     case 'plaineCommune':
     case 'estEnsemble':
     case 'bordeaux':
+    case 'paysBasque':
       return true
     default:
       return false
