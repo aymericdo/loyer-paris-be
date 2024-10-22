@@ -50,7 +50,7 @@ const CITIES = {
     'larressore',
     'mouguerre',
     'saint-jean-de-luz',
-    'saint-pierre d\'irube',
+    'saint-pierre-d\'irube',
     'urcuit',
     'urrugne',
     'ustaritz',

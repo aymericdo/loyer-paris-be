@@ -65,7 +65,7 @@ export const zones = (city: AvailableCities): string[] | { [key: string]: string
     case 'larressore': return ['Zone 3']
     case 'mouguerre': return ['Zone 3']
     case 'saint-jean-de-luz': return ['Zone 1']
-    case 'saint-pierre d\'irube': return ['Zone 3']
+    case 'saint-pierre-d\'irube': return ['Zone 3']
     case 'urcuit': return ['Zone 3']
     case 'urrugne': return ['Zone 2']
     case 'ustaritz': return ['Zone 3']

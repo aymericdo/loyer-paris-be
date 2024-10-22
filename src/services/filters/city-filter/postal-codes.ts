@@ -193,7 +193,7 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
       postalCodes: ['64500'],
       regex: [/\b64500\b/g],
     }
-    case 'saint-pierre d\'irube': return {
+    case 'saint-pierre-d\'irube': return {
       postalCodes: ['64990'],
       regex: [/\b64990\b/g],
     }

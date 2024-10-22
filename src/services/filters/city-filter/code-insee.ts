@@ -49,7 +49,7 @@ export const codeInsee = (city: AvailableCities): string => {
     case 'larressore': return '64317'
     case 'mouguerre': return '64407'
     case 'saint-jean-de-luz': return '64483'
-    case 'saint-pierre d\'irube': return '64496'
+    case 'saint-pierre-d\'irube': return '64496'
     case 'urcuit': return '64540'
     case 'urrugne': return '64545'
     case 'ustaritz': return '64547'

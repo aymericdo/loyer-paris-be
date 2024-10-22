@@ -53,7 +53,7 @@ export const label = (city: AvailableMainCities | AvailableCities): string => {
     case 'larressore': return 'Larressore'
     case 'mouguerre': return 'Mouguerre'
     case 'saint-jean-de-luz': return 'Saint-Jean-de-Luz'
-    case 'saint-pierre d\'irube': return 'Saint-Pierre d\'Irube'
+    case 'saint-pierre-d\'irube': return 'Saint-Pierre-d\'Irube'
     case 'urcuit': return 'Urcuit'
     case 'urrugne': return 'Urrugne'
     case 'ustaritz': return 'Ustaritz'
