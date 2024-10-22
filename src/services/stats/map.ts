@@ -23,6 +23,11 @@ export async function getMap(req: Request, res: Response) {
 
   getAdsWithCoordinates(city, dateRange)
     .then((data) => {
+      if (!data.length) {
+        res.status(403).json({ message: 'not_enough_data' })
+        return
+      }
+
       const vegaMap = {
         ...Vega.commonOpt(),
         layer: [

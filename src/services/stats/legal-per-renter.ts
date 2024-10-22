@@ -15,7 +15,7 @@ export function getLegalPerRenter(req: Request, res: Response) {
   getClassicData(mainCity, dateRange, { renter: { $exists: true } }, { isLegal: 1, renter: 1 })
     .then((data) => {
       if (!data.length) {
-        res.status(403).json({ message: 'not enough data' })
+        res.status(403).json({ message: 'not_enough_data' })
         return
       }
 

@@ -13,6 +13,11 @@ export function getLegalPerDPE(req: Request, res: Response) {
 
   getClassicData(mainCity, dateRange, { dpe: { $exists: true } }, { isLegal: 1, dpe: 1 })
     .then((data) => {
+      if (!data.length) {
+        res.status(403).json({ message: 'not_enough_data' })
+        return
+      }
+
       const vegaOpt = Vega.commonOpt()
       const vegaMap = {
         ...vegaOpt,

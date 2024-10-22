@@ -24,7 +24,7 @@ export async function getChloroplethMap(req: Request, res: Response) {
   getLegalPerDistrict(city, dateRange)
     .then((result: { illegalPercentage: number, isIllegalCount: number, totalCount: number, district: string }[]) => {
       if (!result.length) {
-        res.status(403).json({ message: 'not enough data' })
+        res.status(403).json({ message: 'not_enough_data' })
         return
       }
 

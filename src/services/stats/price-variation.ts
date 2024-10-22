@@ -13,7 +13,7 @@ export function getPriceVariation(req: Request, res: Response) {
   getClassicData(mainCity, dateRange, { isLegal: false }, { createdAt: 1, maxPrice: 1, priceExcludingCharges: 1 })
     .then((data) => {
       if (!data.length) {
-        res.status(403).json({ message: 'not enough data' })
+        res.status(403).json({ message: 'not_enough_data' })
         return
       }
 
