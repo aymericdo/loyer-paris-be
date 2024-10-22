@@ -110,7 +110,7 @@ export async function getRelevantAdsData(
     let blurry = false
 
     const mainCity = getMainCity(ad.city)
-    if (!isFake(mainCity) && !ad.longitude || !ad.latitude) {
+    if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
       const feature = await new DistrictsList(
         mainCity, {
           specificDistrict: ad.district,
