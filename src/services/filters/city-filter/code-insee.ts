@@ -1,6 +1,6 @@
 import { AvailableCities } from '@services/filters/city-filter/city-list'
 
-export const codeInsee = (city: AvailableCities): string => {
+export const inseeCode = (city: AvailableCities): string => {
   switch (city) {
     case 'paris': return '75056'
     case 'lyon': return '69123'

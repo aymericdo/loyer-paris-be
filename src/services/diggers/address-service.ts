@@ -5,7 +5,7 @@ import { regexString } from '@services/helpers/regex'
 import * as cleanup from '@services/helpers/cleanup'
 import { DataGouvAddress, DataGouvAddressItem } from '@interfaces/address'
 import axios from 'axios'
-import { codeInsee } from '@services/filters/city-filter/code-insee'
+import { inseeCode } from '@services/filters/city-filter/code-insee'
 import { PrettyLog } from '@services/helpers/pretty-log'
 
 export class AddressService {
@@ -27,7 +27,7 @@ export class AddressService {
     const limit = 5
 
     try {
-      const result = await axios.get(`https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${codeInsee(city)}&autocomplete=1`)
+      const result = await axios.get(`https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${inseeCode(city)}&autocomplete=1`)
       const dataGouv: DataGouvAddress = result.data
       return dataGouv.features
     } catch (error) {

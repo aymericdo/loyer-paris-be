@@ -1,6 +1,7 @@
 import { IpService } from '@services/helpers/ip'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { getAdoptionRate } from '@services/stats/adoption'
+import { getChloroplethCitiesMap } from '@services/stats/chloropleth-cities-map'
 import { getChloroplethMap } from '@services/stats/chloropleth-map'
 import { getIsLegalVariation } from '@services/stats/is-legal-variation'
 import { getLegalPerClassicRenter } from '@services/stats/legal-per-classic-renter'
@@ -66,6 +67,7 @@ router.use('/', function (req: Request, res: Response, next: NextFunction) {
 router.get('/welcome/:city', getWelcomeText)
 router.get('/map/:city', getMap)
 router.get('/chloropleth-map/:city', getChloroplethMap)
+router.get('/chloropleth-cities-map/:city', getChloroplethCitiesMap)
 router.get('/price-difference/:city', getPriceDifference)
 router.get('/is-legal-per-surface/:city', getLegalPerSurface)
 router.get('/adoption', getAdoptionRate)
