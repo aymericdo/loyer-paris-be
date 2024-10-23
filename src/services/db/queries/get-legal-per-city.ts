@@ -58,7 +58,7 @@ export async function getLegalPerCity(
     },
     {
       $match: {
-        totalCount: { $gte: 10 }
+        totalCount: { $gte: 5 }
       }
     }
   ]
