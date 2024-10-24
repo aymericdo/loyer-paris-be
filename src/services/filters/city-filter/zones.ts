@@ -52,7 +52,7 @@ export const zones = (city: AvailableCities): string[] | { [key: string]: string
     case 'arcangues': return ['Zone 1']
     case 'ascain': return ['Zone 2']
     case 'bassussarry': return ['Zone 2']
-    case 'bayonne': return ['Zone 1', 'Zone 2']
+    case 'bayonne': return ['Zone 1', 'Zone 2', 'Zone 3']
     case 'biarritz': return ['Zone 1']
     case 'bidart': return ['Zone 1']
     case 'biriatou': return ['Zone 3']
