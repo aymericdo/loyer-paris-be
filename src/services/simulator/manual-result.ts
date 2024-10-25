@@ -1,6 +1,7 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities, getCitiesFromMainCity } from '@services/filters/city-filter/city-list'
 import { infoLink } from '@services/filters/city-filter/info-link'
+import { zones } from '@services/filters/city-filter/zones'
 import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
@@ -31,6 +32,16 @@ export async function getManualResult(req: Request, res: Response) {
   const dateBuiltRange: [number, number] = YearBuiltService.formatAsYearBuilt(dateBuiltValueStr)
   const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
   const isHouse: boolean = isHouseValue !== null ? +isHouseValue === 1 : false
+
+  if (!getCitiesFromMainCity(mainCity).some((city) => {
+    const cityZones = zones(city)
+    return  (Array.isArray(cityZones)) ?
+      cityZones.includes(district) :
+      Object.values(cityZones).flat().includes(district)
+  })) {
+    res.status(403).send('zone is not corresponding')
+    return
+  }
 
   const CurrentEncadrementFilter = new EncadrementFilterFactory(mainCity).currentEncadrementFilter()
   const params: InfoToFilter = {
