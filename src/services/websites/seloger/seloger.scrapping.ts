@@ -84,9 +84,9 @@ export class SelogerScrapping {
     let isParticulier = false
 
     itemTags.forEach((tag) => {
-      if (tag.textContent.match(/m²/g)) {
+      if (tag.textContent.match(/m²/g) && !tag.textContent.match(/terrain/gi)) {
         surface = tag
-      } else if (tag.textContent.match(/pièce/g)) {
+      } else if (tag.textContent.match(/pièce/gi)) {
         rooms = tag
       } else if (tag.textContent.match(/Particulier/g)) {
         isParticulier = true
