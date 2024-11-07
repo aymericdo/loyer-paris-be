@@ -46,45 +46,20 @@ export class SaveRentService {
       surface: this.adToSave.surface,
       city: this.adToSave.city,
       district: this.adToSave.district,
-      ...(this.adToSave.dpe != null && {
-        dpe: this.adToSave.dpe,
-      }),
-      ...(this.adToSave.isFake != null && {
-        isFake: this.adToSave.isFake,
-      }),
-      ...(this.adToSave.address != null && {
-        address: this.adToSave.address,
-      }),
-      ...(this.adToSave.postalCode != null && {
-        postalCode: this.adToSave.postalCode,
-      }),
-      ...(this.adToSave.hasFurniture != null && {
-        hasFurniture: this.adToSave.hasFurniture,
-      }),
-      ...(this.adToSave.isHouse != null && {
-        isHouse: this.adToSave.isHouse,
-      }),
-      ...(this.adToSave.latitude != null && {
-        latitude: this.adToSave.latitude,
-      }),
-      ...(this.adToSave.longitude != null && {
-        longitude: this.adToSave.longitude,
-      }),
-      ...(this.adToSave.renter != null && {
-        renter: this.adToSave.renter,
-      }),
-      ...(this.adToSave.roomCount != null && {
-        roomCount: this.adToSave.roomCount,
-      }),
-      ...(this.adToSave.stations != null &&
-        this.adToSave.stations.length && {
-        stations: this.adToSave.stations,
-      }),
-      ...(this.adToSave.yearBuilt != null &&
-        this.adToSave.yearBuilt.length && {
-        yearBuilt: this.adToSave.yearBuilt,
-      }),
+      ...this.saveIfNotNull('dpe'),
+      ...this.saveIfNotFalse('isFake'),
+      ...this.saveIfNotNull('address'),
+      ...this.saveIfNotNull('postalCode'),
+      ...this.saveIfNotNull('hasFurniture'),
+      ...this.saveIfNotNull('isHouse'),
+      ...this.saveIfNotNull('latitude'),
+      ...this.saveIfNotNull('longitude'),
+      ...this.saveIfNotNull('renter'),
+      ...this.saveIfNotNull('roomCount'),
+      ...this.saveIfNotEmpty('stations'),
+      ...this.saveIfNotEmpty('yearBuilt'),
     })
+
     PrettyLog.call('saving ad')
 
     try {
@@ -92,10 +67,31 @@ export class SaveRentService {
       PrettyLog.call('ad saved', 'green')
     } catch (err) {
       if (err.code === 11000) {
-        PrettyLog.call('⚠️  ad already saved', 'red')
+        PrettyLog.call('⚠️ ad already saved', 'red')
+        await Rent.updateOne({ ...err.keyValue }, { lastSeen: new Date() })
       } else {
         console.error(err)
       }
     }
+  }
+
+  private saveIfNotNull(key: string) {
+    return (this.adToSave[key] != null && {
+      [key]: this.adToSave[key],
+    })
+  }
+
+  private saveIfNotEmpty(key: string) {
+    return (this.adToSave[key] != null &&
+      this.adToSave[key].length && {
+      [key]: this.adToSave[key],
+    })
+  }
+
+  private saveIfNotFalse(key: string) {
+    return (this.adToSave[key] != null &&
+      this.adToSave[key] !== false && {
+      [key]: this.adToSave[key],
+    })
   }
 }

@@ -25,6 +25,7 @@ const schema = new Schema({
   stations: { type: [String], required: false, default: undefined },
   dpe: { type: String, required: false },
   isFake: { type: Boolean, required: false },
+  lastSeen: { type: Date, default: Date.now },
 })
 
 schema.index({ id: 1, website: 1, priceExcludingCharges: 1 }, { unique: true })
