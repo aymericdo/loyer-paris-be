@@ -92,6 +92,10 @@ export class SerializerService {
           order: 8,
           value: !isLegal ? roundNumber(100 - (maxAuthorized * 100) / priceExcludingCharges) : null,
         },
+        promo: {
+          order: 9,
+          value: !isLegal ? roundNumber(priceExcludingCharges - maxAuthorized) : null,
+        },
       },
       isLegal,
       isFake: isFake(getMainCity(city)),
