@@ -44,6 +44,11 @@ async function getAddresses(req: Request, res: Response) {
   const city: AvailableCities = req.query.city.toString() as AvailableCities
   const addressQuery = req.query.q.toString()
 
+  if (!mainCityList.includes(mainCity)) {
+    res.status(403).json({ message: 'City params not valid' })
+    return
+  }
+
   if (addressQuery.trim().length < 4) {
     res.json([])
     return
