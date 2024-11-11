@@ -135,6 +135,14 @@ export class DigService {
       }
     }
 
+    if (surface < 9) {
+      throw {
+        error: ERROR_CODE.Surface,
+        msg: 'surface too small',
+        isIncompleteAd: true,
+      }
+    }
+
     return surface
   }
 
