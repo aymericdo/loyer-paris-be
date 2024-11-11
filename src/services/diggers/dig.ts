@@ -4,7 +4,7 @@ import { AvailableCities, getMainCity } from '@services/filters/city-filter/city
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { PrettyLog } from '@services/helpers/pretty-log'
-import { regexString } from '@services/helpers/regex'
+import { getFirstMatchResult, regexString } from '@services/helpers/regex'
 import { stringToNumber } from '@services/helpers/string-to-number'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { PARTICULIER, DPE_LIST } from '@services/websites/website'
@@ -32,6 +32,7 @@ export class DigService {
     const hasCharges = this.digForHasCharges()
     const isHouse = canHaveHouse(getMainCity(city)) ? this.digForIsHouse() : null
     const dpe = this.digForDPE()
+    const rentComplement = this.digForRentComplement()
 
     return {
       id: this.ad.id,
@@ -51,6 +52,7 @@ export class DigService {
       hasCharges,
       isHouse,
       dpe,
+      rentComplement,
     }
   }
 
@@ -75,12 +77,8 @@ export class DigService {
   }
 
   private digForRoomCount(): number {
-    const roomsFromTitle =
-      this.ad.title && this.ad.title.match(regexString('roomCount')) && this.ad.title.match(regexString('roomCount'))[0]
-    const roomsFromDescription =
-      this.ad.description &&
-      this.ad.description.match(regexString('roomCount')) &&
-      this.ad.description.match(regexString('roomCount'))[0]
+    const roomsFromTitle = getFirstMatchResult(this.ad.title, regexString('roomCount'))
+    const roomsFromDescription = getFirstMatchResult(this.ad.description, regexString('roomCount'))
     return (!!this.ad.rooms && this.ad.rooms) || stringToNumber(roomsFromTitle) || stringToNumber(roomsFromDescription)
   }
 
@@ -120,12 +118,8 @@ export class DigService {
   private digForSurface(): number {
     const surface =
       this.ad.surface ||
-      (this.ad.title &&
-        this.ad.title.match(regexString('surface')) &&
-        cleanup.number(this.ad.title.match(regexString('surface'))[0])) ||
-      (this.ad.description &&
-        this.ad.description.match(regexString('surface')) &&
-        cleanup.number(this.ad.description.match(regexString('surface'))[0]))
+      cleanup.number(getFirstMatchResult(this.ad.title, regexString('surface'))) ||
+      cleanup.number(getFirstMatchResult(this.ad.description, regexString('surface')))
 
     if (!surface) {
       throw {
@@ -183,11 +177,8 @@ export class DigService {
       return true
     }
 
-    const isHouseFromTitle =
-      this.ad.title?.match(regexString('isHouse')) && this.ad.title?.match(regexString('isHouse'))[0]
-
-    const isHouseFromDescription =
-      this.ad.description?.match(regexString('isHouse')) && this.ad.description?.match(regexString('isHouse'))[0]
+    const isHouseFromTitle = getFirstMatchResult(this.ad.title, regexString('isHouse'))
+    const isHouseFromDescription = getFirstMatchResult(this.ad.description, regexString('isHouse'))
 
     return isHouseFromTitle?.length > 0 || isHouseFromDescription?.length > 0
   }
@@ -195,8 +186,8 @@ export class DigService {
   private digForCharges(): number {
     const charges =
       this.ad.charges ||
-      (this.ad.description?.match(regexString('charges')) &&
-        cleanup.price(this.ad.description.match(regexString('charges'))[0]))
+      cleanup.price(getFirstMatchResult(this.ad.description, regexString('charges')))
+
     return +charges
   }
 
@@ -211,5 +202,13 @@ export class DigService {
   private digForDPE(): string | null {
     const DPE = this.ad.dpe?.toUpperCase()
     return DPE?.split(' ')?.find((word) => DPE_LIST.includes(word)) || null
+  }
+
+  private digForRentComplement(): number {
+    const rentComplement =
+      this.ad.rentComplement ||
+      cleanup.price(getFirstMatchResult(this.ad.description, regexString('rentComplement')))
+
+    return rentComplement
   }
 }

@@ -88,6 +88,7 @@ export abstract class Website {
           district: filteredResult.districtName,
           isFake: isFake(mainCity),
           dpe: cleanAd.dpe,
+          rentComplement: cleanAd.rentComplement,
           hasFurniture: cleanAd.hasFurniture,
           isHouse: cleanAd.isHouse,
           postalCode: cleanAd.postalCode,

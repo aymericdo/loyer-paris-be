@@ -9,6 +9,7 @@ export interface Ad {
   coord?: Coordinate
   description: string
   dpe?: string | null
+  rentComplement?: number
   furnished?: boolean
   hasCharges?: boolean
   neighborhood?: string
@@ -41,6 +42,7 @@ export interface CleanAd {
   hasCharges: boolean
   isHouse?: boolean
   dpe?: string | null
+  rentComplement?: number | null
 }
 
 export interface InfoToFilter {

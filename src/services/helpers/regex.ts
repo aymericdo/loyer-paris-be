@@ -1,4 +1,4 @@
-export const regexString = (value: string): string => {
+export const regexString = (value: string): RegExp => {
   const regex = {
     address:
       /([0-9]+,?)? ?((bis|b|ter),?)?(rue|avenue|passage|boulevard|faubourg|allee|quai|impasse|square|bd|cite) ?( ?[a-zA-Z'’-]+){0,4}/g,
@@ -7,6 +7,8 @@ export const regexString = (value: string): string => {
     nonFurnished: /(non-|non )\bmeuble/g,
     charges:
       /((?<=((?<! hors )charges locatives |(?<! hors )charges |(?<! hors )charge )(\D{0,4}))|(?<=\d{3,4}((|\.|,)\d{1,2})?(\D{0,5})?\+ ?))(\d{2,3}((|\.|,)\d{1,2})?)(?=( ?euros\b| ?€| ?e\b| ?eur\b| ?euro\b | ?de\b ?(charge(s)?)\b))/g,
+    rentComplement:
+      /((?<=(complement de loyer )(\D{0,4}))|(?<=\d{3,4}((|\.|,)\d{1,2})?(\D{0,5})?\+ ?))(\d{2,3}((|\.|,)\d{1,2})?)(?=( ?euros\b| ?€| ?e\b| ?eur\b| ?euro\b | ?de\b ?(charge(s)?)\b))/g,
     hasCharges: /prix charge[s]? comprise[s]?/g,
     surface: /((9|\d{2})((|\.|,)\d{1,2})?)(?= ?(m2\b|metre|m²))/g,
     isHouse: /maison/g,
@@ -18,4 +20,8 @@ export const regexString = (value: string): string => {
   } else {
     return null
   }
+}
+
+export const getFirstMatchResult = (text: string, regex: RegExp): string => {
+  return (text?.match(regex) && text.match(regex)[0])
 }

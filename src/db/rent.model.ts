@@ -26,6 +26,7 @@ const schema = new Schema({
   dpe: { type: String, required: false },
   isFake: { type: Boolean, required: false },
   lastSeen: { type: Date, default: Date.now },
+  rentComplement: { type: Number, required: false },
 })
 
 schema.index({ id: 1, website: 1, priceExcludingCharges: 1 }, { unique: true })
