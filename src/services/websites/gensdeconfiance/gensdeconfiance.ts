@@ -3,7 +3,7 @@ import { GensdeconfianceMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { PARTICULIER, Website, WebsiteType } from '@services/websites/website'
-import { GensdeconfianceScrapping } from './gensdeconfiance.scrapping'
+import { GensdeconfianceScraping } from './gensdeconfiance.scraping'
 
 export class Gensdeconfiance extends Website {
   website: WebsiteType = 'gensdeconfiance'
@@ -24,7 +24,7 @@ export class Gensdeconfiance extends Website {
       }
     }
 
-    const scrap = GensdeconfianceScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = GensdeconfianceScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

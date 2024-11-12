@@ -3,7 +3,7 @@ import { ERROR_CODE } from '@services/api/errors'
 import { virtualConsole } from '@services/helpers/jsdome'
 import { JSDOM } from 'jsdom'
 
-export class PapScrapping {
+export class PapScraping {
   static scrap(data: string): PapMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),
@@ -21,7 +21,7 @@ export class PapScrapping {
     )
 
     const rowPrices = [...document.querySelectorAll(
-      'body > div.details-annonce-container > div > div.main-content.details-item > div > div.row > div.col-1-3'
+      'body > div.details-annonce-container > div > div.main-content .item-transports .row .col-1-3'
     )]
 
     let charges = null

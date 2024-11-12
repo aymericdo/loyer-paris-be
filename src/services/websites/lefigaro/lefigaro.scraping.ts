@@ -4,7 +4,7 @@ import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
-export class LefigaroScrapping {
+export class LefigaroScraping {
   static scrap(data: string): LefigaroMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),

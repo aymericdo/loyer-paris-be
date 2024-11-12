@@ -3,7 +3,7 @@ import { SuperimmoMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'
-import { SuperimmoScrapping } from './superimmo.scrapping'
+import { SuperimmoScraping } from './superimmo.scraping'
 export class Superimmo extends Website {
   website: WebsiteType = 'superimmo'
 
@@ -23,7 +23,7 @@ export class Superimmo extends Website {
       }
     }
 
-    const scrap = SuperimmoScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = SuperimmoScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

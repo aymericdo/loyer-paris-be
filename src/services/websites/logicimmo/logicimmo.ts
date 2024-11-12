@@ -3,7 +3,7 @@ import { LogicimmoMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { PARTICULIER, Website, WebsiteType } from '@services/websites/website'
-import { LogicimmoScrapping } from './logicimmo.scrapping'
+import { LogicimmoScraping } from './logicimmo.scraping'
 
 export class LogicImmo extends Website {
   website: WebsiteType = 'logicimmo'
@@ -24,7 +24,7 @@ export class LogicImmo extends Website {
       }
     }
 
-    const scrap = LogicimmoScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = LogicimmoScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

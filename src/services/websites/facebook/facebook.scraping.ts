@@ -4,7 +4,7 @@ import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
-export class FacebookScrapping {
+export class FacebookScraping {
   static scrap(data: string): FacebookMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),

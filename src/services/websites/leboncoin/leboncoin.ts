@@ -3,7 +3,7 @@ import { LeboncoinMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { PARTICULIER, Website, WebsiteType } from '@services/websites/website'
-import { LeboncoinScrapping } from './leboncoin.scrapping'
+import { LeboncoinScraping } from './leboncoin.scraping'
 
 export class LeBonCoin extends Website {
   website: WebsiteType = 'leboncoin'
@@ -24,7 +24,7 @@ export class LeBonCoin extends Website {
       }
     }
 
-    const scrap = LeboncoinScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = LeboncoinScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

@@ -3,7 +3,7 @@ import { FacebookMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { PARTICULIER, Website, WebsiteType } from '@services/websites/website'
-import { FacebookScrapping } from './facebook.scrapping'
+import { FacebookScraping } from './facebook.scraping'
 export class Facebook extends Website {
   website: WebsiteType = 'facebook'
 
@@ -23,7 +23,7 @@ export class Facebook extends Website {
       }
     }
 
-    const scrap = FacebookScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = FacebookScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

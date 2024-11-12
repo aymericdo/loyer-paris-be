@@ -4,7 +4,7 @@ import { PARTICULIER } from '@services/websites/website'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
-export class SelogerScrapping {
+export class SelogerScraping {
   static scrap(data: string): SelogerMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),

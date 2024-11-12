@@ -4,7 +4,7 @@ import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
-export class FnaimScrapping {
+export class FnaimScraping {
   static scrap(data: string): FnaimMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),

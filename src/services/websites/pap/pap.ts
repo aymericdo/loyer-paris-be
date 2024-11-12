@@ -3,7 +3,7 @@ import { PapMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { PARTICULIER, Website, WebsiteType } from '@services/websites/website'
-import { PapScrapping } from './pap.scrapping'
+import { PapScraping } from './pap.scraping'
 
 export class Pap extends Website {
   website: WebsiteType = 'pap'
@@ -24,7 +24,7 @@ export class Pap extends Website {
       }
     }
 
-    const scrap = PapScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = PapScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

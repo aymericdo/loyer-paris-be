@@ -3,7 +3,7 @@ import { AvendrealouerMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'
-import { AvendrealouerScrapping } from './avendrealouer.scrapping'
+import { AvendrealouerScraping } from './avendrealouer.scraping'
 export class Avendrealouer extends Website {
   website: WebsiteType = 'avendrealouer'
 
@@ -23,7 +23,7 @@ export class Avendrealouer extends Website {
       }
     }
 
-    const scrap = AvendrealouerScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = AvendrealouerScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

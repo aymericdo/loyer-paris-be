@@ -3,7 +3,7 @@ import { FonciaMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'
-import { FonciaScrapping } from './foncia.scrapping'
+import { FonciaScraping } from './foncia.scraping'
 export class Foncia extends Website {
   website: WebsiteType = 'foncia'
 
@@ -23,7 +23,7 @@ export class Foncia extends Website {
       }
     }
 
-    const scrap = FonciaScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = FonciaScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

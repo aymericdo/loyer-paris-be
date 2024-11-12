@@ -3,7 +3,7 @@ import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
-export class LogicimmoScrapping {
+export class LogicimmoScraping {
   static scrap(data: string): LogicimmoMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),

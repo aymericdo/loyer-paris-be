@@ -3,7 +3,7 @@ import { FnaimMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'
-import { FnaimScrapping } from './fnaim.scrapping'
+import { FnaimScraping } from './fnaim.scraping'
 export class Fnaim extends Website {
   website: WebsiteType = 'fnaim'
 
@@ -23,7 +23,7 @@ export class Fnaim extends Website {
       }
     }
 
-    const scrap = FnaimScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = FnaimScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

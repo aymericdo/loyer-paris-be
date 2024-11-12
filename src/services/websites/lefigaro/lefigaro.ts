@@ -3,7 +3,7 @@ import { LefigaroMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'
-import { LefigaroScrapping } from './lefigaro.scrapping'
+import { LefigaroScraping } from './lefigaro.scraping'
 
 export class LeFigaro extends Website {
   website: WebsiteType = 'lefigaro'
@@ -24,7 +24,7 @@ export class LeFigaro extends Website {
       }
     }
 
-    const scrap = LefigaroScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = LefigaroScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

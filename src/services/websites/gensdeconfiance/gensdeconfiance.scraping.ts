@@ -3,7 +3,7 @@ import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
-export class GensdeconfianceScrapping {
+export class GensdeconfianceScraping {
   static scrap(data: string): GensdeconfianceMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),

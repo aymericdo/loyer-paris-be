@@ -3,7 +3,7 @@ import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
-export class OrpiScrapping {
+export class OrpiScraping {
   static scrap(data: string): OrpiMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),

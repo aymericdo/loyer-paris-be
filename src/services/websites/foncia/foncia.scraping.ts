@@ -3,7 +3,7 @@ import { virtualConsole } from '@services/helpers/jsdome'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
-export class FonciaScrapping {
+export class FonciaScraping {
   static scrap(data: string): FonciaMapping {
     const { document } = new JSDOM(data, {
       virtualConsole: virtualConsole(),

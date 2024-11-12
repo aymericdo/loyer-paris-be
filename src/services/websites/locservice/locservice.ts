@@ -3,7 +3,7 @@ import { LocserviceMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { PARTICULIER, Website, WebsiteType } from '@services/websites/website'
-import { LocserviceScrapping } from './locservice.scrapping'
+import { LocserviceScraping } from './locservice.scraping'
 
 export class Locservice extends Website {
   website: WebsiteType = 'locservice'
@@ -17,7 +17,7 @@ export class Locservice extends Website {
       }
     }
 
-    const scrap = LocserviceScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = LocserviceScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {

@@ -3,7 +3,7 @@ import { LuxResidenceMapping } from '@interfaces/scrap-mapping'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { Website, WebsiteType } from '@services/websites/website'
-import { LuxResidenceScrapping } from './lux-residence.scrapping'
+import { LuxResidenceScraping } from './lux-residence.scraping'
 export class LuxResidence extends Website {
   website: WebsiteType = 'luxresidence'
 
@@ -23,7 +23,7 @@ export class LuxResidence extends Website {
       }
     }
 
-    const scrap = LuxResidenceScrapping.scrap(JSON.parse(this.body.data))
+    const scrap = LuxResidenceScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
       throw {
