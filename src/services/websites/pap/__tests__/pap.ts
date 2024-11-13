@@ -61,7 +61,7 @@ describe('pap', () => {
           },
           charges: {
             order: 7,
-            value: 100,
+            value: null,
           },
           hasCharges: {
             order: 8,
@@ -100,11 +100,11 @@ describe('pap', () => {
           },
           promoPercentage: {
             order: 8,
-            value: 6.67,
+            value: 13.85,
           },
           promo: {
             order: 9,
-            value: 80,
+            value: 180,
           },
         },
         isFake: false,
@@ -143,7 +143,7 @@ describe('pap', () => {
           yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
           price: { order: 6, value: 880 },
-          charges: { order: 7, value: null },
+          charges: { order: 7, value: 80 },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
@@ -153,13 +153,13 @@ describe('pap', () => {
           surface: { order: 3, value: 50 },
           dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 17.5 },
-          maxAuthorized: { order: 7, value: 875 },
-          promoPercentage: { order: 8, value: 0.57 },
-          promo: { order: 9, value: 5 },
+          max: { order: 6, value: null },
+          maxAuthorized: { order: 7, value: null },
+          promoPercentage: { order: 8, value: null },
+          promo: { order: 9, value: null },
         },
         isFake: false,
-        isLegal: false,
+        isLegal: true,
         moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
@@ -197,7 +197,7 @@ describe('pap', () => {
           yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
           price: { order: 6, value: 740 },
-          charges: { order: 7, value: null },
+          charges: { order: 7, value: 70 },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
@@ -209,8 +209,8 @@ describe('pap', () => {
           isHouse: { order: 5, value: undefined },
           max: { order: 6, value: 20.4 },
           maxAuthorized: { order: 7, value: 612 },
-          promoPercentage: { order: 8, value: 17.3 },
-          promo: { order: 9, value: 128 },
+          promoPercentage: { order: 8, value: 8.66 },
+          promo: { order: 9, value: 58 },
         },
         isFake: false,
         isLegal: false,
