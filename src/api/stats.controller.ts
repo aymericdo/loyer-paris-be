@@ -1,4 +1,3 @@
-import { IpService } from '@services/helpers/ip'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { getAdoptionRate } from '@services/stats/adoption'
 import { getChloroplethCitiesMap } from '@services/stats/chloropleth-cities-map'
@@ -13,54 +12,17 @@ import { getMap } from '@services/stats/map'
 import { getPriceDifference } from '@services/stats/price-difference'
 import { getPriceVariation } from '@services/stats/price-variation'
 import { getWelcomeText } from '@services/stats/welcome-text'
-import axios from 'axios'
 import express, { NextFunction, Request, Response } from 'express'
 const router = express.Router()
 
 router.get('/need-captcha', getNeedCaptcha)
 function getNeedCaptcha(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getNeedCaptcha`, 'blue')
-  const ipService = new IpService(req)
-  res.status(200).json(!ipService.isIpCached())
+  res.status(200).json(false)
 }
 
 router.use('/', function (req: Request, res: Response, next: NextFunction) {
-  const ipService = new IpService(req)
-
-  if (ipService.isIpCached()) {
-    next()
-  } else {
-    if (!req.query.recaptchaToken) {
-      return res.status(403).json({
-        message: 'token expired',
-      })
-    }
-    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SECRET}&response=${req.query.recaptchaToken}`
-    axios
-      .post(
-        url,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-          },
-        }
-      )
-      .then((response) => {
-        if (!response.data.success) {
-          return res.status(500).json({
-            message: response.data['error-codes'].join('.'),
-          })
-        } else {
-          ipService.saveIp()
-        }
-
-        next()
-      })
-      .catch(() => {
-        return res.status(500).json({ message: 'oops, something went wrong on our side' })
-      })
-  }
+  next()
 })
 
 // routes
