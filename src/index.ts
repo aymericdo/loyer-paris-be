@@ -9,7 +9,6 @@ import express, { NextFunction, Request, Response } from 'express'
 
 import path from 'path'
 import { nodeProfilingIntegration } from '@sentry/profiling-node'
-import { Slack } from '@messenger/slack'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { ApiErrorsService } from '@services/api/errors'
 import { ApiError } from '@interfaces/shared'
