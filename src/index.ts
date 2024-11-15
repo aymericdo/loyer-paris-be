@@ -93,6 +93,7 @@ app.use(function onError(err: ApiError | Error, req: Request, res: (Response & {
   const apiError = new ApiErrorsService(err as ApiError)
   apiError.logger()
   apiError.sendSlackErrorMessage(res.sentry)
+  apiError.saveIncompleteRent()
 
   const status = apiError.status
   if (status === 500) {

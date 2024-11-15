@@ -45,10 +45,6 @@ export class ApiErrorsService {
         PrettyLog.call(errorMsg, 'red')
       }
     }
-
-    if (this.error?.isIncompleteAd) {
-      this.saveIncompleteRent()
-    }
   }
 
   async sendSlackErrorMessage(sentryId?: string): Promise<void> {
@@ -56,30 +52,16 @@ export class ApiErrorsService {
       new Slack().sendMessage('#bad-location', `${this.incompleteAd?.website} : ${this.error.msg}`)
     }
 
-    new Slack().sendMessage('#errors',
-      `Error ${this.status} : ${JSON.stringify(this.error)}\n`+
-      `(https://encadrement-loyers.sentry.io/issues/?query=${sentryId})`
-    )
-  }
-
-  private getStatus(error: ApiError): number {
-    switch (error?.error as ERROR_CODE) {
-      case ERROR_CODE.Minimal:
-      case ERROR_CODE.Address:
-      case ERROR_CODE.BadLocation:
-      case ERROR_CODE.Price:
-      case ERROR_CODE.Surface:
-      case ERROR_CODE.Other:
-        return 400
-      case ERROR_CODE.Filter:
-        return 501
-      default:
-        return 500
+    if (this.status === 500) {
+      new Slack().sendMessage('#errors',
+        `Error ${this.status} : ${JSON.stringify(this.error)}\n`+
+        `(https://encadrement-loyers.sentry.io/issues/?query=${sentryId})`
+      )
     }
   }
 
-  private async saveIncompleteRent() {
-    if (!this.incompleteAd) return
+  async saveIncompleteRent() {
+    if (!this.error?.isIncompleteAd || !this.incompleteAd) return
 
     const incompleteRent = new IncompleteRent({
       id: this.incompleteAd.id,
@@ -99,6 +81,22 @@ export class ApiErrorsService {
       } else {
         console.error(err)
       }
+    }
+  }
+
+  private getStatus(error: ApiError): number {
+    switch (error?.error as ERROR_CODE) {
+      case ERROR_CODE.Minimal:
+      case ERROR_CODE.Address:
+      case ERROR_CODE.BadLocation:
+      case ERROR_CODE.Price:
+      case ERROR_CODE.Surface:
+      case ERROR_CODE.Other:
+        return 400
+      case ERROR_CODE.Filter:
+        return 501
+      default:
+        return 500
     }
   }
 }
