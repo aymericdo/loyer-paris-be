@@ -11,10 +11,10 @@ function getByData(req: Request, res: Response) {
 }
 
 router.post('/data/v2', getByDataV2)
-function getByDataV2(req: Request, res: Response) {
+async function getByDataV2(req: Request, res: Response) {
   PrettyLog.call(`-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`, 'blue')
   const leboncoin = new LeBonCoin(res, { body: req.body })
-  leboncoin.analyse()
+  await leboncoin.analyse()
 }
 
 module.exports = router

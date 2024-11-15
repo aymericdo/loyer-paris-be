@@ -22,34 +22,31 @@ export class ApiErrorsService {
     this.error = error
   }
 
-  getStatus(needLog = true): number {
-    if (needLog) {
-      switch (this.error?.error as ERROR_CODE) {
-        case ERROR_CODE.Filter:
-          PrettyLog.call(this.error.msg, 'red')
-          break
-        case ERROR_CODE.Partner:
-        case ERROR_CODE.City:
-          PrettyLog.call(this.error.msg)
-          break
-        case ERROR_CODE.Minimal:
-        case ERROR_CODE.Other:
-        case ERROR_CODE.Address:
-        case ERROR_CODE.Price:
-        case ERROR_CODE.Surface:
-          PrettyLog.call(this.error.msg, 'yellow')
-          break
-        default: {
-          const errorMsg = `${ERROR500_MSG} ${this.error?.stack || JSON.stringify(this.error)}`
-          PrettyLog.call(errorMsg, 'red')
-        }
-      }
-
-      if (this.error?.isIncompleteAd) {
-        this.saveIncompleteRent()
+  logger(): void {
+    switch (this.error?.error as ERROR_CODE) {
+      case ERROR_CODE.Filter:
+        PrettyLog.call(this.error.msg, 'red'); break
+      case ERROR_CODE.Partner:
+      case ERROR_CODE.City:
+        PrettyLog.call(this.error.msg); break
+      case ERROR_CODE.Minimal:
+      case ERROR_CODE.Other:
+      case ERROR_CODE.Address:
+      case ERROR_CODE.Price:
+      case ERROR_CODE.Surface:
+        PrettyLog.call(this.error.msg, 'yellow'); break
+      default: {
+        const errorMsg = `${ERROR500_MSG} ${this.error?.stack}`
+        PrettyLog.call(errorMsg, 'red')
       }
     }
 
+    if (this.error?.isIncompleteAd) {
+      this.saveIncompleteRent()
+    }
+  }
+
+  getStatus(): number {
     switch (this.error?.error as ERROR_CODE) {
       case ERROR_CODE.Minimal:
       case ERROR_CODE.Address:
@@ -63,10 +60,7 @@ export class ApiErrorsService {
       case ERROR_CODE.Partner:
         return 503
       default:
-        throw {
-          error: ERROR500_MSG,
-          msg: `${this.error?.stack?.toString() || this.error.toString()}`,
-        }
+        return 500
     }
   }
 
