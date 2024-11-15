@@ -1,34 +1,39 @@
 import { IncompleteRent } from '@db/db'
+import { IncompleteAd } from '@interfaces/ad'
 import { ApiError } from '@interfaces/shared'
+import { Slack } from '@messenger/slack'
 import { PrettyLog } from '@services/helpers/pretty-log'
 
 export enum ERROR_CODE {
   Other = 'other',
   Minimal = 'minimal',
   Address = 'address',
-  City = 'city',
+  BadLocation = 'badLocation',
   Price = 'price',
   Surface = 'surface',
   Filter = 'filter',
-  Partner = 'partner',
 }
 
 export const ERROR500_MSG = '[ERROR 500]'
 
 export class ApiErrorsService {
   error: ApiError = null
+  incompleteAd: IncompleteAd = null
+  status: number = null
 
   constructor(error: ApiError) {
     this.error = error
+    this.incompleteAd = error?.incompleteAd
+    this.status = this.getStatus(error)
   }
 
   logger(): void {
     switch (this.error?.error as ERROR_CODE) {
       case ERROR_CODE.Filter:
         PrettyLog.call(this.error.msg, 'red'); break
-      case ERROR_CODE.Partner:
-      case ERROR_CODE.City:
-        PrettyLog.call(this.error.msg); break
+      case ERROR_CODE.BadLocation:
+        PrettyLog.call(this.error.msg, 'yellow')
+        break
       case ERROR_CODE.Minimal:
       case ERROR_CODE.Other:
       case ERROR_CODE.Address:
@@ -46,35 +51,43 @@ export class ApiErrorsService {
     }
   }
 
-  getStatus(): number {
-    switch (this.error?.error as ERROR_CODE) {
+  async sendSlackErrorMessage(sentryId?: string): Promise<void> {
+    if (this.error?.error === ERROR_CODE.BadLocation) {
+      new Slack().sendMessage('#bad-location', `${this.incompleteAd?.website} : ${this.error.msg}`)
+    }
+
+    new Slack().sendMessage('#errors',
+      `Error ${this.status} : ${JSON.stringify(this.error)}\n`+
+      `(https://encadrement-loyers.sentry.io/issues/?query=${sentryId})`
+    )
+  }
+
+  private getStatus(error: ApiError): number {
+    switch (error?.error as ERROR_CODE) {
       case ERROR_CODE.Minimal:
       case ERROR_CODE.Address:
-      case ERROR_CODE.City:
+      case ERROR_CODE.BadLocation:
       case ERROR_CODE.Price:
       case ERROR_CODE.Surface:
       case ERROR_CODE.Other:
         return 400
       case ERROR_CODE.Filter:
         return 501
-      case ERROR_CODE.Partner:
-        return 503
       default:
         return 500
     }
   }
 
-  async saveIncompleteRent() {
-    const ad = this.error.incompleteAd
-    if (!ad) return
+  private async saveIncompleteRent() {
+    if (!this.incompleteAd) return
 
     const incompleteRent = new IncompleteRent({
-      id: ad.id,
-      url: ad.url,
-      website: ad.website,
+      id: this.incompleteAd.id,
+      url: this.incompleteAd.url,
+      website: this.incompleteAd.website,
       errorType: this.error.error,
       errorMessage: this.error.msg,
-      ...(ad.city != null && { city: ad.city }),
+      ...(this.incompleteAd.city != null && { city: this.incompleteAd.city }),
     })
 
     try {

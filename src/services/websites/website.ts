@@ -58,12 +58,13 @@ export abstract class Website {
   async digData() {
     const ad: Ad = await this.mapping()
     const url = this.body.url && new URL(this.body.url)
-
-    const cityService = new CityFilter(ad.cityLabel)
-    const city: AvailableCities = cityService.findCity()
-    const mainCity: AvailableMainCities = getMainCity(city)
+    let city: AvailableCities | null = null
 
     try {
+      const cityService = new CityFilter(ad.cityLabel)
+      city = cityService.findCity()
+      const mainCity: AvailableMainCities = getMainCity(city)
+
       const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
 
       const CurrentEncadrementFilter = new EncadrementFilterFactory(getMainCity(city)).currentEncadrementFilter()

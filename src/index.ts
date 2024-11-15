@@ -90,10 +90,11 @@ if (process.env.CURRENT_ENV === 'prod') {
 
 app.use(Sentry.Handlers.errorHandler())
 app.use(function onError(err: ApiError | Error, req: Request, res: (Response & { sentry: string }), next: NextFunction) {
-  const status = new ApiErrorsService(err as ApiError).getStatus()
-  new ApiErrorsService(err as ApiError).logger()
-  new Slack().sendMessage('#errors', `Error ${status} : ${JSON.stringify(err)} (sentryId: ${res.sentry})`)
+  const apiError = new ApiErrorsService(err as ApiError)
+  apiError.logger()
+  apiError.sendSlackErrorMessage(res.sentry)
 
+  const status = apiError.status
   if (status === 500) {
     next(err)
   } else {

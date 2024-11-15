@@ -1,8 +1,6 @@
 import { string } from '@services/helpers/cleanup'
 import { ERROR_CODE } from '@services/api/errors'
 import { AvailableCities, getCityList } from '@services/filters/city-filter/city-list'
-import { PrettyLog } from '@services/helpers/pretty-log'
-import { Slack } from '@messenger/slack'
 import Fuse from 'fuse.js'
 
 export class CityFilter {
@@ -32,12 +30,10 @@ export class CityFilter {
 
     if (!currentCity) {
       const message = `city '${cityName}' not found in the list`
-      PrettyLog.call(message, 'yellow')
-      new Slack().sendMessage('#bad-location', message)
 
       throw {
-        error: ERROR_CODE.City,
-        msg: 'city not found in the list',
+        error: ERROR_CODE.BadLocation,
+        msg: message,
       }
     }
 
