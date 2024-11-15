@@ -1,3 +1,4 @@
+import { ApiErrorsService } from '@services/api/errors'
 import { getRelevantAdsData, getRelevantAdsDataTotalCount } from '@services/db/queries/get-relevants-ad'
 import { AvailableCityZones, AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
@@ -50,10 +51,16 @@ export async function getRelevantAds(req: Request, res: Response) {
     isLegal,
   }
 
-  const [data, total] = await Promise.all([getRelevantAdsData(filter, { page, perPage }), getRelevantAdsDataTotalCount(filter)])
-  res.set({
-    'X-Total-Count': total.toString(),
-    'Access-Control-Expose-Headers': 'X-Total-Count',
-  })
-  res.json(data)
+  Promise.all([getRelevantAdsData(filter, { page, perPage }), getRelevantAdsDataTotalCount(filter)])
+    .then(([data, total]) => {
+      res.set({
+        'X-Total-Count': total.toString(),
+        'Access-Control-Expose-Headers': 'X-Total-Count',
+      })
+      res.json(data)
+    })
+    .catch((err) => {
+      const status = new ApiErrorsService(err).getStatus()
+      res.status(status).json(err)
+    })
 }

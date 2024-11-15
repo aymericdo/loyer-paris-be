@@ -1,6 +1,5 @@
 import { getShamefulAdsData } from '@services/db/queries/get-shameful-ads'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
-import { PrettyLog } from '@services/helpers/pretty-log'
 import TwitterApi from 'twitter-api-v2'
 
 type CityInfo = [AvailableMainCities, string, string]
@@ -44,7 +43,8 @@ export class NameAndShameService {
           .join('\n')
         tweetText += `\ncc ${prefecture}`
         const { data: createdTweet } = await this.v2Client.tweet(tweetText)
-        PrettyLog.call(`Tweet ${createdTweet.id} : ${createdTweet.text} has been sent !`, 'blue')
+        // eslint-disable-next-line no-console
+        console.log('Tweet', createdTweet.id, ':', createdTweet.text, 'has been sent !')
       }
     })
   }

@@ -4,10 +4,10 @@ import express, { Request, Response } from 'express'
 const router = express.Router()
 
 router.post('/data/v2', getByDataV2)
-async function getByDataV2(req: Request, res: Response) {
+function getByDataV2(req: Request, res: Response) {
   PrettyLog.call(`-> v2${req.baseUrl}/${req.body.id} getByData (${req.body.platform})`, 'blue')
   const luxresidence = new LuxResidence(res, { body: req.body })
-  await luxresidence.analyse()
+  luxresidence.analyse()
 }
 
 module.exports = router

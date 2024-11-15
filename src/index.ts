@@ -5,13 +5,11 @@ dotenv.config()
 import { CronJobsService } from '@cronjobs/cronjobs'
 import * as Sentry from '@sentry/node'
 import cors from 'cors'
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 
 import path from 'path'
 import { nodeProfilingIntegration } from '@sentry/profiling-node'
-import { PrettyLog } from '@services/helpers/pretty-log'
-import { ApiErrorsService } from '@services/api/errors'
-import { ApiError } from '@interfaces/shared'
+import { Slack } from '@messenger/slack'
 
 const app = express()
 
@@ -88,19 +86,14 @@ if (process.env.CURRENT_ENV === 'prod') {
 }
 
 app.use(Sentry.Handlers.errorHandler())
-app.use(function onError(err: ApiError | Error, req: Request, res: (Response & { sentry: string }), next: NextFunction) {
-  const apiError = new ApiErrorsService(err as ApiError)
-  apiError.logger()
-  apiError.sendSlackErrorMessage(res.sentry)
-  apiError.saveIncompleteRent()
 
-  const status = apiError.status
-  if (status === 500) {
-    next(err)
-  } else {
-    res.status(status).json(err)
-  }
+// Optional fallthrough error handler
+app.use(function onError(err, req, res, next) {
+  new Slack().sendMessage('#errors', `${err} (id: ${res.sentry})`)
+
+  next()
 })
 
 const port = process.env.PORT || 3000
-app.listen(port, () => PrettyLog.call(`Encadrement app listening on port ${port}!`, 'yellow'))
+// eslint-disable-next-line no-console
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))

@@ -1,7 +1,8 @@
 import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
 import { Body } from '@interfaces/scrap-mapping'
+import { ApiError } from '@interfaces/shared'
 import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
-import { ERROR_CODE } from '@services/api/errors'
+import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'
 import { SerializerService } from '@services/api/serializer'
 import { SaveRentService } from '@services/db/save-rent'
 import { DigService } from '@services/diggers/dig'
@@ -48,9 +49,15 @@ export abstract class Website {
     this.body = props.body
   }
 
-  async analyse(): Promise<void> {
-    const data = await this.digData()
-    this.res.json(data)
+  analyse(): void {
+    this.digData()
+      .then((data) => {
+        this.res.json(data)
+      })
+      .catch((err: ApiError) => {
+        const status = new ApiErrorsService(err).getStatus()
+        this.res.status(status).json(err)
+      })
   }
 
   abstract mapping(): Promise<Ad>
@@ -58,13 +65,12 @@ export abstract class Website {
   async digData() {
     const ad: Ad = await this.mapping()
     const url = this.body.url && new URL(this.body.url)
-    let city: AvailableCities | null = null
+
+    const cityService = new CityFilter(ad.cityLabel)
+    const city: AvailableCities = cityService.findCity()
+    const mainCity: AvailableMainCities = getMainCity(city)
 
     try {
-      const cityService = new CityFilter(ad.cityLabel)
-      city = cityService.findCity()
-      const mainCity: AvailableMainCities = getMainCity(city)
-
       const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
 
       const CurrentEncadrementFilter = new EncadrementFilterFactory(getMainCity(city)).currentEncadrementFilter()

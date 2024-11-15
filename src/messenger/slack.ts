@@ -1,4 +1,3 @@
-import { PrettyLog } from '@services/helpers/pretty-log'
 import { LogLevel, WebClient } from '@slack/web-api'
 
 export class Slack {
@@ -16,7 +15,8 @@ export class Slack {
       })
 
       if (process.env.CURRENT_ENV !== 'prod') {
-        PrettyLog.call(JSON.stringify(result), 'green')
+        // eslint-disable-next-line no-console
+        console.log(result)
       }
     } catch (error) {
       console.error(error)

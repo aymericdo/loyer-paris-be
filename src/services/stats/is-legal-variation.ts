@@ -1,10 +1,11 @@
+import { ApiErrorsService } from '@services/api/errors'
 import { getLegalPerDate } from '@services/db/queries/get-legal-per-date'
 import { AvailableCityZones, AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 
-export async function getIsLegalVariation(req: Request, res: Response) {
+export function getIsLegalVariation(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} isLegalVariation`, 'blue')
 
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
@@ -27,112 +28,118 @@ export async function getIsLegalVariation(req: Request, res: Response) {
   const isParticulier =
     isParticulierValue.toLowerCase() === 'true' ? true : isParticulierValue.toLowerCase() === 'false' ? false : null
 
-  const data = await getLegalPerDate(mainCity, districtList, surfaceRange, roomRange, hasFurniture, dateRange, isParticulier)
-  if (!data.length) {
-    res.status(403).json({ message: 'not_enough_data' })
-    return
-  }
-
-  const vegaOpt = Vega.commonOpt()
-  const vegaMap = {
-    ...vegaOpt,
-    title: {
-      ...vegaOpt.title,
-      text: 'Annonces non conformes au cours du temps',
-    },
-    padding: {
-      ...vegaOpt.padding,
-      top: 24,
-    },
-    data: {
-      values: data,
-    },
-    transform: [
-      {
-        calculate: 'datum.illegalPercentage / 100',
-        as: 'illegalPercentageDecimal'
-      },
-      {
-        calculate: 'datetime(parseInt(split(datum.weekDate, \'-\')[0]), 0, 1 + (parseInt(split(datum.weekDate, \'-\')[1])-1)*7)',
-        as: 'date'
+  getLegalPerDate(mainCity, districtList, surfaceRange, roomRange, hasFurniture, dateRange, isParticulier)
+    .then((data) => {
+      if (!data.length) {
+        res.status(403).json({ message: 'not_enough_data' })
+        return
       }
-    ],
-    layer: [
-      {
-        mark: {
-          type: 'line',
-          interpolate: 'monotone',
-          color: '#fff',
-          size: 1,
+
+      const vegaOpt = Vega.commonOpt()
+      const vegaMap = {
+        ...vegaOpt,
+        title: {
+          ...vegaOpt.title,
+          text: 'Annonces non conformes au cours du temps',
         },
-        encoding: {
-          x: { field: 'date', type: 'temporal', title: 'Semaine' },
-          color: { 'value': '#fff' },
-          y: {
-            field: 'illegalPercentageDecimal',
-            type: 'quantitative',
-            title: 'Pourcentage non conforme (%)',
-            axis: { format: '.1%' }
-          },
-          tooltip: [
-            {
-              field: 'date',
-              type: 'temporal',
-              format: 'Semaine %W-%Y',
-              title: 'Semaine'
-            },
-            {
-              field: 'illegalPercentageDecimal',
-              type: 'quantitative',
-              title: 'Pourcentage non conforme',
-              format: '.1%'
-            },
-            { field: 'totalCount', type: 'quantitative', title: 'Total' }
-          ]
-        }
-      },
-      {
-        mark: {
-          type: 'line',
-          interpolate: 'monotone',
-          color: '#fdcd56',
-          size: 4,
+        padding: {
+          ...vegaOpt.padding,
+          top: 24,
+        },
+        data: {
+          values: data,
         },
         transform: [
           {
-            loess: 'illegalPercentageDecimal',
-            on: 'date',
-            bandwidth: 0.4,
+            calculate: 'datum.illegalPercentage / 100',
+            as: 'illegalPercentageDecimal'
+          },
+          {
+            calculate: 'datetime(parseInt(split(datum.weekDate, \'-\')[0]), 0, 1 + (parseInt(split(datum.weekDate, \'-\')[1])-1)*7)',
+            as: 'date'
           }
         ],
-        encoding: {
-          x: {
-            field: 'date',
-            type: 'temporal',
-            'axis': { format: 'Semaine %W-%Y' }
-          },
-          y: {
-            field: 'illegalPercentageDecimal',
-            type: 'quantitative',
-          },
-          tooltip: [
-            {
-              field: 'date',
-              type: 'temporal',
-              format: 'Semaine %W-%Y',
-              title: 'Semaine'
+        layer: [
+          {
+            mark: {
+              type: 'line',
+              interpolate: 'monotone',
+              color: '#fff',
+              size: 1,
             },
-            {
-              field: 'illegalPercentageDecimal',
-              type: 'quantitative',
-              title: 'Pourcentage lissé',
-              format: '.1%'
+            encoding: {
+              x: { field: 'date', type: 'temporal', title: 'Semaine' },
+              color: { 'value': '#fff' },
+              y: {
+                field: 'illegalPercentageDecimal',
+                type: 'quantitative',
+                title: 'Pourcentage non conforme (%)',
+                axis: { format: '.1%' }
+              },
+              tooltip: [
+                {
+                  field: 'date',
+                  type: 'temporal',
+                  format: 'Semaine %W-%Y',
+                  title: 'Semaine'
+                },
+                {
+                  field: 'illegalPercentageDecimal',
+                  type: 'quantitative',
+                  title: 'Pourcentage non conforme',
+                  format: '.1%'
+                },
+                { field: 'totalCount', type: 'quantitative', title: 'Total' }
+              ]
             }
-          ]
-        }
+          },
+          {
+            mark: {
+              type: 'line',
+              interpolate: 'monotone',
+              color: '#fdcd56',
+              size: 4,
+            },
+            transform: [
+              {
+                loess: 'illegalPercentageDecimal',
+                on: 'date',
+                bandwidth: 0.4,
+              }
+            ],
+            encoding: {
+              x: {
+                field: 'date',
+                type: 'temporal',
+                'axis': { format: 'Semaine %W-%Y' }
+              },
+              y: {
+                field: 'illegalPercentageDecimal',
+                type: 'quantitative',
+              },
+              tooltip: [
+                {
+                  field: 'date',
+                  type: 'temporal',
+                  format: 'Semaine %W-%Y',
+                  title: 'Semaine'
+                },
+                {
+                  field: 'illegalPercentageDecimal',
+                  type: 'quantitative',
+                  title: 'Pourcentage lissé',
+                  format: '.1%'
+                }
+              ]
+            }
+          }
+        ]
       }
-    ]
-  }
 
-  res.json(vegaMap)
+      res.json(vegaMap)
+    })
+    .catch((err) => {
+      const status = new ApiErrorsService(err).getStatus()
+      res.status(status).json(err)
+    })
 }
