@@ -1,7 +1,7 @@
 import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
 import { Body } from '@interfaces/scrap-mapping'
 import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
-import { ERROR_CODE } from '@services/api/errors'
+import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'
 import { SerializerService } from '@services/api/serializer'
 import { SaveRentService } from '@services/db/save-rent'
 import { DigService } from '@services/diggers/dig'
@@ -12,6 +12,7 @@ import { Response } from 'express'
 import { CityFilter } from '@services/filters/city-filter/city-filter'
 import { isFake } from '@services/filters/city-filter/fake'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { ApiError } from '@interfaces/shared'
 
 export const DPE_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 export const PARTICULIER = 'Particulier'
@@ -49,8 +50,20 @@ export abstract class Website {
   }
 
   async analyse(): Promise<void> {
-    const data = await this.digData()
-    this.res.json(data)
+    try {
+      const data = await this.digData()
+      this.res.json(data)
+    } catch (error) {
+      const apiError = new ApiErrorsService(error as ApiError)
+      apiError.logger()
+      apiError.saveIncompleteRent()
+      const status = apiError.status
+      if (status > 500) {
+        throw error
+      } else {
+        this.res.status(status).json(error)
+      }
+    }
   }
 
   abstract mapping(): Promise<Ad>

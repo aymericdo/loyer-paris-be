@@ -90,12 +90,10 @@ if (process.env.CURRENT_ENV === 'prod') {
 app.use(Sentry.Handlers.errorHandler())
 app.use(function onError(err: ApiError | Error, req: Request, res: (Response & { sentry: string }), next: NextFunction) {
   const apiError = new ApiErrorsService(err as ApiError)
-  apiError.logger()
   apiError.sendSlackErrorMessage(res.sentry)
-  apiError.saveIncompleteRent()
 
   const status = apiError.status
-  if (status === 500) {
+  if (status > 500) {
     next(err)
   } else {
     res.status(status).json(err)
