@@ -5,7 +5,7 @@ import TwitterApi from 'twitter-api-v2'
 
 type CityInfo = [AvailableMainCities, string, string]
 
-const MAX_DELTA = 200
+const MAX_DELTA = 100
 export class NameAndShameService {
   twitterClient = new TwitterApi({
     appKey: process.env.TWITTER_API_KEY,
@@ -21,16 +21,17 @@ export class NameAndShameService {
   async call() {
     [
       ['paris', 'Paris', '@Paris'],
-      ['plaineCommune', 'Plaine Commune', '@prefpolice'],
+      // ['plaineCommune', 'Plaine Commune', '@prefpolice'],
       ['lille', 'Lille', '@prefet59'],
       ['lyon', 'Lyon', '@prefetrhone'],
-      ['estEnsemble', 'Est Ensemble', '@prefpolice'],
+      // ['estEnsemble', 'Est Ensemble', '@prefpolice'],
       ['bordeaux', 'Bordeaux', '@PrefAquitaine33'],
       ['montpellier', 'Montpellier', '@Prefet34'],
-    ].forEach(async ([city, cityValue, prefecture]: CityInfo) => {
-      const ads = await getShamefulAdsData(city, MAX_DELTA)
+      ['paysBasque', 'Pays Basque', '@Prefet64'],
+    ].forEach(async ([mainCity, cityValue, prefecture]: CityInfo) => {
+      const ads = await getShamefulAdsData(mainCity, MAX_DELTA)
 
-      if (ads.length) {
+      if (ads.length > 5) {
         let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${
           ads.length > 1 ? 's' : ''
         } à ${cityValue} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${MAX_DELTA}€ : `
