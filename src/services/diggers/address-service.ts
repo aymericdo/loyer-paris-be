@@ -27,8 +27,8 @@ export class AddressService {
     const limit = 5
 
     try {
-      const result = await axios.get(`https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${inseeCode(city)}&autocomplete=1`)
-      const dataGouv: DataGouvAddress = result.data
+      const response = await axios(`https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${inseeCode(city)}&autocomplete=1`)
+      const dataGouv: DataGouvAddress = response.data
       return dataGouv.features
     } catch (error) {
       PrettyLog.call(JSON.stringify(error), 'red')

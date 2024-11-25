@@ -27,7 +27,7 @@ export async function getChloroplethCitiesMap(req: Request, res: Response) {
 
   const geojsonPromises = Object.keys(cityByInseeCodes).map(async (inseeCode) => {
     try {
-      return await axios.get(`https://geo.api.gouv.fr/communes/${inseeCode}?fields=code,nom,contour`)
+      return await axios(`https://geo.api.gouv.fr/communes/${inseeCode}?fields=code,nom,contour`)
     } catch (error) {
       PrettyLog.call(error.message, 'red')
     }
