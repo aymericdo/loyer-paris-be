@@ -93,7 +93,7 @@ app.use(function onError(err: ApiError | Error, req: Request, res: (Response & {
   apiError.sendSlackErrorMessage(res.sentry)
 
   const status = apiError.status
-  if (status > 500) {
+  if (status >= 500) {
     next(err)
   } else {
     res.status(status).json(err)

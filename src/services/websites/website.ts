@@ -58,7 +58,7 @@ export abstract class Website {
       apiError.logger()
       apiError.saveIncompleteRent()
       const status = apiError.status
-      if (status > 500) {
+      if (status >= 500) {
         throw error
       } else {
         this.res.status(status).json(error)
