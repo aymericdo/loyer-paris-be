@@ -27,7 +27,8 @@ interface RelevantAdsData {
 }
 
 function buildFilter(filterParam: {
-  city: AvailableMainCities | 'all'
+  mainCity: AvailableMainCities | 'all'
+  city: AvailableCities | 'all'
   districtList: AvailableCityZones
   surfaceRange: [number, number]
   priceRange: [number, number]
@@ -44,7 +45,7 @@ function buildFilter(filterParam: {
     isLegal: filterParam.isLegal,
     createdAt: { $gte: minDate },
     ...getClassicWebsiteFilter(),
-    ...getCityFilter(filterParam.city),
+    ...(filterParam.city ? { city: filterParam.city } : getCityFilter(filterParam.mainCity)),
     ...getDistrictFilter(filterParam.districtList),
     ...getFurnitureFilter(filterParam.hasFurniture),
     ...getHouseFilter(filterParam.isHouse),
@@ -59,7 +60,8 @@ function buildFilter(filterParam: {
 
 export async function getRelevantAdsData(
   filterParam: {
-    city: AvailableMainCities | 'all'
+    mainCity: AvailableMainCities | 'all'
+    city: AvailableCities | 'all'
     districtList: AvailableCityZones
     surfaceRange: [number, number]
     priceRange: [number, number]
@@ -141,7 +143,8 @@ export async function getRelevantAdsData(
 }
 
 export async function getRelevantAdsDataTotalCount(filterParam: {
-  city: AvailableMainCities | 'all'
+  mainCity: AvailableMainCities | 'all'
+  city: AvailableCities | 'all'
   districtList: AvailableCityZones
   surfaceRange: [number, number]
   priceRange: [number, number]

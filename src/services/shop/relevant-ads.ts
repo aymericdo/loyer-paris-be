@@ -1,5 +1,5 @@
 import { getRelevantAdsData, getRelevantAdsDataTotalCount } from '@services/db/queries/get-relevants-ad'
-import { AvailableCityZones, AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableCities, AvailableCityZones, AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
 
@@ -8,7 +8,8 @@ export async function getRelevantAds(req: Request, res: Response) {
   const page: number = +req.query.page
   const perPage: number = +req.query.perPage
 
-  const city: AvailableMainCities | 'all' = (req.query.cityValue as AvailableMainCities | 'all') || null
+  const mainCity: AvailableMainCities | 'all' = (req.query.cityValue as AvailableMainCities | 'all') || null
+  const city: AvailableCities | 'all' = (req.query.cityValue2 as AvailableCities | 'all') || null
   const districtValues: string = (req.query.districtValues as string) || null
   const priceValue = (req.query.priceValue as string) || null
   const exceedingValue = (req.query.exceedingValue as string) || null
@@ -39,6 +40,7 @@ export async function getRelevantAds(req: Request, res: Response) {
   const isHouse: boolean = isHouseValue && isHouseValue != 'null' ? +isHouseValue === 1 : null
 
   const filter = {
+    mainCity,
     city,
     districtList,
     surfaceRange,
