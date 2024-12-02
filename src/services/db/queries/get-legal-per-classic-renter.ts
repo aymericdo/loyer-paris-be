@@ -1,5 +1,5 @@
 import { Rent } from '@db/db'
-import { getCityFilter, getClassicSurfaceFilter, getDateRangeFilter } from '@services/db/queries/common'
+import { getMainCityFilter, getClassicSurfaceFilter, getDateRangeFilter } from '@services/db/queries/common'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'
 
@@ -11,7 +11,7 @@ export async function getLegalPerClassicRenterData(
 ): Promise<{ isLegal: boolean; renter: string }[]> {
   const filter = {
     ...getClassicSurfaceFilter(),
-    ...getCityFilter(city),
+    ...getMainCityFilter(city),
     ...getDateRangeFilter(dateRange),
     ...(website ? {
       $or: [{ renter: { $regex: renterNameRegex } }, { website }]

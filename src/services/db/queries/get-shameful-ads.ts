@@ -1,5 +1,5 @@
 import { Rent } from '@db/db'
-import { getCityFilter } from '@services/db/queries/common'
+import { getMainCityFilter } from '@services/db/queries/common'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export async function getShamefulAdsData(
@@ -22,7 +22,7 @@ export async function getShamefulAdsData(
     $expr: {
       $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta],
     },
-    ...getCityFilter(city as AvailableMainCities),
+    ...getMainCityFilter(city as AvailableMainCities),
   }
 
   return (await Rent.find(

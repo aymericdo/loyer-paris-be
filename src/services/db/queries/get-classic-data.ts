@@ -1,5 +1,5 @@
 import { Rent } from '@db/db'
-import { getCityFilter, getDateRangeFilter, getClassicFilter } from '@services/db/queries/common'
+import { getMainCityFilter, getDateRangeFilter, getClassicFilter } from '@services/db/queries/common'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export async function getClassicData(
@@ -10,7 +10,7 @@ export async function getClassicData(
 ): Promise<object[]> {
   const filter = {
     ...getClassicFilter(),
-    ...getCityFilter(city),
+    ...getMainCityFilter(city),
     ...getDateRangeFilter(dateRange),
     ...moreFilter
   }

@@ -11,11 +11,17 @@ export function getWebsiteFilter(website?: string): { website: string | { $nin: 
   return { website: { $nin: FUNNIEST_WEBSITES } }
 }
 
-export function getCityFilter(mainCity: AvailableMainCities | 'all'): { city: { $in: AvailableCities[] } } | { city: { $nin: string[] } } | Record<string, never> {
+export function getMainCityFilter(mainCity: AvailableMainCities | 'all'): { city: { $in: AvailableCities[] } } | { city: { $nin: string[] } } | Record<string, never> {
   if (!mainCity || mainCity === 'all') return { city: { $nin: fakeCities } }
 
   const cities = getCitiesFromMainCity(mainCity)
   return { city: { '$in': cities } }
+}
+
+export function getCityFilter(city: AvailableCities | 'all'): { city: AvailableCities } | { city: { $nin: string[] } } | Record<string, never> {
+  if (!city || city === 'all') return { city: { $nin: fakeCities } }
+
+  return { city }
 }
 
 export function getDateRangeFilter(dateRange: [string, string]): { createdAt: { $gte: Date, $lte: Date } } | Record<string, never> {

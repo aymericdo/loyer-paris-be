@@ -1,5 +1,5 @@
 import { Rent } from '@db/db'
-import { getCityFilter, getDateRangeFilter, getClassicFilter } from '@services/db/queries/common'
+import { getMainCityFilter, getDateRangeFilter, getClassicFilter } from '@services/db/queries/common'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export async function getLegalPerCity(
@@ -8,7 +8,7 @@ export async function getLegalPerCity(
 ): Promise<{ illegalPercentage: number, isIllegalCount: number, totalCount: number, city: string }[]> {
   const filter = {
     ...getClassicFilter(),
-    ...getCityFilter(city),
+    ...getMainCityFilter(city),
     ...getDateRangeFilter(dateRange),
   }
 

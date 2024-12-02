@@ -1,4 +1,4 @@
-import { getCityFilter, getDateRangeFilter, getWebsiteFilter } from '@services/db/queries/common'
+import { getMainCityFilter, getDateRangeFilter, getWebsiteFilter } from '@services/db/queries/common'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { Rent } from '@db/db'
 
@@ -7,7 +7,7 @@ export async function getAdsWithCoordinates(
   dateRange: [string, string]
 ): Promise<{ isLegal: boolean; latitude: number; longitude: number; district: string }[]> {
   const filter = {
-    ...getCityFilter(city),
+    ...getMainCityFilter(city),
     ...getDateRangeFilter(dateRange),
     ...getWebsiteFilter(),
     latitude: { $exists: true },

@@ -1,5 +1,5 @@
 import { Rent } from '@db/db'
-import { getCityFilter, getClassicWebsiteFilter, getDateRangeFilter, getDistrictFilter, getFurnitureFilter, getIsParticulierFilter, getRoomFilter, getSurfaceFilter } from '@services/db/queries/common'
+import { getMainCityFilter, getClassicWebsiteFilter, getDateRangeFilter, getDistrictFilter, getFurnitureFilter, getIsParticulierFilter, getRoomFilter, getSurfaceFilter } from '@services/db/queries/common'
 import { AvailableCityZones, AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 function basicFilter(
@@ -13,7 +13,7 @@ function basicFilter(
 ) {
   const filter = {
     ...getClassicWebsiteFilter(),
-    ...getCityFilter(city),
+    ...getMainCityFilter(city),
     ...getDateRangeFilter(dateRange),
     ...getDistrictFilter(districtList),
     ...getFurnitureFilter(hasFurniture),

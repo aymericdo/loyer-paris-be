@@ -1,5 +1,5 @@
 import { Rent } from '@db/db'
-import { getCityFilter, getClassicWebsiteFilter, getDistrictFilter, getExceedingFilter, getFurnitureFilter, getHouseFilter, getPriceFilter, getRoomFilter, getSurfaceFilter } from '@services/db/queries/common'
+import { getMainCityFilter, getClassicWebsiteFilter, getDistrictFilter, getExceedingFilter, getFurnitureFilter, getHouseFilter, getPriceFilter, getRoomFilter, getSurfaceFilter, getCityFilter } from '@services/db/queries/common'
 import { DistrictsList } from '@services/districts/districts-list'
 import { AvailableCities, AvailableCityZones, AvailableMainCities, getMainCity } from '@services/filters/city-filter/city-list'
 import { isFake } from '@services/filters/city-filter/fake'
@@ -45,7 +45,7 @@ function buildFilter(filterParam: {
     isLegal: filterParam.isLegal,
     createdAt: { $gte: minDate },
     ...getClassicWebsiteFilter(),
-    ...(filterParam.city ? { city: filterParam.city } : getCityFilter(filterParam.mainCity)),
+    ...(filterParam.city ? getCityFilter(filterParam.city) : getMainCityFilter(filterParam.mainCity)),
     ...getDistrictFilter(filterParam.districtList),
     ...getFurnitureFilter(filterParam.hasFurniture),
     ...getHouseFilter(filterParam.isHouse),
