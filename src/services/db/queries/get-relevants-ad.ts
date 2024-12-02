@@ -1,7 +1,7 @@
 import { Rent } from '@db/db'
 import { getMainCityFilter, getClassicWebsiteFilter, getDistrictFilter, getExceedingFilter, getFurnitureFilter, getHouseFilter, getPriceFilter, getRoomFilter, getSurfaceFilter, getCityFilter } from '@services/db/queries/common'
 import { DistrictsList } from '@services/districts/districts-list'
-import { AvailableCities, AvailableCityZones, AvailableMainCities, getMainCity } from '@services/filters/city-filter/city-list'
+import { AvailableCities, AvailableCityZones, AvailableMainCities, getCitiesFromMainCity, getMainCity } from '@services/filters/city-filter/city-list'
 import { isFake } from '@services/filters/city-filter/fake'
 import { roundNumber } from '@services/helpers/round-number'
 import randomPositionInPolygon from 'random-position-in-polygon'
@@ -113,9 +113,10 @@ export async function getRelevantAdsData(
 
     const mainCity = getMainCity(ad.city)
     if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
+      const isMultipleCities = getCitiesFromMainCity(mainCity).length > 1
       const feature = await new DistrictsList(
         mainCity, {
-          specificDistrict: ad.district,
+          specificDistrict: isMultipleCities ? null : ad.district,
           specificCity: ad.city,
         },
       ).currentFeature()
