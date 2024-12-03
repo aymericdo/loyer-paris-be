@@ -113,10 +113,9 @@ export async function getRelevantAdsData(
 
     const mainCity = getMainCity(ad.city)
     if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
-      const isMultipleCities = getCitiesFromMainCity(mainCity).length > 1
       const feature = await new DistrictsList(
         mainCity, {
-          specificDistrict: isMultipleCities ? null : ad.district,
+          specificDistrict: ad.district,
           specificCity: ad.city,
         },
       ).currentFeature()

@@ -24,7 +24,7 @@ export class DistrictFilterLyon extends DistrictFilterParent {
     }
 
     if (this.city) {
-      filter['properties.city'] = { $regex: this.city,  $options: 'i' }
+      filter['properties.city'] = { $regex: this.city, $options: 'i' }
     }
 
     const districts = await this.GeojsonCollection.find(filter).lean()
@@ -37,7 +37,7 @@ export class DistrictFilterLyon extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find(
       {
-        'properties.city': { $regex: this.city,  $options: 'i' }
+        'properties.city': { $regex: this.city, $options: 'i' }
       },
     ).lean()
     return districts?.length ? districts : []
