@@ -3,19 +3,21 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
-import { isFake } from '@services/filters/city-filter/fake'
 import axios from 'axios'
 import { inseeCode } from '@services/filters/city-filter/code-insee'
 import { getLegalPerCity } from '@services/db/queries/get-legal-per-city'
+import { isMainCityValid } from '@services/api/validations'
 
 export async function getChloroplethCitiesMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethCitiesMap`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
+  isMainCityValid(res, mainCity, true)
+
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
 
   const cities = getCitiesFromMainCity(mainCity)
-  if (isFake(mainCity) || cities.length === 1) {
+  if (cities.length === 1) {
     res.status(403).json({ message: 'City params not valid' })
     return
   }

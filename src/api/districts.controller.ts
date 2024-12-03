@@ -1,4 +1,5 @@
 import { DataGouvAddressItem } from '@interfaces/address'
+import { isMainCityValid } from '@services/api/validations'
 import { AddressService } from '@services/diggers/address-service'
 import { DistrictsList } from '@services/districts/districts-list'
 import { AvailableMainCities, AvailableCities, mainCityList } from '@services/filters/city-filter/city-list'
@@ -12,10 +13,7 @@ router.get('/geojson/:city', getGeodata)
 async function getGeodata(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getGeodata`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  if (!mainCityList.includes(mainCity) || isFake(mainCity)) {
-    res.status(403).json({ message: 'City params not valid' })
-    return
-  }
+  isMainCityValid(res, mainCity)
 
   const geodata = await new DistrictsList(mainCity as AvailableMainCities).currentGeodata()
 
@@ -26,10 +24,7 @@ router.get('/list/:city', getDistricts)
 async function getDistricts(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getDistricts`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  if (!mainCityList.includes(mainCity) || isFake(mainCity)) {
-    res.status(403).json({ message: 'City params not valid' })
-    return
-  }
+  isMainCityValid(res, mainCity)
 
   const city: AvailableCities = req.query.city as AvailableCities
   const districtsItems = await new DistrictsList(mainCity as AvailableMainCities, { specificCity: city }).districtElemWithGroupBy()
@@ -41,13 +36,10 @@ router.get('/address/:city', getAddresses)
 async function getAddresses(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
   const mainCity = req.params.city as AvailableMainCities
+  isMainCityValid(res, mainCity)
+
   const city: AvailableCities = req.query.city.toString() as AvailableCities
   const addressQuery = req.query.q.toString()
-
-  if (!mainCityList.includes(mainCity)) {
-    res.status(403).json({ message: 'City params not valid' })
-    return
-  }
 
   if (addressQuery.trim().length < 4) {
     res.json([])

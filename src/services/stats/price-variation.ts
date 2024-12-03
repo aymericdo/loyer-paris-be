@@ -1,3 +1,4 @@
+import { isMainCityValid } from '@services/api/validations'
 import { getClassicData } from '@services/db/queries/get-classic-data'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
@@ -7,6 +8,8 @@ import { Request, Response } from 'express'
 export async function getPriceVariation(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} priceVariation`, 'blue')
   const mainCity = req.params.city as AvailableMainCities
+  isMainCityValid(res, mainCity, true)
+
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
   const data = await getClassicData(mainCity, dateRange, { isLegal: false }, { createdAt: 1, maxPrice: 1, priceExcludingCharges: 1 })

@@ -5,22 +5,19 @@ import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
 import { getLegalPerDistrict } from '@services/db/queries/get-legal-per-district'
-import { isFake } from '@services/filters/city-filter/fake'
+import { isMainCityValid } from '@services/api/validations'
 
 export async function getChloroplethMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
-  const city: AvailableMainCities = req.params.city as AvailableMainCities
+  const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
+  isMainCityValid(res, mainCity, true)
+
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
 
-  if (isFake(city)) {
-    res.status(403).json({ message: 'City params not valid' })
-    return
-  }
+  const geodata = await new DistrictsList(mainCity as AvailableMainCities).currentGeodata()
 
-  const geodata = await new DistrictsList(city as AvailableMainCities).currentGeodata()
-
-  const result: { illegalPercentage: number, isIllegalCount: number, totalCount: number, district: string }[] = await getLegalPerDistrict(city, dateRange)
+  const result: { illegalPercentage: number, isIllegalCount: number, totalCount: number, district: string }[] = await getLegalPerDistrict(mainCity, dateRange)
 
   if (!result.length) {
     res.status(403).json({ message: 'not_enough_data' })

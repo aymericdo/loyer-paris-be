@@ -5,22 +5,19 @@ import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
 import { getAdsWithCoordinates } from '@services/db/queries/get-ads-with-coordinates'
-import { isFake } from '@services/filters/city-filter/fake'
+import { isMainCityValid } from '@services/api/validations'
 
 export async function getMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getMap`, 'blue')
-  const city: AvailableMainCities = req.params.city as AvailableMainCities
+  const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
+  isMainCityValid(res, mainCity, true)
+
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').slice(0, 2) as [string, string]
 
-  if (isFake(city)) {
-    res.status(403).json({ message: 'City params not valid' })
-    return
-  }
+  const geodata = await new DistrictsList(mainCity as AvailableMainCities).currentGeodata()
 
-  const geodata = await new DistrictsList(city as AvailableMainCities).currentGeodata()
-
-  const data = await getAdsWithCoordinates(city, dateRange)
+  const data = await getAdsWithCoordinates(mainCity, dateRange)
   const vegaMap = {
     ...Vega.commonOpt(),
     layer: [
