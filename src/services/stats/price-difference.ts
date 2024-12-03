@@ -4,13 +4,11 @@ import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import { getClassicData } from '@services/db/queries/get-classic-data'
 import { PostalCodeService } from '@services/diggers/postal-code-service'
-import { isMainCityValid } from '@services/api/validations'
 
 export async function getPriceDifference(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} priceDifference`, 'blue')
 
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  isMainCityValid(res, mainCity, true)
 
   const postalCodePossibilities = new PostalCodeService(mainCity, 'all').getPostalCodePossibilities()
 

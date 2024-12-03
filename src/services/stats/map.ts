@@ -5,12 +5,10 @@ import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
 import { getAdsWithCoordinates } from '@services/db/queries/get-ads-with-coordinates'
-import { isMainCityValid } from '@services/api/validations'
 
 export async function getMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getMap`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  isMainCityValid(res, mainCity, true)
 
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').slice(0, 2) as [string, string]

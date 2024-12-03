@@ -1,5 +1,4 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { isMainCityValid } from '@services/api/validations'
 import { AvailableMainCities, getCitiesFromMainCity } from '@services/filters/city-filter/city-list'
 import { infoLink } from '@services/filters/city-filter/info-link'
 import { zones } from '@services/filters/city-filter/zones'
@@ -13,7 +12,6 @@ export async function getManualResult(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getManualResult`, 'blue')
 
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  isMainCityValid(res, mainCity)
 
   const districtValue: string = (req.query.districtValue as string) || null
   const priceValue = (req.query.priceValue as string) || null

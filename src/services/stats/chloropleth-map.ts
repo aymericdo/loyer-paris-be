@@ -5,12 +5,10 @@ import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
 import { getLegalPerDistrict } from '@services/db/queries/get-legal-per-district'
-import { isMainCityValid } from '@services/api/validations'
 
 export async function getChloroplethMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethMap`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  isMainCityValid(res, mainCity, true)
 
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]

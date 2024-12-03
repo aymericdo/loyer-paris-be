@@ -1,3 +1,4 @@
+import { paramMiddleware } from '@services/api/validations'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { getChloroplethCitiesMap } from '@services/stats/chloropleth-cities-map'
 import { getChloroplethMap } from '@services/stats/chloropleth-map'
@@ -21,17 +22,17 @@ function getNeedCaptcha(req: Request, res: Response) {
 }
 
 // routes
-router.get('/welcome/:city', getWelcomeText)
-router.get('/map/:city', getMap)
-router.get('/chloropleth-map/:city', getChloroplethMap)
-router.get('/chloropleth-cities-map/:city', getChloroplethCitiesMap)
-router.get('/price-difference/:city', getPriceDifference)
-router.get('/is-legal-per-surface/:city', getLegalPerSurface)
-router.get('/price-variation/:city', getPriceVariation)
-router.get('/is-legal-variation/:city', getIsLegalVariation)
-router.get('/is-legal-per-renter/:city', getLegalPerRenter)
-router.get('/is-legal-per-classic-renter/:city', getLegalPerClassicRenter)
-router.get('/is-legal-per-website/:city', getLegalPerWebsite)
-router.get('/is-legal-per-dpe/:city', getLegalPerDPE)
+router.get('/welcome/:city', paramMiddleware(true), getWelcomeText)
+router.get('/map/:city', paramMiddleware(true), getMap)
+router.get('/chloropleth-map/:city', paramMiddleware(true), getChloroplethMap)
+router.get('/chloropleth-cities-map/:city', paramMiddleware(true), getChloroplethCitiesMap)
+router.get('/price-difference/:city', paramMiddleware(true), getPriceDifference)
+router.get('/is-legal-per-surface/:city', paramMiddleware(true), getLegalPerSurface)
+router.get('/price-variation/:city', paramMiddleware(true), getPriceVariation)
+router.get('/is-legal-variation/:city', paramMiddleware(true), getIsLegalVariation)
+router.get('/is-legal-per-renter/:city', paramMiddleware(true), getLegalPerRenter)
+router.get('/is-legal-per-classic-renter/:city', paramMiddleware(true), getLegalPerClassicRenter)
+router.get('/is-legal-per-website/:city', paramMiddleware(true), getLegalPerWebsite)
+router.get('/is-legal-per-dpe/:city', paramMiddleware(true), getLegalPerDPE)
 
 module.exports = router

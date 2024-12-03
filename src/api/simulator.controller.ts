@@ -1,8 +1,9 @@
+import { paramMiddleware } from '@services/api/validations'
 import { getManualResult } from '@services/simulator/manual-result'
 import express from 'express'
 
 const router = express.Router()
 
-router.get('/:city', getManualResult)
+router.get('/:city', paramMiddleware(), getManualResult)
 
 module.exports = router

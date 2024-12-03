@@ -1,30 +1,28 @@
 import { DataGouvAddressItem } from '@interfaces/address'
-import { isMainCityValid } from '@services/api/validations'
+import { paramMiddleware } from '@services/api/validations'
 import { AddressService } from '@services/diggers/address-service'
 import { DistrictsList } from '@services/districts/districts-list'
-import { AvailableMainCities, AvailableCities, mainCityList } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities, AvailableCities } from '@services/filters/city-filter/city-list'
 import { isFake } from '@services/filters/city-filter/fake'
 import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import express, { Request, Response } from 'express'
 const router = express.Router()
 
-router.get('/geojson/:city', getGeodata)
+router.get('/geojson/:city', paramMiddleware(), getGeodata)
 async function getGeodata(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getGeodata`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  isMainCityValid(res, mainCity)
 
   const geodata = await new DistrictsList(mainCity as AvailableMainCities).currentGeodata()
 
   res.json(geodata)
 }
 
-router.get('/list/:city', getDistricts)
+router.get('/list/:city', paramMiddleware(), getDistricts)
 async function getDistricts(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getDistricts`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  isMainCityValid(res, mainCity)
 
   const city: AvailableCities = req.query.city as AvailableCities
   const districtsItems = await new DistrictsList(mainCity as AvailableMainCities, { specificCity: city }).districtElemWithGroupBy()
@@ -32,11 +30,10 @@ async function getDistricts(req: Request, res: Response) {
   res.json(districtsItems)
 }
 
-router.get('/address/:city', getAddresses)
+router.get('/address/:city', paramMiddleware(), getAddresses)
 async function getAddresses(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
   const mainCity = req.params.city as AvailableMainCities
-  isMainCityValid(res, mainCity)
 
   const city: AvailableCities = req.query.city.toString() as AvailableCities
   const addressQuery = req.query.q.toString()

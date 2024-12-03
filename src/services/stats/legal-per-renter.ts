@@ -1,4 +1,3 @@
-import { isMainCityValid } from '@services/api/validations'
 import { getClassicData } from '@services/db/queries/get-classic-data'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
@@ -9,7 +8,6 @@ export async function getLegalPerRenter(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} isLegalPerRenter`, 'blue')
 
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
-  isMainCityValid(res, mainCity, true)
 
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]

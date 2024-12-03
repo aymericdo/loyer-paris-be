@@ -1,4 +1,3 @@
-import { isMainCityValid } from '@services/api/validations'
 import { getClassicData } from '@services/db/queries/get-classic-data'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
@@ -8,7 +7,6 @@ export async function getWelcomeText(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getWelcomeText`, 'blue')
 
   const mainCity: AvailableMainCities & 'all' = req.params.city as AvailableMainCities & 'all'
-  isMainCityValid(res, mainCity, true)
 
   const rents = await getClassicData(mainCity, null, {}, { isLegal: 1, surface: 1 }) as { isLegal: boolean; surface: number }[]
 
