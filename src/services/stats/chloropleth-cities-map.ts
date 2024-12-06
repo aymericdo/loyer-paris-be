@@ -3,9 +3,8 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
-import axios from 'axios'
-import { inseeCode } from '@services/filters/city-filter/code-insee'
 import { getLegalPerCity } from '@services/db/queries/get-legal-per-city'
+import { CitiesFetcher } from '@services/fetchers/cities'
 
 export async function getChloroplethCitiesMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethCitiesMap`, 'blue')
@@ -20,30 +19,8 @@ export async function getChloroplethCitiesMap(req: Request, res: Response) {
     return
   }
 
-  const cityByInseeCodes = cities.reduce((prev, city) => {
-    prev[inseeCode(city)] = city
-    return prev
-  }, {})
-
-  const geojsonPromises = Object.keys(cityByInseeCodes).map(async (inseeCode) => {
-    try {
-      return await axios(`https://geo.api.gouv.fr/communes/${inseeCode}?fields=code,nom,contour`)
-    } catch (error) {
-      PrettyLog.call(error.message, 'red')
-    }
-  })
-
-  const results = await Promise.all(geojsonPromises)
-
-  const geodata = {
-    type: 'FeatureCollection',
-    features: results.filter(Boolean).map((result) => ({
-      ...result.data.contour,
-      properties: {
-        city: cityByInseeCodes[result.data.code],
-      },
-    })),
-  }
+  const cityFetcher = new CitiesFetcher(cities)
+  const geodata = await cityFetcher.fetchGeojson()
 
   const result: { illegalPercentage: number, isIllegalCount: number, totalCount: number, city: string }[] = await getLegalPerCity(mainCity, dateRange)
   if (!result.length) {
