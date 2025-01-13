@@ -8,7 +8,7 @@ export function getClassicWebsiteFilter(): { website: { $nin: typeof FUNNIEST_WE
 export function getWebsiteFilter(website?: string): { website: string | { $nin: typeof FUNNIEST_WEBSITES } } {
   if (website) return { website }
 
-  return { website: { $nin: FUNNIEST_WEBSITES } }
+  return getClassicWebsiteFilter()
 }
 
 export function getMainCityFilter(mainCity: AvailableMainCities | 'all'): { city: { $in: AvailableCities[] } } | { city: { $nin: string[] } } | Record<string, never> {
