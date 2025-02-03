@@ -25,7 +25,7 @@ export class LogicimmoScraping {
     })
 
     const itemTags = [
-      ...document.querySelectorAll('[data-testid="aviv.CDP.Sections.Hardfacts.Price.Informations"] .css-1c3h18e'),
+      ...document.querySelectorAll('[data-testid="aviv.CDP.Sections.Hardfacts"] .css-1c3h18e'),
       ...document.querySelectorAll('[data-testid="aviv.CDP.Sections.Features"] ul[data-testid="aviv.CDP.Sections.Features.Preview"] li'),
     ]
 
