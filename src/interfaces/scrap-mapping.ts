@@ -50,6 +50,7 @@ export interface LefigaroMapping {
 export interface LogicimmoMapping {
   id: string
   charges: string
+  hasCharges: boolean
   cityLabel: string
   description: string
   dpe: string | null

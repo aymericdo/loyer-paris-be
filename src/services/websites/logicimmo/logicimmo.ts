@@ -41,6 +41,7 @@ export class LogicImmo extends Website {
     return {
       id: ad.id.toString(),
       charges: cleanup.number(ad.charges),
+      hasCharges: ad.hasCharges,
       cityLabel: cleanup.string(ad.cityLabel),
       description: cleanup.string(ad.description),
       dpe: ad.dpe,

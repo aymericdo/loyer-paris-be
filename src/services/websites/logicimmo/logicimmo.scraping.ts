@@ -9,51 +9,37 @@ export class LogicimmoScraping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const description = document.querySelector(
-      'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section.offer-detail-view > div > div.blocDescrProperty > article > p.descrProperty'
-    )
-    const price = document.querySelector('body > main > div > div.mainContent > div.offerDetailContainer > section > div > h1 > div > div.offerSummaryPricing > p')
+    const description = document.querySelector('#root > div > main > div.css-18xl464.MainColumn > div > section.Section.Description')
+    const price = document.querySelector('[data-testid="aviv.CDP.Sections.Hardfacts.Price.Value"]')
 
-    const cityLabel = document.querySelector('body > main > div > div.mainContent > div > section > div > h1 > div > div.offerSummaryDetails > p.locality')
-    const renter = document.querySelector(
-      'body > main > div > div.mainContent > div.offerDetailContainer > div.offerContactVertical > div.contactVerticalWrapper > div.cardTopInfos > div.infosContainer > div > span > span'
-    )
-
-    const chargeNode = [
-      ...document.querySelectorAll(
-        'body > main > div.pageContainer > div.mainContent > div.offerDetailContainer > section > div.aboutPriceBox .aboutPriceContainer ul.aboutPriceList > li'
-      )
-    ]
-
-    const offerCriteria = [...document.querySelectorAll('#dtlTechniqueBox > li.dtlTechiqueItm')]
-    const itemTags = [
-      ...document.querySelectorAll(
-        'body > main > div > div > div.offerDetailContainer > section > div > h1 > div > div.offerSummaryDetails > p'
-      )
-    ]
+    const cityLabel = document.querySelector('[data-testid="aviv.CDP.Sections.Location.Address"]')
+    const renter = document.querySelector('[data-testid="aviv.CDP.Contacting.ContactCard.Title"]')
+    const hasCharges = document.querySelector('[data-testid="aviv.CDP.Sections.Hardfacts.Price.Informations"]')
+    const chargeNode = [...document.querySelectorAll('[data-testid="aviv.CDP.Sections.Price.PrimaryComponent"] .css-cxt05v')]
 
     let charges = null
     chargeNode.forEach((elem) => {
-      if (elem.textContent.match(/Charges Locatives/g)) {
-        charges = elem
+      if (elem.textContent.match(/Provisions pour charges/g)) {
+        charges = elem.querySelector('.css-1djk842 .css-1thfuam')
       }
     })
+
+    const itemTags = [
+      ...document.querySelectorAll('[data-testid="aviv.CDP.Sections.Hardfacts.Price.Informations"] .css-1c3h18e'),
+      ...document.querySelectorAll('[data-testid="aviv.CDP.Sections.Features"] ul[data-testid="aviv.CDP.Sections.Features.Preview"] li'),
+    ]
 
     let furnished = null
-    offerCriteria.forEach((criteria) => {
-      if (criteria.textContent.match(/Meublé/g)) {
-        furnished = criteria
-      }
-    })
-
     let surface = null
     let rooms = null
 
     itemTags.forEach((tag) => {
       if (tag.textContent.match(/m²/g)) {
         surface = tag
-      } else if (tag.textContent.match(/p./g)) {
+      } else if (tag.textContent.match(/pièce/g)) {
         rooms = tag
+      } else if (tag.textContent.match(/meublé/g)) {
+        furnished = tag
       }
     })
 
@@ -61,11 +47,12 @@ export class LogicimmoScraping {
       return null
     }
 
-    const dpe = document.querySelector('article.DPE > ul > li > span[tabindex]')
+    const dpe = document.querySelector('[data-testid="aviv.CDP.Sections.Energy.Preview.EfficiencyClass"]')
 
     return {
       id: null,
       cityLabel: cityLabel && cityLabel.textContent,
+      hasCharges: hasCharges?.textContent === 'cc',
       charges: charges && charges.textContent,
       description: description && description.textContent,
       dpe: dpe?.textContent,
