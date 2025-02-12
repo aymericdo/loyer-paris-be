@@ -19,17 +19,17 @@ export class FnaimScraping {
     const renter = document.querySelector(
       '#annonceFiche > div.annonce_fiche.fiche > div.caracteristique.agence > div > div.coordonnees > div > a'
     )
-    const cityLabel = document.querySelector('#annonceFiche > div.ariane')
     const features = [...document.querySelectorAll('#annonceFiche > div.annonce_fiche.fiche > ul > li')]
     const features2 = [...document.querySelectorAll('#logementBlock > ul > li')]
 
+    let cityLabel = null
     let surface = null
     let rooms = null
     let yearBuilt = null
 
     let isRent = null
     tabs.forEach((tab) => {
-      if (tab.textContent?.toLowerCase()?.match(/louer appartement/g)) {
+      if (tab.textContent?.toLowerCase()?.match(/(louer appartement)|(location appartement)/g)) {
         isRent = true
       }
     })
@@ -43,6 +43,8 @@ export class FnaimScraping {
         surface = feature
       } else if (feature.textContent.match(/Pièce/g)) {
         rooms = feature
+      } else if (feature.textContent.match(/Lieu/g)) {
+        cityLabel = feature
       }
     })
 
