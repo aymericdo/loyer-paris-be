@@ -197,6 +197,7 @@ export interface FnaimMapping {
   hasCharges: boolean
   charges: string
   price: string
+  dpe: string
   rooms: string
   yearBuilt: string
   renter: string

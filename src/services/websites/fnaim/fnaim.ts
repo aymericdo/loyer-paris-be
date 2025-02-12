@@ -45,6 +45,7 @@ export class Fnaim extends Website {
       renter: ad.renter ? cleanup.string(ad.renter) : null,
       rooms: cleanup.number(ad.rooms),
       hasCharges: ad.hasCharges,
+      dpe: ad.dpe,
       charges: cleanup.number(ad.charges),
       yearBuilt: cleanup.number(ad.yearBuilt),
       surface: cleanup.number(ad.surface),

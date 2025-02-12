@@ -21,6 +21,7 @@ export class FnaimScraping {
     )
     const features = [...document.querySelectorAll('#annonceFiche > div.annonce_fiche.fiche > ul > li')]
     const features2 = [...document.querySelectorAll('#logementBlock > ul > li')]
+    const dpe = document.querySelector('.dpeListe > li')
 
     let cityLabel = null
     let surface = null
@@ -58,9 +59,10 @@ export class FnaimScraping {
       return null
     }
 
-    const charges =
-      chargesNode?.textContent?.match(/(?<=- )\d+(?= € par mois de provision pour charges)/g) &&
-      chargesNode?.textContent?.match(/(?<=- )\d+(?= € par mois de provision pour charges)/g)[0]
+    const chargeRegex = /(?<=- )\d+(?= € par mois de provision pour charges)/g
+    const charges = chargesNode?.textContent?.match(chargeRegex) && chargesNode?.textContent?.match(chargeRegex)[0]
+
+    const dpeTextArray = dpe?.textContent.replace(/\s+/g, ' ').replaceAll(' ', '').replaceAll(' ', '').replaceAll('\n', '')?.match(/(?<=DPE:)[A-G]/g)
 
     return {
       id: null,
@@ -70,6 +72,7 @@ export class FnaimScraping {
       hasCharges: !!hasCharges?.textContent?.toLowerCase().includes('charges comprises'),
       charges,
       renter: renter?.textContent,
+      dpe: dpeTextArray.length ? dpeTextArray[0] : null,
       rooms: rooms?.textContent,
       yearBuilt: yearBuilt?.textContent,
       surface: surface?.textContent,
