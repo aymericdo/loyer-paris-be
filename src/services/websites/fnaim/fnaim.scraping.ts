@@ -72,7 +72,7 @@ export class FnaimScraping {
       hasCharges: !!hasCharges?.textContent?.toLowerCase().includes('charges comprises'),
       charges,
       renter: renter?.textContent,
-      dpe: dpeTextArray.length ? dpeTextArray[0] : null,
+      dpe: dpeTextArray?.length ? dpeTextArray[0] : null,
       rooms: rooms?.textContent,
       yearBuilt: yearBuilt?.textContent,
       surface: surface?.textContent,
