@@ -25,7 +25,7 @@ export class BienIciScraping {
       '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > div.titleInsideTable > div.titleFirstBloc > div.detailedSheetPrice > div > div > span.perMonth'
     )
     const renter = document.querySelector(
-      '#public > div.contactSection > div.contactToggleInfo.contactButton.scrollUp > div.contactToggleName > div.contact-name'
+      'section.about-agency.vue-about-agency > div.agency-overview div.agency-overview__info > h1'
     )
     const cityLabel = document.querySelector(
       '[id^=section-detailed] > div > div.detailedSheetOtherInfo > div.detailedSheetFirstBlock > div.titleInside > h1 > span'
