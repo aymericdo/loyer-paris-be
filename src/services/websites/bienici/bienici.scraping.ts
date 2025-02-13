@@ -65,7 +65,7 @@ export class BienIciScraping {
       price: price?.textContent,
       hasCharges: !!hasCharges?.textContent?.includes('charges comprises'),
       charges: charges?.textContent?.match(/\d+/)?.length && charges?.textContent?.match(/\d+/)[0],
-      renter: renter?.getAttribute('title'),
+      renter: renter?.textContent,
       rooms: rooms?.textContent,
       surface: surface?.textContent,
       title: title?.textContent,
