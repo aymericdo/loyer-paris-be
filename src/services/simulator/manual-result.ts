@@ -1,4 +1,5 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
+import { queryParamValidator } from '@services/api/validations'
 import { AvailableMainCities, getCitiesFromMainCity } from '@services/filters/city-filter/city-list'
 import { infoLink } from '@services/filters/city-filter/info-link'
 import { zones } from '@services/filters/city-filter/zones'
@@ -13,13 +14,13 @@ export async function getManualResult(req: Request, res: Response) {
 
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
-  const districtValue: string = (req.query.districtValue as string) || null
-  const priceValue = (req.query.priceValue as string) || null
-  const furnishedValue = (req.query.furnishedValue as string) || null
-  const surfaceValue: string = (req.query.surfaceValue as string) || null
-  const roomValue: string = (req.query.roomValue as string) || null
-  const isHouseValue: string = (req.query.isHouseValue as string) || null
-  const dateBuiltValueStr: string = (req.query.dateBuiltValueStr as string) || null
+  const districtValue: string = queryParamValidator(req.query.districtValue as string)
+  const priceValue = queryParamValidator(req.query.priceValue as string)
+  const furnishedValue = queryParamValidator(req.query.furnishedValue as string)
+  const surfaceValue: string = queryParamValidator(req.query.surfaceValue as string)
+  const roomValue: string = queryParamValidator(req.query.roomValue as string)
+  const isHouseValue: string = queryParamValidator(req.query.isHouseValue as string)
+  const dateBuiltValueStr: string = queryParamValidator(req.query.dateBuiltValueStr as string)
 
   if (!mainCity || !districtValue || !priceValue || !furnishedValue || !surfaceValue || !roomValue) {
     res.status(403).send('missing params')

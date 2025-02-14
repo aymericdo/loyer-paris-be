@@ -5,3 +5,6 @@ node_modules/**
 build/**
 .DS_Store
 globalConfig.json
+
+# Sentry Config File
+.sentryclirc

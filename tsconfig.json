@@ -6,6 +6,7 @@
     "experimentalDecorators": true,
     "lib": ["es2019", "dom", "dom.iterable"],
     "baseUrl": "./src",
+
     "paths": {
       "@api/*": ["api/*"],
       "@cronjobs/*": ["cronjobs/*"],
@@ -14,11 +15,19 @@
       "@messenger/*": ["messenger/*"],
       "@services/*": ["services/*"]
     },
+
     "allowJs": true,
     "outDir": "./build",
     "strict": false,
     "noImplicitAny": false,
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "inlineSources": true,
+
+    // Set `sourceRoot` to  "/" to strip the build path prefix
+    // from generated source code references.
+    // This improves issue grouping in Sentry.
+    "sourceRoot": "/"
   }
 }

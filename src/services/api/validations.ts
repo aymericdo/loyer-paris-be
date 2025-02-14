@@ -12,7 +12,7 @@ const isMainCityValid = (mainCity: AvailableMainCities | 'all', allAccepted = fa
   return true
 }
 
-export function paramMiddleware (allAccepted = false) {
+export function paramMiddleware(allAccepted = false) {
   return function (req: Request, res: Response, next: NextFunction) {
     if (isMainCityValid(req.params.city as AvailableMainCities, allAccepted)) {
       next()
@@ -20,4 +20,8 @@ export function paramMiddleware (allAccepted = false) {
       res.status(403).json({ message: 'City params not valid' })
     }
   }
+}
+
+export function queryParamValidator(value: string) {
+  return (value && value !== 'null') ? value : null
 }
