@@ -53,8 +53,10 @@ export class ApiErrorsService {
     }
 
     if (this.status >= 500) {
+      const basicError: Error = this.error as unknown as Error
+
       new Slack().sendMessage('#errors',
-        `Error ${this.status} : ${JSON.stringify(this.error.stack)}\n`+
+        `Error ${this.status} : ${basicError.name}: ${basicError.message}\n${basicError.stack}\n`+
         `(https://encadrement-loyers.sentry.io/issues/?query=${sentryId})`
       )
     }
