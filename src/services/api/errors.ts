@@ -52,9 +52,9 @@ export class ApiErrorsService {
       new Slack().sendMessage('#bad-location', `${this.incompleteAd?.website} : ${this.error.msg}`)
     }
 
-    if (this.status === 500) {
+    if (this.status >= 500) {
       new Slack().sendMessage('#errors',
-        `Error ${this.status} : ${JSON.stringify(this.error)}\n`+
+        `Error ${this.status} : ${JSON.stringify(this.error.stack)}\n`+
         `(https://encadrement-loyers.sentry.io/issues/?query=${sentryId})`
       )
     }
