@@ -7,8 +7,10 @@ export const inseeCode = (city: AvailableCities): string => {
     case 'lille': return '59350'
     case 'hellemmes': return '59298'
     case 'lomme': return '59355'
+
     case 'montpellier': return '34172'
     case 'bordeaux': return '33063'
+
     case 'aubervilliers': return '93001'
     case 'epinay-sur-seine': return '93031'
     case 'ile-saint-denis': return '93039'
@@ -28,8 +30,10 @@ export const inseeCode = (city: AvailableCities): string => {
     case 'noisy-le-sec': return '93053'
     case 'pantin': return '93055'
     case 'romainville': return '93063'
+
     case 'la rochelle': return '17300'
     case 'annecy': return '74010'
+
     case 'ahetze': return '64009'
     case 'anglet': return '64024'
     case 'arbonne': return '64035'
@@ -54,6 +58,29 @@ export const inseeCode = (city: AvailableCities): string => {
     case 'urrugne': return '64545'
     case 'ustaritz': return '64547'
     case 'villefranque': return '64558'
+
+    case 'bresson': return '38057'
+    case 'claix': return '38095'
+    case 'domène': return '38147'
+    case 'échirolles': return '38151'
+    case 'éybens': return '38158'
+    case 'fontaine': return '38169'
+    case 'fontanil-cornillon': return '38170'
+    case 'gières': return '38180'
+    case 'grenoble': return '38185'
+    case 'la tronche': return '38516'
+    case 'le pont-de-claix': return '38319'
+    case 'meylan': return '38229'
+    case 'murianette': return '38272'
+    case 'poisat': return '38309'
+    case 'saint-égrève': return '38382'
+    case 'saint-martin-d\'hères': return '38421'
+    case 'sassenage': return '38471'
+    case 'seyssinet-pariset': return '38486'
+    case 'seyssins': return '38487'
+    case 'varces-allières-et-risset': return '38524'
+    case 'venon': return '38532'
+
     default: return ''
   }
 }

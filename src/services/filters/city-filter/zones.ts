@@ -70,6 +70,28 @@ export const zones = (city: AvailableCities): string[] | { [key: string]: string
     case 'urrugne': return ['Zone 2']
     case 'ustaritz': return ['Zone 3']
     case 'villefranque': return ['Zone 3']
+
+    case 'bresson': return ['Zone A']
+    case 'claix': return ['Zone A']
+    case 'domène': return ['Zone A']
+    case 'échirolles': return ['Zone A']
+    case 'éybens': return ['Zone A']
+    case 'fontaine': return ['Zone A']
+    case 'fontanil-cornillon': return ['Zone A']
+    case 'gières': return ['Zone A']
+    case 'grenoble': return ['Zone 1', 'Zone 2']
+    case 'la tronche': return ['Zone A']
+    case 'le pont-de-claix': return ['Zone A']
+    case 'meylan': return ['Zone A']
+    case 'murianette': return ['Zone A']
+    case 'poisat': return ['Zone A']
+    case 'saint-égrève': return ['Zone A']
+    case 'saint-martin-d\'hères': return ['Zone A']
+    case 'sassenage': return ['Zone A']
+    case 'seyssinet-pariset': return ['Zone A']
+    case 'seyssins': return ['Zone A']
+    case 'varces-allières-et-risset': return ['Zone A']
+    case 'venon': return ['Zone A']
     default: return null
   }
 }

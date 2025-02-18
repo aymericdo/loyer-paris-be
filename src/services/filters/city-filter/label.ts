@@ -58,6 +58,29 @@ export const label = (city: AvailableMainCities | AvailableCities): string => {
     case 'urrugne': return 'Urrugne'
     case 'ustaritz': return 'Ustaritz'
     case 'villefranque': return 'Villefranque'
+
+    case 'bresson': return 'Bresson'
+    case 'claix': return 'Claix'
+    case 'domène': return 'Domène'
+    case 'échirolles': return 'Échirolles'
+    case 'éybens': return 'Éybens'
+    case 'fontaine': return 'Fontaine'
+    case 'fontanil-cornillon': return 'Fontanil-Cornillon'
+    case 'gières': return 'Gières'
+    case 'grenoble': return 'Grenoble'
+    case 'la tronche': return 'La Tronche'
+    case 'le pont-de-claix': return 'Le Pont-de-Claix'
+    case 'meylan': return 'Meylan'
+    case 'murianette': return 'Murianette'
+    case 'poisat': return 'Poisat'
+    case 'saint-égrève': return 'Saint-Égrève'
+    case 'saint-martin-d\'hères': return 'Saint-Martin-d\'Hères'
+    case 'sassenage': return 'Sassenage'
+    case 'seyssinet-pariset': return 'Seyssinet-Pariset'
+    case 'seyssins': return 'Seyssins'
+    case 'varces-allières-et-risset': return 'Varces-Allières-et-Risset'
+    case 'venon': return 'Venon'
+
     default: return capitalizeFirstLetter(city)
   }
 }

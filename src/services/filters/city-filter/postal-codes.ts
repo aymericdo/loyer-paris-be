@@ -213,5 +213,90 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
       postalCodes: ['64990'],
       regex: [/\b64990\b/g],
     }
+
+    case 'bresson': return {
+      postalCodes: ['38320'],
+      regex: [/\b38320\b/g],
+    }
+    case 'claix': return {
+      postalCodes: ['38640'],
+      regex: [/\b38640\b/g],
+    }
+    case 'domène': return {
+      postalCodes: ['38420'],
+      regex: [/\b38420\b/g],
+    }
+    case 'échirolles': return {
+      postalCodes: ['38130'],
+      regex: [/\b38130\b/g],
+    }
+    case 'éybens': return {
+      postalCodes: ['38320'],
+      regex: [/\b38320\b/g],
+    }
+    case 'fontaine': return {
+      postalCodes: ['38600'],
+      regex: [/\b38600\b/g],
+    }
+    case 'fontanil-cornillon': return {
+      postalCodes: ['38120'],
+      regex: [/\b38120\b/g],
+    }
+    case 'gières': return {
+      postalCodes: ['38610'],
+      regex: [/\b38610\b/g],
+    }
+    case 'grenoble': return {
+      postalCodes: ['38000', '38100'],
+      regex: [/\b38000\b/g, /,\b38100\b/g]
+    }
+    case 'la tronche': return {
+      postalCodes: ['38700'],
+      regex: [/\b38700\b/g],
+    }
+    case 'le pont-de-claix': return {
+      postalCodes: ['38800'],
+      regex: [/\b38800\b/g],
+    }
+    case 'meylan': return {
+      postalCodes: ['38240'],
+      regex: [/\b38240\b/g],
+    }
+    case 'murianette': return {
+      postalCodes: ['38870'],
+      regex: [/\b38870\b/g],
+    }
+    case 'poisat': return {
+      postalCodes: ['38320'],
+      regex: [/\b38320\b/g],
+    }
+    case 'saint-égrève': return {
+      postalCodes: ['38120'],
+      regex: [/\b38120\b/g],
+    }
+    case 'saint-martin-d\'hères': return {
+      postalCodes: ['38400'],
+      regex: [/\b38400\b/g],
+    }
+    case 'sassenage': return {
+      postalCodes: ['38360'],
+      regex: [/\b38360\b/g],
+    }
+    case 'seyssinet-pariset': return {
+      postalCodes: ['38170'],
+      regex: [/\b38170\b/g],
+    }
+    case 'seyssins': return {
+      postalCodes: ['38185'],
+      regex: [/\b38185\b/g],
+    }
+    case 'varces-allières-et-risset': return {
+      postalCodes: ['38760'],
+      regex: [/\b38760\b/g],
+    }
+    case 'venon': return {
+      postalCodes: ['38750'],
+      regex: [/\b38750\b/g],
+    }
   }
 }
