@@ -18,7 +18,7 @@
     "debug": "tsc && node --inspect ./build/src/index.js",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org encadrement-loyers --project node ./build && sentry-cli sourcemaps upload --org encadrement-loyers --project node ./build --log-level=debug"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org encadrement-loyers --project node ./build && sentry-cli sourcemaps upload --org encadrement-loyers --project node ./build"
   },
   "author": "Aymeric & Thomas",
   "license": "ISC",
