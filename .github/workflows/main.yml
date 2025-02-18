@@ -33,6 +33,7 @@ jobs:
         with:
           version: latest
           url: https://encadrement-loyers.sentry.io/
+          token: ${{ secrets.SENTRY_AUTH_TOKEN }}
           organization: encadrement-loyers
           project: node
       - name: Copy repository
