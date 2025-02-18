@@ -31,6 +31,8 @@ jobs:
       - name: Setup Sentry CLI
         uses: matbour/setup-sentry-cli@v1
         with:
+          version: latest
+          url: https://encadrement-loyers.sentry.io/
           token: ${{ secrets.SENTRY_TOKEN }}
           organization: encadrement-loyers
           project: node
