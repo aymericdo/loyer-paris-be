@@ -4,7 +4,7 @@ export const isFake = (city: AvailableMainCities): boolean => {
   switch (city) {
     case 'la rochelle':
     case 'annecy':
-      // nice, nantes, strasbourg, grenoble, rennes, toulon, tours
+      // nice, nantes, strasbourg, rennes, toulon, tours
       return true
     default:
       return false

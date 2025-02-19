@@ -56,6 +56,29 @@ const CITIES = {
     'ustaritz',
     'villefranque',
   ],
+  grenoble: [
+    'bresson',
+    'claix',
+    'domène',
+    'échirolles',
+    'éybens',
+    'fontaine',
+    'fontanil-cornillon',
+    'gières',
+    'grenoble',
+    'la tronche',
+    'le pont-de-claix',
+    'meylan',
+    'murianette',
+    'poisat',
+    'saint-égrève',
+    'saint-martin-d\'hères',
+    'sassenage',
+    'seyssinet-pariset',
+    'seyssins',
+    'varces-allières-et-risset',
+    'venon'
+  ],
 } as const
 
 export type AvailableMainCities = keyof typeof CITIES
