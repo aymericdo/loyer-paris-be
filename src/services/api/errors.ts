@@ -63,7 +63,7 @@ export class ApiErrorsService {
   }
 
   async saveIncompleteRent() {
-    if (!this.error?.isIncompleteAd || !this.incompleteAd) return
+    if (!(this.error?.isIncompleteAd && this.incompleteAd)) return
 
     const incompleteRent = new IncompleteRent({
       id: this.incompleteAd.id,
@@ -96,7 +96,7 @@ export class ApiErrorsService {
       case ERROR_CODE.Other:
         return 400
       case ERROR_CODE.Filter:
-        return 501
+        return 422
       default:
         return 500
     }

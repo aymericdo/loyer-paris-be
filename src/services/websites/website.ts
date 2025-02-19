@@ -124,7 +124,11 @@ export abstract class Website {
           filteredResult
         ).serialize()
       } else {
-        throw { error: ERROR_CODE.Filter, msg: 'no match found' }
+        throw {
+          error: ERROR_CODE.Filter,
+          msg: 'no match found',
+          isIncompleteAd: true,
+        }
       }
     } catch (err) {
       console.error(err)
