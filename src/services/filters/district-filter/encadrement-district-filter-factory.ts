@@ -7,6 +7,7 @@ import { DistrictFilterMontpellier } from './district-filter-montpellier'
 import { DistrictFilterParis } from './district-filter-paris'
 import { DistrictFilterPlaineCommune } from './district-filter-plaine-commune'
 import { DistrictFilterPaysBasque } from '@services/filters/district-filter/district-filter-pays-basque'
+import { DistrictFilterGrenoble } from '@services/filters/district-filter/district-filter-grenoble'
 
 export class DistrictFilterFactory {
   mainCity: AvailableMainCities
@@ -33,6 +34,8 @@ export class DistrictFilterFactory {
         return DistrictFilterBordeaux
       case 'paysBasque':
         return DistrictFilterPaysBasque
+      case 'grenoble':
+        return DistrictFilterGrenoble
     }
   }
 }

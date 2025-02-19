@@ -8,6 +8,7 @@ import { ParisDistrictItem, ParisEncadrementItem } from './paris'
 import { PlaineCommuneDistrictItem, PlaineCommuneEncadrementItem } from './plaine-commune'
 import { LilleEncadrementItem } from '@interfaces/lille'
 import { PaysBasqueDistrictItem, PaysBasqueEncadrementItem } from '@interfaces/pays-basque'
+import { GrenobleDistrictItem, GrenobleEncadrementItem } from '@interfaces/grenoble'
 
 export interface Coordinate {
   lat: number
@@ -55,6 +56,7 @@ export type DistrictItem =
   | LyonDistrictItem
   | BordeauxDistrictItem
   | PaysBasqueDistrictItem
+  | GrenobleDistrictItem
 
 export type EncadrementItem =
   DefaultEncadrementItem
@@ -62,6 +64,7 @@ export type EncadrementItem =
   | LyonEncadrementItem
   | LilleEncadrementItem
   | MontpellierEncadrementItem
+  | GrenobleEncadrementItem
   | EncadrementItemWithHouse
 
 export type EncadrementItemWithHouse =

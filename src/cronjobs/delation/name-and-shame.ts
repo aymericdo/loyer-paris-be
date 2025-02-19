@@ -28,6 +28,7 @@ export class NameAndShameService {
       ['bordeaux', 'Bordeaux', '@PrefAquitaine33'],
       ['montpellier', 'Montpellier', '@Prefet34'],
       ['paysBasque', 'Pays Basque', '@Prefet64'],
+      ['grenoble', 'Grenoble', '@Prefet38'],
     ].forEach(async ([mainCity, cityValue, prefecture]: CityInfo) => {
       const ads = await getShamefulAdsData(mainCity, MAX_DELTA)
 
