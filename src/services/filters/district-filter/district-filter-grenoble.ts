@@ -13,10 +13,21 @@ export class DistrictFilterGrenoble extends DistrictFilterParent {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
+  protected async getDistrictFromName(): Promise<GrenobleDistrictItem[]> {
+    const zone: string = this.districtName.match(/(?<=Zone ).*/g)[0]
+    const districts = await this.GeojsonCollection.find(
+      {
+        'properties.Zone': { $in: [zone] }
+      },
+    ).lean()
+
+    return districts?.length ? districts : []
+  }
+
   protected async getDistrictsFromCity(): Promise<GrenobleDistrictItem[]> {
     if (!this.city) return []
 
-    const currentZones: number[] = (zones(this.city) as string[]).map((zone: string) => +zone.match(/\d+/)[0])
+    const currentZones: string[] = (zones(this.city) as string[]).map((zone: string) => zone.match(/(?<=Zone ).*/g)[0])
 
     const districts = await this.GeojsonCollection.find(
       {
