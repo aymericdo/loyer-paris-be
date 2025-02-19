@@ -50,7 +50,7 @@ export class DistrictFilterParent {
     const districtFromCoordinate =
       await this.getDistrictFromCoordinate(this.coordinates?.lat, this.coordinates?.lng)
 
-    if (districtFromCoordinate.length) {
+    if (districtFromCoordinate !== null) {
       return districtFromCoordinate
     }
 
@@ -95,7 +95,7 @@ export class DistrictFilterParent {
   }
 
   private async getDistrictFromCoordinate(lat: number, lng: number): Promise<DistrictItem[]> {
-    if (!lat || !lng) return []
+    if (!lat || !lng) return null
 
     const district = await this.GeojsonCollection.findOne(
       {
