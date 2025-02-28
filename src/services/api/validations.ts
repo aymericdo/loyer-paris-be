@@ -22,6 +22,6 @@ export function paramMiddleware(allAccepted = false) {
   }
 }
 
-export function queryParamValidator(value: string) {
+export function queryParamValidator(value: string): string | null {
   return (value && value !== 'null' && value !== 'undefined') ? value : null
 }

@@ -1,5 +1,5 @@
 import { DataGouvAddressItem } from '@interfaces/address'
-import { paramMiddleware } from '@services/api/validations'
+import { paramMiddleware, queryParamValidator } from '@services/api/validations'
 import { AddressService } from '@services/diggers/address-service'
 import { DistrictsList } from '@services/districts/districts-list'
 import { AvailableMainCities, AvailableCities } from '@services/filters/city-filter/city-list'
@@ -24,7 +24,13 @@ async function getDistricts(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getDistricts`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
-  const city: AvailableCities = req.query.city as AvailableCities
+  const city: AvailableCities = queryParamValidator(req.query.city as string) as AvailableCities
+
+  if (!city) {
+    res.status(403).send('missing params')
+    return
+  }
+
   const districtsItems = await new DistrictsList(mainCity as AvailableMainCities, { specificCity: city }).districtElemWithGroupBy()
 
   res.json(districtsItems)
@@ -35,8 +41,13 @@ async function getAddresses(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getAddresses`, 'blue')
   const mainCity = req.params.city as AvailableMainCities
 
-  const city: AvailableCities = req.query.city.toString() as AvailableCities
-  const addressQuery = req.query.q.toString()
+  const city: AvailableCities = queryParamValidator(req.query.city as string) as AvailableCities
+  const addressQuery = queryParamValidator(req.query.q as string)
+
+  if (!city) {
+    res.status(403).send('missing params')
+    return
+  }
 
   if (addressQuery.trim().length < 4) {
     res.json([])
