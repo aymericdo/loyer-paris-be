@@ -20,22 +20,22 @@ export class NameAndShameService {
 
   async call() {
     [
-      ['paris', 'Paris', '@Paris'],
+      ['paris', 'à Paris', '@Paris'],
       // ['plaineCommune', 'Plaine Commune', '@prefpolice'],
-      ['lille', 'Lille', '@prefet59'],
-      ['lyon', 'Lyon', '@prefetrhone'],
+      ['lille', 'à Lille', '@prefet59'],
+      ['lyon', 'à Lyon', '@prefetrhone'],
       // ['estEnsemble', 'Est Ensemble', '@prefpolice'],
-      ['bordeaux', 'Bordeaux', '@PrefAquitaine33'],
-      ['montpellier', 'Montpellier', '@Prefet34'],
-      ['paysBasque', 'Pays Basque', '@Prefet64'],
-      ['grenoble', 'Grenoble', '@Prefet38'],
+      ['bordeaux', 'à Bordeaux', '@PrefAquitaine33'],
+      ['montpellier', 'à Montpellier', '@Prefet34'],
+      ['paysBasque', 'dans le Pays Basque', '@Prefet64'],
+      ['grenoble', 'à Grenoble', '@Prefet38'],
     ].forEach(async ([mainCity, cityValue, prefecture]: CityInfo) => {
       const ads = await getShamefulAdsData(mainCity, MAX_DELTA)
 
       if (ads.length > 5) {
         let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${
           ads.length > 1 ? 's' : ''
-        } à ${cityValue} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${MAX_DELTA}€ : `
+        } ${cityValue} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${MAX_DELTA}€ : `
         tweetText += ads
           .filter((ad) => !!ad.url)
           .slice(0, 5)
