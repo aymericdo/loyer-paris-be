@@ -1,18 +1,11 @@
-import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
+import { Ad, FilteredResult, IncompleteAd } from '@interfaces/ad'
 import { Body } from '@interfaces/scrap-mapping'
-import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
-import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'
-import { SerializerService } from '@services/api/serializer'
-import { SaveRentService } from '@services/db/save-rent'
-import { DigService } from '@services/diggers/dig'
-import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
-import { getPriceExcludingCharges } from '@services/helpers/charges'
-import { roundNumber } from '@services/helpers/round-number'
-import { Response } from 'express'
-import { CityFilter } from '@services/filters/city-filter/city-filter'
-import { isFake } from '@services/filters/city-filter/fake'
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { ApiError } from '@interfaces/shared'
+import { ApiErrorsService } from '@services/api/errors'
+import { extrcatAdData } from '@services/diggers/aiDigger'
+import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
+import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
+import { Response } from 'express'
 
 export const DPE_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 export const PARTICULIER = 'Particulier'
@@ -33,7 +26,7 @@ export const WEBSITE_LIST = [
   'seloger',
   'superimmo',
   'foncia',
-  'avendrealouer'
+  'avendrealouer',
 ] as const
 
 export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']
@@ -71,65 +64,69 @@ export abstract class Website {
   async digData() {
     const ad: Ad = await this.mapping()
     const url = this.body.url && new URL(this.body.url)
-    let city: AvailableCities | null = null
+    const city: AvailableCities | null = null
 
     try {
-      const cityService = new CityFilter(ad.cityLabel)
-      city = cityService.findCity()
-      const mainCity: AvailableMainCities = getMainCity(city)
+      const cleanAd = await extrcatAdData(this.body.data)
+      console.log(cleanAd)
+      // const cityService = new CityFilter(ad.cityLabel)
+      // city = cityService.findCity()
+      // const mainCity: AvailableMainCities = getMainCity(city)
 
-      const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
+      // const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
 
       const CurrentEncadrementFilter = new EncadrementFilterFactory(getMainCity(city)).currentEncadrementFilter()
+      // @ts-expect-error
       const filteredResult: FilteredResult = await new CurrentEncadrementFilter(cleanAd).find()
+      console.log(filteredResult)
 
-      if (filteredResult) {
-        const maxAuthorized = roundNumber(filteredResult.maxPrice * cleanAd.surface)
-        const priceExcludingCharges = getPriceExcludingCharges(cleanAd.price, cleanAd.charges, cleanAd.hasCharges)
-        const isLegal = priceExcludingCharges <= maxAuthorized
+      // if (filteredResult) {
+      //   const maxAuthorized = roundNumber(filteredResult.maxPrice * cleanAd.surface)
+      //   const priceExcludingCharges = getPriceExcludingCharges(cleanAd.price, cleanAd.charges, cleanAd.hasCharges)
+      //   const isLegal = priceExcludingCharges <= maxAuthorized
 
-        await new SaveRentService({
-          id: cleanAd.id,
-          address: cleanAd.address,
-          city: cleanAd.city,
-          district: filteredResult.districtName,
-          isFake: isFake(mainCity),
-          dpe: cleanAd.dpe,
-          rentComplement: cleanAd.rentComplement,
-          hasFurniture: cleanAd.hasFurniture,
-          isHouse: cleanAd.isHouse,
-          postalCode: cleanAd.postalCode,
-          price: cleanAd.price,
-          renter: cleanAd.renter,
-          roomCount: cleanAd.roomCount,
-          stations: cleanAd.stations,
-          surface: cleanAd.surface,
-          yearBuilt: cleanAd.yearBuilt,
-          isLegal,
-          latitude: cleanAd.coordinates?.lat,
-          longitude: cleanAd.coordinates?.lng,
-          maxPrice: maxAuthorized,
-          priceExcludingCharges,
-          website: this.website,
-          url: url && `${url.origin}${url.pathname}`,
-        }).save()
+      //   await new SaveRentService({
+      //     id: cleanAd.id,
+      //     address: cleanAd.address,
+      //     city: cleanAd.city,
+      //     district: filteredResult.districtName,
+      //     isFake: isFake(mainCity),
+      //     dpe: cleanAd.dpe,
+      //     rentComplement: cleanAd.rentComplement,
+      //     hasFurniture: cleanAd.hasFurniture,
+      //     isHouse: cleanAd.isHouse,
+      //     postalCode: cleanAd.postalCode,
+      //     price: cleanAd.price,
+      //     renter: cleanAd.renter,
+      //     roomCount: cleanAd.roomCount,
+      //     stations: cleanAd.stations,
+      //     surface: cleanAd.surface,
+      //     yearBuilt: cleanAd.yearBuilt,
+      //     isLegal,
+      //     latitude: cleanAd.coordinates?.lat,
+      //     longitude: cleanAd.coordinates?.lng,
+      //     maxPrice: maxAuthorized,
+      //     priceExcludingCharges,
+      //     website: this.website,
+      //     url: url && `${url.origin}${url.pathname}`,
+      //   }).save()
 
-        return new SerializerService(
-          {
-            ...cleanAd,
-            isLegal,
-            maxAuthorized,
-            priceExcludingCharges,
-          },
-          filteredResult
-        ).serialize()
-      } else {
-        throw {
-          error: ERROR_CODE.Filter,
-          msg: 'no match found',
-          isIncompleteAd: true,
-        }
-      }
+      //   return new SerializerService(
+      //     {
+      //       ...cleanAd,
+      //       isLegal,
+      //       maxAuthorized,
+      //       priceExcludingCharges,
+      //     },
+      //     filteredResult,
+      //   ).serialize()
+      // } else {
+      //   throw {
+      //     error: ERROR_CODE.Filter,
+      //     msg: 'no match found',
+      //     isIncompleteAd: true,
+      //   }
+      // }
     } catch (err) {
       console.error(err)
       const incompleteAd: IncompleteAd = {
