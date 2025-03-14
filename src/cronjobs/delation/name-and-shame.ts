@@ -5,7 +5,7 @@ import TwitterApi from 'twitter-api-v2'
 
 type CityInfo = [AvailableMainCities, string, string]
 
-const MAX_DELTA = 100
+const MAX_DELTA = 150
 export class NameAndShameService {
   twitterClient = new TwitterApi({
     appKey: process.env.TWITTER_API_KEY,
