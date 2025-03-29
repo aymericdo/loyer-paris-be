@@ -32,10 +32,8 @@ export class NameAndShameService {
     ].forEach(async ([mainCity, cityValue, prefecture]: CityInfo) => {
       const ads = await getShamefulAdsData(mainCity, MAX_DELTA)
 
-      if (ads.length > 5) {
-        let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonce${
-          ads.length > 1 ? 's' : ''
-        } ${cityValue} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${MAX_DELTA}€ : `
+      if (ads.length > 2) {
+        let tweetText = `🤖 Info Encadrement ! Dans la semaine qui vient de s'écouler, ${ads.length} annonces ${cityValue} dépassai${ads.length > 1 ? 'en' : ''}t l'encadrement d'au moins ${MAX_DELTA}€ : `
         tweetText += ads
           .filter((ad) => !!ad.url)
           .slice(0, 5)
