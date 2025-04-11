@@ -27,7 +27,7 @@ export class NameAndShameService {
       // ['estEnsemble', 'Est Ensemble', '@prefpolice'],
       ['bordeaux', 'à Bordeaux', '@PrefAquitaine33'],
       ['montpellier', 'à Montpellier', '@Prefet34'],
-      ['paysBasque', 'dans le Pays Basque', '@Prefet64'],
+      ['paysBasque', 'au Pays Basque', '@Prefet64'],
       ['grenoble', 'à Grenoble', '@Prefet38'],
     ].forEach(async ([mainCity, cityValue, prefecture]: CityInfo) => {
       const ads = await getShamefulAdsData(mainCity, MAX_DELTA)
