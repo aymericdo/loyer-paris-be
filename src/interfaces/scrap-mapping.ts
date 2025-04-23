@@ -52,6 +52,7 @@ export interface LogicimmoMapping {
   charges: string
   hasCharges: boolean
   cityLabel: string
+  title: string
   description: string
   dpe: string | null
   furnished: boolean

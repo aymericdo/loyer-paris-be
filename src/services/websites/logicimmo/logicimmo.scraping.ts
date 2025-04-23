@@ -1,5 +1,8 @@
+// Same as seloger.scraping
+
 import { LogicimmoMapping } from '@interfaces/scrap-mapping'
 import { virtualConsole } from '@services/helpers/jsdome'
+import { PARTICULIER } from '@services/websites/website'
 import jsdom from 'jsdom'
 const { JSDOM } = jsdom
 
@@ -9,58 +12,68 @@ export class LogicimmoScraping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const description = document.querySelector('#root > div > main > div.css-18xl464.MainColumn > div > section.Section.Description')
-    const price = document.querySelector('[data-testid="aviv.CDP.Sections.Hardfacts.Price.Value"]')
+    const title = document.querySelector('[data-testid*="MainDescription.Title"]')
+    const description = document.querySelector('[data-testid*="MainDescription.Expandable-text"]')
+    const price = document.querySelector('[data-testid*="Hardfacts.Price.Value"]')
+    const hasCharges = document.querySelector('[data-testid*="Hardfacts.Price.Informations"]')
+    const cityLabel = document.querySelector('[data-testid*="cdp-location-address"]')
+    const renter = document.querySelector('[data-testid*="ContactCard.Title"]')
+    const charges = document.querySelector('[data-testid*="Sections.Price.PrimaryComponent"] .css-cxt05v')
 
-    const cityLabel = document.querySelector('[data-testid="aviv.CDP.Sections.Location.Address"]')
-    const renter = document.querySelector('[data-testid="aviv.CDP.Contacting.ContactCard.Title"]')
-    const hasCharges = document.querySelector('[data-testid="aviv.CDP.Sections.Hardfacts.Price.Informations"]')
-    const chargeNode = [...document.querySelectorAll('[data-testid="aviv.CDP.Sections.Price.PrimaryComponent"] .css-cxt05v')]
+    const itemTags = [...document.querySelectorAll('[data-testid*="Sections.Hardfacts"] .css-1c3h18e')]
 
-    let charges = null
-    chargeNode.forEach((elem) => {
-      if (elem.textContent.match(/Provisions pour charges/g)) {
-        charges = elem.querySelector('.css-1djk842 .css-1thfuam')
-      }
-    })
-
-    const itemTags = [
-      ...document.querySelectorAll('[data-testid="aviv.CDP.Sections.Hardfacts"] .css-1c3h18e'),
-      ...document.querySelectorAll('[data-testid="aviv.CDP.Sections.Features"] ul[data-testid="aviv.CDP.Sections.Features.Preview"] li'),
-    ]
-
-    let furnished = null
+    let isParticulier = false
     let surface = null
     let rooms = null
 
     itemTags.forEach((tag) => {
-      if (tag.textContent.match(/m²/g)) {
+      if (tag.textContent.match(/m²/g) && !tag.textContent.match(/terrain/gi)) {
         surface = tag
-      } else if (tag.textContent.match(/pièce/g)) {
+      } else if (tag.textContent.match(/pièce/gi)) {
         rooms = tag
-      } else if (tag.textContent.match(/meublé/g)) {
-        furnished = tag
+      } else if (tag.textContent.match(/Particulier/g)) {
+        isParticulier = true
       }
     })
 
-    if (!description && !price && !cityLabel) {
+    const itemTags2 = [...document.querySelectorAll('ul li [data-testid*="Sections.Features.Feature"]')]
+
+    const furnished = itemTags2?.some((el) => {
+      return el.textContent.match(/^Meublé/g)
+    })
+
+    let yearBuilt = itemTags2?.find((el) => {
+      return el.textContent.match(/^Année de construction/g)
+    })
+
+    const basicFeatures = [...document.querySelectorAll('[data-testid="basic-features"] > div')]
+    if (!yearBuilt) {
+      yearBuilt = basicFeatures?.find((el) => {
+        return el.textContent.match(/^Construit en/g)
+      })
+    }
+
+    if (!title && !description && !price && !cityLabel) {
       return null
     }
 
-    const dpe = document.querySelector('[data-testid="aviv.CDP.Sections.Energy.Preview.EfficiencyClass"]')
+    const cityLabelText = cityLabel && cityLabel.textContent
+
+    const dpeElem = document.querySelector('[data-testid*="Energy.Preview.EfficiencyClass"]')
 
     return {
       id: null,
-      cityLabel: cityLabel && cityLabel.textContent,
-      hasCharges: hasCharges?.textContent === 'cc',
-      charges: charges && charges.textContent,
-      description: description && description.textContent,
-      dpe: dpe?.textContent,
-      furnished: furnished && !!furnished.textContent,
-      price: price && price.textContent,
-      renter: renter && renter.textContent,
-      rooms: rooms && rooms.textContent,
-      surface: surface && surface.textContent,
+      cityLabel: cityLabelText,
+      charges: charges?.textContent,
+      description: description?.textContent,
+      furnished,
+      hasCharges: hasCharges?.textContent.includes('cc'),
+      price: price?.textContent,
+      renter: isParticulier ? PARTICULIER : renter ? renter.textContent : null,
+      rooms: rooms?.textContent,
+      surface: surface?.textContent,
+      title: title?.textContent,
+      dpe: dpeElem?.textContent,
     }
   }
 }
