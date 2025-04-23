@@ -19,8 +19,8 @@ export class FnaimScraping {
     const renter = document.querySelector('#colonneDroiteFiche div.caracteristique.agence .libelle')
     const features = [...document.querySelectorAll('#annonceFiche div.caracteristique > ul > li')]
     const dpe = document.querySelector('.dpeListe > li')
+    const cityLabel = tabs.map(tab => tab.textContent).join(' ')
 
-    let cityLabel = null
     let surface = null
     let rooms = null
     let yearBuilt = null
@@ -41,8 +41,6 @@ export class FnaimScraping {
         surface = feature
       } else if (feature.textContent.match(/Pièce/g)) {
         rooms = feature
-      } else if (feature.textContent.match(/Lieu/g)) {
-        cityLabel = feature
       } else if (feature.textContent.match(/Année de construction/g)) {
         yearBuilt = feature
       }
@@ -59,7 +57,7 @@ export class FnaimScraping {
 
     return {
       id: null,
-      cityLabel: cityLabel?.textContent,
+      cityLabel,
       description: description?.textContent,
       price: price?.textContent,
       hasCharges: !!hasCharges?.textContent?.toLowerCase().includes('charges comprises'),
