@@ -10,17 +10,14 @@ export class FnaimScraping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const tabs = [...document.querySelectorAll('#annonceFiche > div.ariane > span > a > span')]
-    const title = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header > div > h1')
-    const description = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > div:nth-child(5) > p')
-    const price = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header h3 > span')
-    const chargesNode = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > div.description > p')
-    const hasCharges = document.querySelector('#annonceFiche > div.annonce_fiche.fiche > header > div.mainInfo > div')
-    const renter = document.querySelector(
-      '#annonceFiche > div.annonce_fiche.fiche > div.caracteristique.agence > div > div.coordonnees > div > a'
-    )
-    const features = [...document.querySelectorAll('#annonceFiche > div.annonce_fiche.fiche > ul > li')]
-    const features2 = [...document.querySelectorAll('#logementBlock > ul > li')]
+    const tabs = [...document.querySelectorAll('div.ariane > span > a > span')]
+    const title = document.querySelector('#annonceFiche div > h1.titreFiche')
+    const description = document.querySelector('#annonceFiche [itemprop="description"]')
+    const price = document.querySelector('#annonceFiche div.annonce_price')
+    const chargesNode = document.querySelector('#annonceFiche #description > p')
+    const hasCharges = document.querySelector('#annonceFiche div.annonce_price')
+    const renter = document.querySelector('#colonneDroiteFiche div.caracteristique.agence .libelle')
+    const features = [...document.querySelectorAll('#annonceFiche div.caracteristique > ul > li')]
     const dpe = document.querySelector('.dpeListe > li')
 
     let cityLabel = null
@@ -46,11 +43,7 @@ export class FnaimScraping {
         rooms = feature
       } else if (feature.textContent.match(/Lieu/g)) {
         cityLabel = feature
-      }
-    })
-
-    features2.forEach((feature) => {
-      if (feature.textContent.match(/Année de construction/g)) {
+      } else if (feature.textContent.match(/Année de construction/g)) {
         yearBuilt = feature
       }
     })
