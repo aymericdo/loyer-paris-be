@@ -2,9 +2,14 @@ import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export const isFake = (city: AvailableMainCities): boolean => {
   switch (city) {
-    case 'la rochelle':
     case 'annecy':
-      // nice, nantes, strasbourg, rennes, toulon, tours
+    case 'la rochelle':
+    case 'marseille':
+    case 'nice':
+    case 'nantes':
+    case 'strasbourg':
+    case 'rennes':
+    case 'toulon':
       return true
     default:
       return false

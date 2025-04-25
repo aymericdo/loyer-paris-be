@@ -30,6 +30,12 @@ const CITIES = {
   montpellier: ['montpellier'],
   'la rochelle': ['la rochelle'],
   'annecy': ['annecy'],
+  'marseille': ['marseille'],
+  'nice': ['nice'],
+  'nantes': ['nantes'],
+  'strasbourg': ['strasbourg'],
+  'rennes': ['rennes'],
+  'toulon': ['toulon'],
   paysBasque: [
     'ahetze',
     'anglet',

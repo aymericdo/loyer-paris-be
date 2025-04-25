@@ -298,5 +298,29 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
       postalCodes: ['38750'],
       regex: [/\b38750\b/g],
     }
+    case 'marseille': return {
+      postalCodes: ['13001', '13002', '13003', '13004', '13005', '13006', '13007', '13008', '13009', '13010', '13011', '13012', '13013', '13014', '13015', '13016', '13000'],
+      regex: [/\b13001\b/g, /\b13002\b/g, /\b13003\b/g, /\b13004\b/g, /\b13005\b/g, /\b13006\b/g, /\b13007\b/g, /\b13008\b/g, /\b13009\b/g, /\b13010\b/g, /\b13011\b/g, /\b13012\b/g, /\b13013\b/g, /\b13014\b/g, /\b13015\b/g, /\b13016\b/g, /\b13000\b/g],
+    }
+    case 'nice': return {
+      postalCodes: ['06000', '06100', '06200', '06300'],
+      regex: [/\b06000\b/g, /\b06100\b/g, /\b06200\b/g, /\b06300\b/g],
+    }
+    case 'nantes': return {
+      postalCodes: ['44000', '44100', '44200', '44300'],
+      regex: [/\b44000\b/g, /\b44100\b/g, /\b44200\b/g, /\b44300\b/g],
+    }
+    case 'strasbourg': return {
+      postalCodes: ['67000', '67100', '67200'],
+      regex: [/\b67000\b/g, /\b67100\b/g, /\b67200\b/g],
+    }
+    case 'rennes': return {
+      postalCodes: ['35000', '35200', '35700'],
+      regex: [/\b35000\b/g, /\b35200\b/g, /\b35700\b/g],
+    }
+    case 'toulon': return {
+      postalCodes: ['83000', '83100', '83200'],
+      regex: [/\b83000\b/g, /\b83100\b/g, /\b83200\b/g],
+    }
   }
 }
