@@ -322,5 +322,13 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
       postalCodes: ['83000', '83100', '83200'],
       regex: [/\b83000\b/g, /\b83100\b/g, /\b83200\b/g],
     }
+    case 'aix-en-provence': return {
+      postalCodes: ['13080', '13090', '13100', '13290', '13540'],
+      regex: [/\b13080\b/g, /\b13090\b/g, /\b13100\b/g, /\b13290\b/g, /\b13540\b/g],
+    }
+    case 'toulouse': return {
+      postalCodes: ['31000', '31004', '31090', '31100', '31200', '31300', '31400', '31500'],
+      regex: [/\b31000\b/g, /\b31004\b/g, /\b31090\b/g, /\b31100\b/g, /\b31200\b/g, /\b31300\b/g, /\b31400\b/g, /\b31500\b/g],
+    }
   }
 }

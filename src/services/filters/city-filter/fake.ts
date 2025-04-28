@@ -10,6 +10,8 @@ export const isFake = (city: AvailableMainCities): boolean => {
     case 'strasbourg':
     case 'rennes':
     case 'toulon':
+    case 'toulouse':
+    case 'aix-en-provence':
       return true
     default:
       return false

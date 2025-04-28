@@ -38,6 +38,8 @@ export const label = (city: AvailableMainCities | AvailableCities): string => {
     case 'strasbourg': return 'Strasbourg'
     case 'rennes': return 'Rennes'
     case 'toulon': return 'Toulon'
+    case 'toulouse': return 'Toulouse'
+    case 'aix-en-provence': return 'Aix-en-Provence'
     case 'annecy': return 'Annecy'
     case 'paysBasque': return 'Pays Basque'
     case 'ahetze': return 'Ahetze'

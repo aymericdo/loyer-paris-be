@@ -36,6 +36,8 @@ const CITIES = {
   'strasbourg': ['strasbourg'],
   'rennes': ['rennes'],
   'toulon': ['toulon'],
+  'toulouse': ['toulouse'],
+  'aix-en-provence': ['aix-en-provence'],
   paysBasque: [
     'ahetze',
     'anglet',
