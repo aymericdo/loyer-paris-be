@@ -136,7 +136,7 @@ describe('pap', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: 'cite casseville 59000, Lille' },
+          address: { order: 0, value: 'cite menu 59000, Lille' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: 2 },
           surface: { order: 3, value: 50 },

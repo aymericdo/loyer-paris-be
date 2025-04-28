@@ -33,6 +33,14 @@ export const inseeCode = (city: AvailableCities): string => {
 
     case 'la rochelle': return '17300'
     case 'annecy': return '74010'
+    case 'marseille': return '13055'
+    case 'nice': return '06088'
+    case 'nantes': return '44109'
+    case 'strasbourg': return '67482'
+    case 'rennes': return '35238'
+    case 'toulon': return '83137'
+    case 'toulouse': return '31555'
+    case 'aix-en-provence': return '13001'
 
     case 'ahetze': return '64009'
     case 'anglet': return '64024'
