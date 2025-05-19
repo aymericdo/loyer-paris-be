@@ -33,8 +33,7 @@ export class ApiErrorsService {
       case ERROR_CODE.Filter:
         PrettyLog.call(this.error.msg, 'red'); break
       case ERROR_CODE.BadLocation:
-        PrettyLog.call(this.error.msg, 'yellow')
-        break
+      case ERROR_CODE.Colocation:
       case ERROR_CODE.Minimal:
       case ERROR_CODE.Other:
       case ERROR_CODE.Address:
@@ -92,6 +91,7 @@ export class ApiErrorsService {
       case ERROR_CODE.Minimal:
       case ERROR_CODE.Address:
       case ERROR_CODE.BadLocation:
+      case ERROR_CODE.Colocation:
       case ERROR_CODE.Price:
       case ERROR_CODE.Surface:
       case ERROR_CODE.Other:
