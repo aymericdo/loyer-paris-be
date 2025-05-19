@@ -18,7 +18,7 @@ export class SelogerScraping {
     const renter = document.querySelector('[data-testid*="ContactCard.Title"]')
     const charges = document.querySelector('[data-testid*="Sections.Price.PrimaryComponent"] .css-cxt05v')
 
-    const itemTags = [...document.querySelectorAll('[data-testid*="Sections.Hardfacts"] .css-1c3h18e')]
+    const itemTags = [...document.querySelectorAll('[data-testid*="cdp-hardfacts"] .css-1c3h18e')]
 
     let isParticulier = false
     let surface = null
