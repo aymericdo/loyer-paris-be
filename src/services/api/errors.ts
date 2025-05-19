@@ -9,6 +9,7 @@ export enum ERROR_CODE {
   Minimal = 'minimal',
   Address = 'address',
   BadLocation = 'badLocation',
+  Colocation = 'colocation',
   Price = 'price',
   Surface = 'surface',
   Filter = 'filter',

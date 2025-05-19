@@ -80,6 +80,14 @@ export abstract class Website {
 
       const cleanAd: CleanAd = await new DigService(ad).digInAd(city)
 
+      if (cleanAd.colocation) {
+        throw {
+          error: ERROR_CODE.Colocation,
+          msg: 'colocation found',
+          isIncompleteAd: true,
+        }
+      }
+
       const CurrentEncadrementFilter = new EncadrementFilterFactory(getMainCity(city)).currentEncadrementFilter()
       const filteredResult: FilteredResult = await new CurrentEncadrementFilter(cleanAd).find()
 
@@ -96,7 +104,6 @@ export abstract class Website {
           isFake: isFake(mainCity),
           dpe: cleanAd.dpe,
           rentComplement: cleanAd.rentComplement,
-          colocation: cleanAd.colocation,
           hasFurniture: cleanAd.hasFurniture,
           isHouse: cleanAd.isHouse,
           postalCode: cleanAd.postalCode,
