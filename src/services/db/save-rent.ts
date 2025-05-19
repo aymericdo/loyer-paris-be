@@ -8,6 +8,7 @@ interface SavedInfo {
   district: string
   dpe?: string | null
   rentComplement?: number | null
+  colocation?: boolean | null
   city: AvailableCities
   hasFurniture?: boolean
   isHouse?: boolean
@@ -49,6 +50,7 @@ export class SaveRentService {
       district: this.adToSave.district,
       ...this.saveIfNotNull('dpe'),
       ...this.saveIfNotNull('rentComplement'),
+      ...this.saveIfNotNull('colocation'),
       ...this.saveIfNotFalse('isFake'),
       ...this.saveIfNotNull('address'),
       ...this.saveIfNotNull('postalCode'),

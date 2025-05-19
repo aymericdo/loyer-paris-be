@@ -33,6 +33,7 @@ export class DigService {
     const isHouse = canHaveHouse(getMainCity(city)) ? this.digForIsHouse() : null
     const dpe = this.digForDPE()
     const rentComplement = this.digForRentComplement()
+    const colocation = this.digForColoc()
 
     return {
       id: this.ad.id,
@@ -53,6 +54,7 @@ export class DigService {
       isHouse,
       dpe,
       rentComplement,
+      colocation,
     }
   }
 
@@ -210,5 +212,10 @@ export class DigService {
       cleanup.price(getFirstMatchResult(this.ad.description, regexString('rentComplement')))
 
     return rentComplement
+  }
+
+  private digForColoc(): boolean {
+    return (this.ad.description?.match(regexString('colocation')) &&
+      !!this.ad.description.match(regexString('colocation')).length)
   }
 }

@@ -96,6 +96,7 @@ export abstract class Website {
           isFake: isFake(mainCity),
           dpe: cleanAd.dpe,
           rentComplement: cleanAd.rentComplement,
+          colocation: cleanAd.colocation,
           hasFurniture: cleanAd.hasFurniture,
           isHouse: cleanAd.isHouse,
           postalCode: cleanAd.postalCode,

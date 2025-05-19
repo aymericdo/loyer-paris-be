@@ -43,6 +43,7 @@ export interface CleanAd {
   isHouse?: boolean
   dpe?: string | null
   rentComplement?: number | null
+  colocation?: boolean | null
 }
 
 export interface InfoToFilter {
