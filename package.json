@@ -8,8 +8,7 @@
     "npm": "11.x"
   },
   "scripts": {
-    "start": "npm run dev",
-    "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
+    "watch": "nodemon --exec \"npm run build && npm run dev\" --watch src --ext ts",
     "build": "rimraf ./build && tsc && npm run sentry:sourcemaps",
     "test": "jest --forceExit --detectOpenHandles",
     "test:watch": "jest --forceExit --detectOpenHandles --no-cache --watchAll",

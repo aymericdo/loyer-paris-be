@@ -17,14 +17,6 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
       postalCodes: ['59000', '59260', '59160', '59800', '59777'],
       regex: [/\b59000\b/g, /\b59260\b/g, /\b59160\b/g, /\b59800\b/g, /\b59777\b/g],
     }
-    case 'hellemmes': return {
-      postalCodes: ['59260'],
-      regex: [/\b59260\b/g],
-    }
-    case 'lomme': return {
-      postalCodes: ['59160'],
-      regex: [/\b59160\b/g],
-    }
     case 'montpellier': return {
       postalCodes: ['34000', '34070', '34080', '34090'],
       regex: [/\b34000\b/g, /\b34070\b/g, /\b34080\b/g, /\b34090\b/g],

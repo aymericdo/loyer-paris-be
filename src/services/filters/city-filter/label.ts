@@ -29,8 +29,6 @@ export const label = (city: AvailableMainCities | AvailableCities): string => {
     case 'noisy-le-sec': return 'Noisy-le-Sec'
     case 'pantin': return 'Pantin'
     case 'romainville': return 'Romainville'
-    case 'hellemmes': return 'Hellemmes-Lille'
-    case 'lomme': return 'Lomme'
     case 'la rochelle': return 'La Rochelle'
     case 'marseille': return 'Marseille'
     case 'nice': return 'Nice'

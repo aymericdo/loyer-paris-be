@@ -5,8 +5,6 @@ export const inseeCode = (city: AvailableCities): string => {
     case 'paris': return '75056'
     case 'lyon': return '69123'
     case 'lille': return '59350'
-    case 'hellemmes': return '59298'
-    case 'lomme': return '59355'
 
     case 'montpellier': return '34172'
     case 'bordeaux': return '33063'

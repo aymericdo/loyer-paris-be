@@ -2,7 +2,7 @@ import { isFake } from '@services/filters/city-filter/fake'
 
 const CITIES = {
   paris: ['paris'],
-  lille: ['lille', 'lomme', 'hellemmes'],
+  lille: ['lille'],
   plaineCommune: [
     'aubervilliers',
     'epinay-sur-seine',
