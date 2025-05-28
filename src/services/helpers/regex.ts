@@ -13,7 +13,7 @@ export const regexString = (value: string): RegExp => {
     surface: /((9|\d{2})((|\.|,)\d{1,2})?)(?= ?(m2\b|metre|m²))/ig,
     isHouse: /maison/ig,
     particulier: /particulier/ig,
-    colocation: /colocation/ig,
+    colocation: /\bcolocation\b(?![^.!?]{0,50}\b(interdite|impossible|refusée|non\s?autorisée|interdiction)\b)/ig,
   }
 
   if (Object.keys(regex).includes(value)) {
