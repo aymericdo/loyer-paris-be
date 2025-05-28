@@ -43,7 +43,7 @@ export const IncompleteRent = rentConnection.model('IncompleteRent', incompleteR
 export const EmpriseBatie = empriseBatieConnection.model('Batie', empriseBatieSchema)
 
 // https://www.data.gouv.fr/fr/datasets/resultats-des-observatoires-locaux-des-loyers-par-agglomeration/
-export const LyonGeojson = encadrementZone1Connection.model('lyongeojsons', zoneSchema)
+export const LyonGeojson = encadrementZone1Connection.model('lyongeojsons2', zoneSchema)
 export const LilleGeojson = encadrementZone1Connection.model('lillegeojsons', zoneSchema)
 export const PlaineCommuneGeojson = encadrementZone1Connection.model('plainecommunegeojsons', zoneSchema)
 export const EstEnsembleGeojson = encadrementZone1Connection.model('estensemblegeojsons', zoneSchema)

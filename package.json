@@ -8,16 +8,24 @@
     "npm": "11.x"
   },
   "scripts": {
-    "watch": "nodemon --exec \"npm run build && npm run dev\" --watch src --ext ts",
-    "build": "rimraf ./build && tsc && npm run sentry:sourcemaps",
-    "test": "jest --forceExit --detectOpenHandles",
-    "test:watch": "jest --forceExit --detectOpenHandles --no-cache --watchAll",
-    "dev": "ts-node-dev --transpile-only ./src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "watch": "tsc --watch & nodemon ./build/src/index.js",
+
+    "build": "rimraf ./build && tsc",
+    "build:prod": "npm run build && npm run sentry:sourcemaps",
+
     "prod": "node ./build/src/index.js",
-    "debug": "tsc && node --inspect ./build/src/index.js",
+    "start": "npm run prod",
+
+    "test": "jest",
+    "test:ci": "jest --ci",
+    "test:watch": "jest --no-cache --watchAll",
+
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
+
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org encadrement-loyers --project node ./build && sentry-cli sourcemaps upload --org encadrement-loyers --project node ./build",
+
     "kml-to-geojson": "node src/scripts/kml-to-geojson.js"
   },
   "author": "Aymeric & Thomas",
