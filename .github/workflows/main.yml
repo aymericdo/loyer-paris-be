@@ -47,6 +47,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Upgrade npm to v11
+        run: npm install -g npm@11
+
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.6.0
         with:
