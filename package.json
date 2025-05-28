@@ -10,23 +10,17 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "watch": "tsc --watch & nodemon ./build/src/index.js",
-
     "build": "rimraf ./build && tsc",
     "build:prod": "npm run build && npm run sentry:sourcemaps",
-
     "prod": "node ./build/src/index.js",
     "start": "npm run prod",
-
     "test": "jest",
     "test:ci": "jest --ci",
     "test:watch": "jest --no-cache --watchAll",
-
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org encadrement-loyers --project node ./build && sentry-cli sourcemaps upload --org encadrement-loyers --project node ./build",
-
-    "kml-to-geojson": "node src/scripts/kml-to-geojson.js"
+    "kml-to-geojson": "ts-node -r tsconfig-paths/register src/scripts/kml-to-geojson.ts"
   },
   "author": "Aymeric & Thomas",
   "license": "ISC",
@@ -86,6 +80,7 @@
     "ts-jest": "^29.1.5",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3"
   }
 }
