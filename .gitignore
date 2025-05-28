@@ -1,10 +1,14 @@
+.DS_Store
+.vscode/
+
 .env
 .globalConfig.json
-node_modules/**
-.vscode/
-build/**
-.DS_Store
 globalConfig.json
+
+node_modules/**
+build/**
+
+src/scripts/data/**
 
 # Sentry Config File
 .sentryclirc

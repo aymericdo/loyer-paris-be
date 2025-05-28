@@ -39,12 +39,19 @@ export interface DefaultEncadrementItem {
   prix_max: string;
 }
 
+export interface Properties {
+  city: string
+  codeObservatoire: string
+  codeInsee: string
+  zone: string
+  postalCode: string
+  year: string
+  Zone: string // to delete
+}
+
 export interface DefaultDistrictItem {
   type: 'Feature'
-  properties: {
-    Zone: number
-    [DISPLAY_ZONE_FIELD]: string
-  }
+  properties: Properties
   geometry: { type: 'MultiPolygon'; coordinates: number[][][] }
 }
 

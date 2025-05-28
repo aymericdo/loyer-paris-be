@@ -1,5 +1,5 @@
 import { DataGouvAddressItem, FinalDataGouvAddressItem } from '@interfaces/address'
-import { Coordinate, DistrictItem } from '@interfaces/shared'
+import { Coordinate, DistrictItem, Properties } from '@interfaces/shared'
 import { AvailableCities, AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export class DistrictFilterParent {
@@ -19,18 +19,18 @@ export class DistrictFilterParent {
     this.districtName = districtName
   }
 
-  digZoneInProperties(data: unknown): string {
-    return `Zone ${data['Zone']}`
+  digZoneInProperties(data: Properties): string {
+    return `Zone ${+data.zone || data.Zone}`
   }
 
-  digCityInProperties(_data: unknown): string {
-    return null
+  digCityInProperties(data: Properties): string {
+    return data.city
   }
 
   buildItem(district: DistrictItem, elem: DataGouvAddressItem): FinalDataGouvAddressItem {
     return {
       ...elem,
-      districtName: district ? this.digZoneInProperties(district['properties']) : null,
+      districtName: district ? this.digZoneInProperties(district['properties'] as Properties) : null,
     } as FinalDataGouvAddressItem
   }
 
