@@ -75,7 +75,7 @@ export const zones = (city: AvailableCities): string[] | { [key: string]: string
     case 'claix': return ['Zone A']
     case 'domène': return ['Zone A']
     case 'échirolles': return ['Zone A']
-    case 'éybens': return ['Zone A']
+    case 'eybens': return ['Zone A']
     case 'fontaine': return ['Zone A']
     case 'fontanil-cornillon': return ['Zone A']
     case 'gières': return ['Zone A']

@@ -20,7 +20,7 @@ export class DistrictFilterParent {
   }
 
   digZoneInProperties(data: Properties): string {
-    return `Zone ${+data.zone || data.Zone}`
+    return `Zone ${data.zone ? /^\d+$/.test(data.zone) ? +data.zone : data.zone : data.Zone}`
   }
 
   digCityInProperties(data: Properties): string {

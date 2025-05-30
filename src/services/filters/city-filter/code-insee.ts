@@ -69,7 +69,7 @@ export const inseeCode = (city: AvailableCities): string => {
     case 'claix': return '38095'
     case 'domène': return '38147'
     case 'échirolles': return '38151'
-    case 'éybens': return '38158'
+    case 'eybens': return '38158'
     case 'fontaine': return '38169'
     case 'fontanil-cornillon': return '38170'
     case 'gières': return '38180'

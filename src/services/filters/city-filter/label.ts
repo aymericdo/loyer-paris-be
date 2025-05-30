@@ -69,7 +69,7 @@ export const label = (city: AvailableMainCities | AvailableCities): string => {
     case 'claix': return 'Claix'
     case 'domène': return 'Domène'
     case 'échirolles': return 'Échirolles'
-    case 'éybens': return 'Éybens'
+    case 'eybens': return 'Eybens'
     case 'fontaine': return 'Fontaine'
     case 'fontanil-cornillon': return 'Fontanil-Cornillon'
     case 'gières': return 'Gières'

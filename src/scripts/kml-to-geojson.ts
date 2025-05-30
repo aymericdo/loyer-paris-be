@@ -10,7 +10,7 @@ import axios from 'axios'
 import type { Feature, FeatureCollection } from 'geojson'
 
 // === Configurable Paths ===
-const FILE_NAME = 'L6400_zone_elem_2024'
+const FILE_NAME = 'L3800_zone_elem_2024'
 
 const inputPath = path.resolve(__dirname, `./data/${FILE_NAME}.kml`)
 const outputPath = path.resolve(__dirname, `./data/${FILE_NAME}.json`)
@@ -40,7 +40,7 @@ async function transformFeatureProperties(properties) {
 
   if (!zone) {
     const zoneStr = zones(city.toLowerCase())?.[0]
-    zone = zoneStr ? (zoneStr.match(/\d+/) || [null])[0] : null
+    zone = zoneStr ? (zoneStr.match(/(?<=Zone ).*/) || [null])[0] : null
   }
 
   if (!zone) return null

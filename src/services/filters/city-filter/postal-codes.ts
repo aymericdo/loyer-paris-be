@@ -222,7 +222,7 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
       postalCodes: ['38130'],
       regex: [/\b38130\b/g],
     }
-    case 'éybens': return {
+    case 'eybens': return {
       postalCodes: ['38320'],
       regex: [/\b38320\b/g],
     }

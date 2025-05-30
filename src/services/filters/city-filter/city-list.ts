@@ -69,7 +69,7 @@ const CITIES = {
     'claix',
     'domène',
     'échirolles',
-    'éybens',
+    'eybens',
     'fontaine',
     'fontanil-cornillon',
     'gières',
