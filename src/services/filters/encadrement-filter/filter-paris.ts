@@ -1,6 +1,6 @@
 import { FilteredResult } from '@interfaces/ad'
 import { ParisDistrictItem, ParisEncadrementItem, ParisQuartierItem } from '@interfaces/paris'
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 import { DistrictFilterParis } from '@services/filters/district-filter/district-filter-paris'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 import * as fs from 'fs'

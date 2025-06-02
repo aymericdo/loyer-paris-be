@@ -1,11 +1,11 @@
-import { AvailableCities, AvailableMainCities, getCitiesFromMainCity } from '@services/filters/city-filter/city-list'
+import { AvailableCities, AvailableMainCities, getCitiesFromMainCity } from '@services/city-config/list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
 import { getLegalPerCity } from '@services/db/queries/get-legal-per-city'
-import { CitiesFetcher } from '@services/fetchers/cities'
-import { label } from '@services/filters/city-filter/label'
+import { label } from '@services/city-config/label'
+import { CITY_PATH, DistrictsList } from '@services/districts/districts-list'
 
 export async function getChloroplethCitiesMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethCitiesMap`, 'blue')
@@ -20,8 +20,7 @@ export async function getChloroplethCitiesMap(req: Request, res: Response) {
     return
   }
 
-  const cityFetcher = new CitiesFetcher(cities)
-  const geodata = await cityFetcher.fetchGeojson()
+  const geodata = await new DistrictsList(mainCity).currentGeodata()
 
   const result: { illegalPercentage: number, isIllegalCount: number, totalCount: number, city: string }[] =
     (await getLegalPerCity(mainCity, dateRange)).map((data) => ({
@@ -42,7 +41,7 @@ export async function getChloroplethCitiesMap(req: Request, res: Response) {
     },
     transform: [
       {
-        lookup: 'properties.city',
+        lookup: CITY_PATH,
         from: {
           data: {
             values: result,

@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 import { DistrictFilterLyon } from '@services/filters/district-filter/district-filter-lyon'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 

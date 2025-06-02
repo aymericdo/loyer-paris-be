@@ -1,6 +1,5 @@
-import { DataGouvAddressItem, FinalDataGouvAddressItem } from '@interfaces/address'
 import { Coordinate, DistrictItem, DefaultDistrictItemProperties, DistrictItemProperties } from '@interfaces/shared'
-import { AvailableCities, AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableCities, AvailableMainCities } from '@services/city-config/list'
 
 export class DistrictFilterParent {
   GeojsonCollection = null
@@ -27,13 +26,6 @@ export class DistrictFilterParent {
 
   digCityInProperties(data: DistrictItemProperties): string {
     return (data as DefaultDistrictItemProperties).city
-  }
-
-  buildItem(district: DistrictItem, elem: DataGouvAddressItem): FinalDataGouvAddressItem {
-    return {
-      ...elem,
-      districtName: district ? this.digZoneInProperties(district['properties']) : null,
-    } as FinalDataGouvAddressItem
   }
 
   buildGroupBy(_elem: string): string {

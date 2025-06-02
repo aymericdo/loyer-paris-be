@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 import { DistrictFilterBordeaux } from './district-filter-bordeaux'
 import { DistrictFilterEstEnsemble } from './district-filter-est-ensemble'
 import { DistrictFilterLille } from './district-filter-lille'

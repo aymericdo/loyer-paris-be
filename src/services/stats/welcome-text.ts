@@ -1,5 +1,5 @@
 import { getClassicData } from '@services/db/queries/get-classic-data'
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
 

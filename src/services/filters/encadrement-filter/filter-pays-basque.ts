@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 import { DistrictFilterPaysBasque } from '@services/filters/district-filter/district-filter-pays-basque'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 

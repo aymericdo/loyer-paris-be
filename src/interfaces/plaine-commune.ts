@@ -1,10 +1,6 @@
-import { DefaultEncadrementItem } from '@interfaces/shared'
-import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
+import { DISPLAY_CITY_FIELD, DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
 
-export interface PlaineCommuneEncadrementItem extends DefaultEncadrementItem {
-  maison: boolean
-}
-
+// source : http://www.referenceloyer.drihl.ile-de-france.developpement-durable.gouv.fr/plaine-commune/
 export interface PlaineCommuneDistrictItemProperties {
   ID_BD_Topo: string
   INSEE_COM: string
@@ -13,6 +9,7 @@ export interface PlaineCommuneDistrictItemProperties {
   SIREN_EPCI: string
   Zone: string
   [DISPLAY_ZONE_FIELD]: string
+  [DISPLAY_CITY_FIELD]: string
 }
 
 export interface PlaineCommuneDistrictItem {

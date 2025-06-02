@@ -1,8 +1,8 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { Coordinate, DefaultDistrictItem, DefaultEncadrementItem, DistrictItem, EncadrementItem, EncadrementItemWithHouse } from '@interfaces/shared'
-import { canHaveHouse } from '@services/filters/city-filter/can-have-house'
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
-import { dateBuiltRange } from '@services/filters/city-filter/date-build-range'
+import { Coordinate, DefaultDistrictItem, DefaultEncadrementItem, DistrictItem, EncadrementItem } from '@interfaces/shared'
+import { canHaveHouse } from '@services/city-config/can-have-house'
+import { AvailableMainCities } from '@services/city-config/list'
+import { dateBuiltRange } from '@services/city-config/date-build-range'
 import { YearBuiltService } from '@services/helpers/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -93,8 +93,8 @@ export abstract class EncadrementFilterParent {
 
     return this.infoToFilter.isHouse != null
       ? this.infoToFilter.isHouse
-        ? (rangeRent as EncadrementItemWithHouse).maison
-        : !(rangeRent as EncadrementItemWithHouse).maison
+        ? (rangeRent as DefaultEncadrementItem).maison
+        : !(rangeRent as DefaultEncadrementItem).maison
       : true
   }
 
@@ -129,7 +129,7 @@ export abstract class EncadrementFilterParent {
         }
 
         if (canHaveHouse(this.mainCity)) {
-          res['isHouse'] = (rent as unknown as EncadrementItemWithHouse).maison ? 'Maison' : null
+          res['isHouse'] = rent.maison ? 'Maison' : null
         }
 
         return res

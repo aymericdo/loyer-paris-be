@@ -1,5 +1,5 @@
 import { getLegalPerDate } from '@services/db/queries/get-legal-per-date'
-import { AvailableCityZones, AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableCityZones, AvailableMainCities } from '@services/city-config/list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'

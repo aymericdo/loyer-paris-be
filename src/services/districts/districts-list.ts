@@ -1,7 +1,7 @@
 import { DistrictItem, GeojsonFile } from '@interfaces/shared'
-import { AvailableCities, AvailableMainCities, getCityList } from '@services/filters/city-filter/city-list'
-import { label } from '@services/filters/city-filter/label'
-import { zones } from '@services/filters/city-filter/zones'
+import { AvailableCities, AvailableMainCities, getCityList } from '@services/city-config/list'
+import { label } from '@services/city-config/label'
+import { zones } from '@services/city-config/zones'
 import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 
 interface DistrictElem {
@@ -11,9 +11,10 @@ interface DistrictElem {
   displaySequence: number | string
 }
 
-export const DISPLAY_CITY_FIELD = 'displayCity'
 export const DISPLAY_ZONE_FIELD = 'displayZone'
-export const DISTRICT_FIELD = `properties.${DISPLAY_ZONE_FIELD}`
+export const DISPLAY_CITY_FIELD = 'displayCity'
+export const ZONE_PATH = `properties.${DISPLAY_ZONE_FIELD}`
+export const CITY_PATH = `properties.${DISPLAY_CITY_FIELD}`
 
 export class DistrictsList {
   currentDistrictFilter = null

@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 
 export const dateBuiltRange = (city: AvailableMainCities): [number, number][] => {
   switch (city) {

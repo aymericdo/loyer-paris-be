@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 
 export const canHaveHouse = (city: AvailableMainCities): boolean => {
   // https://www.youtube.com/watch?v=TuxMwALL_S4&ab_channel=Charted

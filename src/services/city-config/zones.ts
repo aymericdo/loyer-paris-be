@@ -1,4 +1,4 @@
-import { AvailableCities } from '@services/filters/city-filter/city-list'
+import { AvailableCities } from '@services/city-config/list'
 
 export const zones = (city: AvailableCities): string[] | { [key: string]: string[] } => {
   switch (city) {

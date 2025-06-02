@@ -1,8 +1,8 @@
 import { Rent } from '@db/db'
 import { getMainCityFilter, getClassicWebsiteFilter, getDistrictFilter, getExceedingFilter, getFurnitureFilter, getHouseFilter, getPriceFilter, getRoomFilter, getSurfaceFilter, getCityFilter } from '@services/db/queries/common'
-import { CitiesFetcher } from '@services/fetchers/cities'
-import { AvailableCities, AvailableCityZones, AvailableMainCities, getMainCity } from '@services/filters/city-filter/city-list'
-import { isFake } from '@services/filters/city-filter/fake'
+import { DistrictsList } from '@services/districts/districts-list'
+import { AvailableCities, AvailableCityZones, AvailableMainCities, getMainCity } from '@services/city-config/list'
+import { isFake } from '@services/city-config/fake'
 import { roundNumber } from '@services/helpers/round-number'
 import randomPositionInPolygon from 'random-position-in-polygon'
 
@@ -113,8 +113,7 @@ export async function getRelevantAdsData(
 
     const mainCity = getMainCity(ad.city)
     if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
-      const cityFetcher = new CitiesFetcher([ad.city])
-      const geodata = await cityFetcher.fetchGeojson()
+      const geodata = await new DistrictsList(mainCity, { specificCity: ad.city }).currentGeodata()
       const feature = geodata.features[0]
 
       if (feature) {

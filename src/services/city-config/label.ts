@@ -1,4 +1,4 @@
-import { AvailableCities, AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableCities, AvailableMainCities } from '@services/city-config/list'
 import { capitalizeFirstLetter } from '@services/helpers/capitalize'
 
 export const label = (city: AvailableMainCities | AvailableCities): string => {

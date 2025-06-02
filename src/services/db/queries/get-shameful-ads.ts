@@ -1,6 +1,6 @@
 import { Rent } from '@db/db'
 import { getMainCityFilter } from '@services/db/queries/common'
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 
 export async function getShamefulAdsData(
   city: AvailableMainCities,

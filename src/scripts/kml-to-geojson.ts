@@ -3,7 +3,7 @@
 import fs from 'fs'
 import { DOMParser } from '@xmldom/xmldom'
 import * as toGeoJSON from '@tmcw/togeojson'
-import { zones } from '@services/filters/city-filter/zones'
+import { zones } from '@services/city-config/zones'
 import path from 'path'
 import axios from 'axios'
 

@@ -1,5 +1,5 @@
 import { Coordinate } from '@interfaces/shared'
-import { AvailableCities } from '@services/filters/city-filter/city-list'
+import { AvailableCities } from '@services/city-config/list'
 
 export interface Ad {
   id: string

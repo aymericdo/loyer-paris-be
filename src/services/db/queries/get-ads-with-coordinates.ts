@@ -1,5 +1,5 @@
 import { getMainCityFilter, getDateRangeFilter, getWebsiteFilter } from '@services/db/queries/common'
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 import { Rent } from '@db/db'
 
 export async function getAdsWithCoordinates(

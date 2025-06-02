@@ -1,4 +1,4 @@
-import { isFake } from '@services/filters/city-filter/fake'
+import { isFake } from '@services/city-config/fake'
 
 const CITIES = {
   paris: ['paris'],

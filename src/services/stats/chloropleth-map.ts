@@ -1,5 +1,5 @@
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
-import { DISTRICT_FIELD, DistrictsList } from '@services/districts/districts-list'
+import { AvailableMainCities } from '@services/city-config/list'
+import { ZONE_PATH, DistrictsList } from '@services/districts/districts-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
@@ -30,7 +30,7 @@ export async function getChloroplethMap(req: Request, res: Response) {
     },
     transform: [
       {
-        lookup: DISTRICT_FIELD,
+        lookup: ZONE_PATH,
         from: {
           data: {
             values: result,

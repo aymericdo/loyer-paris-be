@@ -1,13 +1,7 @@
 import { IncompleteAd } from '@interfaces/ad'
-import {  BordeauxEncadrementItem } from './bordeaux'
-import { EstEnsembleDistrictItem, EstEnsembleDistrictItemProperties, EstEnsembleEncadrementItem } from './est-ensemble'
-import { LyonEncadrementItem } from './lyon'
-import { MontpellierEncadrementItem } from './montpellier'
+import { EstEnsembleDistrictItem, EstEnsembleDistrictItemProperties } from './est-ensemble'
 import { ParisDistrictItem, ParisDistrictItemProperties, ParisEncadrementItem } from './paris'
-import { PlaineCommuneDistrictItem, PlaineCommuneDistrictItemProperties, PlaineCommuneEncadrementItem } from './plaine-commune'
-import { LilleEncadrementItem } from '@interfaces/lille'
-import { PaysBasqueEncadrementItem } from '@interfaces/pays-basque'
-import { GrenobleEncadrementItem } from '@interfaces/grenoble'
+import { PlaineCommuneDistrictItem, PlaineCommuneDistrictItemProperties } from './plaine-commune'
 
 export interface Coordinate {
   lat: number
@@ -36,6 +30,7 @@ export interface DefaultEncadrementItem {
   prix_min: string;
   prix_med: string;
   prix_max: string;
+  maison?: boolean;
 }
 
 export interface DefaultDistrictItemProperties {
@@ -65,20 +60,7 @@ export type DistrictItem =
   | PlaineCommuneDistrictItem
   | EstEnsembleDistrictItem
 
-export type EncadrementItem =
-  DefaultEncadrementItem
-  | ParisEncadrementItem
-  | LyonEncadrementItem
-  | LilleEncadrementItem
-  | MontpellierEncadrementItem
-  | GrenobleEncadrementItem
-  | EncadrementItemWithHouse
-
-export type EncadrementItemWithHouse =
-  | EstEnsembleEncadrementItem
-  | PlaineCommuneEncadrementItem
-  | BordeauxEncadrementItem
-  | PaysBasqueEncadrementItem
+export type EncadrementItem = DefaultEncadrementItem | ParisEncadrementItem
 
 export interface GeojsonFile {
   type: 'FeatureCollection'

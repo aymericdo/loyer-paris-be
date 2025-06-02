@@ -1,6 +1,6 @@
 import { Rent } from '@db/db'
 import { getMainCityFilter, getClassicSurfaceFilter, getDateRangeFilter } from '@services/db/queries/common'
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'
 
 export async function getLegalPerClassicRenterData(

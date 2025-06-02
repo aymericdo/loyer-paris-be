@@ -1,9 +1,9 @@
-import { DataGouvAddressItem } from '@interfaces/address'
+import { DataGouvAddressItem, FinalDataGouvAddressItem } from '@interfaces/address'
 import { paramMiddleware, queryParamValidator } from '@services/api/validations'
 import { AddressService } from '@services/diggers/address-service'
 import { DistrictsList } from '@services/districts/districts-list'
-import { AvailableMainCities, AvailableCities } from '@services/filters/city-filter/city-list'
-import { isFake } from '@services/filters/city-filter/fake'
+import { AvailableMainCities, AvailableCities } from '@services/city-config/list'
+import { isFake } from '@services/city-config/fake'
 import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import express, { Request, Response } from 'express'
@@ -79,8 +79,12 @@ async function getAddresses(req: Request, res: Response) {
     })
 
     const district = await currentDistrictFilter.getFirstDistrict()
-    return currentDistrictFilter.buildItem(district, elem)
-  })) as DataGouvAddressItem[]
+
+    return {
+      ...elem,
+      districtName: district ? this.digZoneInProperties(district['properties']) : null,
+    }
+  })) as FinalDataGouvAddressItem[]
 
   res.json(data)
 }

@@ -1,11 +1,11 @@
 import { Ad } from '@interfaces/ad'
 import { Coordinate, AddressItem } from '@interfaces/shared'
-import { AvailableCities } from '@services/filters/city-filter/city-list'
+import { AvailableCities } from '@services/city-config/list'
 import { regexString } from '@services/helpers/regex'
 import * as cleanup from '@services/helpers/cleanup'
 import { DataGouvAddress, DataGouvAddressItem } from '@interfaces/address'
 import axios from 'axios'
-import { inseeCode } from '@services/filters/city-filter/code-insee'
+import { inseeCode } from '@services/city-config/code-insee'
 import { PrettyLog } from '@services/helpers/pretty-log'
 
 export class AddressService {

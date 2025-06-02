@@ -1,7 +1,7 @@
 import { Ad } from '@interfaces/ad'
-import { AvailableCities, AvailableMainCities, getCityList } from '@services/filters/city-filter/city-list'
-import { postalCodes } from '@services/filters/city-filter/postal-codes'
-import { haveArrondissements } from '@services/filters/city-filter/have-arrondissements'
+import { AvailableCities, AvailableMainCities, getCityList } from '@services/city-config/list'
+import { postalCodes } from '@services/city-config/postal-codes'
+import { hasArrondissement } from '@services/city-config/has-arrondissement'
 
 export class PostalCodeService {
   private mainCity: AvailableMainCities
@@ -14,9 +14,9 @@ export class PostalCodeService {
 
   getPostalCodePossibilities(): string[] {
     if (this.city === 'all') {
-      return getCityList(this.mainCity).flatMap(city => postalCodes(city).postalCodes)
+      return getCityList(this.mainCity).flatMap(city => postalCodes(city))
     } else {
-      return postalCodes(this.city).postalCodes
+      return postalCodes(this.city)
     }
   }
 
@@ -31,36 +31,47 @@ export class PostalCodeService {
     }
 
     const postalCode =
-      (ad.cityLabel && this.startOfPostalCodeFromText(ad.cityLabel)) ||
-      (ad.title && this.startOfPostalCodeFromText(ad.title)) ||
-      (ad.description && this.startOfPostalCodeFromText(ad.description)) ||
+      (ad.cityLabel && this.startOfPostalCodeFromText(ad.cityLabel, postalCodePossibilities)) ||
+      (ad.title && this.startOfPostalCodeFromText(ad.title, postalCodePossibilities)) ||
+      (ad.description && this.startOfPostalCodeFromText(ad.description, postalCodePossibilities)) ||
       (postalCodePossibilities[0].endsWith('000') && postalCodePossibilities[0])
 
     return postalCode && postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
   }
 
-  protected startOfPostalCodeFromText(text: string): string {
+  protected startOfPostalCodeFromText(text: string, codes: string[]): string {
     if (this.city === 'all') return null
 
-    const regexs = postalCodes(this.city).regex
+    const startOfPostalCode = codes[0].slice(0, 2)
 
-    let postalCodeRe = new RegExp(regexs[0])
-    let res = text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
-
-    if (res) {
-      return res
+    let regex = null
+    if (codes.length === 1) {
+      regex = new RegExp(codes[0], 'gi')
+    } else {
+      regex = new RegExp(`${startOfPostalCode}[0-9]{3}`, 'gi')
     }
 
-    if (haveArrondissements(this.city) && regexs.length > 1) {
-      postalCodeRe = new RegExp(regexs[1])
-      const match = text.match(postalCodeRe) && text.match(postalCodeRe)[0].trim()
+    const match = text.match(regex)
+    const matchedPostalCode = match && match[0].trim()
 
-      // get '75' for '75011'
-      const startOfPostalCode = this.getPostalCodePossibilities()[0].slice(0, 2)
-
-      res = match ? (match.length === 1 ? `${startOfPostalCode}00${match}` : `${startOfPostalCode}0${match}`) : null
+    if (matchedPostalCode) {
+      return matchedPostalCode
     }
 
-    return res
+    if (hasArrondissement(this.city)) {
+      const arrondissementRegex = new RegExp(
+        `(?<=${this.city} )\\d{1,2}(?= ?(er|ème|e|eme))`,
+        'gi'
+      )
+
+      const match = text.match(arrondissementRegex)
+      if (match) {
+        const arrondissementNumber = match[0].padStart(2, '0')
+        const possiblePostal = `${startOfPostalCode}${arrondissementNumber}`
+        if (codes.includes(possiblePostal)) return possiblePostal
+      }
+    }
+
+    return null
   }
 }

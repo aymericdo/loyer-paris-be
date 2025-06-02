@@ -1,6 +1,6 @@
 import { Ad, CleanAd, FilteredResult, IncompleteAd } from '@interfaces/ad'
 import { Body } from '@interfaces/scrap-mapping'
-import { AvailableCities, getMainCity } from '@services/filters/city-filter/city-list'
+import { AvailableCities, getMainCity } from '@services/city-config/list'
 import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'
 import { SerializerService } from '@services/api/serializer'
 import { SaveRentService } from '@services/db/save-rent'
@@ -9,9 +9,9 @@ import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/e
 import { getPriceExcludingCharges } from '@services/helpers/charges'
 import { roundNumber } from '@services/helpers/round-number'
 import { Response } from 'express'
-import { CityFilter } from '@services/filters/city-filter/city-filter'
-import { isFake } from '@services/filters/city-filter/fake'
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { CityFilter } from '@services/filters/city-filter'
+import { isFake } from '@services/city-config/fake'
+import { AvailableMainCities } from '@services/city-config/list'
 import { ApiError } from '@interfaces/shared'
 
 export const DPE_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 'G']

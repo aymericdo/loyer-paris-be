@@ -1,5 +1,5 @@
 import { getShamefulAdsData } from '@services/db/queries/get-shameful-ads'
-import { AvailableMainCities } from '@services/filters/city-filter/city-list'
+import { AvailableMainCities } from '@services/city-config/list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import TwitterApi from 'twitter-api-v2'
 
