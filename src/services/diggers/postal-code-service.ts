@@ -33,8 +33,7 @@ export class PostalCodeService {
     const postalCode =
       (ad.cityLabel && this.startOfPostalCodeFromText(ad.cityLabel, postalCodePossibilities)) ||
       (ad.title && this.startOfPostalCodeFromText(ad.title, postalCodePossibilities)) ||
-      (ad.description && this.startOfPostalCodeFromText(ad.description, postalCodePossibilities)) ||
-      (postalCodePossibilities[0].endsWith('000') && postalCodePossibilities[0])
+      (ad.description && this.startOfPostalCodeFromText(ad.description, postalCodePossibilities))
 
     return postalCode && postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
   }
@@ -60,15 +59,18 @@ export class PostalCodeService {
 
     if (hasArrondissement(this.city)) {
       const arrondissementRegex = new RegExp(
-        `(?<=${this.city} )\\d{1,2}(?= ?(er|ème|e|eme))`,
+        `((?<=${this.city} )\\d{1,2})|(\\d{1,2}(?= ?(er|ème|e|eme)))`,
         'gi'
       )
 
       const match = text.match(arrondissementRegex)
+
       if (match) {
-        const arrondissementNumber = match[0].padStart(2, '0')
-        const possiblePostal = `${startOfPostalCode}${arrondissementNumber}`
-        if (codes.includes(possiblePostal)) return possiblePostal
+        for (const m of match) {
+          const arrondissementNumber = m.replace(/ ?(er|ème|e|eme)/i, '').padStart(3, '0')
+          const possiblePostal = `${startOfPostalCode}${arrondissementNumber}`
+          if (codes.includes(possiblePostal)) return possiblePostal
+        }
       }
     }
 

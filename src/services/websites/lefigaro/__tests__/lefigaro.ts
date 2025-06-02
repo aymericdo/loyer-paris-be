@@ -85,7 +85,7 @@ describe('lefigaro', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: '59000, Lille' },
+          address: { order: 0, value: 'square dutilleul, Lille' },
           hasFurniture: { order: 1, value: null },
           roomCount: { order: 2, value: 3 },
           surface: { order: 3, value: 91 },

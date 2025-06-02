@@ -84,7 +84,7 @@ describe('seloger', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: '59000, Lille' },
+          address: { order: 0, value: '10 rue de puebla 59800, Lille' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: null },
           surface: { order: 3, value: 36 },
