@@ -1,4 +1,4 @@
-import { ParisDistrictItem } from '@interfaces/paris'
+import { ParisDistrictItem, ParisDistrictItemProperties } from '@interfaces/paris'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { ParisGeojson } from '@db/db'
@@ -11,7 +11,7 @@ export class DistrictFilterParis extends DistrictFilterParent {
     return super.getDistricts() as Promise<ParisDistrictItem[]>
   }
 
-  digZoneInProperties(data: unknown): string {
+  digZoneInProperties(data: ParisDistrictItemProperties): string {
     return data['l_qu']
   }
 

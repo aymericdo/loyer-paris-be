@@ -1,5 +1,5 @@
 import { DataGouvAddressItem, FinalDataGouvAddressItem } from '@interfaces/address'
-import { Coordinate, DistrictItem, Properties } from '@interfaces/shared'
+import { Coordinate, DistrictItem, DefaultDistrictItemProperties, DistrictItemProperties } from '@interfaces/shared'
 import { AvailableCities, AvailableMainCities } from '@services/filters/city-filter/city-list'
 
 export class DistrictFilterParent {
@@ -19,18 +19,20 @@ export class DistrictFilterParent {
     this.districtName = districtName
   }
 
-  digZoneInProperties(data: Properties): string {
-    return `Zone ${data.zone ? /^\d+$/.test(data.zone) ? +data.zone : data.zone : data.Zone}`
+  digZoneInProperties(data: DistrictItemProperties): string {
+    return `Zone ${/^\d+$/.test((data as DefaultDistrictItemProperties).zone) ?
+      +(data as DefaultDistrictItemProperties).zone :
+      (data as DefaultDistrictItemProperties).zone}`
   }
 
-  digCityInProperties(data: Properties): string {
-    return data.city
+  digCityInProperties(data: DistrictItemProperties): string {
+    return (data as DefaultDistrictItemProperties).city
   }
 
   buildItem(district: DistrictItem, elem: DataGouvAddressItem): FinalDataGouvAddressItem {
     return {
       ...elem,
-      districtName: district ? this.digZoneInProperties(district['properties'] as Properties) : null,
+      districtName: district ? this.digZoneInProperties(district['properties']) : null,
     } as FinalDataGouvAddressItem
   }
 
@@ -73,21 +75,42 @@ export class DistrictFilterParent {
 
   protected async getDistrictFromName(): Promise<DistrictItem[]> {
     const zone: number = +this.districtName.match(/\d+/)[0]
+
+    const filter = {
+      'properties.zone': { $in: [zone, zone.toString()] }
+    }
+
+    if (this.city) {
+      filter['properties.city'] = { $regex: this.city, $options: 'i' }
+    }
+
+    const districts = await this.GeojsonCollection.find(filter).lean()
+
+    return districts?.length ? districts : []
+  }
+
+  protected async getDistrictsFromPostalCode(): Promise<DistrictItem[]> {
+    if (!this.postalCode) return []
+
     const districts = await this.GeojsonCollection.find(
       {
-        'properties.Zone': { $in: [zone, zone.toString()] }
+        'properties.postalCode': this.postalCode.toString(),
       },
     ).lean()
 
     return districts?.length ? districts : []
   }
 
-  protected async getDistrictsFromPostalCode(): Promise<DistrictItem[]> {
-    return []
-  }
-
   protected async getDistrictsFromCity(): Promise<DistrictItem[]> {
-    return []
+    if (!this.city) return []
+
+    const districts = await this.GeojsonCollection.find(
+      {
+        'properties.city': { $regex: this.city, $options: 'i' }
+      },
+    ).lean()
+
+    return districts?.length ? districts : []
   }
 
   protected async getDistrictsFromMainCity(): Promise<DistrictItem[]> {

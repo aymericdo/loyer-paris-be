@@ -5,13 +5,18 @@ export interface EstEnsembleEncadrementItem extends DefaultEncadrementItem {
   maison: boolean
 }
 
+export interface EstEnsembleDistrictItemProperties {
+  ID_BD_Topo: string
+  INSEE_COM: string
+  CODE_POST: string
+  NOM_COM: string
+  SIREN_EPCI: string
+  Zone: string
+  [DISPLAY_ZONE_FIELD]: string
+}
+
 export interface EstEnsembleDistrictItem {
   type: 'Feature'
-  properties: {
-    com_code: string
-    com_name: string
-    Zone: string
-    [DISPLAY_ZONE_FIELD]: string
-  }
+  properties: EstEnsembleDistrictItemProperties
   geometry: { type: 'MultiPolygon'; coordinates: number[][][] }
 }

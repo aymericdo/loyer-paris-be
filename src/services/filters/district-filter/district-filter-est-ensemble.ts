@@ -2,7 +2,7 @@ import { DefaultDistrictItem } from '@interfaces/shared'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { EstEnsembleGeojson } from '@db/db'
-import { EstEnsembleDistrictItem } from '@interfaces/est-ensemble'
+import { EstEnsembleDistrictItem, EstEnsembleDistrictItemProperties } from '@interfaces/est-ensemble'
 
 export class DistrictFilterEstEnsemble extends DistrictFilterParent {
   GeojsonCollection = EstEnsembleGeojson
@@ -12,8 +12,12 @@ export class DistrictFilterEstEnsemble extends DistrictFilterParent {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
-  digCityInProperties(data: unknown): string {
-    return data['com_name']
+  digZoneInProperties(data: EstEnsembleDistrictItemProperties): string {
+    return `Zone ${data.Zone}`
+  }
+
+  digCityInProperties(data: EstEnsembleDistrictItemProperties): string {
+    return data.NOM_COM
   }
 
   protected async getDistrictFromName(): Promise<EstEnsembleDistrictItem[]> {
@@ -24,7 +28,7 @@ export class DistrictFilterEstEnsemble extends DistrictFilterParent {
     }
 
     if (this.city) {
-      filter['properties.com_name'] = { $regex: this.city,  $options: 'i' }
+      filter['properties.NOM_COM'] = { $regex: this.city,  $options: 'i' }
     }
 
     const districts = await this.GeojsonCollection.find(filter).lean()
@@ -37,7 +41,7 @@ export class DistrictFilterEstEnsemble extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find(
       {
-        'properties.com_code': +this.postalCode
+        'properties.CODE_POST': this.postalCode.toString(),
       },
     ).lean()
     return districts?.length ? districts : []
@@ -48,9 +52,10 @@ export class DistrictFilterEstEnsemble extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find(
       {
-        'properties.com_name': { $regex: this.city,  $options: 'i' }
+        'properties.NOM_COM': { $regex: this.city,  $options: 'i' }
       },
     ).lean()
+
     return districts?.length ? districts : []
   }
 }

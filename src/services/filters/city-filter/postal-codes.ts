@@ -41,7 +41,7 @@ export const postalCodes = (city: AvailableCities): { postalCodes: string[], reg
       postalCodes: ['93120'],
       regex: [/\b93120\b/g],
     }
-    case 'pierrefitte': return {
+    case 'pierrefitte-sur-seine': return {
       postalCodes: ['93380'],
       regex: [/\b93380\b/g],
     }

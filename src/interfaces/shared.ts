@@ -1,14 +1,13 @@
 import { IncompleteAd } from '@interfaces/ad'
-import { DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
-import {  BordeauxDistrictItem, BordeauxEncadrementItem } from './bordeaux'
-import { EstEnsembleDistrictItem, EstEnsembleEncadrementItem } from './est-ensemble'
-import { LyonDistrictItem, LyonEncadrementItem } from './lyon'
+import {  BordeauxEncadrementItem } from './bordeaux'
+import { EstEnsembleDistrictItem, EstEnsembleDistrictItemProperties, EstEnsembleEncadrementItem } from './est-ensemble'
+import { LyonEncadrementItem } from './lyon'
 import { MontpellierEncadrementItem } from './montpellier'
-import { ParisDistrictItem, ParisEncadrementItem } from './paris'
-import { PlaineCommuneDistrictItem, PlaineCommuneEncadrementItem } from './plaine-commune'
+import { ParisDistrictItem, ParisDistrictItemProperties, ParisEncadrementItem } from './paris'
+import { PlaineCommuneDistrictItem, PlaineCommuneDistrictItemProperties, PlaineCommuneEncadrementItem } from './plaine-commune'
 import { LilleEncadrementItem } from '@interfaces/lille'
-import { PaysBasqueDistrictItem, PaysBasqueEncadrementItem } from '@interfaces/pays-basque'
-import { GrenobleDistrictItem, GrenobleEncadrementItem } from '@interfaces/grenoble'
+import { PaysBasqueEncadrementItem } from '@interfaces/pays-basque'
+import { GrenobleEncadrementItem } from '@interfaces/grenoble'
 
 export interface Coordinate {
   lat: number
@@ -39,31 +38,32 @@ export interface DefaultEncadrementItem {
   prix_max: string;
 }
 
-export interface Properties {
+export interface DefaultDistrictItemProperties {
   city: string
   codeObservatoire: string
   codeInsee: string
   zone: string
   postalCode: string
   year: string
-  Zone: string // to delete
 }
 
 export interface DefaultDistrictItem {
   type: 'Feature'
-  properties: Properties
   geometry: { type: 'MultiPolygon'; coordinates: number[][][] }
+  properties: DefaultDistrictItemProperties
 }
+
+export type DistrictItemProperties =
+  DefaultDistrictItemProperties
+  | ParisDistrictItemProperties
+  | PlaineCommuneDistrictItemProperties
+  | EstEnsembleDistrictItemProperties
 
 export type DistrictItem =
   DefaultDistrictItem
   | ParisDistrictItem
   | PlaineCommuneDistrictItem
   | EstEnsembleDistrictItem
-  | LyonDistrictItem
-  | BordeauxDistrictItem
-  | PaysBasqueDistrictItem
-  | GrenobleDistrictItem
 
 export type EncadrementItem =
   DefaultEncadrementItem

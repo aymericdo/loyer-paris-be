@@ -1,10 +1,11 @@
-import { AvailableMainCities, getCitiesFromMainCity } from '@services/filters/city-filter/city-list'
+import { AvailableCities, AvailableMainCities, getCitiesFromMainCity } from '@services/filters/city-filter/city-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
 import { getLegalPerCity } from '@services/db/queries/get-legal-per-city'
 import { CitiesFetcher } from '@services/fetchers/cities'
+import { label } from '@services/filters/city-filter/label'
 
 export async function getChloroplethCitiesMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethCitiesMap`, 'blue')
@@ -22,7 +23,12 @@ export async function getChloroplethCitiesMap(req: Request, res: Response) {
   const cityFetcher = new CitiesFetcher(cities)
   const geodata = await cityFetcher.fetchGeojson()
 
-  const result: { illegalPercentage: number, isIllegalCount: number, totalCount: number, city: string }[] = await getLegalPerCity(mainCity, dateRange)
+  const result: { illegalPercentage: number, isIllegalCount: number, totalCount: number, city: string }[] =
+    (await getLegalPerCity(mainCity, dateRange)).map((data) => ({
+      ...data,
+      city: label(data.city as AvailableCities),
+    }))
+
   if (!result.length) {
     res.status(403).json({ message: 'not_enough_data' })
     return

@@ -60,7 +60,7 @@ export abstract class EncadrementFilterParent {
 
   protected async isDistrictMatch(districtsMatched: DistrictItem[], rangeRent: EncadrementItem): Promise<boolean> {
     return districtsMatched?.length
-      ? districtsMatched.map((district: DefaultDistrictItem) => (+district.properties.zone || +district.properties.Zone))
+      ? districtsMatched.map((district: DefaultDistrictItem) => +district.properties.zone)
         .includes(+(rangeRent as DefaultEncadrementItem).zone)
       : false
   }

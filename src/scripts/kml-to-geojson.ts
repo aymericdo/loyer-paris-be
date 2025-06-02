@@ -10,7 +10,7 @@ import axios from 'axios'
 import type { Feature, FeatureCollection } from 'geojson'
 
 // === Configurable Paths ===
-const FILE_NAME = 'L3800_zone_elem_2024'
+const FILE_NAME = 'L7502_zone_elem_2024'
 
 const inputPath = path.resolve(__dirname, `./data/${FILE_NAME}.kml`)
 const outputPath = path.resolve(__dirname, `./data/${FILE_NAME}.json`)

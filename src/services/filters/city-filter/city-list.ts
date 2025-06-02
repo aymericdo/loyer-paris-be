@@ -8,7 +8,7 @@ const CITIES = {
     'epinay-sur-seine',
     'ile-saint-denis',
     'courneuve',
-    'pierrefitte',
+    'pierrefitte-sur-seine',
     'saint-denis',
     'saint-ouen',
     'stains',

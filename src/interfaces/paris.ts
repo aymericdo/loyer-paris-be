@@ -18,22 +18,24 @@ export interface ParisQuartierItem {
   id_quartier: number
 }
 
+export interface ParisDistrictItemProperties {
+  n_sq_qu: number
+  perimetre: string
+  geom_x_y: number[]
+  c_qu: number
+  surface: number
+  l_qu: string
+  n_sq_ar: number
+  c_quinsee: number
+  c_ar: number
+  [DISPLAY_ZONE_FIELD]: string
+}
+
 export interface ParisDistrictItem {
   type: 'Feature'
   geometry: {
     type: 'Polygon'
     coordinates: number[][][]
   }
-  properties: {
-    n_sq_qu: number
-    perimetre: string
-    geom_x_y: number[]
-    c_qu: number
-    surface: number
-    l_qu: string
-    n_sq_ar: number
-    c_quinsee: number
-    c_ar: number
-    [DISPLAY_ZONE_FIELD]: string
-  }
+  properties: ParisDistrictItemProperties
 }

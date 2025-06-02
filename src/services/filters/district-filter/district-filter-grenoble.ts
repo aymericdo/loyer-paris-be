@@ -1,38 +1,29 @@
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { GrenobleGeojson } from '@db/db'
-import { GrenobleDistrictItem } from '@interfaces/grenoble'
-import { zones } from '@services/filters/city-filter/zones'
+import { DefaultDistrictItem } from '@interfaces/shared'
 
 export class DistrictFilterGrenoble extends DistrictFilterParent {
   GeojsonCollection = GrenobleGeojson
   mainCity: AvailableMainCities = 'grenoble'
 
-  async getDistricts(): Promise<GrenobleDistrictItem[]> {
-    return super.getDistricts() as Promise<GrenobleDistrictItem[]>
+  async getDistricts(): Promise<DefaultDistrictItem[]> {
+    return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
-  protected async getDistrictFromName(): Promise<GrenobleDistrictItem[]> {
+  protected async getDistrictFromName(): Promise<DefaultDistrictItem[]> {
     const zone: string = this.districtName.match(/(?<=Zone ).*/g)[0]
-    const districts = await this.GeojsonCollection.find(
-      {
-        'properties.Zone': { $in: [zone] }
-      },
-    ).lean()
 
-    return districts?.length ? districts : []
-  }
+    const filter = {
+      'properties.zone': { $in: [zone] }
+    }
 
-  protected async getDistrictsFromCity(): Promise<GrenobleDistrictItem[]> {
-    if (!this.city) return []
+    if (this.city) {
+      filter['properties.NOM_COM'] = { $regex: this.city,  $options: 'i' }
+    }
 
-    const currentZones: string[] = (zones(this.city) as string[]).map((zone: string) => zone.match(/(?<=Zone ).*/g)[0])
+    const districts = await this.GeojsonCollection.find(filter).lean()
 
-    const districts = await this.GeojsonCollection.find(
-      {
-        'properties.Zone': { $in: currentZones }
-      },
-    ).lean()
     return districts?.length ? districts : []
   }
 }

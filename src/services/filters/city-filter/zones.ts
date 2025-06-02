@@ -32,7 +32,7 @@ export const zones = (city: AvailableCities): string[] | { [key: string]: string
     case 'epinay-sur-seine': return ['Zone 315']
     case 'ile-saint-denis': return ['Zone 312']
     case 'courneuve': return ['Zone 316']
-    case 'pierrefitte': return ['Zone 317']
+    case 'pierrefitte-sur-seine': return ['Zone 317']
     case 'saint-denis': return ['Zone 311', 'Zone 312']
     case 'saint-ouen': return ['Zone 310']
     case 'stains': return ['Zone 318']

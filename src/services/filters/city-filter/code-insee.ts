@@ -13,7 +13,7 @@ export const inseeCode = (city: AvailableCities): string => {
     case 'epinay-sur-seine': return '93031'
     case 'ile-saint-denis': return '93039'
     case 'courneuve': return '93027'
-    case 'pierrefitte': return '93059'
+    case 'pierrefitte-sur-seine': return '93059'
     case 'saint-denis': return '93066'
     case 'saint-ouen': return '93070'
     case 'stains': return '93072'

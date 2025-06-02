@@ -1,7 +1,7 @@
 import { DefaultDistrictItem } from '@interfaces/shared'
 import { AvailableMainCities } from '@services/filters/city-filter/city-list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
-import { PlaineCommuneDistrictItem } from '@interfaces/plaine-commune'
+import { PlaineCommuneDistrictItem, PlaineCommuneDistrictItemProperties } from '@interfaces/plaine-commune'
 import { PlaineCommuneGeojson } from '@db/db'
 
 export class DistrictFilterPlaineCommune extends DistrictFilterParent {
@@ -12,8 +12,12 @@ export class DistrictFilterPlaineCommune extends DistrictFilterParent {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
-  digCityInProperties(data: unknown): string {
-    return data['CODE_POST']
+  digZoneInProperties(data: PlaineCommuneDistrictItemProperties): string {
+    return `Zone ${data.Zone}`
+  }
+
+  digCityInProperties(data: PlaineCommuneDistrictItemProperties): string {
+    return data.NOM_COM
   }
 
   protected async getDistrictFromName(): Promise<PlaineCommuneDistrictItem[]> {
@@ -51,6 +55,7 @@ export class DistrictFilterPlaineCommune extends DistrictFilterParent {
         'properties.NOM_COM': { $regex: this.city,  $options: 'i' }
       },
     ).lean()
+
     return districts?.length ? districts : []
   }
 }

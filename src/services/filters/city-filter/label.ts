@@ -14,7 +14,7 @@ export const label = (city: AvailableMainCities | AvailableCities): string => {
     case 'epinay-sur-seine': return 'Épinay-sur-Seine'
     case 'ile-saint-denis': return 'L\'Île-Saint-Denis'
     case 'courneuve': return 'La Courneuve'
-    case 'pierrefitte': return 'Pierrefitte-sur-Seine'
+    case 'pierrefitte-sur-seine': return 'Pierrefitte-sur-Seine'
     case 'saint-denis': return 'Saint-Denis'
     case 'saint-ouen': return 'Saint-Ouen-sur-Seine'
     case 'stains': return 'Stains'

@@ -1,5 +1,6 @@
 import { AvailableCities } from '@services/filters/city-filter/city-list'
 import { inseeCode } from '@services/filters/city-filter/code-insee'
+import { label } from '@services/filters/city-filter/label'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import axios from 'axios'
 
@@ -31,7 +32,7 @@ export class CitiesFetcher {
           ...result.data.contour,
         },
         properties: {
-          city: cityByInseeCodes[result.data.code],
+          city: label(cityByInseeCodes[result.data.code] as AvailableCities),
         },
       })),
     }
