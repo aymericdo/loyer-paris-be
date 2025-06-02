@@ -14,7 +14,7 @@
     "build:prod": "npm run build && npm run sentry:sourcemaps",
     "prod": "node ./build/src/index.js",
     "start": "npm run prod",
-    "test": "jest",
+    "test": "jest --forceExit --detectOpenHandles",
     "test:ci": "jest --ci",
     "test:watch": "jest --no-cache --watchAll",
     "lint": "eslint . --ext .ts",
