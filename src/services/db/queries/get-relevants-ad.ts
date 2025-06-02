@@ -116,7 +116,11 @@ export async function getRelevantAdsData(
       const geodata = await new DistrictsList(mainCity, { specificCity: ad.city }).currentGeodata()
       const feature = geodata.features[0]
 
-      if (feature) {
+      if (feature && feature.geometry.type !== 'Polygon') {
+        console.log(feature)
+      }
+
+      if (feature && feature.geometry.type === 'Polygon') {
         const point = randomPositionInPolygon(feature)
 
         ad.longitude = point[0]
