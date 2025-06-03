@@ -7,6 +7,8 @@ import { isFake } from '@services/city-config/fake'
 import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import express, { Request, Response } from 'express'
+import { DistrictItem } from '@interfaces/shared'
+import { ParisDistrictItemProperties } from '@interfaces/paris'
 const router = express.Router()
 
 router.get('/geojson/:city', paramMiddleware(), getGeodata)
@@ -78,11 +80,13 @@ async function getAddresses(req: Request, res: Response) {
       }
     })
 
-    const district = await currentDistrictFilter.getFirstDistrict()
+    const district: DistrictItem = await currentDistrictFilter.getFirstDistrict()
 
     return {
       ...elem,
-      districtName: district ? this.digZoneInProperties(district['properties']) : null,
+      districtName: district ?
+        currentDistrictFilter.digZoneInProperties(district.properties as ParisDistrictItemProperties) :
+        null,
     }
   })) as FinalDataGouvAddressItem[]
 
