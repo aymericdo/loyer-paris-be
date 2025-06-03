@@ -11,6 +11,10 @@ export class DistrictFilterParis extends DistrictFilterParent {
     return super.getDistricts() as Promise<ParisDistrictItem[]>
   }
 
+  digCityInProperties(_data: ParisDistrictItemProperties): string {
+    return 'paris'
+  }
+
   digZoneInProperties(data: ParisDistrictItemProperties): string {
     return data['l_qu']
   }

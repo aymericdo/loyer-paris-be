@@ -44,7 +44,7 @@ export interface DefaultDistrictItemProperties {
 
 export interface DefaultDistrictItem {
   type: 'Feature'
-  geometry: { type: 'MultiPolygon'; coordinates: number[][][] }
+  geometry: { type: 'MultiPolygon'; coordinates: number[][][] } | { type: 'GeometryCollection', geometries: DefaultDistrictItem }
   properties: DefaultDistrictItemProperties
 }
 

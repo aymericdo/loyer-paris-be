@@ -58,6 +58,22 @@ function buildFilter(filterParam: {
   return filter
 }
 
+function randomPointInGeometryCollection(geometryCollection) {
+  const polygons = geometryCollection.geometries.filter(geom =>
+    geom.type === 'Polygon' || geom.type === 'MultiPolygon'
+  )
+
+  if (polygons.length === 0) return null
+
+  const randomPolygon = polygons[Math.floor(Math.random() * polygons.length)]
+  return randomPositionInPolygon({
+    type: 'Feature',
+    geometry: {
+      ...randomPolygon,
+    }
+  })
+}
+
 export async function getRelevantAdsData(
   filterParam: {
     mainCity: AvailableMainCities | 'all'
@@ -114,18 +130,20 @@ export async function getRelevantAdsData(
     const mainCity = getMainCity(ad.city)
     if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
       const geodata = await new DistrictsList(mainCity, { specificCity: ad.city }).currentGeodata()
-      const feature = geodata.features[0]
+      const feature = geodata.features[Math.floor(Math.random() * geodata.features.length)]
 
-      if (feature && feature.geometry.type !== 'Polygon') {
-        console.log(feature)
+      let point = null
+
+      if (feature) {
+        if (feature.geometry.type === 'GeometryCollection') {
+          point = randomPointInGeometryCollection(feature.geometry)
+        } else {
+          point = randomPositionInPolygon(feature)
+          ad.longitude = point[0]
+          ad.latitude = point[1]
+        }
       }
 
-      if (feature && feature.geometry.type === 'Polygon') {
-        const point = randomPositionInPolygon(feature)
-
-        ad.longitude = point[0]
-        ad.latitude = point[1]
-      }
       blurry = true
     }
 
