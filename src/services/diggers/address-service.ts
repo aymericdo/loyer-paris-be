@@ -4,7 +4,7 @@ import { AvailableCities } from '@services/city-config/list'
 import { regexString } from '@services/helpers/regex'
 import * as cleanup from '@services/helpers/cleanup'
 import { DataGouvAddress, DataGouvAddressItem } from '@interfaces/address'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { inseeCode } from '@services/city-config/code-insee'
 import { PrettyLog } from '@services/helpers/pretty-log'
 
@@ -25,15 +25,32 @@ export class AddressService {
     if (query.trim().length < 4) return []
 
     const limit = 5
+    const url = `https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${inseeCode(city)}&autocomplete=1`
+    const retries = 3
+    const delay = 1000
 
-    try {
-      const response = await axios(`https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${inseeCode(city)}&autocomplete=1`)
-      const dataGouv: DataGouvAddress = response.data
-      return dataGouv.features
-    } catch (error) {
-      PrettyLog.call(JSON.stringify(error), 'red')
-      throw error
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      try {
+        const response = await axios(url)
+        const dataGouv: DataGouvAddress = response.data
+        return dataGouv.features
+      } catch (err) {
+        const error = err as AxiosError
+        const status = error?.response?.status
+        const isTimeoutOr504 = status === 504 || error.code === 'ECONNABORTED'
+
+        PrettyLog.call(`Tentative ${attempt} échouée`, 'yellow')
+        PrettyLog.call(JSON.stringify(error), 'red')
+
+        if (!isTimeoutOr504 || attempt === retries) {
+          throw error
+        }
+
+        await new Promise(resolve => setTimeout(resolve, delay))
+      }
     }
+
+    return []
   }
 
   async getAddress(): Promise<[string, Coordinate, Coordinate]> {
