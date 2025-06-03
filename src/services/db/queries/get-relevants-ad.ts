@@ -139,6 +139,9 @@ export async function getRelevantAdsData(
           point = randomPointInGeometryCollection(feature.geometry)
         } else {
           point = randomPositionInPolygon(feature)
+        }
+
+        if (point) {
           ad.longitude = point[0]
           ad.latitude = point[1]
         }
