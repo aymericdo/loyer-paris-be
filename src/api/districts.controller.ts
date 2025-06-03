@@ -8,7 +8,6 @@ import { DistrictFilterFactory } from '@services/filters/district-filter/encadre
 import { PrettyLog } from '@services/helpers/pretty-log'
 import express, { Request, Response } from 'express'
 import { DistrictItem } from '@interfaces/shared'
-import { ParisDistrictItemProperties } from '@interfaces/paris'
 const router = express.Router()
 
 router.get('/geojson/:city', paramMiddleware(), getGeodata)
@@ -85,7 +84,7 @@ async function getAddresses(req: Request, res: Response) {
     return {
       ...elem,
       districtName: district ?
-        currentDistrictFilter.digZoneInProperties(district.properties as ParisDistrictItemProperties) :
+        currentDistrictFilter.digZoneInProperties(district.properties) :
         null,
     }
   })) as FinalDataGouvAddressItem[]

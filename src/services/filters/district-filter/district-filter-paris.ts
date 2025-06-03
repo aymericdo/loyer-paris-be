@@ -2,6 +2,7 @@ import { ParisDistrictItem, ParisDistrictItemProperties } from '@interfaces/pari
 import { AvailableMainCities } from '@services/city-config/list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { ParisGeojson } from '@db/db'
+import { DistrictItemProperties } from '@interfaces/shared'
 
 export class DistrictFilterParis extends DistrictFilterParent {
   GeojsonCollection = ParisGeojson
@@ -15,8 +16,8 @@ export class DistrictFilterParis extends DistrictFilterParent {
     return 'paris'
   }
 
-  digZoneInProperties(data: ParisDistrictItemProperties): string {
-    return data['l_qu']
+  digZoneInProperties(data: DistrictItemProperties): string {
+    return (data as ParisDistrictItemProperties).l_qu
   }
 
   buildGroupBy(arrondissement: string): string {

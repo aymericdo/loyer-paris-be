@@ -17,7 +17,17 @@ export class DistrictFilterFactory {
     this.mainCity = mainCity
   }
 
-  currentDistrictFilter() {
+  currentDistrictFilter(): (
+  typeof DistrictFilterParis |
+  typeof DistrictFilterLille |
+  typeof DistrictFilterPlaineCommune |
+  typeof DistrictFilterEstEnsemble |
+  typeof DistrictFilterLyon |
+  typeof DistrictFilterMontpellier |
+  typeof DistrictFilterBordeaux |
+  typeof DistrictFilterPaysBasque |
+  typeof DistrictFilterGrenoble |
+  typeof DistrictFilterToulouse) {
     switch (this.mainCity) {
       case 'paris':
         return DistrictFilterParis

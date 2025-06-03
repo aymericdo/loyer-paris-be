@@ -1,4 +1,4 @@
-import { DefaultDistrictItem } from '@interfaces/shared'
+import { DefaultDistrictItem, DistrictItemProperties } from '@interfaces/shared'
 import { AvailableMainCities } from '@services/city-config/list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { PlaineCommuneDistrictItem, PlaineCommuneDistrictItemProperties } from '@interfaces/plaine-commune'
@@ -12,8 +12,8 @@ export class DistrictFilterPlaineCommune extends DistrictFilterParent {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
-  digZoneInProperties(data: PlaineCommuneDistrictItemProperties): string {
-    return `Zone ${data.Zone}`
+  digZoneInProperties(data: DistrictItemProperties): string {
+    return `Zone ${(data as PlaineCommuneDistrictItemProperties).Zone}`
   }
 
   digCityInProperties(data: PlaineCommuneDistrictItemProperties): string {

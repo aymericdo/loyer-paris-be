@@ -1,4 +1,4 @@
-import { DefaultDistrictItem } from '@interfaces/shared'
+import { DefaultDistrictItem, DistrictItemProperties } from '@interfaces/shared'
 import { AvailableMainCities } from '@services/city-config/list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { EstEnsembleGeojson } from '@db/db'
@@ -12,8 +12,8 @@ export class DistrictFilterEstEnsemble extends DistrictFilterParent {
     return super.getDistricts() as Promise<DefaultDistrictItem[]>
   }
 
-  digZoneInProperties(data: EstEnsembleDistrictItemProperties): string {
-    return `Zone ${data.Zone}`
+  digZoneInProperties(data: DistrictItemProperties): string {
+    return `Zone ${(data as EstEnsembleDistrictItemProperties).Zone}`
   }
 
   digCityInProperties(data: EstEnsembleDistrictItemProperties): string {
