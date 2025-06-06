@@ -3,26 +3,17 @@
 import fs from 'fs'
 import { DOMParser } from '@xmldom/xmldom'
 import * as toGeoJSON from '@tmcw/togeojson'
-import { zones } from '@services/city-config/zones'
 import path from 'path'
-import axios from 'axios'
+import { fetchMoreCityInfo } from 'scripts/utils'
 
 import type { Feature, FeatureCollection } from 'geojson'
+import { zones } from '@services/city-config/city-selectors'
 
 // === Configurable Paths ===
 const FILE_NAME = 'L7502_zone_elem_2024'
 
 const inputPath = path.resolve(__dirname, `./data/${FILE_NAME}.kml`)
 const outputPath = path.resolve(__dirname, `./data/${FILE_NAME}.json`)
-
-async function fetchCityInfo(inseeCode) {
-  try {
-    const response = await axios(`https://geo.api.gouv.fr/communes/${inseeCode}?fields=code,nom,codesPostaux`)
-    return response.data
-  } catch (error) {
-    console.error(error)
-  }
-}
 
 async function transformFeatureProperties(properties) {
   const raw = properties.VAR5 || ''
@@ -31,16 +22,16 @@ async function transformFeatureProperties(properties) {
   if (!match) return null
 
   const codeObservatoire = match[1]
-  const codeInsee = parseInt(match[2])
+  const codeInsee = match[2]
   let zone = match[3] || null
 
-  const info = await fetchCityInfo(codeInsee)
+  const info = await fetchMoreCityInfo(codeInsee)
   const city = info?.nom || 'N/A'
   const postalCode = info?.codesPostaux?.[0] || 'N/A'
 
   if (!zone) {
     const zoneStr = zones(city.toLowerCase())?.[0]
-    zone = zoneStr ? (zoneStr.match(/(?<=Zone ).*/) || [null])[0] : null
+    zone = zoneStr && typeof zoneStr === 'string' ? (zoneStr.match(/(?<=Zone ).*/) || [null])[0] : null
   }
 
   if (!zone) return null

@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { GrenobleGeojson } from '@db/db'
 import { DefaultDistrictItem } from '@interfaces/shared'
@@ -15,7 +15,7 @@ export class DistrictFilterGrenoble extends DistrictFilterParent {
     const zone: string = this.districtName.match(/(?<=Zone ).*/g)[0]
 
     const filter = {
-      'properties.zone': { $in: [zone] }
+      'properties.zone': zone
     }
 
     if (this.city) {

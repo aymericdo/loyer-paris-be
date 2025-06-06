@@ -1,5 +1,5 @@
 import { ParisDistrictItem, ParisDistrictItemProperties } from '@interfaces/paris'
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { ParisGeojson } from '@db/db'
 import { DistrictItemProperties } from '@interfaces/shared'

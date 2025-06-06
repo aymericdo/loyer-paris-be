@@ -1,8 +1,9 @@
 import { getLegalPerDate } from '@services/db/queries/get-legal-per-date'
-import { AvailableCityZones, AvailableMainCities } from '@services/city-config/list'
+import { AvailableCityZones } from '@services/city-config/city-selectors'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 
 export async function getIsLegalVariation(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} isLegalVariation`, 'blue')

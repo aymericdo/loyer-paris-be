@@ -2,12 +2,13 @@ import { DataGouvAddressItem, FinalDataGouvAddressItem } from '@interfaces/addre
 import { paramMiddleware, queryParamValidator } from '@services/api/validations'
 import { AddressService } from '@services/diggers/address-service'
 import { DistrictsList } from '@services/districts/districts-list'
-import { AvailableMainCities, AvailableCities } from '@services/city-config/list'
-import { isFake } from '@services/city-config/fake'
 import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import express, { Request, Response } from 'express'
 import { DistrictItem } from '@interfaces/shared'
+import { AvailableCities } from '@services/city-config/cities'
+import { isFake } from '@services/city-config/city-selectors'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 const router = express.Router()
 
 router.get('/geojson/:city', paramMiddleware(), getGeodata)

@@ -1,4 +1,6 @@
-import { AvailableMainCities, AvailableCities, getCitiesFromMainCity, AvailableCityZones, fakeCities } from '@services/city-config/list'
+import { AvailableCities } from '@services/city-config/cities'
+import { fakeCities, getCitiesFromMainCity, AvailableCityZones } from '@services/city-config/city-selectors'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'
 
 export function getClassicWebsiteFilter(): { website: { $nin: typeof FUNNIEST_WEBSITES } } {

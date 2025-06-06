@@ -1,5 +1,6 @@
 import { Coordinate, DistrictItem, DefaultDistrictItemProperties, DistrictItemProperties } from '@interfaces/shared'
-import { AvailableCities, AvailableMainCities } from '@services/city-config/list'
+import { AvailableCities } from '@services/city-config/cities'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 
 export class DistrictFilterParent {
   GeojsonCollection = null
@@ -69,7 +70,7 @@ export class DistrictFilterParent {
     const zone: number = +this.districtName.match(/\d+/)[0]
 
     const filter = {
-      'properties.zone': { $in: [zone, zone.toString()] }
+      'properties.zone': zone.toString().padStart(2, '0'),
     }
 
     if (this.city) {

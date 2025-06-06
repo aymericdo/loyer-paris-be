@@ -1,5 +1,7 @@
+import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCityZones } from '@services/city-config/city-selectors'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { getRelevantAdsData, getRelevantAdsDataTotalCount } from '@services/db/queries/get-relevants-ad'
-import { AvailableCities, AvailableCityZones, AvailableMainCities } from '@services/city-config/list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Request, Response } from 'express'
 

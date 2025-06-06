@@ -1,7 +1,8 @@
 import { string } from '@services/helpers/cleanup'
 import { ERROR_CODE } from '@services/api/errors'
-import { AvailableCities, getCityList } from '@services/city-config/list'
 import Fuse from 'fuse.js'
+import { AvailableCities } from '@services/city-config/cities'
+import { getCityList } from '@services/city-config/city-selectors'
 
 export class CityFilter {
   cityText: string

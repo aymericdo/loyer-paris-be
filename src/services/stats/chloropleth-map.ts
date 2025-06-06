@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { ZONE_PATH, DistrictsList } from '@services/districts/districts-list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'

@@ -1,0 +1,237 @@
+{
+  "paris": {
+    "cityList": [
+      "paris"
+    ],
+    "label": "Paris",
+    "infoLink": "https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712",
+    "coordinates": [
+      48.866667,
+      2.333333
+    ]
+  },
+  "lille": {
+    "cityList": [
+      "lille"
+    ],
+    "label": "Lille",
+    "infoLink": "https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers",
+    "coordinates": [
+      50.62925,
+      3.057256
+    ]
+  },
+  "plaineCommune": {
+    "cityList": [
+      "aubervilliers",
+      "epinay-sur-seine",
+      "ile-saint-denis",
+      "courneuve",
+      "pierrefitte-sur-seine",
+      "saint-denis",
+      "saint-ouen",
+      "stains",
+      "villetaneuse"
+    ],
+    "house": true,
+    "label": "Plaine Commune",
+    "infoLink": "https://plainecommune.fr/encadrementdesloyers/",
+    "coordinates": [
+      48.9246404,
+      2.3625964
+    ]
+  },
+  "lyon": {
+    "cityList": [
+      "lyon",
+      "villeurbanne"
+    ],
+    "label": "Lyon",
+    "infoLink": "https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html",
+    "builtYearRangeEnd": 2005,
+    "coordinates": [
+      45.7578137,
+      4.8320114
+    ]
+  },
+  "estEnsemble": {
+    "cityList": [
+      "bagnolet",
+      "bobigny",
+      "bondy",
+      "le pré-saint-gervais",
+      "les lilas",
+      "montreuil",
+      "noisy-le-sec",
+      "pantin",
+      "romainville"
+    ],
+    "house": true,
+    "label": "Est Ensemble",
+    "infoLink": "https://www.est-ensemble.fr/lencadrement-des-loyers-sera-applique-en-decembre-est-ensemble",
+    "coordinates": [
+      48.86415,
+      2.44322
+    ]
+  },
+  "bordeaux": {
+    "cityList": [
+      "bordeaux"
+    ],
+    "house": true,
+    "label": "Bordeaux",
+    "infoLink": "https://www.bordeaux-metropole.fr/Vivre-habiter/Se-loger-et-habiter/Mettre-son-logement-en-location/Encadrement-des-loyers-a-Bordeaux",
+    "coordinates": [
+      44.841225,
+      -0.5800364
+    ]
+  },
+  "montpellier": {
+    "cityList": [
+      "montpellier"
+    ],
+    "label": "Montpellier",
+    "infoLink": "https://www.montpellier3m.fr/lencadrement-des-loyers-entre-en-application-montpellier-compter-du-1er-juillet-2022",
+    "builtYearRangeEnd": 2005,
+    "coordinates": [
+      43.6112422,
+      3.8767337
+    ]
+  },
+  "la rochelle": {
+    "cityList": [
+      "la rochelle"
+    ],
+    "fake": true,
+    "label": "La Rochelle"
+  },
+  "annecy": {
+    "cityList": [
+      "annecy"
+    ],
+    "fake": true,
+    "label": "Annecy"
+  },
+  "marseille": {
+    "cityList": [
+      "marseille"
+    ],
+    "fake": true,
+    "label": "Marseille"
+  },
+  "nice": {
+    "cityList": [
+      "nice"
+    ],
+    "fake": true,
+    "label": "Nice"
+  },
+  "nantes": {
+    "cityList": [
+      "nantes"
+    ],
+    "fake": true,
+    "label": "Nantes"
+  },
+  "strasbourg": {
+    "cityList": [
+      "strasbourg"
+    ],
+    "fake": true,
+    "label": "Strasbourg"
+  },
+  "rennes": {
+    "cityList": [
+      "rennes"
+    ],
+    "fake": true,
+    "label": "Rennes"
+  },
+  "toulon": {
+    "cityList": [
+      "toulon"
+    ],
+    "fake": true,
+    "label": "Toulon"
+  },
+  "toulouse": {
+    "cityList": [
+      "toulouse"
+    ],
+    "fake": true,
+    "label": "Toulouse"
+  },
+  "aix-en-provence": {
+    "cityList": [
+      "aix-en-provence"
+    ],
+    "fake": true,
+    "label": "Aix-en-Provence"
+  },
+  "paysBasque": {
+    "cityList": [
+      "ahetze",
+      "anglet",
+      "arbonne",
+      "arcangues",
+      "ascain",
+      "bassussarry",
+      "bayonne",
+      "biarritz",
+      "bidart",
+      "biriatou",
+      "boucau",
+      "ciboure",
+      "guéthary",
+      "hendaye",
+      "jatxou",
+      "lahonce",
+      "larressore",
+      "mouguerre",
+      "saint-jean-de-luz",
+      "saint-pierre-d\"irube",
+      "urcuit",
+      "urrugne",
+      "ustaritz",
+      "villefranque"
+    ],
+    "house": true,
+    "label": "Pays Basque",
+    "infoLink": "https://www.communaute-paysbasque.fr/vivre-ici/cadre-de-vie/lencadrement-des-loyers",
+    "coordinates": [
+      43.4417106,
+      -1.6293269
+    ]
+  },
+  "grenoble": {
+    "cityList": [
+      "bresson",
+      "claix",
+      "domène",
+      "échirolles",
+      "eybens",
+      "fontaine",
+      "fontanil-cornillon",
+      "gières",
+      "grenoble",
+      "la tronche",
+      "le pont-de-claix",
+      "meylan",
+      "murianette",
+      "poisat",
+      "saint-égrève",
+      "saint-martin-d\"hères",
+      "sassenage",
+      "seyssinet-pariset",
+      "seyssins",
+      "varces-allières-et-risset",
+      "venon"
+    ],
+    "label": "Grenoble",
+    "infoLink": "https://www.grenoblealpesmetropole.fr/actualite/381/45-l-encadrement-des-loyers-dans-la-metropole-grenobloise-mode-d-emploi.htm",
+    "coordinates": [
+      45.1885,
+      5.7249
+    ]
+  }
+}

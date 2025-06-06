@@ -1,6 +1,6 @@
 import { Ad, CleanAd } from '@interfaces/ad'
 import { Coordinate } from '@interfaces/shared'
-import { AvailableCities, getMainCity } from '@services/city-config/list'
+import { canHaveHouse, getMainCity } from '@services/city-config/city-selectors'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
 import { PrettyLog } from '@services/helpers/pretty-log'
@@ -8,9 +8,9 @@ import { getFirstMatchResult, regexString } from '@services/helpers/regex'
 import { stringToNumber } from '@services/helpers/string-to-number'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { PARTICULIER, DPE_LIST } from '@services/websites/website'
-import { canHaveHouse } from '@services/city-config/can-have-house'
 import { AddressService } from '@services/diggers/address-service'
 import { PostalCodeService } from '@services/diggers/postal-code-service'
+import { AvailableCities } from '@services/city-config/cities'
 export class DigService {
   ad: Ad = null
 

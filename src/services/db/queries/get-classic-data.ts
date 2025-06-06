@@ -1,6 +1,6 @@
 import { Rent } from '@db/db'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { getMainCityFilter, getDateRangeFilter, getClassicFilter } from '@services/db/queries/common'
-import { AvailableMainCities } from '@services/city-config/list'
 
 export async function getClassicData(
   city: AvailableMainCities,

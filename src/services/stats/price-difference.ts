@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'

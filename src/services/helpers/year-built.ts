@@ -1,8 +1,12 @@
 import { EmpriseBatie } from '@db/db'
 
+export type DateRange = [number | null, number | null];
+export const DATE_RANGE_END_IN_2005 = [[null, 1946], [1946, 1970], [1971, 1990], [1991, 2005], [2005, null]] as const satisfies DateRange[]
+export const DATE_RANGE_END_IN_1990 = [[null, 1946], [1946, 1970], [1971, 1990], [1990, null]] as const satisfies DateRange[]
+
 export class YearBuiltService {
   rangeTime: string[]
-  universalRangeTime: [number, number][]
+  universalRangeTime: DateRange[]
 
   constructor(rangeTime: string[], universalRangeTime: [number, number][]) {
     this.rangeTime = rangeTime

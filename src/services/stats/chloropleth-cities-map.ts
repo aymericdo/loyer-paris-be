@@ -1,11 +1,12 @@
-import { AvailableCities, AvailableMainCities, getCitiesFromMainCity } from '@services/city-config/list'
+import { getCitiesFromMainCity, label } from '@services/city-config/city-selectors'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
 import { getLegalPerCity } from '@services/db/queries/get-legal-per-city'
-import { label } from '@services/city-config/label'
 import { CITY_PATH, DistrictsList } from '@services/districts/districts-list'
+import { AvailableCities } from '@services/city-config/cities'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 
 export async function getChloroplethCitiesMap(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getChloroplethCitiesMap`, 'blue')

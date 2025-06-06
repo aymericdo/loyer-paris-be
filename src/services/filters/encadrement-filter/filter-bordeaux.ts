@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterBordeaux } from '@services/filters/district-filter/district-filter-bordeaux'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 

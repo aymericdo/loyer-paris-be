@@ -1,6 +1,6 @@
 import { EstEnsembleDistrictItem } from '@interfaces/est-ensemble'
 import { DistrictItem, EncadrementItem, DefaultEncadrementItem } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterEstEnsemble } from '@services/filters/district-filter/district-filter-est-ensemble'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 

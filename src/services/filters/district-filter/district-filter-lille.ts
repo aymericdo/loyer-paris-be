@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { LilleGeojson } from '@db/db'
 import { DefaultDistrictItem } from '@interfaces/shared'

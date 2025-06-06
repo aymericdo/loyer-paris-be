@@ -1,5 +1,5 @@
 import { DefaultDistrictItem, DistrictItemProperties } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { EstEnsembleGeojson } from '@db/db'
 import { EstEnsembleDistrictItem, EstEnsembleDistrictItemProperties } from '@interfaces/est-ensemble'
@@ -24,7 +24,7 @@ export class DistrictFilterEstEnsemble extends DistrictFilterParent {
     const zone: number = +this.districtName.match(/\d+/)[0]
 
     const filter = {
-      'properties.Zone': { $in: [zone, zone.toString()] }
+      'properties.Zone': zone.toString(),
     }
 
     if (this.city) {

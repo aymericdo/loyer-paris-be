@@ -1,5 +1,5 @@
 import { DefaultDistrictItem, DistrictItemProperties } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { PlaineCommuneDistrictItem, PlaineCommuneDistrictItemProperties } from '@interfaces/plaine-commune'
 import { PlaineCommuneGeojson } from '@db/db'
@@ -24,7 +24,7 @@ export class DistrictFilterPlaineCommune extends DistrictFilterParent {
     const zone: number = +this.districtName.match(/\d+/)[0]
 
     const filter = {
-      'properties.Zone': { $in: [zone, zone.toString()] }
+      'properties.Zone': zone.toString(),
     }
 
     if (this.city) {

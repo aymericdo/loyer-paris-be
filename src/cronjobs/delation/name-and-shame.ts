@@ -1,5 +1,5 @@
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { getShamefulAdsData } from '@services/db/queries/get-shameful-ads'
-import { AvailableMainCities } from '@services/city-config/list'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import TwitterApi from 'twitter-api-v2'
 
@@ -21,10 +21,8 @@ export class NameAndShameService {
   async call() {
     [
       ['paris', 'à Paris', '@Paris'],
-      // ['plaineCommune', 'Plaine Commune', '@prefpolice'],
       ['lille', 'à Lille', '@prefet59'],
       ['lyon', 'à Lyon', '@prefetrhone'],
-      // ['estEnsemble', 'Est Ensemble', '@prefpolice'],
       ['bordeaux', 'à Bordeaux', '@PrefAquitaine33'],
       ['montpellier', 'à Montpellier', '@Prefet34'],
       ['paysBasque', 'au Pays Basque', '@Prefet64'],

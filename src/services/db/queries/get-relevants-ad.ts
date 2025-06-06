@@ -1,8 +1,9 @@
 import { Rent } from '@db/db'
+import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCityZones, getMainCity, isFake } from '@services/city-config/city-selectors'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { getMainCityFilter, getClassicWebsiteFilter, getDistrictFilter, getExceedingFilter, getFurnitureFilter, getHouseFilter, getPriceFilter, getRoomFilter, getSurfaceFilter, getCityFilter } from '@services/db/queries/common'
 import { DistrictsList } from '@services/districts/districts-list'
-import { AvailableCities, AvailableCityZones, AvailableMainCities, getMainCity } from '@services/city-config/list'
-import { isFake } from '@services/city-config/fake'
 import { roundNumber } from '@services/helpers/round-number'
 import randomPositionInPolygon from 'random-position-in-polygon'
 

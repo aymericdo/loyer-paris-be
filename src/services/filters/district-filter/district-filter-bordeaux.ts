@@ -1,7 +1,7 @@
 import { DefaultDistrictItem } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/city-config/list'
 import { DistrictFilterParent } from './encadrement-district-filter-parent'
 import { BordeauxGeojson } from '@db/db'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 
 export class DistrictFilterBordeaux extends DistrictFilterParent {
   GeojsonCollection = BordeauxGeojson

@@ -1,7 +1,7 @@
 import { Ad } from '@interfaces/ad'
-import { AvailableCities, AvailableMainCities, getCityList } from '@services/city-config/list'
-import { postalCodes } from '@services/city-config/postal-codes'
-import { hasArrondissement } from '@services/city-config/has-arrondissement'
+import { AvailableCities } from '@services/city-config/cities'
+import { getCityList, hasArrondissement, postalCodes } from '@services/city-config/city-selectors'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 
 export class PostalCodeService {
   private mainCity: AvailableMainCities
@@ -16,7 +16,7 @@ export class PostalCodeService {
     if (this.city === 'all') {
       return getCityList(this.mainCity).flatMap(city => postalCodes(city))
     } else {
-      return postalCodes(this.city)
+      return [...postalCodes(this.city)]
     }
   }
 
@@ -25,7 +25,7 @@ export class PostalCodeService {
   }
 
   protected digForPostalCode(ad: Ad): string {
-    const postalCodePossibilities: string[] = this.getPostalCodePossibilities()
+    const postalCodePossibilities = this.getPostalCodePossibilities()
     if (postalCodePossibilities?.length === 1) {
       return postalCodePossibilities[0]
     }

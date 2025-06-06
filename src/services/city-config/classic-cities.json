@@ -1,0 +1,1005 @@
+{
+  "paris": {
+    "inseeCode": "75056",
+    "label": "Paris",
+    "postalCodes": [
+      "75001",
+      "75002",
+      "75003",
+      "75004",
+      "75005",
+      "75006",
+      "75007",
+      "75008",
+      "75009",
+      "75010",
+      "75011",
+      "75012",
+      "75013",
+      "75014",
+      "75015",
+      "75016",
+      "75116",
+      "75017",
+      "75018",
+      "75019",
+      "75020"
+    ],
+    "zones": {
+      "1": [
+        "Palais-Royal",
+        "Halles",
+        "St-Germain-l\"Auxerrois",
+        "Place-Vendôme"
+      ],
+      "2": [
+        "Gaillon",
+        "Mail",
+        "Vivienne",
+        "Bonne-Nouvelle"
+      ],
+      "3": [
+        "Enfants-Rouges",
+        "Arts-et-Metiers",
+        "Sainte-Avoie",
+        "Archives"
+      ],
+      "4": [
+        "Arsenal",
+        "Saint-Gervais",
+        "Notre-Dame",
+        "Saint-Merri"
+      ],
+      "5": [
+        "Saint-Victor",
+        "Val-de-Grace",
+        "Jardin-des-Plantes",
+        "Sorbonne"
+      ],
+      "6": [
+        "Saint-Germain-des-Prés",
+        "Notre-Dame-des-Champs",
+        "Odeon",
+        "Monnaie"
+      ],
+      "7": [
+        "Saint-Thomas-d\"Aquin",
+        "Gros-Caillou",
+        "Ecole-Militaire",
+        "Invalides"
+      ],
+      "8": [
+        "Madeleine",
+        "Europe",
+        "Faubourg-du-Roule",
+        "Champs-Elysées"
+      ],
+      "9": [
+        "Faubourg-Montmartre",
+        "Saint-Georges",
+        "Chaussée-d\"Antin",
+        "Rochechouart"
+      ],
+      "10": [
+        "Porte-Saint-Martin",
+        "Hôpital-Saint-Louis",
+        "Saint-Vincent-de-Paul",
+        "Porte-Saint-Denis"
+      ],
+      "11": [
+        "Saint-Ambroise",
+        "Roquette",
+        "Folie-Méricourt",
+        "Sainte-Marguerite"
+      ],
+      "12": [
+        "Picpus",
+        "Quinze-Vingts",
+        "Bel-Air",
+        "Bercy"
+      ],
+      "13": [
+        "Maison-Blanche",
+        "Salpêtrière",
+        "Gare",
+        "Croulebarbe"
+      ],
+      "14": [
+        "Parc-de-Montsouris",
+        "Plaisance",
+        "Montparnasse",
+        "Petit-Montrouge"
+      ],
+      "15": [
+        "Grenelle",
+        "Necker",
+        "Javel",
+        "Saint-Lambert"
+      ],
+      "16": [
+        "Chaillot",
+        "Porte-Dauphine",
+        "Auteuil",
+        "Muette"
+      ],
+      "17": [
+        "Epinettes",
+        "Plaine de Monceaux",
+        "Batignolles",
+        "Ternes"
+      ],
+      "18": [
+        "Clignancourt",
+        "Grandes-Carrières",
+        "Goutte-d\"Or",
+        "La Chapelle"
+      ],
+      "19": [
+        "Villette",
+        "Amérique",
+        "Pont-de-Flandre",
+        "Combat"
+      ],
+      "20": [
+        "Charonne",
+        "Belleville",
+        "Saint-Fargeau",
+        "Père-Lachaise"
+      ]
+    },
+    "arrondissement": true
+  },
+  "lille": {
+    "inseeCode": "59350",
+    "label": "Lille",
+    "postalCodes": [
+      "59000",
+      "59260",
+      "59160",
+      "59800",
+      "59777"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2",
+      "Zone 3",
+      "Zone 4",
+      "Zone 5"
+    ]
+  },
+  "aubervilliers": {
+    "inseeCode": "93001",
+    "label": "Aubervilliers",
+    "postalCodes": [
+      "93300"
+    ],
+    "zones": [
+      "Zone 314"
+    ]
+  },
+  "epinay-sur-seine": {
+    "inseeCode": "93031",
+    "label": "Épinay-sur-Seine",
+    "postalCodes": [
+      "93800"
+    ],
+    "zones": [
+      "Zone 315"
+    ]
+  },
+  "ile-saint-denis": {
+    "inseeCode": "93039",
+    "label": "L\"Île-Saint-Denis",
+    "postalCodes": [
+      "93450"
+    ],
+    "zones": [
+      "Zone 312"
+    ]
+  },
+  "courneuve": {
+    "inseeCode": "93027",
+    "label": "La Courneuve",
+    "postalCodes": [
+      "93120"
+    ],
+    "zones": [
+      "Zone 316"
+    ]
+  },
+  "pierrefitte-sur-seine": {
+    "inseeCode": "93059",
+    "label": "Pierrefitte-sur-Seine",
+    "postalCodes": [
+      "93380"
+    ],
+    "zones": [
+      "Zone 317"
+    ]
+  },
+  "saint-denis": {
+    "inseeCode": "93066",
+    "label": "Saint-Denis",
+    "postalCodes": [
+      "93200",
+      "93210"
+    ],
+    "zones": [
+      "Zone 311",
+      "Zone 312"
+    ]
+  },
+  "saint-ouen": {
+    "inseeCode": "93070",
+    "label": "Saint-Ouen-sur-Seine",
+    "postalCodes": [
+      "93400"
+    ],
+    "zones": [
+      "Zone 310"
+    ]
+  },
+  "stains": {
+    "inseeCode": "93072",
+    "label": "Stains",
+    "postalCodes": [
+      "93240"
+    ],
+    "zones": [
+      "Zone 318"
+    ]
+  },
+  "villetaneuse": {
+    "inseeCode": "93079",
+    "label": "Villetaneuse",
+    "postalCodes": [
+      "93430"
+    ],
+    "zones": [
+      "Zone 316"
+    ]
+  },
+  "lyon": {
+    "inseeCode": "69123",
+    "label": "Lyon",
+    "postalCodes": [
+      "69001",
+      "69002",
+      "69003",
+      "69004",
+      "69005",
+      "69006",
+      "69007",
+      "69008",
+      "69009",
+      "69100"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2",
+      "Zone 3",
+      "Zone 4",
+      "Zone 5"
+    ],
+    "arrondissement": true
+  },
+  "villeurbanne": {
+    "inseeCode": "69266",
+    "label": "Villeurbanne",
+    "postalCodes": [
+      "69100"
+    ],
+    "zones": [
+      "Zone 2",
+      "Zone 3",
+      "Zone 4",
+      "Zone 5"
+    ]
+  },
+  "bagnolet": {
+    "inseeCode": "93006",
+    "label": "Bagnolet",
+    "postalCodes": [
+      "93170"
+    ],
+    "zones": [
+      "Zone 308"
+    ]
+  },
+  "bobigny": {
+    "inseeCode": "93008",
+    "label": "Bobigny",
+    "postalCodes": [
+      "93000"
+    ],
+    "zones": [
+      "Zone 315"
+    ]
+  },
+  "bondy": {
+    "inseeCode": "93010",
+    "label": "Bondy",
+    "postalCodes": [
+      "93140"
+    ],
+    "zones": [
+      "Zone 318"
+    ]
+  },
+  "le pré-saint-gervais": {
+    "inseeCode": "93061",
+    "label": "Le Pré Saint-Gervais",
+    "postalCodes": [
+      "93310"
+    ],
+    "zones": [
+      "Zone 308"
+    ]
+  },
+  "les lilas": {
+    "inseeCode": "93045",
+    "label": "Les Lilas",
+    "postalCodes": [
+      "93260"
+    ],
+    "zones": [
+      "Zone 307"
+    ]
+  },
+  "montreuil": {
+    "inseeCode": "93048",
+    "label": "Montreuil",
+    "postalCodes": [
+      "93100"
+    ],
+    "zones": [
+      "Zone 307",
+      "Zone 308"
+    ]
+  },
+  "noisy-le-sec": {
+    "inseeCode": "93053",
+    "label": "Noisy-le-Sec",
+    "postalCodes": [
+      "93130"
+    ],
+    "zones": [
+      "Zone 311"
+    ]
+  },
+  "pantin": {
+    "inseeCode": "93055",
+    "label": "Pantin",
+    "postalCodes": [
+      "93500"
+    ],
+    "zones": [
+      "Zone 308"
+    ]
+  },
+  "romainville": {
+    "inseeCode": "93063",
+    "label": "Romainville",
+    "postalCodes": [
+      "93230"
+    ],
+    "zones": [
+      "Zone 313"
+    ]
+  },
+  "bordeaux": {
+    "inseeCode": "33063",
+    "label": "Bordeaux",
+    "postalCodes": [
+      "33000",
+      "33300",
+      "33800",
+      "33100",
+      "33200"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2",
+      "Zone 3",
+      "Zone 4"
+    ]
+  },
+  "montpellier": {
+    "inseeCode": "34172",
+    "label": "Montpellier",
+    "postalCodes": [
+      "34000",
+      "34070",
+      "34080",
+      "34090"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2",
+      "Zone 3",
+      "Zone 4",
+      "Zone 5"
+    ]
+  },
+  "la rochelle": {
+    "inseeCode": "17300",
+    "label": "La Rochelle",
+    "postalCodes": [
+      "17000"
+    ],
+    "zones": null
+  },
+  "annecy": {
+    "inseeCode": "74010",
+    "label": "Annecy",
+    "postalCodes": [
+      "74000",
+      "74370",
+      "74600",
+      "74940",
+      "74960"
+    ],
+    "zones": null
+  },
+  "marseille": {
+    "inseeCode": "13055",
+    "label": "Marseille",
+    "postalCodes": [
+      "13001",
+      "13002",
+      "13003",
+      "13004",
+      "13005",
+      "13006",
+      "13007",
+      "13008",
+      "13009",
+      "13010",
+      "13011",
+      "13012",
+      "13013",
+      "13014",
+      "13015",
+      "13016",
+      "13000"
+    ],
+    "arrondissement": true,
+    "zones": null
+  },
+  "nice": {
+    "inseeCode": "06088",
+    "label": "Nice",
+    "postalCodes": [
+      "06000",
+      "06100",
+      "06200",
+      "06300"
+    ],
+    "zones": null
+  },
+  "nantes": {
+    "inseeCode": "44109",
+    "label": "Nantes",
+    "postalCodes": [
+      "44000",
+      "44100",
+      "44200",
+      "44300"
+    ],
+    "zones": null
+  },
+  "strasbourg": {
+    "inseeCode": "67482",
+    "label": "Strasbourg",
+    "postalCodes": [
+      "67000",
+      "67100",
+      "67200"
+    ],
+    "zones": null
+  },
+  "rennes": {
+    "inseeCode": "35238",
+    "label": "Rennes",
+    "postalCodes": [
+      "35000",
+      "35200",
+      "35700"
+    ],
+    "zones": null
+  },
+  "toulon": {
+    "inseeCode": "83137",
+    "label": "Toulon",
+    "postalCodes": [
+      "83000",
+      "83100",
+      "83200"
+    ],
+    "zones": null
+  },
+  "toulouse": {
+    "inseeCode": "31555",
+    "label": "Toulouse",
+    "postalCodes": [
+      "31000",
+      "31004",
+      "31090",
+      "31100",
+      "31200",
+      "31300",
+      "31400",
+      "31500"
+    ],
+    "zones": null
+  },
+  "aix-en-provence": {
+    "inseeCode": "13001",
+    "label": "Aix-en-Provence",
+    "postalCodes": [
+      "13080",
+      "13090",
+      "13100",
+      "13290",
+      "13540"
+    ],
+    "zones": null
+  },
+  "ahetze": {
+    "inseeCode": "64009",
+    "label": "Ahetze",
+    "postalCodes": [
+      "64210"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "anglet": {
+    "inseeCode": "64024",
+    "label": "Anglet",
+    "postalCodes": [
+      "64600"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2"
+    ]
+  },
+  "arbonne": {
+    "inseeCode": "64035",
+    "label": "Arbonne",
+    "postalCodes": [
+      "64210"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "arcangues": {
+    "inseeCode": "64038",
+    "label": "Arcangues",
+    "postalCodes": [
+      "64200"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "ascain": {
+    "inseeCode": "64065",
+    "label": "Ascain",
+    "postalCodes": [
+      "64310"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "bassussarry": {
+    "inseeCode": "64100",
+    "label": "Bassussarry",
+    "postalCodes": [
+      "64200"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "bayonne": {
+    "inseeCode": "64102",
+    "label": "Bayonne",
+    "postalCodes": [
+      "64100"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2",
+      "Zone 3"
+    ]
+  },
+  "biarritz": {
+    "inseeCode": "64122",
+    "label": "Biarritz",
+    "postalCodes": [
+      "64200"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "bidart": {
+    "inseeCode": "64125",
+    "label": "Bidart",
+    "postalCodes": [
+      "64210"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "biriatou": {
+    "inseeCode": "64130",
+    "label": "Biriatou",
+    "postalCodes": [
+      "64700"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "boucau": {
+    "inseeCode": "64140",
+    "label": "Boucau",
+    "postalCodes": [
+      "64340"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "ciboure": {
+    "inseeCode": "64189",
+    "label": "Ciboure",
+    "postalCodes": [
+      "64500"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2"
+    ]
+  },
+  "guéthary": {
+    "inseeCode": "64249",
+    "label": "Guéthary",
+    "postalCodes": [
+      "64210"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "hendaye": {
+    "inseeCode": "64260",
+    "label": "Hendaye",
+    "postalCodes": [
+      "64700"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "jatxou": {
+    "inseeCode": "64282",
+    "label": "Jatxou",
+    "postalCodes": [
+      "64480"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "lahonce": {
+    "inseeCode": "64304",
+    "label": "Lahonce",
+    "postalCodes": [
+      "64990"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "larressore": {
+    "inseeCode": "64317",
+    "label": "Larressore",
+    "postalCodes": [
+      "64480"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "mouguerre": {
+    "inseeCode": "64407",
+    "label": "Mouguerre",
+    "postalCodes": [
+      "64990"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "saint-jean-de-luz": {
+    "inseeCode": "64483",
+    "label": "Saint-Jean-de-Luz",
+    "postalCodes": [
+      "64500"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "saint-pierre-d\"irube": {
+    "inseeCode": "64496",
+    "label": "Saint-Pierre-d\"Irube",
+    "postalCodes": [
+      "64990"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "urcuit": {
+    "inseeCode": "64540",
+    "label": "Urcuit",
+    "postalCodes": [
+      "64990"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "urrugne": {
+    "inseeCode": "64545",
+    "label": "Urrugne",
+    "postalCodes": [
+      "64122",
+      "64700"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "ustaritz": {
+    "inseeCode": "64547",
+    "label": "Ustaritz",
+    "postalCodes": [
+      "64480"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "villefranque": {
+    "inseeCode": "64558",
+    "label": "Villefranque",
+    "postalCodes": [
+      "64990"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "bresson": {
+    "inseeCode": "38057",
+    "label": "Bresson",
+    "postalCodes": [
+      "38320"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "claix": {
+    "inseeCode": "38095",
+    "label": "Claix",
+    "postalCodes": [
+      "38640"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "domène": {
+    "inseeCode": "38147",
+    "label": "Domène",
+    "postalCodes": [
+      "38420"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "échirolles": {
+    "inseeCode": "38151",
+    "label": "Échirolles",
+    "postalCodes": [
+      "38130"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "eybens": {
+    "inseeCode": "38158",
+    "label": "Eybens",
+    "postalCodes": [
+      "38320"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "fontaine": {
+    "inseeCode": "38169",
+    "label": "Fontaine",
+    "postalCodes": [
+      "38600"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "fontanil-cornillon": {
+    "inseeCode": "38170",
+    "label": "Fontanil-Cornillon",
+    "postalCodes": [
+      "38120"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "gières": {
+    "inseeCode": "38180",
+    "label": "Gières",
+    "postalCodes": [
+      "38610"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "grenoble": {
+    "inseeCode": "38185",
+    "label": "Grenoble",
+    "postalCodes": [
+      "38000",
+      "38100"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2"
+    ]
+  },
+  "la tronche": {
+    "inseeCode": "38516",
+    "label": "La Tronche",
+    "postalCodes": [
+      "38700"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "le pont-de-claix": {
+    "inseeCode": "38319",
+    "label": "Le Pont-de-Claix",
+    "postalCodes": [
+      "38800"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "meylan": {
+    "inseeCode": "38229",
+    "label": "Meylan",
+    "postalCodes": [
+      "38240"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "murianette": {
+    "inseeCode": "38272",
+    "label": "Murianette",
+    "postalCodes": [
+      "38870"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "poisat": {
+    "inseeCode": "38309",
+    "label": "Poisat",
+    "postalCodes": [
+      "38320"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "saint-égrève": {
+    "inseeCode": "38382",
+    "label": "Saint-Égrève",
+    "postalCodes": [
+      "38120"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "saint-martin-d\"hères": {
+    "inseeCode": "38421",
+    "label": "Saint-Martin-d\"Hères",
+    "postalCodes": [
+      "38400"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "sassenage": {
+    "inseeCode": "38471",
+    "label": "Sassenage",
+    "postalCodes": [
+      "38360"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "seyssinet-pariset": {
+    "inseeCode": "38486",
+    "label": "Seyssinet-Pariset",
+    "postalCodes": [
+      "38170"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "seyssins": {
+    "inseeCode": "38487",
+    "label": "Seyssins",
+    "postalCodes": [
+      "38185"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "varces-allières-et-risset": {
+    "inseeCode": "38524",
+    "label": "Varces-Allières-et-Risset",
+    "postalCodes": [
+      "38760"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  },
+  "venon": {
+    "inseeCode": "38532",
+    "label": "Venon",
+    "postalCodes": [
+      "38750"
+    ],
+    "zones": [
+      "Zone A"
+    ]
+  }
+}

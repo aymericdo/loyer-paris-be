@@ -1,6 +1,7 @@
 import { Rent } from '@db/db'
+import { AvailableCityZones } from '@services/city-config/city-selectors'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { getMainCityFilter, getClassicWebsiteFilter, getDateRangeFilter, getDistrictFilter, getFurnitureFilter, getIsParticulierFilter, getRoomFilter, getSurfaceFilter } from '@services/db/queries/common'
-import { AvailableCityZones, AvailableMainCities } from '@services/city-config/list'
 
 function basicFilter(
   city: AvailableMainCities,

@@ -1,4 +1,4 @@
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { FilterBordeaux } from './filter-bordeaux'
 import { FilterEstEnsemble } from './filter-est-ensemble'
 import { FilterLille } from './filter-lille'

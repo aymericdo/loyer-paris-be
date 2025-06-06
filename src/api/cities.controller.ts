@@ -1,10 +1,5 @@
-import { canHaveHouse } from '@services/city-config/can-have-house'
-import { AvailableCities, getCityList, getMainCity } from '@services/city-config/list'
-import { coordinates } from '@services/city-config/coordinates'
-import { dateBuiltRange } from '@services/city-config/date-build-range'
-import { isFake } from '@services/city-config/fake'
-import { label } from '@services/city-config/label'
-import { zones } from '@services/city-config/zones'
+import { AvailableCities } from '@services/city-config/cities'
+import { canHaveHouse, coordinates, dateBuiltRange, getCityList, getMainCity, isFake, label, zones } from '@services/city-config/city-selectors'
 import express, { Request, Response } from 'express'
 const router = express.Router()
 

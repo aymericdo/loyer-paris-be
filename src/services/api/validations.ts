@@ -1,5 +1,5 @@
-import { AvailableMainCities, mainCityList } from '@services/city-config/list'
-import { isFake } from '@services/city-config/fake'
+import { mainCityList, isFake } from '@services/city-config/city-selectors'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { Request, Response, NextFunction } from 'express'
 
 const isMainCityValid = (mainCity: AvailableMainCities | 'all', allAccepted = false) => {

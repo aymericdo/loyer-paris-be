@@ -1,7 +1,7 @@
 import { DistrictItem, GeojsonFile } from '@interfaces/shared'
-import { AvailableCities, AvailableMainCities, getCityList } from '@services/city-config/list'
-import { label } from '@services/city-config/label'
-import { zones } from '@services/city-config/zones'
+import { AvailableCities } from '@services/city-config/cities'
+import { getCityList, zones, label } from '@services/city-config/city-selectors'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
 
 interface DistrictElem {

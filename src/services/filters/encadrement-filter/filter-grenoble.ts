@@ -1,5 +1,5 @@
 import { DistrictItem, EncadrementItem, DefaultDistrictItem, DefaultEncadrementItem } from '@interfaces/shared'
-import { AvailableMainCities } from '@services/city-config/list'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterGrenoble } from '@services/filters/district-filter/district-filter-grenoble'
 import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
 
