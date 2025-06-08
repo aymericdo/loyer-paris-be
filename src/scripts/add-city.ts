@@ -2,9 +2,12 @@
 
 import inquirer from 'inquirer'
 import * as fs from 'fs'
-import { fetchCityInfo, fetchMoreCityInfo } from 'scripts/utils'
+import { fetchCityInfo, fetchMoreCityInfo, fetchObservatoiresDesLoyers, unzip } from 'scripts/utils'
 
 async function main() {
+  const { year, observatoire } = await fetchObservatoiresDesLoyers('6300')
+  await unzip(year, observatoire)
+
   const mainFilePath = 'src/services/city-config/main-cities.json'
   const classicCityFilePath = 'src/services/city-config/classic-cities.json'
 
@@ -82,6 +85,9 @@ async function main() {
     console.error('Erreur lors de l\'écriture dans le fichier :', err)
     return
   }
+
+  // la
+  // await fetchObservatoiresDesLoyers()
 
   try {
     data = fs.readFileSync(classicCityFilePath, 'utf8')
