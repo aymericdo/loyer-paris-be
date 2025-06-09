@@ -5,9 +5,17 @@ import { DOMParser } from '@xmldom/xmldom'
 import * as toGeoJSON from '@tmcw/togeojson'
 import path from 'path'
 import { fetchMoreCityInfo } from 'scripts/utils'
-import { zones } from '@services/city-config/city-selectors'
 
 import type { Feature, FeatureCollection } from 'geojson'
+
+const classicCityFilePath = 'src/services/city-config/classic-cities.json'
+let data = null
+try {
+  data = fs.readFileSync(classicCityFilePath, 'utf8')
+} catch (err) {
+  console.error('Erreur lors de la lecture du fichier :', err)
+  process.exit(1)
+}
 
 function stripLeadingZeros(value: string): string {
   return value.replace(/^0+(?=\d)/, '')
@@ -28,7 +36,10 @@ async function transformFeatureProperties(properties) {
   const postalCode = info?.codesPostaux?.[0] || 'N/A'
 
   if (!zone) {
-    const zoneStr = zones(city.toLowerCase())?.[0]
+    const currentCities = JSON.parse(data)
+    const cityDetails = currentCities[city.toLowerCase()]
+
+    const zoneStr = cityDetails?.zones[0]
     zone = zoneStr && typeof zoneStr === 'string' ? (zoneStr.match(/(?<=Zone ).*/) || [null])[0] : null
   }
 

@@ -186,7 +186,6 @@ export async function readCityList(observatoire: string, year: string): Promise<
   })
 }
 
-
 export async function getCityByInsee(observatoire: string, year: string): Promise<{ [city: string]: string }> {
   const filePath = path.resolve(__dirname, './data', `L${observatoire}Zonage${year}.csv`)
 

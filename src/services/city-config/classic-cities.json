@@ -2108,5 +2108,86 @@
     "zones": [
       "Zone 8"
     ]
+  },
+  "bohars": {
+    "inseeCode": "29011",
+    "label": "Bohars",
+    "postalCodes": [
+      "29820"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "brest": {
+    "inseeCode": "29019",
+    "label": "Brest",
+    "postalCodes": [
+      "29200"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2"
+    ]
+  },
+  "gouesnou": {
+    "inseeCode": "29061",
+    "label": "Gouesnou",
+    "postalCodes": [
+      "29850"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "guilers": {
+    "inseeCode": "29069",
+    "label": "Guilers",
+    "postalCodes": [
+      "29820"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "guipavas": {
+    "inseeCode": "29075",
+    "label": "Guipavas",
+    "postalCodes": [
+      "29490"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "plougasteldaoulas": {
+    "inseeCode": "29189",
+    "label": "Plougastel-Daoulas",
+    "postalCodes": [
+      "29470"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "plouzané": {
+    "inseeCode": "29212",
+    "label": "Plouzané",
+    "postalCodes": [
+      "29280"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "le relecqkerhuon": {
+    "inseeCode": "29235",
+    "label": "Le Relecq-Kerhuon",
+    "postalCodes": [
+      "29480"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
   }
 }

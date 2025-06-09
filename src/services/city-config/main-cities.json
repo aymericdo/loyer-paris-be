@@ -347,5 +347,24 @@
       1.433805,
       43.604082
     ]
+  },
+  "brest": {
+    "label": "Brest",
+    "house": false,
+    "cityList": [
+      "bohars",
+      "brest",
+      "gouesnou",
+      "guilers",
+      "guipavas",
+      "plougasteldaoulas",
+      "plouzané",
+      "le relecqkerhuon"
+    ],
+    "fake": true,
+    "coordinates": [
+      -4.497736,
+      48.406435
+    ]
   }
 }

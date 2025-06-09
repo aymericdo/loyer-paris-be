@@ -53,6 +53,7 @@ export const BordeauxGeojson = encadrementZone1Connection.model('bordeauxgeojson
 export const PaysBasqueGeojson = encadrementZone1Connection.model('paysbasquegeojsons', zoneSchema)
 export const GrenobleGeojson = encadrementZone1Connection.model('grenoblegeojsons', zoneSchema)
 export const ToulouseGeojson = encadrementZone1Connection.model('toulousegeojsons', zoneSchema)
+export const BrestGeojson = encadrementZone1Connection.model('brestgeojsons', zoneSchema)
 
 export const closeAllConnections = async () => {
   await rentConnection.close()
