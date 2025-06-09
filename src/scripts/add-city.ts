@@ -2,12 +2,38 @@
 
 import inquirer from 'inquirer'
 import * as fs from 'fs'
-import { fetchCityInfo, fetchMoreCityInfo, fetchObservatoiresDesLoyers, unzip } from 'scripts/utils'
+import {
+  fetchCityInfo,
+  fetchMoreCityInfo,
+  fetchObservatoiresDesLoyers,
+  getCityByInsee,
+  getZonesByInsee,
+  observatoireVerification,
+  unzip,
+} from 'scripts/utils'
+import path from 'path'
+import { exec as execCallback } from 'child_process'
+import { promisify } from 'util'
+
+const exec = promisify(execCallback)
+
+async function runKmlToGeojsonScript(fileName: string) {
+  try {
+    const { stdout, stderr } = await exec(`npm run kml-to-geojson -- kmlFile=${fileName}`)
+
+    if (stderr) {
+      console.error('stderr:', stderr)
+    }
+
+    // eslint-disable-next-line no-console
+    console.log('stdout:', stdout)
+  } catch (error) {
+    console.error('Erreur d\'exécution :', error)
+    process.exit(1)
+  }
+}
 
 async function main() {
-  const { year, observatoire } = await fetchObservatoiresDesLoyers('6300')
-  await unzip(year, observatoire)
-
   const mainFilePath = 'src/services/city-config/main-cities.json'
   const classicCityFilePath = 'src/services/city-config/classic-cities.json'
 
@@ -32,11 +58,33 @@ async function main() {
     return
   }
 
+  const infoFetched = await fetchCityInfo(mainCity)
+  const feature = infoFetched.features[0]
+
+  const departement = feature.properties.postcode.slice(0, 2)
+  let observatoireData = null
+
+  let ok = false
+  let observatoireNumber = 0
+  try {
+    do {
+      observatoireData = await fetchObservatoiresDesLoyers(departement, observatoireNumber.toString().padStart(2, '0'))
+      await unzip(observatoireData.year, observatoireData.observatoire)
+      ok = await observatoireVerification(mainCity, observatoireData.observatoire, observatoireData.year)
+      observatoireNumber += 1
+    } while(!ok)
+  } catch (error) {
+    console.error('Problème au niveau de l\'observatoire des loyers')
+    return
+  }
+
+  const { observatoire, year } = observatoireData
+
+  const cityByInsee = await getCityByInsee(observatoire, year)
+  const cityList = Object.values(cityByInsee)
+  const zonesByInsee = await getZonesByInsee(observatoire, year)
+
   const cityDetailTmp = await inquirer.prompt([{
-    type: 'input',
-    name: 'cityList',
-    message: `Saisis le nom des villes sous ${mainCity} (séparés d'une virgule)`,
-  }, {
     type: 'input',
     name: 'label',
     message: 'Saisis le nom de la ville à afficher',
@@ -52,12 +100,9 @@ async function main() {
     default: true,
   }])
 
-  const infoFetched = await fetchCityInfo(cityDetailTmp.label)
-  const feature = infoFetched.features[0]
-
   const mainCityDetail = {
     ...cityDetailTmp,
-    cityList: cityDetailTmp.cityList.split(',').map((city: string) => city.trim()),
+    cityList: cityList.map((city: string) => city.trim().toLowerCase()),
     fake: !cityDetailTmp.notFake,
     house: cityDetailTmp.house === 'Maison/Appartement',
     coordinates: feature.geometry.coordinates,
@@ -86,9 +131,6 @@ async function main() {
     return
   }
 
-  // la
-  // await fetchObservatoiresDesLoyers()
-
   try {
     data = fs.readFileSync(classicCityFilePath, 'utf8')
   } catch (err) {
@@ -100,34 +142,27 @@ async function main() {
 
   const newCities = {}
 
-  for (let i = 0; i < mainCityDetail.cityList.length; ++i) {
-    const city = mainCityDetail.cityList[i]
-    const infoFetched = await fetchCityInfo(city)
-    const feature = infoFetched.features[0]
+  for (const inseeCode of Object.keys(cityByInsee)) {
+    const city = cityByInsee[inseeCode].toLowerCase()
 
-    const inseeCode = feature.properties.citycode
     const moreInfoFetched = await fetchMoreCityInfo(inseeCode)
 
-    const cityDetailTmp = await inquirer.prompt([{
-      type: 'input',
-      name: 'zones',
-      message: `Saisis le nom des zones pour ${city} (séparés d'une virgule) (Zone xxx)`,
-    }, {
-      type: 'input',
-      name: 'label',
-      message: `Saisis le nom de la ville à afficher pour ${city}`,
-    }])
-
     const cityDetail = {
-      zones: cityDetailTmp.zones.split(',').map((zone: string) => zone.trim()),
-      label: cityDetailTmp.label,
-      postalCodes: moreInfoFetched.codesPostaux,
       inseeCode,
-      arrondissement: ['paris', 'lyon', 'marseille'].includes(city),
+      label: moreInfoFetched.nom,
+      postalCodes: moreInfoFetched.codesPostaux,
+      zones: zonesByInsee[inseeCode].map((zone: string) => zone.trim()),
+    }
+
+    if (['paris', 'lyon', 'marseille'].includes(city)) {
+      cityDetail['arrondissement'] = true
     }
 
     newCities[city] = { ...cityDetail }
   }
+
+  // eslint-disable-next-line no-console
+  console.log(newCities)
 
   try {
     fs.writeFileSync(classicCityFilePath, JSON.stringify({
@@ -141,6 +176,11 @@ async function main() {
 
   // eslint-disable-next-line no-console
   console.log(`✅ la ville "${mainCity}" a été ajoutée`)
+
+  await runKmlToGeojsonScript(`L${observatoire}_zone_elem_${year}`)
+
+  await fs.promises.unlink(path.resolve(__dirname, './data', `L${observatoire}_zone_elem_${year}.kml`))
+  await fs.promises.unlink(path.resolve(__dirname, './data', `L${observatoire}Zonage${year}.csv`))
 }
 
 main()

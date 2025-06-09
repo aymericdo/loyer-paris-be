@@ -70,7 +70,7 @@ export class DistrictFilterParent {
     const zone: number = +this.districtName.match(/\d+/)[0]
 
     const filter = {
-      'properties.zone': zone.toString().padStart(2, '0'),
+      'properties.zone': zone.toString(),
     }
 
     if (this.city) {

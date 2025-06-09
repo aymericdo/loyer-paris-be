@@ -1,11 +1,11 @@
-import { mainCityList, isFake } from '@services/city-config/city-selectors'
+import { getMainCityList, isFake } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 import { Request, Response, NextFunction } from 'express'
 
 const isMainCityValid = (mainCity: AvailableMainCities | 'all', allAccepted = false) => {
   if (allAccepted && mainCity === 'all') return true
 
-  if (!mainCityList.includes(mainCity as AvailableMainCities) || isFake(mainCity as AvailableMainCities)) {
+  if (!getMainCityList().includes(mainCity as AvailableMainCities) || isFake(mainCity as AvailableMainCities)) {
     return false
   }
 

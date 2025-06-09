@@ -1,5 +1,5 @@
 import { AvailableCities } from '@services/city-config/cities'
-import { fakeCities, getCitiesFromMainCity, AvailableCityZones } from '@services/city-config/city-selectors'
+import { getFakeCities, getCitiesFromMainCity, AvailableCityZones } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'
 
@@ -14,14 +14,14 @@ export function getWebsiteFilter(website?: string): { website: string | { $nin: 
 }
 
 export function getMainCityFilter(mainCity: AvailableMainCities | 'all'): { city: { $in: AvailableCities[] } } | { city: { $nin: string[] } } | Record<string, never> {
-  if (!mainCity || mainCity === 'all') return { city: { $nin: fakeCities } }
+  if (!mainCity || mainCity === 'all') return { city: { $nin: getFakeCities() } }
 
   const cities = getCitiesFromMainCity(mainCity)
   return { city: { '$in': cities } }
 }
 
 export function getCityFilter(city: AvailableCities | 'all'): { city: AvailableCities } | { city: { $nin: string[] } } | Record<string, never> {
-  if (!city || city === 'all') return { city: { $nin: fakeCities } }
+  if (!city || city === 'all') return { city: { $nin: getFakeCities() } }
 
   return { city }
 }

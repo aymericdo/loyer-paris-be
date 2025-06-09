@@ -5,15 +5,13 @@ import { DOMParser } from '@xmldom/xmldom'
 import * as toGeoJSON from '@tmcw/togeojson'
 import path from 'path'
 import { fetchMoreCityInfo } from 'scripts/utils'
-
-import type { Feature, FeatureCollection } from 'geojson'
 import { zones } from '@services/city-config/city-selectors'
 
-// === Configurable Paths ===
-const FILE_NAME = 'L7502_zone_elem_2024'
+import type { Feature, FeatureCollection } from 'geojson'
 
-const inputPath = path.resolve(__dirname, `./data/${FILE_NAME}.kml`)
-const outputPath = path.resolve(__dirname, `./data/${FILE_NAME}.json`)
+function stripLeadingZeros(value: string): string {
+  return value.replace(/^0+(?=\d)/, '')
+}
 
 async function transformFeatureProperties(properties) {
   const raw = properties.VAR5 || ''
@@ -35,6 +33,8 @@ async function transformFeatureProperties(properties) {
   }
 
   if (!zone) return null
+
+  zone = stripLeadingZeros(zone)
 
   const year = properties.VAR2 || null
 
@@ -75,13 +75,28 @@ async function kmlToGeojson(kmlString: string): Promise<string> {
 }
 
 // === Main Execution ===
-async function main() {
+async function main(fileName: string) {
+  // === Configurable Paths ===
+
+  const inputPath = path.resolve(__dirname, `./data/${fileName}.kml`)
+  const outputPath = path.resolve(__dirname, `./data/${fileName}.json`)
+
   const kmlString = fs.readFileSync(inputPath, 'utf-8')
   const geojsonFeatures = await kmlToGeojson(kmlString)
   fs.writeFileSync(outputPath, geojsonFeatures, 'utf-8')
 
   // eslint-disable-next-line no-console
   console.log(`✅ Fichier GeoJSON généré à : ${outputPath}`)
+  process.exit(0)
 }
 
-main()
+const DEFAULT_FILE_NAME = 'L2900_zone_elem_2024'
+
+const args = process.argv.slice(2) // ['kmlFile="fileName"']
+const cityArg = args.find(arg => arg.startsWith('kmlFile='))
+const kmlFile = cityArg?.split('=')[1]
+
+// eslint-disable-next-line no-console
+console.log('kmlFile received:', kmlFile)
+
+main(kmlFile ?? DEFAULT_FILE_NAME)
