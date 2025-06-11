@@ -1,6 +1,5 @@
+import { defaults as tsjPreset } from 'ts-jest/presets'
 import type { Config } from '@jest/types'
-
-const { defaults: tsjPreset } = require('ts-jest/presets')
 
 export default async (): Promise<Config.InitialOptions> => {
   return {
@@ -27,6 +26,6 @@ export default async (): Promise<Config.InitialOptions> => {
       '@messenger/(.*)': '<rootDir>/src/messenger/$1',
       '@services/(.*)': '<rootDir>/src/services/$1',
     },
-    transform: tsjPreset.transform,
+    transform: tsjPreset.transform as unknown as { [regex: string]: string | Config.TransformerConfig },
   }
 }

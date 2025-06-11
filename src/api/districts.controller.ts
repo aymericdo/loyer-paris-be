@@ -59,7 +59,7 @@ async function getAddresses(req: Request, res: Response) {
   let data: DataGouvAddressItem[] = []
   try {
     data = await AddressService.getAddresses(city, addressQuery)
-  } catch (error) {
+  } catch (_error) {
     res.json(data)
     return
   }

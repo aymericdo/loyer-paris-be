@@ -74,7 +74,7 @@ async function main() {
       observatoireNumber += 1
     } while(!ok)
   } catch (error) {
-    console.error('Problème au niveau de l\'observatoire des loyers')
+    console.error('Problème au niveau de l\'observatoire des loyers', error)
     return
   }
 
