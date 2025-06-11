@@ -13,6 +13,6 @@ export class DistrictFilterMontpellier extends DistrictFilterParent {
 
   protected async getDistrictsFromCity(): Promise<DistrictItem[]> {
     // There is not other city in the Montpellier Agglomeration
-    return await this.GeojsonCollection.find({}).lean()
+    return await this.GeojsonCollection.find({}).lean() as DistrictItem[]
   }
 }

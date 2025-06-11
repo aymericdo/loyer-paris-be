@@ -13,6 +13,6 @@ export class DistrictFilterLille extends DistrictFilterParent {
 
   protected async getDistrictsFromCity(): Promise<DefaultDistrictItem[]> {
     // There is not other city in the Lille Agglomeration
-    return await this.GeojsonCollection.find({}).lean()
+    return await this.GeojsonCollection.find({}).lean() as DefaultDistrictItem[]
   }
 }

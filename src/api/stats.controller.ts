@@ -35,4 +35,4 @@ router.get('/is-legal-per-classic-renter/:city', paramMiddleware(true), getLegal
 router.get('/is-legal-per-website/:city', paramMiddleware(true), getLegalPerWebsite)
 router.get('/is-legal-per-dpe/:city', paramMiddleware(true), getLegalPerDPE)
 
-module.exports = router
+export default router

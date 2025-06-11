@@ -125,15 +125,29 @@ export async function getRelevantAdsData(
     }
   ).lean()) as unknown as RelevantAdsData[]
 
+  const geodataCache: Record<string, Awaited<ReturnType<DistrictsList['currentGeodata']>>> = {}
+
+  for (const ad of ads) {
+    const mainCity = getMainCity(ad.city)
+    const cacheKey = `${mainCity}_${ad.city}`
+
+    if (geodataCache[cacheKey]) continue
+
+    if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
+      const districtsList = new DistrictsList(mainCity, { specificCity: ad.city })
+      geodataCache[cacheKey] = await districtsList.currentGeodata()
+    }
+  }
+
   return await Promise.all(ads.map(async (ad) => {
     let blurry = false
 
     const mainCity = getMainCity(ad.city)
     if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
-      const geodata = await new DistrictsList(mainCity, { specificCity: ad.city }).currentGeodata()
+      const geodata = geodataCache[`${mainCity}_${ad.city}`]
       const feature = geodata.features[Math.floor(Math.random() * geodata.features.length)]
 
-      let point = null
+      let point: [number, number] | null = null
 
       if (feature) {
         if (feature.geometry.type === 'GeometryCollection') {
@@ -143,15 +157,18 @@ export async function getRelevantAdsData(
         }
 
         if (point) {
-          ad.longitude = point[0]
-          ad.latitude = point[1]
+          ad.longitude = point[0].toString()
+          ad.latitude = point[1].toString()
         }
       }
 
       blurry = true
     }
 
-    const exceeding = !ad.isLegal ? roundNumber(ad.priceExcludingCharges - ad.maxPrice) : null
+    const exceeding = !ad.isLegal
+      ? roundNumber(ad.priceExcludingCharges - ad.maxPrice)
+      : null
+
     delete ad.isLegal
     delete ad.priceExcludingCharges
     delete ad.maxPrice
@@ -161,7 +178,7 @@ export async function getRelevantAdsData(
       blurry,
       exceeding,
     }
-  }).filter(Boolean))
+  }))
 }
 
 export async function getRelevantAdsDataTotalCount(filterParam: {

@@ -93,4 +93,4 @@ async function getAddresses(req: Request, res: Response) {
   res.json(data)
 }
 
-module.exports = router
+export default router

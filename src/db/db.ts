@@ -1,6 +1,6 @@
-import { PrettyLog } from '@services/helpers/pretty-log'
+import mongoose from 'mongoose'
 
-const mongoose = require('mongoose')
+import { PrettyLog } from '@services/helpers/pretty-log'
 
 function makeNewConnection(uri: string) {
   const db = mongoose.createConnection(uri)
@@ -33,10 +33,10 @@ const rentConnection = makeNewConnection(process.env.MONGODB_URI || localConnect
 const empriseBatieConnection = makeNewConnection(process.env.MONGODB_URI_EMPRISE_BATIE || localConnectionString)
 const encadrementZone1Connection = makeNewConnection(process.env.MONGODB_URI_ZONES || localConnectionString)
 
-const rentSchema = require('./rent.model')
-const incompleteRentSchema = require('./incomplete-rent.model')
-const empriseBatieSchema = require('./emprisebatie.model')
-const zoneSchema = require('./zone.model')
+import rentSchema from './rent.model'
+import incompleteRentSchema from './incomplete-rent.model'
+import empriseBatieSchema from './emprisebatie.model'
+import zoneSchema from './zone.model'
 
 export const Rent = rentConnection.model('Rent', rentSchema)
 export const IncompleteRent = rentConnection.model('IncompleteRent', incompleteRentSchema)

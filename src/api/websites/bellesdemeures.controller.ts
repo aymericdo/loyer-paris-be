@@ -10,4 +10,4 @@ async function getByDataV2(req: Request, res: Response) {
   await bellesdemeures.analyse()
 }
 
-module.exports = router
+export default router

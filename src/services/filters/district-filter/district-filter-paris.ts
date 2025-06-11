@@ -38,7 +38,7 @@ export class DistrictFilterParis extends DistrictFilterParent {
       },
     ).lean()
 
-    return districts?.length ? districts : []
+    return districts?.length ? districts as ParisDistrictItem[] : []
   }
 
   protected async getDistrictFromName(): Promise<ParisDistrictItem[]> {
@@ -48,6 +48,6 @@ export class DistrictFilterParis extends DistrictFilterParent {
       },
     ).lean()
 
-    return districts?.length ? districts : []
+    return districts?.length ? districts as ParisDistrictItem[] : []
   }
 }

@@ -13,6 +13,6 @@ export class DistrictFilterBordeaux extends DistrictFilterParent {
 
   protected async getDistrictsFromCity(): Promise<DefaultDistrictItem[]> {
     // There is not other city in the Bordeaux Agglomeration
-    return await this.GeojsonCollection.find({}).lean()
+    return await this.GeojsonCollection.find({}).lean() as DefaultDistrictItem[]
   }
 }

@@ -6,4 +6,4 @@ const router = express.Router()
 
 router.get('/:city', paramMiddleware(), getManualResult)
 
-module.exports = router
+export default router

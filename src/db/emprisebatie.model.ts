@@ -11,4 +11,4 @@ schema.index({ geometry: '2dsphere' })
 
 schema.set('toJSON', { virtuals: true })
 
-module.exports = schema
+export default schema

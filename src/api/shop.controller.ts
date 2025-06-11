@@ -4,4 +4,4 @@ const router = express.Router()
 
 router.get('/', getRelevantAds)
 
-module.exports = router
+export default router

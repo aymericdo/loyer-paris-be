@@ -11,4 +11,4 @@ async function getByDataV2(req: Request, res: Response) {
   locservice.analyse()
 }
 
-module.exports = router
+export default router

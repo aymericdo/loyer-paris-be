@@ -18,4 +18,4 @@ async function getByDataV2(req: Request, res: Response) {
   await leFigaro.analyse()
 }
 
-module.exports = router
+export default router

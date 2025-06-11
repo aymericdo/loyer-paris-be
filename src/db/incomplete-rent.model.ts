@@ -15,4 +15,4 @@ schema.index({ id: 1, website: 1 }, { unique: true })
 
 schema.set('toJSON', { virtuals: true })
 
-module.exports = schema
+export default schema

@@ -11,4 +11,4 @@ async function getByDataV2(req: Request, res: Response) {
   await bienici.analyse()
 }
 
-module.exports = router
+export default router

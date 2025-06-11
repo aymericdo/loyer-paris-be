@@ -13,6 +13,30 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { ApiErrorsService } from '@services/api/errors'
 import { ApiError } from '@interfaces/shared'
 
+import selogerController from '@api/websites/seloger.controller'
+import leboncoinController from '@api/websites/leboncoin.controller'
+import papController from '@api/websites/pap.controller'
+import logicimmoController from '@api/websites/logicimmo.controller'
+import lefigaroController from '@api/websites/lefigaro.controller'
+import orpiController from '@api/websites/orpi.controller'
+import facebookController from '@api/websites/facebook.controller'
+import gensdeconfianceController from '@api/websites/gensdeconfiance.controller'
+import bellesdemeuresController from '@api/websites/bellesdemeures.controller'
+import luxResidenceController from '@api/websites/lux-residence.controller'
+import bieniciController from '@api/websites/bienici.controller'
+import fnaimController from '@api/websites/fnaim.controller'
+import superimmoController from '@api/websites/superimmo.controller'
+import locserviceController from '@api/websites/locservice.controller'
+import fonciaController from '@api/websites/foncia.controller'
+import avendrealouerController from '@api/websites/avendrealouer.controller'
+
+import statsController from '@api/stats.controller'
+import shopController from '@api/shop.controller'
+import simulatorController from '@api/simulator.controller'
+import districtsController from '@api/districts.controller'
+import citiesController from '@api/cities.controller'
+import versionController from '@api/version.controller'
+
 const app = express()
 
 app.use(cors())
@@ -56,31 +80,31 @@ app.use(
 
 app.use(express.static(path.resolve('./json-data')))
 
-app.use('/seloger', require('./api/websites/seloger.controller'))
-app.use('/leboncoin', require('./api/websites/leboncoin.controller'))
-app.use('/pap', require('./api/websites/pap.controller'))
-app.use('/logic-immo', require('./api/websites/logicimmo.controller'))
-app.use('/lefigaro', require('./api/websites/lefigaro.controller'))
-app.use('/orpi', require('./api/websites/orpi.controller'))
-app.use('/facebook', require('./api/websites/facebook.controller'))
-app.use('/gensdeconfiance', require('./api/websites/gensdeconfiance.controller'))
-app.use('/bellesdemeures', require('./api/websites/bellesdemeures.controller'))
-app.use('/lux-residence', require('./api/websites/lux-residence.controller'))
-app.use('/bienici', require('./api/websites/bienici.controller'))
-app.use('/fnaim', require('./api/websites/fnaim.controller'))
-app.use('/superimmo', require('./api/websites/superimmo.controller'))
-app.use('/locservice', require('./api/websites/locservice.controller'))
-app.use('/foncia', require('./api/websites/foncia.controller'))
-app.use('/avendrealouer', require('./api/websites/avendrealouer.controller'))
+app.use('/seloger', selogerController)
+app.use('/leboncoin', leboncoinController)
+app.use('/pap', papController)
+app.use('/logic-immo', logicimmoController)
+app.use('/lefigaro', lefigaroController)
+app.use('/orpi', orpiController)
+app.use('/facebook', facebookController)
+app.use('/gensdeconfiance', gensdeconfianceController)
+app.use('/bellesdemeures', bellesdemeuresController)
+app.use('/lux-residence', luxResidenceController)
+app.use('/bienici', bieniciController)
+app.use('/fnaim', fnaimController)
+app.use('/superimmo', superimmoController)
+app.use('/locservice', locserviceController)
+app.use('/foncia', fonciaController)
+app.use('/avendrealouer', avendrealouerController)
 
-app.use('/stats', require('./api/stats.controller'))
+app.use('/stats', statsController)
 
-app.use('/shop', require('./api/shop.controller'))
-app.use('/simulator', require('./api/simulator.controller'))
-app.use('/districts', require('./api/districts.controller'))
-app.use('/cities', require('./api/cities.controller'))
+app.use('/shop', shopController)
+app.use('/simulator', simulatorController)
+app.use('/districts', districtsController)
+app.use('/cities', citiesController)
 
-app.use('/version', require('./api/version.controller'))
+app.use('/version', versionController)
 
 if (process.env.CURRENT_ENV === 'prod') {
   // Watch the cronjobs

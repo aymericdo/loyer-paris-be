@@ -8,4 +8,4 @@ function getIsExtensionUpToDate(req: Request, res: Response) {
   res.json(currentVersion > version)
 }
 
-module.exports = router
+export default router

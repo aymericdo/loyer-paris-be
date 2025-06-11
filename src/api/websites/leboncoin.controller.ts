@@ -17,4 +17,4 @@ async function getByDataV2(req: Request, res: Response) {
   await leboncoin.analyse()
 }
 
-module.exports = router
+export default router

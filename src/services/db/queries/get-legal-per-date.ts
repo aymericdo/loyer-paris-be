@@ -50,7 +50,7 @@ export async function getLegalPerDate(
     isParticulier
   )
 
-  const aggregation = [
+  return await Rent.aggregate([
     {
       $match: filter
     },
@@ -112,7 +112,5 @@ export async function getLegalPerDate(
       }
     },
     { $sort: { weekDate: 1 } }
-  ]
-
-  return await Rent.aggregate(aggregation)
+  ])
 }

@@ -33,7 +33,7 @@ export class DistrictFilterEstEnsemble extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find(filter).lean()
 
-    return districts?.length ? districts : []
+    return districts?.length ? districts as EstEnsembleDistrictItem[] : []
   }
 
   protected async getDistrictsFromPostalCode(): Promise<EstEnsembleDistrictItem[]> {
@@ -44,7 +44,7 @@ export class DistrictFilterEstEnsemble extends DistrictFilterParent {
         'properties.CODE_POST': this.postalCode.toString(),
       },
     ).lean()
-    return districts?.length ? districts : []
+    return districts?.length ? districts as EstEnsembleDistrictItem[] : []
   }
 
   protected async getDistrictsFromCity(): Promise<EstEnsembleDistrictItem[]> {
@@ -56,6 +56,6 @@ export class DistrictFilterEstEnsemble extends DistrictFilterParent {
       },
     ).lean()
 
-    return districts?.length ? districts : []
+    return districts?.length ? districts as EstEnsembleDistrictItem[] : []
   }
 }

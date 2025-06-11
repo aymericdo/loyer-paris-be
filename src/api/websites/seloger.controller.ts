@@ -16,4 +16,4 @@ async function getByDataV2(req: Request, res: Response) {
   await seloger.analyse()
 }
 
-module.exports = router
+export default router

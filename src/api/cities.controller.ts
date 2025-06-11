@@ -26,4 +26,4 @@ function getValidCityList(req: Request, res: Response) {
   res.json(result)
 }
 
-module.exports = router
+export default router

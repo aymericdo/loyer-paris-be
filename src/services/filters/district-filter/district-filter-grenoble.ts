@@ -24,6 +24,6 @@ export class DistrictFilterGrenoble extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find(filter).lean()
 
-    return districts?.length ? districts : []
+    return districts?.length ? districts as DefaultDistrictItem[] : []
   }
 }
