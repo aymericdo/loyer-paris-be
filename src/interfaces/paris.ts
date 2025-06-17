@@ -31,12 +31,3 @@ export interface ParisDistrictItemProperties {
   [DISPLAY_ZONE_FIELD]: string
   [DISPLAY_CITY_FIELD]: string
 }
-
-export interface ParisDistrictItem {
-  type: 'Feature'
-  geometry: {
-    type: 'Polygon'
-    coordinates: number[][][]
-  }
-  properties: ParisDistrictItemProperties
-}

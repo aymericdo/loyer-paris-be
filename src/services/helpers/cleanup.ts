@@ -1,4 +1,4 @@
-import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCities } from '@services/city-config/classic-cities'
 
 export function string(string: string): string {
   return string

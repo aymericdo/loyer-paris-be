@@ -21,6 +21,7 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org encadrement-loyers --project node ./build && sentry-cli sourcemaps upload --org encadrement-loyers --project node ./build",
     "kml-to-geojson": "ts-node -r tsconfig-paths/register src/scripts/kml-to-geojson.ts",
+    "base-op-csv-to-json": "ts-node -r tsconfig-paths/register src/scripts/base-op-csv-to-json.ts",
     "add-city": "ts-node -r tsconfig-paths/register src/scripts/add-city.ts"
   },
   "author": "Aymeric & Thomas",

@@ -10,7 +10,7 @@ import { YearBuiltService } from '@services/helpers/year-built'
 import { PARTICULIER, DPE_LIST } from '@services/websites/website'
 import { AddressService } from '@services/diggers/address-service'
 import { PostalCodeService } from '@services/diggers/postal-code-service'
-import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCities } from '@services/city-config/classic-cities'
 export class DigService {
   ad: Ad = null
 

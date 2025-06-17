@@ -2,13 +2,13 @@ import { DataGouvAddressItem, FinalDataGouvAddressItem } from '@interfaces/addre
 import { paramMiddleware, queryParamValidator } from '@services/api/validations'
 import { AddressService } from '@services/diggers/address-service'
 import { DistrictsList } from '@services/districts/districts-list'
-import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
+import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import express, { Request, Response } from 'express'
-import { DistrictItem } from '@interfaces/shared'
-import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCities } from '@services/city-config/classic-cities'
 import { isFake } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
+import { ZoneDocument } from '@db/zone.model'
 const router = express.Router()
 
 router.get('/geojson/:city', paramMiddleware(), getGeodata)
@@ -69,18 +69,18 @@ async function getAddresses(req: Request, res: Response) {
     return
   }
 
-  const CurrentDistrictFilter = new DistrictFilterFactory(mainCity).currentDistrictFilter()
+  const districtFilterFactory = new DistrictFilterFactory(mainCity)
 
   // Add [districtName] to all elements
   data = await Promise.all(data.map(async (elem: DataGouvAddressItem) => {
-    const currentDistrictFilter = new CurrentDistrictFilter({
+    const currentDistrictFilter = districtFilterFactory.currentDistrictFilter({
       coordinates: {
         lng: elem.geometry.coordinates[0],
         lat: elem.geometry.coordinates[1],
       }
     })
 
-    const district: DistrictItem = await currentDistrictFilter.getFirstDistrict()
+    const district: ZoneDocument = await currentDistrictFilter.getFirstDistrict()
 
     return {
       ...elem,

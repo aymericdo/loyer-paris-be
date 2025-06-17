@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Model } from 'mongoose'
 
 import { PrettyLog } from '@services/helpers/pretty-log'
 
@@ -36,24 +36,35 @@ const encadrementZone1Connection = makeNewConnection(process.env.MONGODB_URI_ZON
 import rentSchema from './rent.model'
 import incompleteRentSchema from './incomplete-rent.model'
 import empriseBatieSchema from './emprisebatie.model'
-import zoneSchema from './zone.model'
+import zoneSchema, { ZoneDocument } from './zone.model'
 
 export const Rent = rentConnection.model('Rent', rentSchema)
 export const IncompleteRent = rentConnection.model('IncompleteRent', incompleteRentSchema)
 export const EmpriseBatie = empriseBatieConnection.model('Batie', empriseBatieSchema)
 
 // https://www.data.gouv.fr/fr/datasets/resultats-des-observatoires-locaux-des-loyers-par-agglomeration/
-export const LyonGeojson = encadrementZone1Connection.model('lyongeojsons', zoneSchema)
-export const LilleGeojson = encadrementZone1Connection.model('lillegeojsons', zoneSchema)
-export const PlaineCommuneGeojson = encadrementZone1Connection.model('plainecommunegeojsons', zoneSchema)
-export const EstEnsembleGeojson = encadrementZone1Connection.model('estensemblegeojsons', zoneSchema)
-export const ParisGeojson = encadrementZone1Connection.model('parisgeojsons', zoneSchema)
-export const MontpellierGeojson = encadrementZone1Connection.model('montpelliergeojsons', zoneSchema)
-export const BordeauxGeojson = encadrementZone1Connection.model('bordeauxgeojsons', zoneSchema)
-export const PaysBasqueGeojson = encadrementZone1Connection.model('paysbasquegeojsons', zoneSchema)
-export const GrenobleGeojson = encadrementZone1Connection.model('grenoblegeojsons', zoneSchema)
-export const ToulouseGeojson = encadrementZone1Connection.model('toulousegeojsons', zoneSchema)
-export const BrestGeojson = encadrementZone1Connection.model('brestgeojsons', zoneSchema)
+export const LyonGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('lyongeojsons', zoneSchema)
+export const LilleGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('lillegeojsons', zoneSchema)
+export const PlaineCommuneGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('plainecommunegeojsons', zoneSchema)
+export const EstEnsembleGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('estensemblegeojsons', zoneSchema)
+export const ParisGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('parisgeojsons', zoneSchema)
+export const MontpellierGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('montpelliergeojsons', zoneSchema)
+export const BordeauxGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('bordeauxgeojsons', zoneSchema)
+export const PaysBasqueGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('paysbasquegeojsons', zoneSchema)
+export const GrenobleGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('grenoblegeojsons', zoneSchema)
+export const ToulouseGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('toulousegeojsons', zoneSchema)
+export const BrestGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('brestgeojsons', zoneSchema)
+export const SaintMaloGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('saintmalogeojsons', zoneSchema)
+export const AlençonGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('alencongeojsons', zoneSchema)
+export const RennesGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('rennesgeojsons', zoneSchema)
+export const LaRochelleGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('larochellegeojsons', zoneSchema)
+export const ToulonGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('toulongeojsons', zoneSchema)
+export const AnnecyGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('annecygeojsons', zoneSchema)
+export const MarseilleGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('marseillegeojsons', zoneSchema)
+export const NiceGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('nicegeojsons', zoneSchema)
+export const NantesGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('nantesgeojsons', zoneSchema)
+export const StrasbourgGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('strasbourggeojsons', zoneSchema)
+export const NancyGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('nancygeojsons', zoneSchema)
 
 export const closeAllConnections = async () => {
   await rentConnection.close()

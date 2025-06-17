@@ -5,13 +5,13 @@ import { ApiErrorsService, ERROR_CODE } from '@services/api/errors'
 import { SerializerService } from '@services/api/serializer'
 import { SaveRentService } from '@services/db/save-rent'
 import { DigService } from '@services/diggers/dig'
-import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
+import { FilterFactory } from '@services/filters/encadrement-filter/filter-factory'
 import { getPriceExcludingCharges } from '@services/helpers/charges'
 import { roundNumber } from '@services/helpers/round-number'
 import { Response } from 'express'
 import { CityFilter } from '@services/filters/city-filter'
 import { ApiError } from '@interfaces/shared'
-import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCities } from '@services/city-config/classic-cities'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 
 export const DPE_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
@@ -88,8 +88,9 @@ export abstract class Website {
         }
       }
 
-      const CurrentEncadrementFilter = new EncadrementFilterFactory(getMainCity(city)).currentEncadrementFilter()
-      const filteredResult: FilteredResult = await new CurrentEncadrementFilter(cleanAd).find()
+      const encadrementFilterFactory = new FilterFactory(getMainCity(city))
+      const currentEncadrementFilter = encadrementFilterFactory.currentEncadrementFilter(cleanAd)
+      const filteredResult: FilteredResult = await currentEncadrementFilter.find()
 
       if (filteredResult) {
         const maxAuthorized = roundNumber(filteredResult.maxPrice * cleanAd.surface)

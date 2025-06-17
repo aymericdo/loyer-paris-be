@@ -1,11 +1,11 @@
-import { getCitiesFromMainCity, label } from '@services/city-config/city-selectors'
+import { isOnlyOneCity, label } from '@services/city-config/city-selectors'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { Vega } from '@services/helpers/vega'
 import { Request, Response } from 'express'
 import rewind from '@mapbox/geojson-rewind'
 import { getLegalPerCity } from '@services/db/queries/get-legal-per-city'
 import { CITY_PATH, DistrictsList } from '@services/districts/districts-list'
-import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCities } from '@services/city-config/classic-cities'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 
 export async function getChloroplethCitiesMap(req: Request, res: Response) {
@@ -15,8 +15,7 @@ export async function getChloroplethCitiesMap(req: Request, res: Response) {
   const dateValue: string = req.query.dateValue as string
   const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
 
-  const cities = getCitiesFromMainCity(mainCity)
-  if (cities.length === 1) {
+  if (isOnlyOneCity(mainCity)) {
     res.status(403).json({ message: 'City params not valid' })
     return
   }

@@ -1,8 +1,9 @@
-import { DistrictItem, GeojsonFile } from '@interfaces/shared'
-import { AvailableCities } from '@services/city-config/cities'
+import { ZoneDocument } from '@db/zone.model'
+import { GeojsonFile } from '@interfaces/shared'
+import { AvailableCities } from '@services/city-config/classic-cities'
 import { getCityList, zones, label } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
-import { DistrictFilterFactory } from '@services/filters/district-filter/encadrement-district-filter-factory'
+import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
 
 interface DistrictElem {
   label: string
@@ -29,13 +30,15 @@ export class DistrictsList {
     this.mainCity = city
     this.city = options?.specificCity
     this.district = options?.specificDistrict
-    this.currentDistrictFilter = new (new DistrictFilterFactory(this.mainCity).currentDistrictFilter())(
-      { city: this.city, districtName: this.district },
-    )
+    const districtFilterFactory = new DistrictFilterFactory(this.mainCity)
+    this.currentDistrictFilter = districtFilterFactory.currentDistrictFilter({
+      city: this.city,
+      districtName: this.district,
+    })
   }
 
   async currentGeodata(): Promise<GeojsonFile> {
-    const features: DistrictItem[] = await this.currentDistrictFilter.getDistricts()
+    const features: ZoneDocument[] = await this.currentDistrictFilter.getDistricts()
 
     return {
       type: 'FeatureCollection',
@@ -46,11 +49,11 @@ export class DistrictsList {
           [DISPLAY_ZONE_FIELD]: this.currentDistrictFilter.digZoneInProperties(data['properties']),
           [DISPLAY_CITY_FIELD]: this.currentDistrictFilter.digCityInProperties(data['properties']),
         },
-      })) as DistrictItem[],
+      })) as ZoneDocument[],
     }
   }
 
-  async currentFeature(): Promise<DistrictItem> {
+  async currentFeature(): Promise<ZoneDocument> {
     return await this.currentDistrictFilter.getFirstDistrict()
   }
 

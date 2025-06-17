@@ -1,7 +1,9 @@
 import { IncompleteAd } from '@interfaces/ad'
-import { EstEnsembleDistrictItem, EstEnsembleDistrictItemProperties } from './est-ensemble'
-import { ParisDistrictItem, ParisDistrictItemProperties, ParisEncadrementItem } from './paris'
-import { PlaineCommuneDistrictItem, PlaineCommuneDistrictItemProperties } from './plaine-commune'
+import { EstEnsembleDistrictItemProperties } from './est-ensemble'
+import { ParisDistrictItemProperties, ParisEncadrementItem } from './paris'
+import { PlaineCommuneDistrictItemProperties } from './plaine-commune'
+import { ObservatoireEncadrementItem } from '@interfaces/observatoire-des-loyers'
+import { ZoneDocument } from '@db/zone.model'
 
 export interface Coordinate {
   lat: number
@@ -42,27 +44,15 @@ export interface DefaultDistrictItemProperties {
   year: string
 }
 
-export interface DefaultDistrictItem {
-  type: 'Feature'
-  geometry: { type: 'MultiPolygon'; coordinates: number[][][] } | { type: 'GeometryCollection', geometries: DefaultDistrictItem }
-  properties: DefaultDistrictItemProperties
-}
-
 export type DistrictItemProperties =
   DefaultDistrictItemProperties
   | ParisDistrictItemProperties
   | PlaineCommuneDistrictItemProperties
   | EstEnsembleDistrictItemProperties
 
-export type DistrictItem =
-  DefaultDistrictItem
-  | ParisDistrictItem
-  | PlaineCommuneDistrictItem
-  | EstEnsembleDistrictItem
-
-export type EncadrementItem = DefaultEncadrementItem | ParisEncadrementItem
+export type EncadrementItem = DefaultEncadrementItem | ParisEncadrementItem | ObservatoireEncadrementItem
 
 export interface GeojsonFile {
   type: 'FeatureCollection'
-  features: DistrictItem[]
+  features: ZoneDocument[]
 }

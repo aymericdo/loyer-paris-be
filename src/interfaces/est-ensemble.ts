@@ -11,9 +11,3 @@ export interface EstEnsembleDistrictItemProperties {
   [DISPLAY_ZONE_FIELD]: string
   [DISPLAY_CITY_FIELD]: string
 }
-
-export interface EstEnsembleDistrictItem {
-  type: 'Feature'
-  properties: EstEnsembleDistrictItemProperties
-  geometry: { type: 'MultiPolygon'; coordinates: number[][][] }
-}

@@ -1,3 +1,17 @@
 export function getPriceExcludingCharges(price: number, charges: number, hasCharges: boolean): number {
-  return charges && price - charges > 0 ? price - charges : hasCharges ? price - (10 * price) / 100 : price
+  const defaultCharges = hasCharges ? (price * 0.1) : 0
+  let currentCharges = 0
+
+  if (charges) {
+    if (charges > (price * 0.5)) {
+      // charge invalid
+      currentCharges = defaultCharges
+    } else {
+      currentCharges = charges
+    }
+  } else {
+    currentCharges = defaultCharges
+  }
+
+  return price - currentCharges
 }

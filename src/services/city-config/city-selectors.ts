@@ -1,4 +1,4 @@
-import { AvailableCities, CITY_DETAILS } from '@services/city-config/cities'
+import { AvailableCities, CITY_DETAILS } from '@services/city-config/classic-cities'
 import { AvailableMainCities, CITIES } from '@services/city-config/main-cities'
 import { DATE_RANGE_END_IN_1990, DATE_RANGE_END_IN_2005, DateRange } from '@services/helpers/year-built'
 
@@ -25,14 +25,23 @@ export const canHaveHouse = (mainCity: AvailableMainCities): boolean => {
   return CITIES[mainCity]?.house ?? false
 }
 
+export const isOnlyOneCity = (mainCity: AvailableMainCities): boolean => {
+  return getCitiesFromMainCity(mainCity).length === 1
+}
+
 export const isFake = (mainCity: AvailableMainCities): boolean => {
   return CITIES[mainCity]?.fake ?? false
 }
 
+export const getRealCities = () => getMainCityList().filter((mainCity) => !isFake(mainCity))
 export const getFakeCities = () => getMainCityList().filter((mainCity) => isFake(mainCity))
 
 export const infoLink = (mainCity: AvailableMainCities): string => {
   return CITIES[mainCity]?.infoLink ?? null
+}
+
+export const lastDateBuiltRange = (mainCity: AvailableMainCities): number => {
+  return CITIES[mainCity]?.builtYearRangeEnd === 2005 ? 2005 : 1990
 }
 
 export const dateBuiltRange = (mainCity: AvailableMainCities): DateRange[] => {
