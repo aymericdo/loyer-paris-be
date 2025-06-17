@@ -1,6 +1,6 @@
 import { Ad } from '@interfaces/ad'
 import { Coordinate, AddressItem } from '@interfaces/shared'
-import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCities } from '@services/city-config/classic-cities'
 import { regexString } from '@services/helpers/regex'
 import * as cleanup from '@services/helpers/cleanup'
 import { DataGouvAddress, DataGouvAddressItem } from '@interfaces/address'

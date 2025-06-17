@@ -1,5 +1,5 @@
 import { Ad } from '@interfaces/ad'
-import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCities } from '@services/city-config/classic-cities'
 import { getCityList, hasArrondissement, postalCodes } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 

@@ -16,7 +16,9 @@ export class SelogerScraping {
     const hasCharges = document.querySelector('[data-testid*="Hardfacts.Price.Informations"]')
     const cityLabel = document.querySelector('[data-testid*="cdp-location-address"]')
     const renter = document.querySelector('[data-testid*="ContactCard.Title"]')
-    const charges = document.querySelector('[data-testid*="Sections.Price.PrimaryComponent"] .css-cxt05v')
+    const chargesElement = document.querySelector('[data-testid*="Sections.Price.PrimaryComponent"]')
+
+    const charges = chargesElement?.textContent?.match(/(?<=(pour charges.*))\d+/)
 
     const itemTags = [...document.querySelectorAll('[data-testid*="cdp-hardfacts"] .css-1c3h18e')]
 
@@ -62,7 +64,7 @@ export class SelogerScraping {
     return {
       id: null,
       cityLabel: cityLabelText,
-      charges: charges?.textContent,
+      charges: charges?.length ? charges[0] : null,
       description: description?.textContent,
       furnished,
       hasCharges: hasCharges?.textContent.includes('cc'),

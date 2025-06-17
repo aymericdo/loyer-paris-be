@@ -1,17 +1,18 @@
 import { AvailableMainCities } from '@services/city-config/main-cities'
-import { DistrictFilterParent } from './encadrement-district-filter-parent'
+import { DistrictFilterParent } from './district-filter-parent'
 import { GrenobleGeojson } from '@db/db'
-import { DefaultDistrictItem } from '@interfaces/shared'
+import { ZoneDocument } from '@db/zone.model'
 
-export class DistrictFilterGrenoble extends DistrictFilterParent {
+export class GrenobleDistrictFilter extends DistrictFilterParent {
   GeojsonCollection = GrenobleGeojson
   mainCity: AvailableMainCities = 'grenoble'
 
-  async getDistricts(): Promise<DefaultDistrictItem[]> {
-    return super.getDistricts() as Promise<DefaultDistrictItem[]>
+  async getDistricts(): Promise<ZoneDocument[]> {
+    return super.getDistricts() as Promise<ZoneDocument[]>
   }
 
-  protected async getDistrictFromName(): Promise<DefaultDistrictItem[]> {
+  protected async getDistrictFromName(): Promise<ZoneDocument[]> {
+    // Need to customize Grenoble because for some reasons, Zone can be A (yea I know.)
     const zone: string = this.districtName.match(/(?<=Zone ).*/g)[0]
 
     const filter = {
@@ -24,6 +25,6 @@ export class DistrictFilterGrenoble extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find(filter).lean()
 
-    return districts?.length ? districts as DefaultDistrictItem[] : []
+    return districts?.length ? districts as ZoneDocument[] : []
   }
 }

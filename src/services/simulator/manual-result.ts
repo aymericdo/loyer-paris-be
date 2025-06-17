@@ -2,7 +2,7 @@ import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import { queryParamValidator } from '@services/api/validations'
 import { getCitiesFromMainCity, zones, infoLink } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
-import { EncadrementFilterFactory } from '@services/filters/encadrement-filter/encadrement-filter-factory'
+import { FilterFactory } from '@services/filters/encadrement-filter/filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
@@ -44,8 +44,7 @@ export async function getManualResult(req: Request, res: Response) {
     return
   }
 
-  const CurrentEncadrementFilter = new EncadrementFilterFactory(mainCity).currentEncadrementFilter()
-  const params: InfoToFilter = {
+  const infoToFilter: InfoToFilter = {
     city: null,
     postalCode: null,
     coordinates: null,
@@ -57,7 +56,9 @@ export async function getManualResult(req: Request, res: Response) {
     isHouse,
   }
 
-  const currentEncadrementFilter = new CurrentEncadrementFilter(params)
+  const encadrementFilterFactory = new FilterFactory(mainCity)
+  const currentEncadrementFilter = encadrementFilterFactory.currentEncadrementFilter(infoToFilter)
+
   const filteredResult: FilteredResult[] = await currentEncadrementFilter.filter()
 
   res.json(

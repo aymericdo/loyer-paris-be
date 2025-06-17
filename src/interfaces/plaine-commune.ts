@@ -11,9 +11,3 @@ export interface PlaineCommuneDistrictItemProperties {
   [DISPLAY_ZONE_FIELD]: string
   [DISPLAY_CITY_FIELD]: string
 }
-
-export interface PlaineCommuneDistrictItem {
-  type: 'Feature'
-  properties: PlaineCommuneDistrictItemProperties
-  geometry: { type: 'MultiPolygon'; coordinates: number[][][] }
-}

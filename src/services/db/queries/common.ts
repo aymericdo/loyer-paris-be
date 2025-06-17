@@ -1,4 +1,4 @@
-import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCities } from '@services/city-config/classic-cities'
 import { getFakeCities, getCitiesFromMainCity, AvailableCityZones } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 import { FUNNIEST_WEBSITES } from '@services/websites/website'

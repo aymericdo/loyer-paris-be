@@ -1,4 +1,4 @@
-import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCities } from '@services/city-config/classic-cities'
 import { canHaveHouse, coordinates, dateBuiltRange, getCityList, getMainCity, isFake, label, zones } from '@services/city-config/city-selectors'
 import express, { Request, Response } from 'express'
 const router = express.Router()

@@ -97,7 +97,7 @@ async function main(fileName: string) {
   fs.writeFileSync(outputPath, geojsonFeatures, 'utf-8')
 
   // eslint-disable-next-line no-console
-  console.log(`✅ Fichier GeoJSON généré à : ${outputPath}`)
+  console.log(`✅ Fichier GeoJSON à importer dans mongo généré à : ${outputPath}`)
   process.exit(0)
 }
 

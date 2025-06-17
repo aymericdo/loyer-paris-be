@@ -1,15 +1,16 @@
-import { DefaultDistrictItem, DistrictItemProperties } from '@interfaces/shared'
+import { DistrictItemProperties } from '@interfaces/shared'
 import { AvailableMainCities } from '@services/city-config/main-cities'
-import { DistrictFilterParent } from './encadrement-district-filter-parent'
-import { PlaineCommuneDistrictItem, PlaineCommuneDistrictItemProperties } from '@interfaces/plaine-commune'
+import { DistrictFilterParent } from './district-filter-parent'
+import { PlaineCommuneDistrictItemProperties } from '@interfaces/plaine-commune'
 import { PlaineCommuneGeojson } from '@db/db'
+import { ZoneDocument } from '@db/zone.model'
 
-export class DistrictFilterPlaineCommune extends DistrictFilterParent {
+export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
   GeojsonCollection = PlaineCommuneGeojson
   mainCity: AvailableMainCities = 'plaineCommune'
 
-  async getDistricts(): Promise<DefaultDistrictItem[]> {
-    return super.getDistricts() as Promise<DefaultDistrictItem[]>
+  async getDistricts(): Promise<ZoneDocument[]> {
+    return super.getDistricts() as Promise<ZoneDocument[]>
   }
 
   digZoneInProperties(data: DistrictItemProperties): string {
@@ -20,7 +21,7 @@ export class DistrictFilterPlaineCommune extends DistrictFilterParent {
     return data.NOM_COM
   }
 
-  protected async getDistrictFromName(): Promise<PlaineCommuneDistrictItem[]> {
+  protected async getDistrictFromName(): Promise<ZoneDocument[]> {
     const zone: number = +this.districtName.match(/\d+/)[0]
 
     const filter = {
@@ -33,10 +34,10 @@ export class DistrictFilterPlaineCommune extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find(filter).lean()
 
-    return districts?.length ? districts as PlaineCommuneDistrictItem[] : []
+    return districts?.length ? districts : []
   }
 
-  protected async getDistrictsFromPostalCode(): Promise<PlaineCommuneDistrictItem[]> {
+  protected async getDistrictsFromPostalCode(): Promise<ZoneDocument[]> {
     if (!this.postalCode) return []
 
     const districts = await this.GeojsonCollection.find(
@@ -44,10 +45,10 @@ export class DistrictFilterPlaineCommune extends DistrictFilterParent {
         'properties.CODE_POST': +this.postalCode
       },
     ).lean()
-    return districts?.length ? districts as PlaineCommuneDistrictItem[] : []
+    return districts?.length ? districts : []
   }
 
-  protected async getDistrictsFromCity(): Promise<PlaineCommuneDistrictItem[]> {
+  protected async getDistrictsFromCity(): Promise<ZoneDocument[]> {
     if (!this.city) return []
 
     const districts = await this.GeojsonCollection.find(
@@ -56,6 +57,6 @@ export class DistrictFilterPlaineCommune extends DistrictFilterParent {
       },
     ).lean()
 
-    return districts?.length ? districts as PlaineCommuneDistrictItem[] : []
+    return districts?.length ? districts : []
   }
 }

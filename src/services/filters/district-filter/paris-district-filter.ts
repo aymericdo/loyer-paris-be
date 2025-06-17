@@ -1,15 +1,16 @@
-import { ParisDistrictItem, ParisDistrictItemProperties } from '@interfaces/paris'
+import { ParisDistrictItemProperties } from '@interfaces/paris'
 import { AvailableMainCities } from '@services/city-config/main-cities'
-import { DistrictFilterParent } from './encadrement-district-filter-parent'
+import { DistrictFilterParent } from './district-filter-parent'
 import { ParisGeojson } from '@db/db'
 import { DistrictItemProperties } from '@interfaces/shared'
+import { ZoneDocument } from '@db/zone.model'
 
-export class DistrictFilterParis extends DistrictFilterParent {
+export class ParisDistrictFilter extends DistrictFilterParent {
   GeojsonCollection = ParisGeojson
   mainCity: AvailableMainCities = 'paris'
 
-  async getDistricts(): Promise<ParisDistrictItem[]> {
-    return super.getDistricts() as Promise<ParisDistrictItem[]>
+  async getDistricts(): Promise<ZoneDocument[]> {
+    return super.getDistricts() as Promise<ZoneDocument[]>
   }
 
   digCityInProperties(_data: ParisDistrictItemProperties): string {
@@ -27,7 +28,7 @@ export class DistrictFilterParis extends DistrictFilterParent {
     ).toString()} arrondissement`
   }
 
-  protected async getDistrictsFromPostalCode(): Promise<ParisDistrictItem[]> {
+  protected async getDistrictsFromPostalCode(): Promise<ZoneDocument[]> {
     if (!this.postalCode) return []
 
     // 75010 -> 10  75009 -> 9
@@ -38,16 +39,16 @@ export class DistrictFilterParis extends DistrictFilterParent {
       },
     ).lean()
 
-    return districts?.length ? districts as ParisDistrictItem[] : []
+    return districts?.length ? districts : []
   }
 
-  protected async getDistrictFromName(): Promise<ParisDistrictItem[]> {
+  protected async getDistrictFromName(): Promise<ZoneDocument[]> {
     const districts = await this.GeojsonCollection.find(
       {
         'properties.l_qu': this.districtName
       },
     ).lean()
 
-    return districts?.length ? districts as ParisDistrictItem[] : []
+    return districts?.length ? districts : []
   }
 }

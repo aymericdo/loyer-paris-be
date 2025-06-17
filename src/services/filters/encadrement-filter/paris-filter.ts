@@ -1,22 +1,21 @@
+import { ZoneDocument } from '@db/zone.model'
 import { FilteredResult } from '@interfaces/ad'
-import { ParisDistrictItem, ParisEncadrementItem, ParisQuartierItem } from '@interfaces/paris'
+import { ParisDistrictItemProperties, ParisEncadrementItem, ParisQuartierItem } from '@interfaces/paris'
 import { AvailableMainCities } from '@services/city-config/main-cities'
-import { DistrictFilterParis } from '@services/filters/district-filter/district-filter-paris'
-import { EncadrementFilterParent } from '@services/filters/encadrement-filter/encadrement-filter-parent'
+import { FilterParent } from '@services/filters/encadrement-filter/filter-parent'
 import * as fs from 'fs'
 import * as path from 'path'
 import { Memoize } from 'typescript-memoize'
 
 const mappingQuartierZoneParisJson: ParisQuartierItem[] = JSON.parse(fs.readFileSync(path.join('json-data/encadrements_paris_quartiers.json'), 'utf8'))
 
-export class FilterParis extends EncadrementFilterParent {
-  DistrictFilter = DistrictFilterParis
+export class ParisFilter extends FilterParent {
   mainCity: AvailableMainCities = 'paris'
-  rangeRentsJsonPath = 'json-data/encadrements_paris.json'
+  criteriaJsonPath = 'json-data/encadrements_paris.json'
   // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
   rangeTime: string[] = ['Avant 1946', '1946-1970', '1971-1990', 'Après 1990']
 
-  protected async isDistrictMatch(districtsMatched: ParisDistrictItem[], rangeRent: ParisEncadrementItem): Promise<boolean> {
+  protected async isDistrictMatch(districtsMatched: ZoneDocument[], rangeRent: ParisEncadrementItem): Promise<boolean> {
     const zones = this.getParisZones(districtsMatched)
     return zones?.length ? zones.some((zoneRent) => zoneRent.id_zone === rangeRent.id_zone) : true
   }
@@ -50,7 +49,7 @@ export class FilterParis extends EncadrementFilterParent {
     }
 
     const rangeRents = (this.rangeRentsJson() as ParisEncadrementItem[])
-    const districtsMatched: ParisDistrictItem[] = await super.districtsMatched() as ParisDistrictItem[]
+    const districtsMatched = await super.districtsMatched()
     const zones = this.getParisZones(districtsMatched)
 
     return (await Promise.all(rangeRents.map(async (rangeRent) => ({
@@ -90,12 +89,12 @@ export class FilterParis extends EncadrementFilterParent {
   }
 
   @Memoize()
-  private getParisZones(districtsMatched: ParisDistrictItem[]): ParisQuartierItem[] {
+  private getParisZones(districtsMatched: ZoneDocument[]): ParisQuartierItem[] {
     if (!districtsMatched?.length) {
       return []
     }
 
-    const quartiersMatched = districtsMatched.map((district) => district.properties.c_qu)
+    const quartiersMatched = districtsMatched.map((district) => (district.properties as ParisDistrictItemProperties).c_qu)
     return mappingQuartierZoneParisJson.filter((zoneRent) => {
       return quartiersMatched.includes(zoneRent.id_quartier)
     })

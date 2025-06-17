@@ -6,7 +6,9 @@ import {
   fetchCityInfo,
   fetchMoreCityInfo,
   fetchObservatoiresDesLoyers,
+  getBuiltYearRangeEnd,
   getCityByInsee,
+  getHouse,
   getZonesByInsee,
   observatoireVerification,
   unzip,
@@ -16,6 +18,22 @@ import { exec as execCallback } from 'child_process'
 import { promisify } from 'util'
 
 const exec = promisify(execCallback)
+
+async function runTransformBaseOpCsvToJsonScript(fileName: string, city: string) {
+  try {
+    const { stdout, stderr } = await exec(`npm run base-op-csv-to-json -- csv=${fileName} city=${city.replaceAll(' ', '-')}`)
+
+    if (stderr) {
+      console.error('stderr:', stderr)
+    }
+
+    // eslint-disable-next-line no-console
+    console.log('stdout:', stdout)
+  } catch (error) {
+    console.error('Erreur d\'exécution :', error)
+    process.exit(1)
+  }
+}
 
 async function runKmlToGeojsonScript(fileName: string) {
   try {
@@ -55,7 +73,7 @@ async function main() {
 
   if (Object.keys(currentMainCities).includes(mainCity)) {
     console.error('La ville existe déjà')
-    return
+    // return
   }
 
   const infoFetched = await fetchCityInfo(mainCity)
@@ -70,7 +88,7 @@ async function main() {
     do {
       observatoireData = await fetchObservatoiresDesLoyers(departement, observatoireNumber.toString().padStart(2, '0'))
       await unzip(observatoireData.year, observatoireData.observatoire)
-      ok = await observatoireVerification(mainCity, observatoireData.observatoire, observatoireData.year)
+      ok = await observatoireVerification(feature.properties.label, observatoireData.observatoire, observatoireData.year)
       observatoireNumber += 1
     } while(!ok)
   } catch (error) {
@@ -83,16 +101,13 @@ async function main() {
   const cityByInsee = await getCityByInsee(observatoire, year)
   const cityList = Object.values(cityByInsee)
   const zonesByInsee = await getZonesByInsee(observatoire, year)
+  const house = await getHouse(observatoire, year)
+  const builtYearRangeEnd = await getBuiltYearRangeEnd(observatoire, year)
 
   const cityDetailTmp = await inquirer.prompt([{
     type: 'input',
     name: 'label',
     message: 'Saisis le nom de la ville à afficher',
-  }, {
-    type: 'list',
-    name: 'house',
-    message: `Quel type de logement se trouve dans ${mainCity} ?`,
-    choices: ['Appartement', 'Maison/Appartement'],
   }, {
     type: 'confirm',
     name: 'notFake',
@@ -104,8 +119,9 @@ async function main() {
     ...cityDetailTmp,
     cityList: cityList.map((city: string) => city.trim().toLowerCase()),
     fake: !cityDetailTmp.notFake,
-    house: cityDetailTmp.house === 'Maison/Appartement',
+    house,
     coordinates: feature.geometry.coordinates,
+    builtYearRangeEnd: builtYearRangeEnd ? 2005 : 1990,
   }
 
   delete mainCityDetail.notFake
@@ -178,9 +194,11 @@ async function main() {
   console.log(`✅ la ville "${mainCity}" a été ajoutée`)
 
   await runKmlToGeojsonScript(`L${observatoire}_zone_elem_${year}`)
+  await runTransformBaseOpCsvToJsonScript(`Base_OP_${year}_L${observatoire}`, mainCity)
 
   await fs.promises.unlink(path.resolve(__dirname, './data', `L${observatoire}_zone_elem_${year}.kml`))
   await fs.promises.unlink(path.resolve(__dirname, './data', `L${observatoire}Zonage${year}.csv`))
+  await fs.promises.unlink(path.resolve(__dirname, './data', `Base_OP_${year}_L${observatoire}.csv`))
 }
 
 main()

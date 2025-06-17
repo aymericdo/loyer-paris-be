@@ -1,10 +1,12 @@
-import { Coordinate, DistrictItem, DefaultDistrictItemProperties, DistrictItemProperties } from '@interfaces/shared'
-import { AvailableCities } from '@services/city-config/cities'
+import { ZoneDocument } from '@db/zone.model'
+import { Coordinate, DefaultDistrictItemProperties, DistrictItemProperties } from '@interfaces/shared'
+import { AvailableCities } from '@services/city-config/classic-cities'
+import { isOnlyOneCity } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 
 export class DistrictFilterParent {
-  GeojsonCollection = null
   mainCity: AvailableMainCities = null
+  GeojsonCollection = null
   city: AvailableCities = null
   coordinates: Coordinate = null
   postalCode: string = null
@@ -33,40 +35,40 @@ export class DistrictFilterParent {
     return null
   }
 
-  async getFirstDistrict(): Promise<DistrictItem> {
-    return (await this.getDistricts())[0] as DistrictItem
+  async getFirstDistrict(): Promise<ZoneDocument> {
+    return (await this.getDistricts())[0] as ZoneDocument
   }
 
-  async getDistricts(): Promise<DistrictItem[]> {
+  async getDistricts(): Promise<ZoneDocument[]> {
     if (this.districtName) {
-      return await this.getDistrictFromName()
+      return this.getDistrictFromName()
     }
 
-    const districtFromCoordinate =
-      await this.getDistrictFromCoordinate(this.coordinates?.lat, this.coordinates?.lng)
+    const strategies = [
+      () => this.getDistrictFromCoordinate(this.coordinates?.lat, this.coordinates?.lng),
+      () => this.getDistrictsFromPostalCode(),
+      () => this.getDistrictsFromCity(),
+      () => this.getDistrictsFromMainCity(),
+    ]
 
-    if (districtFromCoordinate !== null) {
-      return districtFromCoordinate
+    for (const strategy of strategies) {
+      const result = await strategy()
+
+      // Cas particulier pour getDistrictFromCoordinate qui peut retourner null
+      if (Array.isArray(result) && result.length > 0) {
+        return result
+      }
+
+      if (!Array.isArray(result) && result !== null) {
+        return result
+      }
     }
 
-    const districtFromPostalCode =
-      await this.getDistrictsFromPostalCode()
-
-    if (districtFromPostalCode.length) {
-      return districtFromPostalCode
-    }
-
-    const districtFromSpecificCity =
-      await this.getDistrictsFromCity()
-
-    if (districtFromSpecificCity.length) {
-      return districtFromSpecificCity
-    }
-
-    return await this.getDistrictsFromMainCity()
+    // Par sécurité, fallback si toutes les stratégies échouent
+    return []
   }
 
-  protected async getDistrictFromName(): Promise<DistrictItem[]> {
+  protected async getDistrictFromName(): Promise<ZoneDocument[]> {
     const zone: number = +this.districtName.match(/\d+/)[0]
 
     const filter = {
@@ -82,7 +84,7 @@ export class DistrictFilterParent {
     return districts?.length ? districts : []
   }
 
-  protected async getDistrictsFromPostalCode(): Promise<DistrictItem[]> {
+  protected async getDistrictsFromPostalCode(): Promise<ZoneDocument[]> {
     if (!this.postalCode) return []
 
     const districts = await this.GeojsonCollection.find(
@@ -94,23 +96,27 @@ export class DistrictFilterParent {
     return districts?.length ? districts : []
   }
 
-  protected async getDistrictsFromCity(): Promise<DistrictItem[]> {
+  protected async getDistrictsFromCity(): Promise<ZoneDocument[]> {
     if (!this.city) return []
 
-    const districts = await this.GeojsonCollection.find(
-      {
-        'properties.city': { $regex: this.city, $options: 'i' }
-      },
-    ).lean()
+    if (isOnlyOneCity(this.mainCity)) {
+      return await this.GeojsonCollection.find({}).lean() as ZoneDocument[]
+    } else {
+      const districts = await this.GeojsonCollection.find(
+        {
+          'properties.city': { $regex: this.city, $options: 'i' }
+        },
+      ).lean()
 
-    return districts?.length ? districts : []
+      return districts?.length ? districts : []
+    }
   }
 
-  protected async getDistrictsFromMainCity(): Promise<DistrictItem[]> {
+  protected async getDistrictsFromMainCity(): Promise<ZoneDocument[]> {
     return await this.GeojsonCollection.find({}).lean()
   }
 
-  private async getDistrictFromCoordinate(lat: number, lng: number): Promise<DistrictItem[]> {
+  private async getDistrictFromCoordinate(lat: number, lng: number): Promise<ZoneDocument[]> {
     if (!lat || !lng) return null
 
     const district = await this.GeojsonCollection.findOne(

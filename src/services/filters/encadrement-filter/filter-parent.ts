@@ -1,15 +1,16 @@
+import { ZoneDocument, ZoneProperties } from '@db/zone.model'
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { Coordinate, DefaultDistrictItem, DefaultEncadrementItem, DistrictItem, EncadrementItem } from '@interfaces/shared'
+import { Coordinate, DefaultEncadrementItem, EncadrementItem } from '@interfaces/shared'
 import { dateBuiltRange, canHaveHouse } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
+import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
 import { YearBuiltService } from '@services/helpers/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
 import { Memoize } from 'typescript-memoize'
 
-export abstract class EncadrementFilterParent {
-  DistrictFilter = null
-  rangeRentsJsonPath = null
+export abstract class FilterParent {
+  criteriaJsonPath = null
   infoToFilter: InfoToFilter = null
   mainCity: AvailableMainCities
   rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
@@ -44,8 +45,9 @@ export abstract class EncadrementFilterParent {
     return dateBuiltRange(this.mainCity)[index]
   }
 
-  protected async districtsMatched(): Promise<DistrictItem[]> {
-    return await new this.DistrictFilter({
+  protected async districtsMatched(): Promise<ZoneDocument[]> {
+    const districtFilterFactory = new DistrictFilterFactory(this.mainCity)
+    return await districtFilterFactory.currentDistrictFilter({
       coordinates: this.getCoordinate(),
       city: this.infoToFilter.city,
       postalCode: this.infoToFilter.postalCode,
@@ -57,9 +59,9 @@ export abstract class EncadrementFilterParent {
     return new YearBuiltService(this.rangeTime, dateBuiltRange(this.mainCity)).getDateRangeFromYearBuilt(this.infoToFilter.yearBuilt)
   }
 
-  protected async isDistrictMatch(districtsMatched: DistrictItem[], rangeRent: EncadrementItem): Promise<boolean> {
+  protected async isDistrictMatch(districtsMatched: ZoneDocument[], rangeRent: EncadrementItem): Promise<boolean> {
     return districtsMatched?.length
-      ? districtsMatched.map((district: DefaultDistrictItem) => +district.properties.zone)
+      ? districtsMatched.map((district) => +(district.properties as ZoneProperties).zone)
         .includes(+(rangeRent as DefaultEncadrementItem).zone)
       : false
   }
@@ -98,7 +100,7 @@ export abstract class EncadrementFilterParent {
   }
 
   protected async filterRents(): Promise<EncadrementItem[]> {
-    const districtsMatched: DefaultDistrictItem[] = await this.districtsMatched() as DefaultDistrictItem[]
+    const districtsMatched: ZoneDocument[] = await this.districtsMatched() as ZoneDocument[]
 
     const rangeRents = (this.rangeRentsJson() as DefaultEncadrementItem[])
     return (await Promise.all(rangeRents.map(async (rangeRent) => ({
@@ -147,6 +149,6 @@ export abstract class EncadrementFilterParent {
 
   @Memoize()
   protected rangeRentsJson(): EncadrementItem[] {
-    return JSON.parse(fs.readFileSync(path.join(this.rangeRentsJsonPath), 'utf8'))
+    return JSON.parse(fs.readFileSync(path.join(this.criteriaJsonPath), 'utf8'))
   }
 }

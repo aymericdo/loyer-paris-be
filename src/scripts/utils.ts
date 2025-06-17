@@ -73,7 +73,11 @@ export async function unzip(year: string, observatoire: string) {
 
   const zip = new AdmZip(zipPath)
 
-  const targetFiles = [`L${observatoire}_zone_elem_${year}.kml`, `L${observatoire}Zonage${year}.csv`]
+  const targetFiles = [
+    `L${observatoire}_zone_elem_${year}.kml`,
+    `L${observatoire}Zonage${year}.csv`,
+    `Base_OP_${year}_L${observatoire}.csv`,
+  ]
 
   for (const entry of zip.getEntries()) {
     if (targetFiles.includes(entry.entryName)) {
@@ -123,7 +127,7 @@ export async function observatoireVerification(mainCity: string, observatoire: s
       .on('data', (row) => {
         if (!cityColumnName || resolved) return
         const city = row[cityColumnName]?.trim()
-        if (city?.toLowerCase() === mainCity.toLowerCase()) {
+        if (normalizeHeader(city?.toLowerCase()).includes(normalizeHeader(mainCity.toLowerCase()))) {
           stream.destroy()
           return resolve(true)
         }
@@ -206,7 +210,7 @@ export async function getCityByInsee(observatoire: string, year: string): Promis
       .on('headers', (headers) => {
         for (const rawHeader of headers) {
           const normalized = normalizeHeader(rawHeader)
-          if (normalized === 'INSEE' || normalized === 'COMMUNE') {
+          if (normalized === 'INSEE' || normalized === 'COMMUNE' || normalized === 'CODEINSEE') {
             inseeColumnName = normalized
           }
           if (normalized === 'LIBCOM') {
@@ -256,7 +260,7 @@ export async function getZonesByInsee(observatoire: string, year: string): Promi
       .on('headers', (headers) => {
         for (const rawHeader of headers) {
           const normalized = normalizeHeader(rawHeader)
-          if (normalized === 'INSEE' || normalized === 'COMMUNE') {
+          if (normalized === 'INSEE' || normalized === 'COMMUNE' || normalized === 'CODEINSEE') {
             inseeColumnName = normalized
           }
           if (normalized === 'ZONE') {
@@ -273,7 +277,7 @@ export async function getZonesByInsee(observatoire: string, year: string): Promi
       .on('data', (row) => {
         if (!inseeColumnName || !zoneColumnName) return
         const inseeCode = row[inseeColumnName]?.trim()
-        const zone = `Zone ${row[zoneColumnName]?.trim()}`
+        const zone = `Zone ${parseInt(row[zoneColumnName])}`
 
         if (inseeCode && zone) {
           if (!result[inseeCode]) {
@@ -289,6 +293,62 @@ export async function getZonesByInsee(observatoire: string, year: string): Promi
           finalResult[inseeCode] = Array.from(result[inseeCode]).sort((a, b) => a.localeCompare(b))
         }
         resolve(finalResult)
+      })
+      .on('error', reject)
+  })
+}
+
+export async function getHouse(observatoire: string, year: string): Promise<boolean> {
+  const filePath = path.resolve(__dirname, './data', `Base_OP_${year}_L${observatoire}.csv`)
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Le fichier ${filePath} n'existe pas.`)
+  }
+
+  return new Promise((resolve, reject) => {
+    const stream = fs.createReadStream(filePath, { encoding: 'utf8' })
+
+    stream
+      .pipe(csv({
+        separator: ';',
+        mapHeaders: ({ header }) => normalizeHeader(header),
+      }))
+      .on('data', (row) => {
+        if (row.TYPEHABITAT === 'Maison') {
+          stream.destroy()
+          return resolve(true)
+        }
+      })
+      .on('end', () => {
+        resolve(false)
+      })
+      .on('error', reject)
+  })
+}
+
+export async function getBuiltYearRangeEnd(observatoire: string, year: string): Promise<boolean> {
+  const filePath = path.resolve(__dirname, './data', `Base_OP_${year}_L${observatoire}.csv`)
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Le fichier ${filePath} n'existe pas.`)
+  }
+
+  return new Promise((resolve, reject) => {
+    const stream = fs.createReadStream(filePath, { encoding: 'utf8' })
+
+    stream
+      .pipe(csv({
+        separator: ';',
+        mapHeaders: ({ header }) => normalizeHeader(header),
+      }))
+      .on('data', (row) => {
+        if (row.EPOQUECONSTRUCTIONHOMOGENE.includes('2005')) {
+          stream.destroy()
+          return resolve(true)
+        }
+      })
+      .on('end', () => {
+        resolve(false)
       })
       .on('error', reject)
   })

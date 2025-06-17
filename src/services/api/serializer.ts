@@ -1,5 +1,5 @@
 import { FilteredResult } from '@interfaces/ad'
-import { AvailableCities } from '@services/city-config/cities'
+import { AvailableCities } from '@services/city-config/classic-cities'
 import { label, isFake, getMainCity, infoLink } from '@services/city-config/city-selectors'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
