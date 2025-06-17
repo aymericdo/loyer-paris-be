@@ -1,7 +1,7 @@
 export class Vega {
   static commonOpt() {
     return {
-      $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+      $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
       width: 700,
       height: 500,
       autosize: { type: 'fit', contains: 'padding' },
