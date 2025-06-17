@@ -74,8 +74,7 @@ export abstract class Website {
     let city: AvailableCities | null = null
 
     try {
-      const cityService = new CityFilter(ad.cityLabel)
-      city = cityService.findCity()
+      city = new CityFilter(ad.cityLabel).findCity()
       const mainCity: AvailableMainCities = getMainCity(city)
 
       const cleanAd: CleanAd = await new DigService(ad).digInAd(city)

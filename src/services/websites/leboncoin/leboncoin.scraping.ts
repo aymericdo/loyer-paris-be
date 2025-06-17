@@ -15,7 +15,9 @@ export class LeboncoinScraping {
     const price = document.querySelector('[data-qa-id=adview_price]')
     const renter = document.querySelector('#aside > section > div > div > div')
     const hasCharges = document.querySelector('[data-qa-id=adview_price] > div p.text-caption')
-    const cityLabel = [...document.querySelectorAll('#mainContent > div > div > nav > div > div > nav > ol > li')].map(el => el.textContent).join(' ')
+    const cityLabel = [...document.querySelectorAll('#mainContent > div > div > nav > div > div > nav > ol > li')].map((el, index) => {
+      return index !== [...document.querySelectorAll('#mainContent > div > div > nav > div > div > nav > ol > li')].length - 1 ? el.textContent : ''
+    }).join(' ')
 
     const surface = document.querySelector(
       '#grid > article div div[data-qa-id=criteria_item_square] > div > div div p'
