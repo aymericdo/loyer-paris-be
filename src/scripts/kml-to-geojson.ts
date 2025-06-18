@@ -40,7 +40,10 @@ async function transformFeatureProperties(properties) {
     const cityDetails = currentCities[city.toLowerCase()]
 
     const zoneStr = cityDetails?.zones[0]
-    zone = zoneStr && typeof zoneStr === 'string' ? (zoneStr.match(/(?<=Zone ).*/) || [null])[0] : null
+    zone =
+      zoneStr && typeof zoneStr === 'string'
+        ? (zoneStr.match(/(?<=Zone ).*/) || [null])[0]
+        : null
   }
 
   if (!zone) return null
@@ -97,14 +100,16 @@ async function main(fileName: string) {
   fs.writeFileSync(outputPath, geojsonFeatures, 'utf-8')
 
   // eslint-disable-next-line no-console
-  console.log(`✅ Fichier GeoJSON à importer dans mongo généré à : ${outputPath}`)
+  console.log(
+    `✅ Fichier GeoJSON à importer dans mongo généré à : ${outputPath}`,
+  )
   process.exit(0)
 }
 
 const DEFAULT_FILE_NAME = 'L2900_zone_elem_2024'
 
 const args = process.argv.slice(2) // ['kmlFile="fileName"']
-const cityArg = args.find(arg => arg.startsWith('kmlFile='))
+const cityArg = args.find((arg) => arg.startsWith('kmlFile='))
 const kmlFile = cityArg?.split('=')[1]
 
 // eslint-disable-next-line no-console

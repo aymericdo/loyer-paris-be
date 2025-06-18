@@ -12,14 +12,22 @@ export class FnaimScraping {
 
     const tabs = [...document.querySelectorAll('div.ariane > span > a > span')]
     const title = document.querySelector('#annonceFiche div > h1.titreFiche')
-    const description = document.querySelector('#annonceFiche [itemprop="description"]')
+    const description = document.querySelector(
+      '#annonceFiche [itemprop="description"]',
+    )
     const price = document.querySelector('#annonceFiche div.annonce_price')
     const chargesNode = document.querySelector('#annonceFiche #description > p')
     const hasCharges = document.querySelector('#annonceFiche div.annonce_price')
-    const renter = document.querySelector('#colonneDroiteFiche div.caracteristique.agence .libelle')
-    const features = [...document.querySelectorAll('#annonceFiche div.caracteristique > ul > li')]
+    const renter = document.querySelector(
+      '#colonneDroiteFiche div.caracteristique.agence .libelle',
+    )
+    const features = [
+      ...document.querySelectorAll(
+        '#annonceFiche div.caracteristique > ul > li',
+      ),
+    ]
     const dpe = document.querySelector('.dpeListe > li')
-    const cityLabel = tabs.map(tab => tab.textContent).join(' ')
+    const cityLabel = tabs.map((tab) => tab.textContent).join(' ')
 
     let surface = null
     let rooms = null
@@ -27,7 +35,11 @@ export class FnaimScraping {
 
     let isRent = null
     tabs.forEach((tab) => {
-      if (tab.textContent?.toLowerCase()?.match(/(louer appartement)|(location appartement)/g)) {
+      if (
+        tab.textContent
+          ?.toLowerCase()
+          ?.match(/(louer appartement)|(location appartement)/g)
+      ) {
         isRent = true
       }
     })
@@ -51,16 +63,25 @@ export class FnaimScraping {
     }
 
     const chargeRegex = /(?<=- )\d+(?= € par mois de provision pour charges)/g
-    const charges = chargesNode?.textContent?.match(chargeRegex) && chargesNode?.textContent?.match(chargeRegex)[0]
+    const charges =
+      chargesNode?.textContent?.match(chargeRegex) &&
+      chargesNode?.textContent?.match(chargeRegex)[0]
 
-    const dpeTextArray = dpe?.textContent.replace(/\s+/g, ' ').replaceAll(' ', '').replaceAll(' ', '').replaceAll('\n', '')?.match(/(?<=DPE:)[A-G]/g)
+    const dpeTextArray = dpe?.textContent
+      .replace(/\s+/g, ' ')
+      .replaceAll(' ', '')
+      .replaceAll(' ', '')
+      .replaceAll('\n', '')
+      ?.match(/(?<=DPE:)[A-G]/g)
 
     return {
       id: null,
       cityLabel,
       description: description?.textContent,
       price: price?.textContent,
-      hasCharges: !!hasCharges?.textContent?.toLowerCase().includes('charges comprises'),
+      hasCharges: !!hasCharges?.textContent
+        ?.toLowerCase()
+        .includes('charges comprises'),
       charges,
       renter: renter?.textContent,
       dpe: dpeTextArray?.length ? dpeTextArray[0] : null,

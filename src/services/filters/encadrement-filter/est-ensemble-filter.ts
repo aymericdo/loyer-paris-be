@@ -8,10 +8,17 @@ export class EstEnsembleFilter extends FilterParent {
   mainCity: AvailableMainCities = 'estEnsemble'
   criteriaJsonPath = 'json-data/encadrements_est-ensemble_2024.json'
 
-  protected async isDistrictMatch(districtsMatched: ZoneDocument[], rangeRent: EncadrementItem): Promise<boolean> {
+  protected async isDistrictMatch(
+    districtsMatched: ZoneDocument[],
+    rangeRent: EncadrementItem,
+  ): Promise<boolean> {
     return districtsMatched?.length
-      ? districtsMatched.map((district) => +(district.properties as EstEnsembleDistrictItemProperties).Zone)
-        .includes(+(rangeRent as DefaultEncadrementItem).zone)
+      ? districtsMatched
+          .map(
+            (district) =>
+              +(district.properties as EstEnsembleDistrictItemProperties).Zone,
+          )
+          .includes(+(rangeRent as DefaultEncadrementItem).zone)
       : false
   }
 }

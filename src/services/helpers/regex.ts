@@ -8,12 +8,13 @@ export const regexString = (value: string): RegExp => {
     charges:
       /((?<=((?<! hors )charges locatives |(?<! hors )charges |(?<! hors )charge )(\D{0,4}))|(?<=\d{3,4}((|\.|,)\d{1,2})?(\D{0,5})?\+ ?))(\d{2,3}((|\.|,)\d{1,2})?)(?=( ?euros\b| ?€| ?e\b| ?eur\b| ?euro\b | ?de\b ?(charge(s)?)\b))/g,
     rentComplement:
-      /((?<=(complement de loyer )(\D{0,4})))(\d{2,3}((|\.|,)\d{1,2})?)(?=( ?euros\b| ?€| ?e\b| ?eur\b| ?euro\b | ?de\b ?(charge(s)?)\b))/ig,
-    hasCharges: /prix charge[s]? comprise[s]?/ig,
-    surface: /((9|\d{2})((|\.|,)\d{1,2})?)(?= ?(m2\b|metre|m²))/ig,
-    isHouse: /maison/ig,
-    particulier: /particulier/ig,
-    colocation: /\bcolocation\b(?![^.!?]{0,50}\b(interdite|impossible|refusée|non\s?autorisée|interdiction)\b)/ig,
+      /((?<=(complement de loyer )(\D{0,4})))(\d{2,3}((|\.|,)\d{1,2})?)(?=( ?euros\b| ?€| ?e\b| ?eur\b| ?euro\b | ?de\b ?(charge(s)?)\b))/gi,
+    hasCharges: /prix charge[s]? comprise[s]?/gi,
+    surface: /((9|\d{2})((|\.|,)\d{1,2})?)(?= ?(m2\b|metre|m²))/gi,
+    isHouse: /maison/gi,
+    particulier: /particulier/gi,
+    colocation:
+      /\bcolocation\b(?![^.!?]{0,50}\b(interdite|impossible|refusée|non\s?autorisée|interdiction)\b)/gi,
   }
 
   if (Object.keys(regex).includes(value)) {
@@ -24,5 +25,5 @@ export const regexString = (value: string): RegExp => {
 }
 
 export const getFirstMatchResult = (text: string, regex: RegExp): string => {
-  return (text?.match(regex) && text.match(regex)[0])
+  return text?.match(regex) && text.match(regex)[0]
 }

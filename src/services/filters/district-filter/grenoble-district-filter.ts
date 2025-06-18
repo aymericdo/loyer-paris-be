@@ -16,15 +16,15 @@ export class GrenobleDistrictFilter extends DistrictFilterParent {
     const zone: string = this.districtName.match(/(?<=Zone ).*/g)[0]
 
     const filter = {
-      'properties.zone': zone
+      'properties.zone': zone,
     }
 
     if (this.city) {
-      filter['properties.NOM_COM'] = { $regex: this.city,  $options: 'i' }
+      filter['properties.NOM_COM'] = { $regex: this.city, $options: 'i' }
     }
 
     const districts = await this.GeojsonCollection.find(filter).lean()
 
-    return districts?.length ? districts as ZoneDocument[] : []
+    return districts?.length ? (districts as ZoneDocument[]) : []
   }
 }

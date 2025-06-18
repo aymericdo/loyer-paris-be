@@ -21,7 +21,10 @@ export class AddressService {
     this.ad = ad
   }
 
-  static async getAddresses(city: AvailableCities, query: string): Promise<DataGouvAddressItem[]> {
+  static async getAddresses(
+    city: AvailableCities,
+    query: string,
+  ): Promise<DataGouvAddressItem[]> {
     if (query.trim().length < 4) return []
 
     const limit = 5
@@ -46,7 +49,7 @@ export class AddressService {
           throw error
         }
 
-        await new Promise(resolve => setTimeout(resolve, delay))
+        await new Promise((resolve) => setTimeout(resolve, delay))
       }
     }
 
@@ -54,10 +57,16 @@ export class AddressService {
   }
 
   async getAddress(): Promise<[string, Coordinate, Coordinate]> {
-    const tab = [this.ad.address, this.ad.title, this.ad.description].filter(Boolean)
+    const tab = [this.ad.address, this.ad.title, this.ad.description].filter(
+      Boolean,
+    )
 
     for (const text of tab) {
-      const result = await this.digForAddressInText(this.city, this.postalCode, text)
+      const result = await this.digForAddressInText(
+        this.city,
+        this.postalCode,
+        text,
+      )
       if (result) {
         const coord = this.getCoordinate()
         const blurryCoord = this.getCoordinate(true)
@@ -67,7 +76,11 @@ export class AddressService {
     return [null, null, null]
   }
 
-  private async digForAddressInText(city: AvailableCities, postalCode: string, text: string): Promise<string> {
+  private async digForAddressInText(
+    city: AvailableCities,
+    postalCode: string,
+    text: string,
+  ): Promise<string> {
     const addressRe = new RegExp(regexString('address'))
     const addressesFromRegex = text.match(addressRe) as string[]
     if (addressesFromRegex?.length) {
@@ -81,7 +94,7 @@ export class AddressService {
         await Promise.all(
           addressesQueries.map(async (query) => {
             return await this.getAddressCompleted(city, query)
-          })
+          }),
         )
       )
         .flat()
@@ -91,8 +104,13 @@ export class AddressService {
       if (result?.length) {
         this.setCoordinates(result[0].item.coordinate, result[0].streetNumber)
         return result[0].streetNumber
-          ? cleanup.string(result[0].item.address).replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
-          : cleanup.string(result[0].item.address).replace(/^\d+(b|t)?/g, '').trim()
+          ? cleanup
+              .string(result[0].item.address)
+              .replace(/^\d+(b|t)?/g, result[0].streetNumber.toString())
+          : cleanup
+              .string(result[0].item.address)
+              .replace(/^\d+(b|t)?/g, '')
+              .trim()
       } else {
         return null
       }
@@ -101,15 +119,18 @@ export class AddressService {
     }
   }
 
-  private querifyAddresses(city: AvailableCities, addressesFromRegex: string[]): string[] {
+  private querifyAddresses(
+    city: AvailableCities,
+    addressesFromRegex: string[],
+  ): string[] {
     return addressesFromRegex
-      .map((a) => (cleanup.address(a, city) ?? null))
+      .map((a) => cleanup.address(a, city) ?? null)
       .filter(Boolean)
   }
 
   protected async getAddressCompleted(
     city: AvailableCities,
-    query: string
+    query: string,
   ): Promise<
     {
       item: AddressItem
@@ -121,21 +142,24 @@ export class AddressService {
       return null
     }
 
-    const result: DataGouvAddressItem[] = await AddressService.getAddresses(city, query)
+    const result: DataGouvAddressItem[] = await AddressService.getAddresses(
+      city,
+      query,
+    )
 
     return result
       ? result.map((r: DataGouvAddressItem) => ({
-        item: {
-          address: r.properties.name,
-          postalCode: r.properties.postcode,
-          coordinate: {
-            lng: +r.geometry?.coordinates[0],
-            lat: +r.geometry?.coordinates[1],
+          item: {
+            address: r.properties.name,
+            postalCode: r.properties.postcode,
+            coordinate: {
+              lng: +r.geometry?.coordinates[0],
+              lat: +r.geometry?.coordinates[1],
+            },
           },
-        },
-        score: r.properties.score,
-        streetNumber: cleanup.streetNumber(query)?.toString(),
-      }))
+          score: r.properties.score,
+          streetNumber: cleanup.streetNumber(query)?.toString(),
+        }))
       : []
   }
 
@@ -151,12 +175,15 @@ export class AddressService {
     const coordinatesFromAd =
       this.ad.coord?.lng && this.ad.coord?.lat
         ? {
-          lng: this.ad.coord.lng,
-          lat: this.ad.coord.lat,
-        }
+            lng: this.ad.coord.lng,
+            lat: this.ad.coord.lat,
+          }
         : null
 
-    if (coordinatesFromAd?.lng.toString().length > 9 && coordinatesFromAd?.lat.toString().length > 9) {
+    if (
+      coordinatesFromAd?.lng.toString().length > 9 &&
+      coordinatesFromAd?.lat.toString().length > 9
+    ) {
       return coordinatesFromAd
     } else {
       if (blurry) {

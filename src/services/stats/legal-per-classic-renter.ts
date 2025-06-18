@@ -9,18 +9,42 @@ export async function getLegalPerClassicRenter(req: Request, res: Response) {
   const mainCity = req.params.city as AvailableMainCities
 
   const dateValue: string = req.query.dateValue as string
-  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
+  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [
+    string,
+    string,
+  ]
 
   const plazaImmoData = await getLegalPerClassicRenterData(
     mainCity,
     dateRange,
-    /plaza.*immobilier/i
+    /plaza.*immobilier/i,
   )
-  const century21Data = await getLegalPerClassicRenterData(mainCity, dateRange, /century.*21/i)
-  const fonciaData = await getLegalPerClassicRenterData(mainCity, dateRange, /foncia/i)
-  const laforetData = await getLegalPerClassicRenterData(mainCity, dateRange, /laforet/i)
-  const guyHoquetData = await getLegalPerClassicRenterData(mainCity, dateRange, /guy.*hoquet/i)
-  const orpiData = await getLegalPerClassicRenterData(mainCity, dateRange, /orpi/i, 'orpi')
+  const century21Data = await getLegalPerClassicRenterData(
+    mainCity,
+    dateRange,
+    /century.*21/i,
+  )
+  const fonciaData = await getLegalPerClassicRenterData(
+    mainCity,
+    dateRange,
+    /foncia/i,
+  )
+  const laforetData = await getLegalPerClassicRenterData(
+    mainCity,
+    dateRange,
+    /laforet/i,
+  )
+  const guyHoquetData = await getLegalPerClassicRenterData(
+    mainCity,
+    dateRange,
+    /guy.*hoquet/i,
+  )
+  const orpiData = await getLegalPerClassicRenterData(
+    mainCity,
+    dateRange,
+    /orpi/i,
+    'orpi',
+  )
 
   const data = [
     ...plazaImmoData.map((d) => ({
@@ -99,7 +123,7 @@ export async function getLegalPerClassicRenter(req: Request, res: Response) {
         { field: 'renter', title: 'Agence ', type: 'nominal' },
         {
           field: 'numberAds',
-          title: 'Nombre total d\'annonces ',
+          title: "Nombre total d'annonces ",
           type: 'nominal',
         },
       ],

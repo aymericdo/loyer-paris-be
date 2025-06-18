@@ -1,19 +1,27 @@
 import { Slack } from '@messenger/slack'
-import { getAdsOfTodayByWebsite, getAdsOfWeekByWebsite } from '@services/db/queries/get-ads-of-today-by-website'
+import {
+  getAdsOfTodayByWebsite,
+  getAdsOfWeekByWebsite,
+} from '@services/db/queries/get-ads-of-today-by-website'
 import { FUNNIEST_WEBSITES, WEBSITE_LIST } from '@services/websites/website'
 
 export class HealthCheck {
   async call() {
     const adsOfToday: {
-      website: string, count: number
+      website: string
+      count: number
     }[] = await getAdsOfTodayByWebsite()
 
     const adsOfWeek: {
-      website: string, count: number
+      website: string
+      count: number
     }[] = await getAdsOfWeekByWebsite()
 
     const websitesWithoutResultSinceOneWeek = WEBSITE_LIST.filter((website) => {
-      return !FUNNIEST_WEBSITES.includes(website) && !adsOfWeek.some((value) => value.website === website)
+      return (
+        !FUNNIEST_WEBSITES.includes(website) &&
+        !adsOfWeek.some((value) => value.website === website)
+      )
     })
 
     const countByWebsite = adsOfToday.reduce((prev, obj) => {
@@ -21,7 +29,8 @@ export class HealthCheck {
       return prev
     }, {})
 
-    let message = 'Voici un petit récap du nombre d\'annonces sauvergardées par site aujourd\'hui :\n'
+    let message =
+      "Voici un petit récap du nombre d'annonces sauvergardées par site aujourd'hui :\n"
 
     const iterableWebsite = Object.keys(countByWebsite)
 

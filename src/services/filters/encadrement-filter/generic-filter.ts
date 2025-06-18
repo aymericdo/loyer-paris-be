@@ -16,7 +16,13 @@ export class GenericFilter extends FilterParent {
     this.criteriaJsonPath = criteriaJsonPath
 
     if (lastDateBuiltRange(this.mainCity) === 2005) {
-      this.rangeTime = ['avant 1946', '1946-1970', '1971-1990', '1991-2005', 'apres 2005']
+      this.rangeTime = [
+        'avant 1946',
+        '1946-1970',
+        '1971-1990',
+        '1991-2005',
+        'apres 2005',
+      ]
     }
   }
 }

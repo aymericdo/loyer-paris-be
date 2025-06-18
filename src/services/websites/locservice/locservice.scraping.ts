@@ -11,14 +11,18 @@ export class LocserviceScraping {
 
     const title = document.querySelector('#resume_titre > h2')
 
-    const description = document.querySelector('#descriptif_detail_left > div.innerDetail')
+    const description = document.querySelector(
+      '#descriptif_detail_left > div.innerDetail',
+    )
 
     const price = document.querySelector('#resume_detail > ul > li.loyer')
     const furnished = document.querySelector('#resume_detail > ul > li.meuble')
     const surface = document.querySelector('#resume_detail > ul > li.surface')
     const cityLabel = document.querySelector('#YouAreThere')
 
-    const dpe = document.querySelector('#resume_detail > ul > li.dpe > div:nth-child(1) > span')
+    const dpe = document.querySelector(
+      '#resume_detail > ul > li.dpe > div:nth-child(1) > span',
+    )
 
     return {
       id: null,
@@ -26,10 +30,18 @@ export class LocserviceScraping {
       hasCharges: price?.textContent.includes('CC'),
       description: description?.textContent,
       dpe: dpe?.textContent,
-      furnished: furnished?.textContent?.toLowerCase().replace(' ', '').trim().includes('louémeublé'),
+      furnished: furnished?.textContent
+        ?.toLowerCase()
+        .replace(' ', '')
+        .trim()
+        .includes('louémeublé'),
       price: price && price.textContent.replace('.', ''),
-      rooms: surface?.textContent?.match(/\d+ pièce/g) && surface?.textContent?.match(/\d+ pièce/g)[0],
-      surface: surface?.textContent?.match(/\d+ m²/g) && surface?.textContent?.match(/\d+ m²/g)[0],
+      rooms:
+        surface?.textContent?.match(/\d+ pièce/g) &&
+        surface?.textContent?.match(/\d+ pièce/g)[0],
+      surface:
+        surface?.textContent?.match(/\d+ m²/g) &&
+        surface?.textContent?.match(/\d+ m²/g)[0],
       title: title && title.textContent,
     }
   }

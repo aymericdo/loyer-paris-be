@@ -1,8 +1,19 @@
 import { EmpriseBatie } from '@db/db'
 
-export type DateRange = [number | null, number | null];
-export const DATE_RANGE_END_IN_2005 = [[null, 1946], [1946, 1970], [1971, 1990], [1991, 2005], [2005, null]] as const satisfies DateRange[]
-export const DATE_RANGE_END_IN_1990 = [[null, 1946], [1946, 1970], [1971, 1990], [1990, null]] as const satisfies DateRange[]
+export type DateRange = [number | null, number | null]
+export const DATE_RANGE_END_IN_2005 = [
+  [null, 1946],
+  [1946, 1970],
+  [1971, 1990],
+  [1991, 2005],
+  [2005, null],
+] as const satisfies DateRange[]
+export const DATE_RANGE_END_IN_1990 = [
+  [null, 1946],
+  [1946, 1970],
+  [1971, 1990],
+  [1990, null],
+] as const satisfies DateRange[]
 
 export class YearBuiltService {
   rangeTime: string[]
@@ -32,10 +43,19 @@ export class YearBuiltService {
     const possibleYearsBuilt: number[] =
       yearBuilt.length === 2
         ? yearBuilt[0] === null
-          ? Array.from({ length: yearBuilt[1] - oldestYear + 1 }, (v, k) => oldestYear + k)
+          ? Array.from(
+              { length: yearBuilt[1] - oldestYear + 1 },
+              (v, k) => oldestYear + k,
+            )
           : yearBuilt[1] === null
-            ? Array.from({ length: currentYear - yearBuilt[0] + 1 }, (v, k) => yearBuilt[0] + 1 + k)
-            : Array.from({ length: yearBuilt[1] - yearBuilt[0] + 1 }, (v, k) => yearBuilt[0] + k)
+            ? Array.from(
+                { length: currentYear - yearBuilt[0] + 1 },
+                (v, k) => yearBuilt[0] + 1 + k,
+              )
+            : Array.from(
+                { length: yearBuilt[1] - yearBuilt[0] + 1 },
+                (v, k) => yearBuilt[0] + k,
+              )
         : yearBuilt
 
     return this.rangeTime.filter((_time: string, index: number) => {
@@ -89,20 +109,19 @@ export class YearBuiltService {
 
   // Pour paris only ↴
   static async getEmpriseBatieBuilding(lat: number, lng: number) {
-    return await EmpriseBatie.findOne(
-      {
-        geometry: {
-          $near: {
-            $geometry: { type: 'Point', coordinates: [lng, lat] },
-            $maxDistance: 20,
-          },
+    return await EmpriseBatie.findOne({
+      geometry: {
+        $near: {
+          $geometry: { type: 'Point', coordinates: [lng, lat] },
+          $maxDistance: 20,
         },
       },
-    )
+    })
   }
 
   static getYearBuiltFromBuilding(building) {
-    const yearBuilt = building && building.properties.an_const && [+building.properties.an_const]
+    const yearBuilt = building &&
+      building.properties.an_const && [+building.properties.an_const]
     const periodBuilt =
       building &&
       building.properties.c_perconst &&
@@ -110,7 +129,10 @@ export class YearBuiltService {
         ? [null, +building.properties.c_perconst.slice(-4)]
         : building.properties.c_perconst.toLowerCase().includes('apres')
           ? [+building.properties.c_perconst.slice(-4), null]
-          : [+building.properties.c_perconst.slice(0, 4), +building.properties.c_perconst.slice(-4)])
+          : [
+              +building.properties.c_perconst.slice(0, 4),
+              +building.properties.c_perconst.slice(-4),
+            ])
     return yearBuilt || periodBuilt
   }
 }

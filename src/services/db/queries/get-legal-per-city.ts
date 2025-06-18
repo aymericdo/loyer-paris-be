@@ -1,11 +1,22 @@
 import { Rent } from '@db/db'
 import { AvailableMainCities } from '@services/city-config/main-cities'
-import { getMainCityFilter, getDateRangeFilter, getClassicFilter } from '@services/db/queries/common'
+import {
+  getMainCityFilter,
+  getDateRangeFilter,
+  getClassicFilter,
+} from '@services/db/queries/common'
 
 export async function getLegalPerCity(
   city: AvailableMainCities,
   dateRange: [string, string] | null = null,
-): Promise<{ illegalPercentage: number, isIllegalCount: number, totalCount: number, city: string }[]> {
+): Promise<
+  {
+    illegalPercentage: number
+    isIllegalCount: number
+    totalCount: number
+    city: string
+  }[]
+> {
   const filter = {
     ...getClassicFilter(),
     ...getMainCityFilter(city),
@@ -21,15 +32,11 @@ export async function getLegalPerCity(
         _id: '$city',
         isIllegalCount: {
           $sum: {
-            $cond: [
-              { $eq: ['$isLegal', false] },
-              1,
-              0
-            ]
-          }
+            $cond: [{ $eq: ['$isLegal', false] }, 1, 0],
+          },
         },
         totalCount: {
-          $sum: 1
+          $sum: 1,
         },
       },
     },
@@ -38,30 +45,27 @@ export async function getLegalPerCity(
         _id: 0,
         city: '$_id',
         isIllegalCount: 1,
-        totalCount: 1
-      }
+        totalCount: 1,
+      },
     },
     {
       $addFields: {
         illegalPercentage: {
           $multiply: [
             {
-              $divide: [
-                '$isIllegalCount',
-                '$totalCount'
-              ]
+              $divide: ['$isIllegalCount', '$totalCount'],
             },
-            100
-          ]
-        }
-      }
+            100,
+          ],
+        },
+      },
     },
     {
       $match: {
-        totalCount: { $gte: 5 }
-      }
-    }
+        totalCount: { $gte: 5 },
+      },
+    },
   ]
 
-  return (await Rent.aggregate(aggregation))
+  return await Rent.aggregate(aggregation)
 }

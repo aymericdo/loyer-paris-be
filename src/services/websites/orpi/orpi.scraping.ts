@@ -9,19 +9,37 @@ export class OrpiScraping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const titleElement = document.querySelector('body > main > article > div > div > div > div > div > div > div > div > div > h1')
-    const descriptionElement = document.querySelector('div.o-container div.c-preview')
+    const titleElement = document.querySelector(
+      'body > main > article > div > div > div > div > div > div > div > div > div > h1',
+    )
+    const descriptionElement = document.querySelector(
+      'div.o-container div.c-preview',
+    )
     const chargesElement = [
-      ...document.querySelectorAll('.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li')
+      ...document.querySelectorAll(
+        '.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li',
+      ),
     ]
     const hasChargesElement = [
-      ...document.querySelectorAll('body > main > article > div > div > div > div > div > div > div > div > div > p > small')
+      ...document.querySelectorAll(
+        'body > main > article > div > div > div > div > div > div > div > div > div > p > small',
+      ),
     ]
-    const cityElement = document.querySelector('body > main > article > div > div > div > div > div > div > div > div > div > h1 > span')
-    const priceElement = document.querySelector('body > main > article > div > div > div > div > div > div > div > div > div > p > strong')
-    const charges = chargesElement.find((element) => element.textContent.search('Provisions pour charges') !== -1)
-    const hasCharges = hasChargesElement.some((element) => element.textContent?.toLowerCase().includes('charges comprises'))
-    const renter = document.querySelector('body > main > article > section > div > div > div > div > div > div > div > h3')
+    const cityElement = document.querySelector(
+      'body > main > article > div > div > div > div > div > div > div > div > div > h1 > span',
+    )
+    const priceElement = document.querySelector(
+      'body > main > article > div > div > div > div > div > div > div > div > div > p > strong',
+    )
+    const charges = chargesElement.find(
+      (element) => element.textContent.search('Provisions pour charges') !== -1,
+    )
+    const hasCharges = hasChargesElement.some((element) =>
+      element.textContent?.toLowerCase().includes('charges comprises'),
+    )
+    const renter = document.querySelector(
+      'body > main > article > section > div > div > div > div > div > div > div > h3',
+    )
 
     const dpe = document.querySelector('li.c-dpe__index--active')
     const dpeRegex = /([ABCDEFG])/
@@ -32,14 +50,19 @@ export class OrpiScraping {
       dpeText = matches?.length && matches[0]
     }
 
-    const features = [...document.querySelectorAll('#collapse-details div ul.o-grid li')]
+    const features = [
+      ...document.querySelectorAll('#collapse-details div ul.o-grid li'),
+    ]
 
     let furnished = false
     let surface = null
     let rooms = null
 
     features.forEach((feature) => {
-      if (feature.textContent.match(/Surface.*m²/g) && !feature.textContent.toLowerCase().includes('balcon')) {
+      if (
+        feature.textContent.match(/Surface.*m²/g) &&
+        !feature.textContent.toLowerCase().includes('balcon')
+      ) {
         surface = feature
       } else if (feature.textContent.match(/pièce/g)) {
         rooms = feature

@@ -1,6 +1,13 @@
-import { AvailableCities, CITY_DETAILS } from '@services/city-config/classic-cities'
+import {
+  AvailableCities,
+  CITY_DETAILS,
+} from '@services/city-config/classic-cities'
 import { AvailableMainCities, CITIES } from '@services/city-config/main-cities'
-import { DATE_RANGE_END_IN_1990, DATE_RANGE_END_IN_2005, DateRange } from '@services/helpers/year-built'
+import {
+  DATE_RANGE_END_IN_1990,
+  DATE_RANGE_END_IN_2005,
+  DateRange,
+} from '@services/helpers/year-built'
 
 export type AvailableCityZones = string[] | { [key: string]: string[] }
 
@@ -15,10 +22,18 @@ export function getCities(): AvailableCities[] {
   }, [])
 }
 
-export const getCityList = (mainCity: AvailableMainCities | null = null, city: AvailableCities | null = null): AvailableCities[] =>
+export const getCityList = (
+  mainCity: AvailableMainCities | null = null,
+  city: AvailableCities | null = null,
+): AvailableCities[] =>
   city ? [city] : mainCity ? getCitiesFromMainCity(mainCity) : [...getCities()]
-export const getMainCity = (city: AvailableCities): AvailableMainCities => getMainCityList().find((mainCity) => getCitiesFromMainCity(mainCity).includes(city))
-export const getCitiesFromMainCity = (mainCity: AvailableMainCities): AvailableCities[] => [...CITIES[mainCity].cityList] as AvailableCities[]
+export const getMainCity = (city: AvailableCities): AvailableMainCities =>
+  getMainCityList().find((mainCity) =>
+    getCitiesFromMainCity(mainCity).includes(city),
+  )
+export const getCitiesFromMainCity = (
+  mainCity: AvailableMainCities,
+): AvailableCities[] => [...CITIES[mainCity].cityList] as AvailableCities[]
 
 export const canHaveHouse = (mainCity: AvailableMainCities): boolean => {
   // https://www.youtube.com/watch?v=TuxMwALL_S4&ab_channel=Charted
@@ -33,8 +48,10 @@ export const isFake = (mainCity: AvailableMainCities): boolean => {
   return CITIES[mainCity]?.fake ?? false
 }
 
-export const getRealCities = () => getMainCityList().filter((mainCity) => !isFake(mainCity))
-export const getFakeCities = () => getMainCityList().filter((mainCity) => isFake(mainCity))
+export const getRealCities = () =>
+  getMainCityList().filter((mainCity) => !isFake(mainCity))
+export const getFakeCities = () =>
+  getMainCityList().filter((mainCity) => isFake(mainCity))
 
 export const infoLink = (mainCity: AvailableMainCities): string => {
   return CITIES[mainCity]?.infoLink ?? null
@@ -45,11 +62,18 @@ export const lastDateBuiltRange = (mainCity: AvailableMainCities): number => {
 }
 
 export const dateBuiltRange = (mainCity: AvailableMainCities): DateRange[] => {
-  return CITIES[mainCity]?.builtYearRangeEnd === 2005 ? DATE_RANGE_END_IN_2005 : DATE_RANGE_END_IN_1990
+  return CITIES[mainCity]?.builtYearRangeEnd === 2005
+    ? DATE_RANGE_END_IN_2005
+    : DATE_RANGE_END_IN_1990
 }
 
-export const coordinates = (mainCity: AvailableMainCities): [number, number] => {
-  return CITIES[mainCity]?.coordinates as [number, number] ?? [46.2513662, 4.755835] as [number, number]
+export const coordinates = (
+  mainCity: AvailableMainCities,
+): [number, number] => {
+  return (
+    (CITIES[mainCity]?.coordinates as [number, number]) ??
+    ([46.2513662, 4.755835] as [number, number])
+  )
 }
 
 export const label = (city: AvailableMainCities | AvailableCities): string => {

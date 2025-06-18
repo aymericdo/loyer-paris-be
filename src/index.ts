@@ -67,7 +67,7 @@ app.use(
   express.json({
     limit: '5mb',
     type: ['application/json', 'text/plain'],
-  })
+  }),
 )
 
 app.use(
@@ -75,7 +75,7 @@ app.use(
     limit: '5mb',
     extended: true,
     parameterLimit: 50000,
-  })
+  }),
 )
 
 app.use(express.static(path.resolve('./json-data')))
@@ -112,7 +112,12 @@ if (process.env.CURRENT_ENV === 'prod') {
 }
 
 app.use(Sentry.Handlers.errorHandler())
-app.use(function onError(err: ApiError | Error, req: Request, res: (Response & { sentry: string }), next: NextFunction) {
+app.use(function onError(
+  err: ApiError | Error,
+  req: Request,
+  res: Response & { sentry: string },
+  next: NextFunction,
+) {
   const apiError = new ApiErrorsService(err as ApiError)
   apiError.sendSlackErrorMessage(res.sentry)
 
@@ -125,4 +130,6 @@ app.use(function onError(err: ApiError | Error, req: Request, res: (Response & {
 })
 
 const port = process.env.PORT || 3000
-app.listen(port, () => PrettyLog.call(`Encadrement app listening on port ${port}!`, 'yellow'))
+app.listen(port, () =>
+  PrettyLog.call(`Encadrement app listening on port ${port}!`, 'yellow'),
+)

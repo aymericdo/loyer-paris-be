@@ -3,7 +3,29 @@ import { EstEnsembleDistrictFilter } from './est-ensemble-district-filter'
 import { ParisDistrictFilter } from './paris-district-filter'
 import { PlaineCommuneDistrictFilter } from './plaine-commune-district-filter'
 import { GrenobleDistrictFilter } from '@services/filters/district-filter/grenoble-district-filter'
-import { AlençonGeojson, AnnecyGeojson, ArrasGeojson, BordeauxGeojson, BrestGeojson, LaRochelleGeojson, LilleGeojson, LyonGeojson, MarseilleGeojson, MontpellierGeojson, NancyGeojson, NantesGeojson, NiceGeojson, PaysBasqueGeojson, RennesGeojson, SaintMaloGeojson, StrasbourgGeojson, ToulonGeojson, ToulouseGeojson, ToursGeojson, VannesGeojson } from '@db/db'
+import {
+  AlençonGeojson,
+  AnnecyGeojson,
+  ArrasGeojson,
+  BordeauxGeojson,
+  BrestGeojson,
+  LaRochelleGeojson,
+  LilleGeojson,
+  LyonGeojson,
+  MarseilleGeojson,
+  MontpellierGeojson,
+  NancyGeojson,
+  NantesGeojson,
+  NiceGeojson,
+  PaysBasqueGeojson,
+  RennesGeojson,
+  SaintMaloGeojson,
+  StrasbourgGeojson,
+  ToulonGeojson,
+  ToulouseGeojson,
+  ToursGeojson,
+  VannesGeojson,
+} from '@db/db'
 import { GenericDistrictFilter } from '@services/filters/district-filter/generic-district-filter'
 import { DistrictFilterParent } from '@services/filters/district-filter/district-filter-parent'
 import { AvailableCities } from '@services/city-config/classic-cities'
@@ -14,7 +36,9 @@ import { Model } from 'mongoose'
 export class DistrictFilterFactory {
   mainCity: AvailableMainCities
 
-  private genericConfigs: Partial<Record<AvailableMainCities, Model<ZoneDocument>>> = {
+  private genericConfigs: Partial<
+    Record<AvailableMainCities, Model<ZoneDocument>>
+  > = {
     lyon: LyonGeojson,
     paysBasque: PaysBasqueGeojson,
     montpellier: MontpellierGeojson,
@@ -43,10 +67,10 @@ export class DistrictFilterFactory {
   }
 
   currentDistrictFilter(options: {
-    coordinates?: Coordinate,
-    city?: AvailableCities,
-    postalCode?: string,
-    districtName?: string,
+    coordinates?: Coordinate
+    city?: AvailableCities
+    postalCode?: string
+    districtName?: string
   }): DistrictFilterParent {
     if (Object.keys(this.genericConfigs).includes(this.mainCity)) {
       const geojson = this.genericConfigs[this.mainCity]

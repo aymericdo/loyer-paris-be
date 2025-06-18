@@ -9,4 +9,6 @@ type CityData = {
 }
 
 export type AvailableCities = keyof typeof cities
-export const CITY_DETAILS: { readonly [city in AvailableCities]: Readonly<CityData> } = cities
+export const CITY_DETAILS: {
+  readonly [city in AvailableCities]: Readonly<CityData>
+} = cities

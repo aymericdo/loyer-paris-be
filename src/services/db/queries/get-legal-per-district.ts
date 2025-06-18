@@ -1,11 +1,22 @@
 import { Rent } from '@db/db'
 import { AvailableMainCities } from '@services/city-config/main-cities'
-import { getMainCityFilter, getDateRangeFilter, getClassicFilter } from '@services/db/queries/common'
+import {
+  getMainCityFilter,
+  getDateRangeFilter,
+  getClassicFilter,
+} from '@services/db/queries/common'
 
 export async function getLegalPerDistrict(
   city: AvailableMainCities,
   dateRange: [string, string] | null = null,
-): Promise<{ illegalPercentage: number, isIllegalCount: number, totalCount: number, district: string }[]> {
+): Promise<
+  {
+    illegalPercentage: number
+    isIllegalCount: number
+    totalCount: number
+    district: string
+  }[]
+> {
   const filter = {
     ...getClassicFilter(),
     ...getMainCityFilter(city),
@@ -21,15 +32,11 @@ export async function getLegalPerDistrict(
         _id: '$district',
         isIllegalCount: {
           $sum: {
-            $cond: [
-              { $eq: ['$isLegal', false] },
-              1,
-              0
-            ]
-          }
+            $cond: [{ $eq: ['$isLegal', false] }, 1, 0],
+          },
         },
         totalCount: {
-          $sum: 1
+          $sum: 1,
         },
       },
     },
@@ -38,30 +45,27 @@ export async function getLegalPerDistrict(
         _id: 0,
         district: '$_id',
         isIllegalCount: 1,
-        totalCount: 1
-      }
+        totalCount: 1,
+      },
     },
     {
       $addFields: {
         illegalPercentage: {
           $multiply: [
             {
-              $divide: [
-                '$isIllegalCount',
-                '$totalCount'
-              ]
+              $divide: ['$isIllegalCount', '$totalCount'],
             },
-            100
-          ]
-        }
-      }
+            100,
+          ],
+        },
+      },
     },
     {
       $match: {
-        totalCount: { $gte: 10 }
-      }
-    }
+        totalCount: { $gte: 10 },
+      },
+    },
   ]
 
-  return (await Rent.aggregate(aggregation))
+  return await Rent.aggregate(aggregation)
 }

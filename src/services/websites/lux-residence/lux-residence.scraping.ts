@@ -10,17 +10,27 @@ export class LuxResidenceScraping {
     }).window
 
     const description = document.querySelector('#descriptionSection')
-    const price = document.querySelector('#appContainer > div div.informationSale > span.price')
-    const renter = document.querySelector('#appContainer > div div.infosAgency > span.nameAgency')
-    const cityLabel = document.querySelector('#appContainer > div .breadcrumb ul .last-level.breadCrumb-link')
-    const surface = document.querySelector('#appContainer .informationProperty .criteria .singleCriteria.area')
-    const rooms = document.querySelector('#appContainer .informationProperty .criteria .singleCriteria.nbrRoom')
+    const price = document.querySelector(
+      '#appContainer > div div.informationSale > span.price',
+    )
+    const renter = document.querySelector(
+      '#appContainer > div div.infosAgency > span.nameAgency',
+    )
+    const cityLabel = document.querySelector(
+      '#appContainer > div .breadcrumb ul .last-level.breadCrumb-link',
+    )
+    const surface = document.querySelector(
+      '#appContainer .informationProperty .criteria .singleCriteria.area',
+    )
+    const rooms = document.querySelector(
+      '#appContainer .informationProperty .criteria .singleCriteria.nbrRoom',
+    )
     const dpe = document.querySelector('[data-testid="dpeClasseActive"]')
 
     const features = [
       ...document.querySelectorAll(
-        '#appContainer .detailsBlock .listBlock > .listBlock-item'
-      )
+        '#appContainer .detailsBlock .listBlock > .listBlock-item',
+      ),
     ]
 
     let furnished = null
@@ -33,9 +43,7 @@ export class LuxResidenceScraping {
     })
 
     const priceFeatures = [
-      ...document.querySelectorAll(
-        '#appContainer .sc-1i8oomw-6.bxBoqJ'
-      )
+      ...document.querySelectorAll('#appContainer .sc-1i8oomw-6.bxBoqJ'),
     ]
 
     priceFeatures.forEach((feature) => {

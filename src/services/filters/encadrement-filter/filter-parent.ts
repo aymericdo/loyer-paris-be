@@ -1,7 +1,14 @@
 import { ZoneDocument, ZoneProperties } from '@db/zone.model'
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
-import { Coordinate, DefaultEncadrementItem, EncadrementItem } from '@interfaces/shared'
-import { dateBuiltRange, canHaveHouse } from '@services/city-config/city-selectors'
+import {
+  Coordinate,
+  DefaultEncadrementItem,
+  EncadrementItem,
+} from '@interfaces/shared'
+import {
+  dateBuiltRange,
+  canHaveHouse,
+} from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
 import { YearBuiltService } from '@services/helpers/year-built'
@@ -29,7 +36,9 @@ export abstract class FilterParent {
 
     // Get the worst case scenario
     const worstCase = rentList.length
-      ? rentList.reduce((prev, current) => (prev.maxPrice > current.maxPrice ? prev : current))
+      ? rentList.reduce((prev, current) =>
+          prev.maxPrice > current.maxPrice ? prev : current,
+        )
       : null
 
     return worstCase
@@ -47,41 +56,59 @@ export abstract class FilterParent {
 
   protected async districtsMatched(): Promise<ZoneDocument[]> {
     const districtFilterFactory = new DistrictFilterFactory(this.mainCity)
-    return await districtFilterFactory.currentDistrictFilter({
-      coordinates: this.getCoordinate(),
-      city: this.infoToFilter.city,
-      postalCode: this.infoToFilter.postalCode,
-      districtName: this.infoToFilter.districtName,
-    }).getDistricts()
+    return await districtFilterFactory
+      .currentDistrictFilter({
+        coordinates: this.getCoordinate(),
+        city: this.infoToFilter.city,
+        postalCode: this.infoToFilter.postalCode,
+        districtName: this.infoToFilter.districtName,
+      })
+      .getDistricts()
   }
 
   protected dateRangeMatched(): string[] {
-    return new YearBuiltService(this.rangeTime, dateBuiltRange(this.mainCity)).getDateRangeFromYearBuilt(this.infoToFilter.yearBuilt)
+    return new YearBuiltService(
+      this.rangeTime,
+      dateBuiltRange(this.mainCity),
+    ).getDateRangeFromYearBuilt(this.infoToFilter.yearBuilt)
   }
 
-  protected async isDistrictMatch(districtsMatched: ZoneDocument[], rangeRent: EncadrementItem): Promise<boolean> {
+  protected async isDistrictMatch(
+    districtsMatched: ZoneDocument[],
+    rangeRent: EncadrementItem,
+  ): Promise<boolean> {
     return districtsMatched?.length
-      ? districtsMatched.map((district) => +(district.properties as ZoneProperties).zone)
-        .includes(+(rangeRent as DefaultEncadrementItem).zone)
+      ? districtsMatched
+          .map((district) => +(district.properties as ZoneProperties).zone)
+          .includes(+(rangeRent as DefaultEncadrementItem).zone)
       : false
   }
 
-  protected async isYearBuiltMatch(rangeRent: EncadrementItem): Promise<boolean> {
+  protected async isYearBuiltMatch(
+    rangeRent: EncadrementItem,
+  ): Promise<boolean> {
     const dateRange = this.dateRangeMatched()
     return dateRange?.length
-      ? dateRange.includes((rangeRent as DefaultEncadrementItem).annee_de_construction)
+      ? dateRange.includes(
+          (rangeRent as DefaultEncadrementItem).annee_de_construction,
+        )
       : true
   }
 
-  protected async isRoomCountMatch(rangeRent: EncadrementItem): Promise<boolean> {
+  protected async isRoomCountMatch(
+    rangeRent: EncadrementItem,
+  ): Promise<boolean> {
     return this.infoToFilter.roomCount
       ? +this.infoToFilter.roomCount < 4
-        ? +(rangeRent as DefaultEncadrementItem).nombre_de_piece === +this.infoToFilter.roomCount
+        ? +(rangeRent as DefaultEncadrementItem).nombre_de_piece ===
+          +this.infoToFilter.roomCount
         : (rangeRent as DefaultEncadrementItem).nombre_de_piece === '4 et plus'
       : true
   }
 
-  protected async isHasFurnitureMatch(rangeRent: EncadrementItem): Promise<boolean> {
+  protected async isHasFurnitureMatch(
+    rangeRent: EncadrementItem,
+  ): Promise<boolean> {
     return this.infoToFilter.hasFurniture != null
       ? this.infoToFilter.hasFurniture
         ? (rangeRent as DefaultEncadrementItem).meuble
@@ -89,7 +116,9 @@ export abstract class FilterParent {
       : true
   }
 
-  protected async isHasHouseMatch(rangeRent: EncadrementItem): Promise<boolean> {
+  protected async isHasHouseMatch(
+    rangeRent: EncadrementItem,
+  ): Promise<boolean> {
     if (!canHaveHouse(this.mainCity)) return true
 
     return this.infoToFilter.isHouse != null
@@ -100,24 +129,32 @@ export abstract class FilterParent {
   }
 
   protected async filterRents(): Promise<EncadrementItem[]> {
-    const districtsMatched: ZoneDocument[] = await this.districtsMatched() as ZoneDocument[]
+    const districtsMatched: ZoneDocument[] =
+      (await this.districtsMatched()) as ZoneDocument[]
 
-    const rangeRents = (this.rangeRentsJson() as DefaultEncadrementItem[])
-    return (await Promise.all(rangeRents.map(async (rangeRent) => ({
-      value: rangeRent,
-      include: (
-        await this.isDistrictMatch(districtsMatched, rangeRent) &&
-        await this.isYearBuiltMatch(rangeRent) &&
-        await this.isRoomCountMatch(rangeRent) &&
-        await this.isHasFurnitureMatch(rangeRent) &&
-        await this.isHasHouseMatch(rangeRent)
+    const rangeRents = this.rangeRentsJson() as DefaultEncadrementItem[]
+    return (
+      await Promise.all(
+        rangeRents.map(async (rangeRent) => ({
+          value: rangeRent,
+          include:
+            (await this.isDistrictMatch(districtsMatched, rangeRent)) &&
+            (await this.isYearBuiltMatch(rangeRent)) &&
+            (await this.isRoomCountMatch(rangeRent)) &&
+            (await this.isHasFurnitureMatch(rangeRent)) &&
+            (await this.isHasHouseMatch(rangeRent)),
+        })),
       )
-    }))))
-      .filter((v: { value: DefaultEncadrementItem, include: boolean }) => v.include)
+    )
+      .filter(
+        (v: { value: DefaultEncadrementItem; include: boolean }) => v.include,
+      )
       .map(({ value }) => value)
   }
 
-  protected async mappingResult(rentList: EncadrementItem[]): Promise<FilteredResult[]> {
+  protected async mappingResult(
+    rentList: EncadrementItem[],
+  ): Promise<FilteredResult[]> {
     return rentList
       .map((rent: DefaultEncadrementItem) => {
         const res = {
@@ -134,16 +171,22 @@ export abstract class FilterParent {
         }
 
         return res
-      }).sort((a, b) => {
-        return this.rangeTime.indexOf(a.yearBuilt) - this.rangeTime.indexOf(b.yearBuilt)
+      })
+      .sort((a, b) => {
+        return (
+          this.rangeTime.indexOf(a.yearBuilt) -
+          this.rangeTime.indexOf(b.yearBuilt)
+        )
       })
   }
 
   protected getCoordinate(): Coordinate {
-    return (!!this.infoToFilter.coordinates?.lat && !!this.infoToFilter.coordinates?.lng) ?
-      this.infoToFilter.coordinates
-      : (!!this.infoToFilter.blurryCoordinates?.lat && !!this.infoToFilter.blurryCoordinates?.lng) ?
-        this.infoToFilter.blurryCoordinates
+    return !!this.infoToFilter.coordinates?.lat &&
+      !!this.infoToFilter.coordinates?.lng
+      ? this.infoToFilter.coordinates
+      : !!this.infoToFilter.blurryCoordinates?.lat &&
+          !!this.infoToFilter.blurryCoordinates?.lng
+        ? this.infoToFilter.blurryCoordinates
         : null
   }
 

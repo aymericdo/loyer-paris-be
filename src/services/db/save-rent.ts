@@ -78,22 +78,28 @@ export class SaveRentService {
   }
 
   private saveIfNotNull(key: string) {
-    return (this.adToSave[key] != null && {
-      [key]: this.adToSave[key],
-    })
+    return (
+      this.adToSave[key] != null && {
+        [key]: this.adToSave[key],
+      }
+    )
   }
 
   private saveIfNotEmpty(key: string) {
-    return (this.adToSave[key] != null &&
+    return (
+      this.adToSave[key] != null &&
       this.adToSave[key].length && {
-      [key]: this.adToSave[key],
-    })
+        [key]: this.adToSave[key],
+      }
+    )
   }
 
   private saveIfNotFalse(key: string) {
-    return (this.adToSave[key] != null &&
+    return (
+      this.adToSave[key] != null &&
       this.adToSave[key] !== false && {
-      [key]: this.adToSave[key],
-    })
+        [key]: this.adToSave[key],
+      }
+    )
   }
 }

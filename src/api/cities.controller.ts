@@ -1,5 +1,14 @@
 import { AvailableCities } from '@services/city-config/classic-cities'
-import { canHaveHouse, coordinates, dateBuiltRange, getCityList, getMainCity, isFake, label, zones } from '@services/city-config/city-selectors'
+import {
+  canHaveHouse,
+  coordinates,
+  dateBuiltRange,
+  getCityList,
+  getMainCity,
+  isFake,
+  label,
+  zones,
+} from '@services/city-config/city-selectors'
 import express, { Request, Response } from 'express'
 const router = express.Router()
 
@@ -18,7 +27,7 @@ function getValidCityList(req: Request, res: Response) {
       displayName: {
         city: label(city),
         mainCity: label(mainCity),
-      }
+      },
     }
 
     return prev

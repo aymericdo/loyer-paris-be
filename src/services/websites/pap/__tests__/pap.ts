@@ -14,7 +14,10 @@ describe('pap', () => {
 
   describe('paris', () => {
     test('returns clean ad', async () => {
-      const dataParis = fs.readFileSync(path.resolve(__dirname, './pap-paris-payload.json'), 'utf8')
+      const dataParis = fs.readFileSync(
+        path.resolve(__dirname, './pap-paris-payload.json'),
+        'utf8',
+      )
 
       const body: Body = {
         id: '234523',
@@ -109,14 +112,18 @@ describe('pap', () => {
         },
         isFake: false,
         isLegal: false,
-        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
+        moreInfo:
+          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
   })
 
   describe('lille', () => {
     test('returns clean ad', async () => {
-      const dataLille = fs.readFileSync(path.resolve(__dirname, './pap-lille-payload.json'), 'utf8')
+      const dataLille = fs.readFileSync(
+        path.resolve(__dirname, './pap-lille-payload.json'),
+        'utf8',
+      )
 
       const body: Body = {
         id: '234523',
@@ -160,14 +167,18 @@ describe('pap', () => {
         },
         isFake: false,
         isLegal: true,
-        moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
+        moreInfo:
+          'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
   })
 
   describe('lyon', () => {
     test('returns clean ad', async () => {
-      const dataLyon = fs.readFileSync(path.resolve(__dirname, './pap-lyon-payload.json'), 'utf8')
+      const dataLyon = fs.readFileSync(
+        path.resolve(__dirname, './pap-lyon-payload.json'),
+        'utf8',
+      )
 
       const body: Body = {
         id: '234523',
@@ -214,7 +225,8 @@ describe('pap', () => {
         },
         isFake: false,
         isLegal: false,
-        moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
+        moreInfo:
+          'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
     })
   })

@@ -25,14 +25,38 @@ function getNeedCaptcha(req: Request, res: Response) {
 router.get('/welcome/:city', paramMiddleware(true), getWelcomeText)
 router.get('/map/:city', paramMiddleware(true), getMap)
 router.get('/chloropleth-map/:city', paramMiddleware(true), getChloroplethMap)
-router.get('/chloropleth-cities-map/:city', paramMiddleware(true), getChloroplethCitiesMap)
+router.get(
+  '/chloropleth-cities-map/:city',
+  paramMiddleware(true),
+  getChloroplethCitiesMap,
+)
 router.get('/price-difference/:city', paramMiddleware(true), getPriceDifference)
-router.get('/is-legal-per-surface/:city', paramMiddleware(true), getLegalPerSurface)
+router.get(
+  '/is-legal-per-surface/:city',
+  paramMiddleware(true),
+  getLegalPerSurface,
+)
 router.get('/price-variation/:city', paramMiddleware(true), getPriceVariation)
-router.get('/is-legal-variation/:city', paramMiddleware(true), getIsLegalVariation)
-router.get('/is-legal-per-renter/:city', paramMiddleware(true), getLegalPerRenter)
-router.get('/is-legal-per-classic-renter/:city', paramMiddleware(true), getLegalPerClassicRenter)
-router.get('/is-legal-per-website/:city', paramMiddleware(true), getLegalPerWebsite)
+router.get(
+  '/is-legal-variation/:city',
+  paramMiddleware(true),
+  getIsLegalVariation,
+)
+router.get(
+  '/is-legal-per-renter/:city',
+  paramMiddleware(true),
+  getLegalPerRenter,
+)
+router.get(
+  '/is-legal-per-classic-renter/:city',
+  paramMiddleware(true),
+  getLegalPerClassicRenter,
+)
+router.get(
+  '/is-legal-per-website/:city',
+  paramMiddleware(true),
+  getLegalPerWebsite,
+)
 router.get('/is-legal-per-dpe/:city', paramMiddleware(true), getLegalPerDPE)
 
 export default router

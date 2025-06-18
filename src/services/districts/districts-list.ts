@@ -25,7 +25,7 @@ export class DistrictsList {
 
   constructor(
     city: AvailableMainCities,
-    options?: { specificCity?: AvailableCities, specificDistrict?: string },
+    options?: { specificCity?: AvailableCities; specificDistrict?: string },
   ) {
     this.mainCity = city
     this.city = options?.specificCity
@@ -38,7 +38,8 @@ export class DistrictsList {
   }
 
   async currentGeodata(): Promise<GeojsonFile> {
-    const features: ZoneDocument[] = await this.currentDistrictFilter.getDistricts()
+    const features: ZoneDocument[] =
+      await this.currentDistrictFilter.getDistricts()
 
     return {
       type: 'FeatureCollection',
@@ -46,8 +47,12 @@ export class DistrictsList {
         ...data,
         properties: {
           ...data.properties,
-          [DISPLAY_ZONE_FIELD]: this.currentDistrictFilter.digZoneInProperties(data['properties']),
-          [DISPLAY_CITY_FIELD]: this.currentDistrictFilter.digCityInProperties(data['properties']),
+          [DISPLAY_ZONE_FIELD]: this.currentDistrictFilter.digZoneInProperties(
+            data['properties'],
+          ),
+          [DISPLAY_CITY_FIELD]: this.currentDistrictFilter.digCityInProperties(
+            data['properties'],
+          ),
         },
       })) as ZoneDocument[],
     }
@@ -58,13 +63,14 @@ export class DistrictsList {
   }
 
   async districtElemWithGroupBy(): Promise<DistrictElem[]> {
-    return getCityList(this.mainCity, this.city)
-      .reduce((prev, city: AvailableCities) => {
+    return getCityList(this.mainCity, this.city).reduce(
+      (prev, city: AvailableCities) => {
         let currentZones = zones(city)
-        if (!currentZones) currentZones = zones(this.mainCity as AvailableCities)
+        if (!currentZones)
+          currentZones = zones(this.mainCity as AvailableCities)
         if (currentZones) {
           if (Array.isArray(currentZones)) {
-            (currentZones as string[]).forEach((zone) => {
+            ;(currentZones as string[]).forEach((zone) => {
               const labelZone = `${label(city)} (${zone})`
 
               prev.push({
@@ -81,7 +87,8 @@ export class DistrictsList {
                   value: zone,
                   label: zone,
                   displaySequence: arrondissement,
-                  groupBy: this.currentDistrictFilter.buildGroupBy(arrondissement),
+                  groupBy:
+                    this.currentDistrictFilter.buildGroupBy(arrondissement),
                 })
               })
             })
@@ -89,6 +96,8 @@ export class DistrictsList {
         }
 
         return prev
-      }, [])
+      },
+      [],
+    )
   }
 }

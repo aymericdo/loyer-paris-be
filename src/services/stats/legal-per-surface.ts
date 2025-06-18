@@ -9,9 +9,17 @@ export async function getLegalPerSurface(req: Request, res: Response) {
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
   const dateValue: string = req.query.dateValue as string
-  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
+  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [
+    string,
+    string,
+  ]
 
-  const data = await getClassicData(mainCity, dateRange, {}, { isLegal: 1, surface: 1 })
+  const data = await getClassicData(
+    mainCity,
+    dateRange,
+    {},
+    { isLegal: 1, surface: 1 },
+  )
   if (!data.length) {
     res.status(403).json({ message: 'not_enough_data' })
     return
@@ -28,7 +36,7 @@ export async function getLegalPerSurface(req: Request, res: Response) {
       values: data,
     },
     mark: { type: 'bar', tooltip: true },
-    transform: [{ calculate: 'datum.isLegal ? \'Oui\' : \'Non\'', as: 'isLegal' }],
+    transform: [{ calculate: "datum.isLegal ? 'Oui' : 'Non'", as: 'isLegal' }],
     encoding: {
       x: {
         bin: {
@@ -41,7 +49,7 @@ export async function getLegalPerSurface(req: Request, res: Response) {
       y: {
         aggregate: 'count',
         field: 'isLegal',
-        title: 'Nombre d\'annonces ',
+        title: "Nombre d'annonces ",
         type: 'quantitative',
       },
       color: {

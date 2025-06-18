@@ -26,6 +26,8 @@ export default async (): Promise<Config.InitialOptions> => {
       '@messenger/(.*)': '<rootDir>/src/messenger/$1',
       '@services/(.*)': '<rootDir>/src/services/$1',
     },
-    transform: tsjPreset.transform as unknown as { [regex: string]: string | Config.TransformerConfig },
+    transform: tsjPreset.transform as unknown as {
+      [regex: string]: string | Config.TransformerConfig
+    },
   }
 }

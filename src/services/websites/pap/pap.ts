@@ -53,7 +53,8 @@ export class Pap extends Website {
       renter: PARTICULIER,
       surface: cleanup.number(ad.surface),
       title: cleanup.string(ad.title),
-      stations: ad.stations && ad.stations.map((station) => cleanup.string(station)),
+      stations:
+        ad.stations && ad.stations.map((station) => cleanup.string(station)),
     }
   }
 }

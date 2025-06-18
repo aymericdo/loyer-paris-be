@@ -1,6 +1,10 @@
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import { queryParamValidator } from '@services/api/validations'
-import { getCitiesFromMainCity, zones, infoLink } from '@services/city-config/city-selectors'
+import {
+  getCitiesFromMainCity,
+  zones,
+  infoLink,
+} from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 import { FilterFactory } from '@services/filters/encadrement-filter/filter-factory'
 import { PrettyLog } from '@services/helpers/pretty-log'
@@ -13,15 +17,30 @@ export async function getManualResult(req: Request, res: Response) {
 
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
-  const districtValue: string = queryParamValidator(req.query.districtValue as string)
+  const districtValue: string = queryParamValidator(
+    req.query.districtValue as string,
+  )
   const priceValue = queryParamValidator(req.query.priceValue as string)
   const furnishedValue = queryParamValidator(req.query.furnishedValue as string)
-  const surfaceValue: string = queryParamValidator(req.query.surfaceValue as string)
+  const surfaceValue: string = queryParamValidator(
+    req.query.surfaceValue as string,
+  )
   const roomValue: string = queryParamValidator(req.query.roomValue as string)
-  const isHouseValue: string = queryParamValidator(req.query.isHouseValue as string)
-  const dateBuiltValueStr: string = queryParamValidator(req.query.dateBuiltValueStr as string)
+  const isHouseValue: string = queryParamValidator(
+    req.query.isHouseValue as string,
+  )
+  const dateBuiltValueStr: string = queryParamValidator(
+    req.query.dateBuiltValueStr as string,
+  )
 
-  if (!mainCity || !districtValue || !priceValue || !furnishedValue || !surfaceValue || !roomValue) {
+  if (
+    !mainCity ||
+    !districtValue ||
+    !priceValue ||
+    !furnishedValue ||
+    !surfaceValue ||
+    !roomValue
+  ) {
     res.status(403).send('missing params')
     return
   }
@@ -30,16 +49,24 @@ export async function getManualResult(req: Request, res: Response) {
   const surface: number = +surfaceValue
   const price: number = +priceValue
   const room: number = +roomValue
-  const dateBuiltRange: [number, number] = YearBuiltService.formatAsYearBuilt(dateBuiltValueStr)
-  const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
+  const dateBuiltRange: [number, number] =
+    YearBuiltService.formatAsYearBuilt(dateBuiltValueStr)
+  const hasFurniture: boolean =
+    furnishedValue === 'furnished'
+      ? true
+      : furnishedValue === 'nonFurnished'
+        ? false
+        : null
   const isHouse: boolean = isHouseValue !== null ? +isHouseValue === 1 : false
 
-  if (!getCitiesFromMainCity(mainCity).some((city) => {
-    const cityZones = zones(city)
-    return  (Array.isArray(cityZones)) ?
-      cityZones.includes(district) :
-      Object.values(cityZones).flat().includes(district)
-  })) {
+  if (
+    !getCitiesFromMainCity(mainCity).some((city) => {
+      const cityZones = zones(city)
+      return Array.isArray(cityZones)
+        ? cityZones.includes(district)
+        : Object.values(cityZones).flat().includes(district)
+    })
+  ) {
     res.status(403).send('zone is not corresponding')
     return
   }
@@ -57,9 +84,11 @@ export async function getManualResult(req: Request, res: Response) {
   }
 
   const encadrementFilterFactory = new FilterFactory(mainCity)
-  const currentEncadrementFilter = encadrementFilterFactory.currentEncadrementFilter(infoToFilter)
+  const currentEncadrementFilter =
+    encadrementFilterFactory.currentEncadrementFilter(infoToFilter)
 
-  const filteredResult: FilteredResult[] = await currentEncadrementFilter.filter()
+  const filteredResult: FilteredResult[] =
+    await currentEncadrementFilter.filter()
 
   res.json(
     filteredResult.map((r) => {
@@ -70,10 +99,10 @@ export async function getManualResult(req: Request, res: Response) {
         maxTotalPrice: roundNumber(r.maxPrice * surface),
         isLegal: r.maxPrice * surface > price,
         yearBuilt: YearBuiltService.getDisplayableYearBuilt(
-          currentEncadrementFilter.rangeTimeToUniversalRangeTime(r.yearBuilt)
+          currentEncadrementFilter.rangeTimeToUniversalRangeTime(r.yearBuilt),
         ),
         moreInfo: infoLink(mainCity),
       }
-    })
+    }),
   )
 }

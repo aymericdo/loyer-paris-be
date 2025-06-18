@@ -14,7 +14,10 @@ describe('seloger', () => {
 
   describe('paris', () => {
     test('returns clean ad', async () => {
-      const dataParis = fs.readFileSync(path.resolve(__dirname, './seloger-paris-payload.json'), 'utf8')
+      const dataParis = fs.readFileSync(
+        path.resolve(__dirname, './seloger-paris-payload.json'),
+        'utf8',
+      )
 
       const body: Body = {
         id: '234523',
@@ -57,14 +60,18 @@ describe('seloger', () => {
         },
         isFake: false,
         isLegal: false,
-        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
+        moreInfo:
+          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
   })
 
   describe('lille', () => {
     test('returns clean ad', async () => {
-      const dataLille = fs.readFileSync(path.resolve(__dirname, './seloger-lille-payload.json'), 'utf8')
+      const dataLille = fs.readFileSync(
+        path.resolve(__dirname, './seloger-lille-payload.json'),
+        'utf8',
+      )
 
       const body: Body = {
         id: '234523',
@@ -84,7 +91,10 @@ describe('seloger', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: '122 rue du marais de lomme 59000, Lille' },
+          address: {
+            order: 0,
+            value: '122 rue du marais de lomme 59000, Lille',
+          },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: 1 },
           surface: { order: 3, value: 21 },
@@ -108,14 +118,18 @@ describe('seloger', () => {
         },
         isFake: false,
         isLegal: false,
-        moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
+        moreInfo:
+          'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
   })
 
   describe('lyon', () => {
     test('returns clean ad - lyon', async () => {
-      const dataLyon = fs.readFileSync(path.resolve(__dirname, './seloger-lyon-payload.json'), 'utf8')
+      const dataLyon = fs.readFileSync(
+        path.resolve(__dirname, './seloger-lyon-payload.json'),
+        'utf8',
+      )
 
       const body: Body = {
         id: '234523',
@@ -159,7 +173,8 @@ describe('seloger', () => {
         },
         isFake: false,
         isLegal: true,
-        moreInfo: 'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
+        moreInfo:
+          'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
       })
     })
   })

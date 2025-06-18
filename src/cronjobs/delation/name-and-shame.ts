@@ -19,7 +19,7 @@ export class NameAndShameService {
   v2Client = this.client.v2
 
   async call() {
-    [
+    const cities: CityInfo[] = [
       ['paris', 'à Paris', '@Paris'],
       ['lille', 'à Lille', '@prefet59'],
       ['lyon', 'à Lyon', '@prefetrhone'],
@@ -27,7 +27,9 @@ export class NameAndShameService {
       ['montpellier', 'à Montpellier', '@Prefet34'],
       ['paysBasque', 'au Pays Basque', '@Prefet64'],
       ['grenoble', 'à Grenoble', '@Prefet38'],
-    ].forEach(async ([mainCity, cityValue, prefecture]: CityInfo) => {
+    ]
+
+    cities.forEach(async ([mainCity, cityValue, prefecture]: CityInfo) => {
       const ads = await getShamefulAdsData(mainCity, MAX_DELTA)
 
       if (ads.length > 2) {
@@ -42,7 +44,10 @@ export class NameAndShameService {
           .join('\n')
         tweetText += `\ncc ${prefecture}`
         const { data: createdTweet } = await this.v2Client.tweet(tweetText)
-        PrettyLog.call(`Tweet ${createdTweet.id} : ${createdTweet.text} has been sent !`, 'blue')
+        PrettyLog.call(
+          `Tweet ${createdTweet.id} : ${createdTweet.text} has been sent !`,
+          'blue',
+        )
       }
     })
   }

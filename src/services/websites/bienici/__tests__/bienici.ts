@@ -14,7 +14,10 @@ describe('bienici', () => {
 
   describe('paris', () => {
     test('returns clean ad', async () => {
-      const dataParis = fs.readFileSync(path.resolve(__dirname, './bienici-paris-payload.json'), 'utf8')
+      const dataParis = fs.readFileSync(
+        path.resolve(__dirname, './bienici-paris-payload.json'),
+        'utf8',
+      )
 
       const body: Body = {
         id: '234523',
@@ -58,14 +61,18 @@ describe('bienici', () => {
         },
         isFake: false,
         isLegal: false,
-        moreInfo: 'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
+        moreInfo:
+          'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
     })
   })
 
   describe('lille', () => {
     test('returns clean ad', async () => {
-      const dataLille = fs.readFileSync(path.resolve(__dirname, './bienici-lille-payload.json'), 'utf8')
+      const dataLille = fs.readFileSync(
+        path.resolve(__dirname, './bienici-lille-payload.json'),
+        'utf8',
+      )
 
       const body: Body = {
         id: '234523',
@@ -109,7 +116,8 @@ describe('bienici', () => {
         },
         isFake: false,
         isLegal: true,
-        moreInfo: 'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
+        moreInfo:
+          'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })
     })
   })

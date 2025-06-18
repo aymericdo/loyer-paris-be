@@ -11,9 +11,14 @@ export async function getMap(req: Request, res: Response) {
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
   const dateValue: string = req.query.dateValue as string
-  const dateRange: [string, string] = dateValue?.split(',').slice(0, 2) as [string, string]
+  const dateRange: [string, string] = dateValue?.split(',').slice(0, 2) as [
+    string,
+    string,
+  ]
 
-  const geodata = await new DistrictsList(mainCity as AvailableMainCities).currentGeodata()
+  const geodata = await new DistrictsList(
+    mainCity as AvailableMainCities,
+  ).currentGeodata()
 
   const data = await getAdsWithCoordinates(mainCity, dateRange)
   const vegaMap = {
@@ -38,7 +43,9 @@ export async function getMap(req: Request, res: Response) {
         data: {
           values: data,
         },
-        transform: [{ calculate: 'datum.isLegal ? \'Oui\' : \'Non\'', as: 'isLegal' }],
+        transform: [
+          { calculate: "datum.isLegal ? 'Oui' : 'Non'", as: 'isLegal' },
+        ],
         encoding: {
           longitude: {
             field: 'longitude',

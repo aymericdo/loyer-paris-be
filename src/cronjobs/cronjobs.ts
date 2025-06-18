@@ -10,7 +10,9 @@ export class CronJobsService {
       '0 8 * * 5',
       async () => {
         try {
-          if (process.env.STOP_TWITTER) { return }
+          if (process.env.STOP_TWITTER) {
+            return
+          }
           await new NameAndShameService().call()
         } catch (e) {
           console.error(e)
@@ -18,7 +20,7 @@ export class CronJobsService {
       },
       {
         timezone: TIMEZONE,
-      }
+      },
     )
 
     schedule(
@@ -32,7 +34,7 @@ export class CronJobsService {
       },
       {
         timezone: TIMEZONE,
-      }
+      },
     )
   }
 }

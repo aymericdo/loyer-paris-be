@@ -10,35 +10,37 @@ export class BellesDemeuresScraping {
     }).window
 
     const title = document.querySelector(
-      'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemVille'
+      'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemVille',
     )
     const description = document.querySelector(
-      '#wrapper > div.detail > div > div.detailWrapInfos > div.detailDesc.wrapMain > p.detailDescSummary'
+      '#wrapper > div.detail > div > div.detailWrapInfos > div.detailDesc.wrapMain > p.detailDescSummary',
     )
     const price = document.querySelector(
-      'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemPrice'
+      'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemPrice',
     )
     const renter = document.querySelector(
-      '#wrapper > div.detail > div > div.detailWrapInfos > div.wrapMain.agencyContactContainer.js_contact_wrapper > aside > div.agencyContactPanels.js_panel > span > picture > img'
+      '#wrapper > div.detail > div > div.detailWrapInfos > div.wrapMain.agencyContactContainer.js_contact_wrapper > aside > div.agencyContactPanels.js_panel > span > picture > img',
     )
     const cityLabelNode = document.querySelector(
-      'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemVille'
+      'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecsVille > div.annonceSpecsListItemVille',
     )
-    const dpe = document.querySelector(
-      '#DpePage .diagnosticBoxActive'
-    )
+    const dpe = document.querySelector('#DpePage .diagnosticBoxActive')
 
     const features = [
-      ...document.querySelectorAll('div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecs > ul > li')
+      ...document.querySelectorAll(
+        'div.mosaicContainer > div.detailBannerInfos > div > h1 > div.annonceSpecs > ul > li',
+      ),
     ]
     const features2 = [
       ...document.querySelectorAll(
-        '#wrapper > div.detail > div > div.detailWrapInfos > div:nth-child(5) > div:nth-child(2) > ul > li > ul > li'
-      )
+        '#wrapper > div.detail > div > div.detailWrapInfos > div:nth-child(5) > div:nth-child(2) > ul > li > ul > li',
+      ),
     ]
 
     const cityLabel = cityLabelNode?.textContent?.split('•').length
-      ? cityLabelNode.textContent.split('•')[cityLabelNode.textContent.split('•').length - 1]
+      ? cityLabelNode.textContent.split('•')[
+          cityLabelNode.textContent.split('•').length - 1
+        ]
       : cityLabelNode?.textContent
 
     let furnished = false
@@ -46,7 +48,10 @@ export class BellesDemeuresScraping {
     let rooms = null
 
     features.forEach((feature) => {
-      if (feature.textContent.match(/M²/g) || feature.textContent.match(/m²/g)) {
+      if (
+        feature.textContent.match(/M²/g) ||
+        feature.textContent.match(/m²/g)
+      ) {
         surface = feature
       } else if (feature.textContent.match(/Pièce/g)) {
         rooms = feature

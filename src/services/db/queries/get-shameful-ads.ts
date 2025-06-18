@@ -4,7 +4,7 @@ import { getMainCityFilter } from '@services/db/queries/common'
 
 export async function getShamefulAdsData(
   city: AvailableMainCities,
-  maxDelta = 200
+  maxDelta = 200,
 ): Promise<
   {
     url: string
@@ -25,7 +25,7 @@ export async function getShamefulAdsData(
     ...getMainCityFilter(city as AvailableMainCities),
   }
 
-  return (await Rent.find(
+  return await Rent.find(
     filter,
     {
       website: 1,
@@ -35,6 +35,6 @@ export async function getShamefulAdsData(
     },
     {
       sort: { createdAt: -1 },
-    }
-  ))
+    },
+  )
 }

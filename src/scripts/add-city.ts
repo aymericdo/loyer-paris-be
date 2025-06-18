@@ -19,9 +19,14 @@ import { promisify } from 'util'
 
 const exec = promisify(execCallback)
 
-async function runTransformBaseOpCsvToJsonScript(fileName: string, city: string) {
+async function runTransformBaseOpCsvToJsonScript(
+  fileName: string,
+  city: string,
+) {
   try {
-    const { stdout, stderr } = await exec(`npm run base-op-csv-to-json -- csv=${fileName} city=${city.replaceAll(' ', '-')}`)
+    const { stdout, stderr } = await exec(
+      `npm run base-op-csv-to-json -- csv=${fileName} city=${city.replaceAll(' ', '-')}`,
+    )
 
     if (stderr) {
       console.error('stderr:', stderr)
@@ -30,14 +35,16 @@ async function runTransformBaseOpCsvToJsonScript(fileName: string, city: string)
     // eslint-disable-next-line no-console
     console.log('stdout:', stdout)
   } catch (error) {
-    console.error('Erreur d\'exécution :', error)
+    console.error("Erreur d'exécution :", error)
     process.exit(1)
   }
 }
 
 async function runKmlToGeojsonScript(fileName: string) {
   try {
-    const { stdout, stderr } = await exec(`npm run kml-to-geojson -- kmlFile=${fileName}`)
+    const { stdout, stderr } = await exec(
+      `npm run kml-to-geojson -- kmlFile=${fileName}`,
+    )
 
     if (stderr) {
       console.error('stderr:', stderr)
@@ -46,7 +53,7 @@ async function runKmlToGeojsonScript(fileName: string) {
     // eslint-disable-next-line no-console
     console.log('stdout:', stdout)
   } catch (error) {
-    console.error('Erreur d\'exécution :', error)
+    console.error("Erreur d'exécution :", error)
     process.exit(1)
   }
 }
@@ -65,11 +72,13 @@ async function main() {
 
   const currentMainCities = JSON.parse(data)
 
-  const { mainCity } = await inquirer.prompt([{
-    type: 'input',
-    name: 'mainCity',
-    message: 'Saisis le nom de la ville (mainCity) que tu veux ajouter',
-  }])
+  const { mainCity } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'mainCity',
+      message: 'Saisis le nom de la ville (mainCity) que tu veux ajouter',
+    },
+  ])
 
   if (Object.keys(currentMainCities).includes(mainCity)) {
     console.error('La ville existe déjà')
@@ -86,13 +95,20 @@ async function main() {
   let observatoireNumber = 0
   try {
     do {
-      observatoireData = await fetchObservatoiresDesLoyers(departement, observatoireNumber.toString().padStart(2, '0'))
+      observatoireData = await fetchObservatoiresDesLoyers(
+        departement,
+        observatoireNumber.toString().padStart(2, '0'),
+      )
       await unzip(observatoireData.year, observatoireData.observatoire)
-      ok = await observatoireVerification(feature.properties.label, observatoireData.observatoire, observatoireData.year)
+      ok = await observatoireVerification(
+        feature.properties.label,
+        observatoireData.observatoire,
+        observatoireData.year,
+      )
       observatoireNumber += 1
-    } while(!ok)
+    } while (!ok)
   } catch (error) {
-    console.error('Problème au niveau de l\'observatoire des loyers', error)
+    console.error("Problème au niveau de l'observatoire des loyers", error)
     return
   }
 
@@ -104,16 +120,19 @@ async function main() {
   const house = await getHouse(observatoire, year)
   const builtYearRangeEnd = await getBuiltYearRangeEnd(observatoire, year)
 
-  const cityDetailTmp = await inquirer.prompt([{
-    type: 'input',
-    name: 'label',
-    message: 'Saisis le nom de la ville à afficher',
-  }, {
-    type: 'confirm',
-    name: 'notFake',
-    message: `${mainCity} applique réellement l'encadrement ?`,
-    default: true,
-  }])
+  const cityDetailTmp = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'label',
+      message: 'Saisis le nom de la ville à afficher',
+    },
+    {
+      type: 'confirm',
+      name: 'notFake',
+      message: `${mainCity} applique réellement l'encadrement ?`,
+      default: true,
+    },
+  ])
 
   const mainCityDetail = {
     ...cityDetailTmp,
@@ -127,23 +146,36 @@ async function main() {
   delete mainCityDetail.notFake
 
   if (!mainCityDetail.fake) {
-    mainCityDetail['infoLink'] = (await inquirer.prompt([{
-      type: 'input',
-      name: 'infoLink',
-      message: 'Saisis l\'url de la ville qui regroupe les informations sur l\'encadrement',
-    }])).infoLink
+    mainCityDetail['infoLink'] = (
+      await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'infoLink',
+          message:
+            "Saisis l'url de la ville qui regroupe les informations sur l'encadrement",
+        },
+      ])
+    ).infoLink
   }
 
   // eslint-disable-next-line no-console
   console.log(mainCityDetail)
 
   try {
-    fs.writeFileSync(mainFilePath, JSON.stringify({
-      ...currentMainCities,
-      [mainCity]: mainCityDetail,
-    }, null, 2), 'utf8')
+    fs.writeFileSync(
+      mainFilePath,
+      JSON.stringify(
+        {
+          ...currentMainCities,
+          [mainCity]: mainCityDetail,
+        },
+        null,
+        2,
+      ),
+      'utf8',
+    )
   } catch (err) {
-    console.error('Erreur lors de l\'écriture dans le fichier :', err)
+    console.error("Erreur lors de l'écriture dans le fichier :", err)
     return
   }
 
@@ -181,12 +213,20 @@ async function main() {
   console.log(newCities)
 
   try {
-    fs.writeFileSync(classicCityFilePath, JSON.stringify({
-      ...currentCities,
-      ...newCities,
-    }, null, 2), 'utf8')
+    fs.writeFileSync(
+      classicCityFilePath,
+      JSON.stringify(
+        {
+          ...currentCities,
+          ...newCities,
+        },
+        null,
+        2,
+      ),
+      'utf8',
+    )
   } catch (err) {
-    console.error('Erreur lors de l\'écriture dans le fichier :', err)
+    console.error("Erreur lors de l'écriture dans le fichier :", err)
     return
   }
 
@@ -194,11 +234,20 @@ async function main() {
   console.log(`✅ la ville "${mainCity}" a été ajoutée`)
 
   await runKmlToGeojsonScript(`L${observatoire}_zone_elem_${year}`)
-  await runTransformBaseOpCsvToJsonScript(`Base_OP_${year}_L${observatoire}`, mainCity)
+  await runTransformBaseOpCsvToJsonScript(
+    `Base_OP_${year}_L${observatoire}`,
+    mainCity,
+  )
 
-  await fs.promises.unlink(path.resolve(__dirname, './data', `L${observatoire}_zone_elem_${year}.kml`))
-  await fs.promises.unlink(path.resolve(__dirname, './data', `L${observatoire}Zonage${year}.csv`))
-  await fs.promises.unlink(path.resolve(__dirname, './data', `Base_OP_${year}_L${observatoire}.csv`))
+  await fs.promises.unlink(
+    path.resolve(__dirname, './data', `L${observatoire}_zone_elem_${year}.kml`),
+  )
+  await fs.promises.unlink(
+    path.resolve(__dirname, './data', `L${observatoire}Zonage${year}.csv`),
+  )
+  await fs.promises.unlink(
+    path.resolve(__dirname, './data', `Base_OP_${year}_L${observatoire}.csv`),
+  )
 }
 
 main()

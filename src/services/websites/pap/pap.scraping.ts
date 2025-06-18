@@ -14,15 +14,19 @@ export class PapScraping {
     const price = document.querySelector('h1.item-title > span.item-price')
     const cityLabel = document.querySelector('div.item-description > h2')
     const itemTags = [...document.querySelectorAll('.item-tags > li > strong')]
-    const stations = [...document.querySelectorAll('ul.item-transports > li > span.label')]
+    const stations = [
+      ...document.querySelectorAll('ul.item-transports > li > span.label'),
+    ]
 
     const sectionName = document.querySelector(
-      'body > div.details-annonce-container > div > div.main-content > div > ol > li:nth-child(2)'
+      'body > div.details-annonce-container > div > div.main-content > div > ol > li:nth-child(2)',
     )
 
-    const rowPrices = [...document.querySelectorAll(
-      'body > div.details-annonce-container > div > div.main-content .item-transports .row .col-1-3'
-    )]
+    const rowPrices = [
+      ...document.querySelectorAll(
+        'body > div.details-annonce-container > div > div.main-content .item-transports .row .col-1-3',
+      ),
+    ]
 
     let charges = null
     rowPrices.forEach((row) => {

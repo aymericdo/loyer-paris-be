@@ -11,8 +11,16 @@ export function string(string: string): string {
 }
 
 export function price(price: string): number {
-  let match = price?.replace(/\s|/g, '').replace(',', '.').match(/\d+(\.\d{1,2})?/g)
-  if (match?.length === 2 && match[0].length === 4 && match[0][1] === '.' && match[1].length === 1) {
+  let match = price
+    ?.replace(/\s|/g, '')
+    .replace(',', '.')
+    .match(/\d+(\.\d{1,2})?/g)
+  if (
+    match?.length === 2 &&
+    match[0].length === 4 &&
+    match[0][1] === '.' &&
+    match[1].length === 1
+  ) {
     // manage this kind of "€1,500 / Month"
     match = [match.join('').replace('.', '')]
   }

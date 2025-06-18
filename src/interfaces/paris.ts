@@ -1,4 +1,7 @@
-import { DISPLAY_CITY_FIELD, DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
+import {
+  DISPLAY_CITY_FIELD,
+  DISPLAY_ZONE_FIELD,
+} from '@services/districts/districts-list'
 
 export interface ParisEncadrementItem {
   ville: string

@@ -1,5 +1,9 @@
 import { ZoneDocument } from '@db/zone.model'
-import { Coordinate, DefaultDistrictItemProperties, DistrictItemProperties } from '@interfaces/shared'
+import {
+  Coordinate,
+  DefaultDistrictItemProperties,
+  DistrictItemProperties,
+} from '@interfaces/shared'
 import { AvailableCities } from '@services/city-config/classic-cities'
 import { isOnlyOneCity } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
@@ -12,9 +16,17 @@ export class DistrictFilterParent {
   postalCode: string = null
   districtName: string = null
 
-  constructor(
-    { coordinates, city, postalCode, districtName }:
-    { coordinates?: Coordinate, city?: AvailableCities, postalCode?: string, districtName?: string }) {
+  constructor({
+    coordinates,
+    city,
+    postalCode,
+    districtName,
+  }: {
+    coordinates?: Coordinate
+    city?: AvailableCities
+    postalCode?: string
+    districtName?: string
+  }) {
     this.coordinates = coordinates
     this.city = city
     this.postalCode = postalCode
@@ -22,9 +34,11 @@ export class DistrictFilterParent {
   }
 
   digZoneInProperties(data: DistrictItemProperties): string {
-    return `Zone ${/^\d+$/.test((data as DefaultDistrictItemProperties).zone) ?
-      +(data as DefaultDistrictItemProperties).zone :
-      (data as DefaultDistrictItemProperties).zone}`
+    return `Zone ${
+      /^\d+$/.test((data as DefaultDistrictItemProperties).zone)
+        ? +(data as DefaultDistrictItemProperties).zone
+        : (data as DefaultDistrictItemProperties).zone
+    }`
   }
 
   digCityInProperties(data: DistrictItemProperties): string {
@@ -45,7 +59,11 @@ export class DistrictFilterParent {
     }
 
     const strategies = [
-      () => this.getDistrictFromCoordinate(this.coordinates?.lat, this.coordinates?.lng),
+      () =>
+        this.getDistrictFromCoordinate(
+          this.coordinates?.lat,
+          this.coordinates?.lng,
+        ),
       () => this.getDistrictsFromPostalCode(),
       () => this.getDistrictsFromCity(),
       () => this.getDistrictsFromMainCity(),
@@ -87,11 +105,9 @@ export class DistrictFilterParent {
   protected async getDistrictsFromPostalCode(): Promise<ZoneDocument[]> {
     if (!this.postalCode) return []
 
-    const districts = await this.GeojsonCollection.find(
-      {
-        'properties.postalCode': this.postalCode.toString(),
-      },
-    ).lean()
+    const districts = await this.GeojsonCollection.find({
+      'properties.postalCode': this.postalCode.toString(),
+    }).lean()
 
     return districts?.length ? districts : []
   }
@@ -100,13 +116,11 @@ export class DistrictFilterParent {
     if (!this.city) return []
 
     if (isOnlyOneCity(this.mainCity)) {
-      return await this.GeojsonCollection.find({}).lean() as ZoneDocument[]
+      return (await this.GeojsonCollection.find({}).lean()) as ZoneDocument[]
     } else {
-      const districts = await this.GeojsonCollection.find(
-        {
-          'properties.city': { $regex: this.city, $options: 'i' }
-        },
-      ).lean()
+      const districts = await this.GeojsonCollection.find({
+        'properties.city': { $regex: this.city, $options: 'i' },
+      }).lean()
 
       return districts?.length ? districts : []
     }
@@ -116,21 +130,22 @@ export class DistrictFilterParent {
     return await this.GeojsonCollection.find({}).lean()
   }
 
-  private async getDistrictFromCoordinate(lat: number, lng: number): Promise<ZoneDocument[]> {
+  private async getDistrictFromCoordinate(
+    lat: number,
+    lng: number,
+  ): Promise<ZoneDocument[]> {
     if (!lat || !lng) return null
 
-    const district = await this.GeojsonCollection.findOne(
-      {
-        geometry: {
-          $geoIntersects: {
-            $geometry: {
-              type: 'Point',
-              coordinates: [lng, lat]
-            }
-          }
-        }
-      }
-    ).lean()
+    const district = await this.GeojsonCollection.findOne({
+      geometry: {
+        $geoIntersects: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [lng, lat],
+          },
+        },
+      },
+    }).lean()
 
     return district ? [district] : []
   }

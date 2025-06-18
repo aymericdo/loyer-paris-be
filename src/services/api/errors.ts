@@ -31,7 +31,8 @@ export class ApiErrorsService {
   logger(): void {
     switch (this.error?.error as ERROR_CODE) {
       case ERROR_CODE.Filter:
-        PrettyLog.call(this.error.msg, 'red'); break
+        PrettyLog.call(this.error.msg, 'red')
+        break
       case ERROR_CODE.BadLocation:
       case ERROR_CODE.Colocation:
       case ERROR_CODE.Minimal:
@@ -39,7 +40,8 @@ export class ApiErrorsService {
       case ERROR_CODE.Address:
       case ERROR_CODE.Price:
       case ERROR_CODE.Surface:
-        PrettyLog.call(this.error.msg, 'yellow'); break
+        PrettyLog.call(this.error.msg, 'yellow')
+        break
       default: {
         const errorMsg = `${ERROR500_MSG} ${this.error?.stack}`
         PrettyLog.call(errorMsg, 'red')
@@ -49,15 +51,19 @@ export class ApiErrorsService {
 
   async sendSlackErrorMessage(sentryId?: string): Promise<void> {
     if (this.error?.error === ERROR_CODE.BadLocation) {
-      new Slack().sendMessage('#bad-location', `${this.incompleteAd?.website} : ${this.error.msg}`)
+      new Slack().sendMessage(
+        '#bad-location',
+        `${this.incompleteAd?.website} : ${this.error.msg}`,
+      )
     }
 
     if (this.status >= 500) {
       const basicError: Error = this.error as unknown as Error
 
-      new Slack().sendMessage('#errors',
-        `Error ${this.status} : ${basicError.name}: ${basicError.message}\n${basicError.stack}\n`+
-        `(https://encadrement-loyers.sentry.io/issues/?query=${sentryId})`
+      new Slack().sendMessage(
+        '#errors',
+        `Error ${this.status} : ${basicError.name}: ${basicError.message}\n${basicError.stack}\n` +
+          `(https://encadrement-loyers.sentry.io/issues/?query=${sentryId})`,
       )
     }
   }

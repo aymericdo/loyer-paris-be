@@ -9,8 +9,16 @@ export async function getPriceVariation(req: Request, res: Response) {
   const mainCity = req.params.city as AvailableMainCities
 
   const dateValue: string = req.query.dateValue as string
-  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
-  const data = await getClassicData(mainCity, dateRange, { isLegal: false }, { createdAt: 1, maxPrice: 1, priceExcludingCharges: 1 })
+  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [
+    string,
+    string,
+  ]
+  const data = await getClassicData(
+    mainCity,
+    dateRange,
+    { isLegal: false },
+    { createdAt: 1, maxPrice: 1, priceExcludingCharges: 1 },
+  )
   if (!data.length) {
     res.status(403).json({ message: 'not_enough_data' })
     return

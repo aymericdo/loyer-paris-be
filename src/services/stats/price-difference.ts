@@ -10,14 +10,23 @@ export async function getPriceDifference(req: Request, res: Response) {
 
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
-  const postalCodePossibilities = new PostalCodeService(mainCity, 'all').getPostalCodePossibilities()
+  const postalCodePossibilities = new PostalCodeService(
+    mainCity,
+    'all',
+  ).getPostalCodePossibilities()
 
   const dateValue: string = req.query.dateValue as string
-  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
+  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [
+    string,
+    string,
+  ]
 
-  const data = await getClassicData(mainCity, dateRange,
+  const data = await getClassicData(
+    mainCity,
+    dateRange,
     { postalCode: { $exists: true }, isLegal: false },
-    { maxPrice: 1, postalCode: 1, priceExcludingCharges: 1 })
+    { maxPrice: 1, postalCode: 1, priceExcludingCharges: 1 },
+  )
   if (!data.length) {
     res.status(403).json({ message: 'not_enough_data' })
     return
@@ -64,7 +73,7 @@ export async function getPriceDifference(req: Request, res: Response) {
         title: 'Différence moyenne (€)',
       },
       tooltip: [
-        { field: 'countOfPostalCode', title: 'Nombre d\'annonces ' },
+        { field: 'countOfPostalCode', title: "Nombre d'annonces " },
         {
           aggregate: 'average',
           field: 'priceDifference',

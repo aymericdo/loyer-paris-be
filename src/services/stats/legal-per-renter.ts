@@ -10,9 +10,17 @@ export async function getLegalPerRenter(req: Request, res: Response) {
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
   const dateValue: string = req.query.dateValue as string
-  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
+  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [
+    string,
+    string,
+  ]
 
-  const data = await getClassicData(mainCity, dateRange, { renter: { $exists: true } }, { isLegal: 1, renter: 1 })
+  const data = await getClassicData(
+    mainCity,
+    dateRange,
+    { renter: { $exists: true } },
+    { isLegal: 1, renter: 1 },
+  )
   if (!data.length) {
     res.status(403).json({ message: 'not_enough_data' })
     return
@@ -84,7 +92,7 @@ export async function getLegalPerRenter(req: Request, res: Response) {
         { field: 'renter', title: 'Agence ', type: 'nominal' },
         {
           field: 'numberAds',
-          title: 'Nombre total d\'annonces ',
+          title: "Nombre total d'annonces ",
           type: 'nominal',
         },
       ],

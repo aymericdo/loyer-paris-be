@@ -1,4 +1,7 @@
-import { DISPLAY_CITY_FIELD, DISPLAY_ZONE_FIELD } from '@services/districts/districts-list'
+import {
+  DISPLAY_CITY_FIELD,
+  DISPLAY_ZONE_FIELD,
+} from '@services/districts/districts-list'
 
 // source : http://www.referenceloyer.drihl.ile-de-france.developpement-durable.gouv.fr/est-ensemble/
 export interface EstEnsembleDistrictItemProperties {

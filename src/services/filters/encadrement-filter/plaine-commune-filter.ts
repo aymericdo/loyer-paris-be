@@ -8,10 +8,18 @@ export class PlaineCommuneFilter extends FilterParent {
   mainCity: AvailableMainCities = 'plaineCommune'
   criteriaJsonPath = 'json-data/encadrements_plaine-commune_2024.json'
 
-  protected async isDistrictMatch(districtsMatched: ZoneDocument[], rangeRent: DefaultEncadrementItem): Promise<boolean> {
+  protected async isDistrictMatch(
+    districtsMatched: ZoneDocument[],
+    rangeRent: DefaultEncadrementItem,
+  ): Promise<boolean> {
     return districtsMatched?.length
-      ? districtsMatched.map((district) => +(district.properties as PlaineCommuneDistrictItemProperties).Zone)
-        .includes(+(rangeRent as DefaultEncadrementItem).zone)
+      ? districtsMatched
+          .map(
+            (district) =>
+              +(district.properties as PlaineCommuneDistrictItemProperties)
+                .Zone,
+          )
+          .includes(+(rangeRent as DefaultEncadrementItem).zone)
       : false
   }
 }

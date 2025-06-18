@@ -13,8 +13,12 @@ export class GensdeconfianceScraping {
 
     const title = document.querySelector('#post-title')
     const description = document.querySelector('#ad-description')
-    const price = document.querySelector('#col-ad div.price-table > div:nth-child(1) > div.price-table__value')
-    const charges = document.querySelector('#col-ad div.price-table > div:nth-child(2) > div.price-table__value')
+    const price = document.querySelector(
+      '#col-ad div.price-table > div:nth-child(1) > div.price-table__value',
+    )
+    const charges = document.querySelector(
+      '#col-ad div.price-table > div:nth-child(2) > div.price-table__value',
+    )
     const address = document.querySelector('#ad-address > p')
     const cityLabel = document.querySelector('#post-title-breadcrumb > small')
     const itemTags = [...document.querySelectorAll('div > ul > li > div')]
@@ -41,7 +45,9 @@ export class GensdeconfianceScraping {
       address: address?.textContent,
       charges: charges?.textContent,
       hasCharges:
-        charges?.textContent && charges.textContent.match(/\d+/)[0] && +charges.textContent.match(/\d+/)[0] > 0,
+        charges?.textContent &&
+        charges.textContent.match(/\d+/)[0] &&
+        +charges.textContent.match(/\d+/)[0] > 0,
       description: description?.textContent,
       price: price?.textContent,
       surface: surface?.textContent,

@@ -21,7 +21,9 @@ export class AvendrealouerScraping {
 
     // const dpe = [...document.querySelectorAll('#adview-energy-link > div')].find((a) => window.getComputedStyle(a, '::before').backgroundColor !== 'rgba(0, 0, 0, 0)')
 
-    const features = blocDetail ? [...blocDetail.querySelectorAll('.bdszss div.iOPKLj')] : []
+    const features = blocDetail
+      ? [...blocDetail.querySelectorAll('.bdszss div.iOPKLj')]
+      : []
     const features2 = blocPro ? [...blocPro.querySelectorAll('ul > li')] : []
 
     let furnished = null

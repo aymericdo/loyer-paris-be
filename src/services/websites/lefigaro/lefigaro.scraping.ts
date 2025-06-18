@@ -15,16 +15,18 @@ export class LefigaroScraping {
     const description = document.querySelector('.classified-description > p')
     const price = document.querySelector('.classified-price')
     const charges = document.querySelector(
-      'div.main-classified > div > div.classified-about-price > ul > li:nth-child(1) > span.about-price-fees-label'
+      'div.main-classified > div > div.classified-about-price > ul > li:nth-child(1) > span.about-price-fees-label',
     )
     const hasCharges = document.querySelector('.classified-price .fees')
     const cityLabel = title?.querySelector('span')
     const renter = document.querySelector(
-      '#middle-inquiry > div.classifieds-about-agency > div > div.agency__desc > strong'
+      '#middle-inquiry > div.classifieds-about-agency > div > div.agency__desc > strong',
     )
 
     const features = [
-      ...document.querySelectorAll('div.main-classified > div > div.classified-features > ul.features-list > li .feature')
+      ...document.querySelectorAll(
+        'div.main-classified > div > div.classified-features > ul.features-list > li .feature',
+      ),
     ]
 
     let furnished = null

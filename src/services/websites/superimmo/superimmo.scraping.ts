@@ -10,29 +10,31 @@ export class SuperimmoScraping {
     }).window
 
     const title = document.querySelector('body > main > div > div h1 > span')
-    const description = document.querySelector('body > main > div.listing-show-wrapper > div.listing-content > p')
+    const description = document.querySelector(
+      'body > main > div.listing-show-wrapper > div.listing-content > p',
+    )
 
     const price = document.querySelector(
-      'body > main > div.listing-show-wrapper > div.listing-content > section > table > tbody > tr:nth-child(1) > td:nth-child(1)'
+      'body > main > div.listing-show-wrapper > div.listing-content > section > table > tbody > tr:nth-child(1) > td:nth-child(1)',
     )
     const charges = document.querySelector(
-      'body > main > div.listing-show-wrapper > div.listing-content > section > table > tbody > tr:nth-child(1) > td:nth-child(2)'
+      'body > main > div.listing-show-wrapper > div.listing-content > section > table > tbody > tr:nth-child(1) > td:nth-child(2)',
     )
     const renter = document.querySelector(
-      'body > main > div.listing-show-wrapper > div.listing-top-content > div.agency-wrapper > div.agency-content > div.header-agency > div.agency-title'
+      'body > main > div.listing-show-wrapper > div.listing-top-content > div.agency-wrapper > div.agency-content > div.header-agency > div.agency-title',
     )
 
     const features = [
       ...document.querySelectorAll(
-        'body > main > div.listing-show-wrapper > div.listing-top-content > div.gallery > div.listing-header > div > h1 .picto'
-      )
+        'body > main > div.listing-show-wrapper > div.listing-top-content > div.gallery > div.listing-header > div > h1 .picto',
+      ),
     ]
 
     const cityLabel = features[features.length - 1]
     const features2 = [
       ...document.querySelectorAll(
-        'body > main > div.listing-show-wrapper > div.listing-content > section:nth-child(8) > table > tbody > tr td'
-      )
+        'body > main > div.listing-show-wrapper > div.listing-content > section:nth-child(8) > table > tbody > tr td',
+      ),
     ]
 
     let surface = null
@@ -57,7 +59,9 @@ export class SuperimmoScraping {
       return null
     }
 
-    const dpe = document.querySelector('table.dpe-table > tbody > tr > td > table > tbody > tr.current')
+    const dpe = document.querySelector(
+      'table.dpe-table > tbody > tr > td > table > tbody > tr.current',
+    )
 
     return {
       id: null,

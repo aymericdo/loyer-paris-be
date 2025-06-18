@@ -13,7 +13,10 @@ export async function getChloroplethCitiesMap(req: Request, res: Response) {
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
   const dateValue: string = req.query.dateValue as string
-  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
+  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [
+    string,
+    string,
+  ]
 
   if (isOnlyOneCity(mainCity)) {
     res.status(403).json({ message: 'City params not valid' })
@@ -22,11 +25,15 @@ export async function getChloroplethCitiesMap(req: Request, res: Response) {
 
   const geodata = await new DistrictsList(mainCity).currentGeodata()
 
-  const result: { illegalPercentage: number, isIllegalCount: number, totalCount: number, city: string }[] =
-    (await getLegalPerCity(mainCity, dateRange)).map((data) => ({
-      ...data,
-      city: label(data.city as AvailableCities),
-    }))
+  const result: {
+    illegalPercentage: number
+    isIllegalCount: number
+    totalCount: number
+    city: string
+  }[] = (await getLegalPerCity(mainCity, dateRange)).map((data) => ({
+    ...data,
+    city: label(data.city as AvailableCities),
+  }))
 
   if (!result.length) {
     res.status(403).json({ message: 'not_enough_data' })
@@ -81,12 +88,12 @@ export async function getChloroplethCitiesMap(req: Request, res: Response) {
         {
           field: 'isIllegalCount',
           type: 'quantitative',
-          title: 'Nombre d\'annonces non conforme ',
+          title: "Nombre d'annonces non conforme ",
         },
         {
           field: 'totalCount',
           type: 'quantitative',
-          title: 'Nombre d\'annonces ',
+          title: "Nombre d'annonces ",
         },
       ],
     },

@@ -33,7 +33,7 @@ export const WEBSITE_LIST = [
   'seloger',
   'superimmo',
   'foncia',
-  'avendrealouer'
+  'avendrealouer',
 ] as const
 
 export const FUNNIEST_WEBSITES = ['bellesdemeures', 'luxresidence']
@@ -88,12 +88,20 @@ export abstract class Website {
       }
 
       const encadrementFilterFactory = new FilterFactory(getMainCity(city))
-      const currentEncadrementFilter = encadrementFilterFactory.currentEncadrementFilter(cleanAd)
-      const filteredResult: FilteredResult = await currentEncadrementFilter.find()
+      const currentEncadrementFilter =
+        encadrementFilterFactory.currentEncadrementFilter(cleanAd)
+      const filteredResult: FilteredResult =
+        await currentEncadrementFilter.find()
 
       if (filteredResult) {
-        const maxAuthorized = roundNumber(filteredResult.maxPrice * cleanAd.surface)
-        const priceExcludingCharges = getPriceExcludingCharges(cleanAd.price, cleanAd.charges, cleanAd.hasCharges)
+        const maxAuthorized = roundNumber(
+          filteredResult.maxPrice * cleanAd.surface,
+        )
+        const priceExcludingCharges = getPriceExcludingCharges(
+          cleanAd.price,
+          cleanAd.charges,
+          cleanAd.hasCharges,
+        )
         const isLegal = priceExcludingCharges <= maxAuthorized
 
         await new SaveRentService({
@@ -129,7 +137,7 @@ export abstract class Website {
             maxAuthorized,
             priceExcludingCharges,
           },
-          filteredResult
+          filteredResult,
         ).serialize()
       } else {
         throw {

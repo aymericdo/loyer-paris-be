@@ -22,7 +22,7 @@ export class FilterFactory {
     brest: 'json-data/encadrements_brest_2024.json',
     toulouse: 'json-data/encadrements_toulouse_2024.json',
     'saint-malo': 'json-data/encadrements_saint-malo_2023.json',
-    'alençon': 'json-data/encadrements_alençon_2023.json',
+    alençon: 'json-data/encadrements_alençon_2023.json',
     'la rochelle': 'json-data/encadrements_la-rochelle_2023.json',
     rennes: 'json-data/encadrements_rennes_2023.json',
     toulon: 'json-data/encadrements_toulon_2024.json',

@@ -29,7 +29,7 @@ export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
     }
 
     if (this.city) {
-      filter['properties.NOM_COM'] = { $regex: this.city,  $options: 'i' }
+      filter['properties.NOM_COM'] = { $regex: this.city, $options: 'i' }
     }
 
     const districts = await this.GeojsonCollection.find(filter).lean()
@@ -40,22 +40,18 @@ export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
   protected async getDistrictsFromPostalCode(): Promise<ZoneDocument[]> {
     if (!this.postalCode) return []
 
-    const districts = await this.GeojsonCollection.find(
-      {
-        'properties.CODE_POST': +this.postalCode
-      },
-    ).lean()
+    const districts = await this.GeojsonCollection.find({
+      'properties.CODE_POST': +this.postalCode,
+    }).lean()
     return districts?.length ? districts : []
   }
 
   protected async getDistrictsFromCity(): Promise<ZoneDocument[]> {
     if (!this.city) return []
 
-    const districts = await this.GeojsonCollection.find(
-      {
-        'properties.NOM_COM': { $regex: this.city,  $options: 'i' }
-      },
-    ).lean()
+    const districts = await this.GeojsonCollection.find({
+      'properties.NOM_COM': { $regex: this.city, $options: 'i' },
+    }).lean()
 
     return districts?.length ? districts : []
   }

@@ -16,10 +16,17 @@ export interface ZoneProperties {
 
 export interface ZoneDocument extends Document {
   type: string
-  geometry: {
-    type: 'MultiPolygon';
-    coordinates: number[][][] } | { type: 'GeometryCollection', geometries: ZoneDocument }
-  properties: ZoneProperties | PlaineCommuneDistrictItemProperties | EstEnsembleDistrictItemProperties | ParisDistrictItemProperties
+  geometry:
+    | {
+        type: 'MultiPolygon'
+        coordinates: number[][][]
+      }
+    | { type: 'GeometryCollection'; geometries: ZoneDocument }
+  properties:
+    | ZoneProperties
+    | PlaineCommuneDistrictItemProperties
+    | EstEnsembleDistrictItemProperties
+    | ParisDistrictItemProperties
 }
 
 const Schema = mongoose.Schema

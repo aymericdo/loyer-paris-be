@@ -8,17 +8,18 @@ import { Model } from 'mongoose'
 export class GenericDistrictFilter extends DistrictFilterParent {
   constructor(
     mainCity: AvailableMainCities,
-    geojson: Model<ZoneDocument>, {
+    geojson: Model<ZoneDocument>,
+    {
       coordinates,
       city,
       postalCode,
-      districtName
+      districtName,
     }: {
       coordinates?: Coordinate
       city?: AvailableCities
       postalCode?: string
       districtName?: string
-    } = {}
+    } = {},
   ) {
     super({ coordinates, city, postalCode, districtName })
     this.mainCity = mainCity

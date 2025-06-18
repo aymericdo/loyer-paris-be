@@ -25,14 +25,14 @@ export interface AddressItem {
 }
 
 export interface DefaultEncadrementItem {
-  zone: number;
-  meuble: boolean;
-  nombre_de_piece: string;
-  annee_de_construction: string;
-  prix_min: string;
-  prix_med: string;
-  prix_max: string;
-  maison?: boolean;
+  zone: number
+  meuble: boolean
+  nombre_de_piece: string
+  annee_de_construction: string
+  prix_min: string
+  prix_med: string
+  prix_max: string
+  maison?: boolean
 }
 
 export interface DefaultDistrictItemProperties {
@@ -45,12 +45,15 @@ export interface DefaultDistrictItemProperties {
 }
 
 export type DistrictItemProperties =
-  DefaultDistrictItemProperties
+  | DefaultDistrictItemProperties
   | ParisDistrictItemProperties
   | PlaineCommuneDistrictItemProperties
   | EstEnsembleDistrictItemProperties
 
-export type EncadrementItem = DefaultEncadrementItem | ParisEncadrementItem | ObservatoireEncadrementItem
+export type EncadrementItem =
+  | DefaultEncadrementItem
+  | ParisEncadrementItem
+  | ObservatoireEncadrementItem
 
 export interface GeojsonFile {
   type: 'FeatureCollection'

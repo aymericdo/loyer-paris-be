@@ -1,6 +1,11 @@
 import { FilteredResult } from '@interfaces/ad'
 import { AvailableCities } from '@services/city-config/classic-cities'
-import { label, isFake, getMainCity, infoLink } from '@services/city-config/city-selectors'
+import {
+  label,
+  isFake,
+  getMainCity,
+  infoLink,
+} from '@services/city-config/city-selectors'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
@@ -79,7 +84,12 @@ export class SerializerService {
         hasFurniture: { order: 1, value: this.filteredResult.isFurnished },
         roomCount: { order: 2, value: this.filteredResult.roomCount },
         surface: { order: 3, value: surface },
-        dateRange: { order: 4, value: YearBuiltService.formatAfterBeforeWord(this.filteredResult.yearBuilt) },
+        dateRange: {
+          order: 4,
+          value: YearBuiltService.formatAfterBeforeWord(
+            this.filteredResult.yearBuilt,
+          ),
+        },
         isHouse: { order: 5, value: this.filteredResult.isHouse },
         max: {
           order: 6,
@@ -88,11 +98,15 @@ export class SerializerService {
         maxAuthorized: { order: 7, value: !isLegal ? maxAuthorized : null },
         promoPercentage: {
           order: 8,
-          value: !isLegal ? roundNumber(100 - (maxAuthorized * 100) / priceExcludingCharges) : null,
+          value: !isLegal
+            ? roundNumber(100 - (maxAuthorized * 100) / priceExcludingCharges)
+            : null,
         },
         promo: {
           order: 9,
-          value: !isLegal ? roundNumber(priceExcludingCharges - maxAuthorized) : null,
+          value: !isLegal
+            ? roundNumber(priceExcludingCharges - maxAuthorized)
+            : null,
         },
       },
       isLegal,

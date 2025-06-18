@@ -1,8 +1,23 @@
 import { Rent } from '@db/db'
 import { AvailableCities } from '@services/city-config/classic-cities'
-import { AvailableCityZones, getMainCity, isFake } from '@services/city-config/city-selectors'
+import {
+  AvailableCityZones,
+  getMainCity,
+  isFake,
+} from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
-import { getMainCityFilter, getClassicWebsiteFilter, getDistrictFilter, getExceedingFilter, getFurnitureFilter, getHouseFilter, getPriceFilter, getRoomFilter, getSurfaceFilter, getCityFilter } from '@services/db/queries/common'
+import {
+  getMainCityFilter,
+  getClassicWebsiteFilter,
+  getDistrictFilter,
+  getExceedingFilter,
+  getFurnitureFilter,
+  getHouseFilter,
+  getPriceFilter,
+  getRoomFilter,
+  getSurfaceFilter,
+  getCityFilter,
+} from '@services/db/queries/common'
 import { DistrictsList } from '@services/districts/districts-list'
 import { roundNumber } from '@services/helpers/round-number'
 import randomPositionInPolygon from 'random-position-in-polygon'
@@ -46,7 +61,9 @@ function buildFilter(filterParam: {
     isLegal: filterParam.isLegal,
     createdAt: { $gte: minDate },
     ...getClassicWebsiteFilter(),
-    ...(filterParam.city ? getCityFilter(filterParam.city) : getMainCityFilter(filterParam.mainCity)),
+    ...(filterParam.city
+      ? getCityFilter(filterParam.city)
+      : getMainCityFilter(filterParam.mainCity)),
     ...getDistrictFilter(filterParam.districtList),
     ...getFurnitureFilter(filterParam.hasFurniture),
     ...getHouseFilter(filterParam.isHouse),
@@ -60,8 +77,8 @@ function buildFilter(filterParam: {
 }
 
 function randomPointInGeometryCollection(geometryCollection) {
-  const polygons = geometryCollection.geometries.filter(geom =>
-    geom.type === 'Polygon' || geom.type === 'MultiPolygon'
+  const polygons = geometryCollection.geometries.filter(
+    (geom) => geom.type === 'Polygon' || geom.type === 'MultiPolygon',
   )
 
   if (polygons.length === 0) return null
@@ -71,7 +88,7 @@ function randomPointInGeometryCollection(geometryCollection) {
     type: 'Feature',
     geometry: {
       ...randomPolygon,
-    }
+    },
   })
 }
 
@@ -91,7 +108,7 @@ export async function getRelevantAdsData(
   paginationOpts?: {
     page: number
     perPage: number
-  }
+  },
 ): Promise<RelevantAdsData[]> {
   const page = paginationOpts?.page || 0
   const perPage = paginationOpts?.perPage || 20
@@ -122,10 +139,13 @@ export async function getRelevantAdsData(
       sort: { createdAt: -1 },
       skip: page * perPage,
       limit: perPage,
-    }
+    },
   ).lean()) as unknown as RelevantAdsData[]
 
-  const geodataCache: Record<string, Awaited<ReturnType<DistrictsList['currentGeodata']>>> = {}
+  const geodataCache: Record<
+    string,
+    Awaited<ReturnType<DistrictsList['currentGeodata']>>
+  > = {}
 
   for (const ad of ads) {
     const mainCity = getMainCity(ad.city)
@@ -134,51 +154,56 @@ export async function getRelevantAdsData(
     if (geodataCache[cacheKey]) continue
 
     if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
-      const districtsList = new DistrictsList(mainCity, { specificCity: ad.city })
+      const districtsList = new DistrictsList(mainCity, {
+        specificCity: ad.city,
+      })
       geodataCache[cacheKey] = await districtsList.currentGeodata()
     }
   }
 
-  return await Promise.all(ads.map(async (ad) => {
-    let blurry = false
+  return await Promise.all(
+    ads.map(async (ad) => {
+      let blurry = false
 
-    const mainCity = getMainCity(ad.city)
-    if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
-      const geodata = geodataCache[`${mainCity}_${ad.city}`]
-      const feature = geodata.features[Math.floor(Math.random() * geodata.features.length)]
+      const mainCity = getMainCity(ad.city)
+      if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
+        const geodata = geodataCache[`${mainCity}_${ad.city}`]
+        const feature =
+          geodata.features[Math.floor(Math.random() * geodata.features.length)]
 
-      let point: [number, number] | null = null
+        let point: [number, number] | null = null
 
-      if (feature) {
-        if (feature.geometry.type === 'GeometryCollection') {
-          point = randomPointInGeometryCollection(feature.geometry)
-        } else {
-          point = randomPositionInPolygon(feature)
+        if (feature) {
+          if (feature.geometry.type === 'GeometryCollection') {
+            point = randomPointInGeometryCollection(feature.geometry)
+          } else {
+            point = randomPositionInPolygon(feature)
+          }
+
+          if (point) {
+            ad.longitude = point[0].toString()
+            ad.latitude = point[1].toString()
+          }
         }
 
-        if (point) {
-          ad.longitude = point[0].toString()
-          ad.latitude = point[1].toString()
-        }
+        blurry = true
       }
 
-      blurry = true
-    }
+      const exceeding = !ad.isLegal
+        ? roundNumber(ad.priceExcludingCharges - ad.maxPrice)
+        : null
 
-    const exceeding = !ad.isLegal
-      ? roundNumber(ad.priceExcludingCharges - ad.maxPrice)
-      : null
+      delete ad.isLegal
+      delete ad.priceExcludingCharges
+      delete ad.maxPrice
 
-    delete ad.isLegal
-    delete ad.priceExcludingCharges
-    delete ad.maxPrice
-
-    return {
-      ...ad,
-      blurry,
-      exceeding,
-    }
-  }))
+      return {
+        ...ad,
+        blurry,
+        exceeding,
+      }
+    }),
+  )
 }
 
 export async function getRelevantAdsDataTotalCount(filterParam: {

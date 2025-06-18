@@ -1,6 +1,10 @@
 import { Ad } from '@interfaces/ad'
 import { AvailableCities } from '@services/city-config/classic-cities'
-import { getCityList, hasArrondissement, postalCodes } from '@services/city-config/city-selectors'
+import {
+  getCityList,
+  hasArrondissement,
+  postalCodes,
+} from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 
 export class PostalCodeService {
@@ -14,7 +18,7 @@ export class PostalCodeService {
 
   getPostalCodePossibilities(): string[] {
     if (this.city === 'all') {
-      return getCityList(this.mainCity).flatMap(city => postalCodes(city))
+      return getCityList(this.mainCity).flatMap((city) => postalCodes(city))
     } else {
       return [...postalCodes(this.city)]
     }
@@ -31,11 +35,19 @@ export class PostalCodeService {
     }
 
     const postalCode =
-      (ad.cityLabel && this.startOfPostalCodeFromText(ad.cityLabel, postalCodePossibilities)) ||
-      (ad.title && this.startOfPostalCodeFromText(ad.title, postalCodePossibilities)) ||
-      (ad.description && this.startOfPostalCodeFromText(ad.description, postalCodePossibilities))
+      (ad.cityLabel &&
+        this.startOfPostalCodeFromText(
+          ad.cityLabel,
+          postalCodePossibilities,
+        )) ||
+      (ad.title &&
+        this.startOfPostalCodeFromText(ad.title, postalCodePossibilities)) ||
+      (ad.description &&
+        this.startOfPostalCodeFromText(ad.description, postalCodePossibilities))
 
-    return postalCode && postalCodePossibilities.includes(postalCode.toString()) ? postalCode : null
+    return postalCode && postalCodePossibilities.includes(postalCode.toString())
+      ? postalCode
+      : null
   }
 
   protected startOfPostalCodeFromText(text: string, codes: string[]): string {
@@ -60,14 +72,16 @@ export class PostalCodeService {
     if (hasArrondissement(this.city)) {
       const arrondissementRegex = new RegExp(
         `((?<=${this.city} )\\d{1,2})|(\\d{1,2}(?= ?(er|ème|e|eme)))`,
-        'gi'
+        'gi',
       )
 
       const match = text.match(arrondissementRegex)
 
       if (match) {
         for (const m of match) {
-          const arrondissementNumber = m.replace(/ ?(er|ème|e|eme)/i, '').padStart(3, '0')
+          const arrondissementNumber = m
+            .replace(/ ?(er|ème|e|eme)/i, '')
+            .padStart(3, '0')
           const possiblePostal = `${startOfPostalCode}${arrondissementNumber}`
           if (codes.includes(possiblePostal)) return possiblePostal
         }

@@ -20,12 +20,16 @@ export class FonciaScraping {
     let surface = secondary?.querySelector('.main-features .surface')
 
     const dpeImg = document.querySelector('.dpe-diagnostic > img')
-    const dpeMatches = dpeImg?.alt?.match(/(?<=Diagnostic classe énergie : )[ABCDEFG]/g)
+    const dpeMatches = dpeImg?.alt?.match(
+      /(?<=Diagnostic classe énergie : )[ABCDEFG]/g,
+    )
     const dpe = dpeMatches?.length ? dpeMatches[0] : null
 
     let charges = null
     let rooms = null
-    const features = [...document.querySelectorAll('.features-container .features .feature')]
+    const features = [
+      ...document.querySelectorAll('.features-container .features .feature'),
+    ]
     features.forEach((feature) => {
       if (feature.textContent?.match(/Dont provision sur charges/g)) {
         charges = feature.querySelector('span.feature-value')

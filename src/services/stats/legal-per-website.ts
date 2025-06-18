@@ -9,9 +9,20 @@ export async function getLegalPerWebsite(req: Request, res: Response) {
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
   const dateValue: string = req.query.dateValue as string
-  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
+  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [
+    string,
+    string,
+  ]
 
-  const data = await getClassicData(mainCity, dateRange, {}, { isLegal: 1, website: 1}) as { isLegal: boolean, website: string }[]
+  const data = (await getClassicData(
+    mainCity,
+    dateRange,
+    {},
+    { isLegal: 1, website: 1 },
+  )) as {
+    isLegal: boolean
+    website: string
+  }[]
 
   if (!data.length) {
     res.status(403).json({ message: 'not_enough_data' })
@@ -26,7 +37,9 @@ export async function getLegalPerWebsite(req: Request, res: Response) {
       text: 'Annonces non conformes par site web',
     },
     data: {
-      values: data.map((res) => (res.website === 'loueragile' ? { ...res, website: 'jinka' } : res)),
+      values: data.map((res) =>
+        res.website === 'loueragile' ? { ...res, website: 'jinka' } : res,
+      ),
     },
     mark: { type: 'bar', tooltip: true },
     transform: [
@@ -85,7 +98,7 @@ export async function getLegalPerWebsite(req: Request, res: Response) {
         { field: 'website', title: 'Site ', type: 'nominal' },
         {
           field: 'numberAds',
-          title: 'Nombre total d\'annonces ',
+          title: "Nombre total d'annonces ",
           type: 'nominal',
         },
       ],

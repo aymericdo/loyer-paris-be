@@ -11,7 +11,10 @@ export async function getIsLegalVariation(req: Request, res: Response) {
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
   const dateValue: string = req.query.dateValue as string
-  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [string, string]
+  const dateRange: [string, string] = dateValue?.split(',').splice(0, 2) as [
+    string,
+    string,
+  ]
   const districtValues: string = req.query.districtValues as string
   const furnishedValue = req.query.furnishedValue as string
   const surfaceValue: string = req.query.surfaceValue as string
@@ -22,14 +25,37 @@ export async function getIsLegalVariation(req: Request, res: Response) {
     ?.split(',')
     ?.map((v) => v)
     .filter(Boolean) as unknown as AvailableCityZones
-  const surfaceRange: [number, number] = surfaceValue?.split(',')?.map((v) => +v).splice(0, 2) as [number, number]
-  const roomRange: [number, number] = roomValue?.split(',')?.map((v) => +v).splice(0, 2) as [number, number]
-  const hasFurniture: boolean = furnishedValue === 'furnished' ? true : furnishedValue === 'nonFurnished' ? false : null
+  const surfaceRange: [number, number] = surfaceValue
+    ?.split(',')
+    ?.map((v) => +v)
+    .splice(0, 2) as [number, number]
+  const roomRange: [number, number] = roomValue
+    ?.split(',')
+    ?.map((v) => +v)
+    .splice(0, 2) as [number, number]
+  const hasFurniture: boolean =
+    furnishedValue === 'furnished'
+      ? true
+      : furnishedValue === 'nonFurnished'
+        ? false
+        : null
 
   const isParticulier =
-    isParticulierValue.toLowerCase() === 'true' ? true : isParticulierValue.toLowerCase() === 'false' ? false : null
+    isParticulierValue.toLowerCase() === 'true'
+      ? true
+      : isParticulierValue.toLowerCase() === 'false'
+        ? false
+        : null
 
-  const data = await getLegalPerDate(mainCity, districtList, surfaceRange, roomRange, hasFurniture, dateRange, isParticulier)
+  const data = await getLegalPerDate(
+    mainCity,
+    districtList,
+    surfaceRange,
+    roomRange,
+    hasFurniture,
+    dateRange,
+    isParticulier,
+  )
   if (!data.length) {
     res.status(403).json({ message: 'not_enough_data' })
     return
@@ -52,12 +78,13 @@ export async function getIsLegalVariation(req: Request, res: Response) {
     transform: [
       {
         calculate: 'datum.illegalPercentage / 100',
-        as: 'illegalPercentageDecimal'
+        as: 'illegalPercentageDecimal',
       },
       {
-        calculate: 'datetime(parseInt(split(datum.weekDate, \'-\')[0]), 0, 1 + (parseInt(split(datum.weekDate, \'-\')[1])-1)*7)',
-        as: 'date'
-      }
+        calculate:
+          "datetime(parseInt(split(datum.weekDate, '-')[0]), 0, 1 + (parseInt(split(datum.weekDate, '-')[1])-1)*7)",
+        as: 'date',
+      },
     ],
     layer: [
       {
@@ -69,29 +96,29 @@ export async function getIsLegalVariation(req: Request, res: Response) {
         },
         encoding: {
           x: { field: 'date', type: 'temporal', title: 'Semaine' },
-          color: { 'value': '#fff' },
+          color: { value: '#fff' },
           y: {
             field: 'illegalPercentageDecimal',
             type: 'quantitative',
             title: 'Pourcentage non conforme (%)',
-            axis: { format: '.1%' }
+            axis: { format: '.1%' },
           },
           tooltip: [
             {
               field: 'date',
               type: 'temporal',
               format: 'Semaine %W-%Y',
-              title: 'Semaine'
+              title: 'Semaine',
             },
             {
               field: 'illegalPercentageDecimal',
               type: 'quantitative',
               title: 'Pourcentage non conforme',
-              format: '.1%'
+              format: '.1%',
             },
-            { field: 'totalCount', type: 'quantitative', title: 'Total' }
-          ]
-        }
+            { field: 'totalCount', type: 'quantitative', title: 'Total' },
+          ],
+        },
       },
       {
         mark: {
@@ -105,13 +132,13 @@ export async function getIsLegalVariation(req: Request, res: Response) {
             loess: 'illegalPercentageDecimal',
             on: 'date',
             bandwidth: 0.4,
-          }
+          },
         ],
         encoding: {
           x: {
             field: 'date',
             type: 'temporal',
-            'axis': { format: 'Semaine %W-%Y' }
+            axis: { format: 'Semaine %W-%Y' },
           },
           y: {
             field: 'illegalPercentageDecimal',
@@ -122,18 +149,18 @@ export async function getIsLegalVariation(req: Request, res: Response) {
               field: 'date',
               type: 'temporal',
               format: 'Semaine %W-%Y',
-              title: 'Semaine'
+              title: 'Semaine',
             },
             {
               field: 'illegalPercentageDecimal',
               type: 'quantitative',
               title: 'Pourcentage lissé',
-              format: '.1%'
-            }
-          ]
-        }
-      }
-    ]
+              format: '.1%',
+            },
+          ],
+        },
+      },
+    ],
   }
 
   res.json(vegaMap)
