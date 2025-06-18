@@ -65,6 +65,9 @@ export const NiceGeojson: Model<ZoneDocument> = encadrementZone1Connection.model
 export const NantesGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('nantesgeojsons', zoneSchema)
 export const StrasbourgGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('strasbourggeojsons', zoneSchema)
 export const NancyGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('nancygeojsons', zoneSchema)
+export const ToursGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('toursgeojsons', zoneSchema)
+export const ArrasGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('arrasgeojsons', zoneSchema)
+export const VannesGeojson: Model<ZoneDocument> = encadrementZone1Connection.model<ZoneDocument>('vannesgeojsons', zoneSchema)
 
 export const closeAllConnections = async () => {
   await rentConnection.close()

@@ -8643,5 +8643,876 @@
     "zones": [
       "Zone 3"
     ]
+  },
+  "ballan-miré": {
+    "inseeCode": "37018",
+    "label": "Ballan-Miré",
+    "postalCodes": [
+      "37510"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "berthenay": {
+    "inseeCode": "37025",
+    "label": "Berthenay",
+    "postalCodes": [
+      "37510"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "chambray-lès-tours": {
+    "inseeCode": "37050",
+    "label": "Chambray-lès-Tours",
+    "postalCodes": [
+      "37170"
+    ],
+    "zones": [
+      "Zone 2",
+      "Zone 3"
+    ]
+  },
+  "chanceaux-sur-choisille": {
+    "inseeCode": "37054",
+    "label": "Chanceaux-sur-Choisille",
+    "postalCodes": [
+      "37390"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "druye": {
+    "inseeCode": "37099",
+    "label": "Druye",
+    "postalCodes": [
+      "37190"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "fondettes": {
+    "inseeCode": "37109",
+    "label": "Fondettes",
+    "postalCodes": [
+      "37230"
+    ],
+    "zones": [
+      "Zone 2",
+      "Zone 3"
+    ]
+  },
+  "joué-lès-tours": {
+    "inseeCode": "37122",
+    "label": "Joué-lès-Tours",
+    "postalCodes": [
+      "37300"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "luynes": {
+    "inseeCode": "37139",
+    "label": "Luynes",
+    "postalCodes": [
+      "37230"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "la membrolle-sur-choisille": {
+    "inseeCode": "37151",
+    "label": "La Membrolle-sur-Choisille",
+    "postalCodes": [
+      "37390"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "mettray": {
+    "inseeCode": "37152",
+    "label": "Mettray",
+    "postalCodes": [
+      "37390"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "notre-dame-d'oé": {
+    "inseeCode": "37172",
+    "label": "Notre-Dame-d'Oé",
+    "postalCodes": [
+      "37390"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "parçay-meslay": {
+    "inseeCode": "37179",
+    "label": "Parçay-Meslay",
+    "postalCodes": [
+      "37210"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "la riche": {
+    "inseeCode": "37195",
+    "label": "La Riche",
+    "postalCodes": [
+      "37520"
+    ],
+    "zones": [
+      "Zone 2",
+      "Zone 3"
+    ]
+  },
+  "rochecorbon": {
+    "inseeCode": "37203",
+    "label": "Rochecorbon",
+    "postalCodes": [
+      "37210"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "saint-avertin": {
+    "inseeCode": "37208",
+    "label": "Saint-Avertin",
+    "postalCodes": [
+      "37550"
+    ],
+    "zones": [
+      "Zone 2",
+      "Zone 3"
+    ]
+  },
+  "saint-cyr-sur-loire": {
+    "inseeCode": "37214",
+    "label": "Saint-Cyr-sur-Loire",
+    "postalCodes": [
+      "37540"
+    ],
+    "zones": [
+      "Zone 2",
+      "Zone 3"
+    ]
+  },
+  "saint-étienne-de-chigny": {
+    "inseeCode": "37217",
+    "label": "Saint-Étienne-de-Chigny",
+    "postalCodes": [
+      "37230"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "saint-genouph": {
+    "inseeCode": "37219",
+    "label": "Saint-Genouph",
+    "postalCodes": [
+      "37510"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "saint-pierre-des-corps": {
+    "inseeCode": "37233",
+    "label": "Saint-Pierre-des-Corps",
+    "postalCodes": [
+      "37700"
+    ],
+    "zones": [
+      "Zone 2",
+      "Zone 3"
+    ]
+  },
+  "savonnières": {
+    "inseeCode": "37243",
+    "label": "Savonnières",
+    "postalCodes": [
+      "37510"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "tours": {
+    "inseeCode": "37261",
+    "label": "Tours",
+    "postalCodes": [
+      "37000",
+      "37100",
+      "37200"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2",
+      "Zone 3"
+    ]
+  },
+  "villandry": {
+    "inseeCode": "37272",
+    "label": "Villandry",
+    "postalCodes": [
+      "37510"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "achicourt": {
+    "inseeCode": "62004",
+    "label": "Achicourt",
+    "postalCodes": [
+      "62217"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "acq": {
+    "inseeCode": "62007",
+    "label": "Acq",
+    "postalCodes": [
+      "62144"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "agny": {
+    "inseeCode": "62013",
+    "label": "Agny",
+    "postalCodes": [
+      "62217"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "anzin saint aubin": {
+    "inseeCode": "62037",
+    "label": "Anzin-Saint-Aubin",
+    "postalCodes": [
+      "62223"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "arras": {
+    "inseeCode": "62041",
+    "label": "Arras",
+    "postalCodes": [
+      "62000"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "athies": {
+    "inseeCode": "62042",
+    "label": "Athies",
+    "postalCodes": [
+      "62223"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "bailleul sir berthoult": {
+    "inseeCode": "62073",
+    "label": "Bailleul-Sir-Berthoult",
+    "postalCodes": [
+      "62580"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "basseux": {
+    "inseeCode": "62085",
+    "label": "Basseux",
+    "postalCodes": [
+      "62123"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "beaumetz les loges": {
+    "inseeCode": "62097",
+    "label": "Beaumetz-lès-Loges",
+    "postalCodes": [
+      "62123"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "beaurains": {
+    "inseeCode": "62099",
+    "label": "Beaurains",
+    "postalCodes": [
+      "62217"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "boiry becquerelle": {
+    "inseeCode": "62144",
+    "label": "Boiry-Becquerelle",
+    "postalCodes": [
+      "62128"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "boiry saint martin": {
+    "inseeCode": "62146",
+    "label": "Boiry-Saint-Martin",
+    "postalCodes": [
+      "62175"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "boiry sainte rictrude": {
+    "inseeCode": "62147",
+    "label": "Boiry-Sainte-Rictrude",
+    "postalCodes": [
+      "62175"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "boisleux au mont": {
+    "inseeCode": "62151",
+    "label": "Boisleux-au-Mont",
+    "postalCodes": [
+      "62175"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "boisleux saint marc": {
+    "inseeCode": "62152",
+    "label": "Boisleux-Saint-Marc",
+    "postalCodes": [
+      "62175"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "boyelles": {
+    "inseeCode": "62172",
+    "label": "Boyelles",
+    "postalCodes": [
+      "62128"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "dainville": {
+    "inseeCode": "62263",
+    "label": "Dainville",
+    "postalCodes": [
+      "62000"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "ecurie": {
+    "inseeCode": "62290",
+    "label": "Écurie",
+    "postalCodes": [
+      "62223"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "etrun": {
+    "inseeCode": "62320",
+    "label": "Étrun",
+    "postalCodes": [
+      "62161"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "fampoux": {
+    "inseeCode": "62323",
+    "label": "Fampoux",
+    "postalCodes": [
+      "62118"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "farbus": {
+    "inseeCode": "62324",
+    "label": "Farbus",
+    "postalCodes": [
+      "62580"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "feuchy": {
+    "inseeCode": "62331",
+    "label": "Feuchy",
+    "postalCodes": [
+      "62223"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "ficheux": {
+    "inseeCode": "62332",
+    "label": "Ficheux",
+    "postalCodes": [
+      "62173"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "gavrelle": {
+    "inseeCode": "62369",
+    "label": "Gavrelle",
+    "postalCodes": [
+      "62580"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "guemappe": {
+    "inseeCode": "62392",
+    "label": "Guémappe",
+    "postalCodes": [
+      "62128"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "heninel": {
+    "inseeCode": "62426",
+    "label": "Héninel",
+    "postalCodes": [
+      "62128"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "henin sur cojeul": {
+    "inseeCode": "62428",
+    "label": "Hénin-sur-Cojeul",
+    "postalCodes": [
+      "62128"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "maroeuil": {
+    "inseeCode": "62557",
+    "label": "Marœuil",
+    "postalCodes": [
+      "62161"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "mercatel": {
+    "inseeCode": "62568",
+    "label": "Mercatel",
+    "postalCodes": [
+      "62217"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "monchy le preux": {
+    "inseeCode": "62582",
+    "label": "Monchy-le-Preux",
+    "postalCodes": [
+      "62118"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "mont saint eloi": {
+    "inseeCode": "62589",
+    "label": "Mont-Saint-Éloi",
+    "postalCodes": [
+      "62144"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "neuville saint vaast": {
+    "inseeCode": "62609",
+    "label": "Neuville-Saint-Vaast",
+    "postalCodes": [
+      "62580"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "neuville vitasse": {
+    "inseeCode": "62611",
+    "label": "Neuville-Vitasse",
+    "postalCodes": [
+      "62217"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "ransart": {
+    "inseeCode": "62689",
+    "label": "Ransart",
+    "postalCodes": [
+      "62173"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "riviere": {
+    "inseeCode": "62712",
+    "label": "Rivière",
+    "postalCodes": [
+      "62173"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "roclincourt": {
+    "inseeCode": "62714",
+    "label": "Roclincourt",
+    "postalCodes": [
+      "62223"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "roeux": {
+    "inseeCode": "62718",
+    "label": "Rœux",
+    "postalCodes": [
+      "62118"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "sainte catherine": {
+    "inseeCode": "62744",
+    "label": "Sainte-Catherine",
+    "postalCodes": [
+      "62223"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "saint laurent blangy": {
+    "inseeCode": "62753",
+    "label": "Saint-Laurent-Blangy",
+    "postalCodes": [
+      "62223"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "saint martin sur cojeul": {
+    "inseeCode": "62761",
+    "label": "Saint-Martin-sur-Cojeul",
+    "postalCodes": [
+      "62128"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "saint nicolas": {
+    "inseeCode": "62764",
+    "label": "Saint-Nicolas",
+    "postalCodes": [
+      "62223"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "thelus": {
+    "inseeCode": "62810",
+    "label": "Thélus",
+    "postalCodes": [
+      "62580"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "tilloy les mofflaines": {
+    "inseeCode": "62817",
+    "label": "Tilloy-lès-Mofflaines",
+    "postalCodes": [
+      "62217"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "wailly": {
+    "inseeCode": "62869",
+    "label": "Wailly",
+    "postalCodes": [
+      "62217"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "wancourt": {
+    "inseeCode": "62873",
+    "label": "Wancourt",
+    "postalCodes": [
+      "62128"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "willerval": {
+    "inseeCode": "62892",
+    "label": "Willerval",
+    "postalCodes": [
+      "62580"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "arradon": {
+    "inseeCode": "56003",
+    "label": "Arradon",
+    "postalCodes": [
+      "56610"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "arzon": {
+    "inseeCode": "56005",
+    "label": "Arzon",
+    "postalCodes": [
+      "56640"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "baden": {
+    "inseeCode": "56008",
+    "label": "Baden",
+    "postalCodes": [
+      "56870"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "le hezo": {
+    "inseeCode": "56084",
+    "label": "Le Hézo",
+    "postalCodes": [
+      "56450"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "ile aux moines": {
+    "inseeCode": "56087",
+    "label": "Île-aux-Moines",
+    "postalCodes": [
+      "56780"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "ile d arz": {
+    "inseeCode": "56088",
+    "label": "Île-d'Arz",
+    "postalCodes": [
+      "56840"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "larmor baden": {
+    "inseeCode": "56106",
+    "label": "Larmor-Baden",
+    "postalCodes": [
+      "56870"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "plescop": {
+    "inseeCode": "56158",
+    "label": "Plescop",
+    "postalCodes": [
+      "56890"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "ploeren": {
+    "inseeCode": "56164",
+    "label": "Ploeren",
+    "postalCodes": [
+      "56880"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "plougoumelen": {
+    "inseeCode": "56167",
+    "label": "Plougoumelen",
+    "postalCodes": [
+      "56400"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "saint armel": {
+    "inseeCode": "56205",
+    "label": "Saint-Armel",
+    "postalCodes": [
+      "56450"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "saint ave": {
+    "inseeCode": "56206",
+    "label": "Saint-Avé",
+    "postalCodes": [
+      "56890"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "saint gildas de rhuys": {
+    "inseeCode": "56214",
+    "label": "Saint-Gildas-de-Rhuys",
+    "postalCodes": [
+      "56730"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "sarzeau": {
+    "inseeCode": "56240",
+    "label": "Sarzeau",
+    "postalCodes": [
+      "56370"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "sene": {
+    "inseeCode": "56243",
+    "label": "Séné",
+    "postalCodes": [
+      "56860"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "le tour du parc": {
+    "inseeCode": "56252",
+    "label": "Le Tour-du-Parc",
+    "postalCodes": [
+      "56370"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "vannes": {
+    "inseeCode": "56260",
+    "label": "Vannes",
+    "postalCodes": [
+      "56000"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2"
+    ]
+  },
+  "bono": {
+    "inseeCode": "56262",
+    "label": "Le Bono",
+    "postalCodes": [
+      "56400"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
   }
 }

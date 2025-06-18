@@ -32,6 +32,9 @@ export class FilterFactory {
     nantes: 'json-data/encadrements_nantes_2023.json',
     strasbourg: 'json-data/encadrements_strasbourg_2024.json',
     nancy: 'json-data/encadrements_nancy_2023.json',
+    tours: 'json-data/encadrements_tours_2023.json',
+    arras: 'json-data/encadrements_arras_2023.json',
+    vannes: 'json-data/encadrements_vannes_2024.json',
   }
 
   constructor(mainCity: AvailableMainCities) {

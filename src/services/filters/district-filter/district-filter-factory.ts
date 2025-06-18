@@ -3,7 +3,7 @@ import { EstEnsembleDistrictFilter } from './est-ensemble-district-filter'
 import { ParisDistrictFilter } from './paris-district-filter'
 import { PlaineCommuneDistrictFilter } from './plaine-commune-district-filter'
 import { GrenobleDistrictFilter } from '@services/filters/district-filter/grenoble-district-filter'
-import { AlençonGeojson, AnnecyGeojson, BordeauxGeojson, BrestGeojson, LaRochelleGeojson, LilleGeojson, LyonGeojson, MarseilleGeojson, MontpellierGeojson, NancyGeojson, NantesGeojson, NiceGeojson, PaysBasqueGeojson, RennesGeojson, SaintMaloGeojson, StrasbourgGeojson, ToulonGeojson, ToulouseGeojson } from '@db/db'
+import { AlençonGeojson, AnnecyGeojson, ArrasGeojson, BordeauxGeojson, BrestGeojson, LaRochelleGeojson, LilleGeojson, LyonGeojson, MarseilleGeojson, MontpellierGeojson, NancyGeojson, NantesGeojson, NiceGeojson, PaysBasqueGeojson, RennesGeojson, SaintMaloGeojson, StrasbourgGeojson, ToulonGeojson, ToulouseGeojson, ToursGeojson, VannesGeojson } from '@db/db'
 import { GenericDistrictFilter } from '@services/filters/district-filter/generic-district-filter'
 import { DistrictFilterParent } from '@services/filters/district-filter/district-filter-parent'
 import { AvailableCities } from '@services/city-config/classic-cities'
@@ -33,6 +33,9 @@ export class DistrictFilterFactory {
     nantes: NantesGeojson,
     strasbourg: StrasbourgGeojson,
     nancy: NancyGeojson,
+    tours: ToursGeojson,
+    arras: ArrasGeojson,
+    vannes: VannesGeojson,
   }
 
   constructor(mainCity: AvailableMainCities) {
