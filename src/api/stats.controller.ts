@@ -9,6 +9,7 @@ import { getLegalPerRenter } from '@services/stats/legal-per-renter'
 import { getLegalPerSurface } from '@services/stats/legal-per-surface'
 import { getLegalPerWebsite } from '@services/stats/legal-per-website'
 import { getMap } from '@services/stats/map'
+import { getMapFrance } from '@services/stats/map-france'
 import { getPriceDifference } from '@services/stats/price-difference'
 import { getPriceVariation } from '@services/stats/price-variation'
 import { getWelcomeText } from '@services/stats/welcome-text'
@@ -23,6 +24,7 @@ function getNeedCaptcha(req: Request, res: Response) {
 
 // routes
 router.get('/welcome/:city', paramMiddleware(true), getWelcomeText)
+router.get('/map/france', getMapFrance)
 router.get('/map/:city', paramMiddleware(true), getMap)
 router.get('/chloropleth-map/:city', paramMiddleware(true), getChloroplethMap)
 router.get(

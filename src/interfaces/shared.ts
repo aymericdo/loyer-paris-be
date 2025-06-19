@@ -3,7 +3,7 @@ import { EstEnsembleDistrictItemProperties } from './est-ensemble'
 import { ParisDistrictItemProperties, ParisEncadrementItem } from './paris'
 import { PlaineCommuneDistrictItemProperties } from './plaine-commune'
 import { ObservatoireEncadrementItem } from '@interfaces/observatoire-des-loyers'
-import { ZoneDocument } from '@db/zone.model'
+import { ZoneDocumentSerialized } from '@db/zone.model'
 
 export interface Coordinate {
   lat: number
@@ -57,5 +57,5 @@ export type EncadrementItem =
 
 export interface GeojsonFile {
   type: 'FeatureCollection'
-  features: ZoneDocument[]
+  features: ZoneDocumentSerialized[]
 }

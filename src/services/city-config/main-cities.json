@@ -268,8 +268,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      7.25092,
-      43.71273
+      43.71273,
+      7.25092
     ],
     "builtYearRangeEnd": 2005
   },
@@ -396,8 +396,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      -1.555335,
-      47.239367
+      47.239367,
+      -1.555335
     ],
     "builtYearRangeEnd": 2005
   },
@@ -441,8 +441,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      7.761454,
-      48.579831
+      48.579831,
+      7.761454
     ],
     "builtYearRangeEnd": 2005
   },
@@ -629,8 +629,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      1.433805,
-      43.604082
+      43.604082,
+      1.433805
     ],
     "builtYearRangeEnd": 2005
   },
@@ -649,8 +649,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      -4.497736,
-      48.406435
+      48.406435,
+      -4.497736
     ],
     "builtYearRangeEnd": 2005
   },
@@ -679,8 +679,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      -1.988626,
-      48.642082
+      48.642082,
+      -1.988626
     ],
     "builtYearRangeEnd": 2005
   },
@@ -722,8 +722,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      0.092935,
-      48.429859
+      48.429859,
+      0.092935
     ],
     "builtYearRangeEnd": 2005
   },
@@ -744,8 +744,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      -1.170382,
-      46.157816
+      46.157816,
+      -1.170382
     ],
     "builtYearRangeEnd": 2005
   },
@@ -799,8 +799,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      -1.68365,
-      48.110899
+      48.110899,
+      -1.68365
     ],
     "builtYearRangeEnd": 2005
   },
@@ -894,8 +894,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      5.933443,
-      43.136379
+      43.136379,
+      5.933443
     ],
     "builtYearRangeEnd": 2005
   },
@@ -919,8 +919,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      6.125296,
-      45.901584
+      45.901584,
+      6.125296
     ],
     "builtYearRangeEnd": 2005
   },
@@ -1023,8 +1023,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      5.405,
-      43.282
+      43.282,
+      5.405
     ],
     "builtYearRangeEnd": 2005
   },
@@ -1068,8 +1068,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      6.171263,
-      48.688135
+      48.688135,
+      6.171263
     ],
     "builtYearRangeEnd": 2005
   },
@@ -1102,8 +1102,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      0.69472,
-      47.395476
+      47.395476,
+      0.69472
     ],
     "builtYearRangeEnd": 2005
   },
@@ -1160,8 +1160,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      2.768267,
-      50.287896
+      50.287896,
+      2.768267
     ],
     "builtYearRangeEnd": 2005
   },
@@ -1190,8 +1190,8 @@
     "fake": true,
     "house": true,
     "coordinates": [
-      -2.752192,
-      47.659971
+      47.659971,
+      -2.752192
     ],
     "builtYearRangeEnd": 2005
   }

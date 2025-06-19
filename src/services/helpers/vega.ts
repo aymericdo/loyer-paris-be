@@ -14,8 +14,8 @@ export class Vega {
       },
       padding: {
         top: 12,
-        left: 24,
-        right: 24,
+        left: 12,
+        right: 12,
         bottom: 12,
       },
       config: {

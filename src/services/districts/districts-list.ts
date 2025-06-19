@@ -1,7 +1,12 @@
-import { ZoneDocument } from '@db/zone.model'
+import { ZoneDocument, ZoneDocumentSerialized } from '@db/zone.model'
 import { GeojsonFile } from '@interfaces/shared'
 import { AvailableCities } from '@services/city-config/classic-cities'
-import { getCityList, zones, label } from '@services/city-config/city-selectors'
+import {
+  getCityList,
+  zones,
+  label,
+  isFake,
+} from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
 
@@ -14,8 +19,10 @@ interface DistrictElem {
 
 export const DISPLAY_ZONE_FIELD = 'displayZone'
 export const DISPLAY_CITY_FIELD = 'displayCity'
+export const DISPLAY_MAIN_CITY_FIELD = 'displayMainCity'
 export const ZONE_PATH = `properties.${DISPLAY_ZONE_FIELD}`
 export const CITY_PATH = `properties.${DISPLAY_CITY_FIELD}`
+export const MAIN_CITY_PATH = `properties.${DISPLAY_MAIN_CITY_FIELD}`
 
 export class DistrictsList {
   currentDistrictFilter = null
@@ -38,23 +45,29 @@ export class DistrictsList {
   }
 
   async currentGeodata(): Promise<GeojsonFile> {
-    const features: ZoneDocument[] =
+    const features: ZoneDocumentSerialized[] =
       await this.currentDistrictFilter.getDistricts()
 
     return {
       type: 'FeatureCollection',
-      features: features.map((data) => ({
-        ...data,
-        properties: {
-          ...data.properties,
-          [DISPLAY_ZONE_FIELD]: this.currentDistrictFilter.digZoneInProperties(
-            data['properties'],
-          ),
-          [DISPLAY_CITY_FIELD]: this.currentDistrictFilter.digCityInProperties(
-            data['properties'],
-          ),
-        },
-      })) as ZoneDocument[],
+      features: features.map((data) => {
+        return {
+          ...data,
+          properties: {
+            ...data.properties,
+            [DISPLAY_ZONE_FIELD]:
+              this.currentDistrictFilter.digZoneInProperties(
+                data['properties'],
+              ),
+            [DISPLAY_CITY_FIELD]:
+              this.currentDistrictFilter.digCityInProperties(
+                data['properties'],
+              ),
+            [DISPLAY_MAIN_CITY_FIELD]: label(this.mainCity),
+            isFake: isFake(this.mainCity),
+          },
+        }
+      }) as ZoneDocumentSerialized[],
     }
   }
 

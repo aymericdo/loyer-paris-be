@@ -1,8 +1,3 @@
-import {
-  DISPLAY_CITY_FIELD,
-  DISPLAY_ZONE_FIELD,
-} from '@services/districts/districts-list'
-
 export interface ParisEncadrementItem {
   ville: string
   epoque: string
@@ -31,6 +26,4 @@ export interface ParisDistrictItemProperties {
   n_sq_ar: number
   c_quinsee: number
   c_ar: number
-  [DISPLAY_ZONE_FIELD]: string
-  [DISPLAY_CITY_FIELD]: string
 }

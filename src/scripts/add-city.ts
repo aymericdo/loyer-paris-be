@@ -139,7 +139,7 @@ async function main() {
     cityList: cityList.map((city: string) => city.trim().toLowerCase()),
     fake: !cityDetailTmp.notFake,
     house,
-    coordinates: feature.geometry.coordinates,
+    coordinates: feature.geometry.coordinates.reverse(),
     builtYearRangeEnd: builtYearRangeEnd ? 2005 : 1990,
   }
 

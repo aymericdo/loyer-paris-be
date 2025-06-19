@@ -1,6 +1,11 @@
 import { EstEnsembleDistrictItemProperties } from '@interfaces/est-ensemble'
 import { ParisDistrictItemProperties } from '@interfaces/paris'
 import { PlaineCommuneDistrictItemProperties } from '@interfaces/plaine-commune'
+import {
+  DISPLAY_ZONE_FIELD,
+  DISPLAY_CITY_FIELD,
+  DISPLAY_MAIN_CITY_FIELD,
+} from '@services/districts/districts-list'
 import mongoose from 'mongoose'
 
 import { Document } from 'mongoose'
@@ -27,6 +32,20 @@ export interface ZoneDocument extends Document {
     | PlaineCommuneDistrictItemProperties
     | EstEnsembleDistrictItemProperties
     | ParisDistrictItemProperties
+}
+
+export interface ZoneDocumentSerialized extends ZoneDocument {
+  properties: (
+    | ZoneProperties
+    | PlaineCommuneDistrictItemProperties
+    | EstEnsembleDistrictItemProperties
+    | ParisDistrictItemProperties
+  ) & {
+    [DISPLAY_ZONE_FIELD]: string
+    [DISPLAY_CITY_FIELD]: string
+    [DISPLAY_MAIN_CITY_FIELD]: string
+    isFake: boolean
+  }
 }
 
 const Schema = mongoose.Schema
