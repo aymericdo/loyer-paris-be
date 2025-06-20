@@ -4,9 +4,12 @@ import { ParisDistrictFilter } from './paris-district-filter'
 import { PlaineCommuneDistrictFilter } from './plaine-commune-district-filter'
 import { GrenobleDistrictFilter } from '@services/filters/district-filter/grenoble-district-filter'
 import {
+  AjaccioGeojson,
   AlençonGeojson,
   AnnecyGeojson,
+  ArlesGeojson,
   ArrasGeojson,
+  BastiaGeojson,
   BordeauxGeojson,
   BrestGeojson,
   ClermontFerrandGeojson,
@@ -62,6 +65,9 @@ export class DistrictFilterFactory {
     arras: ArrasGeojson,
     vannes: VannesGeojson,
     'clermont-ferrand': ClermontFerrandGeojson,
+    bastia: BastiaGeojson,
+    ajaccio: AjaccioGeojson,
+    arles: ArlesGeojson,
   }
 
   constructor(mainCity: AvailableMainCities) {

@@ -10567,5 +10567,253 @@
     "zones": [
       "Zone 5"
     ]
+  },
+  "bastia": {
+    "inseeCode": "2B033",
+    "label": "Bastia",
+    "postalCodes": [
+      "20200",
+      "20600"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "biguglia": {
+    "inseeCode": "2B037",
+    "label": "Biguglia",
+    "postalCodes": [
+      "20620"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "brando": {
+    "inseeCode": "2B043",
+    "label": "Brando",
+    "postalCodes": [
+      "20222"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "furiani": {
+    "inseeCode": "2B120",
+    "label": "Furiani",
+    "postalCodes": [
+      "20600"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "san-martino-di-lota": {
+    "inseeCode": "2B305",
+    "label": "San-Martino-di-Lota",
+    "postalCodes": [
+      "20200"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "santa-maria-di-lota": {
+    "inseeCode": "2B309",
+    "label": "Santa-Maria-di-Lota",
+    "postalCodes": [
+      "20200"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "ville-di-pietrabugno": {
+    "inseeCode": "2B353",
+    "label": "Ville-di-Pietrabugno",
+    "postalCodes": [
+      "20200"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "afa": {
+    "inseeCode": "2A001",
+    "label": "Afa",
+    "postalCodes": [
+      "20167"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "ajaccio": {
+    "inseeCode": "2A004",
+    "label": "Ajaccio",
+    "postalCodes": [
+      "20000",
+      "20090",
+      "20167"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "alata": {
+    "inseeCode": "2A006",
+    "label": "Alata",
+    "postalCodes": [
+      "20167"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "appietto": {
+    "inseeCode": "2A017",
+    "label": "Appietto",
+    "postalCodes": [
+      "20167"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "cuttoli-corticchiato": {
+    "inseeCode": "2A103",
+    "label": "Cuttoli-Corticchiato",
+    "postalCodes": [
+      "20167"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "peri": {
+    "inseeCode": "2A209",
+    "label": "Peri",
+    "postalCodes": [
+      "20167"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "sarrola-carcopino": {
+    "inseeCode": "2A271",
+    "label": "Sarrola-Carcopino",
+    "postalCodes": [
+      "20167"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "tavaco": {
+    "inseeCode": "2A323",
+    "label": "Tavaco",
+    "postalCodes": [
+      "20167"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "valle-di-mezzana": {
+    "inseeCode": "2A336",
+    "label": "Valle-di-Mezzana",
+    "postalCodes": [
+      "20167"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "villanova": {
+    "inseeCode": "2A351",
+    "label": "Villanova",
+    "postalCodes": [
+      "20167"
+    ],
+    "zones": [
+      "Zone 1"
+    ]
+  },
+  "arles": {
+    "inseeCode": "13004",
+    "label": "Arles",
+    "postalCodes": [
+      "13104",
+      "13123",
+      "13129",
+      "13200",
+      "13280"
+    ],
+    "zones": [
+      "Zone 7",
+      "Zone 8"
+    ]
+  },
+  "fourques": {
+    "inseeCode": "30117",
+    "label": "Fourques",
+    "postalCodes": [
+      "30300"
+    ],
+    "zones": [
+      "Zone 10"
+    ]
+  },
+  "boulbon": {
+    "inseeCode": "13017",
+    "label": "Boulbon",
+    "postalCodes": [
+      "13150"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "saint-pierre-de-mézoargues": {
+    "inseeCode": "13061",
+    "label": "Saint-Pierre-de-Mézoargues",
+    "postalCodes": [
+      "13150"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "saintes-maries-de-la-mer": {
+    "inseeCode": "13096",
+    "label": "Saintes-Maries-de-la-Mer",
+    "postalCodes": [
+      "13460"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "saint-martin-de-crau": {
+    "inseeCode": "13097",
+    "label": "Saint-Martin-de-Crau",
+    "postalCodes": [
+      "13310"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "tarascon": {
+    "inseeCode": "13108",
+    "label": "Tarascon",
+    "postalCodes": [
+      "13150"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
   }
 }

@@ -88,7 +88,7 @@ async function main() {
   const infoFetched = await fetchCityInfo(mainCity)
   const feature = infoFetched.features[0]
 
-  const departement = feature.properties.postcode.slice(0, 2)
+  const departement = feature.properties.citycode.slice(0, 2)
   let observatoireData = null
 
   let ok = false
@@ -115,6 +115,8 @@ async function main() {
   const { observatoire, year } = observatoireData
 
   const cityByInsee = await getCityByInsee(observatoire, year)
+  // eslint-disable-next-line no-console
+  console.log(cityByInsee)
   const cityList = Object.values(cityByInsee)
   const zonesByInsee = await getZonesByInsee(observatoire, year)
   const house = await getHouse(observatoire, year)

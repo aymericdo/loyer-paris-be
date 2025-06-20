@@ -141,6 +141,12 @@ export const ClermontFerrandGeojson: Model<ZoneDocument> =
     'clermontferrandgeojsons',
     zoneSchema,
   )
+export const BastiaGeojson: Model<ZoneDocument> =
+  encadrementZone1Connection.model<ZoneDocument>('bastiageojsons', zoneSchema)
+export const AjaccioGeojson: Model<ZoneDocument> =
+  encadrementZone1Connection.model<ZoneDocument>('ajacciogeojsons', zoneSchema)
+export const ArlesGeojson: Model<ZoneDocument> =
+  encadrementZone1Connection.model<ZoneDocument>('arlesgeojsons', zoneSchema)
 
 export const closeAllConnections = async () => {
   await rentConnection.close()

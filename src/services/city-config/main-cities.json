@@ -1310,5 +1310,64 @@
       3.107055
     ],
     "builtYearRangeEnd": 2005
+  },
+  "bastia": {
+    "label": "Bastia",
+    "cityList": [
+      "bastia",
+      "biguglia",
+      "brando",
+      "furiani",
+      "san-martino-di-lota",
+      "santa-maria-di-lota",
+      "ville-di-pietrabugno"
+    ],
+    "fake": true,
+    "house": true,
+    "coordinates": [
+      42.687608,
+      9.435179
+    ],
+    "builtYearRangeEnd": 2005
+  },
+  "ajaccio": {
+    "label": "Ajaccio",
+    "cityList": [
+      "afa",
+      "ajaccio",
+      "alata",
+      "appietto",
+      "cuttoli-corticchiato",
+      "peri",
+      "sarrola-carcopino",
+      "tavaco",
+      "valle-di-mezzana",
+      "villanova"
+    ],
+    "fake": true,
+    "house": true,
+    "coordinates": [
+      41.933615,
+      8.715573
+    ],
+    "builtYearRangeEnd": 2005
+  },
+  "arles": {
+    "label": "Arles",
+    "cityList": [
+      "arles",
+      "boulbon",
+      "saint-pierre-de-mézoargues",
+      "saintes-maries-de-la-mer",
+      "saint-martin-de-crau",
+      "tarascon"
+    ],
+    "fake": true,
+    "house": true,
+    "coordinates": [
+      43.608782,
+      4.610256
+    ],
+    "builtYearRangeEnd": 2005
   }
 }

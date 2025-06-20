@@ -48,9 +48,9 @@ async function editJsonData(
       )
     })
     .map((element) => {
-      const match = element.Zone_calcul.match(/^(L\d+)\.(\d+)(?:\.(\d+))?$/)
+      const match = element.Zone_calcul.split('.')
 
-      const zone = match[3] || null
+      const zone = match[2] || null
 
       return {
         Observatory: element.Observatory,
@@ -132,7 +132,7 @@ async function main(fileName: string, city = null) {
   process.exit(0)
 }
 
-const DEFAULT_FILE_NAME = 'Base_OP_2023_L3502'
+const DEFAULT_FILE_NAME = 'Base_OP_2023_L2B00'
 
 const args = process.argv.slice(2) // ['csv="fileName"']
 const csvArg = args.find((arg) => arg.startsWith('csv='))

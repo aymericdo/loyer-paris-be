@@ -23,13 +23,13 @@ function stripLeadingZeros(value: string): string {
 
 async function transformFeatureProperties(properties) {
   const raw = properties.VAR5 || ''
-  const match = raw.match(/^(L\d{4})\.(\d{5})(?:\.(\d{2}))?$/)
+  const match = raw.split('.')
 
   if (!match) return null
 
-  const codeObservatoire = match[1]
-  const codeInsee = match[2]
-  let zone = match[3] || null
+  const codeObservatoire = match[0]
+  const codeInsee = match[1]
+  let zone = match[2] || null
 
   const info = await fetchMoreCityInfo(codeInsee)
   const city = info?.nom || 'N/A'
@@ -106,7 +106,7 @@ async function main(fileName: string) {
   process.exit(0)
 }
 
-const DEFAULT_FILE_NAME = 'L2900_zone_elem_2024'
+const DEFAULT_FILE_NAME = 'L1301_zone_elem_2023'
 
 const args = process.argv.slice(2) // ['kmlFile="fileName"']
 const cityArg = args.find((arg) => arg.startsWith('kmlFile='))

@@ -49,10 +49,10 @@ export async function fetchObservatoiresDesLoyers(
     const fileName = `Base_OP_${year}_L${observatoire}.zip`
     const targetPath = path.resolve(__dirname, './data', fileName)
     try {
-      const response = await axios(
-        `https://www.observatoires-des-loyers.org/datagouv/${year}/Base_OP_${year}_L${observatoire}.zip`,
-        { responseType: 'stream' },
-      )
+      const url = `https://www.observatoires-des-loyers.org/datagouv/${year}/Base_OP_${year}_L${observatoire}.zip`
+      // eslint-disable-next-line no-console
+      console.log('Fetching..', url)
+      const response = await axios(url, { responseType: 'stream' })
       data = response.data
 
       const writer = fs.createWriteStream(targetPath)
@@ -94,6 +94,7 @@ export async function unzip(year: string, observatoire: string) {
       const outputPath = path.join(outputDir, entry.entryName)
       fs.mkdirSync(path.dirname(outputPath), { recursive: true })
       const content = iconv.decode(entry.getData(), 'latin1')
+
       fs.writeFileSync(outputPath, content, { encoding: 'utf8' })
 
       // eslint-disable-next-line no-console

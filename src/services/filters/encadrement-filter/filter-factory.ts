@@ -36,6 +36,9 @@ export class FilterFactory {
     arras: 'json-data/encadrements_arras_2023.json',
     vannes: 'json-data/encadrements_vannes_2024.json',
     'clermont-ferrand': 'json-data/encadrements_clermont-ferrand_2023.json',
+    bastia: 'json-data/encadrements_bastia_2023.json',
+    ajaccio: 'json-data/encadrements_ajaccio_2023.json',
+    arles: 'json-data/encadrements_arles_2023.json',
   }
 
   constructor(mainCity: AvailableMainCities) {
