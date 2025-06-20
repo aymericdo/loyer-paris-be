@@ -13,6 +13,7 @@ import {
   BordeauxGeojson,
   BrestGeojson,
   ClermontFerrandGeojson,
+  FréjusGeojson,
   LaRochelleGeojson,
   LilleGeojson,
   LyonGeojson,
@@ -68,6 +69,7 @@ export class DistrictFilterFactory {
     bastia: BastiaGeojson,
     ajaccio: AjaccioGeojson,
     arles: ArlesGeojson,
+    fréjus: FréjusGeojson,
   }
 
   constructor(mainCity: AvailableMainCities) {

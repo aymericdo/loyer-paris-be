@@ -1369,5 +1369,22 @@
       4.610256
     ],
     "builtYearRangeEnd": 2005
+  },
+  "fréjus": {
+    "label": "Fréjus",
+    "cityList": [
+      "les adrets-de-l'estérel",
+      "fréjus",
+      "puget-sur-argens",
+      "roquebrune-sur-argens",
+      "saint-raphaël"
+    ],
+    "fake": true,
+    "house": true,
+    "coordinates": [
+      43.445657,
+      6.770515
+    ],
+    "builtYearRangeEnd": 2005
   }
 }

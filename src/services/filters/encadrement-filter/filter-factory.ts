@@ -39,6 +39,7 @@ export class FilterFactory {
     bastia: 'json-data/encadrements_bastia_2023.json',
     ajaccio: 'json-data/encadrements_ajaccio_2023.json',
     arles: 'json-data/encadrements_arles_2023.json',
+    fréjus: 'json-data/encadrements_fréjus_2024.json',
   }
 
   constructor(mainCity: AvailableMainCities) {

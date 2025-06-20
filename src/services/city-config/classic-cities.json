@@ -10815,5 +10815,61 @@
     "zones": [
       "Zone 2"
     ]
+  },
+  "les adrets-de-l'estérel": {
+    "inseeCode": "83001",
+    "label": "Les Adrets-de-l'Estérel",
+    "postalCodes": [
+      "83600"
+    ],
+    "zones": [
+      "Zone 12"
+    ]
+  },
+  "fréjus": {
+    "inseeCode": "83061",
+    "label": "Fréjus",
+    "postalCodes": [
+      "83370",
+      "83600"
+    ],
+    "zones": [
+      "Zone 11",
+      "Zone 12"
+    ]
+  },
+  "puget-sur-argens": {
+    "inseeCode": "83099",
+    "label": "Puget-sur-Argens",
+    "postalCodes": [
+      "83480"
+    ],
+    "zones": [
+      "Zone 12"
+    ]
+  },
+  "roquebrune-sur-argens": {
+    "inseeCode": "83107",
+    "label": "Roquebrune-sur-Argens",
+    "postalCodes": [
+      "83380",
+      "83520"
+    ],
+    "zones": [
+      "Zone 11",
+      "Zone 12"
+    ]
+  },
+  "saint-raphaël": {
+    "inseeCode": "83118",
+    "label": "Saint-Raphaël",
+    "postalCodes": [
+      "83530",
+      "83700"
+    ],
+    "zones": [
+      "Zone 11",
+      "Zone 12"
+    ]
   }
 }
