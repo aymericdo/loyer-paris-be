@@ -11,6 +11,7 @@ import {
 } from '@services/city-config/city-selectors'
 import * as fs from 'fs'
 import * as path from 'path'
+import { kebabize } from '@services/helpers/kebabize'
 
 const mapFranceGeojson = JSON.parse(
   fs.readFileSync(
@@ -90,7 +91,9 @@ export async function getMapFrance(req: Request, res: Response) {
               priority: ['plaineCommune', 'estEnsemble'].includes(city)
                 ? 'low'
                 : '',
-              url: fake ? '' : `https://encadrement-loyers.fr/stats/${city}`,
+              url: fake
+                ? ''
+                : `https://encadrement-loyers.fr/stats/${kebabize(city)}`,
             }
           }),
         },
