@@ -35,6 +35,7 @@ export class FilterFactory {
     tours: 'json-data/encadrements_tours_2023.json',
     arras: 'json-data/encadrements_arras_2023.json',
     vannes: 'json-data/encadrements_vannes_2024.json',
+    'clermont-ferrand': 'json-data/encadrements_clermont-ferrand_2023.json',
   }
 
   constructor(mainCity: AvailableMainCities) {

@@ -9,6 +9,7 @@ import {
   ArrasGeojson,
   BordeauxGeojson,
   BrestGeojson,
+  ClermontFerrandGeojson,
   LaRochelleGeojson,
   LilleGeojson,
   LyonGeojson,
@@ -60,6 +61,7 @@ export class DistrictFilterFactory {
     tours: ToursGeojson,
     arras: ArrasGeojson,
     vannes: VannesGeojson,
+    'clermont-ferrand': ClermontFerrandGeojson,
   }
 
   constructor(mainCity: AvailableMainCities) {

@@ -136,6 +136,11 @@ export const ArrasGeojson: Model<ZoneDocument> =
   encadrementZone1Connection.model<ZoneDocument>('arrasgeojsons', zoneSchema)
 export const VannesGeojson: Model<ZoneDocument> =
   encadrementZone1Connection.model<ZoneDocument>('vannesgeojsons', zoneSchema)
+export const ClermontFerrandGeojson: Model<ZoneDocument> =
+  encadrementZone1Connection.model<ZoneDocument>(
+    'clermontferrandgeojsons',
+    zoneSchema,
+  )
 
 export const closeAllConnections = async () => {
   await rentConnection.close()

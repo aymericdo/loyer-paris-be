@@ -9514,5 +9514,1058 @@
     "zones": [
       "Zone 3"
     ]
+  },
+  "aubiere": {
+    "inseeCode": "63014",
+    "label": "Aubière",
+    "postalCodes": [
+      "63170"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2",
+      "Zone 3",
+      "Zone 4"
+    ]
+  },
+  "aulnat": {
+    "inseeCode": "63019",
+    "label": "Aulnat",
+    "postalCodes": [
+      "63510"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "authezat": {
+    "inseeCode": "63021",
+    "label": "Authezat",
+    "postalCodes": [
+      "63114"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "aydat": {
+    "inseeCode": "63026",
+    "label": "Aydat",
+    "postalCodes": [
+      "63970"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "beaumont": {
+    "inseeCode": "63032",
+    "label": "Beaumont",
+    "postalCodes": [
+      "63110"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2",
+      "Zone 4"
+    ]
+  },
+  "beauregard-l'eveque": {
+    "inseeCode": "63034",
+    "label": "Beauregard-l'Évêque",
+    "postalCodes": [
+      "63116"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "billom": {
+    "inseeCode": "63040",
+    "label": "Billom",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "blanzat": {
+    "inseeCode": "63042",
+    "label": "Blanzat",
+    "postalCodes": [
+      "63112"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "bongheat": {
+    "inseeCode": "63044",
+    "label": "Bongheat",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "bouzel": {
+    "inseeCode": "63049",
+    "label": "Bouzel",
+    "postalCodes": [
+      "63910"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "busseol": {
+    "inseeCode": "63059",
+    "label": "Busséol",
+    "postalCodes": [
+      "63270"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "cebazat": {
+    "inseeCode": "63063",
+    "label": "Cébazat",
+    "postalCodes": [
+      "63118"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "le cendre": {
+    "inseeCode": "63069",
+    "label": "Le Cendre",
+    "postalCodes": [
+      "63670"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "ceyrat": {
+    "inseeCode": "63070",
+    "label": "Ceyrat",
+    "postalCodes": [
+      "63122"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "chamalieres": {
+    "inseeCode": "63075",
+    "label": "Chamalières",
+    "postalCodes": [
+      "63400"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2",
+      "Zone 3"
+    ]
+  },
+  "chanat-la-mouteyre": {
+    "inseeCode": "63083",
+    "label": "Chanat-la-Mouteyre",
+    "postalCodes": [
+      "63530"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "chanonat": {
+    "inseeCode": "63084",
+    "label": "Chanonat",
+    "postalCodes": [
+      "63450"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "chappes": {
+    "inseeCode": "63089",
+    "label": "Chappes",
+    "postalCodes": [
+      "63720"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "charbonnieres-les-varennes": {
+    "inseeCode": "63092",
+    "label": "Charbonnières-les-Varennes",
+    "postalCodes": [
+      "63410"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "chas": {
+    "inseeCode": "63096",
+    "label": "Chas",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "chateaugay": {
+    "inseeCode": "63099",
+    "label": "Châteaugay",
+    "postalCodes": [
+      "63119"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "chatel-guyon": {
+    "inseeCode": "63103",
+    "label": "Châtel-Guyon",
+    "postalCodes": [
+      "63140"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "chauriat": {
+    "inseeCode": "63106",
+    "label": "Chauriat",
+    "postalCodes": [
+      "63117"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "chavaroux": {
+    "inseeCode": "63107",
+    "label": "Chavaroux",
+    "postalCodes": [
+      "63720"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "le cheix": {
+    "inseeCode": "63108",
+    "label": "Le Cheix-sur-Morge",
+    "postalCodes": [
+      "63200"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "clerlande": {
+    "inseeCode": "63112",
+    "label": "Clerlande",
+    "postalCodes": [
+      "63720"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "clermont-ferrand": {
+    "inseeCode": "63113",
+    "label": "Clermont-Ferrand",
+    "postalCodes": [
+      "63000",
+      "63100"
+    ],
+    "zones": [
+      "Zone 1",
+      "Zone 2",
+      "Zone 3",
+      "Zone 4",
+      "Zone 5"
+    ]
+  },
+  "corent": {
+    "inseeCode": "63120",
+    "label": "Corent",
+    "postalCodes": [
+      "63730"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "cournols": {
+    "inseeCode": "63123",
+    "label": "Cournols",
+    "postalCodes": [
+      "63450"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "cournon-d'auvergne": {
+    "inseeCode": "63124",
+    "label": "Cournon-d'Auvergne",
+    "postalCodes": [
+      "63800"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "le crest": {
+    "inseeCode": "63126",
+    "label": "Le Crest",
+    "postalCodes": [
+      "63450"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "durtol": {
+    "inseeCode": "63141",
+    "label": "Durtol",
+    "postalCodes": [
+      "63830"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "egliseneuve-pres-billom": {
+    "inseeCode": "63146",
+    "label": "Égliseneuve-près-Billom",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "ennezat": {
+    "inseeCode": "63148",
+    "label": "Ennezat",
+    "postalCodes": [
+      "63720"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "entraigues": {
+    "inseeCode": "63149",
+    "label": "Entraigues",
+    "postalCodes": [
+      "63720"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "enval": {
+    "inseeCode": "63150",
+    "label": "Enval",
+    "postalCodes": [
+      "63530"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "espirat": {
+    "inseeCode": "63154",
+    "label": "Espirat",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "estandeuil": {
+    "inseeCode": "63155",
+    "label": "Estandeuil",
+    "postalCodes": [
+      "63520"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "fayet-le-chateau": {
+    "inseeCode": "63157",
+    "label": "Fayet-le-Château",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "gerzat": {
+    "inseeCode": "63164",
+    "label": "Gerzat",
+    "postalCodes": [
+      "63360"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "glaine-montaigut": {
+    "inseeCode": "63168",
+    "label": "Glaine-Montaigut",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "isserteaux": {
+    "inseeCode": "63177",
+    "label": "Isserteaux",
+    "postalCodes": [
+      "63270"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "laps": {
+    "inseeCode": "63188",
+    "label": "Laps",
+    "postalCodes": [
+      "63270"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "lempdes": {
+    "inseeCode": "63193",
+    "label": "Lempdes",
+    "postalCodes": [
+      "63370"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "lussat": {
+    "inseeCode": "63200",
+    "label": "Lussat",
+    "postalCodes": [
+      "63360"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "malauzat": {
+    "inseeCode": "63203",
+    "label": "Malauzat",
+    "postalCodes": [
+      "63200"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "malintrat": {
+    "inseeCode": "63204",
+    "label": "Malintrat",
+    "postalCodes": [
+      "63510"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "manglieu": {
+    "inseeCode": "63205",
+    "label": "Manglieu",
+    "postalCodes": [
+      "63270"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "marsat": {
+    "inseeCode": "63212",
+    "label": "Marsat",
+    "postalCodes": [
+      "63200"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "les martres-d'artiere": {
+    "inseeCode": "63213",
+    "label": "Les Martres-d'Artière",
+    "postalCodes": [
+      "63430"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "les martres-de-veyre": {
+    "inseeCode": "63214",
+    "label": "Les Martres-de-Veyre",
+    "postalCodes": [
+      "63730"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "martres-sur-morge": {
+    "inseeCode": "63215",
+    "label": "Martres-sur-Morge",
+    "postalCodes": [
+      "63720"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "mauzun": {
+    "inseeCode": "63216",
+    "label": "Mauzun",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "menetrol": {
+    "inseeCode": "63224",
+    "label": "Ménétrol",
+    "postalCodes": [
+      "63200"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "mur-sur-allier": {
+    "inseeCode": "63226",
+    "label": "Mur-sur-Allier",
+    "postalCodes": [
+      "63111",
+      "63115"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "mirefleurs": {
+    "inseeCode": "63227",
+    "label": "Mirefleurs",
+    "postalCodes": [
+      "63730"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "montmorin": {
+    "inseeCode": "63239",
+    "label": "Montmorin",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "chambaron-sur-morge": {
+    "inseeCode": "63244",
+    "label": "Chambaron sur Morge",
+    "postalCodes": [
+      "63200"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "mozac": {
+    "inseeCode": "63245",
+    "label": "Mozac",
+    "postalCodes": [
+      "63200"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "neuville": {
+    "inseeCode": "63252",
+    "label": "Neuville",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "nohanent": {
+    "inseeCode": "63254",
+    "label": "Nohanent",
+    "postalCodes": [
+      "63830"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "olloix": {
+    "inseeCode": "63259",
+    "label": "Olloix",
+    "postalCodes": [
+      "63450"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "orcet": {
+    "inseeCode": "63262",
+    "label": "Orcet",
+    "postalCodes": [
+      "63670"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "orcines": {
+    "inseeCode": "63263",
+    "label": "Orcines",
+    "postalCodes": [
+      "63870"
+    ],
+    "zones": [
+      "Zone 2"
+    ]
+  },
+  "perignat-les-sarlieve": {
+    "inseeCode": "63272",
+    "label": "Pérignat-lès-Sarliève",
+    "postalCodes": [
+      "63170"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "perignat-sur-allier": {
+    "inseeCode": "63273",
+    "label": "Pérignat-sur-Allier",
+    "postalCodes": [
+      "63800"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "pessat-villeneuve": {
+    "inseeCode": "63278",
+    "label": "Pessat-Villeneuve",
+    "postalCodes": [
+      "63200"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "pignols": {
+    "inseeCode": "63280",
+    "label": "Pignols",
+    "postalCodes": [
+      "63270"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "pont-du-chateau": {
+    "inseeCode": "63284",
+    "label": "Pont-du-Château",
+    "postalCodes": [
+      "63430"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "pulverieres": {
+    "inseeCode": "63290",
+    "label": "Pulvérières",
+    "postalCodes": [
+      "63230"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "reignat": {
+    "inseeCode": "63297",
+    "label": "Reignat",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "riom": {
+    "inseeCode": "63300",
+    "label": "Riom",
+    "postalCodes": [
+      "63200"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "la roche-blanche": {
+    "inseeCode": "63302",
+    "label": "La Roche-Blanche",
+    "postalCodes": [
+      "63670"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "la roche-noire": {
+    "inseeCode": "63306",
+    "label": "La Roche-Noire",
+    "postalCodes": [
+      "63800"
+    ],
+    "zones": [
+      "Zone 3"
+    ]
+  },
+  "romagnat": {
+    "inseeCode": "63307",
+    "label": "Romagnat",
+    "postalCodes": [
+      "63540"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "royat": {
+    "inseeCode": "63308",
+    "label": "Royat",
+    "postalCodes": [
+      "63130"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "saint-amant-tallende": {
+    "inseeCode": "63315",
+    "label": "Saint-Amant-Tallende",
+    "postalCodes": [
+      "63450"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "saint-beauzire": {
+    "inseeCode": "63322",
+    "label": "Saint-Beauzire",
+    "postalCodes": [
+      "63360"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "saint-bonnet-les-allier": {
+    "inseeCode": "63325",
+    "label": "Saint-Bonnet-lès-Allier",
+    "postalCodes": [
+      "63800"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-bonnet-pres-riom": {
+    "inseeCode": "63327",
+    "label": "Saint-Bonnet-près-Riom",
+    "postalCodes": [
+      "63200"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-dier-d'auvergne": {
+    "inseeCode": "63334",
+    "label": "Saint-Dier-d'Auvergne",
+    "postalCodes": [
+      "63520"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-genes-champanelle": {
+    "inseeCode": "63345",
+    "label": "Saint-Genès-Champanelle",
+    "postalCodes": [
+      "63122"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-georges-sur-allier": {
+    "inseeCode": "63350",
+    "label": "Saint-Georges-sur-Allier",
+    "postalCodes": [
+      "63800"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-ignat": {
+    "inseeCode": "63362",
+    "label": "Saint-Ignat",
+    "postalCodes": [
+      "63720"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-jean-des-ollieres": {
+    "inseeCode": "63365",
+    "label": "Saint-Jean-des-Ollières",
+    "postalCodes": [
+      "63520"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-julien-de-coppel": {
+    "inseeCode": "63368",
+    "label": "Saint-Julien-de-Coppel",
+    "postalCodes": [
+      "63160"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-laure": {
+    "inseeCode": "63372",
+    "label": "Saint-Laure",
+    "postalCodes": [
+      "63350"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-maurice": {
+    "inseeCode": "63378",
+    "label": "Saint-Maurice",
+    "postalCodes": [
+      "63270"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-ours": {
+    "inseeCode": "63381",
+    "label": "Saint-Ours",
+    "postalCodes": [
+      "63230"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-sandoux": {
+    "inseeCode": "63395",
+    "label": "Saint-Sandoux",
+    "postalCodes": [
+      "63450"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "saint-saturnin": {
+    "inseeCode": "63396",
+    "label": "Saint-Saturnin",
+    "postalCodes": [
+      "63450"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "salledes": {
+    "inseeCode": "63405",
+    "label": "Sallèdes",
+    "postalCodes": [
+      "63270"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "la sauvetat": {
+    "inseeCode": "63413",
+    "label": "La Sauvetat",
+    "postalCodes": [
+      "63730"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "sayat": {
+    "inseeCode": "63417",
+    "label": "Sayat",
+    "postalCodes": [
+      "63530"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "surat": {
+    "inseeCode": "63424",
+    "label": "Surat",
+    "postalCodes": [
+      "63720"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "tallende": {
+    "inseeCode": "63425",
+    "label": "Tallende",
+    "postalCodes": [
+      "63450"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "trezioux": {
+    "inseeCode": "63438",
+    "label": "Trézioux",
+    "postalCodes": [
+      "63520"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "varennes-sur-morge": {
+    "inseeCode": "63443",
+    "label": "Varennes-sur-Morge",
+    "postalCodes": [
+      "63720"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "vassel": {
+    "inseeCode": "63445",
+    "label": "Vassel",
+    "postalCodes": [
+      "63910"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "vertaizon": {
+    "inseeCode": "63453",
+    "label": "Vertaizon",
+    "postalCodes": [
+      "63910"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "veyre-monton": {
+    "inseeCode": "63455",
+    "label": "Veyre-Monton",
+    "postalCodes": [
+      "63960"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "vic-le-comte": {
+    "inseeCode": "63457",
+    "label": "Vic-le-Comte",
+    "postalCodes": [
+      "63270"
+    ],
+    "zones": [
+      "Zone 4"
+    ]
+  },
+  "volvic": {
+    "inseeCode": "63470",
+    "label": "Volvic",
+    "postalCodes": [
+      "63530"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
+  },
+  "yronde-et-buron": {
+    "inseeCode": "63472",
+    "label": "Yronde-et-Buron",
+    "postalCodes": [
+      "63270"
+    ],
+    "zones": [
+      "Zone 5"
+    ]
   }
 }
