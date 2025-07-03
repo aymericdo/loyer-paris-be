@@ -23,12 +23,18 @@ export function getWebsiteFilter(website?: string): {
 
 export function getMainCityFilter(
   mainCity: AvailableMainCities | 'all',
+  includeFake = false,
 ):
   | { city: { $in: AvailableCities[] } }
   | { city: { $nin: string[] } }
   | Record<string, never> {
-  if (!mainCity || mainCity === 'all')
-    return { city: { $nin: getFakeCities() } }
+  if (!mainCity || mainCity === 'all') {
+    if (includeFake) {
+      return {}
+    } else {
+      return { city: { $nin: getFakeCities() } }
+    }
+  }
 
   const cities = getCitiesFromMainCity(mainCity)
   return { city: { $in: cities } }

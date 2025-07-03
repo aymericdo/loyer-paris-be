@@ -14,9 +14,11 @@ const router = express.Router()
 
 router.get('/list', getValidCityList)
 function getValidCityList(req: Request, res: Response) {
+  const includeFake = req.query.includeFake === 'true'
+
   const result = getCityList().reduce((prev, city: AvailableCities) => {
     const mainCity = getMainCity(city)
-    if (isFake(mainCity)) return prev
+    if (!includeFake && isFake(mainCity)) return prev
 
     prev[city] = {
       mainCity,

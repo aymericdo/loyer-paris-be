@@ -63,7 +63,7 @@ function buildFilter(filterParam: {
     ...getClassicWebsiteFilter(),
     ...(filterParam.city
       ? getCityFilter(filterParam.city)
-      : getMainCityFilter(filterParam.mainCity)),
+      : getMainCityFilter(filterParam.mainCity, true)),
     ...getDistrictFilter(filterParam.districtList),
     ...getFurnitureFilter(filterParam.hasFurniture),
     ...getHouseFilter(filterParam.isHouse),
