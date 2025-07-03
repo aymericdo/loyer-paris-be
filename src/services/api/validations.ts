@@ -4,13 +4,14 @@ import { Request, Response, NextFunction } from 'express'
 
 const isMainCityValid = (
   mainCity: AvailableMainCities | 'all',
-  allAccepted = false,
+  allAccepted: boolean,
+  fakeAccepted: boolean,
 ) => {
   if (allAccepted && mainCity === 'all') return true
 
   if (
     !getMainCityList().includes(mainCity as AvailableMainCities) ||
-    isFake(mainCity as AvailableMainCities)
+    (!fakeAccepted && isFake(mainCity as AvailableMainCities))
   ) {
     return false
   }
@@ -18,9 +19,22 @@ const isMainCityValid = (
   return true
 }
 
-export function paramMiddleware(allAccepted = false) {
+export function paramMiddleware(
+  params: { allAccepted?: boolean; fakeAccepted?: boolean } = {},
+) {
+  params = {
+    allAccepted: false,
+    fakeAccepted: false,
+    ...params,
+  }
   return function (req: Request, res: Response, next: NextFunction) {
-    if (isMainCityValid(req.params.city as AvailableMainCities, allAccepted)) {
+    if (
+      isMainCityValid(
+        req.params.city as AvailableMainCities,
+        params.allAccepted,
+        params.fakeAccepted,
+      )
+    ) {
       next()
     } else {
       res.status(403).json({ message: 'City params not valid' })

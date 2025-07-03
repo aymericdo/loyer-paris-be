@@ -23,42 +23,62 @@ function getNeedCaptcha(req: Request, res: Response) {
 }
 
 // routes
-router.get('/welcome/:city', paramMiddleware(true), getWelcomeText)
+router.get(
+  '/welcome/:city',
+  paramMiddleware({ allAccepted: true }),
+  getWelcomeText,
+)
 router.get('/map/france', getMapFrance)
-router.get('/map/:city', paramMiddleware(true), getMap)
-router.get('/chloropleth-map/:city', paramMiddleware(true), getChloroplethMap)
+router.get('/map/:city', paramMiddleware({ allAccepted: true }), getMap)
+router.get(
+  '/chloropleth-map/:city',
+  paramMiddleware({ allAccepted: true }),
+  getChloroplethMap,
+)
 router.get(
   '/chloropleth-cities-map/:city',
-  paramMiddleware(true),
+  paramMiddleware({ allAccepted: true }),
   getChloroplethCitiesMap,
 )
-router.get('/price-difference/:city', paramMiddleware(true), getPriceDifference)
+router.get(
+  '/price-difference/:city',
+  paramMiddleware({ allAccepted: true }),
+  getPriceDifference,
+)
 router.get(
   '/is-legal-per-surface/:city',
-  paramMiddleware(true),
+  paramMiddleware({ allAccepted: true }),
   getLegalPerSurface,
 )
-router.get('/price-variation/:city', paramMiddleware(true), getPriceVariation)
+router.get(
+  '/price-variation/:city',
+  paramMiddleware({ allAccepted: true }),
+  getPriceVariation,
+)
 router.get(
   '/is-legal-variation/:city',
-  paramMiddleware(true),
+  paramMiddleware({ allAccepted: true }),
   getIsLegalVariation,
 )
 router.get(
   '/is-legal-per-renter/:city',
-  paramMiddleware(true),
+  paramMiddleware({ allAccepted: true }),
   getLegalPerRenter,
 )
 router.get(
   '/is-legal-per-classic-renter/:city',
-  paramMiddleware(true),
+  paramMiddleware({ allAccepted: true }),
   getLegalPerClassicRenter,
 )
 router.get(
   '/is-legal-per-website/:city',
-  paramMiddleware(true),
+  paramMiddleware({ allAccepted: true }),
   getLegalPerWebsite,
 )
-router.get('/is-legal-per-dpe/:city', paramMiddleware(true), getLegalPerDPE)
+router.get(
+  '/is-legal-per-dpe/:city',
+  paramMiddleware({ allAccepted: true }),
+  getLegalPerDPE,
+)
 
 export default router
