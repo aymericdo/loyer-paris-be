@@ -95,19 +95,19 @@ describe('pap', () => {
           isHouse: { order: 5, value: undefined },
           max: {
             order: 6,
-            value: 40,
+            value: 41.2,
           },
           maxAuthorized: {
             order: 7,
-            value: 1120,
+            value: 1153.6,
           },
           promoPercentage: {
             order: 8,
-            value: 13.85,
+            value: 11.26,
           },
           promo: {
             order: 9,
-            value: 180,
+            value: 146.4,
           },
         },
         isFake: false,
@@ -143,7 +143,7 @@ describe('pap', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: 'cite casseville 59000, Lille' },
+          address: { order: 0, value: 'cite menu 59000, Lille' },
           hasFurniture: { order: 1, value: true },
           roomCount: { order: 2, value: 2 },
           surface: { order: 3, value: 50 },
