@@ -3,6 +3,7 @@ import {
   CITY_DETAILS,
 } from '@services/city-config/classic-cities'
 import { AvailableMainCities, CITIES } from '@services/city-config/main-cities'
+import { capitalizeFirstLetter } from '@services/helpers/capitalize'
 import {
   DATE_RANGE_END_IN_1990,
   DATE_RANGE_END_IN_2005,
@@ -77,7 +78,11 @@ export const coordinates = (
 }
 
 export const label = (city: AvailableMainCities | AvailableCities): string => {
-  return CITY_DETAILS[city]?.label ?? CITIES[city].label ?? null
+  return (
+    CITY_DETAILS[city]?.label ??
+    CITIES[city]?.label ??
+    capitalizeFirstLetter(city)
+  )
 }
 
 export const inseeCode = (city: AvailableCities): string => {
