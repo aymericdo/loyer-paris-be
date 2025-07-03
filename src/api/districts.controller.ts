@@ -14,7 +14,7 @@ import { AvailableMainCities } from '@services/city-config/main-cities'
 import { ZoneDocument } from '@db/zone.model'
 const router = express.Router()
 
-router.get('/geojson/:city', paramMiddleware(), getGeodata)
+router.get('/geojson/:city', paramMiddleware(true), getGeodata)
 async function getGeodata(req: Request, res: Response) {
   PrettyLog.call(`-> ${req.baseUrl} getGeodata`, 'blue')
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
