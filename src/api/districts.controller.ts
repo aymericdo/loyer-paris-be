@@ -16,7 +16,7 @@ const router = express.Router()
 
 router.get(
   '/geojson/:city',
-  paramMiddleware({ allAccepted: false, fakeAccepted: true }),
+  paramMiddleware({ fakeAccepted: true }),
   getGeodata,
 )
 async function getGeodata(req: Request, res: Response) {
