@@ -6,7 +6,7 @@ import { FilterParent } from '@services/filters/encadrement-filter/filter-parent
 
 export class EstEnsembleFilter extends FilterParent {
   mainCity: AvailableMainCities = 'estEnsemble'
-  criteriaJsonPath = 'json-data/encadrements_est-ensemble_2024.json'
+  criteriaJsonPath = 'json-data/encadrements_est-ensemble_2025.json'
 
   protected async isDistrictMatch(
     districtsMatched: ZoneDocument[],

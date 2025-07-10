@@ -1,0 +1,3202 @@
+[
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "15,5",
+    "prix_med": "22,2",
+    "prix_max": "26,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "16,2",
+    "prix_med": "23,1",
+    "prix_max": "27,7",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "15,8",
+    "prix_med": "22,5",
+    "prix_max": "27,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "16,0",
+    "prix_med": "22,8",
+    "prix_max": "27,4",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "13,8",
+    "prix_med": "19,7",
+    "prix_max": "23,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "14,1",
+    "prix_med": "20,2",
+    "prix_max": "24,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "14,4",
+    "prix_med": "20,6",
+    "prix_max": "24,7",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "14,8",
+    "prix_med": "21,1",
+    "prix_max": "25,3",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "13,9",
+    "prix_med": "19,9",
+    "prix_max": "23,9",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "14,3",
+    "prix_med": "20,4",
+    "prix_max": "24,5",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "10,6",
+    "prix_med": "15,1",
+    "prix_max": "18,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "10,9",
+    "prix_med": "15,5",
+    "prix_max": "18,6",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,1",
+    "prix_med": "15,9",
+    "prix_max": "19,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,4",
+    "prix_med": "16,3",
+    "prix_max": "19,6",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,0",
+    "prix_med": "17,1",
+    "prix_max": "20,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,3",
+    "prix_med": "17,5",
+    "prix_max": "21,0",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "10,5",
+    "prix_med": "15,0",
+    "prix_max": "18,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "10,8",
+    "prix_med": "15,4",
+    "prix_max": "18,5",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,6",
+    "prix_med": "13,7",
+    "prix_max": "16,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,8",
+    "prix_med": "14,0",
+    "prix_max": "16,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "9,8",
+    "prix_med": "14,0",
+    "prix_max": "16,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,1",
+    "prix_med": "14,4",
+    "prix_max": "17,3",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,6",
+    "prix_med": "15,2",
+    "prix_max": "18,2",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,9",
+    "prix_med": "15,6",
+    "prix_max": "18,7",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "9,0",
+    "prix_med": "12,8",
+    "prix_max": "15,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "9,2",
+    "prix_med": "13,1",
+    "prix_max": "15,7",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,1",
+    "prix_med": "11,6",
+    "prix_max": "13,9",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,3",
+    "prix_med": "11,9",
+    "prix_max": "14,3",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "7,6",
+    "prix_med": "10,8",
+    "prix_max": "13,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "7,8",
+    "prix_med": "11,1",
+    "prix_max": "13,3",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,6",
+    "prix_med": "13,7",
+    "prix_max": "16,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,8",
+    "prix_med": "14,0",
+    "prix_max": "16,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "14,3",
+    "prix_med": "20,4",
+    "prix_max": "24,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "14,6",
+    "prix_med": "20,9",
+    "prix_max": "25,1",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "13,6",
+    "prix_med": "19,4",
+    "prix_max": "23,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "13,9",
+    "prix_med": "19,9",
+    "prix_max": "23,9",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "13,0",
+    "prix_med": "18,6",
+    "prix_max": "22,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "13,4",
+    "prix_med": "19,1",
+    "prix_max": "22,9",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "14,3",
+    "prix_med": "20,4",
+    "prix_max": "24,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "14,6",
+    "prix_med": "20,9",
+    "prix_max": "25,1",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "11,8",
+    "prix_med": "16,8",
+    "prix_max": "20,2",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "12,0",
+    "prix_med": "17,2",
+    "prix_max": "20,6",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,6",
+    "prix_med": "12,3",
+    "prix_max": "14,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,8",
+    "prix_med": "12,6",
+    "prix_max": "15,1",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,4",
+    "prix_med": "14,8",
+    "prix_max": "17,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,6",
+    "prix_med": "15,2",
+    "prix_max": "18,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "11,5",
+    "prix_med": "16,4",
+    "prix_max": "19,7",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "11,8",
+    "prix_med": "16,8",
+    "prix_max": "20,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "9,6",
+    "prix_med": "13,7",
+    "prix_max": "16,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "9,8",
+    "prix_med": "14,0",
+    "prix_max": "16,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,5",
+    "prix_med": "12,1",
+    "prix_max": "14,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,7",
+    "prix_med": "12,4",
+    "prix_max": "14,9",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "9,4",
+    "prix_med": "13,4",
+    "prix_max": "16,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "9,6",
+    "prix_med": "13,7",
+    "prix_max": "16,4",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,5",
+    "prix_med": "15,0",
+    "prix_max": "18,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,8",
+    "prix_med": "15,4",
+    "prix_max": "18,5",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "9,6",
+    "prix_med": "13,7",
+    "prix_max": "16,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "9,8",
+    "prix_med": "14,0",
+    "prix_max": "16,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "6,7",
+    "prix_med": "9,6",
+    "prix_max": "11,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "6,9",
+    "prix_med": "9,8",
+    "prix_max": "11,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "6,6",
+    "prix_med": "9,4",
+    "prix_max": "11,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "6,7",
+    "prix_med": "9,6",
+    "prix_max": "11,5",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,4",
+    "prix_med": "13,4",
+    "prix_max": "16,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,6",
+    "prix_med": "13,7",
+    "prix_max": "16,4",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "15,3",
+    "prix_med": "21,9",
+    "prix_max": "26,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "15,7",
+    "prix_med": "22,4",
+    "prix_max": "26,9",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "10,5",
+    "prix_med": "15,0",
+    "prix_max": "18,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "10,8",
+    "prix_med": "15,4",
+    "prix_max": "18,5",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "13,0",
+    "prix_med": "18,6",
+    "prix_max": "22,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "13,4",
+    "prix_med": "19,1",
+    "prix_max": "22,9",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,2",
+    "prix_med": "18,9",
+    "prix_max": "22,7",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,6",
+    "prix_med": "19,4",
+    "prix_max": "23,3",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "12,9",
+    "prix_med": "18,4",
+    "prix_max": "22,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "13,2",
+    "prix_med": "18,9",
+    "prix_max": "22,7",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,5",
+    "prix_med": "12,2",
+    "prix_max": "14,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,8",
+    "prix_med": "12,5",
+    "prix_max": "15,0",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,1",
+    "prix_med": "15,9",
+    "prix_max": "19,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,4",
+    "prix_med": "16,3",
+    "prix_max": "19,6",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "11,4",
+    "prix_med": "16,3",
+    "prix_max": "19,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "11,7",
+    "prix_med": "16,7",
+    "prix_max": "20,0",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "9,6",
+    "prix_med": "13,7",
+    "prix_max": "16,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "9,8",
+    "prix_med": "14,0",
+    "prix_max": "16,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,5",
+    "prix_med": "10,7",
+    "prix_max": "12,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,7",
+    "prix_med": "11,0",
+    "prix_max": "13,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "9,6",
+    "prix_med": "13,7",
+    "prix_max": "16,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "9,8",
+    "prix_med": "14,0",
+    "prix_max": "16,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,5",
+    "prix_med": "13,6",
+    "prix_max": "16,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,7",
+    "prix_med": "13,9",
+    "prix_max": "16,7",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "7,6",
+    "prix_med": "10,8",
+    "prix_max": "13,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "7,8",
+    "prix_med": "11,1",
+    "prix_max": "13,3",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "6,8",
+    "prix_med": "9,7",
+    "prix_max": "11,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "6,9",
+    "prix_med": "9,9",
+    "prix_max": "11,9",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "7,8",
+    "prix_med": "11,2",
+    "prix_max": "13,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "8,1",
+    "prix_med": "11,5",
+    "prix_max": "13,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,0",
+    "prix_med": "12,9",
+    "prix_max": "15,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,2",
+    "prix_med": "13,2",
+    "prix_max": "15,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "13,7",
+    "prix_med": "19,5",
+    "prix_max": "23,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "14,2",
+    "prix_med": "20,3",
+    "prix_max": "24,4",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "13,0",
+    "prix_med": "18,5",
+    "prix_max": "22,2",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "13,4",
+    "prix_med": "19,2",
+    "prix_max": "23,0",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "12,4",
+    "prix_med": "17,7",
+    "prix_max": "21,2",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "12,9",
+    "prix_med": "18,4",
+    "prix_max": "22,1",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,4",
+    "prix_med": "19,2",
+    "prix_max": "23,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "14,0",
+    "prix_med": "20,0",
+    "prix_max": "24,0",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "10,8",
+    "prix_med": "15,4",
+    "prix_max": "18,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "11,2",
+    "prix_med": "16,0",
+    "prix_max": "19,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "10,4",
+    "prix_med": "14,8",
+    "prix_max": "17,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "10,8",
+    "prix_med": "15,4",
+    "prix_max": "18,5",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,7",
+    "prix_med": "15,3",
+    "prix_max": "18,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,1",
+    "prix_med": "15,9",
+    "prix_max": "19,1",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "11,1",
+    "prix_med": "15,8",
+    "prix_max": "19,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "11,5",
+    "prix_med": "16,4",
+    "prix_max": "19,7",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "9,2",
+    "prix_med": "13,1",
+    "prix_max": "15,7",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "9,5",
+    "prix_med": "13,6",
+    "prix_max": "16,3",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,1",
+    "prix_med": "11,5",
+    "prix_max": "13,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,4",
+    "prix_med": "12,0",
+    "prix_max": "14,4",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "9,2",
+    "prix_med": "13,2",
+    "prix_max": "15,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "9,6",
+    "prix_med": "13,7",
+    "prix_max": "16,4",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,5",
+    "prix_med": "13,5",
+    "prix_max": "16,2",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,8",
+    "prix_med": "14,0",
+    "prix_max": "16,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "7,8",
+    "prix_med": "11,1",
+    "prix_max": "13,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "8,1",
+    "prix_med": "11,5",
+    "prix_max": "13,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,1",
+    "prix_med": "10,1",
+    "prix_max": "12,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,4",
+    "prix_med": "10,5",
+    "prix_max": "12,6",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "7,9",
+    "prix_med": "11,3",
+    "prix_max": "13,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "8,3",
+    "prix_med": "11,8",
+    "prix_max": "14,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "8,0",
+    "prix_med": "11,4",
+    "prix_max": "13,7",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "8,3",
+    "prix_med": "11,9",
+    "prix_max": "14,3",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "17,8",
+    "prix_med": "25,4",
+    "prix_max": "30,5",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "18,2",
+    "prix_med": "26,0",
+    "prix_max": "31,2",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "17,6",
+    "prix_med": "25,1",
+    "prix_max": "30,1",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "18,0",
+    "prix_med": "25,7",
+    "prix_max": "30,8",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "15,6",
+    "prix_med": "22,3",
+    "prix_max": "26,8",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "16,0",
+    "prix_med": "22,9",
+    "prix_max": "27,5",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "16,3",
+    "prix_med": "23,3",
+    "prix_max": "28,0",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "16,7",
+    "prix_med": "23,9",
+    "prix_max": "28,7",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "15,8",
+    "prix_med": "22,5",
+    "prix_max": "27,0",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "16,2",
+    "prix_med": "23,1",
+    "prix_max": "27,7",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "12,0",
+    "prix_med": "17,1",
+    "prix_max": "20,5",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "12,3",
+    "prix_med": "17,5",
+    "prix_max": "21,0",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "12,6",
+    "prix_med": "18,0",
+    "prix_max": "21,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "13,0",
+    "prix_med": "18,5",
+    "prix_max": "22,2",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,5",
+    "prix_med": "19,3",
+    "prix_max": "23,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,9",
+    "prix_med": "19,8",
+    "prix_max": "23,8",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "11,9",
+    "prix_med": "17,0",
+    "prix_max": "20,4",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "12,2",
+    "prix_med": "17,4",
+    "prix_max": "20,9",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "10,9",
+    "prix_med": "15,5",
+    "prix_max": "18,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "11,1",
+    "prix_med": "15,9",
+    "prix_max": "19,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,1",
+    "prix_med": "15,8",
+    "prix_max": "19,0",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,3",
+    "prix_med": "16,2",
+    "prix_max": "19,4",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,0",
+    "prix_med": "17,2",
+    "prix_max": "20,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,3",
+    "prix_med": "17,6",
+    "prix_max": "21,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "10,2",
+    "prix_med": "14,5",
+    "prix_max": "17,4",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "10,4",
+    "prix_med": "14,9",
+    "prix_max": "17,9",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,2",
+    "prix_med": "13,1",
+    "prix_max": "15,7",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,4",
+    "prix_med": "13,4",
+    "prix_max": "16,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "8,5",
+    "prix_med": "12,2",
+    "prix_max": "14,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "8,8",
+    "prix_med": "12,5",
+    "prix_max": "15,0",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,9",
+    "prix_med": "15,5",
+    "prix_max": "18,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 311,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "11,1",
+    "prix_med": "15,9",
+    "prix_max": "19,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "16,2",
+    "prix_med": "23,1",
+    "prix_max": "27,7",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "16,6",
+    "prix_med": "23,7",
+    "prix_max": "28,4",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "15,3",
+    "prix_med": "21,9",
+    "prix_max": "26,3",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "15,7",
+    "prix_med": "22,4",
+    "prix_max": "26,9",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "14,7",
+    "prix_med": "21,0",
+    "prix_max": "25,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "15,1",
+    "prix_med": "21,5",
+    "prix_max": "25,8",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "16,2",
+    "prix_med": "23,1",
+    "prix_max": "27,7",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "16,6",
+    "prix_med": "23,7",
+    "prix_max": "28,4",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "13,3",
+    "prix_med": "19,0",
+    "prix_max": "22,8",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "13,7",
+    "prix_med": "19,5",
+    "prix_max": "23,4",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,7",
+    "prix_med": "13,9",
+    "prix_max": "16,7",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,9",
+    "prix_med": "14,2",
+    "prix_max": "17,0",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,7",
+    "prix_med": "16,7",
+    "prix_max": "20,0",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "12,0",
+    "prix_med": "17,1",
+    "prix_max": "20,5",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,0",
+    "prix_med": "18,5",
+    "prix_max": "22,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,3",
+    "prix_med": "19,0",
+    "prix_max": "22,8",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "10,9",
+    "prix_med": "15,5",
+    "prix_max": "18,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "11,1",
+    "prix_med": "15,9",
+    "prix_max": "19,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,6",
+    "prix_med": "13,7",
+    "prix_max": "16,4",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,8",
+    "prix_med": "14,0",
+    "prix_max": "16,8",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,6",
+    "prix_med": "15,1",
+    "prix_max": "18,1",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,9",
+    "prix_med": "15,5",
+    "prix_max": "18,6",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "11,9",
+    "prix_med": "17,0",
+    "prix_max": "20,4",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,2",
+    "prix_med": "17,4",
+    "prix_max": "20,9",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "10,9",
+    "prix_med": "15,5",
+    "prix_max": "18,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "11,1",
+    "prix_med": "15,9",
+    "prix_max": "19,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,6",
+    "prix_med": "10,8",
+    "prix_max": "13,0",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,8",
+    "prix_med": "11,1",
+    "prix_max": "13,3",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "7,4",
+    "prix_med": "10,6",
+    "prix_max": "12,7",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "7,6",
+    "prix_med": "10,9",
+    "prix_max": "13,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,6",
+    "prix_med": "15,1",
+    "prix_max": "18,1",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 313,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,9",
+    "prix_med": "15,5",
+    "prix_max": "18,6",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "17,3",
+    "prix_med": "24,7",
+    "prix_max": "29,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "17,7",
+    "prix_med": "25,3",
+    "prix_max": "30,4",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "11,9",
+    "prix_med": "17,0",
+    "prix_max": "20,4",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "12,2",
+    "prix_med": "17,4",
+    "prix_max": "20,9",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "14,7",
+    "prix_med": "21,0",
+    "prix_max": "25,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "15,1",
+    "prix_med": "21,5",
+    "prix_max": "25,8",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "15,0",
+    "prix_med": "21,4",
+    "prix_max": "25,7",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "15,3",
+    "prix_med": "21,9",
+    "prix_max": "26,3",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "14,6",
+    "prix_med": "20,8",
+    "prix_max": "25,0",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "14,9",
+    "prix_med": "21,3",
+    "prix_max": "25,6",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,7",
+    "prix_med": "13,8",
+    "prix_max": "16,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,9",
+    "prix_med": "14,1",
+    "prix_max": "16,9",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "12,6",
+    "prix_med": "18,0",
+    "prix_max": "21,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "13,0",
+    "prix_med": "18,5",
+    "prix_max": "22,2",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,9",
+    "prix_med": "18,4",
+    "prix_max": "22,1",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,2",
+    "prix_med": "18,9",
+    "prix_max": "22,7",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "10,9",
+    "prix_med": "15,5",
+    "prix_max": "18,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "11,1",
+    "prix_med": "15,9",
+    "prix_max": "19,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,5",
+    "prix_med": "12,1",
+    "prix_max": "14,5",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,7",
+    "prix_med": "12,4",
+    "prix_max": "14,9",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,9",
+    "prix_med": "15,5",
+    "prix_max": "18,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,1",
+    "prix_med": "15,9",
+    "prix_max": "19,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,8",
+    "prix_med": "15,4",
+    "prix_max": "18,5",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "11,1",
+    "prix_med": "15,8",
+    "prix_max": "19,0",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "8,5",
+    "prix_med": "12,2",
+    "prix_max": "14,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "8,8",
+    "prix_med": "12,5",
+    "prix_max": "15,0",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,7",
+    "prix_med": "11,0",
+    "prix_max": "13,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,9",
+    "prix_med": "11,3",
+    "prix_max": "13,6",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "8,9",
+    "prix_med": "12,7",
+    "prix_max": "15,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "9,1",
+    "prix_med": "13,0",
+    "prix_max": "15,6",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,2",
+    "prix_med": "14,6",
+    "prix_max": "17,5",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 315,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,5",
+    "prix_med": "15,0",
+    "prix_max": "18,0",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "14,9",
+    "prix_med": "21,3",
+    "prix_max": "25,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "15,5",
+    "prix_med": "22,2",
+    "prix_max": "26,6",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "14,1",
+    "prix_med": "20,2",
+    "prix_max": "24,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "14,7",
+    "prix_med": "21,0",
+    "prix_max": "25,2",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "13,5",
+    "prix_med": "19,3",
+    "prix_max": "23,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "14,1",
+    "prix_med": "20,1",
+    "prix_max": "24,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "14,6",
+    "prix_med": "20,9",
+    "prix_max": "25,1",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "15,2",
+    "prix_med": "21,7",
+    "prix_max": "26,0",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "11,8",
+    "prix_med": "16,8",
+    "prix_max": "20,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "12,3",
+    "prix_med": "17,5",
+    "prix_max": "21,0",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "11,3",
+    "prix_med": "16,1",
+    "prix_max": "19,3",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "11,7",
+    "prix_med": "16,7",
+    "prix_max": "20,0",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,7",
+    "prix_med": "16,7",
+    "prix_max": "20,0",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "12,2",
+    "prix_med": "17,4",
+    "prix_max": "20,9",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,0",
+    "prix_med": "17,2",
+    "prix_max": "20,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,5",
+    "prix_med": "17,9",
+    "prix_max": "21,5",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "10,0",
+    "prix_med": "14,3",
+    "prix_max": "17,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "10,4",
+    "prix_med": "14,9",
+    "prix_max": "17,9",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,8",
+    "prix_med": "12,5",
+    "prix_max": "15,0",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "9,1",
+    "prix_med": "13,0",
+    "prix_max": "15,6",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,1",
+    "prix_med": "14,4",
+    "prix_max": "17,3",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,5",
+    "prix_med": "15,0",
+    "prix_max": "18,0",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,3",
+    "prix_med": "14,7",
+    "prix_max": "17,6",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "10,7",
+    "prix_med": "15,3",
+    "prix_max": "18,4",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "8,5",
+    "prix_med": "12,1",
+    "prix_max": "14,5",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "8,8",
+    "prix_med": "12,6",
+    "prix_max": "15,1",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,7",
+    "prix_med": "11,0",
+    "prix_max": "13,2",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "8,0",
+    "prix_med": "11,4",
+    "prix_max": "13,7",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "8,6",
+    "prix_med": "12,3",
+    "prix_max": "14,8",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "9,0",
+    "prix_med": "12,8",
+    "prix_max": "15,4",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "8,7",
+    "prix_med": "12,4",
+    "prix_max": "14,9",
+    "meuble": false,
+    "maison": true
+  },
+  {
+    "zone": 318,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "9,0",
+    "prix_med": "12,9",
+    "prix_max": "15,5",
+    "meuble": true,
+    "maison": true
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "17,1",
+    "prix_med": "24,4",
+    "prix_max": "29,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "18,5",
+    "prix_med": "26,4",
+    "prix_max": "31,7",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "16,1",
+    "prix_med": "23,0",
+    "prix_max": "27,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "17,4",
+    "prix_med": "24,8",
+    "prix_max": "29,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "16,5",
+    "prix_med": "23,6",
+    "prix_max": "28,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "17,9",
+    "prix_med": "25,5",
+    "prix_max": "30,6",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "16,1",
+    "prix_med": "23,0",
+    "prix_max": "27,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "17,4",
+    "prix_med": "24,8",
+    "prix_max": "29,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "13,9",
+    "prix_med": "19,8",
+    "prix_max": "23,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "15,0",
+    "prix_med": "21,4",
+    "prix_max": "25,7",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "12,7",
+    "prix_med": "18,1",
+    "prix_max": "21,7",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "13,7",
+    "prix_med": "19,5",
+    "prix_max": "23,4",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "12,9",
+    "prix_med": "18,4",
+    "prix_max": "22,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "13,9",
+    "prix_med": "19,9",
+    "prix_max": "23,9",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,8",
+    "prix_med": "19,7",
+    "prix_max": "23,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "14,9",
+    "prix_med": "21,3",
+    "prix_max": "25,6",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "12,2",
+    "prix_med": "17,4",
+    "prix_max": "20,9",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "13,2",
+    "prix_med": "18,8",
+    "prix_max": "22,6",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "10,9",
+    "prix_med": "15,6",
+    "prix_max": "18,7",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "11,8",
+    "prix_med": "16,8",
+    "prix_max": "20,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,5",
+    "prix_med": "15,0",
+    "prix_max": "18,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,3",
+    "prix_med": "16,2",
+    "prix_max": "19,4",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,6",
+    "prix_med": "18,0",
+    "prix_max": "21,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,6",
+    "prix_med": "19,4",
+    "prix_max": "23,3",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "12,5",
+    "prix_med": "17,9",
+    "prix_max": "21,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "13,5",
+    "prix_med": "19,3",
+    "prix_max": "23,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "10,6",
+    "prix_med": "15,1",
+    "prix_max": "18,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "11,4",
+    "prix_med": "16,3",
+    "prix_max": "19,6",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,2",
+    "prix_med": "14,6",
+    "prix_max": "17,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,1",
+    "prix_med": "15,8",
+    "prix_max": "19,0",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,0",
+    "prix_med": "17,2",
+    "prix_max": "20,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 307,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,0",
+    "prix_med": "18,6",
+    "prix_max": "22,3",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "18,3",
+    "prix_med": "26,2",
+    "prix_max": "31,4",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "19,8",
+    "prix_med": "28,3",
+    "prix_max": "34,0",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "13,6",
+    "prix_med": "19,4",
+    "prix_max": "23,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "14,7",
+    "prix_med": "21,0",
+    "prix_max": "25,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "14,0",
+    "prix_med": "20,0",
+    "prix_max": "24,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "15,1",
+    "prix_med": "21,6",
+    "prix_max": "25,9",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "15,3",
+    "prix_med": "21,9",
+    "prix_max": "26,3",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 1,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "16,6",
+    "prix_med": "23,7",
+    "prix_max": "28,4",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "14,1",
+    "prix_med": "20,1",
+    "prix_max": "24,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "15,2",
+    "prix_med": "21,7",
+    "prix_max": "26,0",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "12,3",
+    "prix_med": "17,6",
+    "prix_max": "21,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "13,3",
+    "prix_med": "19,0",
+    "prix_max": "22,8",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,1",
+    "prix_med": "15,8",
+    "prix_max": "19,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "12,0",
+    "prix_med": "17,1",
+    "prix_max": "20,5",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,3",
+    "prix_med": "19,0",
+    "prix_max": "22,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 2,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "14,4",
+    "prix_med": "20,5",
+    "prix_max": "24,6",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "13,0",
+    "prix_med": "18,5",
+    "prix_max": "22,2",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "avant 1946",
+    "prix_min": "14,0",
+    "prix_med": "20,0",
+    "prix_max": "24,0",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "10,4",
+    "prix_med": "14,8",
+    "prix_max": "17,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1946-1970",
+    "prix_min": "11,2",
+    "prix_med": "16,0",
+    "prix_max": "19,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "10,2",
+    "prix_med": "14,6",
+    "prix_max": "17,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "1971-1990",
+    "prix_min": "11,1",
+    "prix_med": "15,8",
+    "prix_max": "19,0",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,0",
+    "prix_med": "17,1",
+    "prix_max": "20,5",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": 3,
+    "annee_de_construction": "apres 1990",
+    "prix_min": "13,0",
+    "prix_med": "18,5",
+    "prix_max": "22,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "11,6",
+    "prix_med": "16,5",
+    "prix_max": "19,8",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "avant 1946",
+    "prix_min": "12,5",
+    "prix_med": "17,8",
+    "prix_max": "21,4",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,1",
+    "prix_med": "10,1",
+    "prix_max": "12,1",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1946-1970",
+    "prix_min": "7,6",
+    "prix_med": "10,9",
+    "prix_max": "13,1",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "8,8",
+    "prix_med": "12,5",
+    "prix_max": "15,0",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "1971-1990",
+    "prix_min": "9,5",
+    "prix_med": "13,5",
+    "prix_max": "16,2",
+    "meuble": true,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "11,4",
+    "prix_med": "16,3",
+    "prix_max": "19,6",
+    "meuble": false,
+    "maison": false
+  },
+  {
+    "zone": 308,
+    "nombre_de_piece": "4 et plus",
+    "annee_de_construction": "apres 1990",
+    "prix_min": "12,3",
+    "prix_med": "17,6",
+    "prix_max": "21,1",
+    "meuble": true,
+    "maison": false
+  }
+]

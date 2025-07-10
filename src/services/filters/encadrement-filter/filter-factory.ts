@@ -1,21 +1,21 @@
+import { InfoToFilter } from '@interfaces/ad'
 import { AvailableMainCities } from '@services/city-config/main-cities'
+import { FakeFilter } from '@services/filters/encadrement-filter/fake-filter'
+import { GrenobleFilter } from '@services/filters/encadrement-filter/grenoble-filter'
 import { EstEnsembleFilter } from './est-ensemble-filter'
 import { GenericFilter } from './generic-filter'
 import { ParisFilter } from './paris-filter'
 import { PlaineCommuneFilter } from './plaine-commune-filter'
-import { GrenobleFilter } from '@services/filters/encadrement-filter/grenoble-filter'
-import { InfoToFilter } from '@interfaces/ad'
-import { FakeFilter } from '@services/filters/encadrement-filter/fake-filter'
 
 export class FilterFactory {
   mainCity: AvailableMainCities
 
   private genericConfigs: Partial<Record<AvailableMainCities, string>> = {
     paysBasque: 'json-data/encadrements_pays-basque_2024.json',
-    bordeaux: 'json-data/encadrements_bordeaux_2024.json',
-    lille: 'json-data/encadrements_lille_2024.json',
+    bordeaux: 'json-data/encadrements_bordeaux_2025.json',
+    lille: 'json-data/encadrements_lille_2025.json',
     lyon: 'json-data/encadrements_lyon_2024.json',
-    montpellier: 'json-data/encadrements_montpellier_2024.json',
+    montpellier: 'json-data/encadrements_montpellier_2025.json',
   }
 
   private fakeCityConfigs: Partial<Record<AvailableMainCities, string>> = {
