@@ -3,7 +3,6 @@ import { AvailableCities } from '@services/city-config/classic-cities'
 import {
   AvailableCityZones,
   getMainCity,
-  isFake,
 } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
 import {
@@ -153,7 +152,7 @@ export async function getRelevantAdsData(
 
     if (geodataCache[cacheKey]) continue
 
-    if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
+    if (mainCity && (!ad.longitude || !ad.latitude)) {
       const districtsList = new DistrictsList(mainCity, {
         specificCity: ad.city,
       })
@@ -166,7 +165,7 @@ export async function getRelevantAdsData(
       let blurry = false
 
       const mainCity = getMainCity(ad.city)
-      if (mainCity && !isFake(mainCity) && (!ad.longitude || !ad.latitude)) {
+      if (mainCity && (!ad.longitude || !ad.latitude)) {
         const geodata = geodataCache[`${mainCity}_${ad.city}`]
         const feature =
           geodata.features[Math.floor(Math.random() * geodata.features.length)]
