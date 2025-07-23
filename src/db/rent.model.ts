@@ -11,6 +11,7 @@ const schema = new Schema({
   priceExcludingCharges: { type: Number, required: true },
   surface: { type: Number, required: true },
   city: { type: String, required: true },
+  mainCity: { type: String, required: true },
   url: { type: String, required: false },
   address: { type: String, required: false },
   postalCode: { type: String, required: false },

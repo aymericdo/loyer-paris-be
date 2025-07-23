@@ -1,5 +1,6 @@
 import { Rent } from '@db/db'
 import { AvailableCities } from '@services/city-config/classic-cities'
+import { AvailableMainCities } from '@services/city-config/main-cities'
 import { PrettyLog } from '@services/helpers/pretty-log'
 
 interface SavedInfo {
@@ -9,6 +10,7 @@ interface SavedInfo {
   dpe?: string | null
   rentComplement?: number | null
   city: AvailableCities
+  mainCity: AvailableMainCities
   hasFurniture?: boolean
   isHouse?: boolean
   isFake?: boolean
@@ -46,6 +48,7 @@ export class SaveRentService {
       priceExcludingCharges: this.adToSave.priceExcludingCharges,
       surface: this.adToSave.surface,
       city: this.adToSave.city,
+      mainCity: this.adToSave.mainCity,
       district: this.adToSave.district,
       ...this.saveIfNotNull('dpe'),
       ...this.saveIfNotNull('rentComplement'),

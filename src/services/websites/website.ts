@@ -108,6 +108,7 @@ export abstract class Website {
           id: cleanAd.id,
           address: cleanAd.address,
           city: cleanAd.city,
+          mainCity: mainCity,
           district: filteredResult.districtName,
           isFake: isFake(mainCity),
           dpe: cleanAd.dpe,
