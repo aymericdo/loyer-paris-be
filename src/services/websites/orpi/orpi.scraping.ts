@@ -10,26 +10,29 @@ export class OrpiScraping {
     }).window
 
     const titleElement = document.querySelector(
-      'body > main > article > div > div > div > div > div > div > div > div > div > h1',
+      'body > main > article > section > div > div > div > div > div > div h1',
     )
+
     const descriptionElement = document.querySelector(
-      'div.o-container div.c-preview',
+      'body > main > article > section div.u-p',
     )
+
     const chargesElement = [
       ...document.querySelectorAll(
-        '.o-grid > .o-grid__col .u-list-unstyled.u-text-xs > li',
+        'body > main > article > section:nth-child(1) > div > div > div.o-grid.o-grid--1\\@md.o-grid--1\\@sm > div.o-grid__col.o-grid__col--8 > div.o-grid.u-mt-sm-bis > div.o-grid__col.o-grid__col--12.o-grid__col--6\\@md.o-grid__col--6\\@md-plus.u-text-right\\@md.u-text-right\\@md-plus > ul > li',
       ),
     ]
+
     const hasChargesElement = [
       ...document.querySelectorAll(
-        'body > main > article > div > div > div > div > div > div > div > div > div > p > small',
+        'body > main > article > section:nth-child(1) > div > div > div.o-grid.o-grid--1\\@md.o-grid--1\\@sm > div.o-grid__col.o-grid__col--8 > div.o-grid.u-mt-sm-bis > div.o-grid__col.o-grid__col--12.o-grid__col--6\\@md.o-grid__col--6\\@md-plus.u-text-right\\@md.u-text-right\\@md-plus > p:nth-child(2) > small',
       ),
     ]
     const cityElement = document.querySelector(
-      'body > main > article > div > div > div > div > div > div > div > div > div > h1 > span',
+      '#estate-map > div > div > div.u-mt-xs\\@md-plus.u-mt-sm > div > h2',
     )
     const priceElement = document.querySelector(
-      'body > main > article > div > div > div > div > div > div > div > div > div > p > strong',
+      'body > main > article > section:nth-child(1) > div > div > div.o-grid.o-grid--1\\@md.o-grid--1\\@sm > div.o-grid__col.o-grid__col--8 > div.o-grid.u-mt-sm-bis > div > p > strong',
     )
     const charges = chargesElement.find(
       (element) => element.textContent.search('Provisions pour charges') !== -1,
@@ -37,8 +40,9 @@ export class OrpiScraping {
     const hasCharges = hasChargesElement.some((element) =>
       element.textContent?.toLowerCase().includes('charges comprises'),
     )
+
     const renter = document.querySelector(
-      'body > main > article > section > div > div > div > div > div > div > div > h3',
+      'body > main > article > section:nth-child(1) > div > div > div > div > aside > div > div > div > h3',
     )
 
     const dpe = document.querySelector('li.c-dpe__index--active')

@@ -14,7 +14,7 @@ export const regexString = (value: string): RegExp => {
     isHouse: /maison/gi,
     particulier: /particulier/gi,
     colocation:
-      /\bcolocation\b(?![^.!?]{0,50}\b(interdite|impossible|refusée|non\s?autorisée|interdiction)\b)/gi,
+      /(?<!\b(pas\s+de|sans|refus\s+de|aucune|ni)\s+)\bcolocation\b(?![^.!?]{0,50}\b(interdite|impossible|refusée|non\s?autorisée|interdiction)\b)/gi,
   }
 
   if (Object.keys(regex).includes(value)) {
