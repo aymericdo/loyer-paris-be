@@ -17,10 +17,10 @@ export class SelogerScraping {
       '[data-testid*="MainDescription.Expandable-text"]',
     )
     const price = document.querySelector(
-      '[data-testid*="Hardfacts.Price.Value"]',
+      '[data-testid*="cdp-seo-wrapper"] .css-9wpf20',
     )
     const hasCharges = document.querySelector(
-      '[data-testid*="Hardfacts.Price.Informations"]',
+      '[data-testid*="cdp-seo-wrapper"] .css-3cq25l',
     )
     const cityLabel = document.querySelector(
       '[data-testid*="cdp-location-address"]',
@@ -36,7 +36,7 @@ export class SelogerScraping {
 
     const itemTags = [
       ...document.querySelectorAll(
-        '[data-testid*="cdp-hardfacts"] .css-1c3h18e',
+        '[data-testid*="cdp-seo-wrapper"] .css-7tj8u',
       ),
     ]
 
