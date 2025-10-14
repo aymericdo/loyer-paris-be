@@ -29,8 +29,8 @@ export class AddressService {
 
     const limit = 5
     const url = `https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${inseeCode(city)}&autocomplete=1`
-    const retries = 3
-    const delay = 1000
+    const retries = 5
+    const delay = 2000
 
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {
@@ -45,7 +45,7 @@ export class AddressService {
         PrettyLog.call(`Tentative ${attempt} échouée`, 'yellow')
         PrettyLog.call(JSON.stringify(error), 'red')
 
-        if (!isTimeoutOr504 || attempt === retries) {
+        if (isTimeoutOr504 || attempt >= retries) {
           throw error
         }
 

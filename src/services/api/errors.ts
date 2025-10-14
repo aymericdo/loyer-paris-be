@@ -63,7 +63,8 @@ export class ApiErrorsService {
       new Slack().sendMessage(
         '#errors',
         `Error ${this.status} : ${basicError.name}: ${basicError.message}\n${basicError.stack}\n` +
-          `(https://encadrement-loyers.sentry.io/issues/?query=${sentryId})`,
+          (sentryId ??
+            `(https://encadrement-loyers.sentry.io/issues/?query=${sentryId})`),
       )
     }
   }
