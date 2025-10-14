@@ -10,17 +10,13 @@ export class SelogerScraping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const title = document.querySelector(
-      '[data-testid*="MainDescription.Title"]',
-    )
-    const description = document.querySelector(
-      '[data-testid*="MainDescription.Expandable-text"]',
-    )
+    const title = document.querySelector('[data-testid*="cdp-hardfacts"]')
+    const description = document.querySelector('.Section.Description')
     const price = document.querySelector(
-      '[data-testid*="cdp-seo-wrapper"] .css-9wpf20',
+      '[data-testid*="cdp-seo-wrapper"] .css-k0qv01',
     )
     const hasCharges = document.querySelector(
-      '[data-testid*="cdp-seo-wrapper"] .css-3cq25l',
+      '[data-testid*="cdp-seo-wrapper"] .css-19wvzv',
     )
     const cityLabel = document.querySelector(
       '[data-testid*="cdp-location-address"]',

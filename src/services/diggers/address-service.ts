@@ -3,7 +3,7 @@ import { Coordinate, AddressItem } from '@interfaces/shared'
 import { AvailableCities } from '@services/city-config/classic-cities'
 import { regexString } from '@services/helpers/regex'
 import * as cleanup from '@services/helpers/cleanup'
-import { DataGouvAddress, DataGouvAddressItem } from '@interfaces/address'
+import { AddressResponse, DataGouvAddressItem } from '@interfaces/address'
 import axios, { AxiosError } from 'axios'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { inseeCode } from '@services/city-config/city-selectors'
@@ -29,7 +29,8 @@ export class AddressService {
     if (query.trim().length < 4) return []
 
     const limit = 5
-    const url = `https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${inseeCode(city)}&autocomplete=1`
+    const url = `https://data.geopf.fr/geocodage/completion/?text=${query}+${city}&type=StreetAddress&maximumResponses=${limit}`
+    // const url = `https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${inseeCode(city)}&autocomplete=1`
     const retries = 5
     const baseDelay = 1000
     const factor = 2
@@ -37,8 +38,13 @@ export class AddressService {
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {
         const response = await axios(url)
-        const dataGouv: DataGouvAddress = response.data
-        return dataGouv.features
+        return this.convertGeoPfDataToDataGouvAddressItem(
+          response.data,
+          inseeCode(city),
+        )
+
+        // const dataGouv: DataGouvAddress = response.data
+        // return dataGouv.features
       } catch (err) {
         const error = err as AxiosError
         const status = error?.response?.status
@@ -201,5 +207,43 @@ export class AddressService {
         return this.coordinates || coordinatesFromAd
       }
     }
+  }
+
+  private static convertGeoPfDataToDataGouvAddressItem(
+    result: AddressResponse,
+    citycode: string,
+  ): DataGouvAddressItem[] {
+    if (!result.results?.length) return []
+
+    return result.results.map((r) => {
+      // Extraction du numéro de rue s’il est présent dans le libellé
+      const houseNumberMatch = r.fulltext.match(/^\d+/)
+      const housenumber = houseNumberMatch ? houseNumberMatch[0] : ''
+
+      // Construction de l'identifiant (fictif mais cohérent)
+      const id = `${citycode}_${r.street?.replace(/\s+/g, '_')}_${housenumber || '00000'}`
+
+      return {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [r.x, r.y],
+        },
+        properties: {
+          label: r.fulltext,
+          score: 1,
+          housenumber,
+          id,
+          name: `${housenumber ? housenumber + ' ' : ''}${r.street}`,
+          postcode: r.zipcode,
+          citycode,
+          x: r.x,
+          y: r.y,
+          city: r.city,
+          importance: 1,
+          street: r.street,
+        },
+      }
+    })
   }
 }

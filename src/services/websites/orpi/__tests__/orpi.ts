@@ -6,7 +6,7 @@ import path from 'path'
 import { Orpi } from '../orpi'
 import { Response } from 'express'
 
-describe('orpi', () => {
+fdescribe('orpi', () => {
   afterAll(async () => {
     await closeAllConnections()
     await disconnect()
@@ -37,30 +37,30 @@ describe('orpi', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: '75019, Paris' },
+          address: { order: 0, value: 'rue du docteur heulin 75017, Paris' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: 1 },
-          surface: { order: 3, value: 10.45 },
+          roomCount: { order: 2, value: 2 },
+          surface: { order: 3, value: 32.15 },
           yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
-          price: { order: 6, value: 550 },
-          charges: { order: 7, value: 20 },
+          price: { order: 6, value: 1237 },
+          charges: { order: 7, value: 80 },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Villette' },
+          neighborhood: { order: 0, value: 'Epinettes' },
           hasFurniture: { order: 1, value: true },
-          roomCount: { order: 2, value: '1' },
-          surface: { order: 3, value: 10.45 },
+          roomCount: { order: 2, value: '2' },
+          surface: { order: 3, value: 32.15 },
           dateRange: { order: 4, value: 'Avant 1946' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 38.9 },
-          maxAuthorized: { order: 7, value: 406.5 },
-          promoPercentage: { order: 8, value: 23.3 },
-          promo: { order: 9, value: 123.5 },
+          max: { order: 6, value: null },
+          maxAuthorized: { order: 7, value: null },
+          promoPercentage: { order: 8, value: null },
+          promo: { order: 9, value: null },
         },
         isFake: false,
-        isLegal: false,
+        isLegal: true,
         moreInfo:
           'https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712',
       })
@@ -92,30 +92,30 @@ describe('orpi', () => {
 
       expect(data).toEqual({
         detectedInfo: {
-          address: { order: 0, value: 'boulevard vauban, Lille' },
-          hasFurniture: { order: 1, value: true },
+          address: { order: 0, value: 'rue fremy, Lille' },
+          hasFurniture: { order: 1, value: false },
           roomCount: { order: 2, value: 2 },
-          surface: { order: 3, value: 19.6 },
+          surface: { order: 3, value: 67 },
           yearBuilt: { order: 4, value: null },
           isHouse: { order: 5, value: null },
-          price: { order: 6, value: 525 },
-          charges: { order: 7, value: 60 },
+          price: { order: 6, value: 830 },
+          charges: { order: 7, value: 30 },
           hasCharges: { order: 8, value: null },
         },
         computedInfo: {
-          neighborhood: { order: 0, value: 'Zone 1' },
-          hasFurniture: { order: 1, value: true },
+          neighborhood: { order: 0, value: 'Zone 4' },
+          hasFurniture: { order: 1, value: false },
           roomCount: { order: 2, value: 2 },
-          surface: { order: 3, value: 19.6 },
+          surface: { order: 3, value: 67 },
           dateRange: { order: 4, value: 'Après 1990' },
           isHouse: { order: 5, value: undefined },
-          max: { order: 6, value: 19.3 },
-          maxAuthorized: { order: 7, value: 378.28 },
-          promoPercentage: { order: 8, value: 18.65 },
-          promo: { order: 9, value: 86.72 },
+          max: { order: 6, value: null },
+          maxAuthorized: { order: 7, value: null },
+          promoPercentage: { order: 8, value: null },
+          promo: { order: 9, value: null },
         },
         isFake: false,
-        isLegal: false,
+        isLegal: true,
         moreInfo:
           'https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers',
       })

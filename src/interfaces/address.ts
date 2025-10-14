@@ -15,10 +15,6 @@ export interface DataGouvAddressItem {
     x: number // 653561.11
     y: number // 6863009.07
     city: string // 'Paris'
-    district: string // 'Paris 11e Arrondissement'
-    context: string // '75, Paris, Île-de-France'
-    type: string // 'housenumber'
-    importance: number // 0.82592
     street: string // 'Boulevard Voltaire'
   }
 }
@@ -31,4 +27,26 @@ export interface DataGouvAddress {
 
 export interface FinalDataGouvAddressItem extends DataGouvAddressItem {
   districtName: string | null
+}
+
+// NEW TYPE
+// from https://data.geopf.fr/geocodage/completion
+
+export type AddressResult = {
+  x: number
+  y: number
+  country: string
+  city: string
+  oldcity: string
+  kind: string
+  zipcode: string
+  street: string
+  metropole: boolean
+  fulltext: string
+  classification: number
+}
+
+export type AddressResponse = {
+  status: string
+  results: AddressResult[]
 }
