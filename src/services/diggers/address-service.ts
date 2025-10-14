@@ -30,7 +30,7 @@ export class AddressService {
     const limit = 5
     const url = `https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${inseeCode(city)}&autocomplete=1`
     const retries = 5
-    const delay = 2000
+    const delay = 3000
 
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {
