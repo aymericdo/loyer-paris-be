@@ -148,7 +148,7 @@ export abstract class Website {
         }
       }
     } catch (err) {
-      console.error(err)
+      console.error(JSON.stringify(err))
       const incompleteAd: IncompleteAd = {
         id: ad.id,
         website: this.website,
