@@ -31,7 +31,8 @@ export class AddressService {
     const limit = 5
     const url = `https://api-adresse.data.gouv.fr/search/?q=${query}+${city}&limit=${limit}&citycode=${inseeCode(city)}&autocomplete=1`
     const retries = 5
-    const delay = 3000
+    const baseDelay = 1000
+    const factor = 2
 
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {
@@ -54,7 +55,10 @@ export class AddressService {
           }
         }
 
-        await new Promise((resolve) => setTimeout(resolve, delay))
+        // ⏳ Délai doublé à chaque tentative : 1s, 2s, 4s, 8s...
+        const wait = baseDelay * Math.pow(factor, attempt - 1)
+        PrettyLog.call(`Nouvelle tentative dans ${wait / 1000}s`, 'blue')
+        await new Promise((resolve) => setTimeout(resolve, wait))
       }
     }
 
