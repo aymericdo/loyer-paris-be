@@ -7,6 +7,7 @@ import { DataGouvAddress, DataGouvAddressItem } from '@interfaces/address'
 import axios, { AxiosError } from 'axios'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { inseeCode } from '@services/city-config/city-selectors'
+import { ERROR_CODE } from '@services/api/errors'
 
 export class AddressService {
   private city: AvailableCities
@@ -46,7 +47,11 @@ export class AddressService {
         PrettyLog.call(JSON.stringify(error), 'red')
 
         if (isTimeoutOr504 || attempt >= retries) {
-          throw error
+          throw {
+            error: ERROR_CODE.ApiAdresseError,
+            msg: error.message,
+            status: error.status,
+          }
         }
 
         await new Promise((resolve) => setTimeout(resolve, delay))

@@ -16,6 +16,7 @@ export interface ApiError {
   isIncompleteAd?: boolean
   incompleteAd?: IncompleteAd
   stack?: string
+  status?: number
 }
 
 export interface AddressItem {

@@ -13,6 +13,7 @@ export enum ERROR_CODE {
   Price = 'price',
   Surface = 'surface',
   Filter = 'filter',
+  ApiAdresseError = 'apiAdresseError',
 }
 
 export const ERROR500_MSG = '[ERROR 500]'
@@ -94,6 +95,8 @@ export class ApiErrorsService {
   }
 
   private getStatus(error: ApiError): number {
+    if (error.status) return error.status
+
     switch (error?.error as ERROR_CODE) {
       case ERROR_CODE.Minimal:
       case ERROR_CODE.Address:
