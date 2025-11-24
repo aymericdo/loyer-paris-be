@@ -1,7 +1,7 @@
-import { google } from '@ai-sdk/google';
-import { generateObject } from 'ai';
-import { z } from 'zod';
-import fs from 'fs';
+import { google } from '@ai-sdk/google'
+import { generateObject } from 'ai'
+import { z } from 'zod'
+import fs from 'fs'
 
 const schema = z.object({
   zone: z.number().min(1).max(10),
@@ -10,12 +10,12 @@ const schema = z.object({
   prix_med: z.string().min(1).max(100),
   prix_max: z.string().min(1).max(100),
   prix_min: z.string().min(1).max(100),
-  meuble: z.boolean().describe("Logement meublé ou non"),
-  maison: z.boolean().describe("Logement en maison ou appartement")
-});
+  meuble: z.boolean().describe('Logement meublé ou non'),
+  maison: z.boolean().describe('Logement en maison ou appartement'),
+})
 
 async function extractDataFromArrete(filePath: string) {
-  const { object} = await generateObject({
+  const { object } = await generateObject({
     model: google('gemini-2.5-flash-lite'),
     schema,
     output: 'array',
@@ -51,21 +51,18 @@ async function extractDataFromArrete(filePath: string) {
         ],
       },
     ],
-  });
+  })
 
   return object
 }
 
-
 async function main() {
+  const inputFilePath = './arrete.pdf'
+  const outputFilePath = './output.json'
 
-  const inputFilePath = './arrete.pdf';
-  const outputFilePath = './output.json';
+  const data = await extractDataFromArrete(inputFilePath)
 
-  const data = await extractDataFromArrete(inputFilePath);
-
-  fs.writeFileSync(outputFilePath, JSON.stringify(data, null, 2));
+  fs.writeFileSync(outputFilePath, JSON.stringify(data, null, 2))
 }
-
 
 main()
