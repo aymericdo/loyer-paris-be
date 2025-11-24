@@ -11,7 +11,7 @@ export class FilterFactory {
   mainCity: AvailableMainCities
 
   private genericConfigs: Partial<Record<AvailableMainCities, string>> = {
-    paysBasque: 'json-data/encadrements_pays-basque_2024.json',
+    paysBasque: 'json-data/encadrements_pays-basque_2025.json',
     bordeaux: 'json-data/encadrements_bordeaux_2025.json',
     lille: 'json-data/encadrements_lille_2025.json',
     lyon: 'json-data/encadrements_lyon_2024.json',
