@@ -5,7 +5,7 @@ import {
   AvailableCityZones,
 } from '@services/city-config/city-selectors'
 import { AvailableMainCities } from '@services/city-config/main-cities'
-import { FUNNIEST_WEBSITES } from '@services/websites/website'
+import { FUNNIEST_WEBSITES, PARTICULIER } from '@services/websites/website'
 
 export function getClassicWebsiteFilter(): {
   website: { $nin: typeof FUNNIEST_WEBSITES }
@@ -152,12 +152,12 @@ export function getIsParticulierFilter(
 
   if (isParticulier) {
     return {
-      renter: 'Particulier',
+      renter: PARTICULIER,
     }
   } else {
     return {
       renter: {
-        $ne: 'Particulier',
+        $ne: PARTICULIER,
         $exists: true,
       },
     }
