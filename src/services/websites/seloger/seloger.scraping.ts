@@ -20,7 +20,7 @@ export class SelogerScraping {
     const renter = document.querySelector('[data-testid*="ContactCard.Title"]')
 
     const priceElement = document.querySelector('#price')
-    const chargesElement = priceElement.nextElementSibling
+    const chargesElement = priceElement?.nextElementSibling
 
     const charges = chargesElement?.textContent?.match(
       /(?<=(pour charges.*))\d+/,
