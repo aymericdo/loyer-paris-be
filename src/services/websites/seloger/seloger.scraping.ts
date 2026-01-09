@@ -26,10 +26,11 @@ export class SelogerScraping {
       /(?<=(pour charges.*))\d+/,
     )
 
-    const itemTags = document
-      .querySelector('[data-testid*="cdp-hardfacts-keyfacts"]')
-      .textContent?.split('•')
-      .map((text: string) => text.trim())
+    const itemTags =
+      document
+        .querySelector('[data-testid*="cdp-hardfacts-keyfacts"]')
+        ?.textContent?.split('•')
+        ?.map((text: string) => text.trim()) || []
 
     let isParticulier = false
     let surface = null
