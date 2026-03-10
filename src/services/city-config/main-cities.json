@@ -1,25 +1,15 @@
 {
   "paris": {
-    "cityList": [
-      "paris"
-    ],
+    "cityList": ["paris"],
     "label": "Paris",
     "infoLink": "https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712",
-    "coordinates": [
-      48.866667,
-      2.333333
-    ]
+    "coordinates": [48.866667, 2.333333]
   },
   "lille": {
-    "cityList": [
-      "lille"
-    ],
+    "cityList": ["lille"],
     "label": "Lille",
     "infoLink": "https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers",
-    "coordinates": [
-      50.62925,
-      3.057256
-    ]
+    "coordinates": [50.62925, 3.057256]
   },
   "plaineCommune": {
     "cityList": [
@@ -36,23 +26,15 @@
     "house": true,
     "label": "Plaine Commune",
     "infoLink": "https://plainecommune.fr/encadrementdesloyers/",
-    "coordinates": [
-      48.9246404,
-      2.3625964
-    ]
+    "coordinates": [48.9246404, 2.3625964]
   },
   "lyon": {
-    "cityList": [
-      "lyon",
-      "villeurbanne"
-    ],
+    "cityList": ["lyon", "villeurbanne"],
     "label": "Lyon",
     "infoLink": "https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html",
     "builtYearRangeEnd": 2005,
-    "coordinates": [
-      45.7578137,
-      4.8320114
-    ]
+    "fake": true,
+    "coordinates": [45.7578137, 4.8320114]
   },
   "estEnsemble": {
     "cityList": [
@@ -69,34 +51,21 @@
     "house": true,
     "label": "Est Ensemble",
     "infoLink": "https://www.est-ensemble.fr/lencadrement-des-loyers-sera-applique-en-decembre-est-ensemble",
-    "coordinates": [
-      48.86415,
-      2.44322
-    ]
+    "coordinates": [48.86415, 2.44322]
   },
   "bordeaux": {
-    "cityList": [
-      "bordeaux"
-    ],
+    "cityList": ["bordeaux"],
     "house": true,
     "label": "Bordeaux",
     "infoLink": "https://www.bordeaux-metropole.fr/Vivre-habiter/Se-loger-et-habiter/Mettre-son-logement-en-location/Encadrement-des-loyers-a-Bordeaux",
-    "coordinates": [
-      44.841225,
-      -0.5800364
-    ]
+    "coordinates": [44.841225, -0.5800364]
   },
   "montpellier": {
-    "cityList": [
-      "montpellier"
-    ],
+    "cityList": ["montpellier"],
     "label": "Montpellier",
     "infoLink": "https://www.montpellier3m.fr/lencadrement-des-loyers-entre-en-application-montpellier-compter-du-1er-juillet-2022",
     "builtYearRangeEnd": 2005,
-    "coordinates": [
-      43.6112422,
-      3.8767337
-    ]
+    "coordinates": [43.6112422, 3.8767337]
   },
   "nice": {
     "label": "Nice",
@@ -267,10 +236,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      43.71273,
-      7.25092
-    ],
+    "coordinates": [43.71273, 7.25092],
     "builtYearRangeEnd": 2005
   },
   "nantes": {
@@ -395,10 +361,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      47.239367,
-      -1.555335
-    ],
+    "coordinates": [47.239367, -1.555335],
     "builtYearRangeEnd": 2005
   },
   "strasbourg": {
@@ -440,10 +403,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      48.579831,
-      7.761454
-    ],
+    "coordinates": [48.579831, 7.761454],
     "builtYearRangeEnd": 2005
   },
   "paysBasque": {
@@ -476,10 +436,7 @@
     "house": true,
     "label": "Pays Basque",
     "infoLink": "https://www.communaute-paysbasque.fr/vivre-ici/cadre-de-vie/lencadrement-des-loyers",
-    "coordinates": [
-      43.4417106,
-      -1.6293269
-    ]
+    "coordinates": [43.4417106, -1.6293269]
   },
   "grenoble": {
     "cityList": [
@@ -507,10 +464,7 @@
     ],
     "label": "Grenoble",
     "infoLink": "https://www.grenoblealpesmetropole.fr/actualite/381/45-l-encadrement-des-loyers-dans-la-metropole-grenobloise-mode-d-emploi.htm",
-    "coordinates": [
-      45.1885,
-      5.7249
-    ]
+    "coordinates": [45.1885, 5.7249]
   },
   "toulouse": {
     "label": "Toulouse",
@@ -628,10 +582,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      43.604082,
-      1.433805
-    ],
+    "coordinates": [43.604082, 1.433805],
     "builtYearRangeEnd": 2005
   },
   "brest": {
@@ -648,10 +599,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      48.406435,
-      -4.497736
-    ],
+    "coordinates": [48.406435, -4.497736],
     "builtYearRangeEnd": 2005
   },
   "saint-malo": {
@@ -678,10 +626,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      48.642082,
-      -1.988626
-    ],
+    "coordinates": [48.642082, -1.988626],
     "builtYearRangeEnd": 2005
   },
   "alençon": {
@@ -721,10 +666,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      48.429859,
-      0.092935
-    ],
+    "coordinates": [48.429859, 0.092935],
     "builtYearRangeEnd": 2005
   },
   "la rochelle": {
@@ -743,10 +685,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      46.157816,
-      -1.170382
-    ],
+    "coordinates": [46.157816, -1.170382],
     "builtYearRangeEnd": 2005
   },
   "rennes": {
@@ -798,10 +737,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      48.110899,
-      -1.68365
-    ],
+    "coordinates": [48.110899, -1.68365],
     "builtYearRangeEnd": 2005
   },
   "toulon": {
@@ -893,10 +829,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      43.136379,
-      5.933443
-    ],
+    "coordinates": [43.136379, 5.933443],
     "builtYearRangeEnd": 2005
   },
   "annecy": {
@@ -918,10 +851,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      45.901584,
-      6.125296
-    ],
+    "coordinates": [45.901584, 6.125296],
     "builtYearRangeEnd": 2005
   },
   "marseille": {
@@ -1022,10 +952,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      43.282,
-      5.405
-    ],
+    "coordinates": [43.282, 5.405],
     "builtYearRangeEnd": 2005
   },
   "nancy": {
@@ -1067,10 +994,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      48.688135,
-      6.171263
-    ],
+    "coordinates": [48.688135, 6.171263],
     "builtYearRangeEnd": 2005
   },
   "tours": {
@@ -1101,10 +1025,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      47.395476,
-      0.69472
-    ],
+    "coordinates": [47.395476, 0.69472],
     "builtYearRangeEnd": 2005
   },
   "arras": {
@@ -1159,10 +1080,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      50.287896,
-      2.768267
-    ],
+    "coordinates": [50.287896, 2.768267],
     "builtYearRangeEnd": 2005
   },
   "vannes": {
@@ -1189,10 +1107,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      47.659971,
-      -2.752192
-    ],
+    "coordinates": [47.659971, -2.752192],
     "builtYearRangeEnd": 2005
   },
   "clermont-ferrand": {
@@ -1305,10 +1220,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      45.786671,
-      3.107055
-    ],
+    "coordinates": [45.786671, 3.107055],
     "builtYearRangeEnd": 2005
   },
   "bastia": {
@@ -1324,10 +1236,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      42.687608,
-      9.435179
-    ],
+    "coordinates": [42.687608, 9.435179],
     "builtYearRangeEnd": 2005
   },
   "ajaccio": {
@@ -1346,10 +1255,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      41.933615,
-      8.715573
-    ],
+    "coordinates": [41.933615, 8.715573],
     "builtYearRangeEnd": 2005
   },
   "arles": {
@@ -1364,10 +1270,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      43.608782,
-      4.610256
-    ],
+    "coordinates": [43.608782, 4.610256],
     "builtYearRangeEnd": 2005
   },
   "fréjus": {
@@ -1381,10 +1284,7 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [
-      43.445657,
-      6.770515
-    ],
+    "coordinates": [43.445657, 6.770515],
     "builtYearRangeEnd": 2005
   }
 }

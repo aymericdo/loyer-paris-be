@@ -223,7 +223,7 @@ describe('pap', () => {
           promoPercentage: { order: 8, value: 8.66 },
           promo: { order: 9, value: 58 },
         },
-        isFake: false,
+        isFake: true,
         isLegal: false,
         moreInfo:
           'https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html',
