@@ -5,7 +5,7 @@ import { FilterParent } from '@services/filters/encadrement-filter/filter-parent
 
 export class GrenobleFilter extends FilterParent {
   mainCity: AvailableMainCities = 'grenoble'
-  criteriaJsonPath = 'json-data/encadrements_grenoble.json'
+  criteriaJsonPath = 'json-data/encadrements_grenoble_2025.json'
 
   protected async isDistrictMatch(
     districtsMatched: ZoneDocument[],

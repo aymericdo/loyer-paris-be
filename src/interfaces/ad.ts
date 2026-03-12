@@ -56,6 +56,7 @@ export interface InfoToFilter {
   yearBuilt: number[]
   districtName?: string
   isHouse?: boolean
+  rentalStartDate?: Date
 }
 
 export interface FilteredResult {

@@ -3,13 +3,15 @@
     "cityList": ["paris"],
     "label": "Paris",
     "infoLink": "https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712",
-    "coordinates": [48.866667, 2.333333]
+    "coordinates": [48.866667, 2.333333],
+    "effectiveDate": "2019-07-01"
   },
   "lille": {
     "cityList": ["lille"],
     "label": "Lille",
     "infoLink": "https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers",
-    "coordinates": [50.62925, 3.057256]
+    "coordinates": [50.62925, 3.057256],
+    "effectiveDate": ["2020-03-01", "2021-04-01"]
   },
   "plaineCommune": {
     "cityList": [
@@ -26,7 +28,8 @@
     "house": true,
     "label": "Plaine Commune",
     "infoLink": "https://plainecommune.fr/encadrementdesloyers/",
-    "coordinates": [48.9246404, 2.3625964]
+    "coordinates": [48.9246404, 2.3625964],
+    "effectiveDate": "2021-06-01"
   },
   "lyon": {
     "cityList": ["lyon", "villeurbanne"],
@@ -34,7 +37,8 @@
     "infoLink": "https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html",
     "builtYearRangeEnd": 2005,
     "fake": true,
-    "coordinates": [45.7578137, 4.8320114]
+    "coordinates": [45.7578137, 4.8320114],
+    "effectiveDate": "2021-11-01"
   },
   "estEnsemble": {
     "cityList": [
@@ -51,21 +55,24 @@
     "house": true,
     "label": "Est Ensemble",
     "infoLink": "https://www.est-ensemble.fr/lencadrement-des-loyers-sera-applique-en-decembre-est-ensemble",
-    "coordinates": [48.86415, 2.44322]
+    "coordinates": [48.86415, 2.44322],
+    "effectiveDate": "2022-06-01"
   },
   "bordeaux": {
     "cityList": ["bordeaux"],
     "house": true,
     "label": "Bordeaux",
     "infoLink": "https://www.bordeaux-metropole.fr/Vivre-habiter/Se-loger-et-habiter/Mettre-son-logement-en-location/Encadrement-des-loyers-a-Bordeaux",
-    "coordinates": [44.841225, -0.5800364]
+    "coordinates": [44.841225, -0.5800364],
+    "effectiveDate": "2022-07-15"
   },
   "montpellier": {
     "cityList": ["montpellier"],
     "label": "Montpellier",
     "infoLink": "https://www.montpellier3m.fr/lencadrement-des-loyers-entre-en-application-montpellier-compter-du-1er-juillet-2022",
     "builtYearRangeEnd": 2005,
-    "coordinates": [43.6112422, 3.8767337]
+    "coordinates": [43.6112422, 3.8767337],
+    "effectiveDate": "2022-07-01"
   },
   "nice": {
     "label": "Nice",
@@ -436,7 +443,8 @@
     "house": true,
     "label": "Pays Basque",
     "infoLink": "https://www.communaute-paysbasque.fr/vivre-ici/cadre-de-vie/lencadrement-des-loyers",
-    "coordinates": [43.4417106, -1.6293269]
+    "coordinates": [43.4417106, -1.6293269],
+    "effectiveDate": "2024-11-25"
   },
   "grenoble": {
     "cityList": [
@@ -464,7 +472,8 @@
     ],
     "label": "Grenoble",
     "infoLink": "https://www.grenoblealpesmetropole.fr/actualite/381/45-l-encadrement-des-loyers-dans-la-metropole-grenobloise-mode-d-emploi.htm",
-    "coordinates": [45.1885, 5.7249]
+    "coordinates": [45.1885, 5.7249],
+    "effectiveDate": "2025-01-20"
   },
   "toulouse": {
     "label": "Toulouse",

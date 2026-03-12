@@ -12,8 +12,8 @@ import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { Request, Response } from 'express'
 
-export async function getManualResult(req: Request, res: Response) {
-  PrettyLog.call(`-> ${req.baseUrl} getManualResult`, 'blue')
+export async function simulator(req: Request, res: Response) {
+  PrettyLog.call(`-> ${req.baseUrl} simulator`, 'blue')
 
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 

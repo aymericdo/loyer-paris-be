@@ -6,19 +6,24 @@ import { EstEnsembleFilter } from './est-ensemble-filter'
 import { GenericFilter } from './generic-filter'
 import { ParisFilter } from './paris-filter'
 import { PlaineCommuneFilter } from './plaine-commune-filter'
+import { isFake } from '@services/city-config/city-selectors'
 
 export class FilterFactory {
   mainCity: AvailableMainCities
 
-  private genericConfigs: Partial<Record<AvailableMainCities, string>> = {
+  private filters = {
+    paris: ParisFilter,
+    plaineCommune: PlaineCommuneFilter,
+    estEnsemble: EstEnsembleFilter,
+    grenoble: GrenobleFilter,
+  }
+
+  private cityConfigs: Partial<Record<AvailableMainCities, string>> = {
     paysBasque: 'json-data/encadrements_pays-basque_2025.json',
     bordeaux: 'json-data/encadrements_bordeaux_2025.json',
     lille: 'json-data/encadrements_lille_2025.json',
     lyon: 'json-data/encadrements_lyon_2024.json',
     montpellier: 'json-data/encadrements_montpellier_2025.json',
-  }
-
-  private fakeCityConfigs: Partial<Record<AvailableMainCities, string>> = {
     brest: 'json-data/encadrements_brest_2024.json',
     toulouse: 'json-data/encadrements_toulouse_2024.json',
     'saint-malo': 'json-data/encadrements_saint-malo_2023.json',
@@ -47,23 +52,16 @@ export class FilterFactory {
   }
 
   currentEncadrementFilter(infoToFilter: InfoToFilter) {
-    if (Object.keys(this.genericConfigs).includes(this.mainCity)) {
-      const jsonPath = this.genericConfigs[this.mainCity]
-      return new GenericFilter(this.mainCity, jsonPath, infoToFilter)
-    } else if (Object.keys(this.fakeCityConfigs).includes(this.mainCity)) {
-      const jsonPath = this.fakeCityConfigs[this.mainCity]
-      return new FakeFilter(this.mainCity, jsonPath, infoToFilter)
+    const FilterClass = this.filters[this.mainCity]
+
+    if (FilterClass) {
+      return new FilterClass(infoToFilter)
     }
 
-    switch (this.mainCity) {
-      case 'paris':
-        return new ParisFilter(infoToFilter)
-      case 'plaineCommune':
-        return new PlaineCommuneFilter(infoToFilter)
-      case 'estEnsemble':
-        return new EstEnsembleFilter(infoToFilter)
-      case 'grenoble':
-        return new GrenobleFilter(infoToFilter)
-    }
+    const jsonPath = this.cityConfigs[this.mainCity]
+
+    return isFake(this.mainCity)
+      ? new FakeFilter(this.mainCity, jsonPath, infoToFilter)
+      : new GenericFilter(this.mainCity, jsonPath, infoToFilter)
   }
 }
