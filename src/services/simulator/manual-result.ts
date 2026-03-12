@@ -96,6 +96,7 @@ export async function getManualResult(req: Request, res: Response) {
 
       return {
         ...r,
+        refTodalPrice: roundNumber(r.refPrice * surface),
         maxTotalPrice: roundNumber(r.maxPrice * surface),
         isLegal: r.maxPrice * surface > price,
         yearBuilt: YearBuiltService.getDisplayableYearBuilt(

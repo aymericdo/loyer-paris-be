@@ -101,8 +101,9 @@ export class FakeFilter extends FilterParent {
     return rentList
       .map((rent: ObservatoireEncadrementItem) => {
         const res = {
-          maxPrice: +rent.loyer_median_max,
-          minPrice: +rent.loyer_median_min,
+          maxPrice: +rent.loyer_median_max.toString().replace(',', '.'),
+          refPrice: +rent.loyer_median.toString().replace(',', '.'),
+          minPrice: +rent.loyer_median_min.toString().replace(',', '.'),
           districtName: `Zone ${rent.zone}`,
           isFurnished: null,
           roomCount: this.normalizedRoomCount(
