@@ -17,8 +17,9 @@ export class FakeFilter extends FilterParent {
     mainCity: AvailableMainCities,
     criteriaJsonPath: string,
     infoToFilter: InfoToFilter,
+    rentalStartDate?: Date,
   ) {
-    super(infoToFilter)
+    super(infoToFilter, rentalStartDate)
     this.mainCity = mainCity
     this.criteriaJsonPath = criteriaJsonPath
   }

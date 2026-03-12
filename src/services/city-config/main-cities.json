@@ -1,17 +1,57 @@
 {
   "paris": {
-    "cityList": ["paris"],
+    "cityList": [
+      "paris"
+    ],
     "label": "Paris",
     "infoLink": "https://www.paris.fr/pages/l-encadrement-des-loyers-parisiens-en-vigueur-le-1er-aout-2712",
-    "coordinates": [48.866667, 2.333333],
+    "coordinates": [
+      48.866667,
+      2.333333
+    ],
     "effectiveDate": "2019-07-01"
   },
   "lille": {
-    "cityList": ["lille"],
+    "cityList": [
+      "lille"
+    ],
     "label": "Lille",
     "infoLink": "https://www.lille.fr/Vivre-a-Lille/Mon-logement/L-encadrement-des-loyers",
-    "coordinates": [50.62925, 3.057256],
-    "effectiveDate": ["2020-03-01", "2021-04-01"]
+    "coordinates": [
+      50.62925,
+      3.057256
+    ],
+    "rentControlPeriods": [
+      {
+        "start": "2020-03-01",
+        "end": "2021-03-31",
+        "file": "encadrements_lille_2020.json"
+      },
+      {
+        "start": "2021-04-01",
+        "end": "2022-03-31",
+        "file": "encadrements_lille_2021.json"
+      },
+      {
+        "start": "2022-04-01",
+        "end": "2023-03-31",
+        "file": "encadrements_lille_2022.json"
+      },
+      {
+        "start": "2023-04-01",
+        "end": "2024-03-30",
+        "file": "encadrements_lille_2023.json"
+      },
+      {
+        "start": "2024-03-31",
+        "end": "2025-03-30",
+        "file": "encadrements_lille_2024.json"
+      },
+      {
+        "start": "2025-03-31",
+        "file": "encadrements_lille_2025.json"
+      }
+    ]
   },
   "plaineCommune": {
     "cityList": [
@@ -28,17 +68,71 @@
     "house": true,
     "label": "Plaine Commune",
     "infoLink": "https://plainecommune.fr/encadrementdesloyers/",
-    "coordinates": [48.9246404, 2.3625964],
-    "effectiveDate": "2021-06-01"
+    "coordinates": [
+      48.9246404,
+      2.3625964
+    ],
+    "rentControlPeriods": [
+      {
+        "start": "2021-06-01",
+        "end": "2022-05-31",
+        "file": "encadrements_plaine-commune_2021.json"
+      },
+      {
+        "start": "2022-06-01",
+        "end": "2023-05-31",
+        "file": "encadrements_plaine-commune_2022.json"
+      },
+      {
+        "start": "2023-06-01",
+        "end": "2024-05-30",
+        "file": "encadrements_plaine-commune_2023.json"
+      },
+      {
+        "start": "2024-05-31",
+        "end": "2025-05-30",
+        "file": "encadrements_plaine-commune_2024.json"
+      },
+      {
+        "start": "2025-05-31",
+        "file": "encadrements_plaine-commune_2025.json"
+      }
+    ]
   },
   "lyon": {
-    "cityList": ["lyon", "villeurbanne"],
+    "cityList": [
+      "lyon",
+      "villeurbanne"
+    ],
     "label": "Lyon",
     "infoLink": "https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html",
     "builtYearRangeEnd": 2005,
     "fake": true,
-    "coordinates": [45.7578137, 4.8320114],
-    "effectiveDate": "2021-11-01"
+    "coordinates": [
+      45.7578137,
+      4.8320114
+    ],
+    "rentControlPeriods": [
+      {
+        "start": "2021-11-01",
+        "end": "2022-10-31",
+        "file": "encadrements_lyon_2021.json"
+      },
+      {
+        "start": "2022-11-01",
+        "end": "2023-10-31",
+        "file": "encadrements_lyon_2022.json"
+      },
+      {
+        "start": "2023-11-01",
+        "end": "2024-10-30",
+        "file": "encadrements_lyon_2023.json"
+      },
+      {
+        "start": "2024-10-31",
+        "file": "encadrements_lyon_2024.json"
+      }
+    ]
   },
   "estEnsemble": {
     "cityList": [
@@ -55,24 +149,97 @@
     "house": true,
     "label": "Est Ensemble",
     "infoLink": "https://www.est-ensemble.fr/lencadrement-des-loyers-sera-applique-en-decembre-est-ensemble",
-    "coordinates": [48.86415, 2.44322],
-    "effectiveDate": "2022-06-01"
+    "coordinates": [
+      48.86415,
+      2.44322
+    ],
+    "rentControlPeriods": [
+      {
+        "start": "2022-06-01",
+        "end": "2023-05-31",
+        "file": "encadrements_est-ensemble_2022.json"
+      },
+      {
+        "start": "2023-06-01",
+        "end": "2024-05-30",
+        "file": "encadrements_est-ensemble_2023.json"
+      },
+      {
+        "start": "2024-05-31",
+        "end": "2025-05-30",
+        "file": "encadrements_est-ensemble_2024.json"
+      },
+      {
+        "start": "2025-05-31",
+        "file": "encadrements_est-ensemble_2025.json"
+      }
+    ]
   },
   "bordeaux": {
-    "cityList": ["bordeaux"],
+    "cityList": [
+      "bordeaux"
+    ],
     "house": true,
     "label": "Bordeaux",
     "infoLink": "https://www.bordeaux-metropole.fr/Vivre-habiter/Se-loger-et-habiter/Mettre-son-logement-en-location/Encadrement-des-loyers-a-Bordeaux",
-    "coordinates": [44.841225, -0.5800364],
-    "effectiveDate": "2022-07-15"
+    "coordinates": [
+      44.841225,
+      -0.5800364
+    ],
+    "rentControlPeriods": [
+      {
+        "start": "2022-07-15",
+        "end": "2023-07-14",
+        "file": "encadrements_bordeaux_2022.json"
+      },
+      {
+        "start": "2023-07-15",
+        "end": "2024-07-13",
+        "file": "encadrements_bordeaux_2023.json"
+      },
+      {
+        "start": "2024-07-14",
+        "end": "2025-07-13",
+        "file": "encadrements_bordeaux_2024.json"
+      },
+      {
+        "start": "2025-07-14",
+        "file": "encadrements_bordeaux_2025.json"
+      }
+    ]
   },
   "montpellier": {
-    "cityList": ["montpellier"],
+    "cityList": [
+      "montpellier"
+    ],
     "label": "Montpellier",
     "infoLink": "https://www.montpellier3m.fr/lencadrement-des-loyers-entre-en-application-montpellier-compter-du-1er-juillet-2022",
     "builtYearRangeEnd": 2005,
-    "coordinates": [43.6112422, 3.8767337],
-    "effectiveDate": "2022-07-01"
+    "coordinates": [
+      43.6112422,
+      3.8767337
+    ],
+    "rentControlPeriods": [
+      {
+        "start": "2022-07-01",
+        "end": "2023-06-30",
+        "file": "encadrements_montpellier_2022.json"
+      },
+      {
+        "start": "2023-07-01",
+        "end": "2024-06-29",
+        "file": "encadrements_montpellier_2023.json"
+      },
+      {
+        "start": "2024-06-30",
+        "end": "2025-06-29",
+        "file": "encadrements_montpellier_2024.json"
+      },
+      {
+        "start": "2025-06-30",
+        "file": "encadrements_montpellier_2025.json"
+      }
+    ]
   },
   "nice": {
     "label": "Nice",
@@ -243,8 +410,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [43.71273, 7.25092],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      43.71273,
+      7.25092
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_nice_2023.json"
+      }
+    ]
   },
   "nantes": {
     "label": "Nantes",
@@ -368,8 +543,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [47.239367, -1.555335],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      47.239367,
+      -1.555335
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_nantes_2023.json"
+      }
+    ]
   },
   "strasbourg": {
     "label": "Strasbourg",
@@ -410,8 +593,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [48.579831, 7.761454],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      48.579831,
+      7.761454
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_strasbourg_2024.json"
+      }
+    ]
   },
   "paysBasque": {
     "cityList": [
@@ -443,8 +634,21 @@
     "house": true,
     "label": "Pays Basque",
     "infoLink": "https://www.communaute-paysbasque.fr/vivre-ici/cadre-de-vie/lencadrement-des-loyers",
-    "coordinates": [43.4417106, -1.6293269],
-    "effectiveDate": "2024-11-25"
+    "coordinates": [
+      43.4417106,
+      -1.6293269
+    ],
+    "rentControlPeriods": [
+      {
+        "start": "2024-11-25",
+        "end": "2025-11-24",
+        "file": "encadrements_pays-basque_2024.json"
+      },
+      {
+        "start": "2025-11-25",
+        "file": "encadrements_pays-basque_2025.json"
+      }
+    ]
   },
   "grenoble": {
     "cityList": [
@@ -472,8 +676,16 @@
     ],
     "label": "Grenoble",
     "infoLink": "https://www.grenoblealpesmetropole.fr/actualite/381/45-l-encadrement-des-loyers-dans-la-metropole-grenobloise-mode-d-emploi.htm",
-    "coordinates": [45.1885, 5.7249],
-    "effectiveDate": "2025-01-20"
+    "coordinates": [
+      45.1885,
+      5.7249
+    ],
+    "rentControlPeriods": [
+      {
+        "start": "2025-01-20",
+        "file": "encadrements_grenoble_2025.json"
+      }
+    ]
   },
   "toulouse": {
     "label": "Toulouse",
@@ -591,8 +803,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [43.604082, 1.433805],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      43.604082,
+      1.433805
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_toulouse_2024.json"
+      }
+    ]
   },
   "brest": {
     "label": "Brest",
@@ -608,8 +828,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [48.406435, -4.497736],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      48.406435,
+      -4.497736
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_brest_2024.json"
+      }
+    ]
   },
   "saint-malo": {
     "label": "Saint-Malo",
@@ -635,8 +863,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [48.642082, -1.988626],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      48.642082,
+      -1.988626
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_saint-malo_2023.json"
+      }
+    ]
   },
   "alençon": {
     "label": "Alençon",
@@ -675,8 +911,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [48.429859, 0.092935],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      48.429859,
+      0.092935
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_alençon_2023.json"
+      }
+    ]
   },
   "la rochelle": {
     "label": "La Rochelle",
@@ -694,7 +938,10 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [46.157816, -1.170382],
+    "coordinates": [
+      46.157816,
+      -1.170382
+    ],
     "builtYearRangeEnd": 2005
   },
   "rennes": {
@@ -746,8 +993,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [48.110899, -1.68365],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      48.110899,
+      -1.68365
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_rennes_2023.json"
+      }
+    ]
   },
   "toulon": {
     "label": "Toulon",
@@ -838,8 +1093,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [43.136379, 5.933443],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      43.136379,
+      5.933443
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_toulon_2024.json"
+      }
+    ]
   },
   "annecy": {
     "label": "Annecy",
@@ -860,8 +1123,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [45.901584, 6.125296],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      45.901584,
+      6.125296
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_annecy_2023.json"
+      }
+    ]
   },
   "marseille": {
     "label": "Marseille",
@@ -961,8 +1232,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [43.282, 5.405],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      43.282,
+      5.405
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_marseille_2023.json"
+      }
+    ]
   },
   "nancy": {
     "label": "Nancy",
@@ -1003,8 +1282,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [48.688135, 6.171263],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      48.688135,
+      6.171263
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_nancy_2023.json"
+      }
+    ]
   },
   "tours": {
     "label": "Tours",
@@ -1034,8 +1321,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [47.395476, 0.69472],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      47.395476,
+      0.69472
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_tours_2023.json"
+      }
+    ]
   },
   "arras": {
     "label": "Arras",
@@ -1089,8 +1384,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [50.287896, 2.768267],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      50.287896,
+      2.768267
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_arras_2023.json"
+      }
+    ]
   },
   "vannes": {
     "label": "Vannes",
@@ -1116,8 +1419,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [47.659971, -2.752192],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      47.659971,
+      -2.752192
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_vannes_2024.json"
+      }
+    ]
   },
   "clermont-ferrand": {
     "label": "Clermont-Ferrand",
@@ -1229,8 +1540,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [45.786671, 3.107055],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      45.786671,
+      3.107055
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_clermont-ferrand_2023.json"
+      }
+    ]
   },
   "bastia": {
     "label": "Bastia",
@@ -1245,8 +1564,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [42.687608, 9.435179],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      42.687608,
+      9.435179
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_bastia_2023.json"
+      }
+    ]
   },
   "ajaccio": {
     "label": "Ajaccio",
@@ -1264,8 +1591,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [41.933615, 8.715573],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      41.933615,
+      8.715573
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_ajaccio_2023.json"
+      }
+    ]
   },
   "arles": {
     "label": "Arles",
@@ -1279,8 +1614,16 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [43.608782, 4.610256],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      43.608782,
+      4.610256
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_arles_2023.json"
+      }
+    ]
   },
   "fréjus": {
     "label": "Fréjus",
@@ -1293,7 +1636,15 @@
     ],
     "fake": true,
     "house": true,
-    "coordinates": [43.445657, 6.770515],
-    "builtYearRangeEnd": 2005
+    "coordinates": [
+      43.445657,
+      6.770515
+    ],
+    "builtYearRangeEnd": 2005,
+    "rentControlPeriods": [
+      {
+        "file": "encadrements_fréjus_2024.json"
+      }
+    ]
   }
 }

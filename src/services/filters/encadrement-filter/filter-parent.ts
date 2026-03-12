@@ -21,9 +21,18 @@ export abstract class FilterParent {
   infoToFilter: InfoToFilter = null
   mainCity: AvailableMainCities
   rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
+  rentalStartDate: Date
 
-  constructor(infoToFilter: InfoToFilter) {
+  constructor(infoToFilter: InfoToFilter, rentalStartDate?: Date) {
     this.infoToFilter = infoToFilter
+    this.rentalStartDate = rentalStartDate
+  }
+
+  protected getRentalYear(): number {
+    if (!this.rentalStartDate) {
+      return null
+    }
+    return this.rentalStartDate.getFullYear()
   }
 
   async filter(): Promise<FilteredResult[]> {

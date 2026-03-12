@@ -1,5 +1,5 @@
 import { InfoToFilter } from '@interfaces/ad'
-import { AvailableMainCities } from '@services/city-config/main-cities'
+import { CITIES, AvailableMainCities } from '@services/city-config/main-cities'
 import { FakeFilter } from '@services/filters/encadrement-filter/fake-filter'
 import { GrenobleFilter } from '@services/filters/encadrement-filter/grenoble-filter'
 import { EstEnsembleFilter } from './est-ensemble-filter'
@@ -51,17 +51,58 @@ export class FilterFactory {
     this.mainCity = mainCity
   }
 
-  currentEncadrementFilter(infoToFilter: InfoToFilter) {
-    const FilterClass = this.filters[this.mainCity]
+  private getJsonPathForDate(city: AvailableMainCities, date: Date): string {
+    const cityConfig = CITIES[city]
+    const periods = cityConfig?.rentControlPeriods
 
-    if (FilterClass) {
-      return new FilterClass(infoToFilter)
+    if (!periods?.length) {
+      return this.cityConfigs[city] || `json-data/encadrements_${city}.json`
     }
 
-    const jsonPath = this.cityConfigs[this.mainCity]
+    if (periods.length === 1 && !periods[0].start) {
+      return `json-data/${periods[0].file}`
+    }
+
+    const matchingPeriod = periods.find((p) => {
+      if (!p.start) return false
+      const startDate = new Date(p.start)
+      const endDate = p.end ? new Date(p.end) : new Date('9999-12-31')
+      return date >= startDate && date <= endDate
+    })
+
+    if (!matchingPeriod) {
+      return `json-data/${periods[periods.length - 1].file}`
+    }
+
+    return `json-data/${matchingPeriod.file}`
+  }
+
+  currentEncadrementFilter(infoToFilter: InfoToFilter) {
+    const FilterClass = this.filters[this.mainCity]
+    const jsonPath = infoToFilter.rentalStartDate
+      ? this.getJsonPathForDate(this.mainCity, infoToFilter.rentalStartDate)
+      : this.cityConfigs[this.mainCity]
+
+    if (FilterClass) {
+      return new FilterClass(
+        infoToFilter,
+        infoToFilter.rentalStartDate,
+        jsonPath,
+      )
+    }
 
     return isFake(this.mainCity)
-      ? new FakeFilter(this.mainCity, jsonPath, infoToFilter)
-      : new GenericFilter(this.mainCity, jsonPath, infoToFilter)
+      ? new FakeFilter(
+          this.mainCity,
+          jsonPath,
+          infoToFilter,
+          infoToFilter.rentalStartDate,
+        )
+      : new GenericFilter(
+          this.mainCity,
+          jsonPath,
+          infoToFilter,
+          infoToFilter.rentalStartDate,
+        )
   }
 }
