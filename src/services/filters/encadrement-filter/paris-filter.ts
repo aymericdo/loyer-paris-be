@@ -1,5 +1,5 @@
 import { ZoneDocument } from '@db/zone.model'
-import { FilteredResult, InfoToFilter } from '@interfaces/ad'
+import { FilteredResult } from '@interfaces/ad'
 import {
   ParisDistrictItemProperties,
   ParisEncadrementItem,

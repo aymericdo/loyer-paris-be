@@ -193,7 +193,10 @@ export abstract class FilterParent {
 
   @Memoize()
   protected rangeRentsJson(): EncadrementItem[] {
-    const jsonPath = FilterFactory.getJsonPath(this.mainCity, this.infoToFilter.rentalStartDate)
+    const jsonPath = FilterFactory.getJsonPath(
+      this.mainCity,
+      this.infoToFilter.rentalStartDate,
+    )
     return JSON.parse(fs.readFileSync(path.join(jsonPath), 'utf8'))
   }
 }

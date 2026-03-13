@@ -1,12 +1,18 @@
 import { InfoToFilter } from '@interfaces/ad'
-import { AvailableMainCities, RentControlPeriod } from '@services/city-config/main-cities'
+import {
+  AvailableMainCities,
+  RentControlPeriod,
+} from '@services/city-config/main-cities'
 import { FakeFilter } from '@services/filters/encadrement-filter/fake-filter'
 import { GrenobleFilter } from '@services/filters/encadrement-filter/grenoble-filter'
 import { EstEnsembleFilter } from './est-ensemble-filter'
 import { GenericFilter } from './generic-filter'
 import { ParisFilter } from './paris-filter'
 import { PlaineCommuneFilter } from './plaine-commune-filter'
-import { isFake, rentControlPeriods } from '@services/city-config/city-selectors'
+import {
+  isFake,
+  rentControlPeriods,
+} from '@services/city-config/city-selectors'
 
 export class FilterFactory {
   mainCity: AvailableMainCities
@@ -26,20 +32,12 @@ export class FilterFactory {
     const FilterClass = this.filters[this.mainCity]
 
     if (FilterClass) {
-      return new FilterClass(
-        infoToFilter,
-      )
+      return new FilterClass(infoToFilter)
     }
 
     return isFake(this.mainCity)
-      ? new FakeFilter(
-          this.mainCity,
-          infoToFilter,
-        )
-      : new GenericFilter(
-          this.mainCity,
-          infoToFilter,
-        )
+      ? new FakeFilter(this.mainCity, infoToFilter)
+      : new GenericFilter(this.mainCity, infoToFilter)
   }
 
   static getJsonPath(city: AvailableMainCities, date: Date | null): string {
@@ -50,7 +48,7 @@ export class FilterFactory {
     }
 
     if (date) {
-      return this.getJsonPathForDate(periods, date);
+      return this.getJsonPathForDate(periods, date)
     }
 
     return `json-data/${periods[periods.length - 1].file}`

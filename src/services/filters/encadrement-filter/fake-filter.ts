@@ -13,10 +13,7 @@ export class FakeFilter extends FilterParent {
     'apres 2005',
   ]
 
-  constructor(
-    mainCity: AvailableMainCities,
-    infoToFilter: InfoToFilter,
-  ) {
+  constructor(mainCity: AvailableMainCities, infoToFilter: InfoToFilter) {
     super(infoToFilter)
     this.mainCity = mainCity
   }

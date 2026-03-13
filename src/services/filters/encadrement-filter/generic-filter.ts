@@ -6,10 +6,7 @@ import { FilterParent } from '@services/filters/encadrement-filter/filter-parent
 export class GenericFilter extends FilterParent {
   rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
 
-  constructor(
-    mainCity: AvailableMainCities,
-    infoToFilter: InfoToFilter,
-  ) {
+  constructor(mainCity: AvailableMainCities, infoToFilter: InfoToFilter) {
     super(infoToFilter)
     this.mainCity = mainCity
 

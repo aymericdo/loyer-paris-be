@@ -67,7 +67,6 @@ export async function simulator(req: Request, res: Response) {
       ? new Date(rentalStartDateValueStr)
       : null
 
-
   if (
     !getCitiesFromMainCity(mainCity).some((city) => {
       const cityZones = zones(city)
