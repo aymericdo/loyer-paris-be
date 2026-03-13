@@ -20,19 +20,7 @@ const mappingQuartierZoneParisJson: ParisQuartierItem[] = JSON.parse(
 
 export class ParisFilter extends FilterParent {
   mainCity: AvailableMainCities = 'paris'
-  criteriaJsonPath = 'json-data/encadrements_paris.json'
   rangeTime: string[] = ['Avant 1946', '1946-1970', '1971-1990', 'Après 1990']
-
-  constructor(
-    infoToFilter: InfoToFilter,
-    rentalStartDate?: Date,
-    criteriaJsonPath?: string,
-  ) {
-    super(infoToFilter, rentalStartDate)
-    if (criteriaJsonPath) {
-      this.criteriaJsonPath = criteriaJsonPath
-    }
-  }
 
   protected async isDistrictMatch(
     districtsMatched: ZoneDocument[],
@@ -72,14 +60,10 @@ export class ParisFilter extends FilterParent {
   protected async filterRents(): Promise<
     (ParisEncadrementItem & { districtName: string })[]
   > {
-    const rentalYear = this.getRentalYear()
-    let currentYear = rentalYear
-
-    if (!currentYear) {
-      currentYear = +new Date().getFullYear()
-      if (new Date().getMonth() < 6) {
-        currentYear -= 1
-      }
+    const target = this.infoToFilter.rentalStartDate ?? new Date()
+    let currentYear = +target.getFullYear()
+    if (target.getMonth() < 6) {
+      currentYear -= 1
     }
 
     const rangeRents = this.rangeRentsJson() as ParisEncadrementItem[]

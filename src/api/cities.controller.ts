@@ -7,6 +7,7 @@ import {
   getMainCity,
   isFake,
   label,
+  rentControlPeriods,
   zones,
 } from '@services/city-config/city-selectors'
 import express, { Request, Response } from 'express'
@@ -26,6 +27,7 @@ function getValidCityList(req: Request, res: Response) {
       dateBuiltRange: dateBuiltRange(mainCity),
       hasHouse: canHaveHouse(mainCity),
       coordinates: coordinates(mainCity),
+      rentControlPeriods: rentControlPeriods(mainCity),
       displayName: {
         city: label(city),
         mainCity: label(mainCity),

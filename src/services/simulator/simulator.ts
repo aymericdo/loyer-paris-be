@@ -32,6 +32,9 @@ export async function simulator(req: Request, res: Response) {
   const dateBuiltValueStr: string = queryParamValidator(
     req.query.dateBuiltValueStr as string,
   )
+  const rentalStartDateValueStr: string = queryParamValidator(
+    req.query.rentalStartDate as string,
+  )
 
   if (
     !mainCity ||
@@ -59,6 +62,12 @@ export async function simulator(req: Request, res: Response) {
         : null
   const isHouse: boolean = isHouseValue !== null ? +isHouseValue === 1 : false
 
+  const rentalStartDate: Date =
+    new Date(rentalStartDateValueStr) !== null
+      ? new Date(rentalStartDateValueStr)
+      : null
+
+
   if (
     !getCitiesFromMainCity(mainCity).some((city) => {
       const cityZones = zones(city)
@@ -81,6 +90,7 @@ export async function simulator(req: Request, res: Response) {
     roomCount: room,
     hasFurniture,
     isHouse,
+    rentalStartDate,
   }
 
   const encadrementFilterFactory = new FilterFactory(mainCity)

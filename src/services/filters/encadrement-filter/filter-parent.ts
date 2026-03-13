@@ -15,24 +15,15 @@ import { YearBuiltService } from '@services/helpers/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
 import { Memoize } from 'typescript-memoize'
+import { FilterFactory } from './filter-factory'
 
 export abstract class FilterParent {
-  criteriaJsonPath = null
   infoToFilter: InfoToFilter = null
   mainCity: AvailableMainCities
   rangeTime: string[] = ['avant 1946', '1946-1970', '1971-1990', 'apres 1990']
-  rentalStartDate: Date
 
-  constructor(infoToFilter: InfoToFilter, rentalStartDate?: Date) {
+  constructor(infoToFilter: InfoToFilter) {
     this.infoToFilter = infoToFilter
-    this.rentalStartDate = rentalStartDate
-  }
-
-  protected getRentalYear(): number {
-    if (!this.rentalStartDate) {
-      return null
-    }
-    return this.rentalStartDate.getFullYear()
   }
 
   async filter(): Promise<FilteredResult[]> {
@@ -202,6 +193,7 @@ export abstract class FilterParent {
 
   @Memoize()
   protected rangeRentsJson(): EncadrementItem[] {
-    return JSON.parse(fs.readFileSync(path.join(this.criteriaJsonPath), 'utf8'))
+    const jsonPath = FilterFactory.getJsonPath(this.mainCity, this.infoToFilter.rentalStartDate)
+    return JSON.parse(fs.readFileSync(path.join(jsonPath), 'utf8'))
   }
 }

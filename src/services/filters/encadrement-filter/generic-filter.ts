@@ -8,13 +8,10 @@ export class GenericFilter extends FilterParent {
 
   constructor(
     mainCity: AvailableMainCities,
-    criteriaJsonPath: string,
     infoToFilter: InfoToFilter,
-    rentalStartDate?: Date,
   ) {
-    super(infoToFilter, rentalStartDate)
+    super(infoToFilter)
     this.mainCity = mainCity
-    this.criteriaJsonPath = criteriaJsonPath
 
     if (lastDateBuiltRange(this.mainCity) === 2005) {
       this.rangeTime = [
