@@ -168,6 +168,7 @@ export abstract class FilterParent {
       .map((rent: DefaultEncadrementItem) => {
         const res = {
           maxPrice: +rent.prix_max.toString().replace(',', '.'),
+          refPrice: +rent.prix_med.toString().replace(',', '.'),
           minPrice: +rent.prix_min.toString().replace(',', '.'),
           districtName: `Zone ${rent.zone}`,
           isFurnished: rent.meuble,

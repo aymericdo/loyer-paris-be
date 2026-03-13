@@ -61,6 +61,7 @@ export interface InfoToFilter {
 
 export interface FilteredResult {
   maxPrice: number
+  refPrice: number
   minPrice: number
   districtName: string
   isFurnished: boolean

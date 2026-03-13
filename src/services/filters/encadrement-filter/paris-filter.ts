@@ -119,6 +119,7 @@ export class ParisFilter extends FilterParent {
     return rentList
       .map((r) => ({
         maxPrice: +r.max,
+        refPrice: +r.ref,
         minPrice: +r.min,
         districtName: r.districtName,
         isFurnished: !!r.meuble_txt.match(/^meubl/g),

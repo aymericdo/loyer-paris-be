@@ -96,6 +96,7 @@ export async function simulator(req: Request, res: Response) {
 
       return {
         ...r,
+        refTotalPrice: roundNumber(r.refPrice * surface),
         maxTotalPrice: roundNumber(r.maxPrice * surface),
         isLegal: r.maxPrice * surface > price,
         yearBuilt: YearBuiltService.getDisplayableYearBuilt(
