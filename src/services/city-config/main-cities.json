@@ -6,6 +6,38 @@
     "coordinates": [48.866667, 2.333333],
     "rentControlPeriods": [
       {
+        "start": "2019-07-01",
+        "end": "2020-06-30",
+        "file": "encadrements_paris.json"
+      },
+      {
+        "start": "2020-07-01",
+        "end": "2021-06-30",
+        "file": "encadrements_paris.json"
+      },
+      {
+        "start": "2021-07-01",
+        "end": "2022-06-30",
+        "file": "encadrements_paris.json"
+      },
+      {
+        "start": "2012-07-01",
+        "end": "2023-06-30",
+        "file": "encadrements_paris.json"
+      },
+      {
+        "start": "2023-07-01",
+        "end": "2024-06-30",
+        "file": "encadrements_paris.json"
+      },
+      {
+        "start": "2024-07-01",
+        "end": "2025-06-30",
+        "file": "encadrements_paris.json"
+      },
+      {
+        "start": "2025-07-01",
+        "end": "2026-06-30",
         "file": "encadrements_paris.json"
       }
     ]
