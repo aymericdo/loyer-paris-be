@@ -35,6 +35,11 @@ export class FilterFactory {
       return new FilterClass(infoToFilter)
     }
 
+    if (this.mainCity === 'lyon') {
+      // avoid the fake template
+      return new GenericFilter(this.mainCity, infoToFilter)
+    }
+
     return isFake(this.mainCity)
       ? new FakeFilter(this.mainCity, infoToFilter)
       : new GenericFilter(this.mainCity, infoToFilter)
