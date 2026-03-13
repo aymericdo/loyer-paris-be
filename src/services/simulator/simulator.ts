@@ -12,8 +12,8 @@ import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
 import { Request, Response } from 'express'
 
-export async function getManualResult(req: Request, res: Response) {
-  PrettyLog.call(`-> ${req.baseUrl} getManualResult`, 'blue')
+export async function simulator(req: Request, res: Response) {
+  PrettyLog.call(`-> ${req.baseUrl} simulator`, 'blue')
 
   const mainCity: AvailableMainCities = req.params.city as AvailableMainCities
 
@@ -31,6 +31,9 @@ export async function getManualResult(req: Request, res: Response) {
   )
   const dateBuiltValueStr: string = queryParamValidator(
     req.query.dateBuiltValueStr as string,
+  )
+  const rentalStartDateValueStr: string = queryParamValidator(
+    req.query.rentalStartDate as string,
   )
 
   if (
@@ -59,6 +62,12 @@ export async function getManualResult(req: Request, res: Response) {
         : null
   const isHouse: boolean = isHouseValue !== null ? +isHouseValue === 1 : false
 
+  const rentalStartDate: Date =
+    new Date(rentalStartDateValueStr) !== null
+      ? new Date(rentalStartDateValueStr)
+      : null
+
+
   if (
     !getCitiesFromMainCity(mainCity).some((city) => {
       const cityZones = zones(city)
@@ -81,6 +90,7 @@ export async function getManualResult(req: Request, res: Response) {
     roomCount: room,
     hasFurniture,
     isHouse,
+    rentalStartDate,
   }
 
   const encadrementFilterFactory = new FilterFactory(mainCity)

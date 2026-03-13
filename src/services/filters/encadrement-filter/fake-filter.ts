@@ -15,12 +15,10 @@ export class FakeFilter extends FilterParent {
 
   constructor(
     mainCity: AvailableMainCities,
-    criteriaJsonPath: string,
     infoToFilter: InfoToFilter,
   ) {
     super(infoToFilter)
     this.mainCity = mainCity
-    this.criteriaJsonPath = criteriaJsonPath
   }
 
   async find(): Promise<FilteredResult> {

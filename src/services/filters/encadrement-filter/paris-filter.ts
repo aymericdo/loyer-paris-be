@@ -1,5 +1,5 @@
 import { ZoneDocument } from '@db/zone.model'
-import { FilteredResult } from '@interfaces/ad'
+import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import {
   ParisDistrictItemProperties,
   ParisEncadrementItem,
@@ -20,8 +20,6 @@ const mappingQuartierZoneParisJson: ParisQuartierItem[] = JSON.parse(
 
 export class ParisFilter extends FilterParent {
   mainCity: AvailableMainCities = 'paris'
-  criteriaJsonPath = 'json-data/encadrements_paris.json'
-  // Extract possible range time from rangeRents (json-data/encadrements_paris.json)
   rangeTime: string[] = ['Avant 1946', '1946-1970', '1971-1990', 'Après 1990']
 
   protected async isDistrictMatch(
@@ -62,9 +60,9 @@ export class ParisFilter extends FilterParent {
   protected async filterRents(): Promise<
     (ParisEncadrementItem & { districtName: string })[]
   > {
-    let currentYear = +new Date().getFullYear()
-
-    if (new Date().getMonth() < 6) {
+    const target = this.infoToFilter.rentalStartDate ?? new Date()
+    let currentYear = +target.getFullYear()
+    if (target.getMonth() < 6) {
       currentYear -= 1
     }
 
