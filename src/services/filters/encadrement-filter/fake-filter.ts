@@ -13,14 +13,9 @@ export class FakeFilter extends FilterParent {
     'apres 2005',
   ]
 
-  constructor(
-    mainCity: AvailableMainCities,
-    criteriaJsonPath: string,
-    infoToFilter: InfoToFilter,
-  ) {
+  constructor(mainCity: AvailableMainCities, infoToFilter: InfoToFilter) {
     super(infoToFilter)
     this.mainCity = mainCity
-    this.criteriaJsonPath = criteriaJsonPath
   }
 
   async find(): Promise<FilteredResult> {

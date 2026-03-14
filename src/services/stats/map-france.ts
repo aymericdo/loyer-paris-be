@@ -60,7 +60,7 @@ export async function getMapFrance(req: Request, res: Response) {
             type: 'nominal',
             scale: {
               domain: [true, false],
-              range: ['orange', 'green'],
+              range: ['#0083ff', 'green'],
             },
           },
           stroke: {
@@ -127,7 +127,7 @@ export async function getMapFrance(req: Request, res: Response) {
             type: 'nominal',
             scale: {
               domain: [true, false],
-              range: ['orange', 'green'],
+              range: ['#0083ff', 'green'],
             },
             legend: {
               title: 'Zones tendues',
