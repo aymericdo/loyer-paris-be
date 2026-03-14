@@ -33,7 +33,7 @@ export async function simulator(req: Request, res: Response) {
     req.query.dateBuiltValueStr as string,
   )
   const rentalStartDateValueStr: string = queryParamValidator(
-    req.query.rentalStartDate as string,
+    req.query.rentalStartDateStr as string,
   )
 
   if (
