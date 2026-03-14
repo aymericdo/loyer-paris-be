@@ -75,7 +75,13 @@
       },
       {
         "start": "2025-04-01",
+        "end": "2026-03-31",
         "file": "encadrements_lille_2025.json"
+      },
+      {
+        "start": "2026-04-01",
+        "end": "2026-11-24",
+        "file": "encadrements_lille_2026.json"
       }
     ]
   },
