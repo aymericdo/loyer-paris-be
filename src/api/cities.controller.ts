@@ -27,10 +27,7 @@ function getValidCityList(req: Request, res: Response) {
       dateBuiltRange: dateBuiltRange(mainCity),
       hasHouse: canHaveHouse(mainCity),
       coordinates: coordinates(mainCity),
-      rentControlPeriods: [...rentControlPeriods(mainCity)].map((period) => ({
-        start: period.start,
-        end: period.end,
-      })),
+      rentControlPeriods: rentControlPeriods(mainCity),
       displayName: {
         city: label(city),
         mainCity: label(mainCity),

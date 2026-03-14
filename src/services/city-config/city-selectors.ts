@@ -86,7 +86,7 @@ export const label = (city: AvailableMainCities | AvailableCities): string => {
 }
 
 export const rentControlPeriods = (mainCity: AvailableMainCities) => {
-  return CITIES[mainCity]?.rentControlPeriods
+  return [...CITIES[mainCity]?.rentControlPeriods]
 }
 
 export const inseeCode = (city: AvailableCities): string => {

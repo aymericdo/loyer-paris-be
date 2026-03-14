@@ -53,7 +53,7 @@ export class FilterFactory {
     }
 
     if (date) {
-      return this.getJsonPathForDate(periods, date)
+      return FilterFactory.getJsonPathForDate(periods, date)
     }
 
     return `json-data/${periods[periods.length - 1].file}`
