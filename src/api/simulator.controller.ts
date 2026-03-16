@@ -5,6 +5,6 @@ import express from 'express'
 const router = express.Router()
 
 router.get('/:city', paramMiddleware(), simulator)
-router.get('mon-loyer/:city', paramMiddleware(), simulator)
+router.get('/mon-loyer/:city', paramMiddleware(), simulator)
 
 export default router
