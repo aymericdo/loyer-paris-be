@@ -50,6 +50,9 @@ jobs:
       - name: Upgrade npm to v11
         run: npm install -g npm@11
 
+      - name: Clean npm cache
+        run: npm cache clean --force
+
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.6.0
         with:
