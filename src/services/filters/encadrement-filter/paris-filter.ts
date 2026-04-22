@@ -1,4 +1,4 @@
-import { ZoneDocument } from '@db/zone.model'
+import { Zone, ZoneDocument } from '@db/zone.model'
 import { FilteredResult } from '@interfaces/ad'
 import {
   ParisDistrictItemProperties,
@@ -23,7 +23,7 @@ export class ParisFilter extends FilterParent {
   rangeTime: string[] = ['Avant 1946', '1946-1970', '1971-1990', 'Après 1990']
 
   protected async isDistrictMatch(
-    districtsMatched: ZoneDocument[],
+    districtsMatched: Zone[],
     rangeRent: ParisEncadrementItem,
   ): Promise<boolean> {
     const zones = this.getParisZones(districtsMatched)
@@ -119,7 +119,7 @@ export class ParisFilter extends FilterParent {
   }
 
   @Memoize()
-  private getParisZones(districtsMatched: ZoneDocument[]): ParisQuartierItem[] {
+  private getParisZones(districtsMatched: Zone[]): ParisQuartierItem[] {
     if (!districtsMatched?.length) {
       return []
     }

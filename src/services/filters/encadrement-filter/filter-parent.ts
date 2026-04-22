@@ -1,4 +1,4 @@
-import { ZoneDocument, ZoneProperties } from '@db/zone.model'
+import { Zone, ZoneDocument, ZoneProperties } from '@db/zone.model'
 import { FilteredResult, InfoToFilter } from '@interfaces/ad'
 import {
   Coordinate,
@@ -54,7 +54,7 @@ export abstract class FilterParent {
     return dateBuiltRange(this.mainCity)[index]
   }
 
-  protected async districtsMatched(): Promise<ZoneDocument[]> {
+  protected async districtsMatched(): Promise<Zone[]> {
     const districtFilterFactory = new DistrictFilterFactory(this.mainCity)
     return await districtFilterFactory
       .currentDistrictFilter({

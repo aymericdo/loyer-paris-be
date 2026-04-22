@@ -3,7 +3,7 @@ import { AvailableMainCities } from '@services/city-config/main-cities'
 import { DistrictFilterParent } from './district-filter-parent'
 import { EstEnsembleGeojson } from '@db/db'
 import { EstEnsembleDistrictItemProperties } from '@interfaces/est-ensemble'
-import { ZoneDocument } from '@db/zone.model'
+import { Zone, ZoneDocument } from '@db/zone.model'
 
 export class EstEnsembleDistrictFilter extends DistrictFilterParent {
   GeojsonCollection = EstEnsembleGeojson
@@ -21,7 +21,7 @@ export class EstEnsembleDistrictFilter extends DistrictFilterParent {
     return data.NOM_COM
   }
 
-  protected async getDistrictFromName(): Promise<ZoneDocument[]> {
+  protected async getDistrictFromName(): Promise<Zone[]> {
     const zone: number = +this.districtName.match(/\d+/)[0]
 
     const filter = {
@@ -32,27 +32,27 @@ export class EstEnsembleDistrictFilter extends DistrictFilterParent {
       filter['properties.NOM_COM'] = { $regex: this.city, $options: 'i' }
     }
 
-    const districts = await this.GeojsonCollection.find(filter).lean()
+    const districts = await this.GeojsonCollection.find(filter).lean<Zone[]>()
 
-    return districts?.length ? (districts as ZoneDocument[]) : []
+    return districts?.length ? districts : []
   }
 
-  protected async getDistrictsFromPostalCode(): Promise<ZoneDocument[]> {
+  protected async getDistrictsFromPostalCode(): Promise<Zone[]> {
     if (!this.postalCode) return []
 
     const districts = await this.GeojsonCollection.find({
       'properties.CODE_POST': this.postalCode.toString(),
-    }).lean()
-    return districts?.length ? (districts as ZoneDocument[]) : []
+    }).lean<Zone[]>()
+    return districts?.length ? districts : []
   }
 
-  protected async getDistrictsFromCity(): Promise<ZoneDocument[]> {
+  protected async getDistrictsFromCity(): Promise<Zone[]> {
     if (!this.city) return []
 
     const districts = await this.GeojsonCollection.find({
       'properties.NOM_COM': { $regex: this.city, $options: 'i' },
-    }).lean()
+    }).lean<Zone[]>()
 
-    return districts?.length ? (districts as ZoneDocument[]) : []
+    return districts?.length ? districts : []
   }
 }

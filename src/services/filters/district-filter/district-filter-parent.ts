@@ -1,4 +1,4 @@
-import { ZoneDocument } from '@db/zone.model'
+import { Zone, ZoneDocument } from '@db/zone.model'
 import {
   Coordinate,
   DefaultDistrictItemProperties,
@@ -53,7 +53,7 @@ export class DistrictFilterParent {
     return (await this.getDistricts())[0] as ZoneDocument
   }
 
-  async getDistricts(): Promise<ZoneDocument[]> {
+  async getDistricts(): Promise<Zone[]> {
     if (this.districtName) {
       return this.getDistrictFromName()
     }
@@ -86,7 +86,7 @@ export class DistrictFilterParent {
     return []
   }
 
-  protected async getDistrictFromName(): Promise<ZoneDocument[]> {
+  protected async getDistrictFromName(): Promise<Zone[]> {
     const zone: number = +this.districtName.match(/\d+/)[0]
 
     const filter = {
@@ -102,7 +102,7 @@ export class DistrictFilterParent {
     return districts?.length ? districts : []
   }
 
-  protected async getDistrictsFromPostalCode(): Promise<ZoneDocument[]> {
+  protected async getDistrictsFromPostalCode(): Promise<Zone[]> {
     if (!this.postalCode) return []
 
     const districts = await this.GeojsonCollection.find({
@@ -112,11 +112,11 @@ export class DistrictFilterParent {
     return districts?.length ? districts : []
   }
 
-  protected async getDistrictsFromCity(): Promise<ZoneDocument[]> {
+  protected async getDistrictsFromCity(): Promise<Zone[]> {
     if (!this.city) return []
 
     if (isOnlyOneCity(this.mainCity)) {
-      return (await this.GeojsonCollection.find({}).lean()) as ZoneDocument[]
+      return (await this.GeojsonCollection.find({}).lean()) as Zone[]
     } else {
       const districts = await this.GeojsonCollection.find({
         'properties.city': { $regex: this.city, $options: 'i' },

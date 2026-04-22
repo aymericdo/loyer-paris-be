@@ -7,8 +7,7 @@ import {
   DISPLAY_MAIN_CITY_FIELD,
 } from '@services/districts/districts-list'
 import mongoose from 'mongoose'
-
-import { Document } from 'mongoose'
+import { HydratedDocument, Schema } from 'mongoose'
 
 export interface ZoneProperties {
   city: string
@@ -19,7 +18,7 @@ export interface ZoneProperties {
   year: string
 }
 
-export interface ZoneDocument extends Document {
+export interface Zone {
   type: string
   geometry:
     | {
@@ -34,6 +33,8 @@ export interface ZoneDocument extends Document {
     | ParisDistrictItemProperties
 }
 
+export type ZoneDocument = HydratedDocument<Zone>
+
 export interface ZoneDocumentSerialized extends ZoneDocument {
   properties: (
     | ZoneProperties
@@ -47,8 +48,6 @@ export interface ZoneDocumentSerialized extends ZoneDocument {
     isFake: boolean
   }
 }
-
-const Schema = mongoose.Schema
 
 const schema = new Schema({
   type: { type: String, required: true },
