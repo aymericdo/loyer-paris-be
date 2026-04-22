@@ -8,7 +8,6 @@ import cors from 'cors'
 import express, { NextFunction, Request, Response } from 'express'
 
 import path from 'path'
-import { nodeProfilingIntegration } from '@sentry/profiling-node'
 import { PrettyLog } from '@services/helpers/pretty-log'
 import { ApiErrorsService } from '@services/api/errors'
 import { ApiError } from '@interfaces/shared'
@@ -49,7 +48,6 @@ Sentry.init({
     new Sentry.Integrations.Http({ tracing: true }),
     // enable Express.js middleware tracing
     new Sentry.Integrations.Express({ app }),
-    nodeProfilingIntegration(),
   ],
   // Performance Monitoring
   tracesSampleRate: 1.0, //  Capture 100% of the transactions

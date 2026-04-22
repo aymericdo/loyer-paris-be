@@ -32,7 +32,6 @@
     "@mapbox/geojson-rewind": "^0.5.2",
     "@sentry/cli": "^2.41.1",
     "@sentry/node": "^7.112.2",
-    "@sentry/profiling-node": "^7.112.2",
     "@slack/web-api": "^7.0.0",
     "@tmcw/togeojson": "^7.1.1",
     "@types/cli-color": "^2.0.2",
