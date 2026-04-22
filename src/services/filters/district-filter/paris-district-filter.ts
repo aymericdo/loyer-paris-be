@@ -35,7 +35,7 @@ export class ParisDistrictFilter extends DistrictFilterParent {
         : this.postalCode.slice(-2)
     const districts = await this.GeojsonCollection.find({
       'properties.c_ar': +code,
-    }).lean()
+    })
 
     return districts?.length ? districts : []
   }
@@ -43,7 +43,7 @@ export class ParisDistrictFilter extends DistrictFilterParent {
   protected async getDistrictFromName(): Promise<ZoneDocument[]> {
     const districts = await this.GeojsonCollection.find({
       'properties.l_qu': this.districtName,
-    }).lean()
+    })
 
     return districts?.length ? districts : []
   }

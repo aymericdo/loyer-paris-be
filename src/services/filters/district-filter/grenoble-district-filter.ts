@@ -23,7 +23,7 @@ export class GrenobleDistrictFilter extends DistrictFilterParent {
       filter['properties.NOM_COM'] = { $regex: this.city, $options: 'i' }
     }
 
-    const districts = await this.GeojsonCollection.find(filter).lean()
+    const districts = await this.GeojsonCollection.find(filter)
 
     return districts?.length ? (districts as ZoneDocument[]) : []
   }
