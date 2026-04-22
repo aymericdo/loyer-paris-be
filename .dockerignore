@@ -7,4 +7,6 @@ Dockerfile
 dist
 build
 coverage
+.env
+.env.*
 *.log
