@@ -32,7 +32,7 @@ export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
       filter['properties.NOM_COM'] = { $regex: this.city, $options: 'i' }
     }
 
-    const districts = await this.GeojsonCollection.find(filter)
+    const districts = await this.GeojsonCollection.find(filter).lean()
 
     return districts?.length ? districts : []
   }
@@ -42,7 +42,7 @@ export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find({
       'properties.CODE_POST': +this.postalCode,
-    })
+    }).lean()
     return districts?.length ? districts : []
   }
 
@@ -51,7 +51,7 @@ export class PlaineCommuneDistrictFilter extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find({
       'properties.NOM_COM': { $regex: this.city, $options: 'i' },
-    })
+    }).lean()
 
     return districts?.length ? districts : []
   }

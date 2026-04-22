@@ -32,9 +32,9 @@ export class EstEnsembleDistrictFilter extends DistrictFilterParent {
       filter['properties.NOM_COM'] = { $regex: this.city, $options: 'i' }
     }
 
-    const districts = await this.GeojsonCollection.find(filter)
+    const districts = await this.GeojsonCollection.find(filter).lean()
 
-    return districts?.length ? districts : []
+    return districts?.length ? (districts as ZoneDocument[]) : []
   }
 
   protected async getDistrictsFromPostalCode(): Promise<ZoneDocument[]> {
@@ -42,8 +42,8 @@ export class EstEnsembleDistrictFilter extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find({
       'properties.CODE_POST': this.postalCode.toString(),
-    })
-    return districts?.length ? districts : []
+    }).lean()
+    return districts?.length ? (districts as ZoneDocument[]) : []
   }
 
   protected async getDistrictsFromCity(): Promise<ZoneDocument[]> {
@@ -51,8 +51,8 @@ export class EstEnsembleDistrictFilter extends DistrictFilterParent {
 
     const districts = await this.GeojsonCollection.find({
       'properties.NOM_COM': { $regex: this.city, $options: 'i' },
-    })
+    }).lean()
 
-    return districts?.length ? districts : []
+    return districts?.length ? (districts as ZoneDocument[]) : []
   }
 }
