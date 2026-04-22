@@ -11,7 +11,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "watch": "tsc --watch & nodemon ./build/src/index.js",
     "build": "rimraf ./build && tsc",
-    "build:prod": "npm run build && npm run sentry:sourcemaps",
+    "build:prod": "npm run build",
     "prod": "node ./build/src/index.js",
     "start": "npm run prod",
     "test": "jest --forceExit --detectOpenHandles",
