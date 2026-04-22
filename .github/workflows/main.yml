@@ -14,11 +14,12 @@ jobs:
       MONGODB_URI_EMPRISE_BATIE: ${{ secrets.MONGODB_URI_EMPRISE_BATIE }}
       MONGODB_URI_ZONES: ${{ secrets.MONGODB_URI_ZONES }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [24.x]
         mongodb-version: ['4.0']
     steps:
       # 1. Checkout en premier
