@@ -1,4 +1,4 @@
-import { Zone, ZoneDocument } from '@db/zone.model'
+import { Zone } from '@db/zone.model'
 import { FilteredResult } from '@interfaces/ad'
 import {
   ParisDistrictItemProperties,

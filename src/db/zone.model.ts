@@ -6,7 +6,6 @@ import {
   DISPLAY_CITY_FIELD,
   DISPLAY_MAIN_CITY_FIELD,
 } from '@services/districts/districts-list'
-import mongoose from 'mongoose'
 import { HydratedDocument, Schema } from 'mongoose'
 
 export interface ZoneProperties {
