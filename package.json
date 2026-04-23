@@ -24,7 +24,9 @@
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org encadrement-loyers --project node ./build && sentry-cli sourcemaps upload --org encadrement-loyers --project node ./build",
     "kml-to-geojson": "ts-node -r tsconfig-paths/register src/scripts/kml-to-geojson.ts",
     "base-op-csv-to-json": "ts-node -r tsconfig-paths/register src/scripts/base-op-csv-to-json.ts",
-    "add-city": "ts-node -r tsconfig-paths/register src/scripts/add-city.ts"
+    "add-city": "ts-node -r tsconfig-paths/register src/scripts/add-city.ts",
+    "load-test": "artillery quick --count 100 --num 10 http://localhost:3000/cities/list",
+    "load-test:full": "artillery run artillery.yml"
   },
   "author": "Aymeric & Thomas",
   "license": "ISC",
@@ -78,6 +80,7 @@
     "@typescript-eslint/parser": "^8.34.0",
     "adm-zip": "^0.5.16",
     "ai": "^5.0.101",
+    "artillery": "^2.0.30",
     "csv-parser": "^3.2.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.0.0",

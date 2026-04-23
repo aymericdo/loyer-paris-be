@@ -133,7 +133,6 @@
     "label": "Lyon",
     "infoLink": "https://www.grandlyon.com/services/lencadrement-des-loyers-a-lyon-et-villeurbanne.html",
     "builtYearRangeEnd": 2005,
-    "fake": true,
     "coordinates": [45.7578137, 4.8320114],
     "rentControlPeriods": [
       {
