@@ -95,19 +95,19 @@ describe('pap', () => {
           isHouse: { order: 5, value: undefined },
           max: {
             order: 6,
-            value: 41.2,
+            value: 42.6,
           },
           maxAuthorized: {
             order: 7,
-            value: 1153.6,
+            value: 1192.8,
           },
           promoPercentage: {
             order: 8,
-            value: 11.26,
+            value: 8.25,
           },
           promo: {
             order: 9,
-            value: 146.4,
+            value: 107.2,
           },
         },
         isFake: false,
