@@ -39,6 +39,10 @@
         "start": "2025-07-01",
         "end": "2026-06-30",
         "file": "encadrements_paris.json"
+      },
+      {
+        "start": "2026-07-01",
+        "file": "encadrements_paris_2026.json"
       }
     ]
   },
@@ -124,7 +128,12 @@
       },
       {
         "start": "2025-05-31",
+        "end": "2026-05-31",
         "file": "encadrements_plaine-commune_2025.json"
+      },
+      {
+        "start": "2026-06-01",
+        "file": "encadrements_plaine-commune_2026.json"
       }
     ]
   },
@@ -200,7 +209,12 @@
       },
       {
         "start": "2025-06-01",
+        "end": "2026-05-31",
         "file": "encadrements_est-ensemble_2025.json"
+      },
+      {
+        "start": "2026-06-01",
+        "file": "encadrements_est-ensemble_2026.json"
       }
     ]
   },
@@ -228,7 +242,12 @@
       },
       {
         "start": "2025-07-15",
+        "end": "2026-07-14",
         "file": "encadrements_bordeaux_2025.json"
+      },
+      {
+        "start": "2026-07-15",
+        "file": "encadrements_bordeaux_2026.json"
       }
     ]
   },
@@ -256,7 +275,12 @@
       },
       {
         "start": "2025-07-01",
+        "end": "2026-06-30",
         "file": "encadrements_montpellier_2025.json"
+      },
+      {
+        "start": "2026-07-01",
+        "file": "encadrements_montpellier_2026.json"
       }
     ]
   },
