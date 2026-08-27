@@ -9,31 +9,44 @@ export class OrpiScraping {
       virtualConsole: virtualConsole(),
     }).window
 
-    const titleElement = document.querySelector(
-      'body > main > article > section > div > div > div > div > div > div h1',
-    )
+    const estate = document.querySelector('main article')
+    const titleElement =
+      estate?.querySelector('h1') ??
+      document.querySelector(
+        'body > main > article > section > div > div > div > div > div > div h1',
+      )
 
-    const descriptionElement = document.querySelector(
-      'body > main > article > section div.u-p',
-    )
+    const descriptionElement =
+      estate?.querySelector('.s-cms') ??
+      document.querySelector('body > main > article > section div.u-p')
 
-    const chargesElement = [
-      ...document.querySelectorAll(
-        'body > main > article > section:nth-child(1) > div > div > div.o-grid.o-grid--1\\@md.o-grid--1\\@sm > div.o-grid__col.o-grid__col--8 > div.o-grid.u-mt-sm-bis > div.o-grid__col.o-grid__col--12.o-grid__col--6\\@md.o-grid__col--6\\@md-plus.u-text-right\\@md.u-text-right\\@md-plus > ul > li',
-      ),
-    ]
+    const priceDetails = titleElement?.closest('.o-grid')
 
-    const hasChargesElement = [
-      ...document.querySelectorAll(
-        'body > main > article > section:nth-child(1) > div > div > div.o-grid.o-grid--1\\@md.o-grid--1\\@sm > div.o-grid__col.o-grid__col--8 > div.o-grid.u-mt-sm-bis > div.o-grid__col.o-grid__col--12.o-grid__col--6\\@md.o-grid__col--6\\@md-plus.u-text-right\\@md.u-text-right\\@md-plus > p:nth-child(2) > small',
-      ),
-    ]
-    const cityElement = document.querySelector(
-      '#estate-map > div > div > div.u-mt-xs\\@md-plus.u-mt-sm > div > h2',
-    )
-    const priceElement = document.querySelector(
-      'body > main > article > section:nth-child(1) > div > div > div.o-grid.o-grid--1\\@md.o-grid--1\\@sm > div.o-grid__col.o-grid__col--8 > div.o-grid.u-mt-sm-bis > div > p > strong',
-    )
+    const chargesElement = priceDetails
+      ? [...priceDetails.querySelectorAll('ul li')]
+      : [
+          ...document.querySelectorAll(
+            'body > main > article > section:nth-child(1) > div > div > div.o-grid.o-grid--1\\@md.o-grid--1\\@sm > div.o-grid__col.o-grid__col--8 > div.o-grid.u-mt-sm-bis > div.o-grid__col.o-grid__col--12.o-grid__col--6\\@md.o-grid__col--6\\@md-plus.u-text-right\\@md.u-text-right\\@md-plus > ul > li',
+          ),
+        ]
+
+    const hasChargesElement = priceDetails
+      ? [...priceDetails.querySelectorAll('small')]
+      : [
+          ...document.querySelectorAll(
+            'body > main > article > section:nth-child(1) > div > div > div.o-grid.o-grid--1\\@md.o-grid--1\\@sm > div.o-grid__col.o-grid__col--8 > div.o-grid.u-mt-sm-bis > div.o-grid__col.o-grid__col--12.o-grid__col--6\\@md.o-grid__col--6\\@md-plus.u-text-right\\@md.u-text-right\\@md-plus > p:nth-child(2) > small',
+          ),
+        ]
+    const cityElement =
+      titleElement?.querySelector('.h5') ??
+      document.querySelector(
+        '#estate-map > div > div > div.u-mt-xs\\@md-plus.u-mt-sm > div > h2',
+      )
+    const priceElement =
+      priceDetails?.querySelector('strong.h2, p > strong') ??
+      document.querySelector(
+        'body > main > article > section:nth-child(1) > div > div > div.o-grid.o-grid--1\\@md.o-grid--1\\@sm > div.o-grid__col.o-grid__col--8 > div.o-grid.u-mt-sm-bis > div > p > strong',
+      )
     const charges = chargesElement.find(
       (element) => element.textContent.search('Provisions pour charges') !== -1,
     )
@@ -41,9 +54,11 @@ export class OrpiScraping {
       element.textContent?.toLowerCase().includes('charges comprises'),
     )
 
-    const renter = document.querySelector(
-      'body > main > article > section:nth-child(1) > div > div > div > div > aside > div > div > div > h3',
-    )
+    const renter =
+      estate?.querySelector('aside h3') ??
+      document.querySelector(
+        'body > main > article > section:nth-child(1) > div > div > div > div > aside > div > div > div > h3',
+      )
 
     const dpe = document.querySelector('li.c-dpe__index--active')
     const dpeRegex = /([ABCDEFG])/
@@ -54,9 +69,7 @@ export class OrpiScraping {
       dpeText = matches?.length && matches[0]
     }
 
-    const features = [
-      ...document.querySelectorAll('#collapse-details div ul.o-grid li'),
-    ]
+    const features = [...document.querySelectorAll('#collapse-details li')]
 
     let furnished = false
     let surface = null
@@ -68,12 +81,16 @@ export class OrpiScraping {
         !feature.textContent.toLowerCase().includes('balcon')
       ) {
         surface = feature
-      } else if (feature.textContent.match(/pièce/g)) {
+      } else if (feature.textContent.match(/pièces?/i)) {
         rooms = feature
-      } else if (feature.textContent.match(/Meublé/g)) {
+      } else if (feature.textContent.match(/Meublé/i)) {
         furnished = true
       }
     })
+
+    furnished ||= chargesElement.some((element) =>
+      element.textContent?.toLowerCase().includes('location meublée'),
+    )
 
     return {
       id: null,
