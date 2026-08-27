@@ -13,7 +13,9 @@ export class LefigaroScraping {
     const title = document.querySelector('#classified-main-infos')
 
     const description = document.querySelector('.classified-description > p')
-    const price = document.querySelector('.classified-price')
+    const price = document.querySelector(
+      '.classified-price-per-m2 > strong, .classified-price__detail > strong',
+    )
     const charges = document.querySelector(
       'div.main-classified > div > div.classified-about-price > ul > li:nth-child(1) > span.about-price-fees-label',
     )
