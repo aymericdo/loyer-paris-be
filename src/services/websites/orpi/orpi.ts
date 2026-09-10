@@ -28,6 +28,9 @@ export class Orpi extends Website {
       }
     }
 
+    // L'erreur est rattrapée puis re-emballée avec le contexte `incompleteAd`
+    // par le try/catch de Website.analyse() : un try/catch local ici
+    // supprimerait ce contexte.
     // pi-lens-ignore: unchecked-throwing-call
     const scrap = OrpiScraping.scrap(JSON.parse(this.body.data))
 

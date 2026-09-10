@@ -12,3 +12,6 @@ src/scripts/data/**
 
 # Sentry Config File
 .sentryclirc
+
+# Claude Code worktrees
+.claude/
