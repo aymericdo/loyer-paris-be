@@ -14,6 +14,7 @@
       "@interfaces/*": ["interfaces/*"],
       "@messenger/*": ["messenger/*"],
       "@services/*": ["services/*"],
+      "@test-utils/*": ["test-utils/*"]
     },
 
     "allowJs": true,
@@ -29,5 +30,12 @@
     // from generated source code references.
     // This improves issue grouping in Sentry.
     "sourceRoot": "/"
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "src/test-utils",
+    "**/__tests__/**",
+    "**/*.test.ts"
+  ]
 }
