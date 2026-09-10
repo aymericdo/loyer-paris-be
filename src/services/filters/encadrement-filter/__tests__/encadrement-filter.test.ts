@@ -1,7 +1,10 @@
 import { Zone, ZoneDocument } from '@db/zone.model'
 import { InfoToFilter } from '@interfaces/ad'
 import { DefaultEncadrementItem, EncadrementItem } from '@interfaces/shared'
+import { ObservatoireEncadrementItem } from '@interfaces/observatoire-des-loyers'
+import { ParisEncadrementItem } from '@interfaces/paris'
 import { AvailableMainCities } from '@services/city-config/main-cities'
+import { DistrictFilterFactory } from '@services/filters/district-filter/district-filter-factory'
 import { EstEnsembleFilter } from '@services/filters/encadrement-filter/est-ensemble-filter'
 import { FakeFilter } from '@services/filters/encadrement-filter/fake-filter'
 import { FilterFactory } from '@services/filters/encadrement-filter/filter-factory'
@@ -491,5 +494,323 @@ describe('FilterParent — lecture de l’arrêté embarqué', () => {
     const filter = fileFilter()
 
     expect(filter.exposeRents()).toBe(filter.exposeRents())
+  })
+})
+
+describe('FakeFilter — repli sur l’observatoire des loyers', () => {
+  class FakeProbe extends FakeFilter {
+    districts: ZoneDocument[] = []
+    catalogue: ObservatoireEncadrementItem[] = []
+
+    constructor(over: Partial<InfoToFilter> = {}) {
+      super('brest', info({ ...over, city: 'brest' as never }))
+    }
+
+    protected async districtsMatched(): Promise<Zone[]> {
+      return this.districts as unknown as Zone[]
+    }
+
+    protected rangeRentsJson(): EncadrementItem[] {
+      return this.catalogue as unknown as EncadrementItem[]
+    }
+  }
+
+  const observatoire = (
+    over: Partial<ObservatoireEncadrementItem> = {},
+  ): ObservatoireEncadrementItem => ({
+    Observatory: 'B2900',
+    Data_year: '2024',
+    agglomeration: 'L2900',
+    zone: '1',
+    Zone_calcul: 'L2900.1.01',
+    Type_habitat: 'Appartement',
+    epoque_construction_homogene: '',
+    nombre_pieces_homogene: '',
+    loyer_median: '9,0',
+    loyer_median_max: '10.80',
+    loyer_median_min: '7.50',
+    nombre_observations: '148',
+    ...over,
+  })
+
+  const build = (
+    catalogue: Partial<ObservatoireEncadrementItem>[],
+    over: Partial<InfoToFilter> = {},
+  ) => {
+    const filter = new FakeProbe(over)
+    filter.districts = [zoneRow('1')]
+    filter.catalogue = catalogue.map(observatoire)
+
+    return filter
+  }
+
+  it('met en forme les loyers médians de l’observatoire', async () => {
+    const [result] = await build([{}]).filter()
+
+    expect(result).toEqual({
+      maxPrice: 10.8,
+      refPrice: 9,
+      minPrice: 7.5,
+      districtName: 'Zone 1',
+      isFurnished: null,
+      roomCount: '',
+      yearBuilt: '',
+      isHouse: null,
+    })
+  })
+
+  it.each([
+    ['1P', '1'],
+    ['2P', '2'],
+    ['4P', '4 et plus'],
+    ['4P+', '4 et plus'],
+    ['5P+', '5'],
+    ['n’importe quoi', ''],
+  ])('traduit « %s » en « %s »', async (nombre_pieces_homogene, expected) => {
+    const [result] = await build([{ nombre_pieces_homogene }], {
+      roomCount: null,
+    }).filter()
+
+    expect(result.roomCount).toBe(expected)
+  })
+
+  it('un barème sans nombre de pièces ne filtre rien', async () => {
+    expect(await build([{}], { roomCount: 5 }).filter()).toHaveLength(1)
+  })
+
+  it('écarte les barèmes d’un autre nombre de pièces', async () => {
+    const results = await build([{ nombre_pieces_homogene: '2P' }], {
+      roomCount: 3,
+    }).filter()
+
+    expect(results).toEqual([])
+  })
+
+  it('range « 4 et plus » au-delà de trois pièces', async () => {
+    const results = await build([{ nombre_pieces_homogene: '4P' }], {
+      roomCount: 5,
+    }).filter()
+
+    expect(results).toHaveLength(1)
+  })
+
+  it('un barème sans ancienneté ne filtre rien', async () => {
+    expect(await build([{}], { yearBuilt: [1950] }).filter()).toHaveLength(1)
+  })
+
+  it('respecte la tranche d’ancienneté quand elle est renseignée', async () => {
+    const results = await build(
+      [
+        { epoque_construction_homogene: 'avant 1946' },
+        { epoque_construction_homogene: '1946-1970' },
+      ],
+      { yearBuilt: [1950] },
+    ).filter()
+
+    expect(results.map((r) => r.yearBuilt)).toEqual(['1946-1970'])
+  })
+
+  it('ne filtre jamais sur le meublé, faute d’info à la source', async () => {
+    const results = await build([{}], { hasFurniture: true }).filter()
+
+    expect(results).toHaveLength(1)
+    expect(results[0].isFurnished).toBeNull()
+  })
+
+  it.each([
+    [true, 'Maison', true],
+    [true, 'Appartement', false],
+    [false, 'Appartement', true],
+    [false, 'Maison', false],
+    [null, 'Appartement', true],
+  ])(
+    'maison demandée %s face à un barème %s → %s',
+    async (isHouse, Type_habitat, expected) => {
+      const results = await build([{ Type_habitat }], { isHouse }).filter()
+
+      expect(results.length > 0).toBe(expected)
+    },
+  )
+
+  it('un barème sans type d’habitat ne filtre rien', async () => {
+    const results = await build([{ Type_habitat: '' }], {
+      isHouse: true,
+    }).filter()
+
+    expect(results).toHaveLength(1)
+  })
+
+  it('find() privilégie le barème le mieux renseigné avant le plus cher', async () => {
+    const filter = build(
+      [
+        {
+          nombre_pieces_homogene: '3P',
+          epoque_construction_homogene: 'avant 1946',
+          loyer_median_max: '20',
+        },
+        {
+          nombre_pieces_homogene: '2P',
+          epoque_construction_homogene: '',
+          loyer_median_max: '100',
+        },
+      ],
+      { roomCount: null },
+    )
+
+    expect((await filter.find()).maxPrice).toBe(20)
+  })
+
+  it('find() départage à score égal par le loyer le plus élevé', async () => {
+    const filter = build(
+      [
+        {
+          nombre_pieces_homogene: '3P',
+          epoque_construction_homogene: 'avant 1946',
+          loyer_median_max: '20',
+        },
+        {
+          nombre_pieces_homogene: '2P',
+          epoque_construction_homogene: 'avant 1946',
+          loyer_median_max: '35',
+        },
+      ],
+      { roomCount: null },
+    )
+
+    expect((await filter.find()).maxPrice).toBe(35)
+  })
+
+  it('find() renvoie null quand aucun barème ne correspond', async () => {
+    expect(await build([]).find()).toBeNull()
+  })
+})
+
+describe('ParisFilter — millésime, quartier et mise en forme', () => {
+  class ParisProbe extends ParisFilter {
+    catalogue: ParisEncadrementItem[] = []
+
+    constructor(over: Partial<InfoToFilter> = {}) {
+      super(info({ ...over, city: 'paris' as never }))
+    }
+
+    protected rangeRentsJson(): EncadrementItem[] {
+      return this.catalogue as unknown as EncadrementItem[]
+    }
+  }
+
+  // ParisFilter appelle super.districtsMatched(), qui court-circuite un simple
+  // override : on intercepte donc la fabrique de quartiers pour rester
+  // hors-ligne (sinon chaque test ouvre une requête Mongo sur les zones).
+  let matchedDistricts: ZoneDocument[] = []
+  let districtSpy: jest.SpyInstance
+
+  beforeEach(() => {
+    districtSpy = jest
+      .spyOn(DistrictFilterFactory.prototype, 'currentDistrictFilter')
+      .mockReturnValue({
+        getDistricts: async () => matchedDistricts,
+      } as never)
+  })
+
+  afterEach(() => districtSpy.mockRestore())
+
+  // Le quartier 78 (Saint-Fargeau) appartient à la zone 13.
+  const parisQuartier = (c_qu: number): ZoneDocument =>
+    ({ properties: { c_qu } }) as unknown as ZoneDocument
+
+  const parisRent = (
+    over: Partial<ParisEncadrementItem> = {},
+  ): ParisEncadrementItem => ({
+    ville: 'PARIS',
+    epoque: 'Avant 1946',
+    id_zone: 13,
+    meuble_txt: 'non meublé',
+    max: 24.2,
+    min: 14.1,
+    piece: 2,
+    ref: 20.2,
+    annee: 2024,
+    ...over,
+  })
+
+  const build = (
+    catalogue: Partial<ParisEncadrementItem>[],
+    over: Partial<InfoToFilter> = {},
+    districts: ZoneDocument[] = [parisQuartier(78)],
+  ) => {
+    matchedDistricts = districts
+    const filter = new ParisProbe(over)
+    filter.catalogue = catalogue.map(parisRent)
+
+    return filter
+  }
+
+  const in2024 = { rentalStartDate: new Date('2025-01-15') }
+
+  it('retient le millésime de l’arrêté applicable début 2025', async () => {
+    const results = await build(
+      [
+        { annee: 2024, max: 24.2 },
+        { annee: 2025, max: 99 },
+      ],
+      in2024,
+    ).filter()
+
+    expect(results.map((r) => r.maxPrice)).toEqual([24.2])
+  })
+
+  it('bascule sur le nouveau millésime au 1er juillet', async () => {
+    const results = await build(
+      [
+        { annee: 2024, max: 24.2 },
+        { annee: 2025, max: 99 },
+      ],
+      { rentalStartDate: new Date('2025-08-15') },
+    ).filter()
+
+    expect(results.map((r) => r.maxPrice)).toEqual([99])
+  })
+
+  it('nomme le quartier via la table des zones parisiennes', async () => {
+    const [result] = await build([{}], in2024).filter()
+
+    expect(result.districtName).toBe('Saint-Fargeau')
+  })
+
+  it('écarte les barèmes d’une autre zone', async () => {
+    const results = await build([{ id_zone: 1 }], in2024).filter()
+
+    expect(results).toEqual([])
+  })
+
+  it('met en forme le barème parisien', async () => {
+    const [result] = await build([{ meuble_txt: 'meublé' }], in2024).filter()
+
+    expect(result).toEqual({
+      maxPrice: 24.2,
+      refPrice: 20.2,
+      minPrice: 14.1,
+      districtName: 'Saint-Fargeau',
+      isFurnished: true,
+      roomCount: '2',
+      yearBuilt: 'Avant 1946',
+    })
+  })
+
+  it('trie les époques selon le découpage parisien', async () => {
+    const results = await build(
+      [
+        { epoque: 'Après 1990' },
+        { epoque: '1971-1990' },
+        { epoque: 'Avant 1946' },
+      ],
+      in2024,
+    ).filter()
+
+    expect(results.map((r) => r.yearBuilt)).toEqual([
+      'Avant 1946',
+      '1971-1990',
+      'Après 1990',
+    ])
   })
 })
