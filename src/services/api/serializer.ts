@@ -10,7 +10,7 @@ import { PrettyLog } from '@services/helpers/pretty-log'
 import { roundNumber } from '@services/helpers/round-number'
 import { YearBuiltService } from '@services/helpers/year-built'
 
-interface SerializedInfo {
+export interface SerializedInfo {
   address: string
   charges?: number
   hasCharges?: boolean
