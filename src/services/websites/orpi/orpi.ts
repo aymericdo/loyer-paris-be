@@ -28,6 +28,7 @@ export class Orpi extends Website {
       }
     }
 
+    // pi-lens-ignore: unchecked-throwing-call
     const scrap = OrpiScraping.scrap(JSON.parse(this.body.data))
 
     if (!scrap) {
