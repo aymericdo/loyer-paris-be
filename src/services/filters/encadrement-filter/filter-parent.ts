@@ -15,7 +15,7 @@ import { YearBuiltService } from '@services/helpers/year-built'
 import * as fs from 'fs'
 import * as path from 'path'
 import { Memoize } from 'typescript-memoize'
-import { FilterFactory } from './filter-factory'
+import { getJsonPath } from './json-path'
 
 export abstract class FilterParent {
   infoToFilter: InfoToFilter = null
@@ -193,10 +193,19 @@ export abstract class FilterParent {
 
   @Memoize()
   protected rangeRentsJson(): EncadrementItem[] {
-    const jsonPath = FilterFactory.getJsonPath(
+    const jsonPath = getJsonPath(
       this.mainCity,
       this.infoToFilter.rentalStartDate,
     )
-    return JSON.parse(fs.readFileSync(path.join(jsonPath), 'utf8'))
+
+    // On échoue bruyamment — un arrêté absent ou illisible doit se voir — mais
+    // en nommant le fichier fautif, sinon l'erreur est un SyntaxError anonyme.
+    try {
+      return JSON.parse(fs.readFileSync(path.join(jsonPath), 'utf8'))
+    } catch (err) {
+      throw new Error(
+        `arrêté illisible : ${jsonPath} (${(err as Error).message})`,
+      )
+    }
   }
 }

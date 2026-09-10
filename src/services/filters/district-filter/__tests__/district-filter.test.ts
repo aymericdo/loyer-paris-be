@@ -1,4 +1,4 @@
-import { Zone, ZoneDocument } from '@db/zone.model'
+import { ZoneDocument } from '@db/zone.model'
 import { closeDbConnections } from '@test-utils/website-test-harness'
 import { Model } from 'mongoose'
 import { DistrictFilterFactory } from '../district-filter-factory'
