@@ -73,7 +73,9 @@ export function readJsonFixture<T = unknown>(
  * existantes la dupliquaient à l'identique.
  */
 export function mockExpressResponse(): Response {
-  return { json: jest.fn(), status: jest.fn() } as unknown as Response
+  const res = { json: jest.fn(), status: jest.fn() }
+  res.status.mockReturnValue(res)
+  return res as unknown as Response
 }
 
 /**
