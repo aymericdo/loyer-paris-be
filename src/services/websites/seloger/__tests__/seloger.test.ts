@@ -1,17 +1,69 @@
-import { closeAllConnections } from '@db/db'
+import { Ad } from '@interfaces/ad'
 import { Body } from '@interfaces/scrap-mapping'
+import {
+  closeDbConnections,
+  mapAdFromFixture,
+  readJsonFixture,
+  ScrapingCase,
+} from '@test-utils/website-test-harness'
 import * as fs from 'fs'
-import { disconnect } from 'mongoose'
 import * as path from 'path'
-import { SeLoger } from '../seloger'
 import { Response } from 'express'
+import { SeLoger } from '../seloger'
 
-describe('seloger', () => {
-  afterAll(async () => {
-    await closeAllConnections()
-    await disconnect()
+const TEST_DIR = __dirname
+
+const SELOGER_URL = 'https://seloger.com/dfdsfs?ad=234523'
+
+const cases: ScrapingCase[] = [
+  {
+    payload: 'seloger-paris-payload.json',
+    expected: 'seloger-paris-expected.json',
+    city: 'paris',
+    url: SELOGER_URL,
+    capturedAt: '2025-10-14',
+  },
+  {
+    payload: 'seloger-lille-payload.json',
+    expected: 'seloger-lille-expected.json',
+    city: 'lille',
+    url: SELOGER_URL,
+    capturedAt: '2025-10-14',
+  },
+  {
+    payload: 'seloger-lyon-payload.json',
+    expected: 'seloger-lyon-expected.json',
+    city: 'lyon',
+    url: SELOGER_URL,
+    capturedAt: '2025-10-14',
+  },
+]
+
+// Importer un scraper charge `@db/db`, qui ouvre ses connexions Mongo dès le
+// chargement du module. La fermeture reste au niveau du fichier : les tests
+// E2E_LIVE plus bas ont encore besoin de la base.
+afterAll(closeDbConnections)
+
+describe('seloger — contrat de mapping', () => {
+  describe.each(cases)('$city — $payload', (scrapingCase) => {
+    it('normalise le payload brut en Ad', async () => {
+      const ad = await mapAdFromFixture(SeLoger, TEST_DIR, scrapingCase)
+
+      expect(ad).toEqual(readJsonFixture<Ad>(TEST_DIR, scrapingCase.expected))
+    })
   })
+})
 
+/**
+ * Parcours complet `digData()` : géocodage (data.geopf.fr) et Mongo de
+ * production. Non hermétique à dessein, donc exclu du run par défaut — c'est
+ * la matière du canari nightly. Pour le lancer :
+ *
+ *   E2E_LIVE=1 npx jest src/services/websites/seloger
+ */
+const liveDescribe = process.env.E2E_LIVE === '1' ? describe : describe.skip
+
+liveDescribe('seloger — parcours complet (E2E_LIVE)', () => {
   describe('paris', () => {
     test('returns clean ad', async () => {
       const dataParis = fs.readFileSync(

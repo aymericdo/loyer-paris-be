@@ -1,17 +1,63 @@
-import { closeAllConnections } from '@db/db'
+import { Ad } from '@interfaces/ad'
 import { Body } from '@interfaces/scrap-mapping'
+import {
+  closeDbConnections,
+  mapAdFromFixture,
+  readJsonFixture,
+  ScrapingCase,
+} from '@test-utils/website-test-harness'
 import fs from 'fs'
-import { disconnect } from 'mongoose'
 import path from 'path'
-import { LeFigaro } from '../lefigaro'
 import { Response } from 'express'
+import { LeFigaro } from '../lefigaro'
 
-describe('lefigaro', () => {
-  afterAll(async () => {
-    await closeAllConnections()
-    await disconnect()
+const TEST_DIR = __dirname
+
+const LEFIGARO_URL =
+  'https://immobilier.lefigaro.fr/annonces/annonce-31231985.html'
+
+const cases: ScrapingCase[] = [
+  {
+    payload: 'lefigaro-paris-payload.json',
+    expected: 'lefigaro-paris-expected.json',
+    city: 'paris',
+    url: LEFIGARO_URL,
+    capturedAt: '2025-10-14',
+  },
+  {
+    payload: 'lefigaro-lille-payload.json',
+    expected: 'lefigaro-lille-expected.json',
+    city: 'lille',
+    url: LEFIGARO_URL,
+    capturedAt: '2025-10-14',
+  },
+]
+
+// Importer un scraper charge `@db/db`, qui ouvre ses connexions Mongo dès le
+// chargement du module. La fermeture reste au niveau du fichier : les tests
+// E2E_LIVE plus bas ont encore besoin de la base.
+afterAll(closeDbConnections)
+
+describe('lefigaro — contrat de mapping', () => {
+  describe.each(cases)('$city — $payload', (scrapingCase) => {
+    it('normalise le payload brut en Ad', async () => {
+      const ad = await mapAdFromFixture(LeFigaro, TEST_DIR, scrapingCase)
+
+      expect(ad).toEqual(readJsonFixture<Ad>(TEST_DIR, scrapingCase.expected))
+    })
   })
+})
 
+/**
+ * Parcours complet `digData()` : géocodage (data.geopf.fr) et Mongo de
+ * production. Non hermétique à dessein, donc exclu du run par défaut — c'est
+ * la matière du canari nightly. Pour le lancer :
+ *
+ *   E2E_LIVE=1 npx jest src/services/websites/lefigaro
+ */
+const liveDescribe = process.env.E2E_LIVE === '1' ? describe : describe.skip
+
+liveDescribe('lefigaro — parcours complet (E2E_LIVE)', () => {
   describe('paris', () => {
     test('returns clean ad', async () => {
       const dataParis = fs.readFileSync(

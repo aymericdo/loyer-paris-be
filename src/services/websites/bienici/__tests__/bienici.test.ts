@@ -1,17 +1,63 @@
-import { closeAllConnections } from '@db/db'
+import { Ad } from '@interfaces/ad'
 import { Body } from '@interfaces/scrap-mapping'
+import {
+  closeDbConnections,
+  mapAdFromFixture,
+  readJsonFixture,
+  ScrapingCase,
+} from '@test-utils/website-test-harness'
 import fs from 'fs'
-import { disconnect } from 'mongoose'
 import path from 'path'
-import { BienIci } from '../bienici'
 import { Response } from 'express'
+import { BienIci } from '../bienici'
 
-describe('bienici', () => {
-  afterAll(async () => {
-    await closeAllConnections()
-    await disconnect()
+const TEST_DIR = __dirname
+
+const BIENICI_URL =
+  'https://www.bienici.com/annonce/location/paris-11e/appartement/2pieces/guy-hoquet-immo-facile-4938963'
+
+const cases: ScrapingCase[] = [
+  {
+    payload: 'bienici-paris-payload.json',
+    expected: 'bienici-paris-expected.json',
+    city: 'paris',
+    url: BIENICI_URL,
+    capturedAt: '2025-10-14',
+  },
+  {
+    payload: 'bienici-lille-payload.json',
+    expected: 'bienici-lille-expected.json',
+    city: 'lille',
+    url: BIENICI_URL,
+    capturedAt: '2025-10-14',
+  },
+]
+
+// Importer un scraper charge `@db/db`, qui ouvre ses connexions Mongo dès le
+// chargement du module. La fermeture reste au niveau du fichier : les tests
+// E2E_LIVE plus bas ont encore besoin de la base.
+afterAll(closeDbConnections)
+
+describe('bienici — contrat de mapping', () => {
+  describe.each(cases)('$city — $payload', (scrapingCase) => {
+    it('normalise le payload brut en Ad', async () => {
+      const ad = await mapAdFromFixture(BienIci, TEST_DIR, scrapingCase)
+
+      expect(ad).toEqual(readJsonFixture<Ad>(TEST_DIR, scrapingCase.expected))
+    })
   })
+})
 
+/**
+ * Parcours complet `digData()` : géocodage (data.geopf.fr) et Mongo de
+ * production. Non hermétique à dessein, donc exclu du run par défaut — c'est
+ * la matière du canari nightly. Pour le lancer :
+ *
+ *   E2E_LIVE=1 npx jest src/services/websites/bienici
+ */
+const liveDescribe = process.env.E2E_LIVE === '1' ? describe : describe.skip
+
+liveDescribe('bienici — parcours complet (E2E_LIVE)', () => {
   describe('paris', () => {
     test('returns clean ad', async () => {
       const dataParis = fs.readFileSync(

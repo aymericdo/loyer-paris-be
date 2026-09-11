@@ -16,6 +16,7 @@
     "start": "npm run prod",
     "test": "jest --forceExit --detectOpenHandles",
     "test:ci": "jest --ci",
+    "test:e2e": "E2E_LIVE=1 jest --forceExit --detectOpenHandles",
     "test:watch": "jest --no-cache --watchAll",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
