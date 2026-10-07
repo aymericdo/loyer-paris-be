@@ -121,12 +121,6 @@ export async function getIsLegalVariation(req: Request, res: Response) {
         },
       },
       {
-        mark: {
-          type: 'line',
-          interpolate: 'monotone',
-          color: '#fdcd56',
-          size: 4,
-        },
         transform: [
           {
             loess: 'illegalPercentageDecimal',
@@ -159,6 +153,71 @@ export async function getIsLegalVariation(req: Request, res: Response) {
             },
           ],
         },
+        layer: [
+          {
+            mark: {
+              type: 'line',
+              interpolate: 'monotone',
+              color: '#fdcd56',
+              size: 4,
+            },
+          },
+          {
+            mark: {
+              type: 'rule',
+              color: '#fdcd56',
+              strokeWidth: 1,
+              strokeDash: [4, 4],
+            },
+            transform: [{ filter: { param: 'hoverWeek', empty: false } }],
+            encoding: {
+              y: { value: 0 },
+              y2: { value: { expr: 'height' } },
+              tooltip: null,
+            },
+          },
+          {
+            // Full-height hit areas show the smoothed value nearest to the cursor.
+            mark: { type: 'rect', opacity: 0 },
+            params: [
+              {
+                name: 'hoverWeek',
+                select: {
+                  type: 'point',
+                  fields: ['date'],
+                  on: 'pointerover',
+                  clear: 'pointerout',
+                  toggle: false,
+                },
+              },
+            ],
+            transform: [
+              {
+                window: [
+                  { op: 'lag', field: 'date', as: 'previousDate' },
+                  { op: 'lead', field: 'date', as: 'nextDate' },
+                ],
+                sort: [{ field: 'date', order: 'ascending' }],
+              },
+              {
+                calculate:
+                  'datum.previousDate == null ? datum.date : (datum.previousDate + datum.date) / 2',
+                as: 'hoverStart',
+              },
+              {
+                calculate:
+                  'datum.nextDate == null ? datum.date : (datum.date + datum.nextDate) / 2',
+                as: 'hoverEnd',
+              },
+            ],
+            encoding: {
+              x: { field: 'hoverStart', type: 'temporal' },
+              x2: { field: 'hoverEnd' },
+              y: { value: 0 },
+              y2: { value: { expr: 'height' } },
+            },
+          },
+        ],
       },
     ],
   }
