@@ -217,6 +217,27 @@ describe('DigService.digInAd — prix', () => {
   })
 })
 
+describe('DigService.digInAd — seuils de prix', () => {
+  beforeEach(() => withAddress())
+
+  it.each([100, 30000])('accepte un loyer de %s', async (price) => {
+    withBuilding(null)
+
+    await expect(
+      new DigService(ad({ price })).digInAd('paris'),
+    ).resolves.toMatchObject({ price })
+  })
+
+  it.each([
+    [99, 'price too cheap to be a rent'],
+    [30001, 'price too expensive to be a rent'],
+  ])('refuse un loyer de %s', async (price, msg) => {
+    await expect(
+      new DigService(ad({ price })).digInAd('paris'),
+    ).rejects.toMatchObject({ error: ERROR_CODE.Price, msg })
+  })
+})
+
 describe('DigService.digInAd — meublé', () => {
   beforeEach(() => withAddress())
 

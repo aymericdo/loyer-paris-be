@@ -200,6 +200,15 @@ describe('Website.digData — chemin nominal', () => {
     expect(saved[0].adToSave.isLegal).toBe(true)
   })
 
+  it('déclare le loyer légal quand il égale le plafond', async () => {
+    // 1900 - 100 de charges = 1800 = 30 €/m² × 60 m²
+    const { saved } = withPipeline({ cleanAd: fakeCleanAd({ price: 1900 }) })
+
+    await withBody().digData()
+
+    expect(saved[0].adToSave.isLegal).toBe(true)
+  })
+
   it('déclare le loyer illégal quand il dépasse le plafond', async () => {
     const { saved } = withPipeline({
       filteredResult: fakeFilteredResult({ maxPrice: 20 }),

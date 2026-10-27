@@ -57,6 +57,11 @@ describe('getPriceExcludingCharges', () => {
 
   it('refuse une charge supérieure à la moitié du loyer', () => {
     expect(getPriceExcludingCharges(1000, 800, true)).toBe(900)
+    expect(getPriceExcludingCharges(1000, 501, true)).toBe(900)
+  })
+
+  it('accepte une charge égale à la moitié du loyer', () => {
+    expect(getPriceExcludingCharges(1000, 500, true)).toBe(500)
   })
 
   it('ne déduit rien sans charges ni forfait', () => {

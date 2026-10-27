@@ -11,7 +11,10 @@ import { FilterFactory } from '@services/filters/encadrement-filter/filter-facto
 import { FilterParent } from '@services/filters/encadrement-filter/filter-parent'
 import { GenericFilter } from '@services/filters/encadrement-filter/generic-filter'
 import { GrenobleFilter } from '@services/filters/encadrement-filter/grenoble-filter'
-import { getJsonPath } from '@services/filters/encadrement-filter/json-path'
+import {
+  getJsonPath,
+  getJsonPathForDate,
+} from '@services/filters/encadrement-filter/json-path'
 import { ParisFilter } from '@services/filters/encadrement-filter/paris-filter'
 import { PlaineCommuneFilter } from '@services/filters/encadrement-filter/plaine-commune-filter'
 import { closeDbConnections } from '@test-utils/website-test-harness'
@@ -158,6 +161,17 @@ describe('quel arrêté s’applique', () => {
   it('refuse une ville sans aucun arrêté', () => {
     expect(() => getJsonPath('nowhere' as never, null)).toThrow()
   })
+
+  it('applique encore l’arrêté le dernier jour de sa période', () => {
+    const periods = [
+      { file: 'ancien.json', start: '2024-07-01', end: '2025-06-30' },
+      { file: 'nouveau.json', start: '2025-07-01', end: '2026-06-30' },
+    ]
+
+    expect(getJsonPathForDate(periods as never, new Date('2025-06-30'))).toBe(
+      'json-data/ancien.json',
+    )
+  })
 })
 
 describe('FilterParent — les cinq prédicats', () => {
@@ -194,6 +208,7 @@ describe('FilterParent — les cinq prédicats', () => {
     [2, '2', true],
     [2, '3', false],
     [5, '4 et plus', true],
+    [4, '4 et plus', true],
     [5, '2', false],
   ])(
     'nombre de pièces %s face à « %s » → %s',
@@ -443,6 +458,14 @@ describe('filtres territoriaux — reconnaissance de zone', () => {
     expect(await probe.matchRoomCount({ piece: 4 } as never)).toBe(false)
   })
 
+  it('Paris range un 4 pièces dans « 4 et plus »', async () => {
+    const probe = new ParisProbe(info({ roomCount: 4 }))
+
+    expect(await probe.matchRoomCount({ piece: '4 et plus' } as never)).toBe(
+      true,
+    )
+  })
+
   it('Paris compare le meublé au libellé du barème', async () => {
     const furnished = new ParisFilter(info({ hasFurniture: true }))
     const unfurnished = new ParisFilter(info({ hasFurniture: false }))
@@ -460,6 +483,9 @@ describe('filtres territoriaux — reconnaissance de zone', () => {
         meuble_txt: 'non meublé',
       } as never),
     ).toBe(true)
+    expect(
+      await unfurnished.isHasFurnitureMatch({ meuble_txt: 'meublé' } as never),
+    ).toBe(false)
   })
 })
 
@@ -765,10 +791,22 @@ describe('ParisFilter — millésime, quartier et mise en forme', () => {
         { annee: 2024, max: 24.2 },
         { annee: 2025, max: 99 },
       ],
-      { rentalStartDate: new Date('2025-08-15') },
+      { rentalStartDate: new Date(2025, 6, 1) },
     ).filter()
 
     expect(results.map((r) => r.maxPrice)).toEqual([99])
+  })
+
+  it('garde l’ancien millésime jusqu’au 30 juin', async () => {
+    const results = await build(
+      [
+        { annee: 2024, max: 24.2 },
+        { annee: 2025, max: 99 },
+      ],
+      { rentalStartDate: new Date(2025, 5, 30) },
+    ).filter()
+
+    expect(results.map((r) => r.maxPrice)).toEqual([24.2])
   })
 
   it('nomme le quartier via la table des zones parisiennes', async () => {
