@@ -15,3 +15,20 @@ L'extension est disponible sur les sites suivants : seloger, leboncoin, pap, log
 ## Extension store
 * Chrome: https://chrome.google.com/webstore/detail/encadrement-loyers-paris/nkmghhgmpbngkbjnhpomddeglkpkkfeo?hl=fr
 * Firefox: https://addons.mozilla.org/en-US/firefox/addon/encadrement-loyers-paris/
+
+## Développement
+
+Prérequis : Node 24 et npm 11 (voir `engines` dans `package.json`).
+
+Optionnel, avec [devenv](https://devenv.sh) : `devenv shell` fournit Node et npm, `devenv up` lance un MongoDB local pour `npm run dev`.
+
+```sh
+npm ci
+npm test
+npm run dev
+```
+
+## Known gaps
+
+- CI épinglée sur `ubuntu-24.04` : compatibilité 26.04 de mongodb-memory-server (tests) non vérifiée ; à tester avant le retrait de l'image.
+- Version MongoDB de prod inconnue : `devenv up` lance la 8.3, possiblement différente.
