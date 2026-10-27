@@ -884,4 +884,14 @@ describe('Lyon — chaque arrêté répond pour toutes les catégories', () => {
       expect(results.length).toBeGreaterThan(0)
     },
   )
+
+  it('à partir du 1er novembre 2026, applique l’arrêté du 23 octobre 2026', async () => {
+    const result = await probe('2026-11-15', {
+      roomCount: 1,
+      yearBuilt: [1930],
+      hasFurniture: false,
+    }).find()
+
+    expect(result).toMatchObject({ refPrice: 18, maxPrice: 21.6, minPrice: 12.6 })
+  })
 })
