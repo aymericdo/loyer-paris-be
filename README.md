@@ -30,5 +30,5 @@ npm run dev
 
 ## Known gaps
 
-- CI épinglée sur `ubuntu-24.04` : Playwright/MongoDB pas encore compatibles 26.04 ; à rebumper avant le retrait de l'image.
+- CI épinglée sur `ubuntu-24.04` : compatibilité 26.04 de mongodb-memory-server (tests) non vérifiée ; à tester avant le retrait de l'image.
 - Version MongoDB de prod inconnue : `devenv up` lance la 8.3, possiblement différente.
