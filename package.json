@@ -17,6 +17,7 @@
     "test": "jest --forceExit --detectOpenHandles",
     "test:ci": "jest --ci",
     "test:e2e": "E2E_LIVE=1 jest --forceExit --detectOpenHandles",
+    "fixtures:record": "ts-node -r tsconfig-paths/register src/scripts/capture-fixture.ts",
     "test:watch": "jest --no-cache --watchAll",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
