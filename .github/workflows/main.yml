@@ -15,11 +15,10 @@ jobs:
       MONGODB_URI_ZONES: ${{ secrets.MONGODB_URI_ZONES }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         node-version: [22.x]
-        mongodb-version: ['4.0']
     steps:
       # 1. Checkout en premier
       - name: Checkout repository
@@ -31,10 +30,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Enable Corepack & Install npm 11
-        run: |
-          corepack enable
-          corepack prepare npm@11 --activate
+      - name: Install npm 11
+        run: npm install -g npm@11
 
       # 3. Setup Sentry
       - name: Setup Sentry CLI
@@ -46,15 +43,9 @@ jobs:
           organization: encadrement-loyers
           project: node
 
-      # 4. Start MongoDB
-      - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.6.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
-
-      # 5. Étapes de build/test
+      # 4. Étapes de build/test
       - name: Install
-        run: npm install
+        run: npm ci
 
       - name: Build
         run: npm run build
