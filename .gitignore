@@ -15,3 +15,7 @@ src/scripts/data/**
 
 # Claude Code worktrees
 .claude/
+
+# devenv
+.devenv*
+devenv.local.nix
