@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "22.x",
+    "node": "24.x",
     "npm": "11.x"
   },
   "scripts": {
@@ -76,7 +76,7 @@
     "@types/express-serve-static-core": "^4.17.35",
     "@types/inquirer": "^9.0.8",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.17.51",
+    "@types/node": "^24.19.2",
     "@types/xmldom": "^0.1.34",
     "@typescript-eslint/eslint-plugin": "^8.34.0",
     "@typescript-eslint/parser": "^8.34.0",
