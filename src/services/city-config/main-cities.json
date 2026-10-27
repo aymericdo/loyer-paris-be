@@ -166,7 +166,12 @@
       },
       {
         "start": "2025-11-01",
+        "end": "2026-10-31",
         "file": "encadrements_lyon_2025.json"
+      },
+      {
+        "start": "2026-11-01",
+        "file": "encadrements_lyon_2026.json"
       }
     ]
   },
