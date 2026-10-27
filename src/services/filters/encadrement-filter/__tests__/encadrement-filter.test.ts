@@ -862,14 +862,20 @@ describe('Lyon — chaque arrêté répond pour toutes les catégories', () => {
 
   const probe = (rentalStartDate: string, over: Partial<InfoToFilter>) =>
     new LyonProbe('lyon', {
-      ...info({ city: 'lyon' as never, rentalStartDate: new Date(rentalStartDate) }),
+      ...info({
+        city: 'lyon' as never,
+        rentalStartDate: new Date(rentalStartDate),
+      }),
       ...over,
     } as InfoToFilter)
 
   it.each(['2025-01-15', '2025-11-15', '2026-11-15'])(
     'arrêté en vigueur au %s : un 5 pièces trouve la ligne « 4 et plus »',
     async (date) => {
-      const results = await probe(date, { roomCount: 5, yearBuilt: [1930] }).filter()
+      const results = await probe(date, {
+        roomCount: 5,
+        yearBuilt: [1930],
+      }).filter()
 
       expect(results.length).toBeGreaterThan(0)
       expect(results.every((r) => r.roomCount === '4 et plus')).toBe(true)
@@ -879,7 +885,10 @@ describe('Lyon — chaque arrêté répond pour toutes les catégories', () => {
   it.each(['2025-01-15', '2025-11-15', '2026-11-15'])(
     'arrêté en vigueur au %s : un immeuble de 1995 trouve la tranche 1991-2005',
     async (date) => {
-      const results = await probe(date, { roomCount: 2, yearBuilt: [1995] }).filter()
+      const results = await probe(date, {
+        roomCount: 2,
+        yearBuilt: [1995],
+      }).filter()
 
       expect(results.length).toBeGreaterThan(0)
     },
@@ -892,6 +901,10 @@ describe('Lyon — chaque arrêté répond pour toutes les catégories', () => {
       hasFurniture: false,
     }).find()
 
-    expect(result).toMatchObject({ refPrice: 18, maxPrice: 21.6, minPrice: 12.6 })
+    expect(result).toMatchObject({
+      refPrice: 18,
+      maxPrice: 21.6,
+      minPrice: 12.6,
+    })
   })
 })
