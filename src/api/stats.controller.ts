@@ -29,22 +29,14 @@ router.get(
   getWelcomeText,
 )
 router.get('/map/france', getMapFrance)
-router.get('/map/:city', paramMiddleware({ allAccepted: true }), getMap)
-router.get(
-  '/chloropleth-map/:city',
-  paramMiddleware({ allAccepted: true }),
-  getChloroplethMap,
-)
+router.get('/map/:city', paramMiddleware(), getMap)
+router.get('/chloropleth-map/:city', paramMiddleware(), getChloroplethMap)
 router.get(
   '/chloropleth-cities-map/:city',
-  paramMiddleware({ allAccepted: true }),
+  paramMiddleware(),
   getChloroplethCitiesMap,
 )
-router.get(
-  '/price-difference/:city',
-  paramMiddleware({ allAccepted: true }),
-  getPriceDifference,
-)
+router.get('/price-difference/:city', paramMiddleware(), getPriceDifference)
 router.get(
   '/is-legal-per-surface/:city',
   paramMiddleware({ allAccepted: true }),
