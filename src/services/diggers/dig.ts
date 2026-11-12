@@ -1,5 +1,5 @@
 import { Ad, CleanAd } from '@interfaces/ad'
-import { Coordinate } from '@interfaces/shared'
+import { ApiError, Coordinate } from '@interfaces/shared'
 import { canHaveHouse, getMainCity } from '@services/city-config/city-selectors'
 import { ERROR_CODE } from '@services/api/errors'
 import * as cleanup from '@services/helpers/cleanup'
@@ -76,7 +76,19 @@ export class DigService {
       city,
       postalCode,
       this.ad,
-    ).getAddress()
+    )
+      .getAddress()
+      .catch((error: ApiError): [string, Coordinate, Coordinate] => {
+        if (error?.error !== ERROR_CODE.ApiAdresseError || !postalCode) {
+          throw error
+        }
+
+        PrettyLog.call(
+          `Address API unavailable (${error.msg}), using postal code ${postalCode}`,
+          'yellow',
+        )
+        return [null, null, null]
+      })
 
     const stations = this.ad.stations
 

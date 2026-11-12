@@ -126,7 +126,7 @@ describe('AddressService.getAddresses — appel à data.geopf.fr', () => {
 
     await expect(
       AddressService.getAddresses('paris', '16 boulevard voltaire'),
-    ).rejects.toMatchObject({ error: ERROR_CODE.ApiAdresseError })
+    ).rejects.toMatchObject({ error: ERROR_CODE.ApiAdresseError, status: 504 })
 
     expect(mockedAxios).toHaveBeenCalledTimes(1)
   })

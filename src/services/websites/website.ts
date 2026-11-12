@@ -156,6 +156,10 @@ export abstract class Website {
         city,
       }
 
+      if (err instanceof Error) {
+        throw Object.assign(err, { incompleteAd })
+      }
+
       throw { ...err, incompleteAd }
     }
   }

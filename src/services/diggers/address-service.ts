@@ -54,11 +54,11 @@ export class AddressService {
         PrettyLog.call(JSON.stringify(error), 'red')
 
         if (isTimeoutOr504 || attempt >= retries) {
-          throw {
+          throw Object.assign(new Error(error.message, { cause: err }), {
             error: ERROR_CODE.ApiAdresseError,
             msg: error.message,
-            status: error.status,
-          }
+            status: status ?? error.status,
+          })
         }
 
         // ⏳ Délai doublé à chaque tentative : 1s, 2s, 4s, 8s...

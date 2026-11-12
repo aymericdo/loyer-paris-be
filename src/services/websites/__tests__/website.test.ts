@@ -436,20 +436,21 @@ describe('Website.analyse', () => {
     expect(res.json).not.toHaveBeenCalled()
   })
 
-  it('[constat] écrase les vraies erreurs en les re-emballant', async () => {
+  it('préserve les vraies erreurs en ajoutant le contexte de l’annonce', async () => {
     const { digInAd } = withPipeline()
-    digInAd.mockRejectedValue(new Error('panne'))
+    const error = new Error('panne')
+    const originalStack = error.stack
+    digInAd.mockRejectedValue(error)
     const probe = withBody()
     const res = probe.res as unknown as ResponseProbe
 
-    // `throw { ...err, incompleteAd }` jette un Error vidé de sa substance :
-    // un Error n'a que des propriétés non énumérables, le spread ne garde donc
-    // que `incompleteAd`. Le message et la pile disparaîssent — logger() écrit
-    // alors « [ERROR 500] undefined » sur une panne réelle.
-    await expect(probe.digData()).rejects.toEqual({
+    await expect(probe.digData()).rejects.toBe(error)
+    expect(error).toMatchObject({
+      message: 'panne',
+      stack: originalStack,
       incompleteAd: expect.objectContaining({ id: '234523' }),
     })
-    await expect(probe.analyse()).rejects.toBeDefined()
+    await expect(probe.analyse()).rejects.toBe(error)
     expect(res.status).not.toHaveBeenCalled()
   })
 })
