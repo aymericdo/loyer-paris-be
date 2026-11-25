@@ -20,7 +20,7 @@ export async function getShamefulAdsData(
     isLegal: false,
     createdAt: { $gte: minDate },
     $expr: {
-      $gte: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta],
+      $gt: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta],
     },
     ...getMainCityFilter(city as AvailableMainCities),
   }

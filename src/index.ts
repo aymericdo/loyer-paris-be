@@ -35,6 +35,7 @@ import simulatorController from '@api/simulator.controller'
 import districtsController from '@api/districts.controller'
 import citiesController from '@api/cities.controller'
 import versionController from '@api/version.controller'
+import instagramStoryController from '@api/instagram-story.controller'
 
 const app = express()
 
@@ -103,6 +104,7 @@ app.use('/districts', districtsController)
 app.use('/cities', citiesController)
 
 app.use('/version', versionController)
+app.use('/instagram-story', instagramStoryController)
 
 if (process.env.CURRENT_ENV === 'prod') {
   // Watch the cronjobs
