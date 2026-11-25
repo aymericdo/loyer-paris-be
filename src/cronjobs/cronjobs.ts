@@ -1,19 +1,15 @@
-import { NameAndShameService } from '@cronjobs/delation/name-and-shame'
+import { FileExpirationReminder } from '@cronjobs/city-config/file-expiration-reminder'
 import { HealthCheck } from '@cronjobs/system-health/health-check'
 import { schedule } from 'node-cron'
 
 const TIMEZONE = 'Europe/Paris'
 export class CronJobsService {
   watch() {
-    // https://crontab.guru/#0_8_*_*_1 :)
     schedule(
-      '0 8 * * 5',
+      '0 20 * * *',
       async () => {
         try {
-          if (process.env.STOP_TWITTER) {
-            return
-          }
-          await new NameAndShameService().call()
+          await new HealthCheck().call()
         } catch (e) {
           console.error(e)
         }
@@ -27,7 +23,7 @@ export class CronJobsService {
       '0 20 * * *',
       async () => {
         try {
-          await new HealthCheck().call()
+          await new FileExpirationReminder().call()
         } catch (e) {
           console.error(e)
         }

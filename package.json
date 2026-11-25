@@ -59,7 +59,6 @@
     "node-cache": "^5.1.2",
     "node-cron": "^3.0.2",
     "random-position-in-polygon": "^1.0.6",
-    "twitter-api-v2": "^1.15.1",
     "typescript-memoize": "^1.1.1"
   },
   "_moduleAliases": {
