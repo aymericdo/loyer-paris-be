@@ -51,7 +51,7 @@ export const selectHighestExceedingAd = (
   )
 
 export class NameAndShameStory {
-  async call(): Promise<{ published: boolean }> {
+  async call(): Promise<void> {
     clearLatestInstagramStoryImage()
 
     const adsByTerritory = await Promise.all(
@@ -71,7 +71,7 @@ export class NameAndShameStory {
     const candidate = selectHighestExceedingAd(adsByTerritory.flat())
 
     if (!candidate) {
-      return { published: false }
+      return
     }
 
     const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN
@@ -178,7 +178,5 @@ export class NameAndShameStory {
     if (!publishedMedia.id) {
       throw new Error('Instagram Graph API did not return a published media ID')
     }
-
-    return { published: true }
   }
 }
