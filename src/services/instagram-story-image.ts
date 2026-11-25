@@ -54,8 +54,10 @@ export async function createInstagramStoryImage(
       <line x1="112" y1="1284" x2="968" y2="1284" stroke="#ffffff" opacity="0.25"/>
       <text x="112" y="1360" fill="#d9e8ef" font-family="Arial, sans-serif" font-size="32">PLAFOND ESTIMÉ (HORS CHARGES)</text>
       <text x="112" y="1430" fill="#ffffff" font-family="Arial, sans-serif" font-size="52" font-weight="700">${maxPrice} € / mois</text>
-      <text x="88" y="1660" fill="#d9e8ef" font-family="Arial, sans-serif" font-size="28">Annonce collectée au cours des 7 derniers jours.</text>
-      <text x="88" y="1710" fill="#d9e8ef" font-family="Arial, sans-serif" font-size="28">Estimation automatisée à vérifier au cas par cas.</text>
+      <text x="540" y="1610" text-anchor="middle" fill="#d9e8ef" font-family="Arial, sans-serif" font-size="30">Retrouvez les annonces sur</text>
+      <text x="540" y="1665" text-anchor="middle" fill="#ffd166" font-family="Arial, sans-serif" font-size="36" font-weight="700">https://selection.encadrement-loyers.fr/</text>
+      <text x="88" y="1750" fill="#d9e8ef" font-family="Arial, sans-serif" font-size="26">Annonce collectée au cours des 7 derniers jours.</text>
+      <text x="88" y="1795" fill="#d9e8ef" font-family="Arial, sans-serif" font-size="26">Estimation automatisée à vérifier au cas par cas.</text>
     </svg>
   `
 
