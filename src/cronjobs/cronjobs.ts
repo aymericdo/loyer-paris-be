@@ -7,7 +7,7 @@ const TIMEZONE = 'Europe/Paris'
 export class CronJobsService {
   watch() {
     schedule(
-      '0 8 * * 5',
+      '0 20 * * *',
       async () => {
         try {
           await new NameAndShameStory().call()

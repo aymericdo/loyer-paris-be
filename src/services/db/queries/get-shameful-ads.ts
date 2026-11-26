@@ -16,12 +16,14 @@ export async function getShamefulAdsData(
     maxPrice: number
   }[]
 > {
-  const today = new Date()
-  const minDate = new Date(today.setDate(today.getDate() - 7))
+  const startOfToday = new Date()
+  startOfToday.setHours(0, 0, 0, 0)
+  const startOfYesterday = new Date(startOfToday)
+  startOfYesterday.setDate(startOfYesterday.getDate() - 1)
 
   const filter = {
     isLegal: false,
-    createdAt: { $gte: minDate },
+    createdAt: { $gte: startOfYesterday, $lt: startOfToday },
     $expr: {
       $gt: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta],
     },
