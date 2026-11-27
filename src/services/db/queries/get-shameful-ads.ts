@@ -5,6 +5,9 @@ import {
   getMainCityFilter,
 } from '@services/db/queries/common'
 
+const HOUR_IN_MS = 60 * 60 * 1000
+const LOOKBACK_IN_HOURS = 24
+
 export async function getShamefulAdsData(
   city: AvailableMainCities,
   maxDelta = 200,
@@ -16,14 +19,11 @@ export async function getShamefulAdsData(
     maxPrice: number
   }[]
 > {
-  const startOfToday = new Date()
-  startOfToday.setHours(0, 0, 0, 0)
-  const startOfYesterday = new Date(startOfToday)
-  startOfYesterday.setDate(startOfYesterday.getDate() - 1)
+  const lookbackStart = new Date(Date.now() - LOOKBACK_IN_HOURS * HOUR_IN_MS)
 
   const filter = {
     isLegal: false,
-    createdAt: { $gte: startOfYesterday, $lt: startOfToday },
+    createdAt: { $gte: lookbackStart },
     $expr: {
       $gt: [{ $subtract: ['$priceExcludingCharges', '$maxPrice'] }, maxDelta],
     },

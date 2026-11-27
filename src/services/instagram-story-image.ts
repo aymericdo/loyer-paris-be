@@ -56,7 +56,7 @@ export async function createInstagramStoryImage(
       <text x="112" y="1430" fill="#ffffff" font-family="Arial, sans-serif" font-size="52" font-weight="700">${maxPrice} € / mois</text>
       <text x="540" y="1610" text-anchor="middle" fill="#d9e8ef" font-family="Arial, sans-serif" font-size="30">Retrouvez les annonces sur</text>
       <text x="540" y="1665" text-anchor="middle" fill="#ffd166" font-family="Arial, sans-serif" font-size="36" font-weight="700">https://selection.encadrement-loyers.fr/</text>
-      <text x="88" y="1750" fill="#d9e8ef" font-family="Arial, sans-serif" font-size="26">Annonce collectée au cours des 7 derniers jours.</text>
+      <text x="88" y="1750" fill="#d9e8ef" font-family="Arial, sans-serif" font-size="26">Annonce collectée au cours des dernières 24 heures.</text>
       <text x="88" y="1795" fill="#d9e8ef" font-family="Arial, sans-serif" font-size="26">Estimation automatisée à vérifier au cas par cas.</text>
     </svg>
   `
@@ -68,10 +68,6 @@ let latestInstagramStoryImage: Buffer | undefined
 
 export const setLatestInstagramStoryImage = (image: Buffer): void => {
   latestInstagramStoryImage = image
-}
-
-export const clearLatestInstagramStoryImage = (): void => {
-  latestInstagramStoryImage = undefined
 }
 
 export const getLatestInstagramStoryImage = (): Buffer | undefined =>

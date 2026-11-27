@@ -1,10 +1,10 @@
 import { getShamefulAdsData } from '@services/db/queries/get-shameful-ads'
 import {
-  clearLatestInstagramStoryImage,
   createInstagramStoryImage,
   setLatestInstagramStoryImage,
 } from '@services/instagram-story-image'
 import { AvailableMainCities } from '@services/city-config/main-cities'
+import { PrettyLog } from '@services/helpers/pretty-log'
 
 const MIN_EXCESS = 100
 const TERRITORIES: [AvailableMainCities, string][] = [
@@ -52,8 +52,6 @@ export const selectHighestExceedingAd = (
 
 export class NameAndShameStory {
   async call(): Promise<void> {
-    clearLatestInstagramStoryImage()
-
     const adsByTerritory = await Promise.all(
       TERRITORIES.map(async ([city, label]) => {
         const ads = await getShamefulAdsData(city, MIN_EXCESS)
@@ -71,6 +69,10 @@ export class NameAndShameStory {
     const candidate = selectHighestExceedingAd(adsByTerritory.flat())
 
     if (!candidate) {
+      PrettyLog.call(
+        `Name and shame story: no ad exceeding ${MIN_EXCESS} € in the last 24 hours`,
+        'yellow',
+      )
       return
     }
 

@@ -53,7 +53,9 @@ Si aucune ligne n'apparaît :
 
 ## Ce que fait le cron
 
-Chaque vendredi à 8 h (heure de Paris), le cron examine les annonces non conformes des sept territoires utilisés par l'ancien service, collectées dans les sept derniers jours. Il ne publie que si une annonce dépasse strictement de 100 € le plafond estimé hors charges ; si plusieurs correspondent, seule celle qui a le plus grand dépassement est retenue. La Story présente le territoire, la source, le loyer observé et le plafond estimé. Aucune Story n'est publiée s'il n'y a pas d'annonce éligible.
+Chaque jour à 20 h 30 (heure de Paris), le cron examine les annonces non conformes des sept territoires utilisés par l'ancien service, collectées dans les 24 dernières heures. Il ne publie que si une annonce dépasse strictement de 100 € le plafond estimé hors charges ; si plusieurs correspondent, seule celle qui a le plus grand dépassement est retenue. La Story présente le territoire, la source, le loyer observé et le plafond estimé. Aucune Story n'est publiée s'il n'y a pas d'annonce éligible ; ce cas est tracé dans les logs, et les erreurs remontent dans Sentry.
+
+L'image générée est conservée après le run, jusqu'à ce qu'une exécution suivante la remplace : `latest.jpg` sert donc toujours la dernière Story produite, y compris quand aucun candidat n'a été trouvé.
 
 L'image est générée sans IA, au moment du cron. Meta doit pouvoir la télécharger depuis l'URL publique HTTPS fournie. Le fichier est un JPEG de Story vertical 1080 × 1920 ; le cron crée un conteneur `STORIES`, attend son état `FINISHED`, puis le publie avec `media_publish`.
 

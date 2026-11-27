@@ -1,17 +1,19 @@
 import { FileExpirationReminder } from '@cronjobs/city-config/file-expiration-reminder'
 import { NameAndShameStory } from '@cronjobs/instagram/name-and-shame-story'
 import { HealthCheck } from '@cronjobs/system-health/health-check'
+import * as Sentry from '@sentry/node'
 import { schedule } from 'node-cron'
 
 const TIMEZONE = 'Europe/Paris'
 export class CronJobsService {
   watch() {
     schedule(
-      '0 20 * * *',
+      '30 20 * * *',
       async () => {
         try {
           await new NameAndShameStory().call()
         } catch (e) {
+          Sentry.captureException(e)
           console.error(e)
         }
       },
